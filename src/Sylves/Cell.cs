@@ -33,5 +33,8 @@ namespace Sylves
         {
             return new Cell(cell.x + offset.x, cell.y + offset.y, cell.z + offset.z);
         }
+
+        public static explicit operator Vector3Int(Cell c) => new Vector3Int(c.x, c.y, c.z);
+        public static explicit operator Cell(Vector3Int c) => new Cell(c.x, c.y, c.z);
     }
 }

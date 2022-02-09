@@ -3,11 +3,6 @@ using System.Collections.Generic;
 
 namespace Sylves
 {
-    public interface IBound
-    {
-
-    }
-
     public interface IGrid
     {
         #region Basics
@@ -131,10 +126,42 @@ namespace Sylves
         #endregion
 
         #region Position
+        /// <summary>
+        /// Returns the center of the cell in local space
+        /// </summary>
+        Vector3 GetCellCenter(Cell cell);
+
+        /// <summary>
+        /// Returns the appropriate transform for the cell.
+        /// The translation will always be to GetCellCenter.
+        /// Not inclusive of cell rotation, that should be applied first.
+        /// </summary>
+        TRS GetTRS(Cell cell);
+
+        Deformation GetDeformation(Cell cell);
+
         // TODO: Also shape
         #endregion
 
         #region Query
+        /// <summary>
+        /// Finds the cell containg the give position
+        /// </summary>
+        bool FindCell(Vector3 position, out Cell cell);
+
+        /// <summary>
+        /// Returns the cell and rotation corresponding to a given transform matrix.
+        /// </summary>
+        bool FindCell(
+            Matrix4x4 matrix,
+            out Cell cell,
+            out CellRotation rotation);
+
+        /// <summary>
+        /// Gets the set of cells that potentially overlap bounds.
+        /// </summary>
+        IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max);
+
         // TODO: FindCells, Raycast, GetPath
         #endregion
 

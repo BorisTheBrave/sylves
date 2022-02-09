@@ -215,9 +215,95 @@ namespace Sylves
         #endregion
 
         #region Position
+        /// <summary>
+        /// Returns the center of the cell in local space
+        /// </summary>
+        public Vector3 GetCellCenter(Cell cell)
+        {
+            var s = Vector2.Scale(cellSize, ToVector2Int(cell) + new Vector2(0.5f, 0.5f));
+            return new Vector3(0.5f + s.x, 0.5f + s.y, 0);
+        }
+
+        /// <summary>
+        /// Returns the appropriate transform for the cell.
+        /// The translation will always be to GetCellCenter.
+        /// Not inclusive of cell rotation, that should be applied first.
+        /// </summary>
+        public TRS GetTRS(Cell cell) => new TRS(GetCellCenter(cell));
+
+        public Deformation GetDeformation(Cell cell) => Deformation.Identity;
         #endregion
 
         #region Query
+        public bool FindCell(Vector3 position, out Cell cell)
+        {
+            position -= new Vector3(.5f, .5f, 0);
+            var x = Mathf.RoundToInt(position.x / cellSize.x);
+            var y = Mathf.RoundToInt(position.y / cellSize.y);
+            var z = 0;
+            cell = new Cell(x, y, z);
+            return true;
+        }
+
+        public bool FindCell(
+            Matrix4x4 matrix,
+            out Cell cell,
+            out CellRotation rotation)
+        {
+            const float eps = 1e-6f;
+            var m = matrix;
+
+            var localPos = m.MultiplyPoint3x4(Vector3.zero);
+
+            var forward = m.MultiplyVector(Vector3.forward);
+            if (Vector3.Distance(forward, Vector3.forward) > eps)
+            {
+                cell = default;
+                rotation = default;
+                return false;
+            }
+
+            var right = m.MultiplyVector(Vector3.right);
+
+            var scale = m.lossyScale;
+            var isReflection = false;
+            if (scale.x * scale.y * scale.z < 0)
+            {
+                isReflection = true;
+                right.x = -right.x;
+            }
+            var angle = Mathf.Atan2(right.y, right.x);
+            var angleInt = Mathf.RoundToInt(angle / (Mathf.PI / 2));
+
+            rotation = (isReflection ? SquareRotation.ReflectX : SquareRotation.Identity) * SquareRotation.Rotate90(angleInt);
+            return FindCell(localPos, out cell);
+        }
+
+        public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
+        {
+
+            if (FindCell(min, out var minCell) &&
+                FindCell(max, out var maxCell))
+            {
+                // Filter to in bounds
+                if (bound != null)
+                {
+                    minCell.x = Math.Max(minCell.x, bound.min.x);
+                    minCell.y = Math.Max(minCell.y, bound.min.y);
+                    maxCell.x = Math.Min(minCell.x, bound.max.x - 1);
+                    maxCell.y = Math.Min(minCell.y, bound.max.y - 1);
+                }
+
+                // Loop over cels
+                for (var x = minCell.x; x <= maxCell.x; x++)
+                {
+                    for (var y = minCell.y; y <= maxCell.y; y++)
+                    {
+                        yield return new Cell(x, y, 0);
+                    }
+                }
+            }
+        }
         #endregion
 
     }
