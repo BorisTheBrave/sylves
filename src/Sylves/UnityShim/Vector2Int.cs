@@ -21,8 +21,8 @@ namespace Sylves
 
         public int this[int index]
         {
-            get { switch (index) { case 0: return x; case 1: return y; default: throw new Exception(); } }
-            set { switch (index) { case 0: x = value; break; case 1: y = value; break; break; default: throw new Exception(); } }
+            get { switch (index) { case 0: return x; case 1: return y; default: throw new IndexOutOfRangeException(); } }
+            set { switch (index) { case 0: x = value; break; case 1: y = value; break; default: throw new IndexOutOfRangeException(); } }
         }
         public float magnitude => Mathf.Sqrt(sqrMagnitude);
         public int sqrMagnitude => x * x + y * y;
