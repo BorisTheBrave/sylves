@@ -93,6 +93,60 @@ namespace Sylves
             return (SquareDir)(newSide);
         }
 
+        public Matrix4x4 ToMatrix()
+        {
+            switch (value)
+            {
+                case 0:
+                    return Matrix4x4.identity;
+                case 1:
+                    return new Matrix4x4(new Vector4(0, 1, 0, 0), new Vector4(-1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+                case 2:
+                    return new Matrix4x4(new Vector4(-1, 0, 0, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+                case 3:
+                    return new Matrix4x4(new Vector4(0, -1, 0, 0), new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+                case ~0:
+                    return new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+                case ~1:
+                    return new Matrix4x4(new Vector4(0, -1, 0, 0), new Vector4(-1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+                case ~2:
+                    return new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+                case ~3:
+                    return new Matrix4x4(new Vector4(0, 1, 0, 0), new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+                default:
+                    throw new Exception();
+            }
+        }
+
+        public static Vector2Int operator *(SquareRotation r, Vector2Int v)
+        {
+            switch (r.value)
+            {
+                case 0: break;
+                case 1:
+                    (v.x, v.y) = (-v.y, v.x);
+                    break;
+                case 2:
+                    (v.x, v.y) = (-v.x, -v.y);
+                    break;
+                case 3:
+                    (v.x, v.y) = (v.y, -v.x);
+                    break;
+                case ~0:
+                    v.y = -v.y;
+                    break;
+                case ~1:
+                    (v.x, v.y) = (v.y, v.x);
+                    break;
+                case ~2:
+                    v.x = -v.x;
+                    break;
+                case ~3:
+                    (v.x, v.y) = (-v.y, -v.x);
+                    break;
+            }
+            return v;
+        }
         public static Vector3Int operator *(SquareRotation r, Vector3Int v)
         {
             switch (r.value)
