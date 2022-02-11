@@ -1,0 +1,135 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Sylves
+{
+    public class NGonCellType : ICellType
+    {
+        private static IDictionary<int, ICellType> instances = new Dictionary<int, ICellType>
+        {
+            // Despite being a different class, it should be identical
+            [4] = SquareCellType.Instance,
+        };
+
+        private int n;
+
+        private CellDir[] dirs;
+        private CellRotation[] rotations;
+        private CellRotation[] rotationsAndReflections;
+
+        internal NGonCellType(int n)
+        {
+            this.n = n;
+            dirs = Enumerable.Range(0, n).Select(x => (CellDir)x).ToArray();
+            rotations = Enumerable.Range(0, n).Select(x => (CellRotation)x).ToArray();
+            rotationsAndReflections = rotations.Concat(Enumerable.Range(0, n).Select(x => (CellRotation)~x)).ToArray();
+        }
+
+        public static ICellType Get(int n)
+        {
+            if (instances.TryGetValue(n, out var cellType))
+                return cellType;
+            return instances[n] = new NGonCellType(n);
+        }
+
+
+        public int N => n;
+
+        public IEnumerable<CellDir> GetCellDirs()
+        {
+            return dirs;
+        }
+
+        public CellRotation GetIdentity()
+        {
+            return (CellRotation)0;
+        }
+
+        public Matrix4x4 GetMatrix(CellRotation cellRotation)
+        {
+            var i = (int)cellRotation;
+            var rot = i < 0 ? ~i : i;
+            var isReflection = i < 0;
+            var m = isReflection ? Matrix4x4.Scale(new Vector3(-1, 1, 1)) : Matrix4x4.identity;
+            m = Matrix4x4.Rotate(Quaternion.Euler(0, 0, 360.0f / n * rot)) * m;
+            return m;
+        }
+
+        public IList<CellRotation> GetRotations(bool includeReflections = false)
+        {
+            return includeReflections ? rotationsAndReflections : rotations;
+        }
+
+        public CellDir? Invert(CellDir dir)
+        {
+            if((n & 1) == 0)
+            {
+                return (CellDir)(n - (int)dir);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public CellRotation Invert(CellRotation a)
+        {
+            if ((int)a < 0)
+            {
+                return a;
+            }
+            else
+            {
+                return (CellRotation)(n - (int)a);
+            }
+        }
+
+        public CellRotation Multiply(CellRotation a, CellRotation b)
+        {
+            var ia = (int)a;
+            var ib = (int)b;
+            if(ia >= 0)
+            {
+                if(ib >= 0)
+                {
+                    return (CellRotation)((ia + ib) % n);
+                }
+                else
+                {
+                    return (CellRotation)~((n + ia + ~ib) % n);
+                }
+            }
+            else
+            {
+                if (ib >= 0)
+                {
+                    return (CellRotation)~((n + ~ia - ib) % n);
+                }
+                else
+                {
+                    return (CellRotation)((n + ~ia - ~ib) % n);
+                }
+            }
+        }
+
+        public CellDir Rotate(CellDir dir, CellRotation rotation)
+        {
+            if((int)rotation >= 0)
+            {
+                return (CellDir)(((int)dir + (int)rotation) % n);
+            }
+            else
+            {
+                return (CellDir)((n - (int)dir + ~(int)rotation) % n);
+            }
+        }
+
+        public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
+        {
+            connection = new Connection {  Mirror = (int)rotation < 0 };
+            resultDir = Rotate(dir, rotation);
+        }
+    }
+}
