@@ -43,10 +43,13 @@ namespace Sylves
         {
             return (float)Math.Acos(x);
         }
-
         public static float Atan2(float y, float x)
         {
             return (float)Math.Atan2(y, x);
+        }
+        public static float Abs(float v)
+        {
+            return (float)Math.Abs(v);
         }
 
         public static float Clamp(float value, float min, float max) => value < min ? min : value > max ? max : value;

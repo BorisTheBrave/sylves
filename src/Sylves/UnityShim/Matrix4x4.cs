@@ -132,7 +132,26 @@ namespace Sylves
         //public static Matrix4x4 LookAt(Vector3 from, Vector3 to, Vector3 up);
         //public static Matrix4x4 Ortho(float left, float right, float bottom, float top, float zNear, float zFar);
         //public static Matrix4x4 Perspective(float fov, float aspect, float zNear, float zFar);
-        public static Matrix4x4 Rotate(Quaternion q) => throw new NotImplementedException();
+        public static Matrix4x4 Rotate(Quaternion q)
+        {
+            var qx = q.x;
+            var qy = q.y;
+            var qz = q.z;
+            var qw = q.w;
+            return new Matrix4x4()
+            {
+                m00 = 1 - 2 * qy * qy - 2 * qz * qz,
+                m01 = 2 * qx * qy - 2 * qz * qw,
+                m02 = 2 * qx * qz + 2 * qy * qw,
+                m10 = 2 * qx * qy + 2 * qz * qw,
+                m11 = 1 - 2 * qx * qx - 2 * qz * qz,
+                m12 = 2 * qy * qz - 2 * qx * qw,
+                m20 = 2 * qx * qz - 2 * qy * qw,
+                m21 = 2 * qy * qz + 2 * qx * qw,
+                m22 = 1 - 2 * qx * qx - 2 * qy * qy,
+                m33 = 1,
+            };
+        }
         public static Matrix4x4 Scale(Vector3 vector) => new Matrix4x4(new Vector4(vector.x, 0, 0, 0), new Vector4(0, vector.y, 0, 0), new Vector4(0, 0, vector.z, 0), new Vector4(0, 0, 0, 1));
         public static Matrix4x4 Translate(Vector3 vector) => new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1), new Vector4(vector.x, vector.y, vector.z, 1));
         public static Matrix4x4 Transpose(Matrix4x4 m) => m.transpose;
