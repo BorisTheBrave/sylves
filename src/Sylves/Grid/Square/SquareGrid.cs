@@ -5,6 +5,14 @@ using System.Text;
 
 namespace Sylves
 {
+    /// <summary>
+    /// A regular square 2d grid.
+    /// Covers both the infinite grid, and bounded versions.
+    /// Related classes:
+    /// * <see cref="FTHexDir"/>/<see cref="PTHexDir"/>
+    /// * <see cref="NGonCellType"/> (with n = 6)
+    /// * <see cref="HexBound"/>
+    /// </summary>
     public class SquareGrid : IGrid
     {
         private static readonly ICellType[] cellTypes = { SquareCellType.Instance };

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Values for CellDir when working with PointyTopped hexes
+    /// </summary>
     public enum PTHexDir
     {
         Right,
@@ -14,6 +17,9 @@ namespace Sylves
         DownRight,
     }
 
+    /// <summary>
+    /// Values for CellDir when working with FlatTopped hexes
+    /// </summary>
     public enum FTHexDir
     {
         UpRight,

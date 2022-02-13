@@ -6,8 +6,8 @@ namespace Sylves
 {
 
     /// <summary>
-    ///  Rerpresents a position / rotation and scale.
-    ///  Much like a Transform, but without the association with a unity object.
+    /// Represents a position / rotation and scale.
+    /// Much like a Unity Transform, but without the association with a Unity object.
     /// </summary>
     public class TRS
     {

@@ -5,9 +5,21 @@ using System.Text;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Bounding boxes for cube coordinate hexes.
+    /// This can represent rhombuses and hex shapes drawn on the hex grid.
+    /// </summary>
     public class HexBound : IBound, IEnumerable<Cell>
     {
+
+        /// <summary>
+        /// Inclusive lower bound for each coordinate
+        /// </summary>
         public Vector3Int min;
+        
+        /// <summary>
+        /// Exclusive upper bound for each coordinate
+        /// </summary>
         public Vector3Int max;
         public HexBound(Vector3Int min, Vector3Int max)
         {

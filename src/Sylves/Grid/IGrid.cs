@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Contains all the methods for querying a grid.
+    /// A grid is a collection of cells, with each cell having various data associated with it
+    /// such as neighbours, position in space.
+    /// For more details see the basic concepts in the docs.
+    /// </summary>
     public interface IGrid
     {
         #region Basics

@@ -3,9 +3,19 @@ using System.Collections.Generic;
 
 namespace Sylves
 {
+    /// <summary>
+    /// A bounding box on a regular 2d grid of squares.
+    /// </summary>
     public class SquareBound : IBound, IEnumerable<Cell>
     {
+        /// <summary>
+        /// Inclusive lower bound for each coordinate
+        /// </summary>
         public Vector2Int min;
+        
+        /// <summary>
+        /// Exclusive upper bound for each coordinate
+        /// </summary>
         public Vector2Int max;
 
         public SquareBound(Vector2Int min, Vector2Int max)

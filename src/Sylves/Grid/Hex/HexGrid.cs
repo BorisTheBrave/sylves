@@ -37,9 +37,10 @@ namespace Sylves
     /// The co-ordinate system used is "Cube-cordinates described here: https://www.redblobgames.com/grids/hexagons/
     /// However, it'll usually be fairly forgiving if you just use x,y and don't fill the z value.
     /// See HexOrientation for more details.
+    /// Covers both the infinite grid, and bounded versions.
     /// Related classes:
     /// * <see cref="FTHexDir"/>/<see cref="PTHexDir"/>
-    /// * <see cref="NGonCellType"/> (with 
+    /// * <see cref="NGonCellType"/> (with n = 6)
     /// * <see cref="HexBound"/>
     /// </summary>
     public class HexGrid : IGrid

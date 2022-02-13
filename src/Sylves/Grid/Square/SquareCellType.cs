@@ -4,6 +4,10 @@ using System.Text;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Handles cell information about squares.
+    /// This is a a customized version of NGonCellType and behaves virtually identically.
+    /// </summary>
     public class SquareCellType : ICellType
     {
         private static readonly SquareCellType instance = new SquareCellType();

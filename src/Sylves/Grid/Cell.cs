@@ -4,6 +4,11 @@ using System.Text;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Represents a single cell in the grid.
+    /// Cell is just a set of co-ordinates, the grid itself must be called to get any details about the cell.
+    /// For more details see the basic concepts in the docs.
+    /// </summary>
     public struct Cell
     {
         public Cell(int x, int y)
