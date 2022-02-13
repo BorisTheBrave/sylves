@@ -21,7 +21,6 @@ namespace Sylves
             {
                 foreach (var r in ct.GetRotations(true))
                 {
-                    if ((int)r != -1) continue;
                     var start = new Cell(0, 0, 0);
                     var startOffset = new Vector3Int(0, 0, 0);
                     var endCell = grid.Move(start, dir).Value;
@@ -31,6 +30,13 @@ namespace Sylves
                     Assert.AreEqual(expectedDest, destCell, $"Dir = {dir}, Rot = {r}");
                 }
             }
+        }
+
+        public static void FindCell(IGrid grid, Cell cell)
+        {
+            var success = grid.FindCell(grid.GetCellCenter(cell), out var cell2);
+            Assert.IsTrue(success);
+            Assert.AreEqual(cell, cell2);
         }
     }
 }
