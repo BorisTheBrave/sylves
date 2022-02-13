@@ -124,7 +124,7 @@ namespace Sylves
 
         IBound IntersectBounds(IBound bound, IBound other);
         IBound UnionBounds(IBound bound, IBound other);
-        IEnumerable<Cell> GetCellsInBounds(IBound boud);
+        IEnumerable<Cell> GetCellsInBounds(IBound bound);
         #endregion
 
         #region Position

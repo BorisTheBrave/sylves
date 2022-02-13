@@ -40,7 +40,7 @@ namespace Sylves
         {
             return null;
         }
-        public static IEnumerable<Cell> GetCellsInBounds(IGrid grid, IBound boud)
+        public static IEnumerable<Cell> GetCellsInBounds(IGrid grid, IBound bound)
         {
             return grid.GetCells();
         }
