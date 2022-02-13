@@ -17,7 +17,7 @@ namespace Sylves
         //         ╱   ╲
         //        z     x
         PointyTopped,
-        // Neighbour diagram (for 0,0,0)
+        // Neighbour diagram
         //        0,1,-1
         //  -1,1,0  __  1,0,-1
         //         /  \ 
@@ -32,6 +32,16 @@ namespace Sylves
         FlatTopped,
     }
 
+    /// <summary>
+    /// A regular 2d grid of hexagons.
+    /// The co-ordinate system used is "Cube-cordinates described here: https://www.redblobgames.com/grids/hexagons/
+    /// However, it'll usually be fairly forgiving if you just use x,y and don't fill the z value.
+    /// See HexOrientation for more details.
+    /// Related classes:
+    /// * <see cref="FTHexDir"/>/<see cref="PTHexDir"/>
+    /// * <see cref="NGonCellType"/> (with 
+    /// * <see cref="HexBound"/>
+    /// </summary>
     public class HexGrid : IGrid
     {
         private const float Sqrt3 = 1.73205080756888f;
@@ -47,6 +57,8 @@ namespace Sylves
         Vector2 cellSize;
 
         HexOrientation orientation;
+
+        //TriangleGrid childTriangles;
 
         public HexGrid(float cellSize, HexOrientation orientation = HexOrientation.PointyTopped, HexBound bound = null)
             :this(cellSize *(orientation == HexOrientation.FlatTopped ? new Vector2(Sqrt3 / 2, 1) : new Vector2(1, Sqrt3 / 2)), orientation, bound)
@@ -107,6 +119,23 @@ namespace Sylves
 
             }
         }
+
+        public IGrid Unwrapped => this;
+
+        /*
+        IEnumerable<Cell> GetChildTriangles()
+        {
+
+        }
+
+        Cell GetTriangleParent(Cell triangleCell)
+        {
+
+        }
+
+        IGrid GetChildTriangleGrid() => childTriangles;
+        */
+
         #endregion
 
         #region Cell info
@@ -114,7 +143,7 @@ namespace Sylves
         public IEnumerable<Cell> GetCells()
         {
             CheckBounded();
-            return GetCellsInBounds(bound);
+            return bound;
         }
 
         public ICellType GetCellType(Cell cell)
@@ -128,7 +157,7 @@ namespace Sylves
         public bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
             // FTHexDir and PTHexDir are arranged so that you don't need different code for the two orientations.
-            inverseDir = (CellDir)(6 - (int)dir);
+            inverseDir = (CellDir)((3 + (int)dir) % 6);
             connection = new Connection();
             switch((FTHexDir)dir)
             {
@@ -138,9 +167,9 @@ namespace Sylves
                 case FTHexDir.DownLeft:  dest = cell + new Vector3Int(-1, 0, 1); break;
                 case FTHexDir.Down:      dest = cell + new Vector3Int(0, -1, 1); break;
                 case FTHexDir.DownRight: dest = cell + new Vector3Int(1, -1, 0); break;
-                default: throw new ArgumentException($"Unknownd dir {dir}");
+                default: throw new ArgumentException($"Unknown dir {dir}");
             }
-            return true;
+            return bound == null ? true : bound.Contains(dest);
         }
 
         public bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
@@ -199,27 +228,45 @@ namespace Sylves
         #region Bounds
         public IBound GetBound(IEnumerable<Cell> cells)
         {
-            throw new NotImplementedException();
+            var enumerator = cells.GetEnumerator();
+            if (!enumerator.MoveNext())
+            {
+                throw new Exception($"Enumerator empty");
+            }
+            var min = (Vector3Int)(enumerator.Current);
+            var max = min;
+            while (enumerator.MoveNext())
+            {
+                var current = (Vector3Int)(enumerator.Current);
+                min = Vector3Int.Min(min, current);
+                max = Vector3Int.Min(max, current);
+            }
+            return new HexBound(min, max - Vector3Int.one);
         }
 
         public IGrid BoundBy(IBound bound)
         {
-            throw new NotImplementedException();
+            return new HexGrid(cellSize, orientation, (HexBound)IntersectBounds(this.bound, bound));
         }
 
         public IBound IntersectBounds(IBound bound, IBound other)
         {
-            throw new NotImplementedException();
+            if (bound == null) return other;
+            if (other == null) return bound;
+            return ((HexBound)bound).Intersect((HexBound)other);
 
         }
         public IBound UnionBounds(IBound bound, IBound other)
         {
-            throw new NotImplementedException();
+            if (bound == null) return null;
+            if (other == null) return null;
+            return ((HexBound)bound).Union((HexBound)other);
 
         }
         public IEnumerable<Cell> GetCellsInBounds(IBound bound)
         {
-            throw new NotImplementedException();
+            if (bound == null) throw new Exception("Cannot get cells in null bound as it is infinite");
+            return (HexBound)bound;
         }
         #endregion
         

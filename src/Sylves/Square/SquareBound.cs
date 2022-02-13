@@ -1,6 +1,9 @@
-﻿namespace Sylves
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace Sylves
 {
-    public class SquareBound : IBound
+    public class SquareBound : IBound, IEnumerable<Cell>
     {
         public Vector2Int min;
         public Vector2Int max;
@@ -17,6 +20,10 @@
         {
             return v.x >= min.x && v.y >= min.y && v.x < max.x && v.y < max.y;
         }
+        public bool Contains(Cell v)
+        {
+            return v.x >= min.x && v.y >= min.y && v.x < max.x && v.y < max.y;
+        }
 
         public SquareBound Intersect(SquareBound other)
         {
@@ -25,6 +32,22 @@
         public SquareBound Union(SquareBound other)
         {
             return new SquareBound(Vector2Int.Min(min, other.min), Vector2Int.Max(max, other.max));
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<Cell> GetEnumerator()
+        {
+            for (var x = min.x; x < max.x; x++)
+            {
+                for (var y = min.y; y < max.y; y++)
+                {
+                    yield return new Cell(x, y);
+                }
+            }
         }
     }
 }

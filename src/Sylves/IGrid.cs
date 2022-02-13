@@ -56,6 +56,8 @@ namespace Sylves
 
         IGrid Unbounded { get; }
 
+        IGrid Unwrapped { get; }
+
         #endregion
 
         #region Cell info

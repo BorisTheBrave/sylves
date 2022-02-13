@@ -72,6 +72,8 @@ namespace Sylves
                 }
             }
         }
+
+        public IGrid Unwrapped => this;
         #endregion
 
         #region Cell info
@@ -79,13 +81,7 @@ namespace Sylves
         public IEnumerable<Cell> GetCells()
         {
             CheckBounded();
-            for (var x = bound.min.x; x < bound.max.x; x++)
-            {
-                for (var y = bound.min.y; y < bound.max.y; y++)
-                {
-                    yield return new Cell(x, y);
-                }
-            }
+            return bound;
         }
 
         public ICellType GetCellType(Cell cell)
@@ -119,7 +115,7 @@ namespace Sylves
                     throw new Exception($"Invalid dir {dir}");
             }
             connection = new Connection();
-            return bound == null ? true : bound.Contains(new Vector2Int(dest.x, dest.y));
+            return bound == null ? true : bound.Contains(dest);
         }
 
         public bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
@@ -200,14 +196,7 @@ namespace Sylves
         public IEnumerable<Cell> GetCellsInBounds(IBound bound)
         {
             if (bound == null) throw new Exception("Cannot get cells in null bound as it is infinite");
-            var sBound = (SquareBound)bound;
-            for (var x = sBound.min.x; x < sBound.max.x; x++)
-            {
-                for (var y = sBound.min.y; y < sBound.max.y; y++)
-                {
-                    yield return new Cell(x, y);
-                }
-            }
+            return (SquareBound)bound;
         }
         #endregion
 
