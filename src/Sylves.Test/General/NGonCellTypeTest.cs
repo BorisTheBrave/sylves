@@ -53,5 +53,12 @@ namespace Sylves.Test
                 }
             }
         }
+
+        [Test]
+        public void TestInvert()
+        {
+            var a = new NGonCellType(4);
+            Assert.AreEqual((CellDir)SquareDir.Left, a.Invert((CellDir)SquareDir.Right));
+        }
     }
 }

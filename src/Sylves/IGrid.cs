@@ -48,7 +48,7 @@ namespace Sylves
         /// <summary>
         /// Returns the full list of cell types that can be returned by <see cref="GetCellType(Cell)"/>
         /// </summary>
-        IEnumerable<ICellType> GetCellTypes(Cell cell);
+        IEnumerable<ICellType> GetCellTypes();
 
         #endregion
 
@@ -83,7 +83,7 @@ namespace Sylves
         /// <param name="connection">A descriptor of how cell-local space relates between cell and dest.</param>
         bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection);
 
-        // TODO: Give the offset API some thought
+        // TODO: Give the offset API some thought. Should probably be ParallelTransport?
         /// <summary>
         /// Maps between cell offsets and cells in the grid.
         /// This could be done with <see cref="ICellType.FindPath(Vector3Int, Vector3Int)"/>, but this can be more efficient.

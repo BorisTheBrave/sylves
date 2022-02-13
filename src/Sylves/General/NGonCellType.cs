@@ -5,6 +5,12 @@ using System.Text;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Cell type for a regular polygon with n sides.
+    /// The CellDirs are simply the numbers 0 to n-1 with no particular meaning associated.
+    /// The CellRotations are the numbers 0 to n-1 for a CCW rotation of that many sides, 
+    /// plus numbers ~0 to ~n-1 for the reflections, where rotation ~0 has dir 0 as a fix point.
+    /// </summary>
     public class NGonCellType : ICellType
     {
         private static IDictionary<int, ICellType> instances = new Dictionary<int, ICellType>
@@ -66,10 +72,11 @@ namespace Sylves
         {
             if((n & 1) == 0)
             {
-                return (CellDir)(n - (int)dir);
+                return (CellDir)((n / 2 + (int)dir) % n);
             }
             else
             {
+                // Odd sided polygon's have no inverse for a dir.
                 return null;
             }
         }

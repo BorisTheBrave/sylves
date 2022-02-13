@@ -26,5 +26,11 @@ namespace Sylves.Test
 
             }
         }
+
+        [Test]
+        public void TestInvert()
+        {
+            Assert.AreEqual((CellDir)SquareDir.Left, SquareCellType.Instance.Invert((CellDir)SquareDir.Right));
+        }
     }
 }
