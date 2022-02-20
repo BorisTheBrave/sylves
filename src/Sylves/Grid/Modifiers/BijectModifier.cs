@@ -9,12 +9,12 @@ namespace Sylves
     /// Remaps the cells of the grid by changing their co-ordinates,
     /// without touching the position, shape or topology.
     /// </summary>
-    public class BijectWrapper : BaseWrapper
+    public class BijectModifier : BaseModifier
     {
         private readonly Func<Cell, Cell> toUnderlying;
         private readonly Func<Cell, Cell> fromUnderlying;
 
-        public BijectWrapper(IGrid underlying, Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) : base(underlying)
+        public BijectModifier(IGrid underlying, Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) : base(underlying)
         {
             this.toUnderlying = toUnderlying;
             this.fromUnderlying = fromUnderlying;
@@ -22,7 +22,7 @@ namespace Sylves
 
         protected override IGrid Rebind(IGrid underlying)
         {
-            return new BijectWrapper(underlying, toUnderlying, fromUnderlying);
+            return new BijectModifier(underlying, toUnderlying, fromUnderlying);
         }
 
 

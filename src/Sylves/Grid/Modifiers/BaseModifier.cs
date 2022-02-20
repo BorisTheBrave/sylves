@@ -8,11 +8,11 @@ namespace Sylves
     /// Abstract class for creating wrapper grids.
     /// Wrappers defer most methods to an underlying grid.
     /// </summary>
-    public abstract class BaseWrapper : IGrid
+    public abstract class BaseModifier : IGrid
     {
         private readonly IGrid underlying;
 
-        public BaseWrapper(IGrid underlying)
+        public BaseModifier(IGrid underlying)
         {
             this.underlying = underlying;
         }

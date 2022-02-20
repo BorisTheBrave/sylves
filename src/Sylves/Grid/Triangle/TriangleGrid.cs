@@ -78,8 +78,8 @@ namespace Sylves
                 // as this grid, but it uses the other orientation.
                 // This is a lazy hack to avoid coding things twice.
                 altGrid = 
-                    new BijectWrapper(
-                    new TransformWrapper(new TriangleGrid(
+                    new BijectModifier(
+                    new TransformModifier(new TriangleGrid(
                     new Vector2(cellSize.y, cellSize.x),
                     TriangleOrientation.FlatTopped,
                     bound

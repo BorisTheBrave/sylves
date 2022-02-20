@@ -8,18 +8,18 @@ namespace Sylves
     /// <summary>
     /// Filters the cells in the the grid to a customizable subset.
     /// </summary>
-    public class MaskWrapper : BaseWrapper
+    public class MaskModifier : BaseModifier
     {
         private readonly Func<Cell, bool> containsFunc;
         private readonly IEnumerable<Cell> allCells;
 
-        public MaskWrapper(IGrid underlying, ISet<Cell> allCells) : this(underlying, allCells.Contains, allCells)
+        public MaskModifier(IGrid underlying, ISet<Cell> allCells) : this(underlying, allCells.Contains, allCells)
         {
 
         }
 
 
-        public MaskWrapper(IGrid underlying, Func<Cell, bool> containsFunc, IEnumerable<Cell> allCells = null) : base(underlying)
+        public MaskModifier(IGrid underlying, Func<Cell, bool> containsFunc, IEnumerable<Cell> allCells = null) : base(underlying)
         {
             this.containsFunc = containsFunc;
             this.allCells = allCells;
@@ -27,7 +27,7 @@ namespace Sylves
 
         protected override IGrid Rebind(IGrid underlying)
         {
-            return new MaskWrapper(underlying, containsFunc, allCells);
+            return new MaskModifier(underlying, containsFunc, allCells);
         }
 
         #region Basics

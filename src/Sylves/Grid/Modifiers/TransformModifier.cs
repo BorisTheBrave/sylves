@@ -8,12 +8,12 @@ namespace Sylves
     /// Changes the world space positioning of the grid by a linear transform,
     /// leaving everything else unchanged.
     /// </summary>
-    internal class TransformWrapper : BaseWrapper
+    internal class TransformModifier : BaseModifier
     {
         private readonly Matrix4x4 transform;
         private readonly Matrix4x4 iTransform;
 
-        public TransformWrapper(IGrid underlying, Matrix4x4 transform)
+        public TransformModifier(IGrid underlying, Matrix4x4 transform)
             :base(underlying)
         {
             this.transform = transform;
@@ -22,7 +22,7 @@ namespace Sylves
 
         protected override IGrid Rebind(IGrid underlying)
         {
-            return new TransformWrapper(underlying, transform);
+            return new TransformModifier(underlying, transform);
         }
 
         #region Position
