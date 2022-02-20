@@ -73,19 +73,19 @@ namespace Sylves
 
 
         #region Bounds
-        public virtual IBound GetBound(IEnumerable<Cell> cells) => Underlying.GetBound(cells.Select(toUnderlying));
+        public override IBound GetBound(IEnumerable<Cell> cells) => Underlying.GetBound(cells.Select(toUnderlying));
         #endregion
 
         #region Position
-        public virtual Vector3 GetCellCenter(Cell cell) => Underlying.GetCellCenter(toUnderlying(cell));
+        public override Vector3 GetCellCenter(Cell cell) => Underlying.GetCellCenter(toUnderlying(cell));
 
-        public virtual TRS GetTRS(Cell cell) => Underlying.GetTRS(toUnderlying(cell));
+        public override TRS GetTRS(Cell cell) => Underlying.GetTRS(toUnderlying(cell));
 
-        public virtual Deformation GetDeformation(Cell cell) => Underlying.GetDeformation(toUnderlying(cell));
+        public override Deformation GetDeformation(Cell cell) => Underlying.GetDeformation(toUnderlying(cell));
         #endregion
 
         #region Query
-        public virtual bool FindCell(Vector3 position, out Cell cell)
+        public override bool FindCell(Vector3 position, out Cell cell)
         {
             if(Underlying.FindCell(position, out var uCell))
             {
@@ -99,7 +99,7 @@ namespace Sylves
             }
         }
 
-        public virtual bool FindCell(
+        public override bool FindCell(
             Matrix4x4 matrix,
             out Cell cell,
             out CellRotation rotation)
@@ -116,7 +116,7 @@ namespace Sylves
             }
         }
 
-        public virtual IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max) => Underlying.GetCellsIntersectsApprox(min, max).Select(fromUnderlying);
+        public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max) => Underlying.GetCellsIntersectsApprox(min, max).Select(fromUnderlying);
         #endregion
     }
 }

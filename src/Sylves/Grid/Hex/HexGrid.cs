@@ -61,7 +61,7 @@ namespace Sylves
 
         private readonly HexOrientation orientation;
 
-        //TriangleGrid childTriangles;
+        TriangleGrid childTriangles;
 
         public HexGrid(float cellSize, HexOrientation orientation = HexOrientation.PointyTopped, HexBound bound = null)
             :this(cellSize *(orientation == HexOrientation.FlatTopped ? new Vector2(Sqrt3 / 2, 1) : new Vector2(1, Sqrt3 / 2)), orientation, bound)
@@ -74,6 +74,7 @@ namespace Sylves
             this.orientation = orientation;
             this.bound = bound;
             cellType = HexCellType.Get(orientation);
+            childTriangles = new TriangleGrid(cellSize / 2, orientation == HexOrientation.FlatTopped ? TriangleOrientation.FlatTopped : TriangleOrientation.FlatSides);
         }
 
         private void CheckBounded()
@@ -126,19 +127,44 @@ namespace Sylves
 
         public IGrid Unwrapped => this;
 
-        /*
-        IEnumerable<Cell> GetChildTriangles()
+        public Cell[] GetChildTriangles(Cell cell)
         {
-
+            var (a, b,c) = (cell.x, cell.y, cell.z);
+            return new[] {
+                new Cell(a + 1, b, c),
+                new Cell(a + 1, b + 1, c),
+                new Cell(a, b + 1, c),
+                new Cell(a, b + 1, c + 1),
+                new Cell(a, b, c + 1),
+                new Cell(a + 1, b, c + 1),
+            };
         }
 
-        Cell GetTriangleParent(Cell triangleCell)
+        public Cell GetTriangleParent(Cell triangleCell)
         {
-
+            // Rotate the co-ordinate system by 30 degrees, and discretize.
+            // I'm not totally sure why this works.
+            // Thanks to https://justinpombrio.net/programming/2020/04/28/pixel-to-hex.html
+            var (x, y, z) = (triangleCell.x, triangleCell.y, triangleCell.z);
+            if (orientation == HexOrientation.FlatTopped)
+            {
+                return new Cell(
+                    Mathf.RoundToInt((x - z) / 3f),
+                    Mathf.RoundToInt((y - x) / 3f),
+                    Mathf.RoundToInt((z - y) / 3f)
+                );
+            }
+            else
+            {
+                return new Cell(
+                    Mathf.RoundToInt((x - y) / 3f),
+                    Mathf.RoundToInt((y - z) / 3f),
+                    Mathf.RoundToInt((z - x) / 3f)
+                );
+            }
         }
 
-        IGrid GetChildTriangleGrid() => childTriangles;
-        */
+        public TriangleGrid GetChildTriangleGrid() => childTriangles;
 
         #endregion
 
@@ -309,7 +335,9 @@ namespace Sylves
         #region Query
         public bool FindCell(Vector3 position, out Cell cell)
         {
-            throw new NotImplementedException();
+            var success = childTriangles.FindCell(position, out var triangleCell);
+            cell = GetTriangleParent(triangleCell);
+            return success;
         }
 
 

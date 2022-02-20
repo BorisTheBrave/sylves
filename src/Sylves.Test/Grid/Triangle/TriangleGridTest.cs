@@ -26,9 +26,12 @@ namespace Sylves.Test
         [TestCase(TriangleOrientation.FlatSides)]
         public void FindCell(TriangleOrientation orientation)
         {
-            var t = new TriangleGrid(1, orientation);
+            var t = new TriangleGrid(new Vector2(1, 1), orientation);
             GridTest.FindCell(t, new Cell(1, 0, 0));
             GridTest.FindCell(t, new Cell(100, -99, 0));
+            GridTest.FindCell(t, new Cell(100, -99, 0));
+            GridTest.FindCell(t, new Cell(0, 100, -99));
+            GridTest.FindCell(t, new Cell(5, 4, -7));
             GridTest.FindCell(t, new Cell(100, -49, -49));
         }
     }

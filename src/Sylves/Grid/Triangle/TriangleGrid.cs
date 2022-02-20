@@ -77,15 +77,29 @@ namespace Sylves
                 // altGrid has the same topology and cell centers
                 // as this grid, but it uses the other orientation.
                 // This is a lazy hack to avoid coding things twice.
-                altGrid = new TransformWrapper(new TriangleGrid(
+                altGrid = 
+                    new BijectWrapper(
+                    new TransformWrapper(new TriangleGrid(
+                    new Vector2(cellSize.y, cellSize.x),
+                    TriangleOrientation.FlatTopped,
+                    bound
+                    ),
+                    new Matrix4x4(new Vector4(0, 1, 0, 0), new Vector4( 1, 0, 0, 0), new Vector4(0, 0,1, 0), new Vector4(0, 0, 0, 1))
+                    ),
+                    SwizzleXY,
+                    SwizzleXY);
+                /*altGrid = new TransformWrapper(new TriangleGrid(
                     new Vector2(cellSize.y, cellSize.x),
                     TriangleOrientation.FlatTopped,
                     bound
                     ),
                     Matrix4x4.Rotate(Quaternion.Euler(0, 0, 30))
                     );
+                */
             }
         }
+
+        private static Cell SwizzleXY(Cell c) => new Cell(c.y, c.x, c.z);
 
         private void CheckBounded()
         {
@@ -304,7 +318,7 @@ namespace Sylves
             {
                 return new Vector3(
                     (-1 / 3f * cell.y + 2 / 3f * cell.x - 1 / 3f * cell.z) * cellSize.x,
-                    (0.5f * cell.y + -0.5f * cell.z) * cellSize.y,
+                    (0.5f * cell.y                       + -0.5f * cell.z) * cellSize.y,
                     0);
             }
         }
@@ -324,21 +338,30 @@ namespace Sylves
         {
             if (orientation == TriangleOrientation.FlatSides)
             {
-                return altGrid.FindCell(position, out cell);
+                var x = position.x / cellSize.x;
+                var y = position.y / cellSize.y;
+                cell = new Cell(
+                    Mathf.FloorToInt(x) + 1,
+                    Mathf.CeilToInt(y - 0.5f * x),
+                    Mathf.CeilToInt(-y - 0.5f * x)
+                );
+                return true;
             }
-
-            // Using dot product, measures which row and diagonals a given point occupies.
-            // Or equivalently, multiply by the inverse matrix to tri_center
-            // Note we have to break symmetry, using floor(...)+1 instead of ceil, in order
-            // to deal with corner vertices like (0, 0) correctly.
-            var x = position.x / cellSize.x;
-            var y = position.y / cellSize.y;
-            cell = new Cell(
-                Mathf.CeilToInt(x - 0.5f * y),
-                Mathf.FloorToInt(y) + 1,
-                Mathf.CeilToInt(-x - 0.5f * y)
-            );
-            return true;
+            else
+            {
+                // Using dot product, measures which row and diagonals a given point occupies.
+                // Or equivalently, multiply by the inverse matrix to tri_center
+                // Note we have to break symmetry, using floor(...)+1 instead of ceil, in order
+                // to deal with corner vertices like (0, 0) correctly.
+                var x = position.x / cellSize.x;
+                var y = position.y / cellSize.y;
+                cell = new Cell(
+                    Mathf.CeilToInt(x - 0.5f * y),
+                    Mathf.FloorToInt(y) + 1,
+                    Mathf.CeilToInt(-x - 0.5f * y)
+                );
+                return true;
+            }
         }
 
         public bool FindCell(
