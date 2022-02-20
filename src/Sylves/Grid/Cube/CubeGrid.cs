@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Sylves
 {
-    /// <summary>
-    /// A regular square 2d grid.
-    /// Covers both the infinite grid, and bounded versions.
-    /// Related classes:
-    /// * <see cref="FTHexDir"/>/<see cref="PTHexDir"/>
-    /// * <see cref="NGonCellType"/> (with n = 6)
-    /// * <see cref="HexBound"/>
-    /// </summary>
-    public class SquareGrid : IGrid
+    public class CubeGrid : IGrid
     {
-        private static readonly ICellType[] cellTypes = { SquareCellType.Instance };
+        private static readonly ICellType[] cellTypes = { CubeCellType.Instance };
 
-        SquareBound bound;
+        CubeBound bound;
 
-        Vector2 cellSize;
+        Vector3 cellSize;
 
-        public SquareGrid(Vector2 cellSize, SquareBound bound = null)
+        public CubeGrid(float cellSize, CubeBound bound = null)
+            :this(new Vector3(cellSize, cellSize, cellSize), bound)
+        {
+
+        }
+
+        public CubeGrid(Vector3 cellSize, CubeBound bound = null)
         {
             this.cellSize = cellSize;
             this.bound = bound;
@@ -35,19 +32,10 @@ namespace Sylves
             }
         }
 
-        private static Vector2Int ToVector2Int(Cell cell)
-        {
-            if(cell.z != 0)
-            {
-                throw new Exception("SquareGrid only has cells with z = 0");
-            }
-            return new Vector2Int(cell.x, cell.y);
-        }
-
         #region Basics
-        public bool Is2D => true;
+        public bool Is2D => false;
 
-        public bool Is3D => false;
+        public bool Is3D => true;
 
         public bool IsPlanar => true;
 
@@ -76,7 +64,7 @@ namespace Sylves
                 }
                 else
                 {
-                    return new SquareGrid(cellSize, null);
+                    return new CubeGrid(cellSize, null);
                 }
             }
         }
@@ -94,30 +82,38 @@ namespace Sylves
 
         public ICellType GetCellType(Cell cell)
         {
-            return SquareCellType.Instance;
+            return CubeCellType.Instance;
         }
         #endregion
         #region Topology
 
         public bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
-            switch((SquareDir)dir)
+            switch ((CubeDir)dir)
             {
-                case SquareDir.Right:
+                case CubeDir.Right:
                     dest = cell + Vector3Int.right;
-                    inverseDir = (CellDir)SquareDir.Left;
+                    inverseDir = (CellDir)CubeDir.Left;
                     break;
-                case SquareDir.Left:
+                case CubeDir.Left:
                     dest = cell + Vector3Int.left;
-                    inverseDir = (CellDir)SquareDir.Right;
+                    inverseDir = (CellDir)CubeDir.Right;
                     break;
-                case SquareDir.Up:
+                case CubeDir.Up:
                     dest = cell + Vector3Int.up;
-                    inverseDir = (CellDir)SquareDir.Down;
+                    inverseDir = (CellDir)CubeDir.Down;
                     break;
-                case SquareDir.Down:
+                case CubeDir.Down:
                     dest = cell + Vector3Int.down;
-                    inverseDir = (CellDir)SquareDir.Up;
+                    inverseDir = (CellDir)CubeDir.Up;
+                    break;
+                case CubeDir.Forward:
+                    dest = cell + new Vector3Int(0, 0, 1);
+                    inverseDir = (CellDir)CubeDir.Back;
+                    break;
+                case CubeDir.Back:
+                    dest = cell + new Vector3Int(0, 0, -1);
+                    inverseDir = (CellDir)CubeDir.Forward;
                     break;
                 default:
                     throw new Exception($"Invalid dir {dir}");
@@ -128,7 +124,7 @@ namespace Sylves
 
         public bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
         {
-            var squareRotation = (SquareRotation)startRotation;
+            var squareRotation = (CubeRotation)startRotation;
             destCell = startCell + squareRotation * (destOffset - startOffset);
             destRotation = squareRotation;
             return true;
@@ -136,7 +132,7 @@ namespace Sylves
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
-            return SquareCellType.Instance.GetCellDirs();
+            return CubeCellType.Instance.GetCellDirs();
         }
 
         #endregion
@@ -173,38 +169,38 @@ namespace Sylves
             {
                 throw new Exception($"Enumerator empty");
             }
-            var min = ToVector2Int(enumerator.Current);
+            var min = (Vector3Int)(enumerator.Current);
             var max = min;
-            while(enumerator.MoveNext())
+            while (enumerator.MoveNext())
             {
-                var current = ToVector2Int(enumerator.Current);
-                min = Vector2Int.Min(min, current);
-                max = Vector2Int.Min(max, current);
+                var current = (Vector3Int)(enumerator.Current);
+                min = Vector3Int.Min(min, current);
+                max = Vector3Int.Min(max, current);
             }
-            return new SquareBound(min, max - Vector2Int.one);
+            return new CubeBound(min, max - Vector3Int.one);
         }
 
         public IGrid BoundBy(IBound bound)
         {
-            return new SquareGrid(cellSize, (SquareBound)IntersectBounds(this.bound, bound));
+            return new CubeGrid(cellSize, (CubeBound)IntersectBounds(this.bound, bound));
         }
 
         public IBound IntersectBounds(IBound bound, IBound other)
         {
             if (bound == null) return other;
             if (other == null) return bound;
-            return ((SquareBound)bound).Intersect((SquareBound)other);
+            return ((CubeBound)bound).Intersect((CubeBound)other);
         }
         public IBound UnionBounds(IBound bound, IBound other)
         {
             if (bound == null) return null;
             if (other == null) return null;
-            return ((SquareBound)bound).Union((SquareBound)other);
+            return ((CubeBound)bound).Union((CubeBound)other);
         }
         public IEnumerable<Cell> GetCellsInBounds(IBound bound)
         {
             if (bound == null) throw new Exception("Cannot get cells in null bound as it is infinite");
-            return (SquareBound)bound;
+            return (CubeBound)bound;
         }
         #endregion
 
@@ -214,8 +210,7 @@ namespace Sylves
         /// </summary>
         public Vector3 GetCellCenter(Cell cell)
         {
-            var s = Vector2.Scale(cellSize, ToVector2Int(cell) + new Vector2(0.5f, 0.5f));
-            return new Vector3(s.x, s.y, 0);
+            return Vector3.Scale(cellSize, (Vector3Int)(cell) + new Vector3(0.5f, 0.5f, 0.5f));
         }
 
         /// <summary>
@@ -231,10 +226,10 @@ namespace Sylves
         #region Query
         public bool FindCell(Vector3 position, out Cell cell)
         {
-            position -= new Vector3(.5f, .5f, 0);
+            position -= new Vector3(.5f, .5f, .5f);
             var x = Mathf.RoundToInt(position.x / cellSize.x);
             var y = Mathf.RoundToInt(position.y / cellSize.y);
-            var z = 0;
+            var z = Mathf.RoundToInt(position.z / cellSize.z);
             cell = new Cell(x, y, z);
             return true;
         }
@@ -244,33 +239,48 @@ namespace Sylves
             out Cell cell,
             out CellRotation rotation)
         {
-            const float eps = 1e-6f;
+
             var m = matrix;
 
-            var localPos = m.MultiplyPoint3x4(Vector3.zero);
+            Vector4 Rotate(Vector3Int v)
+            {
+                var v1 = m.MultiplyVector(v);
+                var v2 = new Vector4(Mathf.RoundToInt(v1.x), Mathf.RoundToInt(v1.y), Mathf.RoundToInt(v1.z), 0);
 
-            var forward = m.MultiplyVector(Vector3.forward);
-            if (Vector3.Distance(forward, Vector3.forward) > eps)
+                return v2;
+            }
+
+            // True if v is a unit vector along an axis
+            bool Ok(Vector4 v)
+            {
+                return Math.Abs(v.x) + Math.Abs(v.y) + Math.Abs(v.z) == 1;
+            }
+
+            var rotatedRight = Rotate(Vector3Int.right);
+            var rotatedUp = Rotate(Vector3Int.up);
+            var rotatedForward = Rotate(new Vector3Int(0, 0, 1));
+
+            if (Ok(rotatedRight) && Ok(rotatedUp) && Ok(rotatedForward))
+            {
+
+                rotation = CubeRotation.FromMatrix(new Matrix4x4
+                {
+                    column0 = rotatedRight,
+                    column1 = rotatedUp,
+                    column2 = rotatedForward,
+                    column3 = new Vector4(0, 0, 0, 1),
+                });
+
+                var localPos = m.MultiplyPoint3x4(Vector3.zero);
+
+                return FindCell(localPos, out cell);
+            }
+            else
             {
                 cell = default;
                 rotation = default;
                 return false;
             }
-
-            var right = m.MultiplyVector(Vector3.right);
-
-            var scale = m.lossyScale;
-            var isReflection = false;
-            if (scale.x * scale.y * scale.z < 0)
-            {
-                isReflection = true;
-                right.x = -right.x;
-            }
-            var angle = Mathf.Atan2(right.y, right.x);
-            var angleInt = Mathf.RoundToInt(angle / (Mathf.PI / 2));
-
-            rotation = (isReflection ? SquareRotation.ReflectX : SquareRotation.Identity) * SquareRotation.Rotate90(angleInt);
-            return FindCell(localPos, out cell);
         }
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
@@ -284,8 +294,10 @@ namespace Sylves
                 {
                     minCell.x = Math.Max(minCell.x, bound.min.x);
                     minCell.y = Math.Max(minCell.y, bound.min.y);
+                    minCell.z = Math.Max(minCell.z, bound.min.z);
                     maxCell.x = Math.Min(minCell.x, bound.max.x - 1);
                     maxCell.y = Math.Min(minCell.y, bound.max.y - 1);
+                    maxCell.z = Math.Min(minCell.z, bound.max.z - 1);
                 }
 
                 // Loop over cels
@@ -293,12 +305,14 @@ namespace Sylves
                 {
                     for (var y = minCell.y; y <= maxCell.y; y++)
                     {
-                        yield return new Cell(x, y, 0);
+                        for (var z = minCell.z; y <= maxCell.z; z++)
+                        {
+                            yield return new Cell(x, y, z);
+                        }
                     }
                 }
             }
         }
         #endregion
-
     }
 }

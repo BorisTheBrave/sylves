@@ -14,10 +14,19 @@ namespace Sylves.Test
         [Test]
         [TestCase(HexOrientation.PointyTopped)]
         [TestCase(HexOrientation.FlatTopped)]
-        public void TestRotation(HexOrientation orientation)
+        public void TestTryMoveByOffset(HexOrientation orientation)
         {
             var h = new HexGrid(1, orientation);
             GridTest.TryMoveByOffset(h, new Cell());
+        }
+
+
+        [TestCase(HexOrientation.PointyTopped)]
+        [TestCase(HexOrientation.FlatTopped)]
+        public void TestFindCell(HexOrientation orientation)
+        {
+            var h = new HexGrid(1, orientation);
+            GridTest.FindCell(h, new Cell(1, 0, -1));
         }
     }
 }

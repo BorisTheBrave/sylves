@@ -13,6 +13,7 @@ namespace Sylves
     /// </summary>
     public static class GridTest
     {
+
         // Checks TryMoveByOffset gives same results as CellType.Roate
         public static void TryMoveByOffset(IGrid grid, Cell cell)
         {
@@ -32,11 +33,24 @@ namespace Sylves
             }
         }
 
+        // Checks we can round trip from cell to center and back.
         public static void FindCell(IGrid grid, Cell cell)
         {
+            // Check basic find cell
             var success = grid.FindCell(grid.GetCellCenter(cell), out var cell2);
             Assert.IsTrue(success);
             Assert.AreEqual(cell, cell2);
+
+            // Check FindCell with rotations
+            var ct = grid.GetCellType(cell);
+            foreach(var r in ct.GetRotations(true))
+            {
+                var m = Matrix4x4.Translate(grid.GetCellCenter(cell)) * ct.GetMatrix(r);
+                success = grid.FindCell(m, out cell2, out var r2);
+                Assert.IsTrue(success);
+                Assert.AreEqual(cell, cell2, $"{cell} {r}");
+                Assert.AreEqual(r, r2, $"{cell} {r}");
+            }
         }
     }
 }

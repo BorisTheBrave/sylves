@@ -47,17 +47,19 @@ namespace Sylves
     {
         private const float Sqrt3 = 1.73205080756888f;
 
-        private static readonly ICellType cellType = NGonCellType.Get(6);
-        private static readonly ICellType[] cellTypes = {  cellType };
+        private static readonly ICellType[] ftCellTypes = {HexCellType.Get(HexOrientation.FlatTopped)};
+        private static readonly ICellType[] ptCellTypes= { HexCellType.Get(HexOrientation.PointyTopped) };
 
-        HexBound bound;
+        private readonly ICellType cellType;
+
+        private readonly HexBound bound;
 
         // cellSize measures the actual bounds of a single cell.
         // Thus, to get a regular hexagon, one of the values should be sqrt(3)/2 times smaller than the other (depending on Flat/PointyTopped
         // Note: Unity basically always uses PointyTopped, as other orientations are handled by a swizzle that just affects world position, not cell indices
-        Vector2 cellSize;
+        private readonly Vector2 cellSize;
 
-        HexOrientation orientation;
+        private readonly HexOrientation orientation;
 
         //TriangleGrid childTriangles;
 
@@ -71,6 +73,7 @@ namespace Sylves
             this.cellSize = cellSize;
             this.orientation = orientation;
             this.bound = bound;
+            cellType = HexCellType.Get(orientation);
         }
 
         private void CheckBounded()
@@ -101,7 +104,7 @@ namespace Sylves
         /// </summary>
         public IEnumerable<ICellType> GetCellTypes()
         {
-            return cellTypes;
+            return orientation == HexOrientation.FlatTopped ? ftCellTypes : ptCellTypes;
         }
         #endregion
         #region Relatives
@@ -309,12 +312,22 @@ namespace Sylves
             throw new NotImplementedException();
         }
 
+
         public bool FindCell(
             Matrix4x4 matrix,
             out Cell cell,
             out CellRotation rotation)
         {
-            throw new NotImplementedException();
+            var r = HexRotation.FromMatrix(matrix, orientation);
+            if (r == null)
+            {
+                cell = default;
+                rotation = default;
+                return false;
+            }
+            rotation = r.Value;
+            var localPos = matrix.MultiplyPoint3x4(Vector3.zero);
+            return FindCell(localPos, out cell);
         }
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)

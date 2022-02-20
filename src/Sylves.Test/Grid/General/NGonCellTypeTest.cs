@@ -60,5 +60,15 @@ namespace Sylves.Test
             var a = new NGonCellType(4);
             Assert.AreEqual((CellDir)SquareDir.Left, a.Invert((CellDir)SquareDir.Right));
         }
+
+        [Test]
+        public void TestReflection()
+        {
+            var a = new NGonCellType(6);
+            Assert.AreEqual((CellRotation)~2, a.Multiply((CellRotation)2, (CellRotation)~0));
+            Assert.AreEqual((CellRotation)~3, a.Multiply((CellRotation)3, (CellRotation)~0));
+            TestUtils.AssertAreEqual(Matrix4x4.Scale(new Vector3(-1, 1, 1)), a.GetMatrix(a.ReflectX), 1e-6);
+            TestUtils.AssertAreEqual(Matrix4x4.Scale(new Vector3(1, -1, 1)), a.GetMatrix(a.ReflectY), 1e-6);
+        }
     }
 }

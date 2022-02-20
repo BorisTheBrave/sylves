@@ -48,16 +48,18 @@ namespace Sylves
     {
         private const float Sqrt3 = 1.73205080756888f;
 
-        private static readonly ICellType cellType = NGonCellType.Get(6);
-        private static readonly ICellType[] cellTypes = { cellType };
+        private static readonly ICellType[] ftCellTypes = { HexCellType.Get(HexOrientation.FlatTopped) };
+        private static readonly ICellType[] fsCellTypes = { HexCellType.Get(HexOrientation.PointyTopped) };
 
-        TriangleBound bound;
+        readonly ICellType cellType;
 
-        Vector2 cellSize;
+        private readonly TriangleBound bound;
 
-        TriangleOrientation orientation;
+        private readonly Vector2 cellSize;
 
-        IGrid altGrid;
+        private readonly TriangleOrientation orientation;
+
+        private readonly IGrid altGrid;
 
         public TriangleGrid(float cellSize, TriangleOrientation orientation = TriangleOrientation.FlatTopped, TriangleBound bound = null)
             :this(cellSize * (orientation == TriangleOrientation.FlatTopped ? new Vector2(1, Sqrt3 / 2) : new Vector2(Sqrt3 / 2, 1)), orientation, bound)
@@ -69,6 +71,7 @@ namespace Sylves
             this.cellSize = cellSize;
             this.orientation = orientation;
             this.bound = bound;
+            this.cellType = HexCellType.Get(orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
             if(orientation == TriangleOrientation.FlatSides)
             {
                 // altGrid has the same topology and cell centers
@@ -109,7 +112,7 @@ namespace Sylves
 
         public IEnumerable<ICellType> GetCellTypes()
         {
-            return cellTypes;
+            return orientation == TriangleOrientation.FlatTopped ? ftCellTypes : fsCellTypes;
         }
         #endregion
 
@@ -343,8 +346,16 @@ namespace Sylves
             out Cell cell,
             out CellRotation rotation)
         {
-            throw new NotImplementedException();
-
+            var r = HexRotation.FromMatrix(matrix, orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
+            if(r == null)
+            {
+                cell = default;
+                rotation = default;
+                return false;
+            }
+            rotation = r.Value;
+            var localPos = matrix.MultiplyPoint3x4(Vector3.zero);
+            return FindCell(localPos, out cell);
         }
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)

@@ -7,7 +7,7 @@ namespace Sylves
 {
     /// <summary>
     /// Cell type for a regular polygon with n sides.
-    /// The CellDirs are simply the numbers 0 to n-1 with no particular meaning associated.
+    /// The CellDirs are simply the numbers 0 to n-1 with dir 0 being to the right.
     /// The CellRotations are the numbers 0 to n-1 for a CCW rotation of that many sides, 
     /// plus numbers ~0 to ~n-1 for the reflections, where rotation ~0 has dir 0 as a fix point.
     /// </summary>
@@ -43,6 +43,9 @@ namespace Sylves
 
         public int N => n;
 
+        public CellRotation ReflectY => (CellRotation)~0;
+        public CellRotation ReflectX => (n & 1) == 0 ? (CellRotation)~(n/2) : throw new Exception("Cannot reflex x on odd-sided polygon");
+
         public IEnumerable<CellDir> GetCellDirs()
         {
             return dirs;
@@ -58,7 +61,7 @@ namespace Sylves
             var i = (int)cellRotation;
             var rot = i < 0 ? ~i : i;
             var isReflection = i < 0;
-            var m = isReflection ? Matrix4x4.Scale(new Vector3(-1, 1, 1)) : Matrix4x4.identity;
+            var m = isReflection ? Matrix4x4.Scale(new Vector3(1, -1, 1)) : Matrix4x4.identity;
             m = Matrix4x4.Rotate(Quaternion.Euler(0, 0, 360.0f / n * rot)) * m;
             return m;
         }

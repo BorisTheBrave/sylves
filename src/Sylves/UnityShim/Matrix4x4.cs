@@ -153,7 +153,7 @@ namespace Sylves
             };
         }
         public static Matrix4x4 Scale(Vector3 vector) => new Matrix4x4(new Vector4(vector.x, 0, 0, 0), new Vector4(0, vector.y, 0, 0), new Vector4(0, 0, vector.z, 0), new Vector4(0, 0, 0, 1));
-        public static Matrix4x4 Translate(Vector3 vector) => new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1), new Vector4(vector.x, vector.y, vector.z, 1));
+        public static Matrix4x4 Translate(Vector3 vector) => new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(vector.x, vector.y, vector.z, 1));
         public static Matrix4x4 Transpose(Matrix4x4 m) => m.transpose;
         public static Matrix4x4 TRS(Vector3 pos, Quaternion q, Vector3 s) => Translate(pos) * Rotate(q) * Scale(s);
         public override bool Equals(object other)
