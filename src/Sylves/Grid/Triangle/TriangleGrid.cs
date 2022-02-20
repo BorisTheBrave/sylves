@@ -410,7 +410,7 @@ namespace Sylves
             var fl = y;
             var fu = (y + height);
             // Loop over all rows that the rectangle is in
-            for (var b = Mathf.FloorToInt(fl); b < Mathf.CeilToInt(fu); b++)
+            for (var b = Mathf.FloorToInt(fl) + 1; b < Mathf.CeilToInt(fu) + 1; b++)
             {
                 // Consider each row vs a trimmed rect
                 var minb = Math.Max(b - 1, fl);

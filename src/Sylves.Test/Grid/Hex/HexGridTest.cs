@@ -32,5 +32,42 @@ namespace Sylves.Test
             GridTest.FindCell(h, new Cell(-100, 0 , 100));
             //GridTest.FindCell(h, new Cell(100, -50, -50));
         }
+
+
+        [Test]
+        public void TestGetCellsIntersectsApprox()
+        {
+            var h = new HexGrid(2, HexOrientation.FlatTopped);
+
+            var p = new Vector3(0, 0.57f, 0);
+            CollectionAssert.AreEquivalent(
+                new[] {
+                    new Cell(0, 0, 0),
+                    new Cell(1, 0, -1),
+                    new Cell(0, 1, -1),
+                },
+                h.GetCellsIntersectsApprox(p, p + new Vector3(0.6f, 0.3f, 0)));
+
+
+            CollectionAssert.AreEquivalent(
+                new[] {
+                    new Cell(0, 0, 0),
+                    new Cell(1, 0, -1),
+                    new Cell(0, 1, -1),
+                    new Cell(1, 1, -2),
+                },
+                h.GetCellsIntersectsApprox(p, p + new Vector3(0.6f, 2f, 0)));
+
+            h = new HexGrid(2, HexOrientation.PointyTopped);
+            p = new Vector3(0.57f, 0, 0);
+            CollectionAssert.AreEquivalent(
+                new[] {
+                    new Cell(0, 0, 0),
+                    new Cell(1, 0, -1),
+                    new Cell(0, 1, -1),
+                },
+                h.GetCellsIntersectsApprox(p, p + new Vector3(0.3f, 0.6f, 0)));
+
+        }
     }
 }

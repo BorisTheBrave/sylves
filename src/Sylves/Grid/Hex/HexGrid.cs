@@ -64,7 +64,7 @@ namespace Sylves
         TriangleGrid childTriangles;
 
         public HexGrid(float cellSize, HexOrientation orientation = HexOrientation.PointyTopped, HexBound bound = null)
-            :this(cellSize *(orientation == HexOrientation.FlatTopped ? new Vector2(Sqrt3 / 2, 1) : new Vector2(1, Sqrt3 / 2)), orientation, bound)
+            :this(cellSize *(orientation == HexOrientation.PointyTopped ? new Vector2(Sqrt3 / 2, 1) : new Vector2(1, Sqrt3 / 2)), orientation, bound)
         {
         }
 
@@ -360,7 +360,46 @@ namespace Sylves
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-            throw new NotImplementedException();
+            if (orientation == HexOrientation.FlatTopped)
+            {
+                Cell? prev = null;
+                int? first_y = null;
+                foreach (var triangleCell in childTriangles.GetCellsIntersectsApprox(min, max))
+                {
+                    if (first_y == null) first_y = triangleCell.y;
+                    var hex = GetTriangleParent(triangleCell);
+                    // Tri must be in the bottom half of the hex, except the first row
+                    // This stops double counting
+                    if (first_y == triangleCell.y || hex.y - hex.z == triangleCell.y)
+                    {
+                        if (hex != prev)
+                        {
+                            yield return hex;
+                            prev = hex;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Cell? prev = null;
+                int? first_x = null;
+                foreach (var triangleCell in childTriangles.GetCellsIntersectsApprox(min, max))
+                {
+                    if (first_x == null) first_x = triangleCell.y;
+                    var hex = GetTriangleParent(triangleCell);
+                    // Tri must be in the bottom half of the hex, except the first row
+                    // This stops double counting
+                    if (first_x == triangleCell.y || hex.x - hex.z == triangleCell.x)
+                    {
+                        if (hex != prev)
+                        {
+                            yield return hex;
+                            prev = hex;
+                        }
+                    }
+                }
+            }
         }
         #endregion
     }
