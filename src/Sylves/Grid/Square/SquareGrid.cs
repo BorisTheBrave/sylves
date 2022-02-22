@@ -181,7 +181,7 @@ namespace Sylves
                 min = Vector2Int.Min(min, current);
                 max = Vector2Int.Min(max, current);
             }
-            return new SquareBound(min, max - Vector2Int.one);
+            return new SquareBound(min, max + Vector2Int.one);
         }
 
         public IGrid BoundBy(IBound bound)

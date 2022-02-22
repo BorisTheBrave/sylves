@@ -274,7 +274,7 @@ namespace Sylves
                 min = Vector3Int.Min(min, current);
                 max = Vector3Int.Min(max, current);
             }
-            return new TriangleBound(min, max - Vector3Int.one);
+            return new TriangleBound(min, max + Vector3Int.one);
         }
 
         public IGrid BoundBy(IBound bound)
