@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Sylves\Sylves.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mesh\" />
+  </ItemGroup>
+
 </Project>
