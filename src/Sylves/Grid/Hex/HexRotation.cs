@@ -90,16 +90,18 @@ namespace Sylves
         public static HexRotation operator *(HexRotation a, HexRotation b)
         {
             var isReflection = a.IsReflection ^ b.IsReflection;
-            var rotation = a * (b * 0);
+            var rotation = a * (b * (PTHexDir)0);
             return new HexRotation(isReflection ? (short)~rotation : (short)rotation);
         }
 
-        public static SquareDir operator *(HexRotation rotation, SquareDir dir)
+        public static PTHexDir operator *(HexRotation rotation, PTHexDir dir)
         {
             var side = (int)(dir);
             var newSide = (rotation.IsReflection ? rotation.Rotation - side + 6 : rotation.Rotation + side) % 6;
-            return (SquareDir)(newSide);
+            return (PTHexDir)(newSide);
         }
+
+        public static FTHexDir operator *(HexRotation rotation, FTHexDir dir) => (FTHexDir)(rotation * (PTHexDir)dir);
 
         public Matrix4x4 ToMatrix(HexOrientation orientation)
         {

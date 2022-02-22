@@ -93,17 +93,7 @@ namespace Sylves
             }
         }
 
-        public CellDir Rotate(CellDir dir, CellRotation rotation)
-        {
-            if((int)rotation >= 0)
-            {
-                return (CellDir)(((int)dir + (int)rotation) % 6);
-            }
-            else
-            {
-                return (CellDir)((6 - (int)dir + ~(int)rotation) % 6);
-            }
-        }
+        public CellDir Rotate(CellDir dir, CellRotation rotation) => (CellDir)((HexRotation)rotation * (PTHexDir)dir);
 
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
         {
