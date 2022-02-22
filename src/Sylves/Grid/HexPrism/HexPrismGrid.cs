@@ -20,6 +20,7 @@ namespace Sylves
         private readonly HexOrientation orientation;
 
         private readonly HexGrid hexGrid;
+        private readonly int hexGridIndexCount;
 
         public HexPrismGrid(float cellSize, float layerHeight, HexOrientation orientation = HexOrientation.PointyTopped, HexPrismBound bound = null)
             : this(cellSize * (orientation == HexOrientation.PointyTopped ? new Vector3(Sqrt3 / 2, 1, layerHeight) : new Vector3(1, Sqrt3 / 2, layerHeight)), orientation, bound)
@@ -33,6 +34,7 @@ namespace Sylves
             this.bound = bound;
             cellType = HexPrismCellType.Get(orientation);
             hexGrid = new HexGrid(new Vector2(cellSize.x, cellSize.y), orientation, bound?.hexBound);
+            hexGridIndexCount = bound != null ? hexGrid.IndexCount : 0;
         }
 
         private void CheckBounded()
@@ -172,19 +174,22 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                throw new NotImplementedException();
+                return hexGridIndexCount * (bound.layerMax - bound.layerMin);
             }
         }
 
         public int GetIndex(Cell cell)
         {
             CheckBounded();
-            throw new NotImplementedException();
+            return hexGrid.GetIndex(GetHexCell(cell)) + cell.z * hexGridIndexCount;
         }
 
         public Cell GetCellByIndex(int index)
         {
-            throw new NotImplementedException();
+            var layerCount = hexGridIndexCount;
+            var layer = index / layerCount;
+            var hexIndex = index % layerCount;
+            return GetHexPrismCell(hexGrid.GetCellByIndex(hexIndex), layer);
         }
         #endregion
 

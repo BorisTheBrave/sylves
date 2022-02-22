@@ -239,19 +239,28 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                throw new NotImplementedException();
+                var size = bound.max - bound.min;
+                return size.x * size.y;
             }
         }
 
         public int GetIndex(Cell cell)
         {
             CheckBounded();
-            throw new NotImplementedException();
+            var sizeX = bound.max.x - bound.min.x;
+            var dx = cell.x - bound.min.x;
+            var dy = cell.y - bound.min.y;
+            return dx + dy * sizeX;
+
         }
 
         public Cell GetCellByIndex(int index)
         {
-            throw new NotImplementedException();
+            var sizeX = bound.max.x - bound.min.x;
+            var x = bound.min.x + (index % sizeX);
+            var y = bound.min.y + (index / sizeX);
+            var z = -x - y;
+            return new Cell(x, y, z);
         }
         #endregion
 
