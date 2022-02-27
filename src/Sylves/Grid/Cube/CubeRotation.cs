@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sylves
 {
-    public class CubeRotation
+    public struct CubeRotation
     {
         short value;
 
@@ -107,7 +107,8 @@ namespace Sylves
             );
         }
 
-        internal static CubeRotation FromMatrix(Matrix4x4 matrix)
+        // Converts form matrix when the matrix is guarnateed to be in a good format.
+        private static CubeRotation FromMatrixSimple(Matrix4x4 matrix)
         {
             int GetCol(Vector4 c)
             {
@@ -131,6 +132,45 @@ namespace Sylves
                 ));
         }
 
+        internal static CubeRotation? FromMatrix(Matrix4x4 matrix)
+        {
+
+            var m = matrix;
+
+            Vector4 Rotate(Vector3Int v)
+            {
+                var v1 = m.MultiplyVector(v);
+                var v2 = new Vector4(Mathf.RoundToInt(v1.x), Mathf.RoundToInt(v1.y), Mathf.RoundToInt(v1.z), 0);
+
+                return v2;
+            }
+
+            // True if v is a unit vector along an axis
+            bool Ok(Vector4 v)
+            {
+                return Math.Abs(v.x) + Math.Abs(v.y) + Math.Abs(v.z) == 1;
+            }
+
+            var rotatedRight = Rotate(Vector3Int.right);
+            var rotatedUp = Rotate(Vector3Int.up);
+            var rotatedForward = Rotate(new Vector3Int(0, 0, 1));
+
+            if (Ok(rotatedRight) && Ok(rotatedUp) && Ok(rotatedForward))
+            {
+                return FromMatrixSimple(new Matrix4x4
+                {
+                    column0 = rotatedRight,
+                    column1 = rotatedUp,
+                    column2 = rotatedForward,
+                    column3 = new Vector4(0, 0, 0, 1),
+                });
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public bool IsReflection
         {
             get
@@ -143,7 +183,7 @@ namespace Sylves
         public CubeRotation Invert()
         {
             // TODO: Do fancy bitwise formula
-            return FromMatrix(ToMatrix().transpose);
+            return FromMatrixSimple(ToMatrix().transpose);
         }
 
         public override bool Equals(object obj)

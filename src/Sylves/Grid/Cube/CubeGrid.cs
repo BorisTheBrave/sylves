@@ -226,10 +226,9 @@ namespace Sylves
         #region Query
         public bool FindCell(Vector3 position, out Cell cell)
         {
-            position -= new Vector3(.5f, .5f, .5f);
-            var x = Mathf.RoundToInt(position.x / cellSize.x);
-            var y = Mathf.RoundToInt(position.y / cellSize.y);
-            var z = Mathf.RoundToInt(position.z / cellSize.z);
+            var x = Mathf.FloorToInt(position.x / cellSize.x);
+            var y = Mathf.FloorToInt(position.y / cellSize.y);
+            var z = Mathf.FloorToInt(position.z / cellSize.z);
             cell = new Cell(x, y, z);
             return true;
         }
@@ -242,38 +241,12 @@ namespace Sylves
 
             var m = matrix;
 
-            Vector4 Rotate(Vector3Int v)
+            var cubeRotation = CubeRotation.FromMatrix(m);
+
+            if(cubeRotation != null)
             {
-                var v1 = m.MultiplyVector(v);
-                var v2 = new Vector4(Mathf.RoundToInt(v1.x), Mathf.RoundToInt(v1.y), Mathf.RoundToInt(v1.z), 0);
-
-                return v2;
-            }
-
-            // True if v is a unit vector along an axis
-            bool Ok(Vector4 v)
-            {
-                return Math.Abs(v.x) + Math.Abs(v.y) + Math.Abs(v.z) == 1;
-            }
-
-            var rotatedRight = Rotate(Vector3Int.right);
-            var rotatedUp = Rotate(Vector3Int.up);
-            var rotatedForward = Rotate(new Vector3Int(0, 0, 1));
-
-            if (Ok(rotatedRight) && Ok(rotatedUp) && Ok(rotatedForward))
-            {
-
-                rotation = CubeRotation.FromMatrix(new Matrix4x4
-                {
-                    column0 = rotatedRight,
-                    column1 = rotatedUp,
-                    column2 = rotatedForward,
-                    column3 = new Vector4(0, 0, 0, 1),
-                });
-
-                var localPos = m.MultiplyPoint3x4(Vector3.zero);
-
-                return FindCell(localPos, out cell);
+                rotation = cubeRotation.Value;
+                return FindCell(m.MultiplyPoint3x4(Vector3.zero), out cell);
             }
             else
             {
