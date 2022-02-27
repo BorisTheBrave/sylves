@@ -18,6 +18,14 @@ namespace Sylves
             return grid.GetCellType(cell).GetCellDirs();
         }
 
+        #region Topology
+        public static bool TryMoveByOffset(IGrid grid, Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
+        {
+            // TODO
+            throw new NotImplementedException();
+        }
+        #endregion
+
 
         // Default impl supports no bounds,
         // just returns null representing bounds that covers the whole grid.

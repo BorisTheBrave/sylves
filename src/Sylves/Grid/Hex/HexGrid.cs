@@ -40,7 +40,7 @@ namespace Sylves
     /// Covers both the infinite grid, and bounded versions.
     /// Related classes:
     /// * <see cref="FTHexDir"/>/<see cref="PTHexDir"/>
-    /// * <see cref="NGonCellType"/> (with n = 6)
+    /// * <see cref="HexCellType"/>
     /// * <see cref="HexBound"/>
     /// </summary>
     public class HexGrid : IGrid
