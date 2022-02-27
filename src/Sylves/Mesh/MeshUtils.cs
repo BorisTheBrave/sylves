@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using static Sylves.VectorUtils;
+
 namespace Sylves
 {
     /// <summary>
@@ -58,19 +60,19 @@ namespace Sylves
             if (!isQuads && !isTris)
                 throw new Exception($"Cannot handle topology of type {surfaceMesh.GetTopology(subMesh)}");
 
-            var trilinearInterpolatePoint = isQuads 
+            var interpolatePoint = isQuads 
                 ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2)
                 : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2);
 
-            var trilinearInterpolateNormal = !smoothNormals ? null : isQuads
+            var interpolateNormal = !smoothNormals ? null : isQuads
                 ? QuadInterpolation.InterpolateNormal(surfaceMesh, subMesh, face)
                 : TriangleInterpolation.InterpolateNormal(surfaceMesh, subMesh, face);
 
-            var trilinearInterpolateTangent = !smoothNormals ? null : isQuads
+            var interpolateTangent = !smoothNormals ? null : isQuads
                 ? QuadInterpolation.InterpolateTangent(surfaceMesh, subMesh, face)
                 : TriangleInterpolation.InterpolateTangent(surfaceMesh, subMesh, face);
 
-            var trilinearInterpolateUv = !smoothNormals ? null : isQuads
+            var interpolateUv = !smoothNormals ? null : isQuads
                 ? QuadInterpolation.InterpolateUv(surfaceMesh, subMesh, face)
                 : TriangleInterpolation.InterpolateUv(surfaceMesh, subMesh, face);
 
@@ -79,10 +81,10 @@ namespace Sylves
                 var m = 1e-3f;
 
                 // TODO: Do some actual differentation
-                var t = trilinearInterpolatePoint(p);
-                var dx = (trilinearInterpolatePoint(p + Vector3.right * m) - t) / m;
-                var dy = (trilinearInterpolatePoint(p + Vector3.up * m) - t) / m;
-                var dz = (trilinearInterpolatePoint(p + Vector3.forward * m) - t) / m;
+                var t = interpolatePoint(p);
+                var dx = (interpolatePoint(p + Vector3.right * m) - t) / m;
+                var dy = (interpolatePoint(p + Vector3.up * m) - t) / m;
+                var dz = (interpolatePoint(p + Vector3.forward * m) - t) / m;
 
                 if (!smoothNormals)
                 {
@@ -108,16 +110,16 @@ namespace Sylves
                     // TODO: Do we really need all the normalization?
 
 
-                    var normal = trilinearInterpolateNormal(p).normalized;
-                    var tangent4 = trilinearInterpolateTangent(p);
+                    var normal = interpolateNormal(p).normalized;
+                    var tangent4 = interpolateTangent(p);
                     var tangent3 = ToVector3(tangent4).normalized;
                     var bitangent = (tangent4.w * Vector3.Cross(normal, tangent3)).normalized;
 
                     // TODO: Do some actual differentation
-                    var t2 = trilinearInterpolateUv(p);
-                    var dx2 = (trilinearInterpolateUv(p + Vector3.right * m) - t2) / m;
+                    var t2 = interpolateUv(p);
+                    var dx2 = (interpolateUv(p + Vector3.right * m) - t2) / m;
                     //var dy2 = (trilinearInterpolateUv(p + Vector3.up * m) - t2) / m;// Always zero
-                    var dz2 = (trilinearInterpolateUv(p + Vector3.forward * m) - t2) / m;
+                    var dz2 = (interpolateUv(p + Vector3.forward * m) - t2) / m;
 
                     var j3 = new Matrix4x4(
                         ToVector4(new Vector3(dx2.x, 0, dx2.y).normalized),
@@ -148,10 +150,34 @@ namespace Sylves
                 return jacobi * v;
             }
 
-            return new Deformation(trilinearInterpolatePoint, DeformNormal, DeformTangent, false);
+            return new Deformation(interpolatePoint, DeformNormal, DeformTangent, false);
         }
 
-        private static Vector4 ToVector4(Vector3 v) => new Vector4(v.x, v.y, v.z, 0);
-        private static Vector3 ToVector3(Vector4 v) => new Vector3(v.x, v.y, v.z);
+        /// <summary>
+        /// Returns the indices of the faces of a asubmesh of meshData.
+        /// </summary>
+        /// TODO: Should we make a low alloc version of this?
+        public static IEnumerable<IReadOnlyCollection<int>> GetFaces(MeshData meshData, int subMesh)
+        {
+            var indices = meshData.GetIndices(subMesh);
+
+            switch (meshData.GetTopology(subMesh))
+            {
+                case MeshTopology.Quads:
+                    for (var i = 0; i < indices.Length; i += 4)
+                    {
+                        yield return new ArraySegment<int>(indices, i, 4);
+                    }
+                    break;
+                case MeshTopology.Triangles:
+                    for (var i = 0; i < indices.Length; i += 3)
+                    {
+                        yield return new ArraySegment<int>(indices, i, 3);
+                    }
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }

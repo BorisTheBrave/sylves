@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using static Sylves.VectorUtils;
+
 namespace Sylves
 {
     public class CubeGrid : IGrid
@@ -226,10 +228,7 @@ namespace Sylves
         #region Query
         public bool FindCell(Vector3 position, out Cell cell)
         {
-            var x = Mathf.FloorToInt(position.x / cellSize.x);
-            var y = Mathf.FloorToInt(position.y / cellSize.y);
-            var z = Mathf.FloorToInt(position.z / cellSize.z);
-            cell = new Cell(x, y, z);
+            cell = (Cell)Vector3Int.FloorToInt(Divide(position, cellSize));
             return true;
         }
 

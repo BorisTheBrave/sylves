@@ -46,7 +46,7 @@ namespace Sylves
             return PostDeformIT.MultiplyVector(InnerDeformNormal(PreDeform.MultiplyPoint3x4(p), PreDeformIT.MultiplyVector(v)));
         }
 
-        private Vector4 DeformTangent(Vector3 p, Vector4 t)
+        public Vector4 DeformTangent(Vector3 p, Vector4 t)
         {
             Vector3 t2 = PreDeform.MultiplyVector(new Vector3(t.x, t.y, t.z));
             Vector4 t3 = new Vector4(t2.x, t2.y, t2.z, t.w);
