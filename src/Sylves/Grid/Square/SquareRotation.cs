@@ -108,15 +108,43 @@ namespace Sylves
                 case ~0:
                     return new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
                 case ~1:
-                    return new Matrix4x4(new Vector4(0, -1, 0, 0), new Vector4(-1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
-                case ~2:
-                    return new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
-                case ~3:
                     return new Matrix4x4(new Vector4(0, 1, 0, 0), new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+                case ~2:
+                    return new Matrix4x4(new Vector4(-1, 0, 0, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+                case ~3:
+                    return new Matrix4x4(new Vector4(0, -1, 0, 0), new Vector4(-1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
                 default:
                     throw new Exception();
             }
         }
+
+        public static SquareRotation? FromMatrix(Matrix4x4 matrix)
+        {
+            const float eps = 1e-6f;
+            var m = matrix;
+
+            // Check that this matrix doesn't touch the z-axis
+            var forward = m.MultiplyVector(Vector3.forward);
+            if (Vector3.Distance(forward, Vector3.forward) > eps)
+            {
+                return null;
+            }
+
+            var right = m.MultiplyVector(Vector3.right);
+
+            var up = m.MultiplyVector(Vector3.up);
+            var isReflection = Vector3.Cross(right, up).z < 0;
+            if(isReflection)
+            {
+                right.y = -right.y;
+            }
+            var angle = Mathf.Atan2(right.y, right.x);
+            var angleInt = Mathf.RoundToInt(angle / (Mathf.PI / 2));
+
+            return (isReflection ? ReflectY : Identity) * Rotate90(angleInt);
+        }
+
+        public override string ToString() => value.ToString();
 
         public static Vector2Int operator *(SquareRotation r, Vector2Int v)
         {

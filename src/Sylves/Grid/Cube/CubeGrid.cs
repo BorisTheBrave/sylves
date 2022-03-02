@@ -237,15 +237,12 @@ namespace Sylves
             out Cell cell,
             out CellRotation rotation)
         {
-
-            var m = matrix;
-
-            var cubeRotation = CubeRotation.FromMatrix(m);
+            var cubeRotation = CubeRotation.FromMatrix(matrix);
 
             if(cubeRotation != null)
             {
                 rotation = cubeRotation.Value;
-                return FindCell(m.MultiplyPoint3x4(Vector3.zero), out cell);
+                return FindCell(matrix.MultiplyPoint3x4(Vector3.zero), out cell);
             }
             else
             {

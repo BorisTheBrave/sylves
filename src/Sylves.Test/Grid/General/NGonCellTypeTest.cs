@@ -18,9 +18,9 @@ namespace Sylves.Test
             var a = new NGonCellType(4);
             var b = SquareCellType.Instance;
 
-            foreach(var r in b.GetRotations())
+            foreach(var r in b.GetRotations(true))
             {
-                AssertAreEqual(a.GetMatrix(r), b.GetMatrix(r), 1e-6);
+                AssertAreEqual(a.GetMatrix(r), b.GetMatrix(r), 1e-6, $"{r}");
             }
         }
 

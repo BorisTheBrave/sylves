@@ -244,33 +244,19 @@ namespace Sylves
             out Cell cell,
             out CellRotation rotation)
         {
-            const float eps = 1e-6f;
-            var m = matrix;
+            var squareRotation= SquareRotation.FromMatrix(matrix);
 
-            var localPos = m.MultiplyPoint3x4(Vector3.zero);
-
-            var forward = m.MultiplyVector(Vector3.forward);
-            if (Vector3.Distance(forward, Vector3.forward) > eps)
+            if (squareRotation != null)
+            {
+                rotation = squareRotation.Value;
+                return FindCell(matrix.MultiplyPoint3x4(Vector3.zero), out cell);
+            }
+            else
             {
                 cell = default;
                 rotation = default;
                 return false;
             }
-
-            var right = m.MultiplyVector(Vector3.right);
-
-            var scale = m.lossyScale;
-            var isReflection = false;
-            if (scale.x * scale.y * scale.z < 0)
-            {
-                isReflection = true;
-                right.x = -right.x;
-            }
-            var angle = Mathf.Atan2(right.y, right.x);
-            var angleInt = Mathf.RoundToInt(angle / (Mathf.PI / 2));
-
-            rotation = (isReflection ? SquareRotation.ReflectX : SquareRotation.Identity) * SquareRotation.Rotate90(angleInt);
-            return FindCell(localPos, out cell);
         }
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
