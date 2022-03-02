@@ -60,7 +60,7 @@ namespace Sylves
             if (!isQuads && !isTris)
                 throw new Exception($"Cannot handle topology of type {surfaceMesh.GetTopology(subMesh)}");
 
-            var interpolatePoint = isQuads 
+            var interpolatePoint = isQuads
                 ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2)
                 : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2);
 
@@ -89,9 +89,9 @@ namespace Sylves
                 if (!smoothNormals)
                 {
                     jacobi = new Matrix4x4(
-                        ToVector4(dx), 
-                        ToVector4(dy), 
-                        ToVector4(dz), 
+                        ToVector4(dx),
+                        ToVector4(dy),
+                        ToVector4(dz),
                         new Vector4(0, 0, 0, 1));
                 }
                 else
@@ -153,11 +153,32 @@ namespace Sylves
             return new Deformation(interpolatePoint, DeformNormal, DeformTangent, false);
         }
 
+
+        /// <summary>
+        /// Returns a deformation that transforms from cell co-ordinates to a prism defined by the mesh and the given parameters.
+        /// For quad meshes, cell co-ordinates is a unit cube centered at the origin.
+        /// For tri meshes, cell co-ordinates are a triangle prism centered at the origin.
+        /// </summary>
+        public static Deformation GetDeformation(MeshData surfaceMesh, int face, int subMesh)
+        {
+            var isQuads = surfaceMesh.GetTopology(subMesh) == MeshTopology.Quads;
+            var isTris = surfaceMesh.GetTopology(subMesh) == MeshTopology.Triangles;
+
+            if (!isQuads && !isTris)
+                throw new Exception($"Cannot handle topology of type {surfaceMesh.GetTopology(subMesh)}");
+
+            var interpolatePoint = isQuads
+                ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face)
+                : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face);
+
+            return new Deformation(interpolatePoint, null, null, false);
+        }
+
         /// <summary>
         /// Returns the indices of the faces of a asubmesh of meshData.
         /// </summary>
         /// TODO: Should we make a low alloc version of this?
-        public static IEnumerable<IReadOnlyCollection<int>> GetFaces(MeshData meshData, int subMesh)
+        public static IEnumerable<IReadOnlyList<int>> GetFaces(MeshData meshData, int subMesh)
         {
             var indices = meshData.GetIndices(subMesh);
 

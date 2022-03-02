@@ -40,6 +40,29 @@ namespace Sylves
             return Interpolate(v1, v2, v3, v4, v5, v6, v7, v8);
         }
 
+        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face)
+        {
+            if (mesh.GetTopology(submesh) != MeshTopology.Quads)
+            {
+                throw new Exception($"Mesh topology {mesh.GetTopology(submesh)} not supported. You need to select \"Keep Quads\"");
+            }
+
+            var indices = mesh.GetIndices(submesh);
+            var vertices = mesh.vertices;
+            var normals = mesh.normals;
+            var i1 = indices[face * 4 + 0];
+            var i2 = indices[face * 4 + 1];
+            var i3 = indices[face * 4 + 2];
+            var i4 = indices[face * 4 + 3];
+
+            var v1 = vertices[i1];
+            var v2 = vertices[i2];
+            var v3 = vertices[i3];
+            var v4 = vertices[i4];
+
+            return Interpolate(v1, v2, v3, v4);
+        }
+
         public static Func<Vector3, Vector3> InterpolateNormal(MeshData mesh, int submesh, int face)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Quads)

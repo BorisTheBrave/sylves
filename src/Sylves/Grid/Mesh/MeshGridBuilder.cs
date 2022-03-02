@@ -28,15 +28,15 @@ namespace Sylves
                 foreach (var faceIndices in MeshUtils.GetFaces(data, submesh))
                 {
                     var cell = new Cell(face, submesh);
-                    var deformation = MeshUtils.GetDeformation(data, 1, -0.5f, false, face, 0, submesh);
+                    var deformation = MeshUtils.GetDeformation(data, face, submesh);
                     var count = faceIndices.Count;
                     var cellType = count == 3 ? HexCellType.Get(HexOrientation.PointyTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
-                    var trs =
+                    var trs = GetTRS2d(deformation, Vector3.zero);
                     cellData[cell] = new DataDrivenCellData
                     {
                         CellType = cellType,
                         Deformation = deformation,
-                        TRS = GetTRS(deformation, Vector3.zero),
+                        TRS = trs,
                     };
                     face++;
                 }
@@ -50,6 +50,18 @@ namespace Sylves
             var x = (deformation.DeformPoint(p + Vector3.right * e) - center) / e;
             var y = (deformation.DeformPoint(p + Vector3.up * e) - center) / e;
             var z = (deformation.DeformPoint(p + Vector3.forward * e) - center) / e;
+            var m = new Matrix4x4(ToVector4(x), ToVector4(y), ToVector4(z), new Vector4(center.x, center.y, center.z, 1));
+
+            return new TRS(m);
+        }
+
+        private static TRS GetTRS2d(Deformation deformation, Vector3 p)
+        {
+            var center = deformation.DeformPoint(p);
+            var e = 1e-4f;
+            var x = (deformation.DeformPoint(p + Vector3.right * e) - center) / e;
+            var z = (deformation.DeformPoint(p + Vector3.forward * e) - center) / e;
+            var y = Vector3.Cross(x, z).normalized;
             var m = new Matrix4x4(ToVector4(x), ToVector4(y), ToVector4(z), new Vector4(center.x, center.y, center.z, 1));
 
             return new TRS(m);
