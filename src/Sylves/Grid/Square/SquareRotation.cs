@@ -120,19 +120,16 @@ namespace Sylves
 
         public static SquareRotation? FromMatrix(Matrix4x4 matrix)
         {
-            const float eps = 1e-6f;
-            var m = matrix;
-
             // Check that this matrix doesn't touch the z-axis
-            var forward = m.MultiplyVector(Vector3.forward);
-            if (Vector3.Distance(forward, Vector3.forward) > eps)
+            var forward = matrix.MultiplyVector(Vector3.forward);
+            if (Vector3.Distance(forward, Vector3.forward) > 1e-2f)
             {
                 return null;
             }
 
-            var right = m.MultiplyVector(Vector3.right);
+            var right = matrix.MultiplyVector(Vector3.right);
 
-            var up = m.MultiplyVector(Vector3.up);
+            var up = matrix.MultiplyVector(Vector3.up);
             var isReflection = Vector3.Cross(right, up).z < 0;
             if(isReflection)
             {
