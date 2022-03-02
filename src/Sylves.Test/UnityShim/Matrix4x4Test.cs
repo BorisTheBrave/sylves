@@ -56,7 +56,8 @@ namespace Sylves.Test
 
 
         [Test]
-        [TestCase(2f, 3f, 4f, 0f, 00f, 0f)]
+        [TestCase(-1f, -1f, -1f, 0f, 0f, 0f)]
+        [TestCase(2f, 3f, 4f, 0f, 0f, 0f)]
         [TestCase(2f, 1f, 1f, 0f, 10f, 0f)]
         [TestCase(2f, 1f, 1f, 10f, 0f, 0f)]
         [TestCase(2f, 1f, 1f, 0f, 0f, 10f)]

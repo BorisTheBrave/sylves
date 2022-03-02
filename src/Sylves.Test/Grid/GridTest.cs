@@ -47,7 +47,7 @@ namespace Sylves
             {
                 var m = Matrix4x4.Translate(grid.GetCellCenter(cell)) * ct.GetMatrix(r);
                 success = grid.FindCell(m, out cell2, out var r2);
-                Assert.IsTrue(success);
+                Assert.IsTrue(success, $"{cell} {r}");
                 Assert.AreEqual(cell, cell2, $"{cell} {r}");
                 Assert.AreEqual(r, r2, $"{cell} {r}");
             }

@@ -49,14 +49,22 @@ namespace Sylves
                 hashCellMin = hashCellMin == null ? hashCell : Vector3Int.Min(hashCellMin.Value, hashCell);
                 hashCellMax = hashCellMax == null ? hashCell : Vector3Int.Max(hashCellMax.Value, hashCell);
             }
+            if(hashCellMin == null)
+            {
+                hashCellMin = new Vector3Int();
+                hashCellMax = -Vector3Int.one;
+            }
             hashCellMin = hashCellMin ?? new Vector3Int();
             hashCellMax = hashCellMax ?? new Vector3Int();
-            meshDetails.hashCellBounds = new CubeBound(hashCellMin.Value, hashCellMax.Value);
+            meshDetails.hashCellBounds = new CubeBound(hashCellMin.Value, hashCellMax.Value + Vector3Int.one);
 
             return meshDetails;
         }
 
         // Structure caching some additional data about the mesh
+        // Every cell is assigned a unique hash cell, and the hash cells are large enough
+        // that the bounds of individual cells are contained by the hash cells +-1 away from that
+        // hash cell in each axis.
         private class MeshDetails
         {
             public Vector3 hashCellSize;
@@ -74,15 +82,27 @@ namespace Sylves
         #endregion
 
         #region Query
+
+        private bool IsPointInCell(Vector3 position, Cell cell)
+        {
+            var cellData = CellData[cell];
+            var cellLocalPoint = cellData.TRS.ToMatrix().inverse.MultiplyPoint3x4(position);
+            // TODO: Dispatch to celltype method?
+            if(cellData.CellType == CubeCellType.Instance || cellData.CellType == SquareCellType.Instance)
+            {
+                return Vector3Int.FloorToInt(cellLocalPoint) == Vector3Int.zero;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
         public override bool FindCell(Vector3 position, out Cell cell)
         {
+            // TODO: Maybe search the central hashcell first?
             foreach (var c in GetCellsIntersectsApprox(position, position))
             {
-                var trs = GetTRS(c);
-                var m = trs.ToMatrix().inverse;
-                // TODO: Only supporint cube cell type
-                var x = Vector3Int.FloorToInt(m.MultiplyPoint3x4(position));
-                if(x == Vector3Int.zero)
+                if(IsPointInCell(position, c))
                 {
                     cell = c;
                     return true;
@@ -101,11 +121,31 @@ namespace Sylves
             var p = matrix.MultiplyPoint(Vector3.zero);
             if (FindCell(p, out cell))
             {
-                var cubeRotation = CubeRotation.FromMatrix(GetTRS(cell).ToMatrix().inverse * matrix);
-                if (cubeRotation != null)
+                var cellData = CellData[cell];
+                var m = cellData.TRS.ToMatrix().inverse * matrix;
+                // TODO: Dispatch to celltype method?
+                if (cellData.CellType == CubeCellType.Instance)
                 {
-                    rotation = cubeRotation.Value;
-                    return true;
+                    var cubeRotation = CubeRotation.FromMatrix(m);
+                    if (cubeRotation != null)
+                    {
+                        rotation = cubeRotation.Value;
+                        return true;
+                    }
+                } 
+                else if(cellData.CellType == SquareCellType.Instance)
+                {
+                    var squareRotation = SquareRotation.FromMatrix(m);
+                    if (squareRotation != null)
+                    {
+                        rotation = squareRotation.Value;
+                        return true;
+                    }
+                }
+                else
+                {
+                    throw new NotImplementedException();
+
                 }
             }
 
@@ -116,7 +156,7 @@ namespace Sylves
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
             var minHashCell = Vector3Int.Max(meshDetails.hashCellBounds.min, meshDetails.GetHashCell(min) - Vector3Int.one);
-            var maxHashCell = Vector3Int.Min(meshDetails.hashCellBounds.max, meshDetails.GetHashCell(max) + Vector3Int.one);
+            var maxHashCell = Vector3Int.Min(meshDetails.hashCellBounds.max - Vector3Int.one, meshDetails.GetHashCell(max) + Vector3Int.one);
 
             // Use a spatial hash to locate cells near the tile, and test each one.
             for (var x = minHashCell.x; x <= maxHashCell.x; x++)
@@ -137,8 +177,6 @@ namespace Sylves
                 }
             }
         }
-
-        // TODO: FindCells, Raycast, GetPath
         #endregion
     }
 }
