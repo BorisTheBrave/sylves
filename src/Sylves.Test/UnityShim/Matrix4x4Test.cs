@@ -40,7 +40,32 @@ namespace Sylves.Test
                     ).transpose;
                 AssertAreEqual(e, m, 1e-6);
             }
+        }
 
+        [Test]
+        [TestCase(0f, 10f, 0f)]
+        [TestCase(10f, 0f, 0f)]
+        [TestCase(0f, 0f, 10f)]
+        [TestCase(10f, 10f, 10f)]
+        public void TestRotation(float rx, float ry, float rz)
+        {
+            var m = Matrix4x4.Rotate(Quaternion.Euler(rx, ry, rz));
+            var m2 = Matrix4x4.Rotate(m.rotation);
+            AssertAreEqual(m, m2, 1e-6);
+        }
+
+
+        [Test]
+        [TestCase(2f, 3f, 4f, 0f, 00f, 0f)]
+        [TestCase(2f, 1f, 1f, 0f, 10f, 0f)]
+        [TestCase(2f, 1f, 1f, 10f, 0f, 0f)]
+        [TestCase(2f, 1f, 1f, 0f, 0f, 10f)]
+        [TestCase(3f, 3f, 5f, 10f, 10f, 10f)]
+        public void TestLossyScale(float sx, float sy, float sz, float rx, float ry, float rz)
+        {
+            var m = Matrix4x4.Rotate(Quaternion.Euler(rx, ry, rz)) * Matrix4x4.Scale(new Vector3(sx, sy, sz));
+            var scale = m.lossyScale;
+            AssertAreEqual(new Vector3(sx, sy, sz), scale, 1e-6);
         }
     }
 }

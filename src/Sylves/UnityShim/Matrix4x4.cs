@@ -42,12 +42,65 @@ namespace Sylves
         public static Matrix4x4 zero => new Matrix4x4(Vector4.zero, Vector4.zero, Vector4.zero, Vector4.zero);
         public static Matrix4x4 identity => new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
         public Matrix4x4 transpose => new Matrix4x4(GetRow(0), GetRow(1), GetRow(2), GetRow(3));
-        public Quaternion rotation => throw new NotImplementedException();
+        public Quaternion rotation
+        {
+            get
+            {
+                // Orthogonalize
+                var mx = MultiplyVector(Vector3.right).normalized;
+                var my = Vector3.ProjectOnPlane(MultiplyVector(Vector3.up), mx).normalized;
+                var mz = Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(MultiplyVector(Vector3.forward), mx), my).normalized;
+
+                // https://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
+                // I believe this is known as shepherds method.
+                float tr = mx.x + my.y+ mz.z;
+                if (tr > 0)
+                {
+                    float S = Mathf.Sqrt(tr + 1.0f) * 2; // S=4*qw 
+                    var qw = 0.25f * S;
+                    var qx = (my.z - mz.y) / S;
+                    var qy = (mz.x - mx.z) / S;
+                    var qz = (mx.y - my.x) / S;
+                    return new Quaternion(qx, qy, qz, qw);
+                }
+                else if ((mx.x > my.y) & (mx.x > mz.z))
+                {
+                    float S = Mathf.Sqrt(1.0f + mx.x - my.y - mz.z) * 2; // S=4*qx 
+                    var qw = (my.z - mz.y) / S;
+                    var qx = 0.25f * S;
+                    var qy = (my.x + mx.y) / S;
+                    var qz = (mz.x + mx.z) / S;
+                    return new Quaternion(qx, qy, qz, qw);
+                }
+                else if (my.y > mz.z)
+                {
+                    float S = Mathf.Sqrt(1.0f + my.y - mx.x - mz.z) * 2; // S=4*qy
+                    var qw = (mz.x - mx.z) / S;
+                    var qx = (my.x + mx.y) / S;
+                    var qy = 0.25f * S;
+                    var qz = (mz.y + my.z) / S;
+                    return new Quaternion(qx, qy, qz, qw);
+                }
+                else
+                {
+                    float S = Mathf.Sqrt(1.0f + mz.z - mx.x - my.y) * 2; // S=4*qz
+                    var qw = (mx.y - my.x) / S;
+                    var qx = (mz.x + mx.z) / S;
+                    var qy = (mz.y + my.z) / S;
+                    var qz = 0.25f * S;
+                    return new Quaternion(qx, qy, qz, qw);
+                }
+            }
+        }
         public Vector3 lossyScale
         {
             get
             {
-                throw new NotImplementedException();
+                // Orthogonalize so this matches rotation, above
+                var mx = MultiplyVector(Vector3.right);
+                var my = Vector3.ProjectOnPlane(MultiplyVector(Vector3.up), mx);
+                var mz = Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(MultiplyVector(Vector3.forward), mx), my);
+                return new Vector3(mx.magnitude, my.magnitude, mz.magnitude);
             }
         }
         public bool isIdentity => this == identity;

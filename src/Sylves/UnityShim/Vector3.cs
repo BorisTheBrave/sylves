@@ -86,8 +86,9 @@ namespace Sylves
             tangent = ProjectOnPlane(tangent, normal).normalized;
         }
         public static Vector3 Project(Vector3 a, Vector3 b) => b * Dot(a, b) / b.sqrMagnitude;
-        public static Vector3 ProjectOnPlane(Vector3 vector, Vector3 planeNormal) => vector - planeNormal * Dot(vector, planeNormal);
-        public static Vector3 Reflect(Vector3 inDirection, Vector3 inNormal) => inDirection - 2 * inNormal * Dot(inDirection, inNormal);
+        // TODO: Check if Unity divides by sqrMagnitude
+        public static Vector3 ProjectOnPlane(Vector3 vector, Vector3 planeNormal) => vector - planeNormal * Dot(vector, planeNormal) / planeNormal.sqrMagnitude;
+        public static Vector3 Reflect(Vector3 inDirection, Vector3 inNormal) => inDirection - 2 * inNormal * Dot(inDirection, inNormal) / inNormal.sqrMagnitude;
         //public static Vector3 RotateTowards(Vector3 current, Vector3 target, float maxRadiansDelta, float maxMagnitudeDelta);
 
         public static Vector3 Scale(Vector3 a, Vector3 b) => new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
