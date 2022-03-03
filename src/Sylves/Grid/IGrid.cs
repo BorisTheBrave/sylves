@@ -104,6 +104,17 @@ namespace Sylves
         /// </summary>
         IEnumerable<CellDir> GetCellDirs(Cell cell);
 
+        /// <summary>
+        /// Returns a ordered series of cells and directions, starting a startCell,
+        /// such that moving in the given direction gives the next cell in the sequence,
+        /// and the final cell then moves to destCell.
+        /// Returns null if this is not possible.
+        /// This method is not indended for path finding as it lacks any customization. It is intended
+        /// for algorithms that need to work between any two connected cells, as provides a "proof"
+        /// of connectivity.
+        /// </summary>
+        IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell);
+
         #endregion
 
         #region Index

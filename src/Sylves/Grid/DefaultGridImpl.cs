@@ -21,9 +21,16 @@ namespace Sylves
         #region Topology
         public static bool TryMoveByOffset(IGrid grid, Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
         {
-            // TODO
+            // TODO: Do parallel transport
             throw new NotImplementedException();
         }
+
+        public static IEnumerable<(Cell, CellDir)> FindBasicPath(IGrid grid, Cell startCell, Cell destCell)
+        {
+            // TODO: Do Dijkstra's algorithm
+            throw new NotImplementedException();
+        }
+
         #endregion
 
 

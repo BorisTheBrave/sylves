@@ -69,5 +69,16 @@ namespace Sylves.Test
                 h.GetCellsIntersectsApprox(p, p + new Vector3(0.3f, 0.6f, 0)));
 
         }
+
+
+        [Test]
+        [TestCase(HexOrientation.PointyTopped)]
+        [TestCase(HexOrientation.FlatTopped)]
+        public void TestFindBasicPath(HexOrientation orientation)
+        {
+            var h = new HexGrid(new Vector2(1, 1), orientation);
+
+            GridTest.FindBasicPath(h, new Cell(1, 0, -1), new Cell(10, -5, -5));
+        }
     }
 }

@@ -137,6 +137,42 @@ namespace Sylves
             return CubeCellType.Instance.GetCellDirs();
         }
 
+        public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
+        {
+            var cell = startCell;
+            while (cell.x < destCell.x)
+            {
+                yield return (cell, (CellDir)CubeDir.Right);
+                cell.x += 1;
+            }
+            while (cell.x > destCell.x)
+            {
+                yield return (cell, (CellDir)CubeDir.Left);
+                cell.x -= 1;
+            }
+            while (cell.y < destCell.y)
+            {
+                yield return (cell, (CellDir)CubeDir.Up);
+                cell.y += 1;
+            }
+            while (cell.y > destCell.y)
+            {
+                yield return (cell, (CellDir)CubeDir.Down);
+                cell.y -= 1;
+            }
+            while (cell.z < destCell.z)
+            {
+                yield return (cell, (CellDir)CubeDir.Forward);
+                cell.z += 1;
+            }
+            while (cell.z > destCell.z)
+            {
+                yield return (cell, (CellDir)CubeDir.Back);
+                cell.z -= 1;
+            }
+        }
+
+
         #endregion
 
         #region Index

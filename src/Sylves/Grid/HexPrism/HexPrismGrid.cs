@@ -165,6 +165,26 @@ namespace Sylves
         {
             return cellType.GetCellDirs();
         }
+        public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
+        {
+            var cell = startCell;
+            while (cell.z < destCell.z)
+            {
+                yield return (cell, (CellDir)PTHexPrismDir.Forward);
+                cell.z += 1;
+            }
+            while (cell.z > destCell.z)
+            {
+                yield return (cell, (CellDir)PTHexPrismDir.Back);
+                cell.z -= 1;
+            }
+            var startHex = GetHexCell(cell);
+            var destHex = GetHexCell(destCell);
+            foreach(var (hexCell, dir) in hexGrid.FindBasicPath(startHex, destHex))
+            {
+                yield return (GetHexPrismCell(hexCell, destCell.z), dir);
+            }
+        }
 
         #endregion
 

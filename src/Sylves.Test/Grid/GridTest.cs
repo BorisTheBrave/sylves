@@ -52,5 +52,17 @@ namespace Sylves
                 Assert.AreEqual(r, r2, $"{cell} {r}");
             }
         }
+
+        public static void FindBasicPath(IGrid grid, Cell startCell, Cell endCell)
+        {
+            var path = grid.FindBasicPath(startCell, endCell);
+            var cell = startCell;
+            foreach(var (c2, dir) in path)
+            {
+                Assert.AreEqual(cell, c2);
+                var success = grid.TryMove(cell, dir, out cell, out var _, out var _);
+            }
+            Assert.AreEqual(endCell, cell);
+        }
     }
 }

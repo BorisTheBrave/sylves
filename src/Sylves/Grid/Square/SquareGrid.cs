@@ -21,6 +21,12 @@ namespace Sylves
 
         Vector2 cellSize;
 
+
+        public SquareGrid(float cellSize, SquareBound bound = null)
+            :this(new Vector2(cellSize, cellSize), bound)
+        {
+        }
+
         public SquareGrid(Vector2 cellSize, SquareBound bound = null)
         {
             this.cellSize = cellSize;
@@ -137,6 +143,30 @@ namespace Sylves
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
             return SquareCellType.Instance.GetCellDirs();
+        }
+        public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
+        {
+            var cell = startCell;
+            while (cell.x < destCell.x)
+            {
+                yield return (cell, (CellDir)SquareDir.Right);
+                cell.x += 1;
+            }
+            while (cell.x > destCell.x)
+            {
+                yield return (cell, (CellDir)SquareDir.Left);
+                cell.x -= 1;
+            }
+            while (cell.y < destCell.y)
+            {
+                yield return (cell, (CellDir)SquareDir.Up);
+                cell.y += 1;
+            }
+            while (cell.y > destCell.y)
+            {
+                yield return (cell, (CellDir)SquareDir.Down);
+                cell.y -= 1;
+            }
         }
 
         #endregion

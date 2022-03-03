@@ -63,6 +63,12 @@ namespace Sylves
 
         public override IEnumerable<CellDir> GetCellDirs(Cell cell) => Underlying.GetCellDirs(toUnderlying(cell));
 
+        public override IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
+        {
+            return Underlying.FindBasicPath(toUnderlying(startCell), toUnderlying(destCell))
+                .Select(((Cell cell, CellDir cellDir) x) => (fromUnderlying(x.cell), x.cellDir));
+        }
+
         #endregion
 
         #region Index

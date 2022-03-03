@@ -62,5 +62,16 @@ namespace Sylves.Test
                 },
                 t.GetCellsIntersectsApprox(p, p + new Vector3(0.6f, 0.3f, 0)));
         }
+
+
+        [Test]
+        [TestCase(TriangleOrientation.FlatTopped)]
+        [TestCase(TriangleOrientation.FlatSides)]
+        public void TestFindBasicPath(TriangleOrientation orientation)
+        {
+            var t = new TriangleGrid(1, orientation);
+
+            GridTest.FindBasicPath(t, new Cell(1, 0, 1), new Cell(10, -5, -4));
+        }
     }
 }

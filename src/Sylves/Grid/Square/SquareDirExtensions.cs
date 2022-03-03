@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sylves
 {
-    public static class SquarDirExtensions
+    public static class SquareDirExtensions
     {
         /// <returns>The normal vector for a given face.</returns>
         public static Vector3Int Forward(this SquareDir dir)

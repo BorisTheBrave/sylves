@@ -64,6 +64,7 @@ namespace Sylves
         public virtual bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation) => underlying.TryMoveByOffset(startCell, startOffset, destOffset, startRotation, out destCell, out destRotation);
 
         public virtual IEnumerable<CellDir> GetCellDirs(Cell cell) => underlying.GetCellDirs(cell);
+        public virtual IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => underlying.FindBasicPath(startCell, destCell);
 
         #endregion
 

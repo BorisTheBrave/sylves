@@ -24,5 +24,12 @@ namespace Sylves.Test
             var g = new CubeGrid(1);
             GridTest.FindCell(g, new Cell(1, 0, -1));
         }
+
+        [Test]
+        public void TestFindBasicPath()
+        {
+            var g = new CubeGrid(1);
+            GridTest.FindBasicPath(g, new Cell(0, 0, 0), new Cell(10, 10, 10));
+        }
     }
 }

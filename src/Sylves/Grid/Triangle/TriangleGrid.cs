@@ -167,7 +167,6 @@ namespace Sylves
         public bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
             inverseDir = (CellDir)((3 + (int)dir) % 6);
-            connection = new Connection();
             if (orientation == TriangleOrientation.FlatTopped)
             {
                 switch ((FTHexDir)dir)
@@ -232,6 +231,123 @@ namespace Sylves
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
             return SquareCellType.Instance.GetCellDirs();
+        }
+
+        public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
+        {
+            var cell = startCell;
+            var isMin = cell.x + cell.y + cell.z == 1;
+            if (orientation == TriangleOrientation.FlatTopped)
+            {
+                while (true)
+                {
+                    if (isMin)
+                    {
+                        if (cell.x < destCell.x)
+                        {
+                            yield return (cell, (CellDir)FTHexDir.DownRight);
+                            cell.x += 1;
+                            isMin = false;
+                            continue;
+                        }
+                        if (cell.y < destCell.y)
+                        {
+                            yield return (cell, (CellDir)FTHexDir.Up);
+                            cell.y += 1;
+                            isMin = false;
+                            continue;
+
+                        }
+                        if (cell.z < destCell.z)
+                        {
+                            yield return (cell, (CellDir)FTHexDir.DownLeft);
+                            cell.z += 1;
+                            isMin = false;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (cell.x > destCell.x)
+                        {
+                            yield return (cell, (CellDir)FTHexDir.UpLeft);
+                            cell.x -= 1;
+                            isMin = true;
+                            continue;
+                        }
+                        if (cell.y > destCell.y)
+                        {
+                            yield return (cell, (CellDir)FTHexDir.Down);
+                            cell.y -= 1;
+                            isMin = true;
+                            continue;
+                        }
+                        if (cell.z > destCell.z)
+                        {
+                            yield return (cell, (CellDir)FTHexDir.UpRight);
+                            cell.z -= 1;
+                            isMin = true;
+                            continue;
+                        }
+                    }
+                    break;
+                }
+            }
+            else
+            {
+                while (true)
+                {
+                    if (isMin)
+                    {
+                        if (cell.x < destCell.x)
+                        {
+                            yield return (cell, (CellDir)PTHexDir.Right);
+                            cell.x += 1;
+                            isMin = false;
+                            continue;
+                        }
+                        if (cell.y < destCell.y)
+                        {
+                            yield return (cell, (CellDir)PTHexDir.UpLeft);
+                            cell.y += 1;
+                            isMin = false;
+                            continue;
+                        }
+                        if (cell.z < destCell.z)
+                        {
+                            yield return (cell, (CellDir)PTHexDir.DownLeft);
+                            cell.z += 1;
+                            isMin = false;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (cell.x > destCell.x)
+                        {
+                            yield return (cell, (CellDir)PTHexDir.Left);
+                            cell.x -= 1;
+                            isMin = true;
+                            continue;
+                        }
+                        if (cell.y > destCell.y)
+                        {
+                            yield return (cell, (CellDir)PTHexDir.DownRight);
+                            cell.y -= 1;
+                            isMin = true;
+                            continue;
+                        }
+                        if (cell.z > destCell.z)
+                        {
+                            yield return (cell, (CellDir)PTHexDir.UpRight);
+                            cell.z -= 1;
+                            isMin = true;
+                            continue;
+                        }
+                    }
+                    break;
+                }
+            }
         }
 
         #endregion

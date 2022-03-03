@@ -81,6 +81,12 @@ namespace Sylves
         public override bool Is2D => true;
         #endregion
 
+        #region Topology
+
+        // TODO: Pathfind on mesh, without involving layers
+        //public override IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell);
+        #endregion
+
         #region Query
 
         private bool IsPointInCell(Vector3 position, Cell cell)

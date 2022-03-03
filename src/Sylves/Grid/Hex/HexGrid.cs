@@ -230,6 +230,47 @@ namespace Sylves
         {
             return cellType.GetCellDirs();
         }
+        public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
+        {
+            // FTHexDir and PTHexDir are arranged so that you don't need different code for the two orientations.
+            var cell = startCell;
+            while (cell.x < destCell.x && cell.z > destCell.z)
+            {
+                yield return (cell, (CellDir)FTHexDir.UpRight);
+                cell.x += 1;
+                cell.z -= 1;
+            }
+            while (cell.x > destCell.x && cell.z < destCell.z)
+            {
+                yield return (cell, (CellDir)FTHexDir.DownLeft);
+                cell.x -= 1;
+                cell.z += 1;
+            }
+            while (cell.y < destCell.y && cell.z > destCell.z)
+            {
+                yield return (cell, (CellDir)FTHexDir.Up);
+                cell.y += 1;
+                cell.z -= 1;
+            }
+            while (cell.y > destCell.y && cell.z < destCell.z)
+            {
+                yield return (cell, (CellDir)FTHexDir.Down);
+                cell.y -= 1;
+                cell.y += 1;
+            }
+            while (cell.x < destCell.x && cell.y > destCell.y)
+            {
+                yield return (cell, (CellDir)FTHexDir.DownRight);
+                cell.x += 1;
+                cell.y -= 1;
+            }
+            while (cell.x > destCell.x && cell.y < destCell.y)
+            {
+                yield return (cell, (CellDir)FTHexDir.UpLeft);
+                cell.x -= 1;
+                cell.y += 1;
+            }
+        }
 
         #endregion
 
