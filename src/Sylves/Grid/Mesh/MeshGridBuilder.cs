@@ -123,12 +123,12 @@ namespace Sylves
                         }
                         else
                         {
-                            AddEdge(face, submesh, indexCount, prev, index);
+                            AddEdge(face, submesh, indexCount - 1, prev, index);
                             prev = index;
                         }
                         indexCount++;
                     }
-                    AddEdge(face, submesh, 0, prev, first);
+                    AddEdge(face, submesh, indexCount - 1, prev, first);
                     face++;
                 }
             }
