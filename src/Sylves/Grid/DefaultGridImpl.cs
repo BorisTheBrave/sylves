@@ -49,18 +49,26 @@ namespace Sylves
                 {
                     return false;
                 }
-
-                // Move dest dir 
-                var destDir = cellType.Rotate(srcDir, destRotation);
-                if(!destGrid.TryMove(destCell, destDir, out destCell, out var inverseDir, out var connection))
+                // Move in src grid
+                if (!srcGrid.TryMove(srcCell, srcDir, out _, out var srcInverseDir, out var srcConnection))
                 {
                     return false;
                 }
 
-                // Figure out new rotation
-                if(connection.Mirror || connection.Rotation != 0)
+                // Move in dest grid
+                cellType.Rotate(srcDir, destRotation, out var destDir, out var middleConnection);
+                if(!destGrid.TryMove(destCell, destDir, out destCell, out var destInverseDir, out var destConnection))
                 {
-                    throw new NotImplementedException();
+                    return false;
+                }
+
+                // Overall connection from next src to next dest
+                var connection = destConnection * middleConnection * srcConnection.GetInverse();
+                var nextCellType = destGrid.GetCellType(destCell);// TODO: Avoid calling GetCellType so frequently?
+
+                if(!nextCellType.TryGetRotation(srcInverseDir, destInverseDir, connection, out destRotation))
+                {
+                    return false;
                 }
             }
             return true;
