@@ -71,6 +71,22 @@ namespace Sylves
             connection = new Connection { Mirror = ((SquareRotation)rotation).IsReflection };
         }
 
+        public bool TryGetRotation(CellDir fromDir, CellDir toDir, Connection connection, out CellRotation rotation)
+        {
+            if(connection.Mirror)
+            {
+                var delta = ((int)toDir + (int)fromDir) % 4 + 4;
+                rotation = (CellRotation)~(delta % 4);
+            }
+            else
+            {
+                var delta = ((int)toDir - (int)fromDir) % 4 + 4;
+                rotation = (CellRotation)(delta % 4);
+            }
+            return true;
+        }
+
+
         public Matrix4x4 GetMatrix(CellRotation cellRotation)
         {
             return ((SquareRotation)cellRotation).ToMatrix();

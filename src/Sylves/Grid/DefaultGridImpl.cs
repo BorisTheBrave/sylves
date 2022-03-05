@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Sylves
@@ -24,6 +25,44 @@ namespace Sylves
             // TODO: Do parallel transport
             throw new NotImplementedException();
         }
+
+        public static bool ParallelTransport(IGrid srcGrid, Cell srcStartCell, Cell srcDestCell, IGrid destGrid, Cell destStartCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
+        {
+            destCell = destStartCell;
+            destRotation = startRotation;
+
+            var path = srcGrid.FindBasicPath(srcStartCell, srcDestCell);
+            if(path == null)
+            {
+                return false;
+            }
+            var checkCellTypes = !srcGrid.IsSingleCellType || !destGrid.IsSingleCellType;
+            ICellType cellType = null;
+            if(!checkCellTypes && (cellType = srcGrid.GetCellTypes().First()) != destGrid.GetCellTypes().First())
+            {
+                return false;
+            }
+            foreach(var (srcCell, srcDir) in path)
+            {
+                // Check both src/dest are on compatible cell types
+                if(checkCellTypes && (cellType = srcGrid.GetCellType(srcCell)) != destGrid.GetCellType(destCell))
+                {
+                    return false;
+                }
+
+                // Move dest dir 
+                var destDir = cellType.Rotate(srcDir, destRotation);
+                if(!destGrid.TryMove(destCell, destDir, out destCell, out var inverseDir, out var connection))
+                {
+                    return false;
+                }
+
+                // Figure out new rotation
+                // TODO
+            }
+            return true;
+        }
+
 
         public static IEnumerable<(Cell, CellDir)> FindBasicPath(IGrid grid, Cell startCell, Cell destCell)
         {

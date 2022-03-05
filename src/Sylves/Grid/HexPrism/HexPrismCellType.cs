@@ -60,6 +60,39 @@ namespace Sylves
             }
         }
 
+        public bool TryGetRotation(CellDir fromDir, CellDir toDir, Connection connection, out CellRotation rotation)
+        {
+            if (IsAxial(fromDir))
+            {
+                if (fromDir != toDir)
+                {
+                    rotation = default;
+                    return false;
+                }
+                rotation = (CellRotation)(connection.Mirror ? ~connection.Rotation : connection.Rotation);
+                return true;
+            }
+            else
+            {
+                if(IsAxial(toDir))
+                {
+                    rotation = default;
+                    return false;
+                }
+                if (connection.Mirror)
+                {
+                    var delta = ((int)toDir + (int)fromDir) % 6 + 6;
+                    rotation = (CellRotation)~(delta % 4);
+                }
+                else
+                {
+                    var delta = ((int)toDir - (int)fromDir) % 6 + 6;
+                    rotation = (CellRotation)(delta % 6);
+                }
+                return true;
+            }
+        }
+
         public Matrix4x4 GetMatrix(CellRotation cellRotation) => ((HexRotation)cellRotation).ToMatrix(orientation);
 
         public CellRotation ReflectY => orientation == HexOrientation.FlatTopped ? HexRotation.FTReflectY : HexRotation.PTReflectY;

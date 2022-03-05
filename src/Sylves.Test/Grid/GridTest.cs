@@ -64,5 +64,19 @@ namespace Sylves
             }
             Assert.AreEqual(endCell, cell);
         }
+
+        public static void TryGetRotation(ICellType cellType)
+        {
+            foreach(var dir in cellType.GetCellDirs())
+            {
+                foreach(var rotation in cellType.GetRotations(true))
+                {
+                    cellType.Rotate(dir, rotation, out var dir2, out var connection);
+                    var success = cellType.TryGetRotation(dir, dir2, connection, out var rotation2);
+                    Assert.IsTrue(success);
+                    Assert.AreEqual(rotation, rotation2, $"{dir} {rotation}");
+                }
+            }
+        }
     }
 }

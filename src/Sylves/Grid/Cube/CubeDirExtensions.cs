@@ -38,6 +38,21 @@ namespace Sylves
             throw new Exception();
         }
 
+        /// <returns>Cross product of Up() and Forward().</returns>
+        public static Vector3Int Right(this CubeDir dir)
+        {
+            switch (dir)
+            {
+                case CubeDir.Left: return new Vector3Int(0, 0, 1);
+                case CubeDir.Right: return new Vector3Int(0, 0, -1);
+                case CubeDir.Up: return Vector3Int.left;
+                case CubeDir.Down: return Vector3Int.right;
+                case CubeDir.Forward: return Vector3Int.right;
+                case CubeDir.Back: return Vector3Int.left;
+            }
+            throw new Exception();
+        }
+
         /// <returns>Returns the face dir with the opposite normal vector.</returns>
         public static CubeDir Inverted(this CubeDir dir) => (CubeDir)(1 ^ (int)dir);
     }

@@ -141,5 +141,21 @@ namespace Sylves
             connection = new Connection {  Mirror = (int)rotation < 0 };
             resultDir = Rotate(dir, rotation);
         }
+
+        public bool TryGetRotation(CellDir fromDir, CellDir toDir, Connection connection, out CellRotation rotation)
+        {
+
+            if (connection.Mirror)
+            {
+                var delta = ((int)toDir + (int)fromDir) % n + n;
+                rotation = (CellRotation)~(delta % n);
+            }
+            else
+            {
+                var delta = ((int)toDir - (int)fromDir) % n + n;
+                rotation = (CellRotation)(delta % n);
+            }
+            return true;
+        }
     }
 }

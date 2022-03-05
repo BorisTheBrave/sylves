@@ -50,7 +50,7 @@ namespace Sylves
             var x = (deformation.DeformPoint(p + Vector3.right * e) - center) / e;
             var y = (deformation.DeformPoint(p + Vector3.up * e) - center) / e;
             var z = (deformation.DeformPoint(p + Vector3.forward * e) - center) / e;
-            var m = new Matrix4x4(ToVector4(x), ToVector4(y), ToVector4(z), new Vector4(center.x, center.y, center.z, 1));
+            var m = ToMatrix(x, y, z, new Vector4(center.x, center.y, center.z, 1));
 
             return new TRS(m);
         }
@@ -62,7 +62,7 @@ namespace Sylves
             var x = (deformation.DeformPoint(p + Vector3.right * e) - center) / e;
             var z = (deformation.DeformPoint(p + Vector3.forward * e) - center) / e;
             var y = Vector3.Cross(x, z).normalized;
-            var m = new Matrix4x4(ToVector4(x), ToVector4(y), ToVector4(z), new Vector4(center.x, center.y, center.z, 1));
+            var m = ToMatrix(x, y, z, new Vector4(center.x, center.y, center.z, 1));
 
             return new TRS(m);
         }

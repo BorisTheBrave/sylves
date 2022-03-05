@@ -88,11 +88,7 @@ namespace Sylves
 
                 if (!smoothNormals)
                 {
-                    jacobi = new Matrix4x4(
-                        ToVector4(dx),
-                        ToVector4(dy),
-                        ToVector4(dz),
-                        new Vector4(0, 0, 0, 1));
+                    jacobi = ToMatrix(dx, dy, dz);
                 }
                 else
                 {
@@ -121,18 +117,16 @@ namespace Sylves
                     //var dy2 = (trilinearInterpolateUv(p + Vector3.up * m) - t2) / m;// Always zero
                     var dz2 = (interpolateUv(p + Vector3.forward * m) - t2) / m;
 
-                    var j3 = new Matrix4x4(
-                        ToVector4(new Vector3(dx2.x, 0, dx2.y).normalized),
-                        ToVector4(new Vector3(0, 1, 0)),
-                        ToVector4(new Vector3(dz2.x, 0, dz2.y).normalized),
-                        new Vector4(0, 0, 0, 1)
+                    var j3 = ToMatrix(
+                        new Vector3(dx2.x, 0, dx2.y).normalized,
+                        new Vector3(0, 1, 0),
+                        new Vector3(dz2.x, 0, dz2.y).normalized
                         );
 
-                    var j1 = new Matrix4x4(
-                        ToVector4(tangent3 * dx.magnitude),
-                        ToVector4(normal * dy.magnitude),
-                        ToVector4(bitangent * dz.magnitude),
-                        new Vector4(0, 0, 0, 1));
+                    var j1 = ToMatrix(
+                        tangent3 * dx.magnitude,
+                        normal * dy.magnitude,
+                        bitangent * dz.magnitude);
 
                     jacobi = j3 * j1;
                 }

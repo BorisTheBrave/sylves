@@ -70,5 +70,12 @@ namespace Sylves.Test
             TestUtils.AssertAreEqual(Matrix4x4.Scale(new Vector3(-1, 1, 1)), a.GetMatrix(a.ReflectX), 1e-6);
             TestUtils.AssertAreEqual(Matrix4x4.Scale(new Vector3(1, -1, 1)), a.GetMatrix(a.ReflectY), 1e-6);
         }
+
+        [Test]
+        public void TestTryGetRotation()
+        {
+            GridTest.TryGetRotation(new NGonCellType(6));
+            GridTest.TryGetRotation(new NGonCellType(5));
+        }
     }
 }

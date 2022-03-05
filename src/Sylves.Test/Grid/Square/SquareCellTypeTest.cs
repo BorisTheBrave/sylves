@@ -32,5 +32,12 @@ namespace Sylves.Test
         {
             Assert.AreEqual((CellDir)SquareDir.Left, SquareCellType.Instance.Invert((CellDir)SquareDir.Right));
         }
+
+
+        [Test]
+        public void TestTryGetRotation()
+        {
+            GridTest.TryGetRotation(SquareCellType.Instance);
+        }
     }
 }
