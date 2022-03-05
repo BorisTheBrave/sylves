@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Sylves
 {
-    class MobiusSquareGrid : BijectModifier
-    {
-        public MobiusSquareGrid(int w, int h) : 
-            base(
-                new MeshGrid(MakeMeshData(w, h)),
-                c => new Cell(c.x + w * c.y, 0, 0),
-                c => new Cell(c.x % w, c.x / w, 0)
-                )
+    class MobiusSquareGrid : MeshGrid
+    { 
+        public MobiusSquareGrid(int width, int height)
+            :base(MakeMeshData(width, height))
         {
         }
 
@@ -46,25 +43,25 @@ namespace Sylves
 
                 }
             }
-            var indices = new int[4 * w * h];
-            for (var x = 0; x < w; x++)
+            var indices = new int[h][];
+            for (var y = 0; y < h; y++)
             {
-                for (var y = 0; y < h; y++)
+                indices[y] = new int[4 * w];
+                for (var x = 0; x < w; x++)
                 {
-                    var i = 4 * (x + w * y);
-                    indices[i + 0] = x + 1 + (w + 1) * (y + 0);
-                    indices[i + 1] = x + 1 + (w + 1) * (y + 1);
-                    indices[i + 2] = x + 0 + (w + 1) * (y + 1);
-                    indices[i + 3] = x + 0 + (w + 1) * (y + 0);
+                    indices[y][4 * x + 0] = x + 1 + (w + 1) * (y + 0);
+                    indices[y][4 * x + 1] = x + 1 + (w + 1) * (y + 1);
+                    indices[y][4 * x + 2] = x + 0 + (w + 1) * (y + 1);
+                    indices[y][4 * x + 3] = x + 0 + (w + 1) * (y + 0);
                 }
             }
 
             return new MeshData
             {
-                indices = new[] { indices },
+                indices = indices,
                 vertices = vertices,
-                topologies = new[] { MeshTopology.Quads },
-                subMeshCount = 1,
+                topologies = Enumerable.Range(0, h).Select(_ => MeshTopology.Quads).ToArray(),
+                subMeshCount = h,
             };
         }
     }
