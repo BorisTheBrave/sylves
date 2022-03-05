@@ -50,6 +50,8 @@ namespace Sylves
                 var mx = MultiplyVector(Vector3.right).normalized;
                 var my = Vector3.ProjectOnPlane(MultiplyVector(Vector3.up), mx).normalized;
                 var mz = Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(MultiplyVector(Vector3.forward), mx), my).normalized;
+                var isReflection = Vector3.Dot(mx, Vector3.Cross(my, mz)) < 0;
+                if (isReflection) mx *= -1;
 
                 // https://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
                 // I believe this is known as shepherds method.
@@ -100,7 +102,15 @@ namespace Sylves
                 var mx = MultiplyVector(Vector3.right);
                 var my = Vector3.ProjectOnPlane(MultiplyVector(Vector3.up), mx);
                 var mz = Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(MultiplyVector(Vector3.forward), mx), my);
-                return new Vector3(mx.magnitude, my.magnitude, mz.magnitude);
+                var isReflection = Vector3.Dot(mx, Vector3.Cross(my, mz)) < 0;
+                if (isReflection)
+                {
+                    return new Vector3(-mx.magnitude, my.magnitude, mz.magnitude);
+                }
+                else
+                {
+                    return new Vector3(mx.magnitude, my.magnitude, mz.magnitude);
+                }
             }
         }
         public bool isIdentity => this == identity;

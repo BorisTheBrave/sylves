@@ -58,7 +58,10 @@ namespace Sylves
                 }
 
                 // Figure out new rotation
-                // TODO
+                if(connection.Mirror || connection.Rotation != 0)
+                {
+                    throw new NotImplementedException();
+                }
             }
             return true;
         }

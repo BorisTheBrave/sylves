@@ -56,7 +56,6 @@ namespace Sylves.Test
 
 
         [Test]
-        [TestCase(-1f, -1f, -1f, 0f, 0f, 0f)]
         [TestCase(2f, 3f, 4f, 0f, 0f, 0f)]
         [TestCase(2f, 1f, 1f, 0f, 10f, 0f)]
         [TestCase(2f, 1f, 1f, 10f, 0f, 0f)]
@@ -67,6 +66,14 @@ namespace Sylves.Test
             var m = Matrix4x4.Rotate(Quaternion.Euler(rx, ry, rz)) * Matrix4x4.Scale(new Vector3(sx, sy, sz));
             var scale = m.lossyScale;
             AssertAreEqual(new Vector3(sx, sy, sz), scale, 1e-6);
+        }
+
+        [Test]
+        public void TestLossyScaleNegative()
+        {
+            var m = Matrix4x4.Scale(new Vector3(-1, -2, -3));
+            Assert.AreEqual(new Vector3(-1, 2, 3), m.lossyScale);
+            AssertAreEqual(Matrix4x4.Rotate(Quaternion.Euler(0, 180, 180)), Matrix4x4.Rotate(m.rotation), 1e-6f);
         }
     }
 }
