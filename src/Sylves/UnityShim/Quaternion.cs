@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Sylves
 {
+#if !UNITY
     public struct Quaternion : IEquatable<Quaternion>
     {
         public float x;
@@ -125,4 +126,5 @@ namespace Sylves
         public static bool operator !=(Quaternion lhs, Quaternion rhs);
         */
     }
+#endif
 }

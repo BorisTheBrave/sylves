@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Sylves
 {
+#if !UNITY
     public static class Mathf
     {
         public static float Sqrt(float v)
@@ -57,4 +58,5 @@ namespace Sylves
 
         public static float PI => (float)Math.PI;
     }
+#endif
 }

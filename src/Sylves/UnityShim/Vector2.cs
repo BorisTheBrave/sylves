@@ -2,6 +2,7 @@
 
 namespace Sylves
 {
+#if !UNITY
     public struct Vector2
     {
         public Vector2(float x, float y)
@@ -118,4 +119,5 @@ namespace Sylves
         //public static implicit operator Vector3(Vector2 v);
         //public static implicit operator Vector2(Vector3 v);
     }
+#endif
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves
 {
@@ -126,9 +128,9 @@ namespace Sylves
                 }
             }
             return new CubeRotation((short)(
-                (GetCol(matrix.column0) << 8) |
-                (GetCol(matrix.column1) << 4) |
-                (GetCol(matrix.column2) << 0)
+                (GetCol(matrix.GetColumn(0)) << 8) |
+                (GetCol(matrix.GetColumn(1)) << 4) |
+                (GetCol(matrix.GetColumn(2)) << 0)
                 ));
         }
 
@@ -154,13 +156,12 @@ namespace Sylves
 
             if (Ok(rotatedRight) && Ok(rotatedUp) && Ok(rotatedForward))
             {
-                return FromMatrixSimple(new Matrix4x4
-                {
-                    column0 = rotatedRight,
-                    column1 = rotatedUp,
-                    column2 = rotatedForward,
-                    column3 = new Vector4(0, 0, 0, 1),
-                });
+                return FromMatrixSimple(new Matrix4x4(
+                    rotatedRight,
+                    rotatedUp,
+                    rotatedForward,
+                    new Vector4(0, 0, 0, 1)
+                ));
             }
             else
             {

@@ -2,6 +2,7 @@
 
 namespace Sylves
 {
+#if !UNITY
     public struct Vector3
     {
         public Vector3(float x, float y, float z)
@@ -158,4 +159,5 @@ namespace Sylves
         public static bool operator ==(Vector3 lhs, Vector3 rhs) => lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
         public static bool operator !=(Vector3 lhs, Vector3 rhs) => !(lhs == rhs);
     }
+#endif
 }

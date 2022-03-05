@@ -1,4 +1,5 @@
-﻿#if UNITY
+﻿using System.Linq;
+#if UNITY
 using UnityEngine;
 #endif
 
@@ -11,7 +12,7 @@ namespace Sylves
     {
         public int subMeshCount;
         public int[][] indices;
-        public MeshTopology[] topologies;
+        public Sylves.MeshTopology[] topologies;
         public Vector3[] vertices;
         public Vector2[] uv;
         public Vector3[] normals;
@@ -27,7 +28,7 @@ namespace Sylves
         {
             this.subMeshCount = mesh.subMeshCount;
             this.indices = Enumerable.Range(0, subMeshCount).Select(mesh.GetIndices).ToArray();
-            this.topologies = Enumerable.Range(0, subMeshCount).Select(mesh.GetTopology).ToArray();
+            this.topologies = Enumerable.Range(0, subMeshCount).Select(x => (Sylves.MeshTopology)mesh.GetTopology(x)).ToArray();
 
             this.vertices = mesh.vertices;
             this.uv = mesh.uv;
@@ -41,7 +42,7 @@ namespace Sylves
             return indices[submesh];
         }
 
-        public MeshTopology GetTopology(int submesh)
+        public Sylves.MeshTopology GetTopology(int submesh)
         {
             return topologies[submesh];
         }

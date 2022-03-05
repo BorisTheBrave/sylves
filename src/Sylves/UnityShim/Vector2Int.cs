@@ -2,6 +2,7 @@
 
 namespace Sylves
 {
+#if !UNITY
     public struct Vector2Int
     {
         public Vector2Int(int x, int y)
@@ -67,4 +68,5 @@ namespace Sylves
         // Ignoring this unity misfeature.
         //public static explicit operator Vector3Int(Vector2Int v);
     }
+#endif
 }

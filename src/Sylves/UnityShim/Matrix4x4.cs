@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Sylves
 {
+#if !UNITY
     public struct Matrix4x4 : IEquatable<Matrix4x4>
     {
         public float m00 { get { return column0.x; } set { column0.x = value; } }
@@ -328,4 +329,5 @@ namespace Sylves
         public static bool operator ==(Matrix4x4 lhs, Matrix4x4 rhs) => lhs.Equals(rhs);
         public static bool operator !=(Matrix4x4 lhs, Matrix4x4 rhs) => !(lhs == rhs);
     }
+#endif
 }

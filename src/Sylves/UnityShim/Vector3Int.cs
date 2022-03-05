@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Sylves
 {
+#if !UNITY
     public struct Vector3Int : IEquatable<Vector3Int>
     {
         public Vector3Int(int x, int y, int z)
@@ -73,4 +74,5 @@ namespace Sylves
         // Ignoring this unity misfeature.
         //public static explicit operator Vector2Int(Vector3Int v);
     }
+#endif
 }

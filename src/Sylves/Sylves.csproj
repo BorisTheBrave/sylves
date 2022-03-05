@@ -1,7 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release;UnityRelease</Configurations>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'UnityRelease' ">
+	<DefineConstants>UNITY</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'UnityRelease' ">
+    <Reference Include="UnityEngine">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2019.3.15f1\Editor\Data\Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+   </ItemGroup>
 
 </Project>

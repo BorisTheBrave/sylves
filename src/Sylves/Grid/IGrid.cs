@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves
 {
