@@ -10,6 +10,7 @@ namespace Sylves.Test
     [TestFixture]
     public class DefaultGridImplTest
     {
+        [Test]
         public void TestParallelTransport()
         {
             var sg = new SquareGrid(1);
