@@ -48,7 +48,7 @@ namespace Sylves
 
         public static HexRotation RotateCCW => new HexRotation(1);
 
-        public static HexRotation RotateCW => new HexRotation(-1);
+        public static HexRotation RotateCW => new HexRotation(5);
 
         public static HexRotation Rotate60(int i) => new HexRotation((short)(((i % 6) + 6) % 6));
 

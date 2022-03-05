@@ -46,6 +46,10 @@ namespace Sylves
         public CellRotation ReflectY => (CellRotation)~0;
         public CellRotation ReflectX => (n & 1) == 0 ? (CellRotation)~(n/2) : throw new Exception("Cannot reflex x on odd-sided polygon");
 
+        public CellRotation RotateCCW => (CellRotation)(1);
+
+        public CellRotation RotateCW => (CellRotation)(n - 1);
+
         public IEnumerable<CellDir> GetCellDirs()
         {
             return dirs;

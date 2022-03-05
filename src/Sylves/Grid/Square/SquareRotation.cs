@@ -40,7 +40,7 @@ namespace Sylves
 
         public static SquareRotation RotateCCW => new SquareRotation(1);
 
-        public static SquareRotation RotateCW => new SquareRotation(-1);
+        public static SquareRotation RotateCW => new SquareRotation(3);
 
         public static SquareRotation Rotate90(int i) => new SquareRotation((short)(((i % 4) + 4) % 4));
 
