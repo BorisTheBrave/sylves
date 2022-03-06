@@ -12,11 +12,20 @@ namespace Sylves
     class MeshGrid : DataDrivenGrid
     {
         private readonly MeshDetails meshDetails;
+        private bool is2d;
 
-        public MeshGrid(MeshData meshData):
+        public MeshGrid(MeshData meshData) :
             base(MeshGridBuilder.Build(meshData))
         {
             meshDetails = BuildMeshDetails();
+            is2d = true;
+        }
+
+        public MeshGrid(MeshData meshData, MeshPrismOptions meshPrismOptions) :
+            base(MeshGridBuilder.Build(meshData, meshPrismOptions))
+        {
+            meshDetails = BuildMeshDetails();
+            is2d = false;
         }
 
         #region Impl
@@ -80,7 +89,7 @@ namespace Sylves
 
         #region Basics
 
-        public override bool Is2D => true;
+        public override bool Is2D => is2d;
         #endregion
 
         #region Topology
