@@ -50,7 +50,7 @@ namespace Sylves
             var center2 = iTransform.MultiplyPoint3x4(center);
             var hsize2 = iTransform.MultiplyVector(hsize);
             hsize2 = new Vector3(Mathf.Abs(hsize2.x), Mathf.Abs(hsize2.y), Mathf.Abs(hsize2.z));
-            return GetCellsIntersectsApprox(
+            return Underlying.GetCellsIntersectsApprox(
                 center2 - hsize2,
                 center2 + hsize2
                 );
