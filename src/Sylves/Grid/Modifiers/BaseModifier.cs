@@ -78,6 +78,8 @@ namespace Sylves
         #endregion
 
         #region Bounds
+
+        public virtual IBound GetBound() => underlying.GetBound();
         public virtual IBound GetBound(IEnumerable<Cell> cells) => underlying.GetBound(cells);
 
         public virtual IGrid BoundBy(IBound bound) => Rebind(underlying.BoundBy(bound));

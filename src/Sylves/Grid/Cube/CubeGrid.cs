@@ -203,6 +203,8 @@ namespace Sylves
         #endregion
 
         #region Bounds
+        public IBound GetBound() => bound;
+
         public IBound GetBound(IEnumerable<Cell> cells)
         {
             var enumerator = cells.GetEnumerator();

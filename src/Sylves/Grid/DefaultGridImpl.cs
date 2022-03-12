@@ -89,6 +89,10 @@ namespace Sylves
         // Default impl supports no bounds,
         // just returns null representing bounds that covers the whole grid.
         #region Bounds
+        public static IBound GetBound(IGrid grid)
+        {
+            return null;
+        }
         public static IBound GetBound(IGrid grid, IEnumerable<Cell> cells)
         {
             return null;

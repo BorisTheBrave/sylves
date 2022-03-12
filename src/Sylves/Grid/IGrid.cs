@@ -138,12 +138,15 @@ namespace Sylves
         #endregion
 
         #region Bounds
+        IBound GetBound();
+
         IBound GetBound(IEnumerable<Cell> cells);
 
         IGrid BoundBy(IBound bound);
 
         IBound IntersectBounds(IBound bound, IBound other);
         IBound UnionBounds(IBound bound, IBound other);
+        // TODO: Decide if this should return cells outside of grid.
         IEnumerable<Cell> GetCellsInBounds(IBound bound);
         #endregion
 

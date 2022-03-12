@@ -110,6 +110,8 @@ namespace Sylves
         #endregion
 
         #region Bounds
+        public IBound GetBound() => DefaultGridImpl.GetBound(this);
+
         public IBound GetBound(IEnumerable<Cell> cells) => DefaultGridImpl.GetBound(this, cells);
 
         public IGrid BoundBy(IBound bound) => DefaultGridImpl.BoundBy(this, bound);
