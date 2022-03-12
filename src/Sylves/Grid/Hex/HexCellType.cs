@@ -106,7 +106,7 @@ namespace Sylves
             if (connection.Mirror)
             {
                 var delta = ((int)toDir + (int)fromDir) % 6 + 6;
-                rotation = (CellRotation)~(delta % 4);
+                rotation = (CellRotation)~(delta % 6);
             }
             else
             {

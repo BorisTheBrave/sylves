@@ -11,10 +11,11 @@ namespace Sylves.Test
     public class HexPrismCellTypeTest
     {
         [Test]
-        public void TestTryGetRotation()
+        [TestCase(HexOrientation.PointyTopped)]
+        [TestCase(HexOrientation.FlatTopped)]
+        public void TestTryGetRotation(HexOrientation orientation)
         {
-            GridTest.TryGetRotation(HexPrismCellType.Get(HexOrientation.PointyTopped));
-            GridTest.TryGetRotation(HexPrismCellType.Get(HexOrientation.FlatTopped));
+            GridTest.TryGetRotation(HexPrismCellType.Get(orientation));
         }
     }
 }

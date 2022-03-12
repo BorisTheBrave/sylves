@@ -21,10 +21,11 @@ namespace Sylves.Test
             TestUtils.AssertAreEqual(Matrix4x4.Scale(new Vector3(1, -1, 1)), a.GetMatrix(a.ReflectY), 1e-6);
         }
         [Test]
-        public void TestTryGetRotation()
+        [TestCase(HexOrientation.PointyTopped)]
+        [TestCase(HexOrientation.FlatTopped)]
+        public void TestTryGetRotation(HexOrientation orientation)
         {
-            GridTest.TryGetRotation(HexCellType.Get(HexOrientation.PointyTopped));
-            GridTest.TryGetRotation(HexCellType.Get(HexOrientation.FlatTopped));
+            GridTest.TryGetRotation(HexCellType.Get(orientation));
         }
     }
 }

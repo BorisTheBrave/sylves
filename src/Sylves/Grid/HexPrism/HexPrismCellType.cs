@@ -32,7 +32,7 @@ namespace Sylves
 
         public CellDir? Invert(CellDir dir) => (CellDir)((PTHexPrismDir)dir).Inverted();
 
-        public IList<CellRotation> GetRotations(bool includeReflections = false) => includeReflections ? rotations : rotationsAndReflections;
+        public IList<CellRotation> GetRotations(bool includeReflections = false) => includeReflections ? rotationsAndReflections: rotations;
 
         public CellRotation Multiply(CellRotation a, CellRotation b) => ((HexRotation)a) * b;
 
@@ -83,7 +83,7 @@ namespace Sylves
                 if (connection.Mirror)
                 {
                     var delta = ((int)toDir + (int)fromDir) % 6 + 6;
-                    rotation = (CellRotation)~(delta % 4);
+                    rotation = (CellRotation)~(delta % 6);
                 }
                 else
                 {
