@@ -81,11 +81,19 @@ namespace Sylves
             return new Cell(cell.x, cell.y, layer);
         }
 
-        private static ICellType PrismCellType(ICellType cellType)
+        private static ICellType PrismCellType(ICellType underlyingCellType)
         {
-            if (cellType == SquareCellType.Instance)
+            if (underlyingCellType == SquareCellType.Instance)
             {
                 return CubeCellType.Instance;
+            }
+            else if (underlyingCellType == HexCellType.Get(HexOrientation.FlatTopped))
+            {
+                return HexPrismCellType.Get(HexOrientation.FlatTopped);
+            }
+            else if (underlyingCellType == HexCellType.Get(HexOrientation.PointyTopped))
+            {
+                return HexPrismCellType.Get(HexOrientation.PointyTopped);
             }
             else
             {
@@ -101,6 +109,11 @@ namespace Sylves
                 forwardDir = (CellDir)CubeDir.Forward;
                 backDir = (CellDir)CubeDir.Back;
             }
+            else if(underlyingCellType == HexCellType.Get(HexOrientation.FlatTopped) || underlyingCellType == HexCellType.Get(HexOrientation.PointyTopped))
+            {
+                forwardDir = (CellDir)PTHexPrismDir.Forward;
+                backDir = (CellDir)PTHexPrismDir.Back;
+            }
             else
             {
                 throw new NotImplementedException($"Cell type {underlyingCellType.GetType()} not implemented yet");
@@ -114,6 +127,12 @@ namespace Sylves
                 isForward = (int)cellDir == (int)CubeDir.Forward;
                 inverseDir = (CellDir)((int)CubeDir.Forward + (int)CubeDir.Back - (int)cellDir);
                 return (int)cellDir >= (int)CubeDir.Forward;
+            }
+            else if (underlyingCellType == HexCellType.Get(HexOrientation.FlatTopped) || underlyingCellType == HexCellType.Get(HexOrientation.PointyTopped))
+            {
+                isForward = (int)cellDir == (int)PTHexPrismDir.Forward;
+                inverseDir = (CellDir)((int)PTHexPrismDir.Forward + (int)PTHexPrismDir.Back - (int)cellDir);
+                return (int)cellDir >= (int)PTHexPrismDir.Forward;
             }
             else
             {
@@ -202,7 +221,14 @@ namespace Sylves
             }
             else
             {
-                return underlying.TryMove(cell, dir, out dest, out inverseDir, out connection);
+                var (uCell, layer) = Split(cell);
+                if (!underlying.TryMove(uCell, dir, out var destUCell, out inverseDir, out connection))
+                {
+                    dest = default;
+                    return false;
+                }
+                dest = Combine(destUCell, layer);
+                return true;
             }
         }
 
@@ -366,12 +392,13 @@ namespace Sylves
         {
             var position = matrix.MultiplyPoint3x4(Vector3.zero);
             var layer = GetLayer(position);
-            if(!underlying.FindCell(GetPlanarPosition(position), out var uCell))
+            if (!underlying.FindCell(GetPlanarPosition(position), out var uCell))
             {
                 cell = default;
                 rotation = default;
                 return false;
             }
+            cell = Combine(uCell, layer);
             var cellType = underlying.GetCellType(uCell);
             if(cellType == SquareCellType.Instance)
             {
@@ -379,18 +406,22 @@ namespace Sylves
                 var cubeRotation = CubeRotation.FromMatrix(trs.ToMatrix().inverse * matrix);
                 if(cubeRotation == null)
                 {
-
-                    cell = default;
                     rotation = default;
                     return false;
                 }
-                cell = Combine(uCell, layer);
                 rotation = cubeRotation.Value;
                 return bound == null ? true : bound.MinLayer <= layer && layer < bound.MaxLayer;
             }
             else
             {
-                throw new NotImplementedException();
+                // All other cell types just inherit rotation from their underlying
+                if(!underlying.FindCell(matrix, out var _, out rotation))
+                {
+                    cell = default;
+                    rotation = default;
+                    return false;
+                }
+                return bound == null ? true : bound.MinLayer <= layer && layer < bound.MaxLayer;
             }
         }
 

@@ -11,33 +11,69 @@ namespace Sylves.Test
     internal class PlanarPrismModifierTest
     {
 
-        private PlanarPrismModifier GetGrid()
+        private static Cell ToTriangleGrid(Cell c)
         {
-            return new PlanarPrismModifier(new SquareGrid(1), new PlanarPrismOptions { }); ;
+            var odd = (c.x & 1);
+            var x = (c.x - odd) / 2;
+            var y = c.y;
+            var z = -x - y + 1 + odd;
+            return new Cell(x, y, z);
+        }
+
+        private static Cell FromTriangleGrid(Cell c) => new Cell(c.x * 2 + (c.x + c.y + c.z - 1), c.y, 0);
+
+        private PlanarPrismModifier GetGrid(int gridType)
+        {
+            switch (gridType)
+            {
+                case 0:
+                    return new PlanarPrismModifier(new SquareGrid(1), new PlanarPrismOptions { }); ;
+                case 1:
+                    return new PlanarPrismModifier(
+                        new BijectModifier(new TriangleGrid(1), ToTriangleGrid, FromTriangleGrid),
+                        new PlanarPrismOptions { });
+                default:
+                    throw new Exception();
+            }
+        }
+
+        private static readonly int[] GridTypes = { 0, 1 };
+
+        [Test]
+        [TestCase(0, 0, 0)]
+        [TestCase(1, 0, 0)]
+        [TestCase(1, 1, 0)]
+        public void TestTriangleRoundtrip(int x, int y, int z)
+        {
+            var c = new Cell(x, y, z);
+            Assert.AreEqual(c, FromTriangleGrid(ToTriangleGrid(c)));
         }
 
         // Checks TryMoveByOffset gives same results as CellType.Roate
         [Test]
-        public void TestTryMoveByOffset()
+        [TestCaseSource(nameof(GridTypes))]
+        public void TestTryMoveByOffset(int gridType)
         {
-            var g = GetGrid();
+            var g = GetGrid(gridType);
             GridTest.TryMoveByOffset(g, new Cell());
         }
 
 
         [Test]
-        public void TestFindCell()
+        [TestCaseSource(nameof(GridTypes))]
+        public void TestFindCell(int gridType)
         {
-            var g = GetGrid();
-            GridTest.FindCell(g, new Cell(0, 0, 10));
+            var g = GetGrid(gridType);
+            GridTest.FindCell(g, new Cell(0, 1, 10));
         }
 
 
         [Test]
-        public void TestFindBasicPath()
+        [TestCaseSource(nameof(GridTypes))]
+        public void TestFindBasicPath(int gridType)
         {
-            var g = GetGrid();
-            GridTest.FindBasicPath(g, new Cell(1, 0, -1), new Cell(10, -5, -5));
+            var g = GetGrid(gridType);
+            GridTest.FindBasicPath(g, new Cell(1, 0, 0), new Cell(2, 0, -5));
         }
     }
 }
