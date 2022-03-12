@@ -42,9 +42,9 @@ namespace Sylves
 
             // Check FindCell with rotations
             var ct = grid.GetCellType(cell);
-            foreach(var r in ct.GetRotations(true))
+            foreach (var r in ct.GetRotations(true))
             {
-                var m = Matrix4x4.Translate(grid.GetCellCenter(cell)) * ct.GetMatrix(r);
+                var m = grid.GetTRS(cell).ToMatrix() * ct.GetMatrix(r);
                 success = grid.FindCell(m, out cell2, out var r2);
                 Assert.IsTrue(success, $"{cell} {r}");
                 Assert.AreEqual(cell, cell2, $"{cell} {r}");
