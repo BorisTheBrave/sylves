@@ -98,5 +98,7 @@ namespace Sylves
 
         public CellRotation ReflectY => orientation == HexOrientation.FlatTopped ? HexRotation.FTReflectY : HexRotation.PTReflectY;
         public CellRotation ReflectX => orientation == HexOrientation.FlatTopped ? HexRotation.FTReflectX : HexRotation.PTReflectX;
+        public CellRotation RotateCW => HexRotation.RotateCW;
+        public CellRotation RotateCCW => HexRotation.RotateCCW;
     }
 }

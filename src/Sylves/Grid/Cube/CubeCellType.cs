@@ -83,6 +83,9 @@ namespace Sylves
             };
         }
 
+        public CellRotation RotateCW => throw new System.NotSupportedException("CubeCellType doesn't have a generic axis to rotate around");
+        public CellRotation RotateCCW => throw new System.NotSupportedException("CubeCellType doesn't have a generic axis to rotate around");
+
         public bool TryGetRotation(CellDir fromDir, CellDir toDir, Connection connection, out CellRotation rotation)
         {
             var cubeFromDir = (CubeDir)fromDir;

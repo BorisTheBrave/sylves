@@ -115,5 +115,7 @@ namespace Sylves
             }
             return true;
         }
+        public CellRotation RotateCW => HexRotation.RotateCW;
+        public CellRotation RotateCCW => HexRotation.RotateCCW;
     }
 }

@@ -92,5 +92,7 @@ namespace Sylves
         {
             return ((SquareRotation)cellRotation).ToMatrix();
         }
+        public CellRotation RotateCW => SquareRotation.RotateCW;
+        public CellRotation RotateCCW => SquareRotation.RotateCCW;
     }
 }

@@ -30,6 +30,9 @@ namespace Sylves
 
         void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection);
 
+        CellRotation RotateCW { get; }
+        CellRotation RotateCCW { get; }
+
         /// <summary>
         /// Inverse of <see cref="Rotate(CellDir, CellRotation, out CellDir, out Connection)"/>
         /// </summary>
