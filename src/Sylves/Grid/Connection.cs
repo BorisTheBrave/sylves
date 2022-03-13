@@ -6,6 +6,7 @@ namespace Sylves
     {
         public bool Mirror { get; set; }
         public int Rotation { get; set; }
+        public int Sides { get; set; }
 
         public static Connection operator*(Connection a, Connection b)
         {

@@ -52,7 +52,7 @@ namespace Sylves
                 resultDir = dir;
                 var r = (int)rotation;
                 var rot = r < 0 ? ~r : r;
-                connection = new Connection { Mirror = r < 0, Rotation = rot };
+                connection = new Connection { Mirror = r < 0, Rotation = rot, Sides = 6 };
             }
             else
             {

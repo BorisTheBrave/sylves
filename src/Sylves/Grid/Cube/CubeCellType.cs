@@ -80,6 +80,7 @@ namespace Sylves
             { 
                 Mirror = isReflection,
                 Rotation = angleInt,
+                Sides = 4,
             };
         }
 
