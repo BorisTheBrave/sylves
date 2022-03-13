@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Sylves
 {
     
-    class PlanarPrismOptions
+    public class PlanarPrismOptions
     {
         public float LayerHeight { get; set; } = 1;
         public float LayerOffset { get; set; }
@@ -44,7 +44,7 @@ namespace Sylves
     }
 
     // Doesn't use BaseModifier as so much has changed, everything needs overriding.
-    internal class PlanarPrismModifier : IGrid
+    public class PlanarPrismModifier : IGrid
     {
         private readonly IGrid underlying;
         private readonly PlanarPrismOptions planarPrismOptions;

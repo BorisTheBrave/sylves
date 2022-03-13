@@ -28,19 +28,19 @@ Regular grids are those with a periodic repeating pattern. These are the most co
 
 Modifier grids let you customize an existing grid by systematically changing it in some way.
 
-### Biject modifief
+### Biject modifier
 
 <xref:Sylves.BijectModifier>
 
-### Mask modifief
+### Mask modifier
 
 <xref:Sylves.MaskModifier>
 
-### Transform modifief
+### Transform modifier
 
 <xref:Sylves.TransformModifier>
 
 
-### Planar prism modifief
+### Planar prism modifier
 
 <xref:Sylves.PlanarPrismModifier>

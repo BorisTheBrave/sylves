@@ -2,7 +2,7 @@
 
 ## Grids and cells
 
-The central interface of Sylves is [IGrid](xref:Sylves.IGrid). Each grid type supported by Sylves has a different implementation of this class, such as [`CubeGrid`](xref:Syltves.CubeGrid) or [`HexGrid`](xref:Syves.HexGrid).
+The central interface of Sylves is [IGrid](xref:Sylves.IGrid). Each grid type supported by Sylves has a different implementation of this class, such as [`CubeGrid`](xref:Sylves.CubeGrid) or [`HexGrid`](xref:Sylves.HexGrid).
 
 `IGrid` is essentially stateless. It doesn't store any data, it just has a great deal of methods for querying every aspect of the grid.
 
@@ -70,7 +70,7 @@ In fact, Sylves doesn't come with code for storing data in a grid at all. If you
 
 You can also store the data in a 1d array. This is the most convenient method for serialization.
 
-`IGrid` comes with methods [`GetIndex`](xref:Sylves.IGrid.GetIndex) and [`GetCellByIndex`](xref:Sylves.IGrid.GetCellByIndex) that convert a `Cell` object to a `int` suitable for use in a compact array. Property `IndexCount` gives the size of the array needed to fully contain the grid.
+`IGrid` comes with methods [`GetIndex`](xref:Sylves.IGrid.GetIndex(Sylves.Cell)) and [`GetCellByIndex`](xref:Sylves.IGrid.GetCellByIndex(System.Int32)) that convert a `Cell` object to a `int` suitable for use in a compact array. Property `IndexCount` gives the size of the array needed to fully contain the grid.
 
 Note that these index methods only work on finite grids. You may need to apply a [bound](#bounds) to a infinite grid to filter them to a finite set of cells.
 

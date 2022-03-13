@@ -97,7 +97,8 @@ namespace Sylves
         // TODO: Give the offset API some thought. Should probably be ParallelTransport?
         /// <summary>
         /// Maps between cell offsets and cells in the grid.
-        /// This could be done with <see cref="ICellType.FindPath(Vector3Int, Vector3Int)"/>, but this can be more efficient.
+        /// This is normally done via <see cref="IGrid.FindBasicPath(Sylves.Cell,Sylves.Cell)"/>, but regular grids
+        /// often have a more efficient implementation.
         /// </summary>
         bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation);
 

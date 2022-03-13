@@ -1,6 +1,6 @@
 ﻿namespace Sylves
 {
-    /// <summary></summary>
+    /// <summary>
     /// Represents a particular rotation of a generic cell.
     /// Despite the name, this usually includes reflections too.
     /// The enum is empty - to work with directions, you need to either:

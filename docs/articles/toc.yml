@@ -7,4 +7,4 @@
 - name: Tutorials
   items:
     -  name: Langton's Ant
-       href: langton.md
+       href: tutorials/langton.md
