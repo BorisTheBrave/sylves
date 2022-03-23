@@ -243,6 +243,18 @@ namespace Sylves
             return o;
         }
 
+        public static CubeDir operator *(CubeRotation r, CubeDir dir)
+        {
+            return ToDir(r * dir.Forward());
+        }
+
+        public static CubeBound operator *(CubeRotation rotation, CubeBound bound)
+        {
+            var a = rotation * bound.min;
+            var b = rotation * (bound.max - Vector3Int.one);
+            return new CubeBound(Vector3Int.Min(a, b), Vector3Int.Max(a, b) + Vector3Int.one);
+        }
+
         private static CubeDir ToDir(Vector3Int v)
         {
             if (v.x == 1)
@@ -264,11 +276,6 @@ namespace Sylves
         }
 
         public override string ToString() => value.ToString();
-
-        public static CubeDir operator *(CubeRotation r, CubeDir dir)
-        {
-            return ToDir(r * dir.Forward());
-        }
 
         public static implicit operator CubeRotation(CellRotation r) => new CubeRotation((short)r);
 

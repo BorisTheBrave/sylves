@@ -103,6 +103,35 @@ namespace Sylves
 
         public static FTHexDir operator *(HexRotation rotation, FTHexDir dir) => (FTHexDir)(rotation * (PTHexDir)dir);
 
+        public static HexBound operator *(HexRotation rotation, HexBound bound)
+        {
+            // Operates exactly the same as the cube case.
+            var a = rotation.Multiply(bound.min);
+            var b = rotation.Multiply(bound.max - Vector3Int.one);
+            return new HexBound(Vector3Int.Min(a, b), Vector3Int.Max(a, b) + Vector3Int.one);
+        }
+
+        // Scared to make this an operator when it's a non-standard use of co-ordinates
+        public Vector3Int Multiply(Vector3Int v)
+        {
+            var ir = (int)value;
+            if (ir < 0)
+            {
+                ir = ~ir;
+                v = new Vector3Int(-v.z, -v.y, -v.x);
+            }
+            switch (ir)
+            {
+                case 0: break;
+                case 1: v = new Vector3Int(-v.y, -v.z, -v.x); break;
+                case 2: v = new Vector3Int(v.z, v.x, v.y); break;
+                case 3: v = new Vector3Int(-v.x, -v.y, -v.z); break;
+                case 4: v = new Vector3Int(v.y, v.z, v.x); break;
+                case 5: v = new Vector3Int(-v.z, -v.x, -v.y); break;
+            }
+            return v;
+        }
+
         public Matrix4x4 ToMatrix(HexOrientation orientation)
         {
             var i = value;

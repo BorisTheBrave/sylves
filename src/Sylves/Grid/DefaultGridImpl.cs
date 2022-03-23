@@ -116,5 +116,27 @@ namespace Sylves
             return grid.GetCells();
         }
         #endregion
+
+        #region Symmetry
+        public static GridSymmetry FindGridSymmetry(IGrid grid, ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation)
+        {
+            // Technically, we could implement via exhaustive search. Is that wanted.
+            return null;
+        }
+
+        public static bool TryApplySymmetry(IGrid grid, GridSymmetry s, IBound srcBound, out IBound destBound)
+        {
+            var mappedCells = grid.GetCellsInBounds(srcBound)
+                .Select(c => grid.TryApplySymmetry(s, c, out var dest, out var _) ? dest : (Cell?)null)
+                .OfType<Cell>();
+            destBound = grid.GetBound(mappedCells);
+            return true;
+        }
+
+        public static bool TryApplySymmetry(IGrid grid, GridSymmetry s, Cell src, out Cell dest, out CellRotation r)
+        {
+            return ParallelTransport(grid, s.Src, src, grid, s.Dest, s.Rotation, out dest, out r);
+        }
+        #endregion
     }
 }

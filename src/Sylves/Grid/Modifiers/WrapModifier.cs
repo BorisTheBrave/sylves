@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 #if UNITY
 using UnityEngine;
 #endif
@@ -53,6 +54,41 @@ namespace Sylves
             var dest2 = canonicalize(dest1);
             destCell = dest2 ?? default;
             return dest2 != null;
+        }
+        #endregion
+
+
+        #region Symmetry
+
+        public override GridSymmetry FindGridSymmetry(ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation)
+        {
+            // This is not a bijection, we should really make a set class that handles this property.
+            var uncanonicalDest = new BijectSet(dest, c => c, c => canonicalize(c).Value);
+            var s = Underlying.FindGridSymmetry(src, uncanonicalDest, srcCell, cellRotation);
+            if(s == null)
+                return null;
+            var src2 = canonicalize(s.Src);
+            var dest2 = canonicalize(s.Dest);
+            if (src2 == null || dest2 == null)
+                return null;
+            return new GridSymmetry
+            {
+                Rotation = s.Rotation,
+                Src = src2.Value,
+                Dest = dest2.Value,
+            };
+        }
+
+        public override bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r)
+        {
+            if(!Underlying.TryApplySymmetry(s, src, out dest, out r))
+            {
+                return false;
+            }
+            var dest2 = canonicalize(dest);
+            dest = dest2 ?? default;
+            return dest2 != null;
+
         }
         #endregion
     }

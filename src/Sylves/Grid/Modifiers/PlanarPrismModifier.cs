@@ -157,6 +157,30 @@ namespace Sylves
             }
         }
 
+        private ISet<Cell> ToUnderlying(ISet<Cell> cells, int layer)
+        {
+            return new BijectSet(cells, c => Split(c).cell, c=> Combine(c, layer));
+        }
+
+        private GridSymmetry FromPlanar(GridSymmetry s, int layerOffset)
+        {
+            return new GridSymmetry
+            {
+                Rotation = s.Rotation,
+                Src = Combine(s.Src, 0),
+                Dest = Combine(s.Dest, layerOffset),
+            };
+        }
+        private GridSymmetry ToPlanar(GridSymmetry s)
+        {
+            return new GridSymmetry
+            {
+                Rotation = s.Rotation,
+                Src = Split(s.Src).cell,
+                Dest = Split(s.Dest).cell,
+            };
+        }
+
         #region Basics
 
         public virtual bool Is2D => false;
@@ -234,6 +258,7 @@ namespace Sylves
 
         public virtual bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
         {
+            // See TryApplySymmetry
             throw new NotImplementedException();
         }
 
@@ -399,8 +424,8 @@ namespace Sylves
                 return false;
             }
             cell = Combine(uCell, layer);
-            var cellType = underlying.GetCellType(uCell);
-            if(cellType == SquareCellType.Instance)
+            var underlyingCellType = underlying.GetCellType(uCell);
+            if(underlyingCellType == SquareCellType.Instance)
             {
                 var trs = underlying.GetTRS(uCell);
                 var cubeRotation = CubeRotation.FromMatrix(trs.ToMatrix().inverse * matrix);
@@ -444,6 +469,84 @@ namespace Sylves
             }
         }
         #endregion
+        #region Symmetry
 
+        public virtual GridSymmetry FindGridSymmetry(ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation)
+        {
+            var (uSrcCell, layer) = Split(srcCell);
+            var underlyingCellType = underlying.GetCellType(uSrcCell);
+
+            if(underlyingCellType == SquareCellType.Instance)
+            {
+                // Atm we assume CellRotation can be passed through unchanged
+                throw new NotImplementedException();
+            }
+
+            var uSrc = ToUnderlying(src, 0);
+            var uDest = ToUnderlying(dest, 0);
+            var s = underlying.FindGridSymmetry(uSrc, uDest, uSrcCell, cellRotation);
+            if (s == null)
+            {
+                return null;
+            }
+            var srcMinLayer = src.Select(c => Split(c).layer).Aggregate((a, b) => Math.Min(a, b));
+            var destMinLayer = src == dest ? srcMinLayer : dest.Select(c => Split(c).layer).Aggregate((a, b) => Math.Min(a, b));
+            var layerOffset = destMinLayer - srcMinLayer;
+            // Check it actually works
+            Cell? Map(Cell c)
+            {
+                var (uc, l) = Split(c);
+                if (!underlying.TryApplySymmetry(s, uc, out var ud, out var _))
+                    return null;
+                return Combine(ud, l + layerOffset);
+            }
+            if (!src.Select(Map)
+                .OfType<Cell>()
+                .All(dest.Contains))
+            {
+                return null;
+            }
+            return FromPlanar(s, layerOffset);
+        }
+
+        public virtual bool TryApplySymmetry(GridSymmetry s, IBound srcBound, out IBound destBound)
+        {
+            if(srcBound == null)
+            {
+                destBound = null;
+                return true;
+            }
+            var planarPrismBound = (PlanarPrismBound)srcBound;
+            if(!underlying.TryApplySymmetry(ToPlanar(s), planarPrismBound.PlanarBound, out var destPlanarBound))
+            {
+                destBound = default;
+                return false;
+            }
+            var layerOffset = Split(s.Dest).layer - Split(s.Src).layer;
+            destBound = new PlanarPrismBound
+            {
+                PlanarBound = destPlanarBound,
+                MinLayer = planarPrismBound.MinLayer + layerOffset,
+                MaxLayer = planarPrismBound.MaxLayer + layerOffset,
+            };
+            return true;
+        }
+        public virtual bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r)
+        {
+            var (uSrc, layer) = Split(src);
+            
+            var underlyingCellType = underlying.GetCellType(uSrc);
+            if (underlyingCellType == SquareCellType.Instance)
+            {
+                // Atm we assume CellRotation can be passed through unchanged
+                throw new NotImplementedException();
+            }
+
+            var success = underlying.TryApplySymmetry(ToPlanar(s), uSrc, out var uDest, out r);
+            var layerOffset = Split(s.Dest).layer - Split(s.Src).layer;
+            dest = Combine(uDest, layer + layerOffset);
+            return success;
+        }
+        #endregion
     }
 }

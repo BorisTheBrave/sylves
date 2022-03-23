@@ -4,7 +4,7 @@
 
 namespace Sylves
 {
-    class MeshPrismOptions
+    public class MeshPrismOptions
     {
         public float LayerHeight { get; set; }
         public float LayerOffset { get; set; }

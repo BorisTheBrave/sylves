@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Sylves
 {
-    internal class HexPrismBound : IBound, IEnumerable<Cell>
+    public class HexPrismBound : IBound, IEnumerable<Cell>
     {
         public HexBound hexBound;
 

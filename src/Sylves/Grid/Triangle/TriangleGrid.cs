@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -556,6 +557,59 @@ namespace Sylves
                     }
                 }
             }
+        }
+        #endregion
+
+        #region Symmetry
+
+        public GridSymmetry FindGridSymmetry(ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation)
+        {
+            var cubeRotation = (HexRotation)cellRotation;
+            var srcBound = GetBound(src);
+            var srcMin = src.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Min);
+            var srcMax = src.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Max) - Vector3Int.one;
+            var r1 = cubeRotation.Multiply(srcMin);
+            var r2 = cubeRotation.Multiply(srcMax);
+            var newMin = Vector3Int.Min(r1, r2);
+            var destMin = dest == src ? srcMin : dest.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Min);
+            var translation = destMin - newMin;
+            // Check it actually works
+            if (!src.Select(c => (Cell)(translation + cubeRotation.Multiply((Vector3Int)(c)))).All(dest.Contains))
+            {
+                return null;
+            }
+            return new GridSymmetry
+            {
+                Src = new Cell(),
+                Dest = (Cell)(translation),
+                Rotation = cellRotation,
+            };
+        }
+
+        public bool TryApplySymmetry(GridSymmetry s, IBound srcBound, out IBound destBound)
+        {
+            destBound = null;
+            if (srcBound == null)
+            {
+                return true;
+            }
+            var cubeBound = (TriangleBound)srcBound;
+            // TODO: Use operator*
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.min), out var a, out var _))
+            {
+                return false;
+            }
+            // This trick works best with *inclusive* bounds.
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.min - Vector3Int.one), out var b, out var _))
+            {
+                return false;
+            }
+            destBound = new TriangleBound(Vector3Int.Min((Vector3Int)(a), (Vector3Int)(b)), Vector3Int.Max((Vector3Int)(a), (Vector3Int)(b)) + Vector3Int.one);
+            return true;
+        }
+        public bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r)
+        {
+            return TryMoveByOffset(s.Dest, (Vector3Int)s.Src, (Vector3Int)src, s.Rotation, out dest, out r);
         }
         #endregion
     }

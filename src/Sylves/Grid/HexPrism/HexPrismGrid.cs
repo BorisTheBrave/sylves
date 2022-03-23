@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Sylves
 {
-    internal class HexPrismGrid : IGrid
+    public class HexPrismGrid : IGrid
     {
         private const float Sqrt3 = 1.73205080756888f;
 
@@ -97,7 +98,8 @@ namespace Sylves
             return new Cell(hexPrismCell.x, hexPrismCell.y, -hexPrismCell.x - hexPrismCell.y);
         }
 
-        // TODO Get rid of this
+        // TODO Clean these methods up.
+        // Mabey get rid of some of them, by making HexGrid not use the z component.
         private static Vector3Int GetHexCell(Vector3Int hexPrismCell)
         {
             return new Vector3Int(hexPrismCell.x, hexPrismCell.y, -hexPrismCell.x - hexPrismCell.y);
@@ -108,6 +110,39 @@ namespace Sylves
             return new Cell(hexCell.x, hexCell.y, layer);
         }
 
+        private (Cell cell, int layer) Split(Cell cell)
+        {
+            return (new Cell(cell.x, cell.y, -cell.x - cell.y), cell.z);
+        }
+
+        private Cell Combine(Cell cell, int layer)
+        {
+            return new Cell(cell.x, cell.y, layer);
+        }
+
+        private ISet<Cell> ToUnderlying(ISet<Cell> cells, int layer)
+        {
+            return new BijectSet(cells, c => Split(c).cell, c => Combine(c, layer));
+        }
+
+        private GridSymmetry FromPlanar(GridSymmetry s, int layerOffset)
+        {
+            return new GridSymmetry
+            {
+                Rotation = s.Rotation,
+                Src = Combine(s.Src, 0),
+                Dest = Combine(s.Dest, layerOffset),
+            };
+        }
+        private GridSymmetry ToPlanar(GridSymmetry s)
+        {
+            return new GridSymmetry
+            {
+                Rotation = s.Rotation,
+                Src = Split(s.Src).cell,
+                Dest = Split(s.Dest).cell,
+            };
+        }
 
         #endregion
 
@@ -326,6 +361,70 @@ namespace Sylves
                     yield return GetHexPrismCell(hex, z);
                 }
             }
+        }
+        #endregion
+
+        #region Symmetry
+
+        public virtual GridSymmetry FindGridSymmetry(ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation)
+        {
+            var (uSrcCell, layer) = Split(srcCell);
+
+            var uSrc = ToUnderlying(src, 0);
+            var uDest = ToUnderlying(dest, 0);
+            var s = hexGrid.FindGridSymmetry(uSrc, uDest, uSrcCell, cellRotation);
+            if (s == null)
+            {
+                return null;
+            }
+            var srcMinLayer = src.Select(c => Split(c).layer).Aggregate((a, b) => Math.Min(a, b));
+            var destMinLayer = src == dest ? srcMinLayer : dest.Select(c => Split(c).layer).Aggregate((a, b) => Math.Min(a, b));
+            var layerOffset = destMinLayer - srcMinLayer;
+            // Check it actually works
+            Cell? Map(Cell c)
+            {
+                var (uc, l) = Split(c);
+                if (!hexGrid.TryApplySymmetry(s, uc, out var ud, out var _))
+                    return null;
+                return Combine(ud, l + layerOffset);
+            }
+            if (!src.Select(Map)
+                .OfType<Cell>()
+                .All(dest.Contains))
+            {
+                return null;
+            }
+            return FromPlanar(s, layerOffset);
+        }
+
+        public virtual bool TryApplySymmetry(GridSymmetry s, IBound srcBound, out IBound destBound)
+        {
+            if (srcBound == null)
+            {
+                destBound = null;
+                return true;
+            }
+            var hexPrismBound = (HexPrismBound)srcBound;
+            if (!hexGrid.TryApplySymmetry(ToPlanar(s), hexPrismBound.hexBound, out var destHexBound))
+            {
+                destBound = default;
+                return false;
+            }
+            var layerOffset = Split(s.Dest).layer - Split(s.Src).layer;
+            destBound = new HexPrismBound(
+                (HexBound)destHexBound,
+                hexPrismBound.layerMin + layerOffset,
+                hexPrismBound.layerMax + layerOffset);
+            return true;
+        }
+        public virtual bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r)
+        {
+            var (uSrc, layer) = Split(src);
+
+            var success = hexGrid.TryApplySymmetry(ToPlanar(s), uSrc, out var uDest, out r);
+            var layerOffset = Split(s.Dest).layer - Split(s.Src).layer;
+            dest = Combine(uDest, layer + layerOffset);
+            return success;
         }
         #endregion
     }

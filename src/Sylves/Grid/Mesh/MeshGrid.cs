@@ -9,7 +9,7 @@ using static Sylves.VectorUtils;
 
 namespace Sylves
 {
-    class MeshGrid : DataDrivenGrid
+    public class MeshGrid : DataDrivenGrid
     {
         private readonly MeshDetails meshDetails;
         private bool is2d;

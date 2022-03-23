@@ -21,5 +21,7 @@ namespace Sylves
                   c => new Cell(PMod(c.x, size.x), PMod(c.y, size.y)))
         {
         }
+
+        // TODO: Could do a better job on bounds?
     }
 }

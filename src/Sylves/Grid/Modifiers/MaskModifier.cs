@@ -66,5 +66,10 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max) => Underlying.GetCellsIntersectsApprox(min, max).Where(containsFunc);
         #endregion
+
+        #region Symmetry
+
+        public override bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r) => Underlying.TryApplySymmetry(s, src, out dest, out r) && containsFunc(dest);
+        #endregion
     }
 }

@@ -141,5 +141,12 @@ namespace Sylves
         public abstract IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max);
         #endregion
 
+        #region Symmetry
+
+        public GridSymmetry FindGridSymmetry(ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation) => DefaultGridImpl.FindGridSymmetry(this, src, dest, srcCell, cellRotation);
+
+        public bool TryApplySymmetry(GridSymmetry s, IBound srcBound, out IBound destBound) => DefaultGridImpl.TryApplySymmetry(this, s, srcBound, out destBound);
+        public bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r) => DefaultGridImpl.TryApplySymmetry(this, s, src, out dest, out r);
+        #endregion
     }
 }

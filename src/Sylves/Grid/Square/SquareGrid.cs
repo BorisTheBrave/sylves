@@ -45,11 +45,15 @@ namespace Sylves
 
         private static Vector2Int ToVector2Int(Cell cell)
         {
-            if(cell.z != 0)
+            if (cell.z != 0)
             {
                 throw new Exception("SquareGrid only has cells with z = 0");
             }
             return new Vector2Int(cell.x, cell.y);
+        }
+        private static Cell FromVector2Int(Vector2Int v)
+        {
+            return new Cell(v.x, v.y);
         }
 
         #region Basics
@@ -320,5 +324,59 @@ namespace Sylves
         }
         #endregion
 
+
+        #region Symmetry
+
+        public GridSymmetry FindGridSymmetry(ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation)
+        {
+            var squareRotation = (SquareRotation)cellRotation;
+            var srcBound = GetBound(src);
+            var srcMin = src.Select(ToVector2Int).Aggregate(Vector2Int.Min);
+            var srcMax = src.Select(ToVector2Int).Aggregate(Vector2Int.Max) - Vector2Int.one;
+            var r1 = squareRotation * srcMin;
+            var r2 = squareRotation * srcMax;
+            var newMin = Vector2Int.Min(r1, r2);
+            var destMin = dest == src ? srcMin : dest.Select(ToVector2Int).Aggregate(Vector2Int.Min);
+            var translation = destMin - newMin;
+            // Check it actually works
+            if(!src.Select(c => FromVector2Int(translation + squareRotation * ToVector2Int(c))).All(dest.Contains))
+            {
+                return null;
+            }
+            return new GridSymmetry
+            {
+                Src = new Cell(),
+                Dest = FromVector2Int(translation),
+                Rotation = cellRotation,
+            };
+        }
+
+        public bool TryApplySymmetry(GridSymmetry s, IBound srcBound, out IBound destBound)
+        {
+            destBound = null;
+            if (srcBound == null)
+            {
+                return true;
+            }
+            var squareBound = (SquareBound)srcBound;
+            // TODO: Use operator*
+            if(!TryApplySymmetry(s, FromVector2Int(squareBound.min), out var a, out var _))
+            {
+                return false;
+            }
+            // This trick works best with *inclusive* bounds.
+            if (!TryApplySymmetry(s, FromVector2Int(squareBound.min - Vector2Int.one), out var b, out var _))
+            {
+                return false;
+            }
+            destBound = new SquareBound(Vector2Int.Min(ToVector2Int(a), ToVector2Int(b)), Vector2Int.Max(ToVector2Int(a), ToVector2Int(b)) + Vector2Int.one);
+            return true;
+        }
+
+        public bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r)
+        {
+            return TryMoveByOffset(src, (Vector3Int)s.Src, (Vector3Int)s.Dest, s.Rotation, out dest, out r);
+        }
+        #endregion
     }
 }

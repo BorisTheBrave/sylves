@@ -94,6 +94,13 @@ namespace Sylves
             return (SquareDir)(newSide);
         }
 
+        public static SquareBound operator *(SquareRotation rotation, SquareBound bound)
+        {
+            var a = rotation * bound.min;
+            var b = rotation * (bound.max - Vector2Int.one);
+            return new SquareBound(Vector2Int.Min(a, b), Vector2Int.Max(a, b) + Vector2Int.one);
+        }
+
         public Matrix4x4 ToMatrix()
         {
             switch (value)

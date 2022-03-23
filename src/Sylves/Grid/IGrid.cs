@@ -191,5 +191,33 @@ namespace Sylves
         // TODO: FindCells, Raycast, GetPath
         #endregion
 
+        #region Symmetry
+
+        /// <summary>
+        /// Finds a GridSymmetry that:
+        /// 1) Maps from the cells of src into dest (in any order / rotation), and
+        /// 2) Maps srcCell using cellRotation (to any cell in dest)
+        /// 
+        /// For simple, regular grids, srcCell is irrelevant, as every cell uses the same cellRotation.
+        /// 
+        /// Returns null if one cannot be found. Returns an arbitrary pick if there are multiple possibilities.
+        /// </summary>
+        GridSymmetry FindGridSymmetry(ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation);
+
+        /// <summary>
+        /// Finds a bound that would contain all the cells of srcBound after applying the grid symmetry to them.
+        /// </summary>
+        bool TryApplySymmetry(GridSymmetry s, IBound srcBound, out IBound destBound);
+
+        /// <summary>
+        /// Applies the mapping of s to cell, and also returns the rotation
+        /// 
+        /// For more details, see <see cref="GridSymmetry"/>.
+        /// 
+        /// For simple, regular grids, the output rotation is copied directly from <see cref="GridSymmetry.Rotation"/>.
+        /// </summary>
+        bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r);
+        #endregion
+
     }
 }
