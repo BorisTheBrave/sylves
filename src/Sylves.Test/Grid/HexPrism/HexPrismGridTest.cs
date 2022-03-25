@@ -9,7 +9,6 @@ namespace Sylves.Test
     [TestFixture]
     public class HexPrismGridTest
     {
-        // Checks TryMoveByOffset gives same results as CellType.Roate
         [Test]
         [TestCase(HexOrientation.PointyTopped)]
         [TestCase(HexOrientation.FlatTopped)]

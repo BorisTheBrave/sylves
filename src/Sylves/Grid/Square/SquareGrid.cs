@@ -375,7 +375,7 @@ namespace Sylves
 
         public bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r)
         {
-            return TryMoveByOffset(src, (Vector3Int)s.Src, (Vector3Int)s.Dest, s.Rotation, out dest, out r);
+            return TryMoveByOffset(s.Dest, (Vector3Int)s.Src, (Vector3Int)src, s.Rotation, out dest, out r);
         }
         #endregion
     }

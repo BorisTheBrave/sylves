@@ -22,7 +22,6 @@ namespace Sylves.Test
 
         private static readonly int[] GridTypes = { 0 };
 
-        // Checks TryMoveByOffset gives same results as CellType.Roate
         [Test]
         [TestCaseSource(nameof(GridTypes))]
         public void TestTryMoveByOffset(int gridType)

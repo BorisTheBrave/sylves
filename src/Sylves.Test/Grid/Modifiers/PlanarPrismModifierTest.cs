@@ -49,9 +49,9 @@ namespace Sylves.Test
             Assert.AreEqual(c, FromTriangleGrid(ToTriangleGrid(c)));
         }
 
-        // Checks TryMoveByOffset gives same results as CellType.Roate
         [Test]
         [TestCaseSource(nameof(GridTypes))]
+        [Ignore("Never going to be supported?")]
         public void TestTryMoveByOffset(int gridType)
         {
             var g = GetGrid(gridType);

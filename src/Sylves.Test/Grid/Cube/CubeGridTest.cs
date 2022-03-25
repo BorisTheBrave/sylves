@@ -31,5 +31,26 @@ namespace Sylves.Test
             var g = new CubeGrid(1);
             GridTest.FindBasicPath(g, new Cell(0, 0, 0), new Cell(10, 10, 10));
         }
+
+        [Test]
+        public void TestGridSymmetry()
+        {
+            var g = new CubeGrid(1);
+            var s = new GridSymmetry
+            {
+                Src = new Cell(0, 0, 0),
+                Dest = new Cell(10, 0, 0),
+                Rotation = CubeRotation.RotateXY,
+            };
+            var success = g.TryApplySymmetry(s, new Cell(0, 0, 0), out var dest, out var r);
+            Assert.IsTrue(success);
+            Assert.AreEqual(new Cell(10, 0, 0), dest);
+            Assert.AreEqual(s.Rotation, r);
+
+            success = g.TryApplySymmetry(s, new Cell(3, 0, 0), out dest, out r);
+            Assert.IsTrue(success);
+            Assert.AreEqual(new Cell(10, 3, 0), dest);
+            Assert.AreEqual(s.Rotation, r);
+        }
     }
 }

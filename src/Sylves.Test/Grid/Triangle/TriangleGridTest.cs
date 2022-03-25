@@ -9,7 +9,6 @@ namespace Sylves.Test
     [TestFixture]
     public class TriangleGridTest
     {
-        // Checks TryMoveByOffset gives same results as CellType.Roate
         [Test]
         [TestCase(TriangleOrientation.FlatTopped)]
         [TestCase(TriangleOrientation.FlatSides)]

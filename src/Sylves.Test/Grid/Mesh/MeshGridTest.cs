@@ -38,6 +38,7 @@ namespace Sylves.Test
             meshData.topologies = new[] { MeshTopology.Quads };
         }
 
+        [Ignore("Never going to be supported?")]
         [Test]
         public void TestTryMoveByOffset()
         {

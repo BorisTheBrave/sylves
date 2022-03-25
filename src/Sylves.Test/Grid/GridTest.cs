@@ -13,7 +13,7 @@ namespace Sylves
     public static class GridTest
     {
 
-        // Checks TryMoveByOffset gives same results as CellType.Roate
+        // Checks TryMoveByOffset gives same results as CellType.Rotate
         public static void TryMoveByOffset(IGrid grid, Cell cell)
         {
             var ct = grid.GetCellType(cell);
