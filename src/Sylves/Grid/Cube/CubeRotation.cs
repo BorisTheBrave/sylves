@@ -19,9 +19,16 @@ namespace Sylves
         public static CubeRotation ReflectX => new CubeRotation(0x812);
         public static CubeRotation ReflectY => new CubeRotation(0x092);
         public static CubeRotation ReflectZ => new CubeRotation(0x01A);
-        public static CubeRotation RotateXZ => new CubeRotation(0xA10);
-        public static CubeRotation RotateXY => new CubeRotation(0x902);
-        public static CubeRotation RotateYZ => new CubeRotation(0x0A1);
+        // NB: By Unity convensions:
+        // Rotation around X = RotateYZ
+        // Rotation around Y = RotateZX
+        // Rotation around Z = RotateXY
+        public static CubeRotation RotateZX => new CubeRotation(0xA10);
+        public static CubeRotation RotateYX => new CubeRotation(0x902);
+        public static CubeRotation RotateZY => new CubeRotation(0x0A1);
+        public static CubeRotation RotateXZ => new CubeRotation(0x218);
+        public static CubeRotation RotateXY => new CubeRotation(0x182);
+        public static CubeRotation RotateYZ => new CubeRotation(0x029);
 
         // Ordered by all rotations, then all refelctions
 
