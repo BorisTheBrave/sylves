@@ -16,15 +16,22 @@ namespace Sylves
         private readonly Matrix4x4 iTransform;
 
         public TransformModifier(IGrid underlying, Matrix4x4 transform)
-            :base(underlying)
+            : base(underlying)
         {
             this.transform = transform;
             this.iTransform = transform.inverse;
         }
 
+        private TransformModifier(IGrid underlying, Matrix4x4 transform, Matrix4x4 iTransform)
+           : base(underlying)
+        {
+            this.transform = transform;
+            this.iTransform = iTransform;
+        }
+
         protected override IGrid Rebind(IGrid underlying)
         {
-            return new TransformModifier(underlying, transform);
+            return new TransformModifier(underlying, transform, iTransform);
         }
 
         #region Position
@@ -45,7 +52,7 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-            var center = (min+ max) / 2;
+            var center = (min + max) / 2;
             var hsize = (max - min) / 2;
             var center2 = iTransform.MultiplyPoint3x4(center);
             var hsize2 = iTransform.MultiplyVector(hsize);
