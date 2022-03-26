@@ -196,7 +196,7 @@ namespace Sylves
                 return false;
             }
             destCell = GetHexPrismCell(destHex, startCell.z + (destOffset.z - startOffset.z));
-            return true;
+            return bound == null ? true : bound.Contains(destCell);
         }
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell)

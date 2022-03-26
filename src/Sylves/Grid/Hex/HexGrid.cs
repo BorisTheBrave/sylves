@@ -212,7 +212,7 @@ namespace Sylves
             destRotation = startRotation;
             var offset = ((HexRotation)startRotation).Multiply(destOffset - startOffset);
             destCell = startCell + offset;
-            return true;
+            return bound == null ? true : bound.Contains(destCell);
         }
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell)

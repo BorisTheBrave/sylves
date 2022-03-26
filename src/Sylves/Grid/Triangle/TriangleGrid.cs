@@ -228,7 +228,7 @@ namespace Sylves
                 case 5: offset = new Vector3Int(-offset.z, -offset.x, -offset.y); break;
             }
             destCell = startCell + offset;
-            return true;
+            return bound == null ? true : bound.Contains(destCell);
         }
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell)

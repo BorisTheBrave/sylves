@@ -143,7 +143,7 @@ namespace Sylves
             var squareRotation = (SquareRotation)startRotation;
             destCell = startCell + squareRotation * (destOffset - startOffset);
             destRotation = squareRotation;
-            return true;
+            return bound == null ? true : bound.Contains(destCell);
         }
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell)

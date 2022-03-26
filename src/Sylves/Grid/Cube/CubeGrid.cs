@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 #endif
 
-
 using static Sylves.VectorUtils;
 
 namespace Sylves
@@ -136,7 +135,7 @@ namespace Sylves
             var squareRotation = (CubeRotation)startRotation;
             destCell = startCell + squareRotation * (destOffset - startOffset);
             destRotation = squareRotation;
-            return true;
+            return bound == null ? true : bound.Contains(destCell);
         }
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
