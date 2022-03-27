@@ -37,7 +37,7 @@ namespace Sylves
         #region Position
         public override Vector3 GetCellCenter(Cell cell) => transform.MultiplyPoint3x4(Underlying.GetCellCenter(cell));
 
-        public override TRS GetTRS(Cell cell) => throw new NotImplementedException();
+        public override TRS GetTRS(Cell cell) => new TRS(transform * Underlying.GetTRS(cell).ToMatrix());
 
         public override Deformation GetDeformation(Cell cell) => throw new NotImplementedException();
         #endregion
@@ -48,7 +48,7 @@ namespace Sylves
         public override bool FindCell(
             Matrix4x4 matrix,
             out Cell cell,
-            out CellRotation rotation) => Underlying.FindCell(matrix * iTransform, out cell, out rotation);
+            out CellRotation rotation) => Underlying.FindCell(iTransform * matrix, out cell, out rotation);
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
