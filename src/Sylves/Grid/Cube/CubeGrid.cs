@@ -187,21 +187,23 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                return bound.size.x * bound.size.y;
+                return bound.size.x * bound.size.y * bound.size.z;
             }
         }
 
         public int GetIndex(Cell cell)
         {
             CheckBounded();
-            return (cell.x - bound.min.x) + (cell.y - bound.min.y) * bound.size.x;
+            return (cell.x - bound.min.x) + (cell.y - bound.min.y) * bound.size.x + (cell.z - bound.min.z) * bound.size.x * bound.size.y;
         }
 
         public Cell GetCellByIndex(int index)
         {
             var x = index % bound.size.x;
-            var y = index / bound.size.x;
-            return new Cell(x + bound.min.x, y + bound.min.y, 0);
+            var r = index / bound.size.x;
+            var y = index % bound.size.y;
+            var z = index / bound.size.y;
+            return new Cell(x + bound.min.x, y + bound.min.y, z + bound.min.z);
         }
         #endregion
 
