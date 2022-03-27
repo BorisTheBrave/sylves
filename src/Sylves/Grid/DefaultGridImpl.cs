@@ -115,6 +115,10 @@ namespace Sylves
         {
             return grid.GetCells();
         }
+        public static bool IsCellInBound(IGrid grid, Cell cell, IBound bound)
+        {
+            return true;
+        }
         #endregion
 
         #region Symmetry

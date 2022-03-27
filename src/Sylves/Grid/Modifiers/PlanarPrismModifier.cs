@@ -229,6 +229,7 @@ namespace Sylves
         }
 
         public virtual ICellType GetCellType(Cell cell) => PrismCellType(underlying.GetCellType(cell));
+        public virtual bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
         #endregion
 
         #region Topology
@@ -333,7 +334,18 @@ namespace Sylves
         #region Bounds
 
         public IBound GetBound() => bound;
-        public virtual IBound GetBound(IEnumerable<Cell> cells) => underlying.GetBound(cells);
+        public virtual IBound GetBound(IEnumerable<Cell> cells) 
+        {
+            var uBound = underlying.GetBound(cells.Select(c=>Split(c).cell));
+            var maxLayer = cells.Select(c => Split(c).layer).Max() + 1;
+            var minLayer = cells.Select(c => Split(c).layer).Min();
+            return new PlanarPrismBound
+            {
+                PlanarBound = uBound,
+                MinLayer = minLayer,
+                MaxLayer = maxLayer,
+            };
+        }
 
         public virtual IGrid BoundBy(IBound bound)
         {
@@ -368,6 +380,18 @@ namespace Sylves
                 {
                     yield return Combine(uCell, layer);
                 }
+            }
+        }
+        public virtual bool IsCellInBound(Cell cell, IBound bound)
+        {
+            if (bound is PlanarPrismBound ppb)
+            {
+                var (uCell, layer) = Split(cell);
+                return Underlying.IsCellInBound(uCell, ppb.PlanarBound) && ppb.MinLayer <= layer && layer < ppb.MaxLayer;
+            }
+            else
+            {
+                return true;
             }
         }
         #endregion

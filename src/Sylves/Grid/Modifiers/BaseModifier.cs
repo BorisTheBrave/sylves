@@ -56,6 +56,9 @@ namespace Sylves
         public virtual IEnumerable<Cell> GetCells() => underlying.GetCells();
 
         public virtual ICellType GetCellType(Cell cell) => underlying.GetCellType(cell);
+
+        public virtual bool IsCellInGrid(Cell cell) => Underlying.IsCellInGrid(cell);
+
         #endregion
 
         #region Topology
@@ -87,6 +90,7 @@ namespace Sylves
         public virtual IBound IntersectBounds(IBound bound, IBound other) => underlying.IntersectBounds(bound, other);
         public virtual IBound UnionBounds(IBound bound, IBound other) => underlying.UnionBounds(bound, other);
         public virtual IEnumerable<Cell> GetCellsInBounds(IBound bound) => underlying.GetCellsInBounds(bound);
+        public virtual bool IsCellInBound(Cell cell, IBound bound) => underlying.IsCellInBound(cell, bound);
         #endregion
 
         #region Position

@@ -55,7 +55,12 @@ namespace Sylves
 
         #region Cell info
 
+        public override IEnumerable<Cell> GetCells() => Underlying.GetCells().Select(fromUnderlying);
+
         public override ICellType GetCellType(Cell cell) => Underlying.GetCellType(toUnderlying(cell));
+
+        public override bool IsCellInGrid(Cell cell) => Underlying.IsCellInGrid(toUnderlying(cell));
+
         #endregion
 
         #region Topology
@@ -107,6 +112,8 @@ namespace Sylves
 
         #region Bounds
         public override IBound GetBound(IEnumerable<Cell> cells) => Underlying.GetBound(cells.Select(toUnderlying));
+
+        public override bool IsCellInBound(Cell cell, IBound bound) => Underlying.IsCellInBound(toUnderlying(cell), bound);
         #endregion
 
         #region Position

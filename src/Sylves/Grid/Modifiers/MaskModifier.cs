@@ -42,6 +42,7 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCells() => allCells ?? Underlying.GetCells().Where(containsFunc);
 
+        public override bool IsCellInGrid(Cell cell) => Underlying.IsCellInGrid(cell) && containsFunc(cell);
         #endregion
 
         #region Topology
@@ -54,6 +55,7 @@ namespace Sylves
 
         #region Bounds
         public override IEnumerable<Cell> GetCellsInBounds(IBound bound) => Underlying.GetCellsInBounds(bound).Where(containsFunc);
+        public override bool IsCellInBound(Cell cell, IBound bound) => Underlying.IsCellInBound(cell, bound) && containsFunc(cell);
         #endregion
 
         #region Query

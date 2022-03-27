@@ -80,6 +80,8 @@ namespace Sylves
         /// Returns the cell type associated with a given cell
         /// </summary>
         ICellType GetCellType(Cell cell);
+
+        bool IsCellInGrid(Cell cell);
         #endregion
 
         #region Topology
@@ -149,6 +151,8 @@ namespace Sylves
         IBound UnionBounds(IBound bound, IBound other);
         // TODO: Decide if this should return cells outside of grid.
         IEnumerable<Cell> GetCellsInBounds(IBound bound);
+        
+        bool IsCellInBound(Cell cell, IBound bound);
         #endregion
 
         #region Position

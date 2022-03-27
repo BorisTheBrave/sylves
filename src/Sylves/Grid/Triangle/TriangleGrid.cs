@@ -164,6 +164,7 @@ namespace Sylves
         {
             return cellType;
         }
+        public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
         #endregion
         #region Topology
 
@@ -420,6 +421,7 @@ namespace Sylves
             if (bound == null) throw new Exception("Cannot get cells in null bound as it is infinite");
             return (TriangleBound)bound;
         }
+        public bool IsCellInBound(Cell cell, IBound bound) => bound is TriangleBound tb ? tb.Contains(cell) : true;
         #endregion
 
         #region Position

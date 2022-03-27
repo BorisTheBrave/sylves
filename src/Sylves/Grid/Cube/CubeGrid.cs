@@ -92,6 +92,9 @@ namespace Sylves
         {
             return CubeCellType.Instance;
         }
+
+        public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
+
         #endregion
         #region Topology
 
@@ -250,6 +253,8 @@ namespace Sylves
             if (bound == null) throw new Exception("Cannot get cells in null bound as it is infinite");
             return (CubeBound)bound;
         }
+
+        public bool IsCellInBound(Cell cell, IBound bound) => bound is CubeBound cb ? cb.Contains(cell) : true;
         #endregion
 
         #region Position
