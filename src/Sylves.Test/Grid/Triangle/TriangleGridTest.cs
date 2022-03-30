@@ -11,6 +11,19 @@ namespace Sylves.Test
     {
         [Test]
         [TestCase(TriangleOrientation.FlatTopped)]
+        public void TestUpdown(TriangleOrientation orientation)
+        {
+            var h = new TriangleGrid(1, orientation);
+            CollectionAssert.AreEquivalent(
+                new[] { FTHexDir.Up, FTHexDir.DownLeft, FTHexDir.DownRight },
+                h.GetCellDirs(new Cell(1, 0, 0))
+                );
+
+            Assert.IsFalse(h.TryMove(new Cell(1, 0, 0), (CellDir)FTHexDir.Down, out var _, out var _, out var _));
+        }
+
+        [Test]
+        [TestCase(TriangleOrientation.FlatTopped)]
         [TestCase(TriangleOrientation.FlatSides)]
         public void TestRotation(TriangleOrientation orientation)
         {

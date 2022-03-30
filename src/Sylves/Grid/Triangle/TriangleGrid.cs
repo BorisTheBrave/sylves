@@ -234,7 +234,7 @@ namespace Sylves
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
-            return SquareCellType.Instance.GetCellDirs();
+            return cellType.GetCellDirs();
         }
 
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
