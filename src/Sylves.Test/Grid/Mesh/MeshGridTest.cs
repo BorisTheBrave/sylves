@@ -77,7 +77,7 @@ namespace Sylves.Test
             var g = new MeshGrid(meshData, options);
             var trs = g.GetTRS(new Cell());
             var v = trs.ToMatrix().MultiplyVector(Vector3.forward);
-            TestUtils.AssertAreEqual(Vector3.back, v);
+            TestUtils.AssertAreEqual(Vector3.back, v, 1e-6);
         }
     }
 }

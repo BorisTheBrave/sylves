@@ -102,7 +102,7 @@ namespace Sylves.Test
             var trs1 = cbg.GetTRS(cell1);
             var trs2 = cbg.GetTRS(cell2);
             var expectedRot = (trs2.ToMatrix() * trs1.ToMatrix().inverse);
-            expectedRot.column3 = new Vector4(0, 0, 0, 1);
+            expectedRot.SetColumn(3, new Vector4(0, 0, 0, 1));
             var actualRot = ((CubeRotation)destRotation).ToMatrix();
             // TODO: Revisit this
             //TestUtils.AssertAreEqual(expectedRot, actualRot, 1e-6);
