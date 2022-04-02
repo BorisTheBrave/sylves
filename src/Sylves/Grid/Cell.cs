@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 #if UNITY
 using UnityEngine;
 #endif
@@ -12,6 +13,7 @@ namespace Sylves
     /// </summary>
     public struct Cell : IEquatable<Cell>
     {
+        [DebuggerStepThrough]
         public Cell(int x, int y)
         {
             this.x = x;
@@ -19,6 +21,7 @@ namespace Sylves
             this.z = 0;
         }
 
+        [DebuggerStepThrough]
         public Cell(int x, int y, int z)
         {
             this.x = x;
