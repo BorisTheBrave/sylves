@@ -10,6 +10,7 @@ namespace Sylves.Test
     public class MeshGridTest
     {
         MeshData meshData;
+        MeshPrismOptions options;
         public MeshGridTest()
         {
             meshData = new MeshData();
@@ -36,6 +37,14 @@ namespace Sylves.Test
             meshData.vertices = vertices;
             meshData.indices = new[] { quads };
             meshData.topologies = new[] { MeshTopology.Quads };
+            meshData.RecalculateNormals();
+
+            options = new MeshPrismOptions
+            {
+                LayerHeight = 1,
+                MinLayer = 0,
+                MaxLayer = 2,
+            };
         }
 
         [Ignore("Never going to be supported?")]
@@ -52,6 +61,23 @@ namespace Sylves.Test
         {
             var g = new MeshGrid(meshData);
             GridTest.FindCell(g, new Cell());
+        }
+
+        [Test]
+        public void TestFindCellPrism()
+        {
+            var g = new MeshGrid(meshData, options);
+            GridTest.FindCell(g, new Cell(0, 0, 1));
+        }
+
+        [Test]
+        public void TestGetTRS()
+        {
+            // quad 0 points z-
+            var g = new MeshGrid(meshData, options);
+            var trs = g.GetTRS(new Cell());
+            var v = trs.ToMatrix().MultiplyVector(Vector3.forward);
+            TestUtils.AssertAreEqual(Vector3.back, v);
         }
     }
 }

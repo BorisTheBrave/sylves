@@ -44,10 +44,10 @@ namespace Sylves
                     var face = 0;
                     foreach (var faceIndices in MeshUtils.GetFaces(data, submesh))
                     {
-                        var cell = new Cell(face, submesh);
+                        var cell = new Cell(face, submesh, layer);
                         var deformation = MeshUtils.GetDeformation(data, meshPrismOptions.LayerHeight, meshPrismOptions.LayerOffset, meshPrismOptions.SmoothNormals, face, layer, submesh);
                         var count = faceIndices.Count;
-                        var cellType = count == 3 ? HexCellType.Get(HexOrientation.PointyTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
+                        var cellType = count == 4 ? CubeCellType.Instance : throw new NotImplementedException();
                         var trs = GetTRS(deformation, Vector3.zero);
                         cellData[cell] = new DataDrivenCellData
                         {

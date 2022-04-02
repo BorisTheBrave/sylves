@@ -28,9 +28,9 @@ namespace Sylves
                     var x2 = Mathf.Cos(theta2);
                     var y2 = Mathf.Sin(theta2);
                     vertices[x + (w + 1) * y] = new Vector3(
-                        x1 * radius1 + x1 * x2 * radius2 * (y - h / 2.0f),
-                        y1 * radius1 + y1 * y2 * radius2 * (y - h / 2.0f),
-                        0            +      y2 * radius2 * (y - h / 2.0f)
+                        x1 * radius1 + x1 * x2 * radius2 * 2* (y - h / 2.0f),
+                        y1 * radius1 + y1 * x2 * radius2 * 2* (y - h / 2.0f),
+                        0            +      y2 * radius2 * 2* (y - h / 2.0f)
                         );
 
                 }

@@ -28,6 +28,13 @@ namespace Sylves
             is2d = false;
         }
 
+        internal MeshGrid(DataDrivenData data, bool is2d) :
+            base(data)
+        {
+            meshDetails = BuildMeshDetails();
+            this.is2d = is2d;
+        }
+
         #region Impl
 
         private MeshDetails BuildMeshDetails()

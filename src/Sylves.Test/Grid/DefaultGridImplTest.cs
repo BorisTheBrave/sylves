@@ -64,8 +64,48 @@ namespace Sylves.Test
             Assert.AreEqual((CellRotation)SquareRotation.ReflectY, destRotation);
 
             // TODO: Make tests that deal with non trivial inverseDirs
-            // TODO: Make a test that works with rotating connecionts
+        }
 
+        [Test]
+        public void TestRotatingConnectionParallelTransport()
+        {
+            // Cubius grid is a 3d grid which has a rotating connection
+            var cbg = new CubiusGrid(100, 2);
+            var cg = new CubeGrid(1);
+            var cell1 = new Cell(99, 0, 1);
+            var cell2 = new Cell(0, 1, 1);
+            var rotation = CubeRotation.RotateZY;
+            // Check that cell1 connects to cell2
+            var success = DefaultGridImpl.ParallelTransport(cg, new Cell(0, 0, 0), new Cell(1, 0, 0), cbg, cell1, CubeRotation.Identity, out var destCell, out var destRotation);
+            Assert.IsTrue(success);
+            Assert.AreEqual(cell2, destCell);
+            Assert.AreEqual((CellRotation)rotation, destRotation);
+
+            // Check that the geometry actually matches the topology
+
+            // p2 should be the neartest of these cells to p1
+            var p1 = cbg.GetCellCenter(cell1);
+            var p2 = cbg.GetCellCenter(cell2);
+            var a1 = cbg.GetCellCenter(new Cell(99, 0, 0));
+            var b1 = cbg.GetCellCenter(new Cell(99, 0, 1));
+            var c1 = cbg.GetCellCenter(new Cell(99, 1, 1));
+            var d1 = cbg.GetCellCenter(new Cell(99, 1, 0));
+            Assert.IsTrue(
+                (p1 - p2).magnitude <= (a1 - p2).magnitude && 
+                (p1 - p2).magnitude <= (b1 - p2).magnitude && 
+                (p1 - p2).magnitude <= (c1 - p2).magnitude && 
+                (p1 - p2).magnitude <= (d1 - p2).magnitude
+                );
+
+            // destRotation should match the actual rotation difference
+            // This is only aproximage as there is some twisting between the cells
+            var trs1 = cbg.GetTRS(cell1);
+            var trs2 = cbg.GetTRS(cell2);
+            var expectedRot = (trs2.ToMatrix() * trs1.ToMatrix().inverse);
+            expectedRot.column3 = new Vector4(0, 0, 0, 1);
+            var actualRot = ((CubeRotation)destRotation).ToMatrix();
+            // TODO: Revisit this
+            //TestUtils.AssertAreEqual(expectedRot, actualRot, 1e-6);
 
         }
     }
