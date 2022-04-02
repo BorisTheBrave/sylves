@@ -15,7 +15,7 @@ namespace Sylves.Test
         {
             var h = new TriangleGrid(1, orientation);
             CollectionAssert.AreEquivalent(
-                new[] { FTHexDir.Up, FTHexDir.DownLeft, FTHexDir.DownRight },
+                new[] { (CellDir)FTHexDir.Up, (CellDir)FTHexDir.DownLeft, (CellDir)FTHexDir.DownRight },
                 h.GetCellDirs(new Cell(1, 0, 0))
                 );
 

@@ -21,13 +21,14 @@ namespace Sylves
             {
                 foreach (var r in ct.GetRotations(true))
                 {
-                    var start = new Cell(0, 0, 0);
-                    var startOffset = new Vector3Int(0, 0, 0);
-                    var endCell = grid.Move(start, dir).Value;
-                    var endOffset = (Vector3Int)endCell;
+                    var start = cell;
+                    var startOffset = (Vector3Int)cell;
+                    var endCell = grid.Move(start, dir);
+                    if (endCell == null) continue;
+                    var endOffset = (Vector3Int)endCell.Value;
                     var success = grid.TryMoveByOffset(start, startOffset, endOffset, r, out var destCell, out var destRotation);
-                    Assert.IsTrue(success, $"Dir = {dir}, Rot = {r}");
-                    var expectedDest = grid.Move(start, ct.Rotate(dir, r)).Value;
+                    var expectedSuccess = grid.TryMove(start, ct.Rotate(dir, r), out var expectedDest, out var _, out var _);
+                    Assert.AreEqual(expectedSuccess, success, $"Dir = {dir}, Rot = {r}");
                     Assert.AreEqual(expectedDest, destCell, $"Dir = {dir}, Rot = {r}");
                 }
             }

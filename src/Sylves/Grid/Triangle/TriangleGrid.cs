@@ -54,6 +54,11 @@ namespace Sylves
         private static readonly ICellType[] ftCellTypes = { HexCellType.Get(HexOrientation.FlatTopped) };
         private static readonly ICellType[] fsCellTypes = { HexCellType.Get(HexOrientation.PointyTopped) };
 
+        // Also used for PTHexDir Right, UpLeft, DownLeft
+        private static readonly CellDir[] cellDirsA = { (CellDir)FTHexDir.UpRight, (CellDir)FTHexDir.UpLeft, (CellDir)FTHexDir.Down };
+        // Also used for PTHexDir UpRight, Left, DownRight
+        private static readonly CellDir[] cellDirsB = { (CellDir)FTHexDir.Up, (CellDir)FTHexDir.DownLeft, (CellDir)FTHexDir.DownRight };
+
         readonly ICellType cellType;
 
         private readonly TriangleBound bound;
@@ -111,6 +116,12 @@ namespace Sylves
                 throw new GridInfiniteException();
             }
         }
+
+        public bool IsUp(Cell cell) => orientation == TriangleOrientation.FlatTopped && cell.x + cell.y + cell.z == 2;
+        public bool IsDown(Cell cell) => orientation == TriangleOrientation.FlatTopped && cell.x + cell.y + cell.z == 1;
+        public bool IsLeft(Cell cell) => orientation == TriangleOrientation.FlatSides && cell.x + cell.y + cell.z == 1;
+        public bool IsRight(Cell cell) => orientation == TriangleOrientation.FlatSides && cell.x + cell.y + cell.z == 2;
+        private bool IsUpOrLeft(Cell cell) => (orientation == TriangleOrientation.FlatSides) ^ (cell.x + cell.y + cell.z == 2);
 
         #region Basics
         public bool Is2D => true;
@@ -198,7 +209,7 @@ namespace Sylves
                 }
             }
             connection = new Connection();
-            return bound == null ? true : bound.Contains(dest);
+            return IsCellInGrid(dest);
         }
 
         public bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
@@ -229,12 +240,19 @@ namespace Sylves
                 case 5: offset = new Vector3Int(-offset.z, -offset.x, -offset.y); break;
             }
             destCell = startCell + offset;
-            return bound == null ? true : bound.Contains(destCell);
+            return IsCellInGrid(destCell);
         }
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
-            return cellType.GetCellDirs();
+            if (IsUpOrLeft(cell))
+            {
+                return cellDirsA;
+            }
+            else
+            {
+                return cellDirsB;
+            }
         }
 
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
@@ -421,7 +439,11 @@ namespace Sylves
             if (bound == null) throw new Exception("Cannot get cells in null bound as it is infinite");
             return (TriangleBound)bound;
         }
-        public bool IsCellInBound(Cell cell, IBound bound) => bound is TriangleBound tb ? tb.Contains(cell) : true;
+        public bool IsCellInBound(Cell cell, IBound bound)
+        {
+            var sum = cell.x + cell.y + cell.z;
+            return 1 <= sum && sum <= 2 && (bound is TriangleBound tb ? tb.Contains(cell) : true);
+        }
         #endregion
 
         #region Position
