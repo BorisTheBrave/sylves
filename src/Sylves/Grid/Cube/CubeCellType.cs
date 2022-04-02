@@ -75,6 +75,14 @@ namespace Sylves
             }
             var angle = Mathf.Atan2(y, x);
             var angleInt = Mathf.RoundToInt(angle / (Mathf.PI / 2));
+            if(isReflection)
+            {
+                angleInt = (-angleInt + 4) % 4;
+            }
+            else
+            {
+                angleInt = (angleInt + 4) % 4;
+            }
 
             connection = new Connection
             { 
@@ -97,7 +105,7 @@ namespace Sylves
             var m3 = Matrix4x4.Rotate(Quaternion.Euler(0, 0, connection.Rotation * 90));
             if(connection.Mirror)
             {
-                m3 = Matrix4x4.Scale(new Vector3(1, -1, 1)) * m3;
+                m3 = m3 * Matrix4x4.Scale(new Vector3(1, -1, 1));
             }
 
             // Transpose is equivalent to inverse in this context.
