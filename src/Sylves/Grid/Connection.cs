@@ -10,13 +10,33 @@ namespace Sylves
 
         public static Connection operator*(Connection a, Connection b)
         {
-            if (a.Rotation != 0 || b.Rotation != 0)
-                throw new NotImplementedException();
+            var n = a.Sides != 0 ? a.Sides : b.Sides;
+            int rotation;
+
+            if (n == 0)
+            {
+                rotation = 0;
+            }
+            else
+            {
+                // Same logic as NGonCellType
+                if (!a.Mirror)
+                {
+                    rotation = ((a.Rotation + b.Rotation) % n);
+                }
+                else
+                {
+                    rotation = ((n + a.Rotation - b.Rotation) % n);
+                }
+            }
 
             return new Connection
             {
+                Rotation = rotation,
                 Mirror = a.Mirror ^ b.Mirror,
+                Sides = n,
             };
+
         }
 
         public Connection GetInverse()
