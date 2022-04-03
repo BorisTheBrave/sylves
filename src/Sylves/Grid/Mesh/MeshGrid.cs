@@ -9,6 +9,9 @@ using static Sylves.VectorUtils;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Represents a 2d grid, where each cell corresponds to a face in a given mesh.
+    /// </summary>
     public class MeshGrid : DataDrivenGrid
     {
         private readonly MeshDetails meshDetails;
@@ -19,13 +22,6 @@ namespace Sylves
         {
             meshDetails = BuildMeshDetails();
             is2d = true;
-        }
-
-        public MeshGrid(MeshData meshData, MeshPrismOptions meshPrismOptions) :
-            base(MeshGridBuilder.Build(meshData, meshPrismOptions))
-        {
-            meshDetails = BuildMeshDetails();
-            is2d = false;
         }
 
         internal MeshGrid(DataDrivenData data, bool is2d) :

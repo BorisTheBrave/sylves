@@ -7,10 +7,11 @@ using UnityEngine;
 namespace Sylves.Test
 {
     [TestFixture]
-    public class MeshGridTest
+    public class MeshPrismGridTest
     {
         MeshData meshData;
-        public MeshGridTest()
+        MeshPrismOptions options;
+        public MeshPrismGridTest()
         {
             meshData = new MeshData();
             Vector3[] vertices = {
@@ -37,30 +38,27 @@ namespace Sylves.Test
             meshData.indices = new[] { quads };
             meshData.topologies = new[] { MeshTopology.Quads };
             meshData.RecalculateNormals();
-        }
 
-        [Ignore("Never going to be supported?")]
-        [Test]
-        public void TestTryMoveByOffset()
-        {
-            var g = new MeshGrid(meshData);
-            GridTest.TryMoveByOffset(g, new Cell());
+            options = new MeshPrismOptions
+            {
+                LayerHeight = 1,
+                MinLayer = 0,
+                MaxLayer = 2,
+            };
         }
-
 
         [Test]
         public void TestFindCell()
         {
-            var g = new MeshGrid(meshData);
-            GridTest.FindCell(g, new Cell());
+            var g = new MeshPrismGrid(meshData, options);
+            GridTest.FindCell(g, new Cell(0, 0, 1));
         }
-
 
         [Test]
         public void TestGetTRS()
         {
             // quad 0 points z-
-            var g = new MeshGrid(meshData);
+            var g = new MeshPrismGrid(meshData, options);
             var trs = g.GetTRS(new Cell());
             var v = trs.ToMatrix().MultiplyVector(Vector3.forward);
             TestUtils.AssertAreEqual(Vector3.back, v, 1e-6);

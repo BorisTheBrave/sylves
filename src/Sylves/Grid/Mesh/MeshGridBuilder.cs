@@ -9,6 +9,10 @@ using static Sylves.VectorUtils;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Class contains utiliites for analysing a MeshData, specifically
+    /// for use with MeshGrid.
+    /// </summary>
     internal static class MeshGridBuilder
     {
         public static DataDrivenData Build(MeshData meshData)
