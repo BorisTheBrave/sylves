@@ -7,11 +7,7 @@ namespace Sylves
 {
     public static class QuadInterpolation
     {
-        /// <summary>
-        /// Sets up a function that does trilinear interpolation from a unit cube centered on the origin
-        /// to a cube made by extruding a given face of the mesh by meshOffset1 (for y=-0.5) and meshOffset2 (for y=0.5)
-        /// </summary>
-        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face, float meshOffset1, float meshOffset2)
+        public static void GetCorners(MeshData mesh, int submesh, int face, float meshOffset1, float meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Quads)
             {
@@ -27,19 +23,27 @@ namespace Sylves
             var i4 = indices[face * 4 + 3];
             // Find new bounding cage
 
-            var v1 = vertices[i1] + normals[i1] * meshOffset1;
-            var v2 = vertices[i2] + normals[i2] * meshOffset1;
-            var v3 = vertices[i3] + normals[i3] * meshOffset1;
-            var v4 = vertices[i4] + normals[i4] * meshOffset1;
-            var v5 = vertices[i1] + normals[i1] * meshOffset2;
-            var v6 = vertices[i2] + normals[i2] * meshOffset2;
-            var v7 = vertices[i3] + normals[i3] * meshOffset2;
-            var v8 = vertices[i4] + normals[i4] * meshOffset2;
+            v1 = vertices[i1] + normals[i1] * meshOffset1;
+            v2 = vertices[i2] + normals[i2] * meshOffset1;
+            v3 = vertices[i3] + normals[i3] * meshOffset1;
+            v4 = vertices[i4] + normals[i4] * meshOffset1;
+            v5 = vertices[i1] + normals[i1] * meshOffset2;
+            v6 = vertices[i2] + normals[i2] * meshOffset2;
+            v7 = vertices[i3] + normals[i3] * meshOffset2;
+            v8 = vertices[i4] + normals[i4] * meshOffset2;
+        }
 
+        /// <summary>
+        /// Sets up a function that does trilinear interpolation from a unit cube centered on the origin
+        /// to a cube made by extruding a given face of the mesh by meshOffset1 (for y=-0.5) and meshOffset2 (for y=0.5)
+        /// </summary>
+        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face, float meshOffset1, float meshOffset2)
+        {
+            GetCorners(mesh, submesh, face, meshOffset1, meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8);
             return Interpolate(v1, v2, v3, v4, v5, v6, v7, v8);
         }
 
-        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face)
+        public static void GetCorners(MeshData mesh, int submesh, int face, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Quads)
             {
@@ -48,17 +52,20 @@ namespace Sylves
 
             var indices = mesh.GetIndices(submesh);
             var vertices = mesh.vertices;
-            var normals = mesh.normals;
             var i1 = indices[face * 4 + 0];
             var i2 = indices[face * 4 + 1];
             var i3 = indices[face * 4 + 2];
             var i4 = indices[face * 4 + 3];
 
-            var v1 = vertices[i1];
-            var v2 = vertices[i2];
-            var v3 = vertices[i3];
-            var v4 = vertices[i4];
+            v1 = vertices[i1];
+            v2 = vertices[i2];
+            v3 = vertices[i3];
+            v4 = vertices[i4];
+        }
 
+        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face)
+        {
+            GetCorners(mesh, submesh, face, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4);
             return Interpolate(v1, v2, v3, v4);
         }
 

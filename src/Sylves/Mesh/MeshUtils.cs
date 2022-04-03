@@ -50,6 +50,19 @@ namespace Sylves
             return mesh;
         }
 
+        internal static bool IsPointInCube(Vector3 p, Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 v5, Vector3 v6, Vector3 v7, Vector3 v8)
+        {
+            // Assumes the "cube" at least is convex and has planar edges. Otherwise, a more robost routing is needed
+            bool Check(Vector3 a, Vector3 b, Vector3 c) => Vector3.Dot(Vector3.Cross((b - a), (c - a)), (p - a)) >= 0;
+            if (!Check(v1, v2, v3)) return false;// Down
+            if (!Check(v7, v6, v5)) return false;// Up
+            if (!Check(v5, v6, v1)) return false;// Left
+            if (!Check(v7, v8, v4)) return false;// Right
+            if (!Check(v1, v4, v8)) return false;// Forward
+            if (!Check(v6, v7, v3)) return false;// Back
+            return true;
+        }
+
         /// <summary>
         /// Returns a deformation that transforms from cell co-ordinates to a prism defined by the mesh and the given parameters.
         /// For quad meshes, cell co-ordinates is a unit cube centered at the origin.

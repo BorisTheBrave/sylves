@@ -23,10 +23,6 @@
     <ProjectReference Include="..\Sylves\Sylves.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mesh\" />
-  </ItemGroup>
-
   <PropertyGroup Condition=" '$(Configuration)' == 'UnityRelease' ">
     <DefineConstants>UNITY</DefineConstants>
   </PropertyGroup>
