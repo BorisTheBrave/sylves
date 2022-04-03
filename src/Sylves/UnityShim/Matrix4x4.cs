@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 
 namespace Sylves
 {
@@ -29,6 +28,7 @@ namespace Sylves
         public Vector4 column2; 
         public Vector4 column3;
 
+        [DebuggerStepThrough]
         public Matrix4x4(Vector4 column0, Vector4 column1, Vector4 column2, Vector4 column3)
         {
             this.column0 = column0;

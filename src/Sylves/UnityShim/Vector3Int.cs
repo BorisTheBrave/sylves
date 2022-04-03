@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 
 namespace Sylves
 {
 #if !UNITY
     public struct Vector3Int : IEquatable<Vector3Int>
     {
+        [DebuggerStepThrough]
         public Vector3Int(int x, int y, int z)
         {
             this.x = x;

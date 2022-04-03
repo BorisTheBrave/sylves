@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Sylves
 {
 #if !UNITY
     public struct Vector2
     {
+        [DebuggerStepThrough]
         public Vector2(float x, float y)
         {
             this.x = x;

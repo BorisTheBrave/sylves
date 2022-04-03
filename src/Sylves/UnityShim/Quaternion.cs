@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 
 namespace Sylves
 {
@@ -12,6 +11,7 @@ namespace Sylves
         public float z;
         public float w;
 
+        [DebuggerStepThrough]
         public Quaternion(float x, float y, float z, float w)
         {
             this.x = x;
