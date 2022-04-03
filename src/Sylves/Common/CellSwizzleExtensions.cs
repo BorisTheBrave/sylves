@@ -4,7 +4,7 @@ using UnityEngine;
 #endif
 
 
-namespace Sylves.Common
+namespace Sylves
 {
     public static class CellSwizzleExtensions
     {

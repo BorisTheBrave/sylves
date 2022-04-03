@@ -60,7 +60,7 @@ namespace Sylves
         }
         public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face)
         {
-            GetCorners(mesh, submesh, face, out Vector3 v1, out Vector3 v2, out Vector3 v3;
+            GetCorners(mesh, submesh, face, out Vector3 v1, out Vector3 v2, out Vector3 v3);
             return Interpolate(v1, v2, v3);
         }
 

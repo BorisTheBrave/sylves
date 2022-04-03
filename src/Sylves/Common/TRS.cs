@@ -14,6 +14,13 @@ namespace Sylves
     /// </summary>
     public class TRS
     {
+        public TRS()
+        {
+            Position = Vector3.zero;
+            Rotation = Quaternion.identity;
+            Scale = Vector3.one;
+        }
+
         public TRS(Vector3 position, Quaternion rotation, Vector3 scale)
         {
             Position = position;
