@@ -335,7 +335,7 @@ namespace Sylves
             var squareRotation = (SquareRotation)cellRotation;
             var srcBound = GetBound(src);
             var srcMin = src.Select(ToVector2Int).Aggregate(Vector2Int.Min);
-            var srcMax = src.Select(ToVector2Int).Aggregate(Vector2Int.Max) - Vector2Int.one;
+            var srcMax = src.Select(ToVector2Int).Aggregate(Vector2Int.Max);
             var r1 = squareRotation * srcMin;
             var r2 = squareRotation * srcMax;
             var newMin = Vector2Int.Min(r1, r2);

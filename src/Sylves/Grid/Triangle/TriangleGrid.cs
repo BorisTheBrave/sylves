@@ -591,7 +591,7 @@ namespace Sylves
             var cubeRotation = (HexRotation)cellRotation;
             var srcBound = GetBound(src);
             var srcMin = src.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Min);
-            var srcMax = src.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Max) - Vector3Int.one;
+            var srcMax = src.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Max);
             var r1 = cubeRotation.Multiply(srcMin);
             var r2 = cubeRotation.Multiply(srcMax);
             var newMin = Vector3Int.Min(r1, r2);

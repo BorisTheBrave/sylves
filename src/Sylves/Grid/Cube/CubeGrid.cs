@@ -204,8 +204,8 @@ namespace Sylves
         {
             var x = index % bound.size.x;
             var r = index / bound.size.x;
-            var y = index % bound.size.y;
-            var z = index / bound.size.y;
+            var y = r % bound.size.y;
+            var z = r / bound.size.y;
             return new Cell(x + bound.min.x, y + bound.min.y, z + bound.min.z);
         }
         #endregion
@@ -344,7 +344,7 @@ namespace Sylves
             var cubeRotation = (CubeRotation)cellRotation;
             var srcBound = GetBound(src);
             var srcMin = src.Select(ToVector3Int).Aggregate(Vector3Int.Min);
-            var srcMax = src.Select(ToVector3Int).Aggregate(Vector3Int.Max) - Vector3Int.one;
+            var srcMax = src.Select(ToVector3Int).Aggregate(Vector3Int.Max);
             var r1 = cubeRotation * srcMin;
             var r2 = cubeRotation * srcMax;
             var newMin = Vector3Int.Min(r1, r2);

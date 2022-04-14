@@ -50,6 +50,7 @@ namespace Sylves
                     {
                         var cell = new Cell(face, submesh, layer);
                         var deformation = MeshUtils.GetDeformation(data, meshPrismOptions.LayerHeight, meshPrismOptions.LayerOffset, meshPrismOptions.SmoothNormals, face, layer, submesh);
+                        deformation = deformation * CellSwizzle.XZY.ToMatrix();
                         var count = faceIndices.Count;
                         var cellType = count == 4 ? CubeCellType.Instance : throw new NotImplementedException();
                         var trs = GetTRS(deformation, Vector3.zero);

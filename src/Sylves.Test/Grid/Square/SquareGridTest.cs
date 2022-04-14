@@ -51,5 +51,14 @@ namespace Sylves.Test
             Assert.AreEqual(new Cell(10, 3, 0), dest);
             Assert.AreEqual(s.Rotation, r);
         }
+
+
+
+        [Test]
+        public void TestFindGridSymmetry()
+        {
+            var g = new SquareGrid(1);
+            GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
+        }
     }
 }

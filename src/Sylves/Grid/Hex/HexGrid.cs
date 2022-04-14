@@ -453,17 +453,18 @@ namespace Sylves
 
         public GridSymmetry FindGridSymmetry(ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation)
         {
-            var cubeRotation = (HexRotation)cellRotation;
-            var srcBound = GetBound(src);
+            var hexRotation = (HexRotation)cellRotation;
             var srcMin = src.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Min);
-            var srcMax = src.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Max) - Vector3Int.one;
-            var r1 = cubeRotation.Multiply(srcMin);
-            var r2 = cubeRotation.Multiply(srcMax);
+            var srcMax = src.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Max);
+            var r1 = hexRotation.Multiply(srcMin);
+            var r2 = hexRotation.Multiply(srcMax);
             var newMin = Vector3Int.Min(r1, r2);
             var destMin = dest == src ? srcMin : dest.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Min);
             var translation = destMin - newMin;
+            var a = src.Select(c => (Cell)(translation + hexRotation.Multiply((Vector3Int)(c)))).ToList();
+            var b = a.Select(dest.Contains).ToList();
             // Check it actually works
-            if (!src.Select(c => (Cell)(translation + cubeRotation.Multiply((Vector3Int)(c)))).All(dest.Contains))
+            if (!src.Select(c => (Cell)(translation + hexRotation.Multiply((Vector3Int)(c)))).All(dest.Contains))
             {
                 return null;
             }

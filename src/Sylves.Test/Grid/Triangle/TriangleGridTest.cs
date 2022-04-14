@@ -84,5 +84,16 @@ namespace Sylves.Test
 
             GridTest.FindBasicPath(t, new Cell(1, 0, 1), new Cell(10, -5, -4));
         }
+
+
+
+        [Test]
+        [TestCase(TriangleOrientation.FlatTopped)]
+        [TestCase(TriangleOrientation.FlatSides)]
+        public void TestFindGridSymmetry(TriangleOrientation orientation)
+        {
+            var g = new TriangleGrid(1, orientation);
+            GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
+        }
     }
 }

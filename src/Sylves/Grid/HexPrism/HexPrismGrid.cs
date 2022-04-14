@@ -27,7 +27,7 @@ namespace Sylves
         private readonly int hexGridIndexCount;
 
         public HexPrismGrid(float cellSize, float layerHeight, HexOrientation orientation = HexOrientation.PointyTopped, HexPrismBound bound = null)
-            : this(cellSize * (orientation == HexOrientation.PointyTopped ? new Vector3(Sqrt3 / 2, 1, layerHeight) : new Vector3(1, Sqrt3 / 2, layerHeight)), orientation, bound)
+            : this((orientation == HexOrientation.PointyTopped ? new Vector3(cellSize * Sqrt3 / 2, cellSize, layerHeight) : new Vector3(cellSize, cellSize * Sqrt3 / 2, layerHeight)), orientation, bound)
         {
         }
 
@@ -122,7 +122,7 @@ namespace Sylves
 
         private ISet<Cell> ToUnderlying(ISet<Cell> cells, int layer)
         {
-            return new BijectSet(cells, c => Split(c).cell, c => Combine(c, layer));
+            return new HashSet<Cell>(cells.Select(c => Split(c).cell));
         }
 
         private GridSymmetry FromPlanar(GridSymmetry s, int layerOffset)
@@ -373,7 +373,7 @@ namespace Sylves
             var (uSrcCell, layer) = Split(srcCell);
 
             var uSrc = ToUnderlying(src, 0);
-            var uDest = ToUnderlying(dest, 0);
+            var uDest = src == dest ? uSrc : ToUnderlying(dest, 0);
             var s = hexGrid.FindGridSymmetry(uSrc, uDest, uSrcCell, cellRotation);
             if (s == null)
             {

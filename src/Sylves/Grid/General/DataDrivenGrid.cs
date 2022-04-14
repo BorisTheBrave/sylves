@@ -11,7 +11,6 @@ namespace Sylves
     {
         public TRS TRS { get; set; }
         public Deformation Deformation { get; set; }
-
         public ICellType CellType { get; set; }
     }
 

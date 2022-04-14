@@ -1,9 +1,7 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves.Test
 {
@@ -14,6 +12,7 @@ namespace Sylves.Test
         public void TestIsPointInCube()
         {
             var plane = TestMeshes.PlaneXY;
+
             QuadInterpolation.GetCorners(plane, 0, 0, -.5f, .5f, out var v1, out var v2, out var v3, out var v4, out var v5, out var v6, out var v7, out var v8);
             bool IsPointInCube(Vector3 p) => MeshUtils.IsPointInCube(p, v1, v2, v3, v4, v5, v6, v7, v8);
 

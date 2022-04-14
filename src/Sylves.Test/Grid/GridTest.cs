@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 #if UNITY
 using UnityEngine;
 #endif
@@ -78,6 +79,17 @@ namespace Sylves
                     Assert.AreEqual(rotation, rotation2, $"{dir} {rotation}");
                 }
             }
+        }
+
+        public static void FindGridSymmetry(IGrid grid, Cell cell)
+        {
+            var cells = new HashSet<Cell>(new[] { cell });
+            var cellType = grid.GetCellType(cell);
+            var s = grid.FindGridSymmetry(cells, cells, new Cell(), cellType.GetIdentity());
+            Assert.IsNotNull(s);
+            Assert.AreEqual(cellType.GetIdentity(), s.Rotation);
+            Assert.AreEqual(cell, s.Src);
+            Assert.AreEqual(cell, s.Dest);
         }
     }
 }

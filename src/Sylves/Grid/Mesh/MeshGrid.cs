@@ -15,13 +15,15 @@ namespace Sylves
     public class MeshGrid : DataDrivenGrid
     {
         private readonly MeshDetails meshDetails;
-        private bool is2d;
+        protected readonly MeshData meshData;
+        protected bool is2d;
 
         public MeshGrid(MeshData meshData) :
             base(MeshGridBuilder.Build(meshData))
         {
             meshDetails = BuildMeshDetails();
             is2d = true;
+            this.meshData = meshData;
         }
 
         internal MeshGrid(DataDrivenData data, bool is2d) :
@@ -102,6 +104,7 @@ namespace Sylves
         #endregion
 
         #region Query
+
 
         private bool IsPointInCell(Vector3 position, Cell cell)
         {
@@ -195,6 +198,27 @@ namespace Sylves
                         }
                     }
                 }
+            }
+        }
+        #endregion
+
+        #region Shape
+        protected IReadOnlyList<int> GetBaseFaceIndices(Cell cell)
+        {
+            var (face, submesh, layer) = (cell.x, cell.y, cell.z);
+            var topology = meshData.GetTopology(submesh);
+            if (topology == MeshTopology.Triangles)
+            {
+                return new ArraySegment<int>(meshData.indices[submesh], face * 3, 3);
+            }
+            else if (topology == MeshTopology.Quads)
+            {
+                return new ArraySegment<int>(meshData.indices[submesh], face * 4, 4);
+
+            }
+            else
+            {
+                throw new Exception($"Unsupported topology {topology}");
             }
         }
         #endregion

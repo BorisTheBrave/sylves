@@ -99,5 +99,12 @@ namespace Sylves.Test
             Assert.AreEqual(new Cell(10, -7, -3), dest);
             Assert.AreEqual(s.Rotation, r);
         }
+
+        [Test]
+        public void TestFindGridSymmetry()
+        {
+            var g = new HexGrid(1);
+            GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
+        }
     }
 }
