@@ -95,6 +95,11 @@ namespace Sylves
             return DefaultGridImpl.TryMoveByOffset(this, startCell, startOffset, destOffset, startRotation, out destCell, out destRotation);
         }
 
+        public virtual bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
+        {
+            return DefaultGridImpl.ParallelTransport(aGrid, aSrcCell, aDestCell, this, srcCell, startRotation, out destCell, out destRotation);
+        }
+
         // TODO: Do we want to enhance this?
         public IEnumerable<CellDir> GetCellDirs(Cell cell) => GetCellType(cell).GetCellDirs();
 

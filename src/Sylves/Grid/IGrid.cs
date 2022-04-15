@@ -104,6 +104,27 @@ namespace Sylves
         /// </summary>
         bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation);
 
+
+        /// <summary>
+        /// Given a path in aGrid from aSrcCell to aDestCell
+        /// follows the same path in the current grid, starting at srcCell, and with the whole path rotated by startRotation.
+        /// Reports the final spot that the path ends at, and it's rotation.
+        /// Returns false if this cannot be done (typically because an equivalent pathc annot be found in the grid).
+        /// 
+        /// This method is useful for translating co-ordinates between different grids that are similarish, at least having the same celltypes.
+        /// For example, suppose
+        ///   aGrid = new SquareGrid(1);
+        ///   aSrcCell = new Cell(0, 0)
+        ///   aDestCell = new Cell(5, 0)
+        ///   srcCell = new Cell(100, 100)
+        ///   startRotation = identity
+        /// 
+        /// Then the path in aGrid is a straight line moving 5 units to the right,
+        /// and this method would attempt to move 5 units in the straight line that leads right out of (100, 100).
+        /// </summary>
+        bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation);
+
+
         /// <summary>
         /// Returns directions we might expect TryMove to work for.
         /// This usually just forwards to <see cref="ICellType.GetCellDirs()"/>

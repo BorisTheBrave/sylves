@@ -55,6 +55,20 @@ namespace Sylves
             destCell = dest2 ?? default;
             return dest2 != null;
         }
+
+        public override bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
+        {
+            if(!unboundedUnderlying.ParallelTransport(aGrid, aSrcCell, aDestCell, srcCell, startRotation, out var dest1, out destRotation))
+            {
+                destCell = default;
+                return false;
+            }
+            var dest2 = canonicalize(dest1);
+            destCell = dest2 ?? default;
+            return dest2 != null;
+        }
+
+
         #endregion
 
 

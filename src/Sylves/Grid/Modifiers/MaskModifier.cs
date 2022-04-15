@@ -51,6 +51,11 @@ namespace Sylves
 
         public override bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation) => Underlying.TryMoveByOffset(startCell, startOffset, destOffset, startRotation, out destCell, out destRotation) && containsFunc(destCell);
 
+        public override bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
+        {
+            return Underlying.ParallelTransport(aGrid, aSrcCell, aDestCell, srcCell, startRotation, out destCell, out destRotation) && containsFunc(destCell);
+        }
+
         #endregion
 
         #region Bounds

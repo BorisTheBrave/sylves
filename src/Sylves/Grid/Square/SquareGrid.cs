@@ -147,6 +147,12 @@ namespace Sylves
             return bound == null ? true : bound.Contains(destCell);
         }
 
+        public bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
+        {
+            // TODO: Recognize SquareGrids
+            return DefaultGridImpl.ParallelTransport(aGrid, aSrcCell, aDestCell, this, srcCell, startRotation, out destCell, out destRotation);
+        }
+
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
             return SquareCellType.Instance.GetCellDirs();

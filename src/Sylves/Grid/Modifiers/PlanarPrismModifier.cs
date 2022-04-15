@@ -263,6 +263,11 @@ namespace Sylves
             throw new NotImplementedException();
         }
 
+        public virtual bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
+        {
+            return DefaultGridImpl.ParallelTransport(aGrid, aSrcCell, aDestCell, this, srcCell, startRotation, out destCell, out destRotation);
+        }
+
         public virtual IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
             foreach (var dir in underlying.GetCellDirs(cell))

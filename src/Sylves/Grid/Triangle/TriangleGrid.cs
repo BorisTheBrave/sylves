@@ -243,6 +243,12 @@ namespace Sylves
             return IsCellInGrid(destCell);
         }
 
+        public virtual bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
+        {
+            // TODO: Recognize TriangleGrid
+            return DefaultGridImpl.ParallelTransport(aGrid, aSrcCell, aDestCell, this, srcCell, startRotation, out destCell, out destRotation);
+        }
+
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
             if (IsUpOrLeft(cell))

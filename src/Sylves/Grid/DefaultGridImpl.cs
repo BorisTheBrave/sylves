@@ -28,47 +28,49 @@ namespace Sylves
             throw new NotImplementedException();
         }
 
-        public static bool ParallelTransport(IGrid srcGrid, Cell srcStartCell, Cell srcDestCell, IGrid destGrid, Cell destStartCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
+        public static bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, IGrid bGrid, Cell bSrcCell, CellRotation startRotation, out Cell bDestCell, out CellRotation destRotation)
         {
-            destCell = destStartCell;
+            bDestCell = bSrcCell;
             destRotation = startRotation;
 
-            var path = srcGrid.FindBasicPath(srcStartCell, srcDestCell);
+            var path = aGrid.FindBasicPath(aSrcCell, aDestCell);
             if(path == null)
             {
                 return false;
             }
-            var checkCellTypes = !srcGrid.IsSingleCellType || !destGrid.IsSingleCellType;
+            // Fast track checking cell types in a simple case
+            var checkCellTypes = !aGrid.IsSingleCellType || !bGrid.IsSingleCellType;
             ICellType cellType = null;
-            if(!checkCellTypes && (cellType = srcGrid.GetCellTypes().First()) != destGrid.GetCellTypes().First())
+            if(!checkCellTypes && (cellType = aGrid.GetCellTypes().First()) != bGrid.GetCellTypes().First())
             {
                 return false;
             }
-            foreach(var (srcCell, srcDir) in path)
+            // For each step of the path, recreate the same step in the right grid.
+            foreach(var (aCell, aDir) in path)
             {
-                // Check both src/dest are on compatible cell types
-                if(checkCellTypes && (cellType = srcGrid.GetCellType(srcCell)) != destGrid.GetCellType(destCell))
+                // Check both a/b are on compatible cell types
+                if(checkCellTypes && (cellType = aGrid.GetCellType(aCell)) != bGrid.GetCellType(bDestCell))
                 {
                     return false;
                 }
-                // Move in src grid
-                if (!srcGrid.TryMove(srcCell, srcDir, out _, out var srcInverseDir, out var srcConnection))
+                // Move in a grid (to get inversedir/connection)
+                if (!aGrid.TryMove(aCell, aDir, out _, out var aInverseDir, out var aConnection))
                 {
                     return false;
                 }
 
-                // Move in dest grid
-                cellType.Rotate(srcDir, destRotation, out var destDir, out var middleConnection);
-                if(!destGrid.TryMove(destCell, destDir, out destCell, out var destInverseDir, out var destConnection))
+                // Move in b grid
+                cellType.Rotate(aDir, destRotation, out var bDir, out var middleConnection);
+                if(!bGrid.TryMove(bDestCell, bDir, out bDestCell, out var bInverseDir, out var bConnection))
                 {
                     return false;
                 }
 
                 // Overall connection from next src to next dest
-                var connection = destConnection * middleConnection * srcConnection.GetInverse();
-                var nextCellType = destGrid.GetCellType(destCell);// TODO: Avoid calling GetCellType so frequently?
+                var connection = bConnection * middleConnection * aConnection.GetInverse();
+                var nextCellType = bGrid.GetCellType(bDestCell);// TODO: Avoid calling GetCellType so frequently?
 
-                if(!nextCellType.TryGetRotation(srcInverseDir, destInverseDir, connection, out destRotation))
+                if(!nextCellType.TryGetRotation(aInverseDir, bInverseDir, connection, out destRotation))
                 {
                     return false;
                 }

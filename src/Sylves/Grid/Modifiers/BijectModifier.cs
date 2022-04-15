@@ -93,6 +93,20 @@ namespace Sylves
             }
         }
 
+        public override bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
+        {
+            if(Underlying.ParallelTransport(aGrid, aSrcCell, aDestCell, toUnderlying(srcCell), startRotation, out var destUCell, out destRotation))
+            {
+                destCell = fromUnderlying(destUCell);
+                return true;
+            }
+            else
+            {
+                destCell = default;
+                return false;
+            }
+        }
+
         public override IEnumerable<CellDir> GetCellDirs(Cell cell) => Underlying.GetCellDirs(toUnderlying(cell));
 
         public override IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
