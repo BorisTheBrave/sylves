@@ -1,10 +1,26 @@
 - name: Introduction
   href: intro.md
 - name: Concepts
-  href: concepts.md
-- name: Grids
-  href: grids.md
+  items:
+    -  name: Intro
+       href: concepts/intro.md
+    -  name: Topology
+       href: concepts/topology.md
+    -  name: Space
+       href: concepts/space.md
+    -  name: Bounds
+       href: concepts/bounds.md
+    -  name: Storage
+       href: concepts/storage.md
+    -  name: Rotation
+       href: concepts/rotation.md
+    -  name: Symmetry
+       href: concepts/grid_symmetry.md
 - name: Tutorials
   items:
     -  name: Langton's Ant
        href: tutorials/langton.md
+- name: All Grids
+  href: all_grids.md
+- name: Creating Grids
+  href: creating.md

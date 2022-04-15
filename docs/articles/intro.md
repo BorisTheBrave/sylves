@@ -8,6 +8,9 @@ A: Sure, if you only care about *square* grids. Sylves defines a "grid" much mor
 
 Further:
 
-* All grids in Sylves shares a common interface, [IGrid](concepts.md#grids-and-cells), so algorithms can be written once and work on any grid. 
+* Sylves supports a [wide range of different grids](all_grids.md)
+* All grids in Sylves shares a common interface, [IGrid](concepts/intro.md), so algorithms can be written once and work on any grid. 
 * Sylves handles many of the fiddlier grid operations, such as ...
-* Sylves comes with a sophisticated notion of direction and [rotation](concepts.md#rotation)
+* Sylves comes with a sophisticated notion of direction and [rotation](concepts/rotation.md)
+
+Read on to learn about the [basic concepts of Sylves](concepts.intro.md).
