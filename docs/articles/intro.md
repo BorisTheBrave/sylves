@@ -1,6 +1,6 @@
 # Introduction
 
-Sylves is a C# library for handling computations relating to grids, for games and procedural generation.
+Sylves is a C# library for handling maths relating to grids, for games and procedural generation.
 
 Q: Isn't working with grids easy? It's basically a 2d array.
 
@@ -13,4 +13,4 @@ Further:
 * Sylves handles many of the fiddlier grid operations, such as ...
 * Sylves comes with a sophisticated notion of direction and [rotation](concepts/rotation.md)
 
-Read on to learn about the [basic concepts of Sylves](concepts/intro.md).
+Read on to learn about the **[basic concepts of Sylves](concepts/intro.md)**.

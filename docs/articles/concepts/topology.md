@@ -22,3 +22,10 @@ and gives some information on the edge traversed, `inverseDir` and `connection`.
 With `TryMove` defined, an algorithm can explore the entire grid, one cell at a time.
 
 To make `TryMove` a bit easier to use, there is also `Move` which has a simpler signature, and the [`Walker`](xref:Sylves.Walker) class, which represents a object standing on a given cell facing a given direction.
+
+
+## ParallelTransport
+
+...
+
+Note: If there is only one grid involved, it's often simpler to use [grid symmetries](grid_symmetry.md).
