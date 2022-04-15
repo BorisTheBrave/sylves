@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Sylves
 {
-    class CubiusGrid : MeshGrid
+    public class CubiusGrid : MeshGrid
     { 
         public CubiusGrid(int width, int height, float outerRadius = 10, float innerRadius = 3)
             :base(MakeData(width, height, outerRadius, innerRadius), false)

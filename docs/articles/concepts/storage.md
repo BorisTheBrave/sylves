@@ -15,4 +15,4 @@ You can also store the data in a 1d array. This is the most convenient method fo
 
 `IGrid` comes with methods [`GetIndex`](xref:Sylves.IGrid.GetIndex(Sylves.Cell)) and [`GetCellByIndex`](xref:Sylves.IGrid.GetCellByIndex(System.Int32)) that convert a `Cell` object to a `int` suitable for use in a compact array. Property `IndexCount` gives the size of the array needed to fully contain the grid.
 
-Note that these index methods only work on finite grids. You may need to apply a [bound](#bounds) to a infinite grid to filter them to a finite set of cells.
+Note that these index methods only work on finite grids. You may need to apply a [bound](bounds.md) to a infinite grid to filter them to a finite set of cells.

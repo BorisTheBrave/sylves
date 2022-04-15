@@ -13,4 +13,4 @@ Further:
 * Sylves handles many of the fiddlier grid operations, such as ...
 * Sylves comes with a sophisticated notion of direction and [rotation](concepts/rotation.md)
 
-Read on to learn about the [basic concepts of Sylves](concepts.intro.md).
+Read on to learn about the [basic concepts of Sylves](concepts/intro.md).

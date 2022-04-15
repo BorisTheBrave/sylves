@@ -67,6 +67,6 @@ Modifier grids let you customize an existing grid by systematically changing it 
 
 These grids don't classify neatly and usually serve as demos for various features.
 
-<xref:Sylves.MobiusGrid>
+<xref:Sylves.MobiusSquareGrid>
 <xref:Sylves.CubiusGrid>
 <xref:Sylves.WrappingSquareGrid>

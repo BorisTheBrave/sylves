@@ -16,6 +16,7 @@ the specific class that grid uses is documented with the grid. The classes are u
 * [`GetBound`](xref:Sylves.IGrid.GetBound(System.Collections.Generic.IEnumerable{Sylves.Cell})) - finds the smallest bound that contains all the given cells
 * [`GetCellsInBounds`](xref:Sylves.IGrid.GetCellsInBounds(Sylves.IBound)) - finds all the cells inside a bound
 * [`IsCellInBound`](xref:Sylves.IGrid.IsCellInBound(Sylves.Cell,Sylves.IBound)) - tests if a given cell is inside a bound.
+* [`IntersectBounds`](xref:Sylves.IGrid.IntersectBounds(Sylves.IBound,Sylves.IBound))/[`UnionBounds`](xref:Sylves.IGrid.UnionBounds(Sylves.IBound,Sylves.IBound)) - combines two bounds into one.
 
 Most of these methods will also accept a `null` bound, meaning the entire grid.
 

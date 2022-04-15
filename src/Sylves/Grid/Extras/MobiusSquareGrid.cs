@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Sylves
 {
-    class MobiusSquareGrid : MeshGrid
+    public class MobiusSquareGrid : MeshGrid
     { 
         public MobiusSquareGrid(int width, int height)
             :base(MakeMeshData(width, height))
