@@ -5,8 +5,12 @@ using UnityEngine;
 
 namespace Sylves
 {
-    // Triangle space is defined as a XZ oriented std equilateral triangle of size sqrt(3), vertices, top, bottomleft, bottomright
-    // y axis extends from -1 to 1
+    /// <summary>
+    /// Supplies various linear interpolation methods from a triangle
+    /// For historic reasons, the conventions are based on a XZ plane,
+    /// with an equilateral triangle of size sqrt(3), vertices, top, bottomright, bottomleft
+    /// y axis extends from -0.5 to 0.5f
+    /// </summary>
     public static class TriangleInterpolation
     {
         public static void GetCorners(MeshData mesh, int submesh, int face, float meshOffset1, float meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6)
@@ -179,6 +183,13 @@ namespace Sylves
             return InterpolatePoint;
         }
 
+        /// <summary>
+        /// Linear interpolates from a triangle of size Sqrt(3) in the XZ plane to the triangle supplied by v1 to v3
+        /// The z value of p is unused.
+        /// </summary>
+        /// <param name="v1">Final location of (0, 0, 1)</param>
+        /// <param name="v2">Final location of (sqrt(3) / 2, 0, -0.5)</param>
+        /// <param name="v3">Final location of (-sqrt(3) / 2, 0, 0.5)</param>
         public static Func<Vector3, Vector3> Interpolate(Vector3 v1, Vector3 v2, Vector3 v3)
         {
             Vector3 InterpolatePoint(Vector3 p)

@@ -5,6 +5,12 @@ using UnityEngine;
 
 namespace Sylves
 {
+
+    /// <summary>
+    /// Supplies various bilinear and trilinear interpolation methods.
+    /// For historic reasons, the conventions are based on a XZ plane
+    /// using either a unit square or unit cube.
+    /// </summary>
     public static class QuadInterpolation
     {
         public static void GetCorners(MeshData mesh, int submesh, int face, float meshOffset1, float meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8)
@@ -153,6 +159,9 @@ namespace Sylves
             return Interpolate(v1, v2, v3, v4);
         }
 
+        /// <summary>
+        /// As the Vector3 Interpolate, only in 2 dimensions.
+        /// </summary>
         public static Func<Vector3, Vector2> Interpolate(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4, Vector2 v5, Vector2 v6, Vector2 v7, Vector2 v8)
         {
             Vector2 TrilinearInterpolatePoint(Vector3 p)
@@ -177,7 +186,9 @@ namespace Sylves
             return TrilinearInterpolatePoint;
         }
 
-
+        /// <summary>
+        /// As the Vector3 interpolate, only in 2 dimensions.
+        /// </summary>
         public static Func<Vector3, Vector2> Interpolate(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
         {
             Vector2 TrilinearInterpolatePoint(Vector3 p)
@@ -197,6 +208,18 @@ namespace Sylves
             return TrilinearInterpolatePoint;
         }
 
+        /// <summary>
+        /// Tiilinear interpolates from a unit cube to the polyhedron supplied by v1 to v8
+        /// The z value of p is unused.
+        /// </summary>
+        /// <param name="v1">Final location of (-0.5, -0.5, -0.5)</param>
+        /// <param name="v2">Final location of (-0.5, -0.5, 0.5)</param>
+        /// <param name="v3">Final location of (0.5, -0.5, 0.5)</param>
+        /// <param name="v4">Final location of (0.5, -0.5, -0.5)</param>
+        /// <param name="v4">Final location of (-0.5, 0.5, -0.5)</param>
+        /// <param name="v6">Final location of (-0.5, 0.5, 0.5)</param>
+        /// <param name="v7">Final location of (0.5, 0.5, 0.5)</param>
+        /// <param name="v8">Final location of (0.5, 0.5, -0.5)</param>
         public static Func<Vector3, Vector3> Interpolate(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 v5, Vector3 v6, Vector3 v7, Vector3 v8)
         {
             Vector3 TrilinearInterpolatePoint(Vector3 p)
@@ -221,6 +244,14 @@ namespace Sylves
             return TrilinearInterpolatePoint;
         }
 
+        /// <summary>
+        /// Bilinear interpolates from a unit square in the XZ plane to the quad supplied by v1 to v4
+        /// The z value of p is unused.
+        /// </summary>
+        /// <param name="v1">Final location of (-0.5, 0, -0.5)</param>
+        /// <param name="v2">Final location of (-0.5, 0, 0.5)</param>
+        /// <param name="v3">Final location of (0.5, 0, 0.5)</param>
+        /// <param name="v4">Final location of (0.5, 0, -0.5)</param>
         public static Func<Vector3, Vector3> Interpolate(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
         {
             Vector3 TrilinearInterpolatePoint(Vector3 p)
@@ -240,6 +271,10 @@ namespace Sylves
             return TrilinearInterpolatePoint;
         }
 
+
+        /// <summary>
+        /// As the Vector3 interpolate, only in 4 dimensions.
+        /// </summary>
         public static Func<Vector3, Vector4> Interpolate(Vector4 v1, Vector4 v2, Vector4 v3, Vector4 v4, Vector4 v5, Vector4 v6, Vector4 v7, Vector4 v8)
         {
             Vector4 TrilinearInterpolatePoint(Vector3 p)
@@ -264,6 +299,9 @@ namespace Sylves
             return TrilinearInterpolatePoint;
         }
 
+        /// <summary>
+        /// As the Vector3 interpolate, only in 4 dimensions.
+        /// </summary>
         public static Func<Vector3, Vector4> Interpolate(Vector4 v1, Vector4 v2, Vector4 v3, Vector4 v4)
         {
             Vector4 TrilinearInterpolatePoint(Vector3 p)

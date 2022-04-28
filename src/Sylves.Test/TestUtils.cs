@@ -15,6 +15,12 @@ namespace Sylves.Test
             Assert.AreEqual(q1.w, q2.w, delta, $"Comparing {q1} to {q2}");
         }
 
+        public static void AssertAreEqual(Vector2 v1, Vector2 v2, double delta)
+        {
+            Assert.AreEqual(v1.x, v2.x, delta, $"Comparing {v1} to {v2}");
+            Assert.AreEqual(v1.y, v2.y, delta, $"Comparing {v1} to {v2}");
+        }
+
         public static void AssertAreEqual(Vector3 v1, Vector3 v2, double delta)
         {
             Assert.AreEqual(v1.x, v2.x, delta, $"Comparing {v1} to {v2}");
