@@ -57,24 +57,77 @@ namespace Sylves.Test
 
         }
 
+        [Test]
+        public void TestCubeMove()
+        {
+            var g = new MeshGrid(TestMeshes.Cube);
+            // TestMeshes.Cube is arranged with this convenience for testing
+            Cell ToCell(CubeDir dir) => new Cell((int)dir, 0, 0);
+
+            Assert.AreEqual(ToCell(CubeDir.Up), g.Move(ToCell(CubeDir.Left), (CellDir)SquareDir.Up));
+            Assert.AreEqual(ToCell(CubeDir.Up), g.Move(ToCell(CubeDir.Right), (CellDir)SquareDir.Up));
+            Assert.AreEqual(ToCell(CubeDir.Up), g.Move(ToCell(CubeDir.Forward), (CellDir)SquareDir.Up));
+            Assert.AreEqual(ToCell(CubeDir.Up), g.Move(ToCell(CubeDir.Back), (CellDir)SquareDir.Up));
+            Assert.AreEqual(ToCell(CubeDir.Forward), g.Move(ToCell(CubeDir.Up), (CellDir)SquareDir.Up));
+            Assert.AreEqual(ToCell(CubeDir.Forward), g.Move(ToCell(CubeDir.Down), (CellDir)SquareDir.Up));
+            // TODO: Also check some left right moves
+        }
 
         [Test]
         public void TestCubeGetTRS()
         {
-            // quad 0 points z-
             var g = new MeshGrid(TestMeshes.Cube);
-            var trs = g.GetTRS(new Cell());
-            var v = trs.ToMatrix().MultiplyVector(Vector3.forward);
-            AssertAreEqual(Vector3.back, v, 1e-6);
+            // TestMeshes.Cube is arranged with this convenience for testing
+            Cell ToCell(CubeDir dir) => new Cell((int)dir, 0, 0);
+
+            var trs = g.GetTRS(ToCell(CubeDir.Left));
+            AssertAreEqual(Vector3.left * 0.5f, trs.Position, 1e-6);
+            AssertAreEqual(Vector3.left, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
+
+            trs = g.GetTRS(ToCell(CubeDir.Right));
+            AssertAreEqual(Vector3.right * 0.5f, trs.Position, 1e-6);
+            AssertAreEqual(Vector3.right, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
+
+            trs = g.GetTRS(ToCell(CubeDir.Up));
+            AssertAreEqual(Vector3.up * 0.5f, trs.Position, 1e-6);
+            AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.forward, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
+            
+            trs = g.GetTRS(ToCell(CubeDir.Down));
+            AssertAreEqual(Vector3.down * 0.5f, trs.Position, 1e-6);
+            AssertAreEqual(Vector3.down, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.forward, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
+
+            trs = g.GetTRS(ToCell(CubeDir.Forward));
+            AssertAreEqual(Vector3.forward * 0.5f, trs.Position, 1e-6);
+            AssertAreEqual(Vector3.forward, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
+
+            trs = g.GetTRS(ToCell(CubeDir.Back));
+            AssertAreEqual(Vector3.back * 0.5f, trs.Position, 1e-6);
+            AssertAreEqual(Vector3.back, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
         }
 
 
         [Test]
         public void TestCubeGetDeform()
         {
-            // quad 0 points z-
             var g = new MeshGrid(TestMeshes.Cube);
-            var deform = g.GetDeformation(new Cell());
+            // TestMeshes.Cube is arranged with this convenience for testing
+            Cell ToCell(CubeDir dir) => new Cell((int)dir, 0, 0);
+
+            var deformation = g.GetDeformation(ToCell(CubeDir.Left));
+            // zero gives the face center
+            AssertAreEqual(Vector3.left * 0.5f, deformation.DeformPoint(Vector3.zero), 1e-6);
+            // Moving forward does nothing for 2d mesh grid
+            AssertAreEqual(Vector3.left * 0.5f, deformation.DeformPoint(Vector3.forward * 0.5f), 1e-6);
+            // An actual deformation
+            AssertAreEqual((Vector3.left + Vector3.up) * 0.5f, deformation.DeformPoint(Vector3.up * 0.5f), 1e-6);
+
+            // We can probably trust the TRS points from here
         }
     }
 }

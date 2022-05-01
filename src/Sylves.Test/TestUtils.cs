@@ -9,10 +9,10 @@ namespace Sylves.Test
     {
         public static void AssertAreEqual(Quaternion q1, Quaternion q2, double delta)
         {
-            Assert.AreEqual(q1.x, q2.x, delta, $"Comparing {q1} to {q2}");
-            Assert.AreEqual(q1.y, q2.y, delta, $"Comparing {q1} to {q2}");
-            Assert.AreEqual(q1.z, q2.z, delta, $"Comparing {q1} to {q2}");
-            Assert.AreEqual(q1.w, q2.w, delta, $"Comparing {q1} to {q2}");
+            Assert.AreEqual(q1.x, q2.x, delta, $"Comparing {q1} (euler {q1.eulerAngles}) to {q2} (euler {q2.eulerAngles})");
+            Assert.AreEqual(q1.y, q2.y, delta, $"Comparing {q1} (euler {q1.eulerAngles}) to {q2} (euler {q2.eulerAngles})");
+            Assert.AreEqual(q1.z, q2.z, delta, $"Comparing {q1} (euler {q1.eulerAngles}) to {q2} (euler {q2.eulerAngles})");
+            Assert.AreEqual(q1.w, q2.w, delta, $"Comparing {q1} (euler {q1.eulerAngles}) to {q2} (euler {q2.eulerAngles})");
         }
 
         public static void AssertAreEqual(Vector2 v1, Vector2 v2, double delta)

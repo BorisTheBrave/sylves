@@ -10,6 +10,8 @@ namespace Sylves.Test
         public static MeshData PlaneXY = new MeshData
         {
             indices = new[] { new[] { 0, 1, 2, 3, } },
+            // Edge 0 points Right.
+            // Edge 1 points Up.
             vertices = new[]
                 {
                     new Vector3(0.5f, -0.5f, 0.0f),
@@ -62,15 +64,19 @@ namespace Sylves.Test
                     new Vector3 (-0.5f, +0.5f, +0.5f),
                     new Vector3 (+0.5f, +0.5f, +0.5f),
                     new Vector3 (+0.5f, -0.5f, +0.5f),
-                    new Vector3 (-0.5f, -0.5f, +0.5f),
+                    new Vector3 (-0.5f, -0.5f, +0.5f), 
                 };
+
+                // Faces in same order as CubeDir
+                // They are arranged so that 2nd edge points Up ( or Forward), matching CubeDir.Up().
+                // TODO: Check winding orders
                 int[] quads = {
-                    0, 3, 2, 1,
-                    2, 3, 4, 5,
-                    1, 2, 5, 6,
-                    0, 7, 4, 3,
-                    5, 4, 7, 6,
-                    0, 1, 6, 7,
+                    7, 4, 3, 0, // Left
+                    1, 2, 5, 6, // Right
+                    3, 4, 5, 2, // Up
+                    1, 6, 7, 0, // Down
+                    6, 5, 4, 7, // Forward
+                    0, 3, 2, 1, // Back
                 };
 
                 meshData.subMeshCount = 1;
