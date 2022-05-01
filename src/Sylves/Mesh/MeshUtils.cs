@@ -160,7 +160,10 @@ namespace Sylves
                 return jacobi * v;
             }
 
-            return new Deformation(interpolatePoint, DeformNormal, DeformTangent, false);
+            var deformation = new Deformation(interpolatePoint, DeformNormal, DeformTangent, false);
+            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY). TODO
+            deformation = deformation * ((CubeRotation)(CellRotation)0x012).ToMatrix();
+            return deformation;
         }
 
 
@@ -181,11 +184,14 @@ namespace Sylves
                 ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face)
                 : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face);
 
-            return new Deformation(interpolatePoint, null, null, false);
+            var deformation = new Deformation(interpolatePoint, null, null, false);
+            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY). TODO
+            deformation = deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix();
+            return deformation;
         }
 
         /// <summary>
-        /// Returns the indices of the faces of a asubmesh of meshData.
+        /// Returns the indices of the faces of a submesh of meshData.
         /// </summary>
         /// TODO: Should we make a low alloc version of this?
         public static IEnumerable<IReadOnlyList<int>> GetFaces(MeshData meshData, int subMesh)
