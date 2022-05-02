@@ -79,34 +79,37 @@ namespace Sylves.Test
             // TestMeshes.Cube is arranged with this convenience for testing
             Cell ToCell(CubeDir dir) => new Cell((int)dir, 0, 0);
 
+            // Because the normals point outwards, the tiles are less high than you'd naturally expect
+            float f = Mathf.Sqrt(3) / 3;
+
             var trs = g.GetTRS(ToCell(CubeDir.Left));
             AssertAreEqual(Vector3.left * 0.5f, trs.Position, 1e-6);
-            AssertAreEqual(Vector3.left, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.left * f, trs.ToMatrix().MultiplyVector(Vector3.forward), tol);
             AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
 
             trs = g.GetTRS(ToCell(CubeDir.Right));
             AssertAreEqual(Vector3.right * 0.5f, trs.Position, 1e-6);
-            AssertAreEqual(Vector3.right, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.right * f, trs.ToMatrix().MultiplyVector(Vector3.forward), tol);
             AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
 
             trs = g.GetTRS(ToCell(CubeDir.Up));
             AssertAreEqual(Vector3.up * 0.5f, trs.Position, 1e-6);
-            AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.up * f, trs.ToMatrix().MultiplyVector(Vector3.forward), tol);
             AssertAreEqual(Vector3.forward, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
 
             trs = g.GetTRS(ToCell(CubeDir.Down));
             AssertAreEqual(Vector3.down * 0.5f, trs.Position, 1e-6);
-            AssertAreEqual(Vector3.down, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.down * f, trs.ToMatrix().MultiplyVector(Vector3.forward), tol);
             AssertAreEqual(Vector3.forward, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
 
             trs = g.GetTRS(ToCell(CubeDir.Forward));
             AssertAreEqual(Vector3.forward * 0.5f, trs.Position, 1e-6);
-            AssertAreEqual(Vector3.forward, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.forward * f, trs.ToMatrix().MultiplyVector(Vector3.forward), tol);
             AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
 
             trs = g.GetTRS(ToCell(CubeDir.Back));
             AssertAreEqual(Vector3.back * 0.5f, trs.Position, 1e-6);
-            AssertAreEqual(Vector3.back, trs.ToMatrix().MultiplyVector(Vector3.forward), 1e-6);
+            AssertAreEqual(Vector3.back * f, trs.ToMatrix().MultiplyVector(Vector3.forward), tol);
             AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
         }
     }
