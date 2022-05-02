@@ -113,7 +113,7 @@ namespace Sylves
             // TODO: Dispatch to celltype method?
             if(cellData.CellType == CubeCellType.Instance || cellData.CellType == SquareCellType.Instance)
             {
-                return Vector3Int.FloorToInt(cellLocalPoint) == Vector3Int.zero;
+                return Vector3Int.RoundToInt(cellLocalPoint) == Vector3Int.zero;
             }
             else
             {

@@ -116,17 +116,24 @@ namespace Sylves
             return new TRS(m);
         }
 
+        // Given a single layer of moves,
+        // converts it to moves on multiple layer, in a different cell type
         private static void BuildMoves(MeshData data, MeshPrismOptions meshPrismOptions, IDictionary<Cell, DataDrivenCellData> allCells, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
         {
+            var layerCellData = new Dictionary<Cell, DataDrivenCellData>();
             var layerMoves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>();
+            BuildCellData(data, layerCellData);
             BuildMoves(data, layerMoves);
             for (var layer = meshPrismOptions.MinLayer; layer <= meshPrismOptions.MaxLayer; layer++)
             {
                 foreach (var kv in layerMoves)
                 {
+                    var fromPrismInfo = PrismInfo.Get(layerCellData[kv.Key.Item1].CellType);
+                    var toPrismInfo = PrismInfo.Get(layerCellData[kv.Value.Item1].CellType);
+
                     var fromCell = new Cell(kv.Key.Item1.x, kv.Key.Item1.y, layer);
                     var toCell = new Cell(kv.Value.Item1.x, kv.Value.Item1.y, layer);
-                    moves.Add((fromCell, kv.Key.Item2), (toCell, kv.Value.Item2, kv.Value.Item3));
+                    moves.Add((fromCell, fromPrismInfo.BaseToPrism(kv.Key.Item2)), (toCell, toPrismInfo.BaseToPrism(kv.Value.Item2), kv.Value.Item3));
                 }
             }
             foreach(var kv in allCells)
@@ -160,6 +167,7 @@ namespace Sylves
 
 
         // Loop over every edge of every face, match them up pairwise, and marshal into moves array
+        // This relies on the fact that for 2d cell types, the number of the edge corresponds to the CellDir.
         private static void BuildMoves(MeshData data, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
         {
             var vertices = data.vertices;

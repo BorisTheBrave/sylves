@@ -81,45 +81,16 @@ namespace Sylves
             return new Cell(cell.x, cell.y, layer);
         }
 
-        private static ICellType PrismCellType(ICellType underlyingCellType)
-        {
-            if (underlyingCellType == SquareCellType.Instance)
-            {
-                return CubeCellType.Instance;
-            }
-            else if (underlyingCellType == HexCellType.Get(HexOrientation.FlatTopped))
-            {
-                return HexPrismCellType.Get(HexOrientation.FlatTopped);
-            }
-            else if (underlyingCellType == HexCellType.Get(HexOrientation.PointyTopped))
-            {
-                return HexPrismCellType.Get(HexOrientation.PointyTopped);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
+        private static ICellType PrismCellType(ICellType underlyingCellType) => PrismInfo.Get(underlyingCellType).PrismCellType;
 
         private void GetAxialDirs(ICellType underlyingCellType, out CellDir forwardDir, out CellDir backDir)
         {
-
-            if (underlyingCellType == SquareCellType.Instance)
-            {
-                forwardDir = (CellDir)CubeDir.Forward;
-                backDir = (CellDir)CubeDir.Back;
-            }
-            else if(underlyingCellType == HexCellType.Get(HexOrientation.FlatTopped) || underlyingCellType == HexCellType.Get(HexOrientation.PointyTopped))
-            {
-                forwardDir = (CellDir)PTHexPrismDir.Forward;
-                backDir = (CellDir)PTHexPrismDir.Back;
-            }
-            else
-            {
-                throw new NotImplementedException($"Cell type {underlyingCellType.GetType()} not implemented yet");
-            }
+            var prismInfo = PrismInfo.Get(underlyingCellType);
+            forwardDir = prismInfo.ForwardDir;
+            backDir = prismInfo.BackDir;
         }
-
+        
+        // Should this use PrismInfo?
         private bool IsAxial(ICellType underlyingCellType, CellDir cellDir, out bool isForward, out CellDir inverseDir)
         {
             if (underlyingCellType == SquareCellType.Instance)

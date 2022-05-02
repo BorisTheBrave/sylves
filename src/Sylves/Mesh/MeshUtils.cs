@@ -161,8 +161,8 @@ namespace Sylves
             }
 
             var deformation = new Deformation(interpolatePoint, DeformNormal, DeformTangent, false);
-            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY). TODO
-            deformation = deformation * ((CubeRotation)(CellRotation)0x012).ToMatrix();
+            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY).
+            deformation = deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix();
             return deformation;
         }
 
@@ -185,7 +185,7 @@ namespace Sylves
                 : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face);
 
             var deformation = new Deformation(interpolatePoint, null, null, false);
-            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY). TODO
+            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY).
             deformation = deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix();
             return deformation;
         }
