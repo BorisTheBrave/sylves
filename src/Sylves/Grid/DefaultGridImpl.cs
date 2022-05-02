@@ -46,7 +46,7 @@ namespace Sylves
                 return false;
             }
             // For each step of the path, recreate the same step in the right grid.
-            foreach(var (aCell, aDir) in path)
+            foreach (var (aCell, aDir) in path)
             {
                 // Check both a/b are on compatible cell types
                 if(checkCellTypes && (cellType = aGrid.GetCellType(aCell)) != bGrid.GetCellType(bDestCell))
