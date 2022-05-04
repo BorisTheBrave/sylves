@@ -230,6 +230,11 @@ namespace Sylves
         }
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
         {
+            // Double check we really have "cube co-ordinates" otherwise this will loop for ever
+            if (startCell.x + startCell.y + startCell.z != 0)
+                throw new ArgumentException($"FindBasicPath passed a cell that doesn't correspond to a hex, {startCell}", nameof(startCell));
+            if (destCell.x + destCell.y + destCell.z != 0)
+                throw new ArgumentException($"FindBasicPath passed a cell that doesn't correspond to a hex, {destCell}", nameof(destCell));
             // FTHexDir and PTHexDir are arranged so that you don't need different code for the two orientations.
             var cell = startCell;
             while (cell.x < destCell.x && cell.z > destCell.z)
@@ -254,7 +259,7 @@ namespace Sylves
             {
                 yield return (cell, (CellDir)FTHexDir.Down);
                 cell.y -= 1;
-                cell.y += 1;
+                cell.z += 1;
             }
             while (cell.x < destCell.x && cell.y > destCell.y)
             {

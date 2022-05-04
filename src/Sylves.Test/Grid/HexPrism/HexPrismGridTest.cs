@@ -58,9 +58,7 @@ namespace Sylves.Test
         public void TestFindSymmetry(HexOrientation orientation)
         {
             var g = new HexPrismGrid(new Vector3(1, 1, 1), orientation);
-            //GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
-
-
+            GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
             {
                 var cells = new HashSet<Cell> { new Cell(0, 0, 0), new Cell(0, 1, 0) };
                 var s = g.FindGridSymmetry(cells, cells, new Cell(), HexRotation.Identity);

@@ -39,7 +39,8 @@ namespace Sylves.Test
         {
             var g = new XZHexPrismGrid(1, 1);
             var cellGrid = new XZHexPrismGrid(1, 1);
-            var success = g.ParallelTransport(cellGrid, new Cell(), new Cell(), new Cell(-13, 8, 0), (CellRotation)1, out var destCell, out var destRotation);
+            var success = g.ParallelTransport(cellGrid, new Cell(0,1,0), new Cell(0,0,0), new Cell(-9, 3, 0), (CellRotation)3, out var destCell, out var destRotation);
+            var success2 = g.TryMoveByOffset(new Cell(-9, 3, 0), new Vector3Int(0, 1, 0), new Vector3Int(0, 0, 0), (CellRotation)3, out var destCell2, out var destRotation2);
             Assert.IsTrue(success);
         }
     }
