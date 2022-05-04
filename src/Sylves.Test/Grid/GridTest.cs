@@ -76,7 +76,7 @@ namespace Sylves
                     cellType.Rotate(dir, rotation, out var dir2, out var connection);
                     var success = cellType.TryGetRotation(dir, dir2, connection, out var rotation2);
                     Assert.IsTrue(success);
-                    Assert.AreEqual(rotation, rotation2, $"{dir} {rotation}");
+                    Assert.AreEqual(rotation, rotation2, $"Dir={dir} Rotation={rotation}");
                 }
             }
         }

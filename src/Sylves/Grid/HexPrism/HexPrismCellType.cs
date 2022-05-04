@@ -47,11 +47,18 @@ namespace Sylves
 
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
         {
-            if (IsAxial(dir))
+            if (dir == (CellDir)PTHexPrismDir.Forward)
             {
                 resultDir = dir;
                 var r = (int)rotation;
                 var rot = r < 0 ? ~r : r;
+                connection = new Connection { Mirror = r < 0, Rotation = rot, Sides = 6 };
+            }
+            else if(dir == (CellDir)PTHexPrismDir.Back)
+            {
+                resultDir = dir;
+                var r = (int)rotation;
+                var rot = (6 - (r < 0 ? ~r : r)) % 6;
                 connection = new Connection { Mirror = r < 0, Rotation = rot, Sides = 6 };
             }
             else
@@ -63,7 +70,7 @@ namespace Sylves
 
         public bool TryGetRotation(CellDir fromDir, CellDir toDir, Connection connection, out CellRotation rotation)
         {
-            if (IsAxial(fromDir))
+            if (fromDir == (CellDir)PTHexPrismDir.Forward)
             {
                 if (fromDir != toDir)
                 {
@@ -71,6 +78,17 @@ namespace Sylves
                     return false;
                 }
                 rotation = (CellRotation)(connection.Mirror ? ~connection.Rotation : connection.Rotation);
+                return true;
+            }
+            else if (fromDir == (CellDir)PTHexPrismDir.Back)
+            {
+                if (fromDir != toDir)
+                {
+                    rotation = default;
+                    return false;
+                }
+                var ir = (6 - connection.Rotation) % 6;
+                rotation = (CellRotation)(connection.Mirror ?  ~ir : ir);
                 return true;
             }
             else
