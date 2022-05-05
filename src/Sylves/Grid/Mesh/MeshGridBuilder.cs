@@ -10,6 +10,79 @@ using static Sylves.VectorUtils;
 namespace Sylves
 {
     /// <summary>
+    /// Utility class represented a bundle of half edges extracted from a mesh.
+    /// Only unpaired half-edges are stored - any paired off edges are immediately recorded in the moves array.
+    /// </summary>
+    internal class EdgeStore
+    {
+        // the face, submesh and edge ids, stored by start/end points of the edge.
+        private Dictionary<(Vector3, Vector3), (int, int, int)> unmatchedEdges;
+
+        public EdgeStore()
+        {
+            unmatchedEdges = new Dictionary<(Vector3, Vector3), (int, int, int)>();
+        }
+
+        private EdgeStore(Dictionary<(Vector3, Vector3), (int, int, int)> unmatchedEdges)
+        {
+            this.unmatchedEdges = unmatchedEdges;
+        }
+
+        public IEnumerable<(Vector3 v1, Vector3 v2, int face, int submesh, int edge)> UnmatchedEdges
+        {
+            get
+            {
+                return unmatchedEdges.Select(x => (x.Key.Item1, x.Key.Item2, x.Value.Item1, x.Value.Item2, x.Value.Item3));
+            }
+        }
+
+        // Attempts to pair the new edge with the unmapped edges.
+        // On success, adds it to moves and returns true.
+        public bool MatchEdge(Vector3 v1, Vector3 v2, int face, int submesh, int edge, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
+        {
+            if (unmatchedEdges.TryGetValue((v2, v1), out var match))
+            {
+                // Edges match, add moves in both directions
+                var (face2, submesh2, edge2) = match;
+                var cell = new Cell(face, submesh);
+                var cell2 = new Cell(face2, submesh2);
+                moves.Add((cell, (CellDir)edge), (cell2, (CellDir)edge2, new Connection()));
+                moves.Add((cell2, (CellDir)edge2), (cell, (CellDir)edge, new Connection()));
+                unmatchedEdges.Remove((v2, v1));
+                return true;
+            }
+            else if (unmatchedEdges.TryGetValue((v1, v2), out match))
+            {
+                // Same as above, but with a mirrored connection
+                var (face2, submesh2, edge2) = match;
+                var cell = new Cell(face, submesh);
+                var cell2 = new Cell(face2, submesh2);
+                moves.Add((cell, (CellDir)edge), (cell2, (CellDir)edge2, new Connection { Mirror = true }));
+                moves.Add((cell2, (CellDir)edge2), (cell, (CellDir)edge, new Connection { Mirror = true }));
+                unmatchedEdges.Remove((v1, v2));
+                return true;
+            }
+            return false;
+        }
+
+
+        // MatchEdge, and if it fails, adds the edge to unmatchedEdges
+        public void AddEdge(Vector3 v1, Vector3 v2, int face, int submesh, int edge, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
+        {
+            if(!MatchEdge(v1, v2, face, submesh, edge, moves))
+            {
+                unmatchedEdges.Add((v1, v2), (face, submesh, edge));
+            }
+        }
+
+        public EdgeStore Clone()
+        {
+            return new EdgeStore(unmatchedEdges.ToDictionary(x => x.Key, x => x.Value));
+        }
+    }
+
+
+    /// <summary>
     /// Class contains utiliites for analysing a MeshData, specifically
     /// for use with MeshGrid.
     /// </summary>
@@ -17,12 +90,17 @@ namespace Sylves
     {
         public static DataDrivenData Build(MeshData meshData)
         {
+            return Build(meshData, out var _);
+        }
+
+        public static DataDrivenData Build(MeshData meshData, out EdgeStore edgeStore)
+        {
             var data = new DataDrivenData
             {
                 Cells = new Dictionary<Cell, DataDrivenCellData>(),
                 Moves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>(),
             };
-            BuildMoves(meshData, data.Moves);
+            edgeStore = BuildMoves(meshData, data.Moves);
             BuildCellData(meshData, data.Cells);
             return data;
         }
@@ -168,42 +246,11 @@ namespace Sylves
 
         // Loop over every edge of every face, match them up pairwise, and marshal into moves array
         // This relies on the fact that for 2d cell types, the number of the edge corresponds to the CellDir.
-        private static void BuildMoves(MeshData data, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
+        // Returns any unmatched edges
+        private static EdgeStore BuildMoves(MeshData data, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
         {
             var vertices = data.vertices;
-            var unmatchedEdges = new Dictionary<(Vector3, Vector3), (int, int, int)>();
-            void AddEdge(int face, int submesh, int edge, int index1, int index2)
-            {
-                var v1 = vertices[index1];
-                var v2 = vertices[index2];
-                // Attempt to match an existing edge
-                if (unmatchedEdges.TryGetValue((v2, v1), out var match))
-                {
-                    // Edges match, add moves in both directions
-                    var (face2, submesh2, edge2) = match;
-                    var cell = new Cell(face, submesh);
-                    var cell2 = new Cell(face2, submesh2);
-                    moves.Add((cell, (CellDir)edge), (cell2, (CellDir)edge2, new Connection()));
-                    moves.Add((cell2, (CellDir)edge2), (cell, (CellDir)edge, new Connection()));
-                    unmatchedEdges.Remove((v2, v1));
-                }
-                else if (unmatchedEdges.TryGetValue((v1, v2), out match))
-                {
-                    // Same as above, but with a mirrored connection
-                    var (face2, submesh2, edge2) = match;
-                    var cell = new Cell(face, submesh);
-                    var cell2 = new Cell(face2, submesh2);
-                    moves.Add((cell, (CellDir)edge), (cell2, (CellDir)edge2, new Connection { Mirror = true }));
-                    moves.Add((cell2, (CellDir)edge2), (cell, (CellDir)edge, new Connection { Mirror = true }));
-                    unmatchedEdges.Remove((v1, v2));
-                }
-                else
-                {
-                    // New edge, add to unmatched edges
-                    unmatchedEdges.Add((v1, v2), (face, submesh, edge));
-                }
-
-            }
+            var edgeStore = new EdgeStore();
 
             for (var submesh = 0; submesh < data.subMeshCount; submesh++)
             {
@@ -222,15 +269,17 @@ namespace Sylves
                         }
                         else
                         {
-                            AddEdge(face, submesh, indexCount - 1, prev, index);
+                            edgeStore.AddEdge(vertices[prev], vertices[index], face, submesh, indexCount - 1, moves);
                             prev = index;
                         }
                         indexCount++;
                     }
-                    AddEdge(face, submesh, indexCount - 1, prev, first);
+                    edgeStore.AddEdge(vertices[prev], vertices[first], face, submesh, indexCount - 1, moves);
                     face++;
                 }
             }
+
+            return edgeStore;
         }
     }
 }
