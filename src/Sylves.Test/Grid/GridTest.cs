@@ -49,7 +49,7 @@ namespace Sylves
             {
                 var m = grid.GetTRS(cell).ToMatrix() * ct.GetMatrix(r);
                 success = grid.FindCell(m, out cell2, out var r2);
-                Assert.IsTrue(success, $"{cell} {r}");
+                Assert.IsTrue(success, $"Cell={cell} Rotation={r}");
                 Assert.AreEqual(cell, cell2, $"{cell} {r}");
                 Assert.AreEqual(r, r2, $"{cell} {r}");
             }

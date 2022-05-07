@@ -55,7 +55,6 @@ namespace Sylves
         {
         }
 
-
         public PlanarPrismModifier(IGrid underlying, PlanarPrismOptions planarPrismOptions = null, PlanarPrismBound bound = null)
         {
             this.underlying = underlying;
