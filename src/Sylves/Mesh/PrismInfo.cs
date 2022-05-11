@@ -24,6 +24,23 @@ namespace Sylves
             },
         };
 
+        private static PrismInfo xzSquarePrismInfo = new PrismInfo
+        {
+            BaseCellType = SquareCellType.Instance,
+            PrismCellType = CubeCellType.Instance,
+            ForwardDir = (CellDir)CubeDir.Up,
+            BackDir = (CellDir)CubeDir.Down,
+            BaseToPrismDict = new Dictionary<CellDir, CellDir>
+            {
+                {(CellDir)SquareDir.Left, (CellDir)CubeDir.Left},
+                {(CellDir)SquareDir.Right, (CellDir)CubeDir.Right},
+                //{(CellDir)SquareDir.Up, (CellDir)CubeDir.Forward},
+                //{(CellDir)SquareDir.Down, (CellDir)CubeDir.Back},
+                {(CellDir)SquareDir.Up, (CellDir)CubeDir.Back},
+                {(CellDir)SquareDir.Down, (CellDir)CubeDir.Forward},
+            },
+        };
+
         private static PrismInfo ftHexPrismInfo = new PrismInfo
         {
 
@@ -66,7 +83,7 @@ namespace Sylves
 
         public static PrismInfo Get(ICellType baseCellType)
         {
-            if(baseCellType == SquareCellType.Instance)
+            if (baseCellType == SquareCellType.Instance)
             {
                 return squarePrismInfo;
             }
@@ -77,6 +94,15 @@ namespace Sylves
             if(baseCellType == HexCellType.Get(HexOrientation.PointyTopped))
             {
                 return ptHexPrismInfo;
+            }
+            if(baseCellType is SwapYZCellModifier swapYZCellModifier)
+            {
+                var underlying = swapYZCellModifier.Underlying;
+                if(underlying == SquareCellType.Instance)
+                {
+                    return xzSquarePrismInfo;
+                }
+                return Get(underlying);
             }
             throw new NotImplementedException($"No prism info for cell type {baseCellType}");
         }

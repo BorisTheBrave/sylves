@@ -19,12 +19,14 @@ namespace Sylves
 
         private static readonly Matrix4x4 SwapYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
 
-        public readonly ICellType underlying;
+        private readonly ICellType underlying;
 
         private SwapYZCellModifier(ICellType underlying)
         {
             this.underlying = underlying;
         }
+
+        public ICellType Underlying => underlying;
 
         public static SwapYZCellModifier Get(ICellType underlying)
         {

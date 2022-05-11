@@ -109,7 +109,7 @@ namespace Sylves
                 Moves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>(),
             };
             BuildCellData(meshData, meshPrismOptions, data.Cells);
-            BuildMoves(meshData, meshPrismOptions, data.Cells, data.Moves);
+            BuildMoves(meshData, meshPrismOptions, data.Moves);
             return data;
         }
 
@@ -192,7 +192,7 @@ namespace Sylves
 
         // Given a single layer of moves,
         // converts it to moves on multiple layer, in a different cell type
-        private static void BuildMoves(MeshData data, MeshPrismOptions meshPrismOptions, IDictionary<Cell, DataDrivenCellData> allCells, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
+        private static void BuildMoves(MeshData data, MeshPrismOptions meshPrismOptions, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
         {
             var layerCellData = new Dictionary<Cell, DataDrivenCellData>();
             var layerMoves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>();
