@@ -84,6 +84,7 @@ namespace Sylves
     /// </summary>
     internal static class MeshGridBuilder
     {
+        #region 2d
         public static DataDrivenData Build(MeshData meshData)
         {
             return Build(meshData, out var _);
@@ -101,6 +102,85 @@ namespace Sylves
             return data;
         }
 
+        private static void BuildCellData(MeshData data, IDictionary<Cell, DataDrivenCellData> cellData)
+        {
+            for (var submesh = 0; submesh < data.subMeshCount; submesh++)
+            {
+                var face = 0;
+                foreach (var faceIndices in MeshUtils.GetFaces(data, submesh))
+                {
+                    var cell = new Cell(face, submesh);
+                    var deformation = MeshUtils.GetDeformation(data, face, submesh);
+                    var count = faceIndices.Count;
+                    var cellType = count == 3 ? HexCellType.Get(HexOrientation.PointyTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
+                    var trs = GetTRS2d(deformation, Vector3.zero);
+                    cellData[cell] = new DataDrivenCellData
+                    {
+                        CellType = cellType,
+                        Deformation = deformation,
+                        TRS = trs,
+                    };
+                    face++;
+                }
+            }
+        }
+
+        private static TRS GetTRS2d(Deformation deformation, Vector3 p)
+        {
+            var center = deformation.DeformPoint(p);
+            var e = 1e-4f;
+            var x = (deformation.DeformPoint(p + Vector3.right * e) - center) / e;
+            /*
+            var z = (deformation.DeformPoint(p + Vector3.forward * e) - center) / e;
+            var y = Vector3.Cross(x, z).normalized;
+            */
+            var y = (deformation.DeformPoint(p + Vector3.up * e) - center) / e;
+            var z = Vector3.Cross(x, y).normalized;
+            var m = ToMatrix(x, y, z, new Vector4(center.x, center.y, center.z, 1));
+
+            return new TRS(m);
+        }
+
+        // Loop over every edge of every face, match them up pairwise, and marshal into moves array
+        // This relies on the fact that for 2d cell types, the number of the edge corresponds to the CellDir.
+        // Returns any unmatched edges
+        private static EdgeStore BuildMoves(MeshData data, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
+        {
+            var vertices = data.vertices;
+            var edgeStore = new EdgeStore();
+
+            for (var submesh = 0; submesh < data.subMeshCount; submesh++)
+            {
+                var face = 0;
+                foreach (var faceIndices in MeshUtils.GetFaces(data, submesh))
+                {
+                    int first = -1;
+                    int prev = -1;
+                    int indexCount = 0;
+                    foreach (var index in faceIndices)
+                    {
+                        if (first == -1)
+                        {
+                            first = index;
+                            prev = index;
+                        }
+                        else
+                        {
+                            edgeStore.AddEdge(vertices[prev], vertices[index], new Cell(face, submesh), (CellDir)(indexCount - 1), moves);
+                            prev = index;
+                        }
+                        indexCount++;
+                    }
+                    edgeStore.AddEdge(vertices[prev], vertices[first], new Cell(face, submesh), (CellDir)(indexCount - 1), moves);
+                    face++;
+                }
+            }
+
+            return edgeStore;
+        }
+        #endregion
+
+        #region 3d
         public static DataDrivenData Build(MeshData meshData, MeshPrismOptions meshPrismOptions)
         {
             var data = new DataDrivenData
@@ -138,30 +218,6 @@ namespace Sylves
                 }
             }
         }
-
-        private static void BuildCellData(MeshData data, IDictionary<Cell, DataDrivenCellData> cellData)
-        {
-            for (var submesh = 0; submesh < data.subMeshCount; submesh++)
-            {
-                var face = 0;
-                foreach (var faceIndices in MeshUtils.GetFaces(data, submesh))
-                {
-                    var cell = new Cell(face, submesh);
-                    var deformation = MeshUtils.GetDeformation(data, face, submesh);
-                    var count = faceIndices.Count;
-                    var cellType = count == 3 ? HexCellType.Get(HexOrientation.PointyTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
-                    var trs = GetTRS2d(deformation, Vector3.zero);
-                    cellData[cell] = new DataDrivenCellData
-                    {
-                        CellType = cellType,
-                        Deformation = deformation,
-                        TRS = trs,
-                    };
-                    face++;
-                }
-            }
-        }
-
         private static TRS GetTRS(Deformation deformation, Vector3 p)
         {
             var center = deformation.DeformPoint(p);
@@ -169,22 +225,6 @@ namespace Sylves
             var x = (deformation.DeformPoint(p + Vector3.right * e) - center) / e;
             var y = (deformation.DeformPoint(p + Vector3.up * e) - center) / e;
             var z = (deformation.DeformPoint(p + Vector3.forward * e) - center) / e;
-            var m = ToMatrix(x, y, z, new Vector4(center.x, center.y, center.z, 1));
-
-            return new TRS(m);
-        }
-
-        private static TRS GetTRS2d(Deformation deformation, Vector3 p)
-        {
-            var center = deformation.DeformPoint(p);
-            var e = 1e-4f;
-            var x = (deformation.DeformPoint(p + Vector3.right * e) - center) / e;
-            /*
-            var z = (deformation.DeformPoint(p + Vector3.forward * e) - center) / e;
-            var y = Vector3.Cross(x, z).normalized;
-            */
-            var y = (deformation.DeformPoint(p + Vector3.up * e) - center) / e;
-            var z = Vector3.Cross(x, y).normalized;
             var m = ToMatrix(x, y, z, new Vector4(center.x, center.y, center.z, 1));
 
             return new TRS(m);
@@ -229,43 +269,6 @@ namespace Sylves
             }
         }
 
-
-        // Loop over every edge of every face, match them up pairwise, and marshal into moves array
-        // This relies on the fact that for 2d cell types, the number of the edge corresponds to the CellDir.
-        // Returns any unmatched edges
-        private static EdgeStore BuildMoves(MeshData data, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
-        {
-            var vertices = data.vertices;
-            var edgeStore = new EdgeStore();
-
-            for (var submesh = 0; submesh < data.subMeshCount; submesh++)
-            {
-                var face = 0;
-                foreach (var faceIndices in MeshUtils.GetFaces(data, submesh))
-                {
-                    int first = -1;
-                    int prev = -1;
-                    int indexCount = 0;
-                    foreach (var index in faceIndices)
-                    {
-                        if (first == -1)
-                        {
-                            first = index;
-                            prev = index;
-                        }
-                        else
-                        {
-                            edgeStore.AddEdge(vertices[prev], vertices[index], new Cell(face, submesh), (CellDir)(indexCount - 1), moves);
-                            prev = index;
-                        }
-                        indexCount++;
-                    }
-                    edgeStore.AddEdge(vertices[prev], vertices[first], new Cell(face, submesh), (CellDir)(indexCount - 1), moves);
-                    face++;
-                }
-            }
-
-            return edgeStore;
-        }
+        #endregion
     }
 }
