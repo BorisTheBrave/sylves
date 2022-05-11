@@ -210,30 +210,20 @@ namespace Sylves
                     moves.Add((fromCell, fromPrismInfo.BaseToPrism(kv.Key.Item2)), (toCell, toPrismInfo.BaseToPrism(kv.Value.Item2), kv.Value.Item3));
                 }
             }
-            foreach(var kv in allCells)
+            foreach (var kv in layerCellData)
             {
-                var cell = kv.Key;
                 var cellType = kv.Value.CellType;
-                if (cell.z > meshPrismOptions.MinLayer)
+                var prismInfo = PrismInfo.Get(cellType);
+                for (var layer = meshPrismOptions.MinLayer; layer <= meshPrismOptions.MaxLayer; layer++)
                 {
-                    if (cellType == CubeCellType.Instance)
+                    var cell = new Cell(kv.Key.x, kv.Key.y, layer);
+                    if (cell.z < meshPrismOptions.MaxLayer - 1)
                     {
-                        moves.Add((cell, (CellDir)CubeDir.Forward), (cell + new Vector3Int(0, 0, 1), (CellDir)CubeDir.Back, new Connection()));
+                        moves.Add((cell, prismInfo.ForwardDir), (cell + new Vector3Int(0, 0, 1), prismInfo.BackDir, new Connection()));
                     }
-                    else
+                    if (cell.z > meshPrismOptions.MinLayer)
                     {
-                        throw new NotImplementedException();
-                    }
-                }
-                if (cell.z < meshPrismOptions.MaxLayer - 1)
-                {
-                    if (cellType == CubeCellType.Instance)
-                    {
-                        moves.Add((cell, (CellDir)CubeDir.Back), (cell + new Vector3Int(0, 0, -1), (CellDir)CubeDir.Forward, new Connection()));
-                    }
-                    else
-                    {
-                        throw new NotImplementedException();
+                        moves.Add((cell, prismInfo.BackDir), (cell + new Vector3Int(0, 0, -1), prismInfo.ForwardDir, new Connection()));
                     }
                 }
             }
