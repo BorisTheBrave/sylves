@@ -25,6 +25,7 @@ namespace Sylves.Test
 
 
         [Test]
+        [Ignore("Not supported yet")]
         public void TestTryMoveByOffset()
         {
             var g = new PeriodicPlanarMeshGrid(TestMeshes.PlaneXY, Vector2.right, Vector2.up);
@@ -32,7 +33,6 @@ namespace Sylves.Test
         }
 
         [Test]
-        [Ignore("Not supported yet")]
         public void TestFindCell()
         {
             var g = new PeriodicPlanarMeshGrid(TestMeshes.PlaneXY, Vector2.right, Vector2.up);
