@@ -11,5 +11,6 @@ namespace Sylves
         public int MinLayer { get; set; }
         public int MaxLayer { get; set; }
         public bool SmoothNormals { get; set; }
+        public bool UseXZPlane { get; set; }
     }
 }

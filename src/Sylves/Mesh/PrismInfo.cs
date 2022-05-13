@@ -102,7 +102,17 @@ namespace Sylves
                 {
                     return xzSquarePrismInfo;
                 }
-                return Get(underlying);
+                // We assume that other cell types don't change under this modifier.
+                var uPrismInfo = Get(underlying);
+                // TODO: Avoid allocation?
+                return new PrismInfo
+                {
+                    BaseCellType = baseCellType,
+                    PrismCellType = SwapYZCellModifier.Get(uPrismInfo.PrismCellType),
+                    BackDir = uPrismInfo.BackDir,
+                    ForwardDir = uPrismInfo.ForwardDir,
+                    BaseToPrismDict = uPrismInfo.BaseToPrismDict,
+                };
             }
             throw new NotImplementedException($"No prism info for cell type {baseCellType}");
         }

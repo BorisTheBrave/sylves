@@ -15,6 +15,7 @@ namespace Sylves.Test
         private const float tol = 1e-3f;
 
         MeshPrismOptions options;
+        MeshPrismOptions xzOptions;
         public MeshPrismGridTest()
         {
             options = new MeshPrismOptions
@@ -23,10 +24,17 @@ namespace Sylves.Test
                 MinLayer = 0,
                 MaxLayer = 2,
             };
+            xzOptions = new MeshPrismOptions
+            {
+                LayerHeight = 1,
+                MinLayer = 0,
+                MaxLayer = 2,
+                UseXZPlane = true,
+            };
         }
-
+        #region PlaneXY
         [Test]
-        public void TestFindCell()
+        public void TestPlaneXYFindCell()
         {
             var g = new MeshPrismGrid(TestMeshes.PlaneXY, options);
             GridTest.FindCell(g, new Cell(0, 0, 1));
@@ -53,7 +61,9 @@ namespace Sylves.Test
             AssertAreEqual(new Vector3(0, 0.5f, 0), d.DeformPoint(new Vector3(0, 0.5f, 0)), 1e-6);
             AssertAreEqual(new Vector3(0.5f, 0, 0), d.DeformPoint(new Vector3(0.5f, 0, 0)), 1e-6);
         }
+        #endregion
 
+        #region Cube
         [Test]
         public void TestCubeMove()
         {
@@ -112,5 +122,46 @@ namespace Sylves.Test
             AssertAreEqual(Vector3.back * f, trs.ToMatrix().MultiplyVector(Vector3.forward), tol);
             AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
         }
+        #endregion
+
+        #region UseXZPlane Option
+
+        [Test]
+        public void TestXZPlaneXZFindCell()
+        {
+            var g = new MeshPrismGrid(TestMeshes.PlaneXZ, xzOptions);
+            GridTest.FindCell(g, new Cell(0, 0, 1));
+        }
+
+        [Test]
+        public void TestXZPlaneXZMove()
+        {
+            var g = new MeshPrismGrid(TestMeshes.PlaneXZ, xzOptions);
+            // Moving up should increase the layer
+            Assert.AreEqual(new Cell(0, 0, 1), g.Move(new Cell(0, 0, 0), (CellDir)CubeDir.Up));
+        }
+
+        [Test]
+        public void TestXZPlaneXZGetTRS()
+        {
+            var g = new MeshPrismGrid(TestMeshes.PlaneXZ, xzOptions);
+
+            var trs = g.GetTRS(new Cell());
+            AssertAreEqual(Vector3.forward, trs.ToMatrix().MultiplyVector(Vector3.forward), tol);
+            AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
+            AssertAreEqual(Vector3.right, trs.ToMatrix().MultiplyVector(Vector3.right), tol);
+        }
+
+        [Test]
+        public void TestXZPlaneXZGetDeform()
+        {
+            var g = new MeshPrismGrid(TestMeshes.PlaneXZ, xzOptions);
+            var d = g.GetDeformation(new Cell(0, 0, 0));
+            // deform is identity
+            AssertAreEqual(new Vector3(0, 0, 0), d.DeformPoint(new Vector3(0, 0, 0)), 1e-6);
+            AssertAreEqual(new Vector3(0, 0.5f, 0), d.DeformPoint(new Vector3(0, 0.5f, 0)), 1e-6);
+            AssertAreEqual(new Vector3(0.5f, 0, 0), d.DeformPoint(new Vector3(0.5f, 0, 0)), 1e-6);
+        }
+        #endregion
     }
 }

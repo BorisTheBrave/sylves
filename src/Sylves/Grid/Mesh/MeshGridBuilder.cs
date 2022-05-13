@@ -181,6 +181,8 @@ namespace Sylves
         #endregion
 
         #region 3d
+        private static readonly Matrix4x4 SwapYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
+
         public static DataDrivenData Build(MeshData meshData, MeshPrismOptions meshPrismOptions)
         {
             var data = new DataDrivenData
@@ -188,12 +190,31 @@ namespace Sylves
                 Cells = new Dictionary<Cell, DataDrivenCellData>(),
                 Moves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>(),
             };
-            BuildCellData(meshData, meshPrismOptions, data.Cells);
-            BuildMoves(meshData, meshPrismOptions, data.Moves);
+
+            // First analyse a single layer
+            var layerCellData = new Dictionary<Cell, DataDrivenCellData>();
+            var layerMoves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>();
+            BuildCellData(meshData, layerCellData);
+            BuildMoves(meshData, layerMoves);
+
+            // Transform if necessary
+            if (meshPrismOptions.UseXZPlane)
+            {
+                foreach(var kv in layerCellData)
+                {
+                    kv.Value.CellType = SwapYZCellModifier.Get(kv.Value.CellType);
+                }
+            }
+
+            // Then repeat it on every level
+            BuildCellData(meshData, meshPrismOptions, layerCellData, data.Cells);
+            BuildMoves(meshData, meshPrismOptions, layerCellData, layerMoves, data.Moves);
+
+            // TODO: swap Y and Z cell co-ordinates
             return data;
         }
 
-        private static void BuildCellData(MeshData data, MeshPrismOptions meshPrismOptions, IDictionary<Cell, DataDrivenCellData> cellData)
+        private static void BuildCellData(MeshData data, MeshPrismOptions meshPrismOptions, IDictionary<Cell, DataDrivenCellData> layerCellData, IDictionary<Cell, DataDrivenCellData> cellData)
         {
             for (var layer = meshPrismOptions.MinLayer; layer < meshPrismOptions.MaxLayer; layer++)
             {
@@ -202,11 +223,20 @@ namespace Sylves
                     var face = 0;
                     foreach (var faceIndices in MeshUtils.GetFaces(data, submesh))
                     {
+                        // Despite having layerCellData, most stuff needs re-calculating.
                         var cell = new Cell(face, submesh, layer);
                         var deformation = MeshUtils.GetDeformation(data, meshPrismOptions.LayerHeight, meshPrismOptions.LayerOffset, meshPrismOptions.SmoothNormals, face, layer, submesh);
                         var count = faceIndices.Count;
-                        var cellType = count == 4 ? CubeCellType.Instance : throw new NotImplementedException();
+                        var cellType = PrismInfo.Get(layerCellData[new Cell(face, submesh, 0)].CellType).PrismCellType;
+
+                        // Transform if necessary
+                        if (meshPrismOptions.UseXZPlane)
+                        {
+                            deformation = deformation * SwapYZ;
+                        }
+
                         var trs = GetTRS(deformation, Vector3.zero);
+
                         cellData[cell] = new DataDrivenCellData
                         {
                             CellType = cellType,
@@ -232,12 +262,13 @@ namespace Sylves
 
         // Given a single layer of moves,
         // converts it to moves on multiple layer, in a different cell type
-        private static void BuildMoves(MeshData data, MeshPrismOptions meshPrismOptions, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
+        private static void BuildMoves(
+            MeshData data, 
+            MeshPrismOptions meshPrismOptions,
+            Dictionary<Cell, DataDrivenCellData> layerCellData,
+            Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)> layerMoves,
+            IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
         {
-            var layerCellData = new Dictionary<Cell, DataDrivenCellData>();
-            var layerMoves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>();
-            BuildCellData(data, layerCellData);
-            BuildMoves(data, layerMoves);
             for (var layer = meshPrismOptions.MinLayer; layer <= meshPrismOptions.MaxLayer; layer++)
             {
                 foreach (var kv in layerMoves)

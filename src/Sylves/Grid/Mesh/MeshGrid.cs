@@ -89,6 +89,15 @@ namespace Sylves
 
             public Vector3Int GetHashCell(Vector3 v) => Vector3Int.FloorToInt(Divide(v, hashCellSize));
         }
+
+        ICellType UnwrapSwapYZCellModifier(ICellType cellType)
+        {
+            if(cellType is SwapYZCellModifier modifier)
+            {
+                return modifier.Underlying;
+            }
+            return cellType;
+        }
         #endregion
 
 
@@ -110,8 +119,10 @@ namespace Sylves
         {
             var cellData = CellData[cell];
             var cellLocalPoint = cellData.TRS.ToMatrix().inverse.MultiplyPoint3x4(position);
+            var cellType = UnwrapSwapYZCellModifier(cellData.CellType);
             // TODO: Dispatch to celltype method?
-            if(cellData.CellType == CubeCellType.Instance || cellData.CellType == SquareCellType.Instance)
+            if (cellType == CubeCellType.Instance || 
+                cellType == SquareCellType.Instance)
             {
                 return Vector3Int.RoundToInt(cellLocalPoint) == Vector3Int.zero;
             }
@@ -146,8 +157,9 @@ namespace Sylves
             {
                 var cellData = CellData[cell];
                 var m = cellData.TRS.ToMatrix().inverse * matrix;
+                var cellType = UnwrapSwapYZCellModifier(cellData.CellType);
                 // TODO: Dispatch to celltype method?
-                if (cellData.CellType == CubeCellType.Instance)
+                if (cellType == CubeCellType.Instance)
                 {
                     var cubeRotation = CubeRotation.FromMatrix(m);
                     if (cubeRotation != null)
@@ -156,7 +168,7 @@ namespace Sylves
                         return true;
                     }
                 } 
-                else if(cellData.CellType == SquareCellType.Instance)
+                else if(cellType == SquareCellType.Instance)
                 {
                     var squareRotation = SquareRotation.FromMatrix(m);
                     if (squareRotation != null)
@@ -167,7 +179,7 @@ namespace Sylves
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException($"Unsupported cellType {cellType}");
 
                 }
             }
