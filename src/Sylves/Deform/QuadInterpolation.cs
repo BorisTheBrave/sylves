@@ -13,7 +13,7 @@ namespace Sylves
     /// </summary>
     public static class QuadInterpolation
     {
-        public static void GetCorners(MeshData mesh, int submesh, int face, float meshOffset1, float meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8)
+        public static void GetCorners(MeshData mesh, int submesh, int face, bool invertWinding, float meshOffset1, float meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Quads)
             {
@@ -23,10 +23,22 @@ namespace Sylves
             var indices = mesh.GetIndices(submesh);
             var vertices = mesh.vertices;
             var normals = mesh.normals;
-            var i1 = indices[face * 4 + 0];
-            var i2 = indices[face * 4 + 1];
-            var i3 = indices[face * 4 + 2];
-            var i4 = indices[face * 4 + 3];
+            int i1, i2, i3, i4;
+            if(invertWinding)
+            {
+
+                i1 = indices[face * 4 + 3];
+                i2 = indices[face * 4 + 2];
+                i3 = indices[face * 4 + 1];
+                i4 = indices[face * 4 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 4 + 0];
+                i2 = indices[face * 4 + 1];
+                i3 = indices[face * 4 + 2];
+                i4 = indices[face * 4 + 3];
+            }
             // Find new bounding cage
 
             v1 = vertices[i1] + normals[i1] * meshOffset1;
@@ -43,13 +55,13 @@ namespace Sylves
         /// Sets up a function that does trilinear interpolation from a unit cube centered on the origin
         /// to a cube made by extruding a given face of the mesh by meshOffset1 (for y=-0.5) and meshOffset2 (for y=0.5)
         /// </summary>
-        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face, float meshOffset1, float meshOffset2)
+        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face, bool invertWinding, float meshOffset1, float meshOffset2)
         {
-            GetCorners(mesh, submesh, face, meshOffset1, meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8);
+            GetCorners(mesh, submesh, face, invertWinding, meshOffset1, meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8);
             return Interpolate(v1, v2, v3, v4, v5, v6, v7, v8);
         }
 
-        public static void GetCorners(MeshData mesh, int submesh, int face, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4)
+        public static void GetCorners(MeshData mesh, int submesh, int face, bool invertWinding, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Quads)
             {
@@ -58,10 +70,22 @@ namespace Sylves
 
             var indices = mesh.GetIndices(submesh);
             var vertices = mesh.vertices;
-            var i1 = indices[face * 4 + 0];
-            var i2 = indices[face * 4 + 1];
-            var i3 = indices[face * 4 + 2];
-            var i4 = indices[face * 4 + 3];
+            int i1, i2, i3, i4;
+            if (invertWinding)
+            {
+
+                i1 = indices[face * 4 + 3];
+                i2 = indices[face * 4 + 2];
+                i3 = indices[face * 4 + 1];
+                i4 = indices[face * 4 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 4 + 0];
+                i2 = indices[face * 4 + 1];
+                i3 = indices[face * 4 + 2];
+                i4 = indices[face * 4 + 3];
+            }
 
             v1 = vertices[i1];
             v2 = vertices[i2];
@@ -69,13 +93,13 @@ namespace Sylves
             v4 = vertices[i4];
         }
 
-        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face)
+        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face, bool invertWinding)
         {
-            GetCorners(mesh, submesh, face, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4);
+            GetCorners(mesh, submesh, face, invertWinding, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4);
             return Interpolate(v1, v2, v3, v4);
         }
 
-        public static Func<Vector3, Vector3> InterpolateNormal(MeshData mesh, int submesh, int face)
+        public static Func<Vector3, Vector3> InterpolateNormal(MeshData mesh, int submesh, int face, bool invertWinding)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Quads)
             {
@@ -85,10 +109,22 @@ namespace Sylves
             var indices = mesh.GetIndices(submesh);
             var normals = mesh.normals;
 
-            var i1 = indices[face * 4 + 0];
-            var i2 = indices[face * 4 + 1];
-            var i3 = indices[face * 4 + 2];
-            var i4 = indices[face * 4 + 3];
+            int i1, i2, i3, i4;
+            if (invertWinding)
+            {
+
+                i1 = indices[face * 4 + 3];
+                i2 = indices[face * 4 + 2];
+                i3 = indices[face * 4 + 1];
+                i4 = indices[face * 4 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 4 + 0];
+                i2 = indices[face * 4 + 1];
+                i3 = indices[face * 4 + 2];
+                i4 = indices[face * 4 + 3];
+            }
             // Find new bounding cage
 
             var v1 = normals[i1];
@@ -99,7 +135,7 @@ namespace Sylves
             return Interpolate(v1, v2, v3, v4);
         }
 
-        public static Func<Vector3, Vector4> InterpolateTangent(MeshData mesh, int submesh, int face)
+        public static Func<Vector3, Vector4> InterpolateTangent(MeshData mesh, int submesh, int face, bool invertWinding)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Quads)
             {
@@ -114,10 +150,22 @@ namespace Sylves
             var tangents = mesh.tangents;
 
             var indices = mesh.GetIndices(submesh);
-            var i1 = indices[face * 4 + 0];
-            var i2 = indices[face * 4 + 1];
-            var i3 = indices[face * 4 + 2];
-            var i4 = indices[face * 4 + 3];
+            int i1, i2, i3, i4;
+            if (invertWinding)
+            {
+
+                i1 = indices[face * 4 + 3];
+                i2 = indices[face * 4 + 2];
+                i3 = indices[face * 4 + 1];
+                i4 = indices[face * 4 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 4 + 0];
+                i2 = indices[face * 4 + 1];
+                i3 = indices[face * 4 + 2];
+                i4 = indices[face * 4 + 3];
+            }
             // Find new bounding cage
 
             var v1 = tangents[i1];
@@ -128,7 +176,7 @@ namespace Sylves
             return Interpolate(v1, v2, v3, v4);
         }
 
-        public static Func<Vector3, Vector2> InterpolateUv(MeshData mesh, int submesh, int face)
+        public static Func<Vector3, Vector2> InterpolateUv(MeshData mesh, int submesh, int face, bool invertWinding)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Quads)
             {
@@ -143,10 +191,22 @@ namespace Sylves
             var uvs = mesh.uv;
 
             var indices = mesh.GetIndices(submesh);
-            var i1 = indices[face * 4 + 0];
-            var i2 = indices[face * 4 + 1];
-            var i3 = indices[face * 4 + 2];
-            var i4 = indices[face * 4 + 3];
+            int i1, i2, i3, i4;
+            if (invertWinding)
+            {
+
+                i1 = indices[face * 4 + 3];
+                i2 = indices[face * 4 + 2];
+                i3 = indices[face * 4 + 1];
+                i4 = indices[face * 4 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 4 + 0];
+                i2 = indices[face * 4 + 1];
+                i3 = indices[face * 4 + 2];
+                i4 = indices[face * 4 + 3];
+            }
             // Find new bounding cage
 
             var v1 = uvs[i1];

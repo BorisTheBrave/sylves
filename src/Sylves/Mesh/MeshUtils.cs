@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -68,7 +69,7 @@ namespace Sylves
         /// For quad meshes, cell co-ordinates is a unit cube centered at the origin.
         /// For tri meshes, cell co-ordinates are a triangle prism centered at the origin.
         /// </summary>
-        public static Deformation GetDeformation(MeshData surfaceMesh, float tileHeight, float surfaceOffset, bool smoothNormals, int face, int layer, int subMesh)
+        public static Deformation GetDeformation(MeshData surfaceMesh, float tileHeight, float surfaceOffset, bool smoothNormals, int face, int layer, int subMesh, bool invertWinding)
         {
             var isQuads = surfaceMesh.GetTopology(subMesh) == MeshTopology.Quads;
             var isTris = surfaceMesh.GetTopology(subMesh) == MeshTopology.Triangles;
@@ -77,20 +78,20 @@ namespace Sylves
                 throw new Exception($"Cannot handle topology of type {surfaceMesh.GetTopology(subMesh)}");
 
             var interpolatePoint = isQuads
-                ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2)
-                : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2);
+                ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2)
+                : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2);
 
             var interpolateNormal = !smoothNormals ? null : isQuads
-                ? QuadInterpolation.InterpolateNormal(surfaceMesh, subMesh, face)
-                : TriangleInterpolation.InterpolateNormal(surfaceMesh, subMesh, face);
+                ? QuadInterpolation.InterpolateNormal(surfaceMesh, subMesh, face, invertWinding)
+                : TriangleInterpolation.InterpolateNormal(surfaceMesh, subMesh, face, invertWinding);
 
             var interpolateTangent = !smoothNormals ? null : isQuads
-                ? QuadInterpolation.InterpolateTangent(surfaceMesh, subMesh, face)
-                : TriangleInterpolation.InterpolateTangent(surfaceMesh, subMesh, face);
+                ? QuadInterpolation.InterpolateTangent(surfaceMesh, subMesh, face, invertWinding)
+                : TriangleInterpolation.InterpolateTangent(surfaceMesh, subMesh, face, invertWinding);
 
             var interpolateUv = !smoothNormals ? null : isQuads
-                ? QuadInterpolation.InterpolateUv(surfaceMesh, subMesh, face)
-                : TriangleInterpolation.InterpolateUv(surfaceMesh, subMesh, face);
+                ? QuadInterpolation.InterpolateUv(surfaceMesh, subMesh, face, invertWinding)
+                : TriangleInterpolation.InterpolateUv(surfaceMesh, subMesh, face, invertWinding);
 
             void GetJacobi(Vector3 p, out Matrix4x4 jacobi)
             {
@@ -160,7 +161,7 @@ namespace Sylves
                 return jacobi * v;
             }
 
-            var deformation = new Deformation(interpolatePoint, DeformNormal, DeformTangent, false);
+            var deformation = new Deformation(interpolatePoint, DeformNormal, DeformTangent, invertWinding);
             // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY).
             deformation = deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix();
             return deformation;
@@ -172,7 +173,7 @@ namespace Sylves
         /// For quad meshes, cell co-ordinates is a unit cube centered at the origin.
         /// For tri meshes, cell co-ordinates are a triangle prism centered at the origin.
         /// </summary>
-        public static Deformation GetDeformation(MeshData surfaceMesh, int face, int subMesh)
+        public static Deformation GetDeformation(MeshData surfaceMesh, int face, int subMesh, bool invertWinding)
         {
             var isQuads = surfaceMesh.GetTopology(subMesh) == MeshTopology.Quads;
             var isTris = surfaceMesh.GetTopology(subMesh) == MeshTopology.Triangles;
@@ -181,20 +182,66 @@ namespace Sylves
                 throw new Exception($"Cannot handle topology of type {surfaceMesh.GetTopology(subMesh)}");
 
             var interpolatePoint = isQuads
-                ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face)
-                : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face);
+                ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding)
+                : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding);
 
-            var deformation = new Deformation(interpolatePoint, null, null, false);
+            var deformation = new Deformation(interpolatePoint, null, null, invertWinding);
             // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY).
             deformation = deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix();
             return deformation;
+        }
+
+        public struct Face : IEnumerable<int>
+        {
+            public Face(int[] indices, int offset, int length, bool invertWinding)
+            {
+                this.Indices = indices;
+                this.Offset = offset;
+                this.Length = length;
+                this.InvertWinding = invertWinding;
+            }
+
+            public int[] Indices { get; set; }
+            public int Offset { get; set; }
+            public int Length { get; set; }
+            public bool InvertWinding { get; set; }
+
+            public int Count => Length;
+
+            public IEnumerator<int> GetEnumerator()
+            {
+                if(InvertWinding)
+                {
+                    for(var i=0;i<Length;i++)
+                    {
+                        yield return Indices[Offset - i];
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < Length; i++)
+                    {
+                        yield return Indices[Offset + i];
+                    }
+                }
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+
+            public int this[int i]
+            {
+                get { return InvertWinding ? Indices[Offset - i] : Indices[Offset + i]; }
+            }
         }
 
         /// <summary>
         /// Returns the indices of the faces of a submesh of meshData.
         /// </summary>
         /// TODO: Should we make a low alloc version of this?
-        public static IEnumerable<IReadOnlyList<int>> GetFaces(MeshData meshData, int subMesh)
+        public static IEnumerable<Face> GetFaces(MeshData meshData, int subMesh, bool invertWinding = false)
         {
             var indices = meshData.GetIndices(subMesh);
 
@@ -203,13 +250,13 @@ namespace Sylves
                 case MeshTopology.Quads:
                     for (var i = 0; i < indices.Length; i += 4)
                     {
-                        yield return new ArraySegment<int>(indices, i, 4);
+                        yield return new Face(indices, i + (invertWinding ? 3 : 0), 4, invertWinding);
                     }
                     break;
                 case MeshTopology.Triangles:
                     for (var i = 0; i < indices.Length; i += 3)
                     {
-                        yield return new ArraySegment<int>(indices, i, 3);
+                        yield return new Face(indices, i + (invertWinding ? 2 : 0), 3, invertWinding);
                     }
                     break;
                 default:

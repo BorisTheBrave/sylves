@@ -54,6 +54,15 @@ namespace Sylves.Test
             AssertAreEqual(new Vector3(0, 0, 0), d.DeformPoint(new Vector3(0, 0, 0)), 1e-6);
             AssertAreEqual(new Vector3(0, 0.5f, 0), d.DeformPoint(new Vector3(0, 0.5f, 0)), 1e-6);
             AssertAreEqual(new Vector3(0.5f, 0, 0), d.DeformPoint(new Vector3(0.5f, 0, 0)), 1e-6);
+
+
+            g = new MeshGrid(TestMeshes.PlaneXY, new MeshGridOptions { InvertWinding = true });
+            d = g.GetDeformation(new Cell(0, 0, 0));
+            // Mirrored in X (see notes on InvertWinding)
+            AssertAreEqual(new Vector3(0, 0, 0), d.DeformPoint(new Vector3(0, 0, 0)), 1e-6);
+            AssertAreEqual(new Vector3(0, 0.5f, 0), d.DeformPoint(new Vector3(0, 0.5f, 0)), 1e-6);
+            AssertAreEqual(new Vector3(-0.5f, 0, 0), d.DeformPoint(new Vector3(0.5f, 0, 0)), 1e-6);
+
         }
 
         [Test]

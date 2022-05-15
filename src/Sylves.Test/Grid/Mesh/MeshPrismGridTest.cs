@@ -58,6 +58,7 @@ namespace Sylves.Test
             var d = g.GetDeformation(new Cell(0, 0, 0));
             // deform is identity
             AssertAreEqual(new Vector3(0, 0, 0), d.DeformPoint(new Vector3(0, 0, 0)), 1e-6);
+            AssertAreEqual(new Vector3(0, 0, 0.5f), d.DeformPoint(new Vector3(0, 0, 0.5f)), 1e-6);
             AssertAreEqual(new Vector3(0, 0.5f, 0), d.DeformPoint(new Vector3(0, 0.5f, 0)), 1e-6);
             AssertAreEqual(new Vector3(0.5f, 0, 0), d.DeformPoint(new Vector3(0.5f, 0, 0)), 1e-6);
         }

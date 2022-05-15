@@ -13,7 +13,7 @@ namespace Sylves
     /// </summary>
     public static class TriangleInterpolation
     {
-        public static void GetCorners(MeshData mesh, int submesh, int face, float meshOffset1, float meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6)
+        public static void GetCorners(MeshData mesh, int submesh, int face, bool invertWinding, float meshOffset1, float meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Triangles)
             {
@@ -23,9 +23,19 @@ namespace Sylves
             var indices = mesh.GetIndices(submesh);
             var vertices = mesh.vertices;
             var normals = mesh.normals;
-            var i1 = indices[face * 3 + 0];
-            var i2 = indices[face * 3 + 1];
-            var i3 = indices[face * 3 + 2];
+            int i1, i2, i3;
+            if(invertWinding)
+            {
+                i1 = indices[face * 3 + 2];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 3 + 0];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 2];
+            }
             // Find new bounding cage
 
             v1 = vertices[i1] + normals[i1] * meshOffset1;
@@ -37,13 +47,13 @@ namespace Sylves
 
         }
 
-        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face, float meshOffset1, float meshOffset2)
+        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face, bool invertWinding, float meshOffset1, float meshOffset2)
         {
-            GetCorners(mesh, submesh, face, meshOffset1, meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6);
+            GetCorners(mesh, submesh, face, invertWinding, meshOffset1, meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6);
             return Interpolate(v1, v2, v3, v4, v5, v6);
         }
 
-        public static void GetCorners(MeshData mesh, int submesh, int face, out Vector3 v1, out Vector3 v2, out Vector3 v3)
+        public static void GetCorners(MeshData mesh, int submesh, int face, bool invertWinding, out Vector3 v1, out Vector3 v2, out Vector3 v3)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Triangles)
             {
@@ -53,22 +63,32 @@ namespace Sylves
             var indices = mesh.GetIndices(submesh);
             var vertices = mesh.vertices;
             var normals = mesh.normals;
-            var i1 = indices[face * 3 + 0];
-            var i2 = indices[face * 3 + 1];
-            var i3 = indices[face * 3 + 2];
+            int i1, i2, i3;
+            if (invertWinding)
+            {
+                i1 = indices[face * 3 + 2];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 3 + 0];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 2];
+            }
             // Find new bounding cage
 
             v1 = vertices[i1];
             v2 = vertices[i2];
             v3 = vertices[i3];
         }
-        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face)
+        public static Func<Vector3, Vector3> InterpolatePosition(MeshData mesh, int submesh, int face, bool invertWinding)
         {
-            GetCorners(mesh, submesh, face, out Vector3 v1, out Vector3 v2, out Vector3 v3);
+            GetCorners(mesh, submesh, face, invertWinding, out Vector3 v1, out Vector3 v2, out Vector3 v3);
             return Interpolate(v1, v2, v3);
         }
 
-        public static Func<Vector3, Vector3> InterpolateNormal(MeshData mesh, int submesh, int face)
+        public static Func<Vector3, Vector3> InterpolateNormal(MeshData mesh, int submesh, int face, bool invertWinding)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Triangles)
             {
@@ -78,9 +98,19 @@ namespace Sylves
             var indices = mesh.GetIndices(submesh);
             var normals = mesh.normals;
 
-            var i1 = indices[face * 3 + 0];
-            var i2 = indices[face * 3 + 1];
-            var i3 = indices[face * 3 + 2];
+            int i1, i2, i3;
+            if (invertWinding)
+            {
+                i1 = indices[face * 3 + 2];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 3 + 0];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 2];
+            }
             // Find new bounding cage
 
             var v1 = normals[i1];
@@ -90,7 +120,7 @@ namespace Sylves
             return Interpolate(v1, v2, v3);
         }
 
-        public static Func<Vector3, Vector4> InterpolateTangent(MeshData mesh, int submesh, int face)
+        public static Func<Vector3, Vector4> InterpolateTangent(MeshData mesh, int submesh, int face, bool invertWinding)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Triangles)
             {
@@ -105,9 +135,19 @@ namespace Sylves
             var tangents = mesh.tangents;
 
             var indices = mesh.GetIndices(submesh);
-            var i1 = indices[face * 3 + 0];
-            var i2 = indices[face * 3 + 1];
-            var i3 = indices[face * 3 + 2];
+            int i1, i2, i3;
+            if (invertWinding)
+            {
+                i1 = indices[face * 3 + 2];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 3 + 0];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 2];
+            }
             // Find new bounding cage
 
             var v1 = tangents[i1];
@@ -117,7 +157,7 @@ namespace Sylves
             return Interpolate(v1, v2, v3);
         }
 
-        public static Func<Vector3, Vector2> InterpolateUv(MeshData mesh, int submesh, int face)
+        public static Func<Vector3, Vector2> InterpolateUv(MeshData mesh, int submesh, int face, bool invertWinding)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Triangles)
             {
@@ -132,9 +172,19 @@ namespace Sylves
             var uvs = mesh.uv;
 
             var indices = mesh.GetIndices(submesh);
-            var i1 = indices[face * 3 + 0];
-            var i2 = indices[face * 3 + 1];
-            var i3 = indices[face * 3 + 2];
+            int i1, i2, i3;
+            if (invertWinding)
+            {
+                i1 = indices[face * 3 + 2];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 3 + 0];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 2];
+            }
             // Find new bounding cage
 
             var v1 = uvs[i1];

@@ -27,7 +27,7 @@ namespace Sylves
                 Cells = new Dictionary<Cell, DataDrivenCellData>(),
                 Moves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>(),
             };
-            edgeStore = BuildMoves(meshData, data.Moves);
+            edgeStore = BuildMoves(meshData, meshGridOptions, data.Moves);
             BuildCellData(meshData, meshGridOptions, data.Cells);
             return data;
         }
@@ -37,10 +37,10 @@ namespace Sylves
             for (var submesh = 0; submesh < data.subMeshCount; submesh++)
             {
                 var face = 0;
-                foreach (var faceIndices in MeshUtils.GetFaces(data, submesh))
+                foreach (var faceIndices in MeshUtils.GetFaces(data, submesh, meshGridOptions.InvertWinding))
                 {
                     var cell = new Cell(face, submesh);
-                    var deformation = MeshUtils.GetDeformation(data, face, submesh);
+                    var deformation = MeshUtils.GetDeformation(data, face, submesh, meshGridOptions.InvertWinding);
                     var count = faceIndices.Count;
                     var cellType = count == 3 ? HexCellType.Get(HexOrientation.PointyTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
 
@@ -81,7 +81,7 @@ namespace Sylves
         // Loop over every edge of every face, match them up pairwise, and marshal into moves array
         // This relies on the fact that for 2d cell types, the number of the edge corresponds to the CellDir.
         // Returns any unmatched edges
-        private static EdgeStore BuildMoves(MeshData data, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
+        private static EdgeStore BuildMoves(MeshData data, MeshGridOptions meshGridOptions, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
         {
             var vertices = data.vertices;
             var edgeStore = new EdgeStore();
@@ -89,7 +89,7 @@ namespace Sylves
             for (var submesh = 0; submesh < data.subMeshCount; submesh++)
             {
                 var face = 0;
-                foreach (var faceIndices in MeshUtils.GetFaces(data, submesh))
+                foreach (var faceIndices in MeshUtils.GetFaces(data, submesh, meshGridOptions.InvertWinding))
                 {
                     int first = -1;
                     int prev = -1;
@@ -132,7 +132,7 @@ namespace Sylves
             var layerCellData = new Dictionary<Cell, DataDrivenCellData>();
             var layerMoves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>();
             BuildCellData(meshData, meshPrismGridOptions, layerCellData);
-            BuildMoves(meshData, layerMoves);
+            BuildMoves(meshData, meshPrismGridOptions, layerMoves);
 
             // Then repeat it on every level
             BuildCellData(meshData, meshPrismGridOptions, layerCellData, data.Cells);
@@ -149,11 +149,11 @@ namespace Sylves
                 for (var submesh = 0; submesh < data.subMeshCount; submesh++)
                 {
                     var face = 0;
-                    foreach (var faceIndices in MeshUtils.GetFaces(data, submesh))
+                    foreach (var faceIndices in MeshUtils.GetFaces(data, submesh, meshPrismGridOptions.InvertWinding))
                     {
                         // Despite having layerCellData, most stuff needs re-calculating.
                         var cell = new Cell(face, submesh, layer);
-                        var deformation = MeshUtils.GetDeformation(data, meshPrismGridOptions.LayerHeight, meshPrismGridOptions.LayerOffset, meshPrismGridOptions.SmoothNormals, face, layer, submesh);
+                        var deformation = MeshUtils.GetDeformation(data, meshPrismGridOptions.LayerHeight, meshPrismGridOptions.LayerOffset, meshPrismGridOptions.SmoothNormals, face, layer, submesh, meshPrismGridOptions.InvertWinding);
                         var count = faceIndices.Count;
                         var cellType = PrismInfo.Get(layerCellData[new Cell(face, submesh, 0)].CellType).PrismCellType;
 
