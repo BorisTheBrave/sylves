@@ -13,9 +13,9 @@ namespace Sylves
     public class MeshPrismGrid : MeshGrid
     {
 
-        private readonly MeshPrismOptions meshPrismOptions;
+        private readonly MeshPrismGridOptions meshPrismOptions;
 
-        public MeshPrismGrid(MeshData meshData, MeshPrismOptions meshPrismOptions) :
+        public MeshPrismGrid(MeshData meshData, MeshPrismGridOptions meshPrismOptions) :
             base(MeshGridBuilder.Build(meshData, meshPrismOptions), false)
         {
             this.meshPrismOptions = meshPrismOptions;

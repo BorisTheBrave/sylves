@@ -18,8 +18,8 @@ namespace Sylves
         protected readonly MeshData meshData;
         protected bool is2d;
 
-        public MeshGrid(MeshData meshData) :
-            base(MeshGridBuilder.Build(meshData))
+        public MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions = null) :
+            base(MeshGridBuilder.Build(meshData, meshGridOptions ?? new MeshGridOptions()))
         {
             meshDetails = BuildMeshDetails();
             is2d = true;

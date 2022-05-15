@@ -14,17 +14,17 @@ namespace Sylves.Test
         // Should really fix that at some point
         private const float tol = 1e-3f;
 
-        MeshPrismOptions options;
-        MeshPrismOptions xzOptions;
+        MeshPrismGridOptions options;
+        MeshPrismGridOptions xzOptions;
         public MeshPrismGridTest()
         {
-            options = new MeshPrismOptions
+            options = new MeshPrismGridOptions
             {
                 LayerHeight = 1,
                 MinLayer = 0,
                 MaxLayer = 2,
             };
-            xzOptions = new MeshPrismOptions
+            xzOptions = new MeshPrismGridOptions
             {
                 LayerHeight = 1,
                 MinLayer = 0,
@@ -159,6 +159,7 @@ namespace Sylves.Test
             var d = g.GetDeformation(new Cell(0, 0, 0));
             // deform is identity
             AssertAreEqual(new Vector3(0, 0, 0), d.DeformPoint(new Vector3(0, 0, 0)), 1e-6);
+            AssertAreEqual(new Vector3(0, 0, 0.5f), d.DeformPoint(new Vector3(0, 0, 0.5f)), 1e-6);
             AssertAreEqual(new Vector3(0, 0.5f, 0), d.DeformPoint(new Vector3(0, 0.5f, 0)), 1e-6);
             AssertAreEqual(new Vector3(0.5f, 0, 0), d.DeformPoint(new Vector3(0.5f, 0, 0)), 1e-6);
         }

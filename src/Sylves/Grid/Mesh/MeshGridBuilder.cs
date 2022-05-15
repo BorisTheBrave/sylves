@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -10,87 +9,18 @@ using static Sylves.VectorUtils;
 namespace Sylves
 {
     /// <summary>
-    /// Utility class represented a bundle of half edges extracted from a mesh.
-    /// Only unpaired half-edges are stored - any paired off edges are immediately recorded in the moves array.
-    /// </summary>
-    internal class EdgeStore
-    {
-        // the face, submesh and edge ids, stored by start/end points of the edge.
-        private Dictionary<(Vector3, Vector3), (Cell, CellDir)> unmatchedEdges;
-
-        public EdgeStore()
-        {
-            unmatchedEdges = new Dictionary<(Vector3, Vector3), (Cell, CellDir)>();
-        }
-
-        private EdgeStore(Dictionary<(Vector3, Vector3), (Cell, CellDir)> unmatchedEdges)
-        {
-            this.unmatchedEdges = unmatchedEdges;
-        }
-
-        public IEnumerable<(Vector3 v1, Vector3 v2, Cell cell, CellDir dir)> UnmatchedEdges
-        {
-            get
-            {
-                return unmatchedEdges.Select(x => (x.Key.Item1, x.Key.Item2, x.Value.Item1, x.Value.Item2));
-            }
-        }
-
-        // Attempts to pair the new edge with the unmapped edges.
-        // On success, adds it to moves and returns true.
-        public bool MatchEdge(Vector3 v1, Vector3 v2, Cell cell, CellDir dir, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
-        {
-            if (unmatchedEdges.TryGetValue((v2, v1), out var match))
-            {
-                // Edges match, add moves in both directions
-                var (cell2, dir2) = match;
-                moves.Add((cell, dir), (cell2, dir2, new Connection()));
-                moves.Add((cell2, dir2), (cell, dir, new Connection()));
-                unmatchedEdges.Remove((v2, v1));
-                return true;
-            }
-            else if (unmatchedEdges.TryGetValue((v1, v2), out match))
-            {
-                // Same as above, but with a mirrored connection
-                var (cell2, dir2) = match;
-                moves.Add((cell, dir), (cell2, dir2, new Connection { Mirror = true }));
-                moves.Add((cell2, dir2), (cell, dir, new Connection { Mirror = true }));
-                unmatchedEdges.Remove((v1, v2));
-                return true;
-            }
-            return false;
-        }
-
-
-        // MatchEdge, and if it fails, adds the edge to unmatchedEdges
-        public void AddEdge(Vector3 v1, Vector3 v2, Cell cell, CellDir dir, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
-        {
-            if(!MatchEdge(v1, v2, cell, dir, moves))
-            {
-                unmatchedEdges.Add((v1, v2), (cell, dir));
-            }
-        }
-
-        public EdgeStore Clone()
-        {
-            return new EdgeStore(unmatchedEdges.ToDictionary(x => x.Key, x => x.Value));
-        }
-    }
-
-
-    /// <summary>
     /// Class contains utiliites for analysing a MeshData, specifically
     /// for use with MeshGrid.
     /// </summary>
     internal static class MeshGridBuilder
     {
         #region 2d
-        public static DataDrivenData Build(MeshData meshData)
+        public static DataDrivenData Build(MeshData meshData, MeshGridOptions meshGridOptions)
         {
-            return Build(meshData, out var _);
+            return Build(meshData, meshGridOptions, out var _);
         }
 
-        public static DataDrivenData Build(MeshData meshData, out EdgeStore edgeStore)
+        public static DataDrivenData Build(MeshData meshData, MeshGridOptions meshGridOptions, out EdgeStore edgeStore)
         {
             var data = new DataDrivenData
             {
@@ -98,11 +28,11 @@ namespace Sylves
                 Moves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>(),
             };
             edgeStore = BuildMoves(meshData, data.Moves);
-            BuildCellData(meshData, data.Cells);
+            BuildCellData(meshData, meshGridOptions, data.Cells);
             return data;
         }
 
-        private static void BuildCellData(MeshData data, IDictionary<Cell, DataDrivenCellData> cellData)
+        private static void BuildCellData(MeshData data, MeshGridOptions meshGridOptions, IDictionary<Cell, DataDrivenCellData> cellData)
         {
             for (var submesh = 0; submesh < data.subMeshCount; submesh++)
             {
@@ -113,6 +43,13 @@ namespace Sylves
                     var deformation = MeshUtils.GetDeformation(data, face, submesh);
                     var count = faceIndices.Count;
                     var cellType = count == 3 ? HexCellType.Get(HexOrientation.PointyTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
+
+                    if (meshGridOptions.UseXZPlane)
+                    {
+                        cellType = SwapYZCellModifier.Get(cellType);
+                        deformation = deformation * SwapYZ;
+                    }
+
                     var trs = GetTRS2d(deformation, Vector3.zero);
                     cellData[cell] = new DataDrivenCellData
                     {
@@ -183,7 +120,7 @@ namespace Sylves
         #region 3d
         private static readonly Matrix4x4 SwapYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
 
-        public static DataDrivenData Build(MeshData meshData, MeshPrismOptions meshPrismOptions)
+        public static DataDrivenData Build(MeshData meshData, MeshPrismGridOptions meshPrismGridOptions)
         {
             var data = new DataDrivenData
             {
@@ -194,29 +131,20 @@ namespace Sylves
             // First analyse a single layer
             var layerCellData = new Dictionary<Cell, DataDrivenCellData>();
             var layerMoves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>();
-            BuildCellData(meshData, layerCellData);
+            BuildCellData(meshData, meshPrismGridOptions, layerCellData);
             BuildMoves(meshData, layerMoves);
 
-            // Transform if necessary
-            if (meshPrismOptions.UseXZPlane)
-            {
-                foreach(var kv in layerCellData)
-                {
-                    kv.Value.CellType = SwapYZCellModifier.Get(kv.Value.CellType);
-                }
-            }
-
             // Then repeat it on every level
-            BuildCellData(meshData, meshPrismOptions, layerCellData, data.Cells);
-            BuildMoves(meshData, meshPrismOptions, layerCellData, layerMoves, data.Moves);
+            BuildCellData(meshData, meshPrismGridOptions, layerCellData, data.Cells);
+            BuildMoves(meshData, meshPrismGridOptions, layerCellData, layerMoves, data.Moves);
 
             // TODO: swap Y and Z cell co-ordinates
             return data;
         }
 
-        private static void BuildCellData(MeshData data, MeshPrismOptions meshPrismOptions, IDictionary<Cell, DataDrivenCellData> layerCellData, IDictionary<Cell, DataDrivenCellData> cellData)
+        private static void BuildCellData(MeshData data, MeshPrismGridOptions meshPrismGridOptions, IDictionary<Cell, DataDrivenCellData> layerCellData, IDictionary<Cell, DataDrivenCellData> cellData)
         {
-            for (var layer = meshPrismOptions.MinLayer; layer < meshPrismOptions.MaxLayer; layer++)
+            for (var layer = meshPrismGridOptions.MinLayer; layer < meshPrismGridOptions.MaxLayer; layer++)
             {
                 for (var submesh = 0; submesh < data.subMeshCount; submesh++)
                 {
@@ -225,12 +153,12 @@ namespace Sylves
                     {
                         // Despite having layerCellData, most stuff needs re-calculating.
                         var cell = new Cell(face, submesh, layer);
-                        var deformation = MeshUtils.GetDeformation(data, meshPrismOptions.LayerHeight, meshPrismOptions.LayerOffset, meshPrismOptions.SmoothNormals, face, layer, submesh);
+                        var deformation = MeshUtils.GetDeformation(data, meshPrismGridOptions.LayerHeight, meshPrismGridOptions.LayerOffset, meshPrismGridOptions.SmoothNormals, face, layer, submesh);
                         var count = faceIndices.Count;
                         var cellType = PrismInfo.Get(layerCellData[new Cell(face, submesh, 0)].CellType).PrismCellType;
 
                         // Transform if necessary
-                        if (meshPrismOptions.UseXZPlane)
+                        if (meshPrismGridOptions.UseXZPlane)
                         {
                             deformation = deformation * SwapYZ;
                         }
@@ -264,12 +192,12 @@ namespace Sylves
         // converts it to moves on multiple layer, in a different cell type
         private static void BuildMoves(
             MeshData data, 
-            MeshPrismOptions meshPrismOptions,
+            MeshPrismGridOptions meshPrismGridOptions,
             Dictionary<Cell, DataDrivenCellData> layerCellData,
             Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)> layerMoves,
             IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
         {
-            for (var layer = meshPrismOptions.MinLayer; layer <= meshPrismOptions.MaxLayer; layer++)
+            for (var layer = meshPrismGridOptions.MinLayer; layer <= meshPrismGridOptions.MaxLayer; layer++)
             {
                 foreach (var kv in layerMoves)
                 {
@@ -285,14 +213,14 @@ namespace Sylves
             {
                 var cellType = kv.Value.CellType;
                 var prismInfo = PrismInfo.Get(cellType);
-                for (var layer = meshPrismOptions.MinLayer; layer <= meshPrismOptions.MaxLayer; layer++)
+                for (var layer = meshPrismGridOptions.MinLayer; layer <= meshPrismGridOptions.MaxLayer; layer++)
                 {
                     var cell = new Cell(kv.Key.x, kv.Key.y, layer);
-                    if (cell.z < meshPrismOptions.MaxLayer - 1)
+                    if (cell.z < meshPrismGridOptions.MaxLayer - 1)
                     {
                         moves.Add((cell, prismInfo.ForwardDir), (cell + new Vector3Int(0, 0, 1), prismInfo.BackDir, new Connection()));
                     }
-                    if (cell.z > meshPrismOptions.MinLayer)
+                    if (cell.z > meshPrismGridOptions.MinLayer)
                     {
                         moves.Add((cell, prismInfo.BackDir), (cell + new Vector3Int(0, 0, -1), prismInfo.ForwardDir, new Connection()));
                     }

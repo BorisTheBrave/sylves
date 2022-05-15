@@ -31,7 +31,7 @@ namespace Sylves
             var meshMax2 = new Vector2(meshMax.x, meshMax.y);
             var meshSize = meshMax2 - meshMin2;
 
-            var dataDrivenData = MeshGridBuilder.Build(meshData, out var edgeStore);
+            var dataDrivenData = MeshGridBuilder.Build(meshData, new MeshGridOptions(), out var edgeStore);
 
             // Use offset copies of the mesh to establish extra entries in the moves dictionary
             aabbChunks = new AabbChunks(strideX, strideY, meshMin2, meshSize);

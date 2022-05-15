@@ -15,14 +15,14 @@ namespace Sylves
         private static DataDrivenData MakeData(int w, int h, float outerRadius, float innerRadius)
         {
             var meshData = MakeMeshData(w, h, outerRadius, innerRadius);
-            var meshPrismOptions = new MeshPrismOptions
+            var meshPrismGridOptions = new MeshPrismGridOptions
             {
                 LayerHeight = 2 * innerRadius / h,
                 LayerOffset = -2 * innerRadius / h * (h - 1) / 2,
                 MinLayer = 0,
                 MaxLayer = h,
             };
-            var data = MeshGridBuilder.Build(meshData, meshPrismOptions);
+            var data = MeshGridBuilder.Build(meshData, meshPrismGridOptions);
             // Add connection back to start
             for (var y = 0; y < h; y++)
             {

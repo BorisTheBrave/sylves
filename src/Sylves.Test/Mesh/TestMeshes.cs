@@ -30,9 +30,18 @@ namespace Sylves.Test
             topologies = new[] { MeshTopology.Quads }
         };
 
+        // A unity plane has triangle
+        // (-4, 0, 5)
+        // (-5, 0, 4)
+        // (-5, 0, 5)
+        // and normal Up
+        // (winds clockwise when camera pointing Down, camera up being Forward)
         public static MeshData PlaneXZ = new MeshData
         {
             indices = new[] { new[] { 0, 1, 2, 3, } },
+            // Edge 0 points Right.
+            // Edge 1 points Forward
+            // (winds counter clockwise when camera pointing Down, camera up being Forward)
             vertices = new[]
                 {
                     new Vector3(0.5f, 0.0f, -0.5f),
@@ -42,6 +51,7 @@ namespace Sylves.Test
                 },
             normals = new[]
                 {
+                // TODO: THis is wrong
                     Vector3.up,
                     Vector3.up,
                     Vector3.up,
