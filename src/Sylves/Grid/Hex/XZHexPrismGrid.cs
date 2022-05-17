@@ -8,7 +8,7 @@ namespace Sylves
     /// <summary>
     /// Variant of HexPrismGrid that places hexes in the XZ Plane
     /// </summary>
-    public class XZHexPrismGrid : SwapYZModifier
+    public class XZHexPrismGrid : XZModifier
     {
         public XZHexPrismGrid(float cellSize, float layerHeight, HexOrientation orientation = HexOrientation.PointyTopped, HexPrismBound bound = null)
             : base(new HexPrismGrid(cellSize, layerHeight, orientation, bound))

@@ -46,8 +46,8 @@ namespace Sylves
 
                     if (meshGridOptions.UseXZPlane)
                     {
-                        cellType = SwapYZCellModifier.Get(cellType);
-                        deformation = deformation * SwapYZ;
+                        cellType = XZCellModifier.Get(cellType);
+                        deformation = deformation * RotateYZ;
                     }
 
                     var trs = GetTRS2d(deformation, Vector3.zero);
@@ -118,7 +118,7 @@ namespace Sylves
         #endregion
 
         #region 3d
-        private static readonly Matrix4x4 SwapYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
+        private static readonly Matrix4x4 RotateYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 0, 1));
 
         public static DataDrivenData Build(MeshData meshData, MeshPrismGridOptions meshPrismGridOptions)
         {
@@ -160,7 +160,7 @@ namespace Sylves
                         // Transform if necessary
                         if (meshPrismGridOptions.UseXZPlane)
                         {
-                            deformation = deformation * SwapYZ;
+                            deformation = deformation * RotateYZ;
                         }
 
                         var trs = GetTRS(deformation, Vector3.zero);

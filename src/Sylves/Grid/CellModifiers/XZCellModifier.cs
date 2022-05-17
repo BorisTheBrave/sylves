@@ -7,40 +7,39 @@ using UnityEngine;
 
 namespace Sylves
 {
-    // Perhaps cell types should have no spatial component?
-    // But we use them to know the domain from deformations, so needed anyway?
     /// <summary>
-    /// Swaps Y and Z axes.
-    /// This only affects GetMatrix as all other methods don't refer to space.
+    /// Converts a ICellType based in the XY plane to one
+    /// in the XZ plane. It does this by rotating Y+ to Z+  (and Z+ to Y-)
     /// </summary>
-    public class SwapYZCellModifier : ICellType
+    public class XZCellModifier : ICellType
     {
-        private static readonly Dictionary<ICellType, SwapYZCellModifier> cache = new Dictionary<ICellType, SwapYZCellModifier>();
+        private static readonly Dictionary<ICellType, XZCellModifier> cache = new Dictionary<ICellType, XZCellModifier>();
 
-        private static readonly Matrix4x4 SwapYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
+        private static readonly Matrix4x4 RotateYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 0, 1));
+        private static readonly Matrix4x4 RotateZY = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, -1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
 
         private readonly ICellType underlying;
 
-        private SwapYZCellModifier(ICellType underlying)
+        private XZCellModifier(ICellType underlying)
         {
             this.underlying = underlying;
         }
 
         public ICellType Underlying => underlying;
 
-        public static SwapYZCellModifier Get(ICellType underlying)
+        public static XZCellModifier Get(ICellType underlying)
         {
             if(cache.TryGetValue(underlying, out var v))
             {
                 return v;
             }
-            return cache[underlying] = new SwapYZCellModifier(underlying);
+            return cache[underlying] = new XZCellModifier(underlying);
         }
 
         // GetMatrix is the only nontrivial member
         public Matrix4x4 GetMatrix(CellRotation cellRotation)
         {
-            return SwapYZ * underlying.GetMatrix(cellRotation) * SwapYZ;
+            return RotateYZ * underlying.GetMatrix(cellRotation) * RotateZY;
         }
 
         public CellRotation RotateCW => underlying.RotateCW;

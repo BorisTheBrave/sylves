@@ -30,50 +30,24 @@ namespace Sylves.Test
             topologies = new[] { MeshTopology.Quads }
         };
 
-        // Same as PlaneXY, but with InverseWinding
-        // This is how a typical unity plane would look
-        public static MeshData PlaneXY_I = new MeshData
-        {
-            indices = new[] { new[] { 0, 1, 2, 3, } },
-            // Edge 0 points Left.
-            // Edge 1 points Up.
-            vertices = new[]
-                {
-                    new Vector3(-0.5f, -0.5f, 0.0f),
-                    new Vector3(-0.5f, 0.5f, 0.0f),
-                    new Vector3(0.5f, 0.5f, 0.0f),
-                    new Vector3(0.5f, -0.5f, 0.0f),
-                },
-            normals = new[]
-                {
-                    Vector3.back,
-                    Vector3.back,
-                    Vector3.back,
-                    Vector3.back,
-                },
-            subMeshCount = 1,
-            topologies = new[] { MeshTopology.Quads }
-        };
-
         public static MeshData PlaneXZ = new MeshData
         {
             indices = new[] { new[] { 0, 1, 2, 3, } },
             // Edge 0 points Right.
             // Edge 1 points Forward
-            // (winds counter clockwise when camera pointing Down, camera up being Forward)
             vertices = new[]
                 {
-                    new Vector3(0.5f, 0.0f, -0.5f),
                     new Vector3(0.5f, 0.0f, 0.5f),
-                    new Vector3(-0.5f, 0.0f, 0.5f),
+                    new Vector3(0.5f, 0.0f, -0.5f),
                     new Vector3(-0.5f, 0.0f, -0.5f),
+                    new Vector3(-0.5f, 0.0f, 0.5f),
                 },
             normals = new[]
                 {
-                    Vector3.down,
-                    Vector3.down,
-                    Vector3.down,
-                    Vector3.down,
+                    Vector3.up,
+                    Vector3.up,
+                    Vector3.up,
+                    Vector3.up,
                 },
             subMeshCount = 1,
             topologies = new[] { MeshTopology.Quads }

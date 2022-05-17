@@ -90,9 +90,9 @@ namespace Sylves
             public Vector3Int GetHashCell(Vector3 v) => Vector3Int.FloorToInt(Divide(v, hashCellSize));
         }
 
-        ICellType UnwrapSwapYZCellModifier(ICellType cellType)
+        ICellType UnwrapXZCellModifier(ICellType cellType)
         {
-            if(cellType is SwapYZCellModifier modifier)
+            if(cellType is XZCellModifier modifier)
             {
                 return modifier.Underlying;
             }
@@ -119,7 +119,7 @@ namespace Sylves
         {
             var cellData = CellData[cell];
             var cellLocalPoint = cellData.TRS.ToMatrix().inverse.MultiplyPoint3x4(position);
-            var cellType = UnwrapSwapYZCellModifier(cellData.CellType);
+            var cellType = UnwrapXZCellModifier(cellData.CellType);
             // TODO: Dispatch to celltype method?
             if (cellType == CubeCellType.Instance || 
                 cellType == SquareCellType.Instance)
@@ -157,7 +157,7 @@ namespace Sylves
             {
                 var cellData = CellData[cell];
                 var m = cellData.TRS.ToMatrix().inverse * matrix;
-                var cellType = UnwrapSwapYZCellModifier(cellData.CellType);
+                var cellType = UnwrapXZCellModifier(cellData.CellType);
                 // TODO: Dispatch to celltype method?
                 if (cellType == CubeCellType.Instance)
                 {
