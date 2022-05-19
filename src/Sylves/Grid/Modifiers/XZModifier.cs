@@ -10,7 +10,7 @@ namespace Sylves
 {
     /// <summary>
     /// Converts a IGrid based in the XY plane to one
-    /// in the XZ plane. It does this by rotating Y+ to Z+  (and Z+ to Y-).
+    /// in the XZ plane. It does this by rotating Y+ to Z-  (and Z+ to Y+).
     /// This is different from a transform in that it doesn't rotate the cells, it applies XZCellModifier to them.
     /// </summary>
     public class XZModifier : TransformModifier
@@ -21,7 +21,7 @@ namespace Sylves
         private readonly ICellType cellType;
         private readonly ICellType[] cellTypes;
 
-        public XZModifier(IGrid underlying) : base(underlying, RotateYZ)
+        public XZModifier(IGrid underlying) : base(underlying, RotateZY)
         {
             if(underlying.IsSingleCellType)
             {
@@ -55,7 +55,7 @@ namespace Sylves
 
         public override bool FindCell(Matrix4x4 matrix, out Cell cell, out CellRotation rotation)
         {
-            return Underlying.FindCell(RotateZY * matrix * RotateYZ, out cell, out rotation);
+            return Underlying.FindCell(RotateYZ * matrix * RotateZY, out cell, out rotation);
         }
 
         public override bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)

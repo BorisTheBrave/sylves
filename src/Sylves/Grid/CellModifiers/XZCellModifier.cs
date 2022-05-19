@@ -9,7 +9,7 @@ namespace Sylves
 {
     /// <summary>
     /// Converts a ICellType based in the XY plane to one
-    /// in the XZ plane. It does this by rotating Y+ to Z+  (and Z+ to Y-)
+    /// in the XZ plane. It does this by rotating Y+ to Z-  (and Z+ to Y+)
     /// </summary>
     public class XZCellModifier : ICellType
     {
@@ -39,7 +39,7 @@ namespace Sylves
         // GetMatrix is the only nontrivial member
         public Matrix4x4 GetMatrix(CellRotation cellRotation)
         {
-            return RotateYZ * underlying.GetMatrix(cellRotation) * RotateZY;
+            return RotateZY * underlying.GetMatrix(cellRotation) * RotateYZ;
         }
 
         public CellRotation RotateCW => underlying.RotateCW;

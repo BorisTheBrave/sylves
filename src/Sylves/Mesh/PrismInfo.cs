@@ -34,8 +34,6 @@ namespace Sylves
             {
                 {(CellDir)SquareDir.Left, (CellDir)CubeDir.Left},
                 {(CellDir)SquareDir.Right, (CellDir)CubeDir.Right},
-                //{(CellDir)SquareDir.Up, (CellDir)CubeDir.Forward},
-                //{(CellDir)SquareDir.Down, (CellDir)CubeDir.Back},
                 {(CellDir)SquareDir.Up, (CellDir)CubeDir.Back},
                 {(CellDir)SquareDir.Down, (CellDir)CubeDir.Forward},
             },

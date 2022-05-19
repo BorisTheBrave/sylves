@@ -32,6 +32,9 @@ namespace Sylves.Test
             var g = new XZHexPrismGrid(1, 1);
             var c = g.GetCellCenter(new Cell(10, -5, 0));
             Assert.AreEqual(0, c.y);
+
+            c = g.GetCellCenter(new Cell(10, -5, 1));
+            Assert.AreEqual(1, c.y);
         }
 
         [Test]

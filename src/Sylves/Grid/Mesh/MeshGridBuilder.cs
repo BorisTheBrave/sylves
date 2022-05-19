@@ -43,14 +43,15 @@ namespace Sylves
                     var deformation = MeshUtils.GetDeformation(data, face, submesh, meshGridOptions.InvertWinding);
                     var count = faceIndices.Count;
                     var cellType = count == 3 ? HexCellType.Get(HexOrientation.PointyTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
+                    var trs = GetTRS2d(deformation, Vector3.zero);
 
                     if (meshGridOptions.UseXZPlane)
                     {
                         cellType = XZCellModifier.Get(cellType);
                         deformation = deformation * RotateYZ;
+                        trs = new TRS(trs.ToMatrix() * RotateYZ);
                     }
 
-                    var trs = GetTRS2d(deformation, Vector3.zero);
                     cellData[cell] = new DataDrivenCellData
                     {
                         CellType = cellType,
@@ -119,7 +120,6 @@ namespace Sylves
 
         #region 3d
         private static readonly Matrix4x4 RotateYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 0, 1));
-
         public static DataDrivenData Build(MeshData meshData, MeshPrismGridOptions meshPrismGridOptions)
         {
             var data = new DataDrivenData
@@ -156,14 +156,15 @@ namespace Sylves
                         var deformation = MeshUtils.GetDeformation(data, meshPrismGridOptions.LayerHeight, meshPrismGridOptions.LayerOffset, meshPrismGridOptions.SmoothNormals, face, layer, submesh, meshPrismGridOptions.InvertWinding);
                         var count = faceIndices.Count;
                         var cellType = PrismInfo.Get(layerCellData[new Cell(face, submesh, 0)].CellType).PrismCellType;
+                        var trs = GetTRS(deformation, Vector3.zero);
 
                         // Transform if necessary
                         if (meshPrismGridOptions.UseXZPlane)
                         {
                             deformation = deformation * RotateYZ;
+                            trs = new TRS(trs.ToMatrix() * RotateYZ);
                         }
 
-                        var trs = GetTRS(deformation, Vector3.zero);
 
                         cellData[cell] = new DataDrivenCellData
                         {
