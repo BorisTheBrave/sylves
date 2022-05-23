@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Sylves
 {
+    // Specialized version of PlanarPrismBound
     public class HexPrismBound : IBound, IEnumerable<Cell>
     {
         public HexBound hexBound;

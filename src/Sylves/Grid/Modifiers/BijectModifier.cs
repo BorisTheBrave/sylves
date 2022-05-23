@@ -30,6 +30,7 @@ namespace Sylves
 
         private GridSymmetry FromUnderlying(GridSymmetry s)
         {
+            if (s == null) return null;
             return new GridSymmetry
             {
                 Rotation = s.Rotation,
@@ -39,6 +40,7 @@ namespace Sylves
         }
         private GridSymmetry ToUnderlying(GridSymmetry s)
         {
+            if (s == null) return null;
             return new GridSymmetry
             {
                 Rotation = s.Rotation,

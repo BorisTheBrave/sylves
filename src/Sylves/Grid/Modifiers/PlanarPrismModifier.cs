@@ -229,8 +229,15 @@ namespace Sylves
 
         public virtual bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
         {
-            // See TryApplySymmetry
-            throw new NotImplementedException();
+            var (startUCell, startLayer) = Split(startCell);
+            Vector3Int Flatten(Vector3Int v) => new Vector3Int(v.x, v.y, 0);
+            if (!underlying.TryMoveByOffset(startUCell, Flatten(startOffset), Flatten(destOffset), startRotation, out destCell, out destRotation))
+            {
+                destCell = default;
+                return false;
+            }
+            destCell = Combine(destCell, startCell.z + (destOffset.z - startOffset.z));
+            return bound == null ? true : IsCellInGrid(destCell);
         }
 
         public virtual bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)

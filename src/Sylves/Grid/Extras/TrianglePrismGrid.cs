@@ -1,29 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 #if UNITY
 using UnityEngine;
 #endif
 
 namespace Sylves
 {
+
     public class TrianglePrismGrid : PlanarPrismModifier
     {
-        public TrianglePrismGrid(float cellSize, float layerHeight) :
-            base(
-                new BijectModifier(new TriangleGrid(new Vector2(cellSize, cellSize)), ToTriangleGrid, FromTriangleGrid),
-                        new PlanarPrismOptions { LayerHeight = layerHeight })
+        public TrianglePrismGrid(float cellSize, float layerHeight, TriangleOrientation orientation = TriangleOrientation.FlatTopped, TrianglePrismBound bound = null) :
+            this(TriangleGrid.ComputeCellSize(cellSize, orientation), layerHeight, orientation, bound)
         {
 
         }
 
 
-        public TrianglePrismGrid(Vector3 cellSize) :
-            base(
-                new BijectModifier(new TriangleGrid(new Vector2(cellSize.x, cellSize.y)), ToTriangleGrid, FromTriangleGrid),
-                        new PlanarPrismOptions {LayerHeight = cellSize.z })
+        public TrianglePrismGrid(Vector2 triangleCellSize, float layerHeight, TriangleOrientation orientation = TriangleOrientation.FlatTopped, TrianglePrismBound bound = null) :
+            this(new Vector3(triangleCellSize.x, triangleCellSize.y, layerHeight), orientation, bound)
         {
 
+        }
+
+        public TrianglePrismGrid(Vector3 cellSize, TriangleOrientation orientation = TriangleOrientation.FlatTopped, TrianglePrismBound bound = null) :
+            base(
+                new BijectModifier(new TriangleGrid(new Vector2(cellSize.x, cellSize.y), orientation, bound?.triangleBound), ToTriangleGrid, FromTriangleGrid),
+                new PlanarPrismOptions {LayerHeight = cellSize.z },
+                bound == null ? null : new PlanarPrismBound { PlanarBound = bound.triangleBound, MinLayer = bound.layerMin, MaxLayer = bound.layerMax }
+            )
+        {
         }
 
         private static Cell ToTriangleGrid(Cell c)
@@ -36,5 +40,7 @@ namespace Sylves
         }
 
         private static Cell FromTriangleGrid(Cell c) => new Cell(c.x * 2 + (c.x + c.y + c.z - 1), c.y, 0);
+
+        public override IGrid Unwrapped => this;
     }
 }

@@ -69,8 +69,13 @@ namespace Sylves
 
         private readonly IGrid altGrid;
 
+        internal static Vector2 ComputeCellSize(float cellSize, TriangleOrientation orientation)
+        {
+            return cellSize * (orientation == TriangleOrientation.FlatTopped ? new Vector2(1, Sqrt3 / 2) : new Vector2(Sqrt3 / 2, 1));
+        }
+
         public TriangleGrid(float cellSize, TriangleOrientation orientation = TriangleOrientation.FlatTopped, TriangleBound bound = null)
-            :this(cellSize * (orientation == TriangleOrientation.FlatTopped ? new Vector2(1, Sqrt3 / 2) : new Vector2(Sqrt3 / 2, 1)), orientation, bound)
+            :this(ComputeCellSize(cellSize, orientation), orientation, bound)
         {
         }
 
@@ -386,19 +391,30 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                throw new NotImplementedException();
+                var size = bound.max - bound.min;
+                return 2 * size.x * size.y;
             }
         }
 
         public int GetIndex(Cell cell)
         {
             CheckBounded();
-            throw new NotImplementedException();
+            var sizeX = bound.max.x - bound.min.x;
+            var dx = cell.x - bound.min.x;
+            var dy = cell.y - bound.min.y;
+            var dz = cell.x + cell.y + cell.z - 1;
+            return dz + (dx + dy * sizeX) * 2;
         }
 
         public Cell GetCellByIndex(int index)
         {
-            throw new NotImplementedException();
+            var sizeX = bound.max.x - bound.min.x;
+            var dz = index % 2;
+            index /= 2;
+            var x = bound.min.x + (index % sizeX);
+            var y = bound.min.y + (index / sizeX);
+            var z = dz - x - y + 1;
+            return new Cell(x, y, z);
         }
         #endregion
 

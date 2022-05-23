@@ -15,4 +15,15 @@ namespace Sylves
         Forward,
         Back,
     }
+    public enum FTHexPrismDir
+    {
+        UpRight,
+        Up,
+        UpLeft,
+        DownLeft,
+        Down,
+        DownRight,
+        Forward,
+        Back,
+    }
 }
