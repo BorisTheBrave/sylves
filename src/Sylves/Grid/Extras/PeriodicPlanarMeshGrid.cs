@@ -186,6 +186,9 @@ namespace Sylves
             return new TRS(trs.Position + ChunkOffset(chunk), trs.Rotation, trs.Scale);
         }
 
+        #endregion
+
+        #region Shape
         public Deformation GetDeformation(Cell cell)
         {
             var (centerCell, chunk) = Split(cell);
@@ -194,6 +197,7 @@ namespace Sylves
 
         }
 
+        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new NotImplementedException();
         #endregion
 
         #region Query

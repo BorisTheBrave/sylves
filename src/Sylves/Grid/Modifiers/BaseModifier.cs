@@ -100,8 +100,13 @@ namespace Sylves
         public virtual Vector3 GetCellCenter(Cell cell) => underlying.GetCellCenter(cell);
 
         public virtual TRS GetTRS(Cell cell) => underlying.GetTRS(cell);
+        #endregion
 
+        #region Shape
         public virtual Deformation GetDeformation(Cell cell) => underlying.GetDeformation(cell);
+
+        public virtual void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => underlying.GetPolygon(cell, out vertices, out transform);
+
         #endregion
 
         #region Query

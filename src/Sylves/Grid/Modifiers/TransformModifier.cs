@@ -38,8 +38,16 @@ namespace Sylves
         public override Vector3 GetCellCenter(Cell cell) => transform.MultiplyPoint3x4(Underlying.GetCellCenter(cell));
 
         public override TRS GetTRS(Cell cell) => new TRS(transform * Underlying.GetTRS(cell).ToMatrix());
+        #endregion
 
+        #region Shape
         public override Deformation GetDeformation(Cell cell) => throw new NotImplementedException();
+
+        public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
+        {
+            Underlying.GetPolygon(cell, out vertices, out transform);
+            transform = this.transform * transform;
+        }
         #endregion
 
         #region Query

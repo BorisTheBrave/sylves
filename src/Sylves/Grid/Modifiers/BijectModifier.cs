@@ -144,8 +144,12 @@ namespace Sylves
         public override Vector3 GetCellCenter(Cell cell) => Underlying.GetCellCenter(toUnderlying(cell));
 
         public override TRS GetTRS(Cell cell) => Underlying.GetTRS(toUnderlying(cell));
+        #endregion
 
+        #region Shape
         public override Deformation GetDeformation(Cell cell) => Underlying.GetDeformation(toUnderlying(cell));
+
+        public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => Underlying.GetPolygon(toUnderlying(cell), out vertices, out transform);
         #endregion
 
         #region Query

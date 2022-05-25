@@ -394,13 +394,18 @@ namespace Sylves
             var trs = underlying.GetTRS(uCell);
             return new TRS(trs.Position + GetOffset(layer), trs.Rotation, trs.Scale);
         }
+        #endregion
 
+        #region Shape
         public virtual Deformation GetDeformation(Cell cell)
         {
             var (uCell, layer) = Split(cell);
             var deformation = underlying.GetDeformation(uCell);
             return Matrix4x4.Translate(GetOffset(layer)) * deformation;
         }
+
+        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new Grid3dException();
+
         #endregion
 
         #region Query

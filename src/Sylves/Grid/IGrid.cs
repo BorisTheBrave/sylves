@@ -189,9 +189,14 @@ namespace Sylves
         /// </summary>
         TRS GetTRS(Cell cell);
 
+        #endregion
+
+        #region Shape
+
         Deformation GetDeformation(Cell cell);
 
-        // TODO: Also shape
+        void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform);
+
         #endregion
 
         #region Query

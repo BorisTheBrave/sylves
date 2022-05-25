@@ -134,7 +134,12 @@ namespace Sylves
 
         public TRS GetTRS(Cell cell) => cellData[cell].TRS;
 
+        #endregion
+
+        #region Shape
         public Deformation GetDeformation(Cell cell) => cellData[cell].Deformation;
+
+        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new System.NotImplementedException();
 
         #endregion
 
