@@ -81,15 +81,17 @@ namespace Sylves
             }
         }
 
-        public static void FindGridSymmetry(IGrid grid, Cell cell)
+        // expectedSrcDest: atm, FindGridSymmetry doesn't guarantee that src of the output
+        // matches srcCell of the input. Perhaps it should?
+        public static void FindGridSymmetry(IGrid grid, Cell cell, Cell? expectedSrcDest = null)
         {
             var cells = new HashSet<Cell>(new[] { cell });
             var cellType = grid.GetCellType(cell);
-            var s = grid.FindGridSymmetry(cells, cells, new Cell(), cellType.GetIdentity());
+            var s = grid.FindGridSymmetry(cells, cells, cell, cellType.GetIdentity());
             Assert.IsNotNull(s);
             Assert.AreEqual(cellType.GetIdentity(), s.Rotation);
-            Assert.AreEqual(cell, s.Src);
-            Assert.AreEqual(cell, s.Dest);
+            Assert.AreEqual(expectedSrcDest ?? cell, s.Src);
+            Assert.AreEqual(expectedSrcDest ?? cell, s.Dest);
         }
     }
 }

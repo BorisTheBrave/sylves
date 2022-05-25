@@ -129,7 +129,8 @@ namespace Sylves
 
         private ISet<Cell> ToUnderlying(ISet<Cell> cells, int layer)
         {
-            return new BijectSet(cells, c => Split(c).cell, c=> Combine(c, layer));
+            // Naughty - not a bijection
+            return new BijectSet(cells, c => Split(c).cell, c => Combine(c, layer));
         }
 
         private GridSymmetry FromPlanar(GridSymmetry s, int layerOffset)

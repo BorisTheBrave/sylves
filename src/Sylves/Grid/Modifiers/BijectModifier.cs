@@ -25,7 +25,15 @@ namespace Sylves
 
         private ISet<Cell> ToUnderlying(ISet<Cell> cells)
         {
-            return new BijectSet(cells, toUnderlying, fromUnderlying);
+            var set = new BijectSet(cells, fromUnderlying, toUnderlying);
+            foreach(var cell in set)
+            {
+                if(!set.Contains(cell))
+                {
+                    throw new Exception($"Set of {string.Join(",", set)} does not contain {cell}. (originally {string.Join(",", cells)})");
+                }
+            }
+            return set;
         }
 
         private GridSymmetry FromUnderlying(GridSymmetry s)
