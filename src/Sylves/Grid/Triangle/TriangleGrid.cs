@@ -59,6 +59,34 @@ namespace Sylves
         // Also used for PTHexDir UpRight, Left, DownRight
         private static readonly CellDir[] cellDirsB = { (CellDir)FTHexDir.Up, (CellDir)FTHexDir.DownLeft, (CellDir)FTHexDir.DownRight };
 
+        private static readonly Vector3[] upPolygon =
+        {
+            new Vector3(0.5f, -0.3333333333f, 0),
+            new Vector3(0, 0.6666666667f, 0),
+            new Vector3(-0.5f, -0.3333333333f, 0),
+        };
+
+        private static readonly Vector3[] downPolygon =
+        {
+            new Vector3(0.5f, 0.3333333333f, 0),
+            new Vector3(-0.5f, 0.3333333333f, 0),
+            new Vector3(0, -0.6666666667f, 0),
+        };
+
+        private static readonly Vector3[] leftPolygon =
+        {
+            new Vector3(0.3333333333f, -0.5f, 0),
+            new Vector3(0.3333333333f, 0.5f, 0),
+            new Vector3(-0.6666666667f, 0, 0),
+        };
+
+        private static readonly Vector3[] rightPolygon =
+        {
+            new Vector3(-0.3333333333f, -0.5f, 0),
+            new Vector3(0.6666666667f, 0, 0),
+            new Vector3(-0.3333333333f, 0.5f, 0),
+        };
+
         readonly ICellType cellType;
 
         private readonly TriangleBound bound;
@@ -501,7 +529,26 @@ namespace Sylves
         #region Shape
         public Deformation GetDeformation(Cell cell) => Deformation.Identity;
 
-        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new NotImplementedException();
+        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
+        {
+            if (IsUp(cell))
+            {
+                vertices = upPolygon;
+            }
+            else if (IsDown(cell))
+            {
+                vertices = downPolygon;
+            }
+            else if (IsLeft(cell))
+            {
+                vertices = leftPolygon;
+            }
+            else
+            {
+                vertices = rightPolygon;
+            }
+            transform = Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(new Vector3(cellSize.x, cellSize.y, 0));
+        }
         #endregion
 
         #region Query

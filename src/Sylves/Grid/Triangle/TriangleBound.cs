@@ -17,6 +17,15 @@ namespace Sylves
             this.max = max;
         }
 
+        public static TriangleBound Hexagon(int radius)
+        {
+            var center = new Vector3Int(0, 0, 0);
+            return new TriangleBound(
+                new Vector3Int(center.x - radius + 1, center.y - radius + 1, center.z - radius + 1),
+                new Vector3Int(center.x + radius + 1, center.y + radius + 1, center.z + radius + 1)
+                );
+        }
+
         public bool Contains(Cell v)
         {
             return v.x >= min.x && v.y >= min.y && v.z >= min.z && v.x < max.x && v.y < max.y && v.z < max.z;
@@ -40,8 +49,8 @@ namespace Sylves
         {
             for (var x = min.x; x < max.x; x++)
             {
-                var minY = Math.Max(min.y, -x - max.z + 1 - 2);
-                var maxY = Math.Min(max.y, -x - min.z - 1);
+                var minY = Math.Max(min.y, -x - max.z + 1);
+                var maxY = Math.Min(max.y, -x - min.z + 3);
                 for (var y = minY; y < maxY; y++)
                 {
                     for (var s = 1; s <= 2; s++)
@@ -49,7 +58,7 @@ namespace Sylves
                         var z = -x - y + s;
                         if (min.z <= z && z < max.z)
                         {
-                            yield return new Cell(x, y, -x - y + s);
+                            yield return new Cell(x, y, z);
                         }
                     }
                 }

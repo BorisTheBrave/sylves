@@ -54,6 +54,26 @@ namespace Sylves
         private static readonly ICellType[] ftCellTypes = {HexCellType.Get(HexOrientation.FlatTopped)};
         private static readonly ICellType[] ptCellTypes= { HexCellType.Get(HexOrientation.PointyTopped) };
 
+        private static readonly Vector3[] ptPolygon =
+        {
+            new Vector3(0.5f, -0.25f, 0),
+            new Vector3(0.5f, 0.25f, 0),
+            new Vector3(0, 0.5f, 0),
+            new Vector3(-0.5f, 0.25f, 0),
+            new Vector3(-0.5f, -0.25f, 0),
+            new Vector3(0, -0.5f, 0),
+        };
+
+        private static readonly Vector3[] ftPolygon =
+        {
+            new Vector3(0.5f, 0, 0),
+            new Vector3(0.25f, 0.5f, 0),
+            new Vector3(-0.25f, 0.5f, 0),
+            new Vector3(-0.5f, 0, 0),
+            new Vector3(-0.25f, -0.5f, 0),
+            new Vector3(0.25f, -0.5f, 0),
+        };
+
         private readonly ICellType cellType;
 
         private readonly HexBound bound;
@@ -392,7 +412,11 @@ namespace Sylves
         #region Shape
         public Deformation GetDeformation(Cell cell) => Deformation.Identity;
 
-        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new NotImplementedException();
+        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
+        {
+            vertices = orientation == HexOrientation.PointyTopped ? ptPolygon : ftPolygon;
+            transform = Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(new Vector3(cellSize.x, cellSize.y, 0));
+        }
         #endregion
 
         #region Query

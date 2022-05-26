@@ -19,6 +19,14 @@ namespace Sylves
     {
         private static readonly ICellType[] cellTypes = { SquareCellType.Instance };
 
+        private static readonly Vector3[] polygon =
+        {
+            new Vector3(0.5f, -0.5f, 0),
+            new Vector3(0.5f, 0.5f, 0),
+            new Vector3(-0.5f, 0.5f, 0),
+            new Vector3(-0.5f, -0.5f, 0),
+        };
+
         SquareBound bound;
 
         Vector2 cellSize;
@@ -276,7 +284,11 @@ namespace Sylves
         #region Shape
         public Deformation GetDeformation(Cell cell) => Deformation.Identity;
 
-        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new NotImplementedException();
+        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
+        {
+            vertices = polygon;
+            transform = Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(new Vector3(cellSize.x, cellSize.y, 0));
+        }
         #endregion
 
         #region Query
