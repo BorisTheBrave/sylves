@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -95,6 +96,36 @@ namespace Sylves.Test
         {
             var g = new TriangleGrid(1, orientation);
             GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
+        }
+
+        [Test]
+        public void TestBound()
+        {
+            var size = new Vector3Int(10, 0, 10);
+            var b = new TriangleBound(new Vector3Int(-size.x - size.z + 1, 0, 0), new Vector3Int(3, size.x, size.z));
+            var cells = new HashSet<Cell>(b);
+            // Check the corners
+            Assert.IsTrue(b.Contains(new Cell(1, 0, 0)));
+            Assert.IsTrue(b.Contains(new Cell(2, 0, 0)));
+            Assert.IsTrue(b.Contains(new Cell(1 - (size.x - 1) - (size.z - 1), size.x - 1, size.z - 1)));
+            Assert.IsTrue(b.Contains(new Cell(2 - (size.x - 1) - (size.z - 1), size.x - 1, size.z - 1)));
+            // Contains matches GetEnumerator
+            for (var x = -size.x - size.z - 10; x < size.x + 10; x++)
+            {
+                for (var y = -size.x - size.z - 10; y < size.y + 10; y++)
+                {
+                    for (var z = -size.x - size.z - 10; z < size.z + 10; z++)
+                    {
+                        var s = x + y + z;
+                        if (s == 1 || s == 2)
+                        {
+                            var cell = new Cell(x, y, z);
+                            Assert.AreEqual(b.Contains(cell), cells.Contains(cell));
+                        }
+                    }
+                }
+            }
+            Assert.AreEqual(size.x * size.z * 2, b.Count());
         }
     }
 }
