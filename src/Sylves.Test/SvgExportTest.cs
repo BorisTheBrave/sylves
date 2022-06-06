@@ -40,7 +40,7 @@ namespace Sylves.Test
             } };
             meshData.subMeshCount = 1;
             meshData.topologies = new[] { MeshTopology.NGon };
-            return new PeriodicPlanarMeshGrid(meshData, new Vector2(0.75f, 0), new Vector2(0.5f, 1.0f))
+            return new PeriodicPlanarMeshGrid(meshData, new Vector2(1.0f, 0), new Vector2(0.5f, 1.0f))
                 .BoundBy(new SquareBound(new Vector2Int(-5, -5), new Vector2Int(6, 6)));
         }
 

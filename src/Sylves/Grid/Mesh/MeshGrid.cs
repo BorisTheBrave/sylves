@@ -9,6 +9,11 @@ using static Sylves.VectorUtils;
 
 namespace Sylves
 {
+    public class MeshCellData : DataDrivenCellData
+    {
+        public MeshUtils.Face Face { get; set; }
+    }
+
     /// <summary>
     /// Represents a 2d grid, where each cell corresponds to a face in a given mesh.
     /// </summary>
@@ -21,14 +26,15 @@ namespace Sylves
         public MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions = null) :
             base(MeshGridBuilder.Build(meshData, meshGridOptions ?? new MeshGridOptions()))
         {
+            this.meshData = meshData;
             meshDetails = BuildMeshDetails();
             is2d = true;
-            this.meshData = meshData;
         }
 
-        internal MeshGrid(DataDrivenData data, bool is2d) :
+        internal MeshGrid(MeshData meshData, DataDrivenData data, bool is2d) :
             base(data)
         {
+            this.meshData = meshData;
             meshDetails = BuildMeshDetails();
             this.is2d = is2d;
         }
@@ -231,6 +237,18 @@ namespace Sylves
             else
             {
                 throw new Exception($"Unsupported topology {topology}");
+            }
+        }
+
+        public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
+        {
+            var face = ((MeshCellData)CellData[cell]).Face;
+            transform = Matrix4x4.identity;
+            vertices = new Vector3[face.Length];
+            var i = 0;
+            foreach (var index in face)
+            {
+                vertices[i++] = meshData.vertices[index];
             }
         }
         #endregion

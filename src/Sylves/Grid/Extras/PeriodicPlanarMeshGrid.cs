@@ -65,7 +65,7 @@ namespace Sylves
                 }
             }
 
-            centerGrid = new MeshGrid(dataDrivenData, true);
+            centerGrid = new MeshGrid(meshData, dataDrivenData, true);
             this.strideX = strideX;
             this.strideY = strideY;
         }
@@ -243,10 +243,14 @@ namespace Sylves
             var (centerCell, chunk) = Split(cell);
             var deformation = centerGrid.GetDeformation(centerCell);
             return Matrix4x4.Translate(ChunkOffset(chunk)) * deformation;
-
         }
 
-        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new NotImplementedException();
+        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
+        {
+            var (centerCell, chunk) = Split(cell);
+            centerGrid.GetPolygon(centerCell, out vertices, out transform);
+            transform = Matrix4x4.Translate(ChunkOffset(chunk)) * transform;
+        }
         #endregion
 
         #region Query

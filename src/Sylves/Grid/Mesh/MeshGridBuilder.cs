@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -40,7 +41,17 @@ namespace Sylves
                 foreach (var faceIndices in MeshUtils.GetFaces(data, submesh, meshGridOptions.InvertWinding))
                 {
                     var cell = new Cell(face, submesh);
-                    var deformation = MeshUtils.GetDeformation(data, face, submesh, meshGridOptions.InvertWinding);
+                    Deformation deformation;
+                    if(data.GetTopology(submesh) == MeshTopology.NGon)
+                    {
+                        // Currently ngon doesn't support deformation, so do something else
+                        var centroid = faceIndices.Select(x => data.vertices[x]).Aggregate((x, y) => x + y) / faceIndices.Count;
+                        deformation = Deformation.Identity * Matrix4x4.Translate(centroid);
+                    }
+                    else
+                    {
+                        deformation = MeshUtils.GetDeformation(data, face, submesh, meshGridOptions.InvertWinding);
+                    }
                     var count = faceIndices.Count;
                     var cellType = count == 3 ? HexCellType.Get(HexOrientation.PointyTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
                     var trs = GetTRS2d(deformation, Vector3.zero);
@@ -52,11 +63,12 @@ namespace Sylves
                         trs = new TRS(trs.ToMatrix() * RotateYZ);
                     }
 
-                    cellData[cell] = new DataDrivenCellData
+                    cellData[cell] = new MeshCellData
                     {
                         CellType = cellType,
                         Deformation = deformation,
                         TRS = trs,
+                        Face = faceIndices,
                     };
                     face++;
                 }
