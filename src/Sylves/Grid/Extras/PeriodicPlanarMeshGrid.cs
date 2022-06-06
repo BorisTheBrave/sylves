@@ -14,10 +14,20 @@ namespace Sylves
     /// </summary>
     internal class PeriodicPlanarMeshGrid : IGrid
     {
-        AabbChunks aabbChunks;
-        DataDrivenGrid centerGrid;
+        private readonly AabbChunks aabbChunks;
+        private readonly DataDrivenGrid centerGrid;
         private readonly Vector2 strideX;
         private readonly Vector2 strideY;
+        private SquareBound bound;
+
+        private PeriodicPlanarMeshGrid(AabbChunks aabbChunks, DataDrivenGrid centerGrid, Vector2 strideX, Vector2 strideY, SquareBound bound)
+        {
+            this.aabbChunks = aabbChunks;
+            this.centerGrid = centerGrid;
+            this.strideX = strideX;
+            this.strideY = strideY;
+            this.bound = bound;
+        }
 
         public PeriodicPlanarMeshGrid(MeshData meshData, Vector2 strideX, Vector2 strideY)
         {
@@ -60,6 +70,14 @@ namespace Sylves
             this.strideY = strideY;
         }
 
+        private void CheckBounded()
+        {
+            if (bound == null)
+            {
+                throw new GridInfiniteException();
+            }
+        }
+
         private Vector3 ChunkOffset(Vector2Int chunk)
         {
             var chunkOffset2 = strideX * chunk.x + strideY * chunk.y;
@@ -81,7 +99,6 @@ namespace Sylves
         {
             return new Vector3Int(0, chunk.x, chunk.y);
         }
-
 
 
         #region Basics
@@ -106,7 +123,7 @@ namespace Sylves
 
         #region Relatives
 
-        public IGrid Unbounded => this;
+        public IGrid Unbounded => new PeriodicPlanarMeshGrid(aabbChunks, centerGrid, strideX, strideY, null);
 
         public IGrid Unwrapped => this;
 
@@ -114,11 +131,15 @@ namespace Sylves
 
         #region Cell info
 
-        public IEnumerable<Cell> GetCells() => throw new NotSupportedException();
+        public IEnumerable<Cell> GetCells()
+        {
+            CheckBounded();
+            return GetCellsInBounds(bound);
+        }
 
         public ICellType GetCellType(Cell cell) => centerGrid.GetCellType(Split(cell).centerCell);
 
-        public bool IsCellInGrid(Cell cell) => true;
+        public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
         #endregion
 
         #region Topology
@@ -159,17 +180,45 @@ namespace Sylves
         #endregion
 
         #region Bounds
-        public IBound GetBound() => throw new NotSupportedException();
+        public IBound GetBound() => bound;
 
-        public IBound GetBound(IEnumerable<Cell> cells) => throw new NotSupportedException();
+        public IBound GetBound(IEnumerable<Cell> cells)
+        {
+            var min = cells.Select(x => Split(x).chunk).Aggregate(Vector2Int.Min);
+            var max = cells.Select(x => Split(x).chunk).Aggregate(Vector2Int.Max);
+            return new SquareBound(min, max + Vector2Int.one);
+        }
 
-        public IGrid BoundBy(IBound bound) => throw new NotSupportedException();
+        public IGrid BoundBy(IBound bound) => new PeriodicPlanarMeshGrid(aabbChunks, centerGrid, strideX, strideY, (SquareBound)IntersectBounds(this.bound, bound));
 
-        public IBound IntersectBounds(IBound bound, IBound other) => throw new NotSupportedException();
-        public IBound UnionBounds(IBound bound, IBound other) => throw new NotSupportedException();
-        public IEnumerable<Cell> GetCellsInBounds(IBound bound) => throw new NotSupportedException();
+        public IBound IntersectBounds(IBound bound, IBound other)
+        {
+            if (bound == null) return other;
+            if (other == null) return bound;
+            return ((SquareBound)bound).Intersect((SquareBound)other);
+        }
+        public IBound UnionBounds(IBound bound, IBound other)
+        {
+            if (bound == null) return null;
+            if (other == null) return null;
+            return ((SquareBound)bound).Union((SquareBound)other);
+        }
+        public IEnumerable<Cell> GetCellsInBounds(IBound bound)
+        {
+            foreach (var chunk in (SquareBound)bound)
+            {
+                foreach (var centerCell in centerGrid.GetCells())
+                {
+                    yield return Combine(centerCell, new Vector2Int(chunk.x, chunk.y));
+                }
+            }
+        }
 
-        public bool IsCellInBound(Cell cell, IBound bound) => throw new NotSupportedException();
+        public bool IsCellInBound(Cell cell, IBound bound)
+        {
+            var chunk = Split(cell).chunk;
+            return ((SquareBound)bound).Contains(new Cell(chunk.x, chunk.y));
+        }
         #endregion
 
         #region Position

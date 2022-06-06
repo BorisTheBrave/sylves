@@ -18,6 +18,32 @@ namespace Sylves.Test
             }
         }
 
+        private IGrid TriHexGrid()
+        {
+            var meshData = new MeshData();
+            meshData.vertices = new Vector3[]
+            {
+                new Vector3(0.5f, 0, 0),
+                new Vector3(0.25f, 0.5f, 0),
+                new Vector3(-0.25f, 0.5f, 0),
+                new Vector3(-0.5f, 0, 0),
+                new Vector3(-0.25f, -0.5f, 0),
+                new Vector3(0.25f, -0.5f, 0),
+                new Vector3(0.75f, 0.5f, 0),
+                new Vector3(0.75f, -0.5f, 0),
+            };
+            meshData.indices = new[]{new []
+            {
+                0, 1, 2, 3, 4, ~5,
+                6, 1, ~0,
+                7, 0, ~5,
+            } };
+            meshData.subMeshCount = 1;
+            meshData.topologies = new[] { MeshTopology.NGon };
+            return new PeriodicPlanarMeshGrid(meshData, new Vector2(0.75f, 0), new Vector2(0.5f, 1.0f))
+                .BoundBy(new SquareBound(new Vector2Int(-5, -5), new Vector2Int(6, 6)));
+        }
+
         [Test]
         public void ExportGrids()
         {
@@ -36,6 +62,9 @@ namespace Sylves.Test
             Export(
                 new TriangleGrid(1, TriangleOrientation.FlatTopped).BoundBy(TriangleBound.Hexagon(3)),
                 "tri_ft.svg");
+            Export(
+                TriHexGrid(),
+                "trihex.svg");
         }
     }
 }

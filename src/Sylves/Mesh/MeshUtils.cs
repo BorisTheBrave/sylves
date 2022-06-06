@@ -179,7 +179,9 @@ namespace Sylves
             var isTris = surfaceMesh.GetTopology(subMesh) == MeshTopology.Triangles;
 
             if (!isQuads && !isTris)
+            {
                 throw new Exception($"Cannot handle topology of type {surfaceMesh.GetTopology(subMesh)}");
+            }
 
             var interpolatePoint = isQuads
                 ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding)
@@ -193,35 +195,61 @@ namespace Sylves
 
         public struct Face : IEnumerable<int>
         {
-            public Face(int[] indices, int offset, int length, bool invertWinding)
+            public Face(int[] indices, int offset, int length, bool invertWinding, bool negateTail = false)
             {
                 this.Indices = indices;
                 this.Offset = offset;
                 this.Length = length;
                 this.InvertWinding = invertWinding;
+                this.NegateTail = negateTail;
             }
 
             public int[] Indices { get; set; }
             public int Offset { get; set; }
             public int Length { get; set; }
             public bool InvertWinding { get; set; }
+            public bool NegateTail { get; }
 
             public int Count => Length;
 
             public IEnumerator<int> GetEnumerator()
             {
-                if(InvertWinding)
+                if (NegateTail)
                 {
-                    for(var i=0;i<Length;i++)
+                    if (InvertWinding)
                     {
-                        yield return Indices[Offset - i];
+                        int i;
+                        for (i = 0; i < Length - 1; i++)
+                        {
+                            yield return Indices[Offset - i];
+                        }
+                        yield return ~Indices[Offset - i];
+                    }
+                    else
+                    {
+                        int i;
+                        for (i = 0; i < Length - 1; i++)
+                        {
+                            yield return Indices[Offset + i];
+                        }
+                        yield return ~Indices[Offset + i];
                     }
                 }
                 else
                 {
-                    for (var i = 0; i < Length; i++)
+                    if (InvertWinding)
                     {
-                        yield return Indices[Offset + i];
+                        for (var i = 0; i < Length; i++)
+                        {
+                            yield return Indices[Offset - i];
+                        }
+                    }
+                    else
+                    {
+                        for (var i = 0; i < Length; i++)
+                        {
+                            yield return Indices[Offset + i];
+                        }
                     }
                 }
             }
@@ -233,7 +261,12 @@ namespace Sylves
 
             public int this[int i]
             {
-                get { return InvertWinding ? Indices[Offset - i] : Indices[Offset + i]; }
+                get
+                {
+                    var index = InvertWinding ? Indices[Offset - i] : Indices[Offset + i];
+                    if (NegateTail && i == Length - 1) index = ~index;
+                    return index;
+                }
             }
         }
 
@@ -257,6 +290,24 @@ namespace Sylves
                     for (var i = 0; i < indices.Length; i += 3)
                     {
                         yield return new Face(indices, i + (invertWinding ? 2 : 0), 3, invertWinding);
+                    }
+                    break;
+                case MeshTopology.NGon:
+                    {
+                        if (invertWinding)
+                            throw new NotImplementedException();
+                        var i = 0;
+                        while (i < indices.Length)
+                        {
+                            var i2 = i;
+                            while(i2 < indices.Length -1 && indices[i2] >= 0)
+                            {
+                                i2++;
+                            }
+                            i2++;
+                            yield return new Face(indices, i, i2 - i, false, true);
+                            i = i2;
+                        }
                     }
                     break;
                 default:

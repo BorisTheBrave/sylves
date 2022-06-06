@@ -11,5 +11,8 @@ namespace Sylves
         //Lines = 3,
         //LineStrip = 4,
         //Points = 5
+
+        // Final index of each face is bit inverted.
+        NGon = -1,
     }
 }
