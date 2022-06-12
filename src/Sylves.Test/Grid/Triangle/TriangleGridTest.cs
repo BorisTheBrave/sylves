@@ -95,8 +95,50 @@ namespace Sylves.Test
         public void TestFindGridSymmetry(TriangleOrientation orientation)
         {
             var g = new TriangleGrid(1, orientation);
-            GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
+            GridTest.FindGridSymmetry(g, new Cell(0, 0, 1));
+
+            {
+                var cells = new HashSet<Cell>(new[] { new Cell(0, 0, 1) });
+                var s = g.FindGridSymmetry(cells, cells, new Cell(0, 0, 1), (CellRotation)2);
+                Assert.IsNotNull(s);
+                Assert.AreEqual(new Cell(0, 0, 1), s.Src);
+                Assert.AreEqual(new Cell(0, 0, 1), s.Dest);
+                Assert.AreEqual((CellRotation)2, s.Rotation);
+            }
+
+            {
+                var cells = new HashSet<Cell>(new[] { new Cell(0, 0, 1) });
+                var s = g.FindGridSymmetry(cells, cells, new Cell(0, 0, 1), (CellRotation)1);
+                // This symmetry is not possible as it maps a tile onto itself at a 60 degree rotation
+                Assert.IsNull(s);
+            }
+
+            {
+                var cells = new HashSet<Cell>(new[] { new Cell(0, 0, 1) });
+                var cells2 = new HashSet<Cell>(new[] { new Cell(0, 1, 1) });
+                var s = g.FindGridSymmetry(cells, cells2, new Cell(0, 0, 1), (CellRotation)0);
+                // This symmetry is not possible as it maps up tiles onto down tiles and vv
+                Assert.IsNull(s);
+            }
         }
+
+
+        [Test]
+        public void TestGridSymmetry()
+        {
+            var g = new TriangleGrid(1);
+            var s = new GridSymmetry
+            {
+                Src = new Cell(0, 0, 1),
+                Dest = new Cell(0, 0, 1),
+                Rotation = HexRotation.Rotate60(2),
+            };
+            var success = g.TryApplySymmetry(s, new Cell(0, 0, 1), out var dest, out var r);
+            Assert.IsTrue(success);
+            Assert.AreEqual(new Cell(0, 0, 1), dest);
+            Assert.AreEqual(s.Rotation, r);
+        }
+
 
         [Test]
         public void TestBound()

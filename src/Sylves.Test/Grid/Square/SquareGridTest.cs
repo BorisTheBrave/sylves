@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 #if UNITY
 using UnityEngine;
 #endif
@@ -59,6 +60,15 @@ namespace Sylves.Test
         {
             var g = new SquareGrid(1);
             GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
+
+            {
+                var cells = new HashSet<Cell>(new[] { new Cell(0, 1, 0) });
+                var s = g.FindGridSymmetry(cells, cells, new Cell(0, 1, 0), (CellRotation)2);
+                Assert.IsNotNull(s);
+                Assert.AreEqual(new Cell(0, 0, 0), s.Src);
+                Assert.AreEqual(new Cell(0, 2, 0), s.Dest);
+                Assert.AreEqual((CellRotation)2, s.Rotation);
+            }
         }
     }
 }

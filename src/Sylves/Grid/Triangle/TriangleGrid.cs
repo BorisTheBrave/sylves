@@ -661,24 +661,31 @@ namespace Sylves
 
         public GridSymmetry FindGridSymmetry(ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation)
         {
-            var cubeRotation = (HexRotation)cellRotation;
+            var hexRotation = (HexRotation)cellRotation;
             var srcBound = GetBound(src);
             var srcMin = src.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Min);
             var srcMax = src.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Max);
-            var r1 = cubeRotation.Multiply(srcMin);
-            var r2 = cubeRotation.Multiply(srcMax);
+            var r1 = hexRotation.Multiply(srcMin);
+            var r2 = hexRotation.Multiply(srcMax);
             var newMin = Vector3Int.Min(r1, r2);
             var destMin = dest == src ? srcMin : dest.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Min);
             var translation = destMin - newMin;
-            // Check it actually works
-            if (!src.Select(c => (Cell)(translation + cubeRotation.Multiply((Vector3Int)(c)))).All(dest.Contains))
+            // Check partity
+            if ((hexRotation.Rotation % 2 == 0) ^ ((translation.x + translation.y + translation.z) % 2 == 0))
             {
                 return null;
             }
+
+            // Check it actually works
+            if (!src.Select(c => (Cell)(translation + hexRotation.Multiply((Vector3Int)c))).All(dest.Contains))
+            {
+                return null;
+            }
+
             return new GridSymmetry
             {
-                Src = new Cell(),
-                Dest = (Cell)(translation),
+                Src = srcCell,
+                Dest = (Cell)(translation + hexRotation.Multiply((Vector3Int)srcCell)),
                 Rotation = cellRotation,
             };
         }

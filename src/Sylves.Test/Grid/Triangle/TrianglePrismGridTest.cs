@@ -16,7 +16,7 @@ namespace Sylves.Test
         public void TestFindGridSymmetry(TriangleOrientation orientation)
         {
             var g = new TrianglePrismGrid(1, 1, orientation);
-            GridTest.FindGridSymmetry(g, new Cell(0, 0, 0), new Cell(-1, 0, 0));
+            GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
         }
 
         [Test]
