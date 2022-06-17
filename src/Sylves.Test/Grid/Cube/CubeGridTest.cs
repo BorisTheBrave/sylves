@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#if UNITY
+using UnityEngine;
+#endif
+
 
 namespace Sylves.Test
 {
@@ -51,6 +50,22 @@ namespace Sylves.Test
             Assert.IsTrue(success);
             Assert.AreEqual(new Cell(10, 3, 0), dest);
             Assert.AreEqual(s.Rotation, r);
+        }
+
+        [Test]
+        public void TryApplySymmetry()
+        {
+            var g = new CubeGrid(1);
+            var s = new GridSymmetry
+            {
+                Src = new Cell(),
+                Dest = new Cell(),
+                Rotation = CubeRotation.Identity,
+            };
+            var b = new CubeBound(Vector3Int.zero, new Vector3Int(6, 1, 7));
+            var success = g.TryApplySymmetry(s, b, out var b2);
+            Assert.IsTrue(success);
+            Assert.AreEqual(new Vector3Int(6, 1, 7), ((CubeBound)b2).max);
         }
 
         [Test]

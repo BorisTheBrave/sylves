@@ -389,7 +389,7 @@ namespace Sylves
                 return false;
             }
             // This trick works best with *inclusive* bounds.
-            if (!TryApplySymmetry(s, FromVector3Int(cubeBound.min - Vector3Int.one), out var b, out var _))
+            if (!TryApplySymmetry(s, FromVector3Int(cubeBound.max - Vector3Int.one), out var b, out var _))
             {
                 return false;
             }

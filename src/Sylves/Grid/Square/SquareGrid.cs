@@ -390,7 +390,7 @@ namespace Sylves
                 return false;
             }
             // This trick works best with *inclusive* bounds.
-            if (!TryApplySymmetry(s, FromVector2Int(squareBound.min - Vector2Int.one), out var b, out var _))
+            if (!TryApplySymmetry(s, FromVector2Int(squareBound.max - Vector2Int.one), out var b, out var _))
             {
                 return false;
             }
