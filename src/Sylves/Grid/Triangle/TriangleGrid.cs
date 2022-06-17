@@ -59,6 +59,7 @@ namespace Sylves
         // Also used for PTHexDir UpRight, Left, DownRight
         private static readonly CellDir[] cellDirsB = { (CellDir)FTHexDir.Up, (CellDir)FTHexDir.DownLeft, (CellDir)FTHexDir.DownRight };
 
+        // The triangle polygons, scaled to fit in a unit square
         private static readonly Vector3[] upPolygon =
         {
             new Vector3(0.5f, -0.3333333333f, 0),
@@ -704,7 +705,7 @@ namespace Sylves
                 return false;
             }
             // This trick works best with *inclusive* bounds.
-            if (!TryApplySymmetry(s, (Cell)(cubeBound.min - Vector3Int.one), out var b, out var _))
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.max - Vector3Int.one), out var b, out var _))
             {
                 return false;
             }
