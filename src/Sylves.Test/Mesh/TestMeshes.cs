@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Sylves.Test
 {
-    // TODO: Double check these all have sensible normals / winding
     internal static class TestMeshes
     {
         public static MeshData PlaneXY = new MeshData
@@ -114,6 +113,105 @@ namespace Sylves.Test
                 meshData.RecalculateNormals();
 
                 return meshData;
+            }
+        }
+
+        private const float Sqrt3 = 1.73205080756888f;
+
+        // Corresponds to a triangle of size 1 as defined by triangle grid
+        public static MeshData Equilateral
+        {
+            get
+            {
+                return new MeshData
+                {
+                    vertices = new[]
+                    {
+                        // Edge 0 points UpRight
+                        // Edge 1 points UpLeft
+                        // Edge 2 points Down
+                        // I.e. the CellDir is double the edge
+                        new Vector3(0.5f, -0.3333333333f * Sqrt3 / 2, 0),
+                        new Vector3(0, 0.6666666667f * Sqrt3 / 2, 0),
+                        new Vector3(-0.5f, -0.3333333333f * Sqrt3 / 2, 0),
+                    },
+                    indices = new[] { new[]
+                        {
+                            0,1,2,
+                        }
+                    },
+                    normals = new[]
+                    {
+                        Vector3.forward,
+                        Vector3.forward,
+                        Vector3.forward,
+                    },
+                    subMeshCount = 1,
+                    topologies = new[] { MeshTopology.Triangles }
+                };
+            }
+        }
+
+        /*
+        public static MeshData EquilateralXZ
+        {
+            get
+            {
+                return new MeshData
+                {
+                    vertices = new[]
+                    {
+                        new Vector3(0.5f, 0, 0.3333333333f * Sqrt3 / 2),
+                        new Vector3(0, 0, -0.6666666667f * Sqrt3 / 2),
+                        new Vector3(-0.5f, 0, 0.3333333333f * Sqrt3 / 2),
+                    },
+                    indices = new[] { new[]
+                        {
+                            0,1,2,
+                        }
+                    },
+                    normals = new[]
+                    {
+                        Vector3.up,
+                        Vector3.up,
+                        Vector3.up,
+                    },
+                    subMeshCount = 1,
+                    topologies = new[] { MeshTopology.Triangles }
+                };
+            }
+        }
+        */
+
+        public static MeshData TrianglePlane
+        {
+            get
+            {
+                return new MeshData
+                {
+                    vertices = new[]
+                    {
+                        new Vector3(1.5f, 0,1.5f),
+                        new Vector3(1.5f, 0,-1.5f),
+                        new Vector3(-1.5f, 0,-1.5f),
+                        new Vector3(-1.5f, 0,1.5f),
+                    },
+                    indices = new[] { new[]
+                        {
+                            0,1,2,
+                            0,2,3,
+                        }
+                    },
+                    normals = new[]
+                    {
+                        Vector3.up,
+                        Vector3.up,
+                        Vector3.up,
+                        Vector3.up,
+                    },
+                    subMeshCount = 1,
+                    topologies = new[] { MeshTopology.Triangles }
+                };
             }
         }
     }

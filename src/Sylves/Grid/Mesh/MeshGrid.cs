@@ -127,6 +127,7 @@ namespace Sylves
             var cellLocalPoint = cellData.TRS.ToMatrix().inverse.MultiplyPoint3x4(position);
             var cellType = UnwrapXZCellModifier(cellData.CellType);
             // TODO: Dispatch to celltype method?
+            // TODO: This should use actual cell shape
             if (cellType == CubeCellType.Instance || 
                 cellType == SquareCellType.Instance)
             {

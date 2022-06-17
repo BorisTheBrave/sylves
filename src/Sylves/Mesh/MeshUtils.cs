@@ -15,6 +15,8 @@ namespace Sylves
     /// </summary>
     public static class MeshUtils
     {
+        private static readonly Matrix4x4 RotateZY = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, -1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
+
         // Creates an axis aligned cube that corresponds with a box collider
         internal static MeshData CreateBoxMesh(Vector3 center, Vector3 size)
         {
@@ -162,8 +164,10 @@ namespace Sylves
             }
 
             var deformation = new Deformation(interpolatePoint, DeformNormal, DeformTangent, invertWinding);
-            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY).
-            deformation = deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix();
+            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY and a different scale)
+            deformation = isQuads
+                ? deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix()
+                : deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix() * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Scale(new Vector3(Mathf.Sqrt(3), Mathf.Sqrt(3), 1));
             return deformation;
         }
 

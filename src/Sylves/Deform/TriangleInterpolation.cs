@@ -8,8 +8,9 @@ namespace Sylves
     /// <summary>
     /// Supplies various linear interpolation methods from a triangle
     /// For historic reasons, the conventions are based on a XZ plane,
-    /// with an equilateral triangle of size sqrt(3), vertices, top, bottomright, bottomleft
-    /// y axis extends from -0.5 to 0.5f
+    /// with an equilateral triangle of side sqrt(3), vertices, top, bottomright, bottomleft
+    /// y axis extends from -0.5 to 1.0
+    /// x axis from -sqrt(3)/2 to sqrt(3)/2
     /// </summary>
     public static class TriangleInterpolation
     {

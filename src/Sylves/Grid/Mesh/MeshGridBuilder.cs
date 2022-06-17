@@ -53,7 +53,7 @@ namespace Sylves
                         deformation = MeshUtils.GetDeformation(data, face, submesh, meshGridOptions.InvertWinding);
                     }
                     var count = faceIndices.Count;
-                    var cellType = count == 3 ? HexCellType.Get(HexOrientation.PointyTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
+                    var cellType = count == 3 ? HexCellType.Get(HexOrientation.FlatTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
                     var trs = GetTRS2d(deformation, Vector3.zero);
 
                     if (meshGridOptions.UseXZPlane)
@@ -116,12 +116,16 @@ namespace Sylves
                         }
                         else
                         {
-                            edgeStore.AddEdge(vertices[prev], vertices[index], new Cell(face, submesh), (CellDir)(indexCount - 1), moves);
+                            var cellDir = (CellDir)(faceIndices.Count % 2 == 0 ? (indexCount - 1) : (indexCount - 1) * 2);
+                            edgeStore.AddEdge(vertices[prev], vertices[index], new Cell(face, submesh), cellDir, moves);
                             prev = index;
                         }
                         indexCount++;
                     }
-                    edgeStore.AddEdge(vertices[prev], vertices[first], new Cell(face, submesh), (CellDir)(indexCount - 1), moves);
+                    {
+                        var cellDir = (CellDir)(faceIndices.Count % 2 == 0 ? (indexCount - 1) : (indexCount - 1) * 2);
+                        edgeStore.AddEdge(vertices[prev], vertices[first], new Cell(face, submesh), cellDir, moves);
+                    }
                     face++;
                 }
             }
@@ -210,7 +214,7 @@ namespace Sylves
             Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)> layerMoves,
             IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
         {
-            for (var layer = meshPrismGridOptions.MinLayer; layer <= meshPrismGridOptions.MaxLayer; layer++)
+            for (var layer = meshPrismGridOptions.MinLayer; layer < meshPrismGridOptions.MaxLayer; layer++)
             {
                 foreach (var kv in layerMoves)
                 {
@@ -226,7 +230,7 @@ namespace Sylves
             {
                 var cellType = kv.Value.CellType;
                 var prismInfo = PrismInfo.Get(cellType);
-                for (var layer = meshPrismGridOptions.MinLayer; layer <= meshPrismGridOptions.MaxLayer; layer++)
+                for (var layer = meshPrismGridOptions.MinLayer; layer < meshPrismGridOptions.MaxLayer; layer++)
                 {
                     var cell = new Cell(kv.Key.x, kv.Key.y, layer);
                     if (cell.z < meshPrismGridOptions.MaxLayer - 1)

@@ -165,5 +165,59 @@ namespace Sylves.Test
             AssertAreEqual(new Vector3(0.5f, 0, 0), d.DeformPoint(new Vector3(0.5f, 0, 0)), 1e-6);
         }
         #endregion
+
+
+
+        #region UseXZPlane Option
+
+        [Test]
+        [Ignore("TODO")]
+        public void TestEquilateralFindCell()
+        {
+            var g = new MeshPrismGrid(TestMeshes.Equilateral, options);
+            GridTest.FindCell(g, new Cell(0, 0, 0));
+        }
+
+        [Test]
+        public void TestEquilateralGetTRS()
+        {
+            var g = new MeshPrismGrid(TestMeshes.Equilateral, options);
+
+            var trs = g.GetTRS(new Cell());
+            AssertAreEqual(Vector3.forward, trs.ToMatrix().MultiplyVector(Vector3.forward), tol);
+            AssertAreEqual(Vector3.up, trs.ToMatrix().MultiplyVector(Vector3.up), tol);
+            AssertAreEqual(Vector3.right, trs.ToMatrix().MultiplyVector(Vector3.right), tol);
+        }
+
+        [Test]
+        public void TestEquilateralGetDeform()
+        {
+            var g = new MeshPrismGrid(TestMeshes.Equilateral, options);
+            var d = g.GetDeformation(new Cell(0, 0, 0));
+            // deform is identity
+            AssertAreEqual(new Vector3(0, 0, 0), d.DeformPoint(new Vector3(0, 0, 0)), 1e-6);
+            AssertAreEqual(new Vector3(0, 0, 0.5f), d.DeformPoint(new Vector3(0, 0, 0.5f)), 1e-6);
+            AssertAreEqual(new Vector3(0, 0.5f, 0), d.DeformPoint(new Vector3(0, 0.5f, 0)), 1e-6);
+            AssertAreEqual(new Vector3(0.5f, 0, 0), d.DeformPoint(new Vector3(0.5f, 0, 0)), 1e-6);
+        }
+        #endregion
+
+
+
+        [Test]
+        public void Triangle()
+        {
+
+            var grid = new MeshPrismGrid(TestMeshes.TrianglePlane, new Sylves.MeshPrismGridOptions
+            {
+                MinLayer = 0,
+                MaxLayer = 1,
+                LayerHeight = 1,
+                LayerOffset = 0,
+                //UseXZPlane = true,
+            });
+
+            Assert.IsNotNull(grid);
+        }
     }
 }
