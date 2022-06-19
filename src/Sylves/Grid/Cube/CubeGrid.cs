@@ -337,7 +337,7 @@ namespace Sylves
                 {
                     for (var y = minCell.y; y <= maxCell.y; y++)
                     {
-                        for (var z = minCell.z; y <= maxCell.z; z++)
+                        for (var z = minCell.z; z <= maxCell.z; z++)
                         {
                             yield return new Cell(x, y, z);
                         }
