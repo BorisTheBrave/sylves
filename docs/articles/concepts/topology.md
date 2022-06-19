@@ -21,11 +21,40 @@ and gives some information on the edge traversed, `inverseDir` and `connection`.
 
 With `TryMove` defined, an algorithm can explore the entire grid, one cell at a time.
 
+If you don't care about rotation information, you can use the following simpler methods:
+
+```
+Cell? Move(Cell cell, CellDir dir);
+IEnumerable<Cell> GetNeighbours(Cell cell)
+```
+
 To make `TryMove` a bit easier to use, there is also `Move` which has a simpler signature, and the [`Walker`](xref:Sylves.Walker) class, which represents a object standing on a given cell facing a given direction.
 
 
 ## ParallelTransport
 
-...
+In Sylves, all movement is one-cell at a time using the TryMove method above. But in some cases, that's not really useful.
 
-Note: If there is only one grid involved, it's often simpler to use [grid symmetries](grid_symmetry.md).
+For example, you might be working with a square grid, and want to move 100 units right. Calling TryMove one hundred times is not really great.
+
+If you are always working with a square grid, then you can simply add 100 to the x co-ordinate of the `Cell`, and you don't need this section.
+
+But if you need something that works generally across grids, you need ParallelTransport.
+
+```csharp
+bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation);
+```
+
+`ParallelTransport` imagines you have a path from `aSrcCell` to `aDestCell` on `aGrid`, and then repeats that same path on the current grid, with a fresh starting point and rotation. It then tells you where the path finishes. Sylves will detect if the grids are sufficiently similar, and employ co-ordinate arithmatic if it can, otherwise it falls back to walking the two paths cell-by-cell.
+
+For example:
+
+```csharp
+myGrid.ParallelTransport(new SquareGrid(1), new Cell(0, 0, 0), new Cell(100, 0, 0), new Cell(1, 2, 3), CubeRotation.Identity, out var destCell, out var destRotation)
+```
+
+Describes a path which moves 100 units to the right, and asks that path to rebased to start at (1,2,3). If myGrid is also a square grid, then this will result in `destCell = (101, 2, 3)`, just as if we'd done the straightforward arithmatic.
+
+
+
+NB: [Grid symmetries](grid_symmetry.md) offers a similar feature to ParallelTransport, but only uses a single grid.

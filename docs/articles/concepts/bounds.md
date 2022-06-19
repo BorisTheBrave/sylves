@@ -24,7 +24,7 @@ If you know the exact class of a bound, you can use that type instead of `IBound
 
 ## Bounded grids
 
-Grids themselves often are associated with a specific bound. For example, `new SquareGrid(1)` gives an *infinite* grid of squares. But you restrict the grid:
+Grids themselves often are associated with a specific bound. For example, `new SquareGrid(1)` gives an *infinite* grid of squares. But you can restrict the grid:
 
 ```csharp
 var infiniteGrid = new SquareGrid(1);
