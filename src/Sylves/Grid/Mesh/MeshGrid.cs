@@ -44,17 +44,41 @@ namespace Sylves
         private MeshDetails BuildMeshDetails()
         {
             var hashCellSize = new Vector3(float.Epsilon, float.Epsilon, float.Epsilon);
+            Vector3? min = null;
+            Vector3? max = null;
             foreach (var cell in GetCells())
             {
-                var cellTrs = GetTRS(cell);
-                // TODO: This is the wrong way to compute cell dimensions
-                var dim = Abs(cellTrs.ToMatrix().MultiplyVector(Vector3.one));
-                hashCellSize = Vector3.Max(hashCellSize, dim);
+                if (CellData[cell] is MeshCellData meshCellData)
+                {
+
+
+                    var face = ((MeshCellData)CellData[cell]).Face;
+                    var cellMin = meshData.vertices[face[0]];
+                    var cellMax = cellMin;
+                    for (var i = 1; i < face.Count; i++)
+                    {
+                        var v = meshData.vertices[face[i]];
+                        cellMin = Vector3.Min(cellMin, v);
+                        cellMax = Vector3.Max(cellMax, v);
+                    }
+                    var dim = cellMax - cellMin;
+                    hashCellSize = Vector3.Max(hashCellSize, dim);
+                    min = min == null ? cellMin : Vector3.Min(min.Value, cellMin);
+                    max = max == null ? cellMax : Vector3.Max(max.Value, cellMax);
+                }
+                else
+                {
+                    // TODO: This is the wrong way to compute cell dimensions
+                    var cellTrs = GetTRS(cell);
+                    var dim = Abs(cellTrs.ToMatrix().MultiplyVector(Vector3.one));
+                    hashCellSize = Vector3.Max(hashCellSize, dim);
+                }
             }
             var meshDetails = new MeshDetails
             {
                 hashCellSize = hashCellSize,
                 hashedCells = new Dictionary<Vector3Int, List<Cell>>(),
+                isPlanar = min.HasValue && min.Value.z == max.Value.z,
             };
             Vector3Int? hashCellMin = null;
             Vector3Int? hashCellMax = null;
@@ -92,6 +116,7 @@ namespace Sylves
             public Vector3 hashCellSize;
             public CubeBound hashCellBounds;
             public Dictionary<Vector3Int, List<Cell>> hashedCells;
+            public bool isPlanar;
 
             public Vector3Int GetHashCell(Vector3 v) => Vector3Int.FloorToInt(Divide(v, hashCellSize));
         }
@@ -110,6 +135,8 @@ namespace Sylves
         #region Basics
 
         public override bool Is2D => is2d;
+
+        public override bool IsPlanar => meshDetails.isPlanar;
         #endregion
 
         #region Topology
@@ -120,6 +147,17 @@ namespace Sylves
 
         #region Query
 
+        private static bool IsPointInTriangle(Vector3 p, Vector3 p0, Vector3 p1, Vector3 p2)
+        {
+            var s = (p0.x - p2.x) * (p.y - p2.y) - (p0.y - p2.y) * (p.x - p2.x);
+            var t = (p1.x - p0.x) * (p.y - p0.y) - (p1.y - p0.y) * (p.x - p0.x);
+
+            if ((s < 0) != (t < 0) && s != 0 && t != 0)
+                return false;
+
+            var d = (p2.x - p1.x) * (p.y - p1.y) - (p2.y - p1.y) * (p.x - p1.x);
+            return d == 0 || (d < 0) == (s + t <= 0);
+        }
 
         private bool IsPointInCell(Vector3 position, Cell cell)
         {
@@ -135,7 +173,24 @@ namespace Sylves
             }
             else
             {
-                throw new NotImplementedException();
+                if(!IsPlanar)
+                {
+                    throw new NotImplementedException();
+                }
+
+                // Currently does fan detection
+                // Doesn't work for convex faces
+                var face = ((MeshCellData)cellData).Face;
+                var v0 = meshData.vertices[face[0]];
+                var prev = meshData.vertices[face[face.Count - 1]];
+                for(var i=1;i<face.Count;i++)
+                {
+                    var v = meshData.vertices[face[i]];
+                    if (IsPointInTriangle(cellLocalPoint, v0, prev, v))
+                        return true;
+                    prev = v;
+                }
+                return false;
             }
         }
         public override bool FindCell(Vector3 position, out Cell cell)

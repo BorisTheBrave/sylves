@@ -44,7 +44,7 @@ namespace Sylves
 
         public virtual bool Is2D => false;
         public virtual bool Is3D => false;
-        public bool IsPlanar => false;
+        public virtual bool IsPlanar => false;
         public bool IsRepeating => false;
         public bool IsOrientable => false;
         public bool IsFinite => true;
