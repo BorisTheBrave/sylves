@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -40,11 +41,39 @@ namespace Sylves.Test
         }
 
         [Test]
+        public void TestFindCell_TriHex()
+        {
+            var g = new TriHexGrid();
+            GridTest.FindCell(g, new Cell(0, 2, 3));
+        }
+
+        [Test]
         [Ignore("Not supported yet")]
         public void TestFindBasicPath()
         {
             var g = new PeriodicPlanarMeshGrid(TestMeshes.PlaneXY, Vector2.right, Vector2.up);
             GridTest.FindBasicPath(g, new Cell(0, 0, 0), new Cell(0, 10, 10));
+        }
+
+        [Test]
+        public void TestGetCellsIntersectsApprox()
+        {
+            var g = new PeriodicPlanarMeshGrid(TestMeshes.PlaneXY, Vector2.right, Vector2.up);
+            var cells = g.GetCellsIntersectsApprox(new Vector3(0.0f, 0.0f, 0), new Vector3(2.0f, 0.1f, 0));
+            CollectionAssert.AreEquivalent(new[]
+            {
+                new Cell(0, 0, 0),
+                new Cell(0, 1, 0),
+                new Cell(0, 2, 0),
+            },
+                cells);
+        }
+        [Test]
+        public void TestGetCellsIntersectsApprox_TriHex()
+        {
+            var g = new TriHexGrid();
+            var cells = g.GetCellsIntersectsApprox(new Vector3(0.0f, 0.0f, 0), new Vector3(2.0f, 0.1f, 0));
+            Assert.IsTrue(cells.ToList().Count > 0);
         }
     }
 }

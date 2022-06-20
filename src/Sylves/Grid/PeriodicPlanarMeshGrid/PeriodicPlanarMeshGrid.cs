@@ -12,7 +12,7 @@ namespace Sylves
     /// A grid made of a repeating pattern of a given mesh, that must be planar in the XY plane.
     /// The repeats are given by translation in two independent axes, strideX and strideY .
     /// </summary>
-    internal class PeriodicPlanarMeshGrid : IGrid
+    public class PeriodicPlanarMeshGrid : IGrid
     {
         private readonly AabbChunks aabbChunks;
         private readonly DataDrivenGrid centerGrid;
