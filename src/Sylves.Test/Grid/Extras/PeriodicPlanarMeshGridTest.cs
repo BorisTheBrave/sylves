@@ -44,7 +44,10 @@ namespace Sylves.Test
         public void TestFindCell_TriHex()
         {
             var g = new TriHexGrid();
-            GridTest.FindCell(g, new Cell(0, 2, 3));
+            GridTest.FindCell(g, new Cell(0, 0, 0));
+            GridTest.FindCell(g, new Cell(0, 10, 10));
+            GridTest.FindCell(g, new Cell(1, 10, 10));
+            GridTest.FindCell(g, new Cell(2, 10, 10));
         }
 
         [Test]

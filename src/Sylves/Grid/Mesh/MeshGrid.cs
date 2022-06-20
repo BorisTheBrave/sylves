@@ -162,13 +162,13 @@ namespace Sylves
         private bool IsPointInCell(Vector3 position, Cell cell)
         {
             var cellData = CellData[cell];
-            var cellLocalPoint = cellData.TRS.ToMatrix().inverse.MultiplyPoint3x4(position);
             var cellType = UnwrapXZCellModifier(cellData.CellType);
             // TODO: Dispatch to celltype method?
             // TODO: This should use actual cell shape
             if (cellType == CubeCellType.Instance || 
                 cellType == SquareCellType.Instance)
             {
+            var cellLocalPoint = cellData.TRS.ToMatrix().inverse.MultiplyPoint3x4(position);
                 return Vector3Int.RoundToInt(cellLocalPoint) == Vector3Int.zero;
             }
             else
@@ -186,7 +186,7 @@ namespace Sylves
                 for(var i=1;i<face.Count;i++)
                 {
                     var v = meshData.vertices[face[i]];
-                    if (IsPointInTriangle(cellLocalPoint, v0, prev, v))
+                    if (IsPointInTriangle(position, v0, prev, v))
                         return true;
                     prev = v;
                 }
@@ -229,13 +229,31 @@ namespace Sylves
                         rotation = cubeRotation.Value;
                         return true;
                     }
-                } 
-                else if(cellType == SquareCellType.Instance)
+                }
+                else if (cellType == SquareCellType.Instance)
                 {
                     var squareRotation = SquareRotation.FromMatrix(m);
                     if (squareRotation != null)
                     {
                         rotation = squareRotation.Value;
+                        return true;
+                    }
+                }
+                else if (cellType is HexCellType hexCellType)
+                {
+                    var hexRotation = HexRotation.FromMatrix(m, hexCellType.Orientation);
+                    if (hexRotation != null)
+                    {
+                        rotation = hexRotation.Value;
+                        return true;
+                    }
+                }
+                else if(cellType is NGonCellType ngonCellType)
+                {
+                    var cellRotation = ngonCellType.FromMatrix(m);
+                    if (cellRotation != null)
+                    {
+                        rotation = cellRotation.Value;
                         return true;
                     }
                 }

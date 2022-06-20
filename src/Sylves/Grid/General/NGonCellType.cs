@@ -73,6 +73,29 @@ namespace Sylves
             return m;
         }
 
+        public CellRotation? FromMatrix(Matrix4x4 matrix)
+        {
+            // Check that this matrix doesn't touch the z-axis
+            var forward = matrix.MultiplyVector(Vector3.forward);
+            if (Vector3.Distance(forward, Vector3.forward) > 1e-2f)
+            {
+                return null;
+            }
+
+            var right = matrix.MultiplyVector(Vector3.right);
+
+            var up = matrix.MultiplyVector(Vector3.up);
+            var isReflection = Vector3.Cross(right, up).z < 0;
+            if (isReflection)
+            {
+                right.y = -right.y;
+            }
+            var angle = Mathf.Atan2(right.y, right.x);
+            var angleInt = Mathf.RoundToInt(angle / (Mathf.PI * 2 / n));
+
+            return Multiply(isReflection ? ReflectY : GetIdentity(), (CellRotation)((angleInt + n) % n));
+        }
+
         public IList<CellRotation> GetRotations(bool includeReflections = false)
         {
             return includeReflections ? rotationsAndReflections : rotations;
