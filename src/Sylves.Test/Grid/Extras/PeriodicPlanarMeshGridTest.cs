@@ -78,5 +78,14 @@ namespace Sylves.Test
             var cells = g.GetCellsIntersectsApprox(new Vector3(0.0f, 0.0f, 0), new Vector3(2.0f, 0.1f, 0));
             Assert.IsTrue(cells.ToList().Count > 0);
         }
+
+        [Test]
+        public void TestGetCellsIntersectsApprox_SquareSnub()
+        {
+            var g = new SquareSnubGrid();
+            var cells = g.GetCellsIntersectsApprox(new Vector3(-10, -10, 0), new Vector3(10, 10, 0)).ToList();
+            Assert.IsTrue(cells.Count > 0);
+
+        }
     }
 }

@@ -39,6 +39,7 @@ namespace Sylves.Test
         {
             CheckChunks(new AabbChunks(new Vector2(1, 1), new Vector2(0, 1), Vector2.zero, Vector2.one), new Vector2(0, 0), new Vector2(10, 10));
             CheckChunks(new AabbChunks(new Vector2(3, 0), new Vector2(0, 1), Vector2.zero, Vector2.one), new Vector2(0, 0), new Vector2(10, 10));
+            CheckChunks(new AabbChunks(new Vector2(1, 1), new Vector2(-1, 1), Vector2.zero, Vector2.one), new Vector2(0, 0), new Vector2(10, 10));
         }
     }
 }

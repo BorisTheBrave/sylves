@@ -62,6 +62,10 @@ namespace Sylves
             var left = center - s1 * axis1 - s2 * axis2;
             var bottom= center - s1 * axis1 + s2 * axis2;
             var top = center + s1 * axis1 - s2 * axis2;
+            if((axis1.x * axis2.y - axis1.y * axis2.x) * s1 * s2 > 0)
+            {
+                (top, bottom) = (bottom, top);
+            }
             var minX = Mathf.CeilToInt(left.x);
             var maxX = Mathf.FloorToInt(right.x);
             for (var x = minX; x <= maxX; x++)

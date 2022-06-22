@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.IO;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -69,7 +70,11 @@ namespace Sylves.Test
             Export(
                 new TriHexGrid().BoundBy(new SquareBound(new Vector2Int(-5, -5), new Vector2Int(6, 6))),
                 "trihex.svg",
-                new Options { });
+                new Options { textScale = 0.7 });
+            Export(
+                new SquareSnubGrid().BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))),
+                "snub.svg",
+                new Options { textScale = 0.5 });
         }
     }
 }
