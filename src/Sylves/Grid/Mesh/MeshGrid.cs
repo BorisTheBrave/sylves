@@ -208,6 +208,11 @@ namespace Sylves
             return false;
         }
 
+        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool FindCell(
             Matrix4x4 matrix,
             out Cell cell,

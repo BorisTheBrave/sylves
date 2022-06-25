@@ -152,6 +152,8 @@ namespace Sylves
             out CellRotation rotation);
 
         public abstract IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max);
+
+        public abstract IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity);
         #endregion
 
         #region Symmetry

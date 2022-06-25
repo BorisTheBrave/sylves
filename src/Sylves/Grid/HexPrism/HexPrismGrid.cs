@@ -376,6 +376,10 @@ namespace Sylves
                 }
             }
         }
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Symmetry
