@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -29,6 +30,22 @@ namespace Sylves.Test
         {
             var g = new CubeGrid(1);
             GridTest.FindBasicPath(g, new Cell(0, 0, 0), new Cell(10, 10, 10));
+        }
+
+        [Test]
+        public void TestRaycast()
+        {
+            var g = new CubeGrid(1);
+            var infos = g.Raycast(new Vector3(0, 0, 0), new Vector3(2, 1, 0), 1).ToList();
+            Assert.AreEqual(new Cell(0, 0, 0), infos[0].cell);
+            Assert.AreEqual(null, infos[0].cellDir);
+            Assert.AreEqual(new Cell(1, 0, 0), infos[1].cell);
+            Assert.AreEqual(CubeDir.Left, (CubeDir?)infos[1].cellDir);
+            Assert.AreEqual(new Cell(1, 1, 0), infos[2].cell);
+            Assert.AreEqual(CubeDir.Down, (CubeDir?)infos[2].cellDir);
+            Assert.AreEqual(new Cell(2, 1, 0), infos[3].cell);
+            Assert.AreEqual(CubeDir.Left, (CubeDir?)infos[3].cellDir);
+            Assert.AreEqual(4, infos.Count);
         }
 
         [Test]

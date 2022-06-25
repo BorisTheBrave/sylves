@@ -185,6 +185,16 @@ namespace Sylves
         }
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max) => Underlying.GetCellsIntersectsApprox(min, max).Select(fromUnderlying);
+
+        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        {
+            foreach(var info in Underlying.Raycast(origin, direction, maxDistance))
+            {
+                var info2 = info;
+                info2.cell = fromUnderlying(info.cell);
+                yield return info2;
+            }
+        }
         #endregion
 
         #region Symmetry

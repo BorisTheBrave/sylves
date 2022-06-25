@@ -218,6 +218,9 @@ namespace Sylves
         /// </summary>
         IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max);
 
+        /// <summary>
+        /// Returns the cells intersecting a ray starting at origin, of length direction.magnitude * maxDistance.
+        /// </summary>
         IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity);
         #endregion
 

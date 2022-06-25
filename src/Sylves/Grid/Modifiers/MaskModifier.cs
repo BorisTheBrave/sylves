@@ -72,6 +72,11 @@ namespace Sylves
             out CellRotation rotation) => Underlying.FindCell(matrix, out cell, out rotation) && containsFunc(cell);
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max) => Underlying.GetCellsIntersectsApprox(min, max).Where(containsFunc);
+
+        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        {
+            return Underlying.Raycast(origin, direction, maxDistance).Where(info =>containsFunc(info.cell));
+        }
         #endregion
 
         #region Symmetry

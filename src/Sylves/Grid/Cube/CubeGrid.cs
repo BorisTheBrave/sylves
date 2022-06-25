@@ -348,7 +348,116 @@ namespace Sylves
 
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
-            throw new NotImplementedException();
+            // Normalize things into a space where each cell
+            // occupies a unit cube.
+            var x1 = origin.x / cellSize.x + 0.5f;
+            var y1 = origin.y / cellSize.y + 0.5f;
+            var z1 = origin.z / cellSize.z + 0.5f;
+            var dx = direction.x / cellSize.x;
+            var dy = direction.y / cellSize.y;
+            var dz = direction.z / cellSize.z;
+
+
+
+            var stepx = Math.Sign(dx);
+            var stepy = Math.Sign(dy);
+            var stepz = Math.Sign(dz);
+            var idx = Math.Abs(1 / direction.x);
+            var idy = Math.Abs(1 / direction.y);
+            var idz = Math.Abs(1 / direction.z);
+            var cellDirX = (CellDir)(dx >= 0 ? CubeDir.Left : CubeDir.Right);
+            var cellDirY = (CellDir)(dy >= 0 ? CubeDir.Down : CubeDir.Up);
+            var cellDirZ = (CellDir)(dz >= 0 ? CubeDir.Back : CubeDir.Forward);
+
+            // -1 = in middle of cell, 0,1,2 = on x,y,z face
+            int startOnBorder = -1;
+            // Filter to bounds
+            if(bound != null )
+            {
+                var tx1 = dx >= 0 ? (bound.min.x - x1) / dx : (bound.max.x - x1) / dx;
+                var tx2 = dx >= 0 ? (bound.max.x - x1) / dx : (bound.min.x - x1) / dx;
+                var ty1 = dy >= 0 ? (bound.min.y - y1) / dy : (bound.max.y - y1) / dy;
+                var ty2 = dy >= 0 ? (bound.max.y - y1) / dy : (bound.min.y - y1) / dy;
+                var tz1 = dz >= 0 ? (bound.min.z - z1) / dz : (bound.max.z - z1) / dz;
+                var tz2 = dz >= 0 ? (bound.max.z - z1) / dz : (bound.min.z - z1) / dz;
+
+                var mint = Math.Max(tx1, Math.Max(ty1, tz1));
+                var maxt = Math.Min(tx2, Math.Min(ty2, tz2));
+                // Don't go beyond maxt
+                maxDistance = Math.Min(maxDistance, maxt);
+
+                if (mint > 0)
+                {
+                    // Advance things to mint
+                    x1 += dx * mint;
+                    y1 += dy * mint;
+                    z1 += dz * mint;
+                    maxDistance -= mint;
+                    origin += direction * mint;
+                    startOnBorder = tx1 == mint ? 0 : ty1 == mint ? 1 : 2;
+                }
+                else
+                {
+                    startOnBorder = -1;
+                }
+
+                if (maxDistance < 0)
+                    yield break;
+            }
+
+            var x = startOnBorder == 0 ? Mathf.RoundToInt(x1) + (dx > 0 ? -1 : 0) : Mathf.FloorToInt(x1);
+            var y = startOnBorder == 1 ? Mathf.RoundToInt(y1) + (dy > 0 ? -1 : 0) : Mathf.FloorToInt(y1);
+            var z = startOnBorder == 2 ? Mathf.RoundToInt(z1) + (dz > 0 ? -1 : 0) : Mathf.FloorToInt(z1);
+
+            if (startOnBorder == -1)
+            {
+                yield return new RaycastInfo
+                {
+                    cell = new Cell(x, y, z),
+                    point = origin,
+                    cellDir = null,
+                };
+            }
+
+            var tx = (x + (dx >= 0 ? 1 : 0) - x1) / dx;
+            var ty = (y + (dy >= 0 ? 1 : 0) - y1) / dy;
+            var tz = (z + (dz >= 0 ? 1 : 0) - z1) / dz;
+
+            while (true)
+            {
+                float t;
+                CellDir cellDir;
+                if (tx < ty && tx < tz)
+                {
+                    if (tx > maxDistance) yield break;
+                    x += stepx;
+                    tx += idx;
+                    t = tx;
+                    cellDir = cellDirX;
+                }
+                else if (ty < tz)
+                {
+                    if (ty > maxDistance) yield break;
+                    y += stepy;
+                    ty += idy;
+                    t = ty;
+                    cellDir = cellDirY;
+                }
+                else
+                {
+                    if (tz > maxDistance) yield break;
+                    z += stepz;
+                    tz += idz;
+                    t = tz;
+                    cellDir = cellDirZ;
+                }
+                yield return new RaycastInfo
+                {
+                    cell = new Cell(x, y, z),
+                    point = origin + t * direction,
+                    cellDir = cellDir,
+                };
+            }
         }
         #endregion
 
