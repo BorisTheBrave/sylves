@@ -25,6 +25,15 @@ namespace Sylves.Test
         }
 
 
+
+        [Test]
+        public void TestTryMove_SquareSnub()
+        {
+            var g = new SquareSnubGrid();
+            var cell = g.Move(new Cell(0, 0, 0), (CellDir)4);
+            Assert.AreEqual(new Cell(4, 0, -1), cell);
+        }
+
         [Test]
         [Ignore("Not supported yet")]
         public void TestTryMoveByOffset()
@@ -85,7 +94,6 @@ namespace Sylves.Test
             var g = new SquareSnubGrid();
             var cells = g.GetCellsIntersectsApprox(new Vector3(-10, -10, 0), new Vector3(10, 10, 0)).ToList();
             Assert.IsTrue(cells.Count > 0);
-
         }
     }
 }
