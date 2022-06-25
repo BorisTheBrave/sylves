@@ -87,6 +87,24 @@ namespace Sylves.Test
             GridTest.FindBasicPath(t, new Cell(1, 0, 1), new Cell(10, -5, -4));
         }
 
+        [Test]
+        public void TestRaycast()
+        {
+            var g = new TriangleGrid(1);
+            var start = g.GetCellCenter(new Cell(1, 0, 1));
+            var end = g.GetCellCenter(new Cell(2, 0, 0));
+            var infos = g.Raycast(start, end - start, 1).ToList();
+            Assert.AreEqual(new Cell(1, 0, 1), infos[0].cell);
+            Assert.AreEqual(null, infos[0].cellDir);
+            Assert.AreEqual(new Cell(1, 0, 0), infos[1].cell);
+            Assert.AreEqual(FTHexDir.DownLeft, (FTHexDir?)infos[1].cellDir);
+            Assert.AreEqual(new Cell(2, 0, 0), infos[2].cell);
+            Assert.AreEqual(FTHexDir.UpLeft, (FTHexDir?)infos[2].cellDir);
+            Assert.AreEqual(3, infos.Count);
+
+            // Test bad direction doesn't break things
+            g.Raycast(new Vector3(1.23f, 4.56f, 0), new Vector3(), 1).ToList();
+        }
 
 
         [Test]

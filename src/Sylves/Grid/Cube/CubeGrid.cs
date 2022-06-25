@@ -350,9 +350,9 @@ namespace Sylves
         {
             // Normalize things into a space where each cell
             // occupies a unit cube.
-            var x1 = origin.x / cellSize.x + 0.5f;
-            var y1 = origin.y / cellSize.y + 0.5f;
-            var z1 = origin.z / cellSize.z + 0.5f;
+            var x1 = origin.x / cellSize.x;
+            var y1 = origin.y / cellSize.y;
+            var z1 = origin.z / cellSize.z;
             var dx = direction.x / cellSize.x;
             var dy = direction.y / cellSize.y;
             var dz = direction.z / cellSize.z;
@@ -370,9 +370,10 @@ namespace Sylves
             var cellDirZ = (CellDir)(dz >= 0 ? CubeDir.Back : CubeDir.Forward);
 
             // -1 = in middle of cell, 0,1,2 = on x,y,z face
-            int startOnBorder = -1;
+            int startOnBorder;
+            float extraDistance;
             // Filter to bounds
-            if(bound != null )
+            if (bound != null )
             {
                 var tx1 = dx >= 0 ? (bound.min.x - x1) / dx : (bound.max.x - x1) / dx;
                 var tx2 = dx >= 0 ? (bound.max.x - x1) / dx : (bound.min.x - x1) / dx;
@@ -393,16 +394,23 @@ namespace Sylves
                     y1 += dy * mint;
                     z1 += dz * mint;
                     maxDistance -= mint;
+                    extraDistance = mint;
                     origin += direction * mint;
                     startOnBorder = tx1 == mint ? 0 : ty1 == mint ? 1 : 2;
                 }
                 else
                 {
                     startOnBorder = -1;
+                    extraDistance = 0;
                 }
 
                 if (maxDistance < 0)
                     yield break;
+            }
+            else
+            {
+                startOnBorder = -1;
+                extraDistance = 0;
             }
 
             var x = startOnBorder == 0 ? Mathf.RoundToInt(x1) + (dx > 0 ? -1 : 0) : Mathf.FloorToInt(x1);
@@ -416,6 +424,7 @@ namespace Sylves
                     cell = new Cell(x, y, z),
                     point = origin,
                     cellDir = null,
+                    distance = 0,
                 };
             }
 
@@ -456,6 +465,7 @@ namespace Sylves
                     cell = new Cell(x, y, z),
                     point = origin + t * direction,
                     cellDir = cellDir,
+                    distance = t + extraDistance,
                 };
             }
         }

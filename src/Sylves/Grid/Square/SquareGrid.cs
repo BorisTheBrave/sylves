@@ -349,7 +349,108 @@ namespace Sylves
         }
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
-            throw new NotImplementedException();
+            // Normalize things into a space where each cell
+            // occupies a unit cube.
+            var x1 = origin.x / cellSize.x;
+            var y1 = origin.y / cellSize.y;
+            var dx = direction.x / cellSize.x;
+            var dy = direction.y / cellSize.y;
+
+
+
+            var stepx = Math.Sign(dx);
+            var stepy = Math.Sign(dy);
+            var idx = Math.Abs(1 / direction.x);
+            var idy = Math.Abs(1 / direction.y);
+            var cellDirX = (CellDir)(dx >= 0 ? SquareDir.Left : SquareDir.Right);
+            var cellDirY = (CellDir)(dy >= 0 ? SquareDir.Down : SquareDir.Up);
+
+            // -1 = in middle of cell, 0,1,2 = on x,y,z face
+            int startOnBorder;
+            float extraDistance;
+            // Filter to bounds
+            if (bound != null)
+            {
+                var tx1 = dx >= 0 ? (bound.min.x - x1) / dx : (bound.max.x - x1) / dx;
+                var tx2 = dx >= 0 ? (bound.max.x - x1) / dx : (bound.min.x - x1) / dx;
+                var ty1 = dy >= 0 ? (bound.min.y - y1) / dy : (bound.max.y - y1) / dy;
+                var ty2 = dy >= 0 ? (bound.max.y - y1) / dy : (bound.min.y - y1) / dy;
+
+                var mint = Math.Max(tx1, ty1);
+                var maxt = Math.Min(tx2, ty2);
+                // Don't go beyond maxt
+                maxDistance = Math.Min(maxDistance, maxt);
+
+                if (mint > 0)
+                {
+                    // Advance things to mint
+                    x1 += dx * mint;
+                    y1 += dy * mint;
+                    maxDistance -= mint;
+                    extraDistance = mint;
+                    origin += direction * mint;
+                    startOnBorder = tx1 == mint ? 0 : ty1 == mint ? 1 : 2;
+                }
+                else
+                {
+                    startOnBorder = -1;
+                    extraDistance = 0;
+                }
+
+                if (maxDistance < 0)
+                    yield break;
+            }
+            else
+            {
+                startOnBorder = -1;
+                extraDistance = 0;
+            }
+
+            var x = startOnBorder == 0 ? Mathf.RoundToInt(x1) + (dx > 0 ? -1 : 0) : Mathf.FloorToInt(x1);
+            var y = startOnBorder == 1 ? Mathf.RoundToInt(y1) + (dy > 0 ? -1 : 0) : Mathf.FloorToInt(y1);
+
+            if (startOnBorder == -1)
+            {
+                yield return new RaycastInfo
+                {
+                    cell = new Cell(x, y),
+                    point = origin,
+                    cellDir = null,
+                    distance = 0,
+                };
+            }
+
+            var tx = (x + (dx >= 0 ? 1 : 0) - x1) / dx;
+            var ty = (y + (dy >= 0 ? 1 : 0) - y1) / dy;
+
+            while (true)
+            {
+                float t;
+                CellDir cellDir;
+                if (tx < ty)
+                {
+                    if (tx > maxDistance) yield break;
+                    x += stepx;
+                    tx += idx;
+                    t = tx;
+                    cellDir = cellDirX;
+                }
+                else
+                {
+                    if (ty > maxDistance) yield break;
+                    y += stepy;
+                    ty += idy;
+                    t = ty;
+                    cellDir = cellDirY;
+                }
+                yield return new RaycastInfo
+                {
+                    cell = new Cell(x, y),
+                    point = origin + t * direction,
+                    cellDir = cellDir,
+                    distance = t + extraDistance,
+                };
+            }
         }
         #endregion
 
