@@ -17,15 +17,20 @@ namespace Sylves
 
         // the face, submesh and edge ids, stored by start/end points of the edge.
         private Dictionary<(Vector3Int, Vector3Int), (Vector3, Vector3, Cell, CellDir)> unmatchedEdges;
+        private Dictionary<Vector3Int, int> vertexCount;
+
 
         public EdgeStore()
         {
             unmatchedEdges = new Dictionary<(Vector3Int, Vector3Int), (Vector3, Vector3, Cell, CellDir)>();
+            vertexCount = new Dictionary<Vector3Int, int>();
         }
 
-        private EdgeStore(Dictionary<(Vector3Int, Vector3Int), (Vector3, Vector3, Cell, CellDir)> unmatchedEdges)
+        private EdgeStore(Dictionary<(Vector3Int, Vector3Int), (Vector3, Vector3, Cell, CellDir)> unmatchedEdges,
+            Dictionary<Vector3Int, int> vertexCount)
         {
             this.unmatchedEdges = unmatchedEdges;
+            this.vertexCount = vertexCount;
         }
 
         public IEnumerable<(Vector3 v1, Vector3 v2, Cell cell, CellDir dir)> UnmatchedEdges
@@ -53,9 +58,15 @@ namespace Sylves
         {
             var v1i = Vector3Int.FloorToInt(v1 / tolerance);
             var v2i = Vector3Int.FloorToInt(v2 / tolerance);
-            foreach (var o1 in Offsets) {
-                foreach (var o2 in Offsets) {
-                    var w1 = v1i + o1;
+            foreach (var o1 in Offsets)
+            {
+                var w1 = v1i + o1;
+                // Early exit so we don't need try every value of o2
+                if (!vertexCount.TryGetValue(w1, out var c) || c <= 0)
+                    continue;
+
+                foreach (var o2 in Offsets) 
+                {
                     var w2 = v2i + o2;
                     if (unmatchedEdges.TryGetValue((w2, w1), out var match))
                     {
@@ -64,6 +75,8 @@ namespace Sylves
                         moves.Add((cell, dir), (cell2, dir2, new Connection()));
                         moves.Add((cell2, dir2), (cell, dir, new Connection()));
                         unmatchedEdges.Remove((w2, w1));
+                        vertexCount[w2]--;
+                        vertexCount[w1]--;
                         return true;
                     }
                     else if (unmatchedEdges.TryGetValue((w1, w2), out match))
@@ -73,6 +86,8 @@ namespace Sylves
                         moves.Add((cell, dir), (cell2, dir2, new Connection { Mirror = true }));
                         moves.Add((cell2, dir2), (cell, dir, new Connection { Mirror = true }));
                         unmatchedEdges.Remove((w1, w2));
+                        vertexCount[w1]--;
+                        vertexCount[w2]--;
                         return true;
                     }
                 }
@@ -89,12 +104,15 @@ namespace Sylves
                 var v1i = Vector3Int.FloorToInt(v1 / tolerance);
                 var v2i = Vector3Int.FloorToInt(v2 / tolerance);
                 unmatchedEdges.Add((v1i, v2i), (v1, v2, cell, dir));
+                vertexCount[v1i] = 1 + (vertexCount.TryGetValue(v1i, out var c) ? c : 0);
+                vertexCount[v2i] = 1 + (vertexCount.TryGetValue(v2i, out c) ? c : 0);
             }
         }
 
         public EdgeStore Clone()
         {
-            return new EdgeStore(unmatchedEdges.ToDictionary(x => x.Key, x => x.Value));
+            return new EdgeStore(unmatchedEdges.ToDictionary(x => x.Key, x => x.Value), 
+                vertexCount.ToDictionary(x=>x.Key, x=>x.Value));
         }
     }
 }
