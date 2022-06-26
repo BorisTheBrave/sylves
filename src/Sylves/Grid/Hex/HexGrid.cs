@@ -490,7 +490,23 @@ namespace Sylves
         }
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
-            throw new NotImplementedException();
+            Cell? prevHex = null;
+            foreach(var triInfo in childTriangles.Raycast(origin, direction, maxDistance))
+            {
+                var hex = GetTriangleParent(triInfo.cell);
+                if (hex == prevHex)
+                    continue;
+
+                yield return new RaycastInfo
+                {
+                    cell = hex,
+                    cellDir = triInfo.cellDir,
+                    point = triInfo.point,
+                    distance = triInfo.distance,
+                };
+
+                prevHex = hex;
+            }
         }
         #endregion
 

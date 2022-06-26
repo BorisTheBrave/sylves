@@ -101,9 +101,13 @@ namespace Sylves.Test
             Assert.AreEqual(new Cell(2, 0, 0), infos[2].cell);
             Assert.AreEqual(FTHexDir.UpLeft, (FTHexDir?)infos[2].cellDir);
             Assert.AreEqual(3, infos.Count);
-
-            // Test bad direction doesn't break things
+            
+            // Test bad direction doesn't break things by looping infinitely
             g.Raycast(new Vector3(1.23f, 4.56f, 0), new Vector3(), 1).ToList();
+
+            // Test corner case doesn't break things
+            var cells = g.Raycast(new Vector3(0, 0, 0), new Vector3(2, 0, 0), 1).Select(x=>x.cell).ToList();
+            Assert.IsTrue(cells.All(c => c.x + c.y + c.z == 2 || c.x + c.y + c.z == 1), string.Join(",", cells));
         }
 
 

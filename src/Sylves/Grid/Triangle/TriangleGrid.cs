@@ -675,9 +675,9 @@ namespace Sylves
             var dy = direction.y / cellSize.y;
 
             // Convert from cartesian co-ordinates to the three triangle axes
-            var fa = x1 - 0.5f * y1 + 1;
-            var fb = y1 + 1;
-            var fc = -x1 - 0.5f * y1 + 1;
+            var fa = x1 - 0.5f * y1;
+            var fb = y1;
+            var fc = -x1 - 0.5f * y1;
             var da = dx - 0.5f * dy;
             var db = dy;
             var dc = -dx - 0.5f * dy;
@@ -737,9 +737,9 @@ namespace Sylves
                 extraDistance = 0;
             }
 
-            var a = startOnBorder == 0 ? Mathf.RoundToInt(fa) + (da > 0 ? -1 : 0) : Mathf.FloorToInt(fa);
-            var b = startOnBorder == 1 ? Mathf.RoundToInt(fb) + (db > 0 ? -1 : 0) : Mathf.FloorToInt(fb);
-            var c = startOnBorder == 2 ? Mathf.RoundToInt(fc) + (dc > 0 ? -1 : 0) : Mathf.FloorToInt(fc);
+            var a = startOnBorder == 0 ? Mathf.RoundToInt(fa) + (da > 0 ? -1 : 0) : Mathf.CeilToInt(fa);
+            var b = startOnBorder == 1 ? Mathf.RoundToInt(fb) + (db > 0 ? -1 : 0) : Mathf.FloorToInt(fb) + 1;
+            var c = startOnBorder == 2 ? Mathf.RoundToInt(fc) + (dc > 0 ? -1 : 0) : Mathf.CeilToInt(fc);
 
             if (startOnBorder == -1)
             {
@@ -752,9 +752,9 @@ namespace Sylves
                 };
             }
 
-            var ta = (a + (da >= 0 ? 1 : 0) - fa) / da;
-            var tb = (b + (db >= 0 ? 1 : 0) - fb) / db;
-            var tc = (c + (dc >= 0 ? 1 : 0) - fc) / dc;
+            var ta = (a - 1 + (da >= 0 ? 1 : 0) - fa) / da;
+            var tb = (b - 1 + (db >= 0 ? 1 : 0) - fb) / db;
+            var tc = (c - 1 + (dc >= 0 ? 1 : 0) - fc) / dc;
             var isUp = a + b + c == 2;
 
             while (true)
