@@ -46,8 +46,8 @@ namespace Sylves.Test
                     new Cell(0, 1, -1),
                 },
                 g.GetCellsIntersectsApprox(p, p + new Vector3(0.6f, 0.3f, 0)));
-
-
+            
+            
             CollectionAssert.AreEquivalent(
                 new[] {
                     new Cell(0, 0, 0),
@@ -56,7 +56,7 @@ namespace Sylves.Test
                     new Cell(1, 1, -2),
                 },
                 g.GetCellsIntersectsApprox(p, p + new Vector3(0.6f, 2f, 0)));
-
+            
             g = new HexGrid(2, HexOrientation.PointyTopped);
             p = new Vector3(0.57f, 0, 0);
             CollectionAssert.AreEquivalent(
@@ -66,6 +66,15 @@ namespace Sylves.Test
                     new Cell(0, 1, -1),
                 },
                 g.GetCellsIntersectsApprox(p, p + new Vector3(0.3f, 0.6f, 0)));
+
+            g = new HexGrid(1);
+            CollectionAssert.AreEquivalent(
+                new[] {
+                    new Cell(1, -1, 0), 
+                    new Cell(0, 0, 0),
+                    new Cell(1, 0, -1),
+                },
+                g.GetCellsIntersectsApprox(new Vector3(0.28f, -0.36f, 0.00f), new Vector3(0.60f, -0.16f, 0.00f)));
 
         }
 

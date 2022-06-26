@@ -153,7 +153,9 @@ namespace Sylves
 
         public Cell[] GetChildTriangles(Cell cell)
         {
-            var (a, b,c) = (cell.x, cell.y, cell.z);
+            var a = cell.x - cell.y;
+            var b = cell.y - cell.z;
+            var c = cell.z - cell.x;
             return new[] {
                 new Cell(a + 1, b, c),
                 new Cell(a + 1, b + 1, c),
@@ -473,11 +475,11 @@ namespace Sylves
                 int? first_x = null;
                 foreach (var triangleCell in childTriangles.GetCellsIntersectsApprox(min, max))
                 {
-                    if (first_x == null) first_x = triangleCell.y;
+                    if (first_x == null) first_x = triangleCell.x;
                     var hex = GetTriangleParent(triangleCell);
                     // Tri must be in the bottom half of the hex, except the first row
                     // This stops double counting
-                    if (first_x == triangleCell.y || hex.x - hex.z == triangleCell.x)
+                    if (first_x == triangleCell.x || hex.x - hex.z == triangleCell.x)
                     {
                         if (hex != prev)
                         {
