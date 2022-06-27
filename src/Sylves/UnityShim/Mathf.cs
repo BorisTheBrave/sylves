@@ -53,6 +53,11 @@ namespace Sylves
             return (float)Math.Abs(v);
         }
 
+        public static float Min(float v1, float v2) => Math.Min(v1, v2);
+        public static float Min(float v1, float v2, float v3) => Math.Min(v1, Math.Min(v2, v3));
+        public static float Max(float v1, float v2) => Math.Max(v1, v2);
+        public static float Max(float v1, float v2, float v3) => Math.Max(v1, Math.Max(v2, v3));
+
         public static float Clamp(float value, float min, float max) => value < min ? min : value > max ? max : value;
         public static float Clamp01(float value) => Clamp(value, 0.0f, 1.0f);
 

@@ -50,8 +50,6 @@ namespace Sylves
             {
                 if (CellData[cell] is MeshCellData meshCellData)
                 {
-
-
                     var face = ((MeshCellData)CellData[cell]).Face;
                     var cellMin = meshData.vertices[face[0]];
                     var cellMax = cellMin;
@@ -159,6 +157,7 @@ namespace Sylves
             return d == 0 || (d < 0) == (s + t <= 0);
         }
 
+        // FindCell, applied to a single cell
         private bool IsPointInCell(Vector3 position, Cell cell)
         {
             var cellData = CellData[cell];
@@ -210,7 +209,166 @@ namespace Sylves
 
         public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
-            throw new NotImplementedException();
+            // Report the cell the origin starts in.
+            // This is a special case as RaycastCell is dumb and doesn't always report it.
+            bool hasOriginCell = FindCell(origin, out var originCell);
+            if (hasOriginCell)
+            {
+                yield return new RaycastInfo
+                {
+                    cell = originCell,
+                    distance = 0,
+                    point = origin,
+                };
+            }
+
+            // Broadphase - walk through the hashCells looking for cells to check
+            // origin needs to be offset as cubegrid rounds to cell, while hash grid floors to cell
+            var bfRaycastInfos = CubeGrid.Raycast(origin - meshDetails.hashCellSize / 2, direction, maxDistance, meshDetails.hashCellSize, meshDetails.hashCellBounds);
+            Vector3Int? prevHashCell = null;
+            var queuedRaycastInfos = new List<RaycastInfo>();
+            foreach (var bfRaycastInfo in bfRaycastInfos)
+            {
+                // Find check every hashCell within one of the cast to cell
+                // Excluding ones we've already checked
+                // So this is a bit like a simplified shapecast, rather than a raycast.
+                for (var x = -1; x <= 1; x++)
+                {
+                    for (var y = -1; y <= 1; y++)
+                    {
+                        for (var z = -1; z <= 1; z++)
+                        {
+                            var hashCell = ((Vector3Int)bfRaycastInfo.cell) + new Vector3Int(x, y, z);
+                            if (prevHashCell != null)
+                            {
+                                var diffX = hashCell.x - prevHashCell.Value.x;
+                                var diffY = hashCell.y - prevHashCell.Value.y;
+                                var diffZ = hashCell.z - prevHashCell.Value.z;
+                                if (Math.Abs(diffX) <= 1 && Math.Abs(diffY) <= 1 && Math.Abs(diffZ) <= 1)
+                                {
+                                    // We've already checked this cell, skip
+                                    continue;
+                                }
+                            }
+
+                            queuedRaycastInfos.AddRange(RaycastHashCell(hashCell, origin, direction, maxDistance));
+                        }
+                    }
+                }
+
+                // Re-sort queue
+                queuedRaycastInfos.Sort((x, y) => -x.distance.CompareTo(y.distance));
+
+                // Find the distance such that all raycastInfos smaller than this distance have already found,
+                // meaning it is safe to stream them out of the queue without getting anything out of order
+                var minDistance = bfRaycastInfo.distance - Mathf.Min(
+                        Mathf.Abs(meshDetails.hashCellSize.x / direction.x),
+                        Mathf.Abs(meshDetails.hashCellSize.y / direction.y),
+                        Mathf.Abs(meshDetails.hashCellSize.z / direction.z)
+                    );
+
+                // Actually stream all the safe raycastInfos
+                while (queuedRaycastInfos.Count > 0 && queuedRaycastInfos[queuedRaycastInfos.Count - 1].distance < minDistance)
+                {
+                    var ri = queuedRaycastInfos[queuedRaycastInfos.Count - 1];
+                    queuedRaycastInfos.RemoveAt(queuedRaycastInfos.Count - 1);
+                    if (hasOriginCell && originCell == ri.cell)
+                        continue;
+                    yield return ri;
+                }
+            }
+
+            // We've found all raycast infos, stream out any that haven't already been sent
+            for (var i = queuedRaycastInfos.Count - 1; i >= 0; i--)
+            {
+                var ri = queuedRaycastInfos[i];
+                if (hasOriginCell && originCell == ri.cell)
+                    continue;
+                yield return ri;
+            }
+        }
+
+        private IEnumerable<RaycastInfo> RaycastHashCell(Vector3Int hashCell, Vector3 rayOrigin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        {
+            if (meshDetails.hashedCells.TryGetValue(hashCell, out var cells))
+            {
+                foreach (var cell in cells)
+                {
+                    var raycastInfo = RaycastCell(cell, rayOrigin, direction);
+                    if (raycastInfo != null && raycastInfo.Value.distance <= maxDistance)
+                    {
+                        yield return raycastInfo.Value;
+                    }
+                }
+            }
+        }
+
+        // Narrow phase
+        // I.e. raycast, applied to a single cell
+        private RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
+        {
+            var cellData = CellData[cell];
+            var cellType = UnwrapXZCellModifier(cellData.CellType);
+            if (cellType == CubeCellType.Instance)
+            {
+                // TODO
+                return null;
+                /*
+                GetCellVertices(cell, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8);
+                var hit = MeshRaycast.RaycastCube(rayOrigin, direction, v1, v2, v3, v4, v5, v6, v7, v8);
+                if (hit != null)
+                {
+                    var hit2 = hit.Value;
+                    hit2.cell = cell;
+                    return hit2;
+                }
+                else
+                {
+                    return null;
+                }
+                */
+            } 
+            else
+            {
+                if(!IsPlanar)
+                {
+                    throw new NotImplementedException();
+                }
+
+                var face = ((MeshCellData)cellData).Face;
+                var prev = meshData.vertices[face[face.Count - 1]];
+                var bestD = float.PositiveInfinity;
+                var bestP = new Vector3();
+                var bestI = 0;
+                for (var i = 0; i < face.Count; i++)
+                {
+                    var curr = meshData.vertices[face[i]];
+                    if (MeshRaycast.RaycastSegment(rayOrigin, direction, prev, curr, out var p, out var d))
+                    {
+                        if (d < bestD)
+                        {
+                            bestD = d;
+                            bestP = p;
+                            bestI = i;
+                        }
+                    }
+                    prev = curr;
+                }
+                if(bestD == float.PositiveInfinity)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new RaycastInfo
+                    {
+                        cell = cell,
+                        //cellDir = null,// TODO
+                        distance = bestD,
+                        point = bestP,
+                    };
+                }
+            }
         }
 
         public override bool FindCell(
