@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -16,6 +17,8 @@ namespace Sylves
         private readonly Vector2 invStrideX;
         private readonly Vector2 invStrideY;
 
+        private readonly Vector2Int[] chunksInFundamentalRhombus;
+
         internal AabbChunks(Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize)
         {
             this.strideX = strideX;
@@ -26,6 +29,22 @@ namespace Sylves
             var det = strideX.x * strideY.y - strideX.y * strideY.x;
             this.invStrideX = new Vector2(strideY.y, -strideX.y) / det;
             this.invStrideY = new Vector2(-strideY.x, strideX.x) / det;
+
+            // The fundamental rhombus has sides equal to strideX and strideY, so it fully tiles plane
+            // with every copy having the same relationship to the aabss
+
+            var fundamentalRhombusCorners = new[]
+            {
+                Vector2.zero,
+                strideX,
+                strideX + strideY,
+                strideY,
+            };
+            var minFR = fundamentalRhombusCorners.Aggregate(Vector2.Min);
+            var maxFR = fundamentalRhombusCorners.Aggregate(Vector2.Max);
+            // TODO: this could actually be a tighter bound
+            chunksInFundamentalRhombus = GetChunkIntersects(minFR, maxFR).ToArray();
+
         }
 
         public (Vector2, Vector2) GetChunkBounds(Vector2Int chunk)
@@ -35,6 +54,7 @@ namespace Sylves
             return (bl, tr);
         }
 
+        // Linear transformation that maps strideX to (1, 0) and strideY to (0, 1).
         private Vector2 Inv(Vector2 v)
         {
             return invStrideX * v.x + invStrideY * v.y;
@@ -82,6 +102,60 @@ namespace Sylves
                 {
                     yield return new Vector2Int(x, y);
                 }
+            }
+        }
+
+        private class RaycastInfoComparer : IComparer<RaycastInfo>
+        {
+            public int Compare(RaycastInfo x, RaycastInfo y)
+            {
+                return x.distance < y.distance ? -1 : x.distance > y.distance ? 1 : 0;
+            }
+        }
+
+        public IEnumerable<RaycastInfo> Raycast(Vector2 origin, Vector2 direction, float maxDistance)
+        {
+            // Raycast through a tiling of the fundamental rhombus
+            // which in inverse space, is just a square grid
+            var invOrigin = Inv(origin);
+            var invDirection = Inv(direction);
+            var fundRis = CubeGrid.Raycast(new Vector3(invOrigin.x, invOrigin.y, 0), new Vector3(invDirection.x, invDirection.y, 0), maxDistance, Vector3.one, null);
+            var comparer = new RaycastInfoComparer();
+
+            var output = new List<RaycastInfo>(chunksInFundamentalRhombus.Length);
+            foreach(var ri in fundRis)
+            {
+                output.Clear();
+                foreach (var chunk in chunksInFundamentalRhombus)
+                {
+                    var actualChunk = new Vector2Int(ri.cell.x + chunk.x, ri.cell.y + chunk.y);
+
+                    // Raycast vs one chunk. This could be optimized better
+                    var (chunkMin, chunkMax) = GetChunkBounds(actualChunk);
+                    var t1 = (chunkMin.x - origin.x) / direction.x;
+                    var t2 = (chunkMax.x - origin.x) / direction.x;
+                    var t3 = (chunkMin.y - origin.y) / direction.y;
+                    var t4 = (chunkMax.y - origin.y) / direction.y;
+                    if (direction.x < 0)
+                        (t1, t2) = (t2, t1);
+                    if (direction.y < 0)
+                        (t3, t4) = (t4, t3);
+                    var tmin = Math.Max(t1, t3);
+                    var tmax = Math.Min(t2, t4);
+                    if (tmin > tmax || tmin > maxDistance || tmax < 0)
+                        continue;
+                    output.Add(new RaycastInfo
+                    {
+                        cell = new Cell(actualChunk.x, actualChunk.y),
+                        distance = tmin,
+                    });
+                }
+
+                // TODO Filter out duplicates
+                output.Sort(comparer);
+
+                foreach (var o in output)
+                    yield return o;
             }
         }
     }

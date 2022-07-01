@@ -302,7 +302,25 @@ namespace Sylves
 
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
-            throw new NotImplementedException();
+            var origin2 = new Vector2(origin.x, origin.y);
+            var direction2 = new Vector2(direction.x, direction.y);
+            foreach (var chunkRaycastInfo in aabbChunks.Raycast(origin2, direction2, maxDistance))
+            {
+                var chunk = new Vector2Int(chunkRaycastInfo.cell.x, chunkRaycastInfo.cell.y);
+                var chunkOffset = ChunkOffset(chunk);
+                // TODO: Handle re-orderng, like in MeshGrid
+                foreach(var raycastInfo in centerGrid.Raycast(origin - chunkOffset, direction, maxDistance))
+                {
+                    yield return new RaycastInfo
+                    {
+                        cell = raycastInfo.cell + Promote(chunk),
+                        cellDir = raycastInfo.cellDir,
+                        distance = raycastInfo.distance,
+                        point = raycastInfo.point + chunkOffset,
+                    };
+                }
+
+            }
         }
         #endregion
 
