@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -136,6 +137,30 @@ namespace Sylves.Test
             AssertAreEqual((Vector3.left + Vector3.up) * 0.5f, deformation.DeformPoint(Vector3.up * 0.5f), 1e-6);
 
             // We can probably trust the TRS points from here
+        }
+
+        [Test]
+        public void TestRaycast_2d()
+        {
+            var g = new MeshGrid(TestMeshes.PlaneXY);
+            var results = g.Raycast(new Vector3(-0.6f, 0.1f, 0), Vector3.right);
+            var raycastInfo = results.Single();
+            Assert.AreEqual(new Cell(), raycastInfo.cell);
+            // TODO
+            //Assert.AreEqual(SquareDir.Left, (SquareDir?)raycastInfo.cellDir);
+            Assert.AreEqual(0.1f, raycastInfo.distance, 1e-6);
+        }
+
+        [Test]
+        public void TestRaycast_2d_Glancing()
+        {
+            var g = new MeshGrid(TestMeshes.PlaneXY);
+            var results = g.Raycast(new Vector3(-0.6f, -0.1f, 0), Vector3.right);
+            var raycastInfo = results.Single();
+            Assert.AreEqual(new Cell(), raycastInfo.cell);
+            // TODO
+            //Assert.AreEqual(SquareDir.Left, (SquareDir?)raycastInfo.cellDir);
+            Assert.AreEqual(0.1f, raycastInfo.distance, 1e-6);
         }
     }
 }

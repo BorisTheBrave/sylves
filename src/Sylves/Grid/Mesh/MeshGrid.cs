@@ -101,6 +101,7 @@ namespace Sylves
             hashCellMin = hashCellMin ?? new Vector3Int();
             hashCellMax = hashCellMax ?? new Vector3Int();
             meshDetails.hashCellBounds = new CubeBound(hashCellMin.Value, hashCellMax.Value + Vector3Int.one);
+            meshDetails.expandedHashCellBounds = new CubeBound(hashCellMin.Value - Vector3Int.one, hashCellMax.Value + Vector3Int.one + Vector3Int.one);
 
             return meshDetails;
         }
@@ -113,6 +114,7 @@ namespace Sylves
         {
             public Vector3 hashCellSize;
             public CubeBound hashCellBounds;
+            public CubeBound expandedHashCellBounds;
             public Dictionary<Vector3Int, List<Cell>> hashedCells;
             public bool isPlanar;
 
@@ -222,9 +224,8 @@ namespace Sylves
                 };
             }
 
-            // Broadphase - walk through the hashCells looking for cells to check
-            // origin needs to be offset as cubegrid rounds to cell, while hash grid floors to cell
-            var bfRaycastInfos = CubeGrid.Raycast(origin - meshDetails.hashCellSize / 2, direction, maxDistance, meshDetails.hashCellSize, meshDetails.hashCellBounds);
+            // Broadphase - walk through the hashCells looking for cells to check.
+            var bfRaycastInfos = CubeGrid.Raycast(origin, direction, maxDistance, meshDetails.hashCellSize, meshDetails.expandedHashCellBounds);
             Vector3Int? prevHashCell = null;
             var queuedRaycastInfos = new List<RaycastInfo>();
             foreach (var bfRaycastInfo in bfRaycastInfos)
@@ -276,6 +277,8 @@ namespace Sylves
                         continue;
                     yield return ri;
                 }
+
+                prevHashCell = (Vector3Int)bfRaycastInfo.cell;
             }
 
             // We've found all raycast infos, stream out any that haven't already been sent
