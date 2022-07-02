@@ -381,12 +381,13 @@ namespace Sylves
             // Filter to bounds
             if (bound != null )
             {
-                var tx1 = dx >= 0 ? (bound.min.x - x1) / dx : (bound.max.x - x1) / dx;
-                var tx2 = dx >= 0 ? (bound.max.x - x1) / dx : (bound.min.x - x1) / dx;
-                var ty1 = dy >= 0 ? (bound.min.y - y1) / dy : (bound.max.y - y1) / dy;
-                var ty2 = dy >= 0 ? (bound.max.y - y1) / dy : (bound.min.y - y1) / dy;
-                var tz1 = dz >= 0 ? (bound.min.z - z1) / dz : (bound.max.z - z1) / dz;
-                var tz2 = dz >= 0 ? (bound.max.z - z1) / dz : (bound.min.z - z1) / dz;
+                // Find the start and end values of t that the ray crosses each axis.
+                var tx1 = dx == 0 ? (bound.min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.min.x - x1) / dx : (bound.max.x - x1) / dx;
+                var tx2 = dx == 0 ? (bound.max.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.max.x - x1) / dx : (bound.min.x - x1) / dx;
+                var ty1 = dy == 0 ? (bound.min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.min.y - y1) / dy : (bound.max.y - y1) / dy;
+                var ty2 = dy == 0 ? (bound.max.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.max.y - y1) / dy : (bound.min.y - y1) / dy;
+                var tz1 = dz == 0 ? (bound.min.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (bound.min.z - z1) / dz : (bound.max.z - z1) / dz;
+                var tz2 = dz == 0 ? (bound.max.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (bound.max.z - z1) / dz : (bound.min.z - z1) / dz;
 
                 var mint = Math.Max(tx1, Math.Max(ty1, tz1));
                 var maxt = Math.Min(tx2, Math.Min(ty2, tz2));
@@ -411,6 +412,8 @@ namespace Sylves
                 }
 
                 if (maxDistance < 0)
+                    yield break;
+                if (mint == float.PositiveInfinity)
                     yield break;
             }
             else
@@ -445,26 +448,29 @@ namespace Sylves
                 if (tx < ty && tx < tz)
                 {
                     if (tx > maxDistance) yield break;
+                    t = tx;
                     x += stepx;
                     tx += idx;
-                    t = tx;
                     cellDir = cellDirX;
+                    if (bound != null && (x >= bound.max.x || x < bound.min.x)) yield break;
                 }
                 else if (ty < tz)
                 {
                     if (ty > maxDistance) yield break;
+                    t = ty;
                     y += stepy;
                     ty += idy;
-                    t = ty;
                     cellDir = cellDirY;
+                    if (bound != null && (y >= bound.max.y || x < bound.min.y)) yield break;
                 }
                 else
                 {
                     if (tz > maxDistance) yield break;
+                    t = tz;
                     z += stepz;
                     tz += idz;
-                    t = tz;
                     cellDir = cellDirZ;
+                    if (bound != null && (z >= bound.max.z || z < bound.min.z)) yield break;
                 }
                 yield return new RaycastInfo
                 {
