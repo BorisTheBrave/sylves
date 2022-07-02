@@ -371,10 +371,11 @@ namespace Sylves
             // Filter to bounds
             if (bound != null)
             {
-                var tx1 = dx >= 0 ? (bound.min.x - x1) / dx : (bound.max.x - x1) / dx;
-                var tx2 = dx >= 0 ? (bound.max.x - x1) / dx : (bound.min.x - x1) / dx;
-                var ty1 = dy >= 0 ? (bound.min.y - y1) / dy : (bound.max.y - y1) / dy;
-                var ty2 = dy >= 0 ? (bound.max.y - y1) / dy : (bound.min.y - y1) / dy;
+                // Find the start and end values of t that the ray crosses each axis.
+                var tx1 = dx == 0 ? (bound.min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.min.x - x1) / dx : (bound.max.x - x1) / dx;
+                var tx2 = dx == 0 ? (bound.max.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.max.x - x1) / dx : (bound.min.x - x1) / dx;
+                var ty1 = dy == 0 ? (bound.min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.min.y - y1) / dy : (bound.max.y - y1) / dy;
+                var ty2 = dy == 0 ? (bound.max.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.max.y - y1) / dy : (bound.min.y - y1) / dy;
 
                 var mint = Math.Max(tx1, ty1);
                 var maxt = Math.Min(tx2, ty2);
@@ -398,6 +399,8 @@ namespace Sylves
                 }
 
                 if (maxDistance < 0)
+                    yield break;
+                if (mint == float.PositiveInfinity)
                     yield break;
             }
             else
@@ -430,18 +433,20 @@ namespace Sylves
                 if (tx < ty)
                 {
                     if (tx > maxDistance) yield break;
+                    t = tx;
                     x += stepx;
                     tx += idx;
-                    t = tx;
                     cellDir = cellDirX;
+                    if (bound != null && (x >= bound.max.x || x < bound.min.x)) yield break;
                 }
                 else
                 {
                     if (ty > maxDistance) yield break;
+                    t = ty;
                     y += stepy;
                     ty += idy;
-                    t = ty;
                     cellDir = cellDirY;
+                    if (bound != null && (y >= bound.max.y || x < bound.min.y)) yield break;
                 }
                 yield return new RaycastInfo
                 {

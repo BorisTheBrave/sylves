@@ -699,12 +699,12 @@ namespace Sylves
             // Filter to bounds
             if (bound != null)
             {
-                var ta1 = da >= 0 ? (bound.min.x - fa) / da : (bound.max.x - fa) / da;
-                var ta2 = da >= 0 ? (bound.max.x - fa) / da : (bound.min.x - fa) / da;
-                var tb1 = db >= 0 ? (bound.min.y - fb) / db : (bound.max.y - fb) / db;
-                var tb2 = db >= 0 ? (bound.max.y - fb) / db : (bound.min.y - fb) / db;
-                var tc1 = dc >= 0 ? (bound.min.z - fc) / dc : (bound.max.z - fc) / dc;
-                var tc2 = dc >= 0 ? (bound.max.z - fc) / dc : (bound.min.z - fc) / dc;
+                var ta1 = da == 0 ? (bound.min.x > fa ? 1 : -1) * float.PositiveInfinity : da >= 0 ? (bound.min.x - fa) / da : (bound.max.x - fa) / da;
+                var ta2 = da == 0 ? (bound.max.x > fa ? 1 : -1) * float.PositiveInfinity : da >= 0 ? (bound.max.x - fa) / da : (bound.min.x - fa) / da;
+                var tb1 = db == 0 ? (bound.min.y > fb ? 1 : -1) * float.PositiveInfinity : db >= 0 ? (bound.min.y - fb) / db : (bound.max.y - fb) / db;
+                var tb2 = db == 0 ? (bound.max.y > fb ? 1 : -1) * float.PositiveInfinity : db >= 0 ? (bound.max.y - fb) / db : (bound.min.y - fb) / db;
+                var tc1 = dc == 0 ? (bound.min.z > fc ? 1 : -1) * float.PositiveInfinity : dc >= 0 ? (bound.min.z - fc) / dc : (bound.max.z - fc) / dc;
+                var tc2 = dc == 0 ? (bound.max.z > fc ? 1 : -1) * float.PositiveInfinity : dc >= 0 ? (bound.max.z - fc) / dc : (bound.min.z - fc) / dc;
 
                 var mint = Math.Max(ta1, Math.Max(tb1, tc1));
                 var maxt = Math.Min(ta2, Math.Min(tb2, tc2));
@@ -729,6 +729,8 @@ namespace Sylves
                 }
 
                 if (maxDistance < 0)
+                    yield break;
+                if (mint == float.PositiveInfinity)
                     yield break;
             }
             else
@@ -764,27 +766,30 @@ namespace Sylves
                 if (ta <= tb && ta <= tc && (stepa == 1) != isUp)
                 {
                     if (ta > maxDistance) yield break;
+                    t = ta;
                     a += stepa;
                     ta += ida;
-                    t = ta;
                     cellDir = cellDirX;
+                    if (bound != null && (a >= bound.max.x || a < bound.min.x)) yield break;
                 }
                 else if (tb <= ta && tb <= tc && (stepb == 1) != isUp)
                 {
                     if (tb > maxDistance) yield break;
+                    t = tb;
                     b += stepb;
                     tb += idb;
-                    t = tb;
                     cellDir = cellDirY;
+                    if (bound != null && (b >= bound.max.y || b < bound.min.y)) yield break;
                 }
                 else if(!float.IsInfinity(tc))
                 {
                     if (tc > maxDistance) yield break;
+                    t = tc;
                     c += stepc;
                     tc += idc;
-                    t = tc;
                     cellDir = cellDirZ;
-                } 
+                    if (bound != null && (c >= bound.max.z || c < bound.min.z)) yield break;
+                }
                 else
                 {
                     yield break;

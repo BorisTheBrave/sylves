@@ -53,10 +53,14 @@ namespace Sylves.Test
             // Test bad direction doesn't break things
             g.Raycast(new Vector3(1.23f, 4.56f, 0), new Vector3(), 1).ToList();
 
-            // Test degenerate axes work ok
-            // Particularly fiddly case is when the ray is co-incident witht he cube side
             var bound = new CubeBound(new Vector3Int(0, 0, 0), new Vector3Int(1, 1, 1));
             g = new CubeGrid(1, bound);
+
+            // Test distance
+            Assert.AreEqual(0.4f, g.Raycast(new Vector3(-0.4f, 0.5f, 0), Vector3.right).First().distance);
+
+            // Test degenerate axes work ok
+            // Particularly fiddly case is when the ray is co-incident witht he cube side
             Assert.AreEqual(0, g.Raycast(new Vector3(-0.5f, -0.5f, 0), Vector3.right).Count());
             Assert.AreEqual(1, g.Raycast(new Vector3(-0.5f, 0f, 0), Vector3.right).Count());
             Assert.AreEqual(1, g.Raycast(new Vector3(-0.5f, 0.5f, 0), Vector3.right).Count());
