@@ -95,5 +95,15 @@ namespace Sylves.Test
             var cells = g.GetCellsIntersectsApprox(new Vector3(-10, -10, 0), new Vector3(10, 10, 0)).ToList();
             Assert.IsTrue(cells.Count > 0);
         }
+
+        [Test]
+        public void TestRaycast()
+        {
+            var g = new PeriodicPlanarMeshGrid(TestMeshes.PlaneXY, Vector2.right, Vector2.up);
+            var start = new Vector3(3.088772f, - 0.9270384f, 0);
+            var end = new Vector3(2.384936f, 0.2460213f, 0);
+            var results = g.Raycast(start, end - start, 1);
+            Assert.AreEqual(3, results.Count());
+        }
     }
 }

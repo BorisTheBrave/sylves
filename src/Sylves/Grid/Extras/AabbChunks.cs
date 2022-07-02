@@ -109,7 +109,7 @@ namespace Sylves
         {
             public int Compare(RaycastInfo x, RaycastInfo y)
             {
-                return x.distance < y.distance ? -1 : x.distance > y.distance ? 1 : 0;
+                return x.distance.CompareTo(y.distance);
             }
         }
 
@@ -123,12 +123,12 @@ namespace Sylves
             var comparer = new RaycastInfoComparer();
 
             var output = new List<RaycastInfo>(chunksInFundamentalRhombus.Length);
-            foreach(var ri in fundRis)
+            void Process(RaycastInfo fundamentalRi, double fundamentalMinDistance, double fundamentalMaxDistance)
             {
                 output.Clear();
                 foreach (var chunk in chunksInFundamentalRhombus)
                 {
-                    var actualChunk = new Vector2Int(ri.cell.x + chunk.x, ri.cell.y + chunk.y);
+                    var actualChunk = new Vector2Int(fundamentalRi.cell.x + chunk.x, fundamentalRi.cell.y + chunk.y);
 
                     // Raycast vs one chunk. This could be optimized better
                     var (chunkMin, chunkMax) = GetChunkBounds(actualChunk);
@@ -142,7 +142,17 @@ namespace Sylves
                         (t3, t4) = (t4, t3);
                     var tmin = Math.Max(t1, t3);
                     var tmax = Math.Min(t2, t4);
-                    if (tmin > tmax || tmin > maxDistance || tmax < 0)
+                    if (
+                        // No collision
+                        tmin > tmax || 
+                        // Collision is after ray segment
+                        tmin > maxDistance || 
+                        // Collision is before ray segment
+                        tmax < 0 ||
+                        // Collision is not in current fundamental rhombus
+                        // We ignore for now for ordering reasons, it'll be found in a later rhombus
+                        tmin > fundamentalMaxDistance ||
+                        tmin < fundamentalMinDistance)
                         continue;
                     output.Add(new RaycastInfo
                     {
@@ -151,9 +161,26 @@ namespace Sylves
                     });
                 }
 
-                // TODO Filter out duplicates
+                // There's actually a O(n) way of doing this by using aabbs presorted by each axis
+                // but it's so fiddly that I feel it's not worth doing.
                 output.Sort(comparer);
-
+            }
+            RaycastInfo? prev = null;
+            var first = true;
+            foreach(var ri in fundRis)
+            {
+                if (prev != null)
+                {
+                    Process(prev.Value, first ? float.NegativeInfinity : prev.Value.distance, ri.distance);
+                    first = false;
+                }
+                prev = ri;
+                foreach (var o in output)
+                    yield return o;
+            }
+            if (prev != null)
+            {
+                Process(prev.Value, first ? float.NegativeInfinity : prev.Value.distance, maxDistance);
                 foreach (var o in output)
                     yield return o;
             }

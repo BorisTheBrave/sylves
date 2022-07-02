@@ -32,7 +32,7 @@ namespace Sylves
         public PeriodicPlanarMeshGrid(MeshData meshData, Vector2 strideX, Vector2 strideY)
         {
             if (meshData.subMeshCount != 1)
-                throw new Exception();
+                throw new Exception($"Expected subMeshCount of 1");
 
             // Analyse the original mesh
             var meshMin = meshData.vertices.Aggregate(Vector3.Min);
@@ -304,22 +304,38 @@ namespace Sylves
         {
             var origin2 = new Vector2(origin.x, origin.y);
             var direction2 = new Vector2(direction.x, direction.y);
+            var queuedRaycastInfos = new List<RaycastInfo>();
             foreach (var chunkRaycastInfo in aabbChunks.Raycast(origin2, direction2, maxDistance))
             {
+                // Resort and drain queue
+                queuedRaycastInfos.Sort((x, y) => -x.distance.CompareTo(y.distance));
+                while (queuedRaycastInfos.Count > 0 && queuedRaycastInfos[queuedRaycastInfos.Count - 1].distance < chunkRaycastInfo.distance)
+                {
+                    var ri = queuedRaycastInfos[queuedRaycastInfos.Count - 1];
+                    queuedRaycastInfos.RemoveAt(queuedRaycastInfos.Count - 1);
+                    yield return ri;
+                }
+
                 var chunk = new Vector2Int(chunkRaycastInfo.cell.x, chunkRaycastInfo.cell.y);
                 var chunkOffset = ChunkOffset(chunk);
-                // TODO: Handle re-orderng, like in MeshGrid
                 foreach(var raycastInfo in centerGrid.Raycast(origin - chunkOffset, direction, maxDistance))
                 {
-                    yield return new RaycastInfo
+                    queuedRaycastInfos.Add(new RaycastInfo
                     {
                         cell = raycastInfo.cell + Promote(chunk),
                         cellDir = raycastInfo.cellDir,
                         distance = raycastInfo.distance,
                         point = raycastInfo.point + chunkOffset,
-                    };
+                    });
                 }
+            }
 
+            // Final drain
+            queuedRaycastInfos.Sort((x, y) => -x.distance.CompareTo(y.distance));
+            for (var i = queuedRaycastInfos.Count - 1; i >= 0; i--)
+            {
+                var ri = queuedRaycastInfos[i];
+                yield return ri;
             }
         }
         #endregion
