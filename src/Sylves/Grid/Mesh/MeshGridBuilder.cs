@@ -52,8 +52,7 @@ namespace Sylves
                     {
                         deformation = MeshUtils.GetDeformation(data, face, submesh, meshGridOptions.InvertWinding);
                     }
-                    var count = faceIndices.Count;
-                    var cellType = count == 3 ? HexCellType.Get(HexOrientation.FlatTopped) : count == 4 ? SquareCellType.Instance : NGonCellType.Get(count);
+                    var cellType = GetCellType(faceIndices.Count);
                     var trs = GetTRS2d(deformation, Vector3.zero);
 
                     if (meshGridOptions.UseXZPlane)
@@ -116,14 +115,14 @@ namespace Sylves
                         }
                         else
                         {
-                            var cellDir = (CellDir)(faceIndices.Count % 2 == 0 ? (indexCount - 1) : (indexCount - 1) * 2);
+                            var cellDir = EdgeIndexToDir(indexCount, faceIndices.Count);
                             edgeStore.AddEdge(vertices[prev], vertices[index], new Cell(face, submesh), cellDir, moves);
                             prev = index;
                         }
                         indexCount++;
                     }
                     {
-                        var cellDir = (CellDir)(faceIndices.Count % 2 == 0 ? (indexCount - 1) : (indexCount - 1) * 2);
+                        var cellDir = EdgeIndexToDir(indexCount, faceIndices.Count);
                         edgeStore.AddEdge(vertices[prev], vertices[first], new Cell(face, submesh), cellDir, moves);
                     }
                     face++;
@@ -246,5 +245,16 @@ namespace Sylves
         }
 
         #endregion
+
+        private static CellDir EdgeIndexToDir(int edgeIndex, int edgeCount)
+        {
+            return (CellDir)(edgeCount % 2 == 0 ? (edgeIndex - 1) : (edgeIndex - 1) * 2);
+        }
+
+        private static ICellType GetCellType(int edgeCount)
+        {
+            return edgeCount == 3 ? HexCellType.Get(HexOrientation.FlatTopped) : edgeCount == 4 ? SquareCellType.Instance :
+                edgeCount % 2 == 0 ? NGonCellType.Get(edgeCount) : NGonCellType.Get(edgeCount * 2);
+        }
     }
 }
