@@ -110,6 +110,16 @@ namespace Sylves.Test
             Assert.IsTrue(cells.All(c => c.x + c.y + c.z == 2 || c.x + c.y + c.z == 1), string.Join(",", cells));
         }
 
+        [Test]
+        public void TestRaycast2()
+        {
+            var g = new TriangleGrid(1);
+            var start = new Vector3(1.896744f, 7.311303f, 0);
+            var end = new Vector3(2.8949f, 5.91106f, 0);
+            var infos = g.Raycast(start, end - start, 1).ToList();
+            Assert.AreEqual(0, infos.Count);
+        }
+
 
         [Test]
         [TestCase(TriangleOrientation.FlatTopped)]
