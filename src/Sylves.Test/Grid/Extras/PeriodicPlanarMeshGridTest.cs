@@ -58,11 +58,26 @@ namespace Sylves.Test
             GridTest.FindCell(g, new Cell(1, 10, 10));
             GridTest.FindCell(g, new Cell(2, 10, 10));
         }
+
         [Test]
         public void TestFindCell_Cairo()
         {
             var g = new CairoGrid();
             GridTest.FindCell(g, new Cell(0, 0, 0));
+        }
+
+        [Test]
+        public void TestFindCell_MetaHexagon()
+        {
+            var g = new MetaHexagonGrid();
+            var h = new HexGrid(1);
+            System.Console.WriteLine(h.GetCellCenter(new Cell(-1, 1, 0)).ToString());
+            System.Console.WriteLine(h.GetCellCenter(new Cell(-1, 0, 1)).ToString());
+            System.Console.WriteLine(h.GetCellCenter(new Cell(-20, 10, 10)).ToString());
+            var success = h.FindCell(g.GetCellCenter(new Cell(0, 10, 10)), out var hex);
+            Assert.IsTrue(success);
+            Assert.AreEqual(new Cell(-20, 10, 10), hex);
+
         }
 
         [Test]
