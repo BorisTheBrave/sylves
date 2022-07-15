@@ -58,6 +58,12 @@ namespace Sylves.Test
             GridTest.FindCell(g, new Cell(1, 10, 10));
             GridTest.FindCell(g, new Cell(2, 10, 10));
         }
+        [Test]
+        public void TestFindCell_Tetrakis()
+        {
+            var g = new TetrakisSquareGrid();
+            GridTest.FindCell(g, new Cell(0, 0, 0));
+        }
 
         [Test]
         public void TestFindCell_Cairo()

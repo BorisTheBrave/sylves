@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 #if UNITY
 using UnityEngine;
@@ -16,43 +17,17 @@ namespace Sylves
         }
         private static MeshData MetaHexagonGridMeshData()
         {
+            var hexGrid = new HexGrid(1);
             var meshData = new MeshData();
-            // TODO: Remove duplicates?
-            meshData.vertices = new Vector3[]
-            {
-                0.5f * new Vector3(0, 0, 0),
-                0.5f * new Vector3(0.000000f, -1.000000f, 0),
-                0.5f * new Vector3(-0.866025f, -0.500000f, 0),
-                0.5f * new Vector3(-0.866025f, 0.500000f, 0),
-                0.5f * new Vector3(0.000000f, 1.000000f, 0),
-                0.5f * new Vector3(0.866025f, 0.500000f, 0),
-                0.5f * new Vector3(0.866025f, -0.500000f, 0),
-                0.5f * new Vector3(-0.433013f, -0.750000f, 0),
-                0.5f * new Vector3(-0.866025f, 0.000000f, 0),
-                0.5f * new Vector3(-0.433013f, 0.750000f, 0),
-                0.5f * new Vector3(0.433013f, 0.750000f, 0),
-                0.5f * new Vector3(0.866025f, 0.000000f, 0),
-                0.5f * new Vector3(0.433013f, -0.750000f, 0),
-                0.5f * new Vector3(0.000000f, 0.000000f, 0),
-            };
+            hexGrid.GetPolygon(new Cell(), out var vertices, out var transform);
+            meshData.vertices = vertices.Select(transform.MultiplyPoint3x4).ToArray();
             meshData.indices = new[]{new []
             {
-                3, 8, 13,
-                11, 5, 13,
-                1, 12, 13,
-                8, 2, 13,
-                4, 9, 13,
-                12, 6, 13,
-                9, 3, 13,
-                5, 10, 13,
-                2, 7, 13,
-                10, 4, 13,
-                6, 11, 13,
-                7, 1, 13,
+                0, 1, 2, 3, 4, ~5,
             } };
             meshData.subMeshCount = 1;
-            meshData.topologies = new[] { MeshTopology.Triangles };
-            return meshData;
+            meshData.topologies = new[] { MeshTopology.NGon };
+            return ConwayOperators.Meta(meshData);
         }
 
     }
