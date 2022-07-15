@@ -52,7 +52,7 @@ namespace Sylves
                     {
                         deformation = MeshUtils.GetDeformation(data, face, submesh, meshGridOptions.InvertWinding);
                     }
-                    var cellType = GetCellType(faceIndices.Count);
+                    var cellType = GetCellType(faceIndices.Count, meshGridOptions.DoubleOddFaces);
                     var trs = GetTRS2d(deformation, Vector3.zero);
 
                     if (meshGridOptions.UseXZPlane)
@@ -115,14 +115,14 @@ namespace Sylves
                         }
                         else
                         {
-                            var cellDir = EdgeIndexToDir(indexCount, faceIndices.Count);
+                            var cellDir = EdgeIndexToDir(indexCount, faceIndices.Count, meshGridOptions.DoubleOddFaces);
                             edgeStore.AddEdge(vertices[prev], vertices[index], new Cell(face, submesh), cellDir, moves);
                             prev = index;
                         }
                         indexCount++;
                     }
                     {
-                        var cellDir = EdgeIndexToDir(indexCount, faceIndices.Count);
+                        var cellDir = EdgeIndexToDir(indexCount, faceIndices.Count, meshGridOptions.DoubleOddFaces);
                         edgeStore.AddEdge(vertices[prev], vertices[first], new Cell(face, submesh), cellDir, moves);
                     }
                     face++;
@@ -246,15 +246,17 @@ namespace Sylves
 
         #endregion
 
-        private static CellDir EdgeIndexToDir(int edgeIndex, int edgeCount)
+        private static CellDir EdgeIndexToDir(int edgeIndex, int edgeCount, bool doubleOddFaces)
         {
-            return (CellDir)(edgeCount % 2 == 0 ? (edgeIndex - 1) : (edgeIndex - 1) * 2);
+            return (CellDir)(edgeCount % 2 == 1 && doubleOddFaces ? (edgeIndex - 1) * 2 : (edgeIndex - 1));
         }
 
-        private static ICellType GetCellType(int edgeCount)
+        private static ICellType GetCellType(int edgeCount, bool doubleOddFaces)
         {
-            return edgeCount == 3 ? HexCellType.Get(HexOrientation.FlatTopped) : edgeCount == 4 ? SquareCellType.Instance :
-                edgeCount % 2 == 0 ? NGonCellType.Get(edgeCount) : NGonCellType.Get(edgeCount * 2);
+            return edgeCount == 3 && doubleOddFaces ? HexCellType.Get(HexOrientation.FlatTopped) :
+                edgeCount == 4 ? SquareCellType.Instance :
+                edgeCount % 2 == 1 && doubleOddFaces ? NGonCellType.Get(edgeCount * 2) 
+                : NGonCellType.Get(edgeCount);
         }
     }
 }

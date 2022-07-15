@@ -6,6 +6,9 @@ namespace Sylves
 {
     public class MeshGridOptions
     {
+        /// <summary>
+        /// If set, assumes the 2d plane that a face maps from is in the XZ axis.
+        /// </summary>
         public bool UseXZPlane { get; set; }
 
         /// <summary>
@@ -19,5 +22,11 @@ namespace Sylves
         ///                  verts 0 => DownLeft, 1 => UpLeft, 2=> UpRight, 3 = DownRight
         /// </summary>
         public bool InvertWinding { get; set; }
+
+        /// <summary>
+        /// If set, odd faces become cells with twice as many edges.
+        /// It's often more convenient to work with even polygons as an about face is possible.
+        /// </summary>
+        public bool DoubleOddFaces { get; set; }
     }
 }
