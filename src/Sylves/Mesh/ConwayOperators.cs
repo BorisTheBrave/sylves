@@ -1,6 +1,12 @@
 ﻿#if UNITY
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 #endif
+
+using System;
+using System.Collections.Generic;
 
 namespace Sylves
 {
@@ -86,6 +92,104 @@ namespace Sylves
                 }
                 meshEmitter.EndSubMesh();
             }
+            return meshEmitter.ToMeshData();
+        }
+
+        public static MeshData Dual(MeshData meshData)
+        {
+            var ddd = MeshGridBuilder.Build(meshData, new MeshGridOptions());
+            var moves = ddd.Moves;
+            var cellData = ddd.Cells;
+            var meshEmitter = new MeshEmitter(meshData);
+            var otherData = new Dictionary<Cell, (int centroid, int other)>();
+            // Collect centroids
+            foreach(var kv in cellData)
+            {
+                var centroid = meshEmitter.Average(((MeshCellData)kv.Value).Face, meshData);
+                otherData[kv.Key] = (centroid, 0);
+            }
+            meshEmitter.StartSubmesh(MeshTopology.NGon);
+            var forwardCentroids = new List<int>();
+            var backwardCentroids = new List<int>();
+            var visited = new HashSet<(Cell, CellDir)>();
+            foreach (var cell in cellData.Keys)
+            {
+                var cellType = cellData[cell].CellType;
+                foreach(var dir in cellType.GetCellDirs())
+                {
+                    // Check if we've already explored this arc/loop
+                    if (visited.Contains((cell, dir)))
+                    {
+                        continue;
+                    }
+                    // Walk forword
+                    forwardCentroids.Clear();
+                    backwardCentroids.Clear();
+                    bool isLoop;
+                    {
+                        var currentCell = cell;
+                        var currentDir = dir;
+                        while (true)
+                        {
+                            visited.Add((currentCell, currentDir));
+                            forwardCentroids.Add(otherData[currentCell].centroid);
+                            if (!moves.TryGetValue((currentCell, currentDir), out var t))
+                            {
+                                isLoop = false;
+                                break;
+                            }
+                            var (nextCell, iDir, connection) = t;
+                            if (connection.Mirror)
+                                throw new NotImplementedException();
+                            currentCell = nextCell;
+                            var currentFace = ((MeshCellData)cellData[cell]).Face;
+                            currentDir = (CellDir)(((int)iDir + 1) % currentFace.Length);
+
+                            if (currentCell == cell && currentDir == dir)
+                            {
+                                isLoop = true;
+                                break;
+                            }
+                        }
+                    }
+                    // Walk back if necessary
+                    if(!isLoop)
+                    {
+                        var currentCell = cell;
+                        var currentDir = dir;
+                        while(true)
+                        {
+                            var currentFace = ((MeshCellData)cellData[cell]).Face;
+                            currentDir = (CellDir)(((int)currentDir - 1 + currentFace.Length) % currentFace.Length);
+                            if (!moves.TryGetValue((currentCell, currentDir), out var t))
+                            {
+                                break;
+                            }
+                            var (nextCell, iDir, connection) = t;
+                            if (connection.Mirror)
+                                throw new NotImplementedException();
+                            currentCell = nextCell;
+                            currentDir = iDir;
+                            visited.Add((currentCell, currentDir));
+                            backwardCentroids.Add(otherData[currentCell].centroid);
+                        }
+                    }
+                    // Create face from arc/loop
+                    if (backwardCentroids.Count + forwardCentroids.Count > 2)
+                    {
+                        for (var i = backwardCentroids.Count - 1; i >= 0; i--)
+                        {
+                            meshEmitter.AddFaceIndex(backwardCentroids[i]);
+                        }
+                        for (var i = 0; i < forwardCentroids.Count - 1; i++)
+                        {
+                            meshEmitter.AddFaceIndex(forwardCentroids[i]);
+                        }
+                        meshEmitter.AddFaceIndex(~forwardCentroids[forwardCentroids.Count - 1]);
+                    }
+                }
+            }
+            meshEmitter.EndSubMesh();
             return meshEmitter.ToMeshData();
         }
     }

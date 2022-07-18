@@ -28,6 +28,12 @@ namespace Sylves
             tangents = originalData.tangents == null ? null : new List<Vector4>();
         }
 
+        public void AddSubmesh(List<int> indices, MeshTopology meshTopology)
+        {
+            indices.Add(indices);
+            topologies.Add(meshTopology);
+        }
+
         public void StartSubmesh(MeshTopology meshTopology)
         {
             indices.Add(new List<int>());
@@ -74,7 +80,7 @@ namespace Sylves
             var uv = Vector2.zero;
             var normal = Vector3.zero;
             var tangent = Vector4.zero;
-            foreach(var i in indices)
+            foreach (var i in indices)
             {
                 n += 1;
                 v += vertices[i];
@@ -84,6 +90,27 @@ namespace Sylves
                     normal += normals[i];
                 if (tangents != null)
                     tangent += tangents[i];
+            }
+            return AddVertex(v / n, uv / n, normal.normalized, tangent / n);
+        }
+
+        public int Average(IEnumerable<int> indices, MeshData meshData)
+        {
+            var n = 0;
+            var v = Vector3.zero;
+            var uv = Vector2.zero;
+            var normal = Vector3.zero;
+            var tangent = Vector4.zero;
+            foreach (var i in indices)
+            {
+                n += 1;
+                v += meshData.vertices[i];
+                if (this.uv != null)
+                    uv += meshData.uv[i];
+                if (normals != null)
+                    normal += meshData.normals[i];
+                if (tangents != null)
+                    tangent += meshData.tangents[i];
             }
             return AddVertex(v / n, uv / n, normal.normalized, tangent / n);
         }
@@ -132,6 +159,16 @@ namespace Sylves
             else
             {
                 throw new Exception($"Cannot add a triangle to topology {topologies[topologies.Count - 1]}");
+            }
+        }
+        public void AddFaceIndex(int i)
+        {
+            if (topologies.Count == 0)
+                throw new Exception("Must first add a submesh");
+
+            else if (topologies[topologies.Count - 1] == MeshTopology.NGon)
+            {
+                indices[indices.Count - 1].Add(i);
             }
         }
 
