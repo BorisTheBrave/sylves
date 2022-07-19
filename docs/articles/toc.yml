@@ -20,6 +20,8 @@
   items:
     -  name: Langton's Ant
        href: tutorials/langton.md
+    -  name: Paint Program
+       href: tutorials/paint.md
 - name: All Grids
   href: all_grids.md
 - name: Creating Grids
