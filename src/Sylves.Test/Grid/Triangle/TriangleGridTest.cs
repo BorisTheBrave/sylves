@@ -111,17 +111,6 @@ namespace Sylves.Test
         }
 
         [Test]
-        public void TestRaycast2()
-        {
-            var g = new TriangleGrid(1);
-            var start = new Vector3(1.896744f, 7.311303f, 0);
-            var end = new Vector3(2.8949f, 5.91106f, 0);
-            var infos = g.Raycast(start, end - start, 1).ToList();
-            Assert.AreEqual(0, infos.Count);
-        }
-
-
-        [Test]
         [TestCase(TriangleOrientation.FlatTopped)]
         [TestCase(TriangleOrientation.FlatSides)]
         public void TestFindGridSymmetry(TriangleOrientation orientation)

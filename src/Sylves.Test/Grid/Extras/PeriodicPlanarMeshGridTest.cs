@@ -24,16 +24,6 @@ namespace Sylves.Test
             Assert.AreEqual(new Cell(0, 0, 1), g.Move(new Cell(0, 0, 0), (CellDir)SquareDir.Up));
         }
 
-
-
-        [Test]
-        public void TestTryMove_SquareSnub()
-        {
-            var g = new SquareSnubGrid();
-            var cell = g.Move(new Cell(0, 0, 0), (CellDir)4);
-            Assert.AreEqual(new Cell(4, 0, -1), cell);
-        }
-
         [Test]
         [Ignore("Not supported yet")]
         public void TestTryMoveByOffset()
