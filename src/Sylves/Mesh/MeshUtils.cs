@@ -318,5 +318,33 @@ namespace Sylves
                     throw new NotImplementedException();
             }
         }
+
+        public static MeshData ToMesh(IGrid grid)
+        {
+            if(!grid.Is2D)
+            {
+                throw new Exception("Can only make a mesh from a 2d grid");
+            }
+            var verticies = new List<Vector3>();
+            var indices = new List<int>();
+            foreach(var cell in grid.GetCells())
+            {
+                var l = verticies.Count;
+                grid.GetPolygon(cell, out var v, out var t);
+                verticies.AddRange(v.Select(t.MultiplyPoint3x4));
+                for(;l < verticies.Count;l++)
+                {
+                    indices.Add(l);
+                }
+                indices[indices.Count - 1] = ~l;
+            }
+            return new MeshData
+            {
+                indices = new[] { indices.ToArray() },
+                vertices = verticies.ToArray(),
+                subMeshCount = 1,
+                topologies = new[] { MeshTopology.NGon },
+            };
+        }
     }
 }
