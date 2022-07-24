@@ -63,7 +63,7 @@ namespace Sylves
             return (CellRotation)0;
         }
 
-        public Matrix4x4 GetMatrix(CellRotation cellRotation)
+        internal static Matrix4x4 GetMatrix(CellRotation cellRotation, int n)
         {
             var i = (int)cellRotation;
             var rot = i < 0 ? ~i : i;
@@ -73,7 +73,12 @@ namespace Sylves
             return m;
         }
 
-        public CellRotation? FromMatrix(Matrix4x4 matrix)
+        public Matrix4x4 GetMatrix(CellRotation cellRotation)
+        {
+            return GetMatrix(cellRotation, n);
+        }
+
+        internal static CellRotation? FromMatrix(Matrix4x4 matrix, int n)
         {
             // Check that this matrix doesn't touch the z-axis
             var forward = matrix.MultiplyVector(Vector3.forward);
@@ -93,7 +98,14 @@ namespace Sylves
             var angle = Mathf.Atan2(right.y, right.x);
             var angleInt = Mathf.RoundToInt(angle / (Mathf.PI * 2 / n));
 
-            return Multiply(isReflection ? ReflectY : GetIdentity(), (CellRotation)((angleInt + n) % n));
+            var reflectY = (CellRotation)~0;
+            var identity = (CellRotation)0;
+            return Multiply(isReflection ? reflectY : identity, (CellRotation)((angleInt + n) % n), n);
+        }
+
+        public CellRotation? FromMatrix(Matrix4x4 matrix)
+        {
+            return FromMatrix(matrix, n);
         }
 
         public IList<CellRotation> GetRotations(bool includeReflections = false)
@@ -126,7 +138,7 @@ namespace Sylves
             }
         }
 
-        public CellRotation Multiply(CellRotation a, CellRotation b)
+        internal static CellRotation Multiply(CellRotation a, CellRotation b, int n)
         {
             var ia = (int)a;
             var ib = (int)b;
@@ -154,7 +166,12 @@ namespace Sylves
             }
         }
 
-        public CellDir Rotate(CellDir dir, CellRotation rotation)
+        public CellRotation Multiply(CellRotation a, CellRotation b)
+        {
+            return Multiply(a, b, n);
+        }
+
+        internal static CellDir Rotate(CellDir dir, CellRotation rotation, int n)
         {
             if((int)rotation >= 0)
             {
@@ -164,6 +181,11 @@ namespace Sylves
             {
                 return (CellDir)((n - (int)dir + ~(int)rotation) % n);
             }
+        }
+
+        public CellDir Rotate(CellDir dir, CellRotation rotation)
+        {
+            return Rotate(dir, rotation, n);
         }
 
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)

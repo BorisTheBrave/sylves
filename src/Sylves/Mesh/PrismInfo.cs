@@ -39,6 +39,12 @@ namespace Sylves
             },
         };
 
+        private static IDictionary<int, PrismInfo> nGonPrismInfo = new Dictionary<int, PrismInfo>
+        {
+            // Despite being a different class, it should be identical
+            [4] = squarePrismInfo,
+        };
+
         private static PrismInfo ftHexPrismInfo = new PrismInfo
         {
 
@@ -89,11 +95,26 @@ namespace Sylves
             {
                 return ftHexPrismInfo;
             }
-            if(baseCellType == HexCellType.Get(HexOrientation.PointyTopped))
+            if (baseCellType == HexCellType.Get(HexOrientation.PointyTopped))
             {
                 return ptHexPrismInfo;
             }
-            if(baseCellType is XZCellModifier xzCellModifier)
+            if (baseCellType is NGonCellType ngct)
+            {
+                var n = ngct.N;
+                if(!nGonPrismInfo.TryGetValue(n, out var prismInfo))
+                {
+                    nGonPrismInfo[n] = prismInfo = new PrismInfo
+                    {
+                        ForwardDir = (CellDir)n,
+                        BackDir = (CellDir)(n + 1),
+                        BaseCellType = ngct,
+                        PrismCellType = NGonPrismCellType.Get(n),
+                    };
+                }
+                return prismInfo;
+            }
+            if (baseCellType is XZCellModifier xzCellModifier)
             {
                 var underlying = xzCellModifier.Underlying;
                 if(underlying == SquareCellType.Instance)
