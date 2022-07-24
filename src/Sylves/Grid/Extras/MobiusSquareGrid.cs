@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace Sylves
 {
+    /// <summary>
+    /// A square grid on a Möbius strip.
+    /// Demonstrates how Sylves handles non-orientability on 2d surfaces.
+    /// </summary>
     public class MobiusSquareGrid : MeshGrid
     { 
         public MobiusSquareGrid(int width, int height)

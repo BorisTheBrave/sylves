@@ -3,7 +3,7 @@
 [`IBound`](xref:Sylves.IBound) is a generalization of the idea of a [bounding box](https://en.wikipedia.org/wiki/Minimum_bounding_box) to different sorts of grids.
 
 A bound represents a collection of cells using a small class, which typically stores the min and max extends of the cells.
-Bounds cannot represent *any* collection of cells, for that, you should use a `HashSet<Cell>`.
+Bounds cannot represent an arbitrary collection of cells, for that, you should use a `HashSet<Cell>`.
 So bounds are best used in cases where it doesn't matter if a few too many cells are included, such as in many chunking and culling algorithms.
 
 Not all grids support bounds. The ones that don't will simply return `null`, which represents bounds that cover the entire grid. When grids do support bounds, 

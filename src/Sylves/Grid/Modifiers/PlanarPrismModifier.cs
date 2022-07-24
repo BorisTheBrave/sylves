@@ -44,6 +44,9 @@ namespace Sylves
     }
 
     // Doesn't use BaseModifier as so much has changed, everything needs overriding.
+    /// <summary>
+    /// Takes a 2d planar grid, and extends it into multiple layers along the third the dimension.
+    /// </summary>
     public class PlanarPrismModifier : IGrid
     {
         private readonly IGrid underlying;

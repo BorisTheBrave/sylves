@@ -276,7 +276,7 @@ namespace Sylves
         /// <param name="v2">Final location of (-0.5, -0.5, 0.5)</param>
         /// <param name="v3">Final location of (0.5, -0.5, 0.5)</param>
         /// <param name="v4">Final location of (0.5, -0.5, -0.5)</param>
-        /// <param name="v4">Final location of (-0.5, 0.5, -0.5)</param>
+        /// <param name="v5">Final location of (-0.5, 0.5, -0.5)</param>
         /// <param name="v6">Final location of (-0.5, 0.5, 0.5)</param>
         /// <param name="v7">Final location of (0.5, 0.5, 0.5)</param>
         /// <param name="v8">Final location of (0.5, 0.5, -0.5)</param>

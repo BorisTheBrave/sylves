@@ -15,7 +15,7 @@ Grid symmetries are defined as below
     }
 ```
 
-This (generally) means the map that maps Src to Dest, while also rotating it as specified. This is sufficient to fully specify the map on other tiles, via [parallel transport](parallel_transport.md).
+This (generally) means the map that maps Src to Dest, while also rotating it as specified. This is sufficient to fully specify the map on other tiles, via parallel transport.
 
 Note that the symmetries of a grid are not related to the symmetry of the cells. For example, consider the rhombille tiling:
 

@@ -9,6 +9,9 @@ namespace Sylves
 {
     /// <summary>
     /// Filters the cells in the the grid to a customizable subset.
+    /// 
+    /// Filtered cells will not be returned by GetCells, TryMove, etc. Passing them as inputs
+    /// is undefined.
     /// </summary>
     public class MaskModifier : BaseModifier
     {

@@ -26,7 +26,7 @@ Other categories include:
 
 * Relatives - Provides other grids related to the current grid.
 * Index - Converts between `Cell` and `int`, if you want to use an array for storage
-* Bounds - Methods of dealing with bounding boxes on the grid.
+* [Bounds](bounds.md) - Methods of dealing with bounding boxes on the grid.
 * Query - Methods for finding cells in 3d space, such as point queries, raycasts, etc.
 
 ## Grid Abstraction
@@ -56,4 +56,4 @@ It's also worth noting that `SquareCellType` and `HexCellType` can be used inter
 
 ## Cell types
 
-While an `IGrid` contains the majority of Sylves methods, some more can be found on `ICellType`. ICellType considers just a single cell in isolation, and talks about how...
+While an `IGrid` contains the majority of Sylves methods, some more can be found on `ICellType`. ICellType considers just a single cell in isolation. Most of it's methods deal with [rotation](rotation.md)

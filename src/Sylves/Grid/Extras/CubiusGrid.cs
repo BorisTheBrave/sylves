@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Sylves
 {
+    /// <summary>
+    /// A torus with a quarter turn. Demonstrates how Sylves handles non-orientability on 3d surfaces.
+    /// </summary>
     public class CubiusGrid : MeshGrid
     { 
         public CubiusGrid(int width, int height, float outerRadius = 10, float innerRadius = 3)

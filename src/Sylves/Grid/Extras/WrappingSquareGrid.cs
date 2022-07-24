@@ -9,6 +9,9 @@ using static Sylves.MathUtils;
 
 namespace Sylves
 {
+    /// <summary>
+    /// WrapModifier applied to SquareGrid. This is a very common grid in games. 
+    /// </summary>
     public class WrappingSquareGrid : WrapModifier
     {
         public WrappingSquareGrid(float cellSize, Vector2Int size)
