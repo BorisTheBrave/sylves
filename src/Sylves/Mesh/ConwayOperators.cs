@@ -14,6 +14,8 @@ namespace Sylves
     // See https://en.wikipedia.org/wiki/Conway_polyhedron_notation
     public static class ConwayOperators
     {
+        private const float FAR = 1e10f;
+
         /// <summary>
         /// Subdivides each edge, adds a vertex in the center of each face,
         /// then replaces each n-gon face with a fan of 2n triangles from the center.
@@ -46,7 +48,7 @@ namespace Sylves
         /// Subdivides each edge, adds a vertex in the center of each face,
         /// then replaces each n-gon face with a fan of n quads from the center.
         /// </summary>
-        public static MeshData Kis(MeshData meshData)
+        public static MeshData Ortho(MeshData meshData)
         {
             var meshEmitter = new MeshEmitter(meshData);
             meshEmitter.CopyAllVertices();
@@ -73,7 +75,7 @@ namespace Sylves
         /// Adds a vertex in the center of each face,
         /// then replaces each n-gon face with a fan of n triangles from the center.
         /// </summary>
-        public static MeshData Ortho(MeshData meshData)
+        public static MeshData Kis(MeshData meshData)
         {
             var meshEmitter = new MeshEmitter(meshData);
             meshEmitter.CopyAllVertices();
@@ -95,20 +97,20 @@ namespace Sylves
             return meshEmitter.ToMeshData();
         }
 
-        public static MeshData Dual(MeshData meshData)
+        internal static MeshData Dual(MeshData meshData)
         {
             var ddd = MeshGridBuilder.Build(meshData, new MeshGridOptions());
             var moves = ddd.Moves;
             var cellData = ddd.Cells;
             var meshEmitter = new MeshEmitter(meshData);
             var otherData = new Dictionary<Cell, (int centroid, int other)>();
+            var outputIndices = new List<int>();
             // Collect centroids
             foreach(var kv in cellData)
             {
                 var centroid = meshEmitter.Average(((MeshCellData)kv.Value).Face, meshData);
                 otherData[kv.Key] = (centroid, 0);
             }
-            meshEmitter.StartSubmesh(MeshTopology.NGon);
             var forwardCentroids = new List<int>();
             var backwardCentroids = new List<int>();
             var visited = new HashSet<(Cell, CellDir)>();
@@ -122,10 +124,21 @@ namespace Sylves
                     {
                         continue;
                     }
+                    // Determine the vertex we are walking around
+                    bool isFar;
+                    {
+                        var face = ((MeshCellData)cellData[cell]).Face;
+                        var i1 = face[(int)dir];
+                        var v = meshData.vertices[i1];
+                        // Far vertices are treated as if points at infinity - they don't generate a face.
+                        isFar = v.magnitude >= FAR;
+                    }
                     // Walk forword
                     forwardCentroids.Clear();
                     backwardCentroids.Clear();
                     bool isLoop;
+                    (Cell, CellDir) forwardHalfEdge = default;
+                    (Cell, CellDir) backHalfEdge = default;
                     {
                         var currentCell = cell;
                         var currentDir = dir;
@@ -136,6 +149,7 @@ namespace Sylves
                             if (!moves.TryGetValue((currentCell, currentDir), out var t))
                             {
                                 isLoop = false;
+                                forwardHalfEdge = (currentCell, currentDir);
                                 break;
                             }
                             var (nextCell, iDir, connection) = t;
@@ -163,6 +177,7 @@ namespace Sylves
                             currentDir = (CellDir)(((int)currentDir - 1 + currentFace.Length) % currentFace.Length);
                             if (!moves.TryGetValue((currentCell, currentDir), out var t))
                             {
+                                backHalfEdge = (currentCell, currentDir);
                                 break;
                             }
                             var (nextCell, iDir, connection) = t;
@@ -175,21 +190,58 @@ namespace Sylves
                         }
                     }
                     // Create face from arc/loop
-                    if (backwardCentroids.Count + forwardCentroids.Count > 2)
+                    if (!isFar)
                     {
+                        // Create point "at infinity" for the back end of the arc
+                        if(!isLoop)
+                        {
+                            var face = ((MeshCellData)cellData[backHalfEdge.Item1]).Face;
+                            // Find bisector of edge
+                            var i1 = face[(int)backHalfEdge.Item2];
+                            var i2 = face[(int)(backHalfEdge.Item2 + 1) % face.Length];
+                            var v = (meshData.vertices[i1] + meshData.vertices[i2]) / 2;
+                            // Extend to "infinity"
+                            var backCentroid = meshEmitter.vertices[backwardCentroids.Count > 0 ? backwardCentroids[backwardCentroids.Count -1] : forwardCentroids[0]];
+                            v = (v - backCentroid).normalized * FAR;
+                            outputIndices.Add(meshEmitter.AddVertex(
+                                v,
+                                new Vector2(),
+                                new Vector3(),
+                                new Vector4()
+                                ));
+                        }
+                        // Copy points from the arc/loop
                         for (var i = backwardCentroids.Count - 1; i >= 0; i--)
                         {
-                            meshEmitter.AddFaceIndex(backwardCentroids[i]);
+                            outputIndices.Add(backwardCentroids[i]);
                         }
-                        for (var i = 0; i < forwardCentroids.Count - 1; i++)
+                        for (var i = 0; i < forwardCentroids.Count; i++)
                         {
-                            meshEmitter.AddFaceIndex(forwardCentroids[i]);
+                            outputIndices.Add(forwardCentroids[i]);
                         }
-                        meshEmitter.AddFaceIndex(~forwardCentroids[forwardCentroids.Count - 1]);
+                        // Create point "at infinity" for the forward end of the arc
+                        if (!isLoop)
+                        {
+                            var face = ((MeshCellData)cellData[forwardHalfEdge.Item1]).Face;
+                            // Find bisector of edge
+                            var i1 = face[(int)forwardHalfEdge.Item2];
+                            var i2 = face[(int)(forwardHalfEdge.Item2 + 1) % face.Length];
+                            var v = (meshData.vertices[i1] + meshData.vertices[i2]) / 2;
+                            // Extend to "infinity"
+                            var forwardCentroid = meshEmitter.vertices[forwardCentroids[forwardCentroids.Count - 1]];
+                            v = (v - forwardCentroid).normalized * FAR;
+                            outputIndices.Add(meshEmitter.AddVertex(
+                                v,
+                                new Vector2(),
+                                new Vector3(),
+                                new Vector4()
+                                ));
+                        }
+                        outputIndices[outputIndices.Count - 1] = ~outputIndices[outputIndices.Count - 1];
                     }
                 }
             }
-            meshEmitter.EndSubMesh();
+            meshEmitter.AddSubmesh(outputIndices, MeshTopology.NGon);
             return meshEmitter.ToMeshData();
         }
     }

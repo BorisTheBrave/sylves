@@ -14,6 +14,9 @@ namespace Sylves.Test
         public void TestDual()
         {
             var r = ConwayOperators.Dual(ConwayOperators.Kis(TestMeshes.PlaneXY));
+            Assert.AreEqual(5, MeshUtils.GetFaces(r, 0).Count());
+            var r2 = ConwayOperators.Dual(r);
+            Assert.AreEqual(1, MeshUtils.GetFaces(r2, 0).Count());
         }
     }
 }

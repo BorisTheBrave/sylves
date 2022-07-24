@@ -12,7 +12,7 @@ namespace Sylves
         private readonly MeshData originalData;
         private List<List<int>> indices;
         private List<Sylves.MeshTopology> topologies;
-        private List<Vector3> vertices;
+        public List<Vector3> vertices;
         private List<Vector2> uv;
         private List<Vector3> normals;
         private List<Vector4> tangents;
@@ -30,7 +30,7 @@ namespace Sylves
 
         public void AddSubmesh(List<int> indices, MeshTopology meshTopology)
         {
-            indices.Add(indices);
+            this.indices.Add(indices);
             topologies.Add(meshTopology);
         }
 
@@ -159,16 +159,6 @@ namespace Sylves
             else
             {
                 throw new Exception($"Cannot add a triangle to topology {topologies[topologies.Count - 1]}");
-            }
-        }
-        public void AddFaceIndex(int i)
-        {
-            if (topologies.Count == 0)
-                throw new Exception("Must first add a submesh");
-
-            else if (topologies[topologies.Count - 1] == MeshTopology.NGon)
-            {
-                indices[indices.Count - 1].Add(i);
             }
         }
 
