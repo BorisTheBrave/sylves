@@ -26,6 +26,11 @@ namespace Sylves
             this.min = min;
             this.max = max;
         }
+        public SquareBound(int minX, int minY, int maxX, int maxY)
+        {
+            this.min = new Vector2Int(minX, minY);
+            this.max = new Vector2Int(maxX, maxY);
+        }
 
         public Vector2Int size => max - min;
 
