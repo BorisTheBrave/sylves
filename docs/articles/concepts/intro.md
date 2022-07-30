@@ -6,7 +6,9 @@ The central interface of Sylves is [IGrid](xref:Sylves.IGrid). Each grid type su
 
 Each grid is considered a collection of cells. Each cell is individual locations in a grid. In a square grid, each square is one cell. In a hexagon grid, each cell is one hexagon, etc.
 
-<TODO image of a square grid, with coordinate labels>
+<figure>
+<img src="../../images/square_grid.svg"/>
+</figure>
 
 Cells are represented by the [`Cell`](xref:Sylves.Cell) struct. A `Cell` object is just (x,y,z) co-ordinate, it contains no other data. If you want to know something specific about a cell, you must call a method on `IGrid` to look it up.
 
@@ -34,17 +36,19 @@ Sylves supports an [extremely wide set of grids](../all_grids.md):
 * Irregular grids can have a different shape for every cell.
 * You can even [create your own grids](../creating.md).
 
-NB: grids [do note store any data](storage.md), they are basically stateless. They just exist to as a way to interact with cells.
+NB: grids [do not store any data](storage.md), they are basically stateless. They just exist to as a way to interact with cells.
 
 ## What is a cell?
 
 It's helpful to think of cells as a polygon. This is not true for 3d grids like `CubeGrid`, and 2d grids aren't required to actually have a polygonal shape, but this is the most common and simplest case.
 
-Just like `IGrid` exists to describe a *collection* of cells, another interface, [`ICellType`](xref:Sylves.ICellTyle) describes the properties of a single cell. Again, this does not involve storing data, it just covers the geometric properties of the cell. Cell types are generally singletons like `SquareCellType.Instance` shared between all square cells.
+Just like `IGrid` exists to describe a *collection* of cells, another interface, [`ICellType`](xref:Sylves.ICellType) describes the properties of a single cell. Again, this does not involve storing data, it just covers the geometric properties of the cell. Cell types are generally singletons like `SquareCellType.Instance` shared between all square cells.
 
 The main thing `ICellType` is used for is working with cell directions, via the `CellDir` class. Cell directions are labels assigned to each edge of the cell (or to each face of a cell, for 3d cells). 
 
-< TODO diagram of cell with directions >
+<figure>
+<img src="../../images/cell_anatomy.svg"/>
+</figure>
 
 Cell directions are a key component of exploring the [topology](topology.md) of the grid.
 
