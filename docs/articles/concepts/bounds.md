@@ -3,7 +3,7 @@
 [`IBound`](xref:Sylves.IBound) is a generalization of the idea of a [bounding box](https://en.wikipedia.org/wiki/Minimum_bounding_box) to different sorts of grids.
 
 A bound represents a collection of cells using a small class, which typically stores the min and max extends of the cells.
-Bounds cannot represent an arbitrary collection of cells, for that, you should use a `HashSet<Cell>`.
+Bounds cannot represent an exact arbitrary collection of cells, for that, you should use a `HashSet<Cell>`.
 So bounds are best used in cases where it doesn't matter if a few too many cells are included, such as in many chunking and culling algorithms.
 
 Not all grids support bounds. The ones that don't will simply return `null`, which represents bounds that cover the entire grid. When grids do support bounds, 
@@ -20,7 +20,7 @@ the specific class that grid uses is documented with the grid. The classes are u
 
 Most of these methods will also accept a `null` bound, meaning the entire grid.
 
-If you know the exact class of a bound, you can use that type instead of `IBound`. Most bounds have useful methods and constructors on them.
+If you know the specific class of a bound, you can use that type instead of `IBound`. Most bounds have useful methods and constructors on them, and implement `IEnumerable<Cell>` to easily get the cells within.
 
 ## Bounded grids
 

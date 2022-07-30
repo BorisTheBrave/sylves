@@ -4,7 +4,7 @@ Topology is a fancy word for considering how the cells of a grid connect togethe
 
 In other words, it is treating a grid like it is a [graph](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)), 
 where nodes of the graphs are cells of the grid, and there are edges for each pair of adjacent cells. 
-The edges of the graph are labelled with [rotation data](rotation.md), and the cells are labelled with their celltype.
+The edges of the graph are labelled with [cell dirs](xref:Sylves.CellDir) and [rotation data](rotation.md), and the cells are labelled with their celltype.
 
 Treating a grid as a graph is handy for many common algorithms, such as path finding and distance fields.
 
@@ -17,7 +17,7 @@ bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out 
 ```
 
 `TryMove` attempts to move from `cell`, along the edge labelled with `dir`. If it is sucessfully, it returns the cell along the edge as `dest`,
-and gives some information on the edge traversed, `inverseDir` and `connection`. See [rotations](rotation.md) for how to interpret these.
+and gives some information on the edge traversed, `inverseDir` and `connection`. See [rotations](rotation.md#trymove-and-rotation) for how to interpret these.
 
 With `TryMove` defined, an algorithm can explore the entire grid, one cell at a time.
 

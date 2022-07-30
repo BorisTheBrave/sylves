@@ -4,24 +4,22 @@ For many games and other usages of grids, you never need to worry about rotating
 
 But in other usages, the facing direction of objects matters, or you wish to re-use the same tile image in a different orientation. For these, sooner or later, you'll need to worry about rotations.
 
-Rotations are one of the most complicated parts of Sylves' API and you are recommended to avoid them until you are comfortable with cells, celltypes and grids.
+Rotations are complicated to understand fully, and you are recommended to avoid them until you are comfortable with cells, cell types and grids, as described in the [intro](intro.md).
 
 ## What is a rotation?
 
-In Sylves, a rotation is a mapping of a cell onto itself. For example, for a square tile, there are 4 rotations, corresponding to rotating by 0, 90, 180 or 270 degrees.
+In Sylves, a `CellRotation` describes any rotation of a single cell that maps the cell onto itself.
+
+For example, for a square tile, there are 4 rotations, corresponding to rotating by 0, 90, 180 or 270 degrees.
 Rotating by, say, 45 degrees is not a rotation, as that would transform a square to a diamond, not back to the original square.
 
 There's also 4 reflections that map a square onto itself. Reflections are treated the same as rotations in Sylves, and usually we'll use rotation to refer to both of them.
 
-Transformations that map something back onto itself are known symmetries in mathematics.
+<TODO diagram of the 8 reflections>
 
----
+Transformations that map something back onto itself are known as symmetries in mathematics.
 
-Rotations are represented by the enum `CellRotation`. This is an empty enumeration - the actual values are specific to the cell type in question.
-
-So for `SquareCellType`, you can use `SquareRotation` which contains the 8 rotations/reflections of a square.
-
-(recall, SquareCellType is used to describe cells shaped like squares, which are then used by several different grids).
+The actual enum  `CellRotation`. This is an empty enumeration - the actual values are specific to the cell type in question. So to work with rotations, you must either cast to a more specific type, like `SquareRotation`, or you must use the appropriate `ICellType` implementation, `SquareCellType.Instance`.
 
 Rotations only consider a single cell at a time. For rotating an entire grid, see [Grid Symmetry](grid_symmetry.md) or [TransformModifier](xref:Sylves.TransformModifier).
 
@@ -53,26 +51,41 @@ The main thing you can do with a rotation, is rotate things by it.
 
 If you use concrete classes like `SquareRotation`, they usually have the `*` operator overloaded as a shorthand for applying rotations, and many other convenience methods.
 
-
 ## TryMove and Rotation
 
-When you call [`TryMove`](xref:Sylves.IGrid.TryMove(Sylves.Cell,Sylves.CellDir,Sylves.Cell@,Sylves.CellDir@,Sylves.Connection@)), in addition to returning the tile you move to, the grid returns `inverseDir` and `connection`.
+A classic riddle goes: *"A bear travels one mile south, one mile west, then one mile north and finds itself back at home. What color is the bear?"*.
+
+The answer of course, is white - the only place on earth where this is possible is near the north pole. But it does illustrate an important about motion - when you travel on curved or distored surfaces, things work differently. Our bear took two 90 degree turns, but somehow ended up returning home at an angle.
+
+![](../../images/walk_sphere.svg)
+
+The same issue comes up in some of the more complicated grids of Sylves. Let's consider a grid that uses the faces of a cube - it has 6 faces, each a square. The exact same problem shows up:
+
+![](../../images/walk_cube.svg)
+
+If you follow this path, you end up rotated 90 degrees from where you started! This is the link between motion on a grid, and rotation.
+
+---
+
+In order to deal with this sort of situation, when you call [`IGrid.TryMove`](xref:Sylves.IGrid.TryMove(Sylves.Cell,Sylves.CellDir,Sylves.Cell@,Sylves.CellDir@,Sylves.Connection@)), in addition to returning the tile you move to, you get `inverseDir` and `connection`, which explain what is happening.
 
 Let's ignore connection for now, as it is irrelevant to the majority of grids. `inverseDir` returns the `CellDir` needed to move *back* to the original cell. Why is `inverseDir` so important?
 
 Well, for the basic grids, like SquareGrid, HexGrid, CubeGrid, `inverseDir` is always the obvious choice. If you move left, then inverseDir will be right. Same for up/down, etc.
 
-But there are more complex grids, where that isn't the case. Consider a grid which has 6 square cells, arranged as the faces of a 3d cube.
+On our 3d cube example however, it's simply not possible for the directions to all the consistent like that. Here's one way we *could* label the cube.
 
-[TODO: Diagram]
+![](../../images/cube_directions.svg).
 
-It's not possible to arrange the cells so that inverseDir is always the obvious choice. You can see above, that if you move **up** from the cell A, you end up on the top of the cube, cell B. But you need to go **left** to get back.
+When we `TryMove` from the top face, in direction `SquareDir.Down`, we end up on the left face. And inverseDir will be `SquareDir.Up`.
 
-Another way of saying the same thing is that if you are standing on the surface of this cube on cell A, facing towards the **upper** edge. If you walk straight, you'll cross over the edge, and now you'll find you are facing towards B's **right** edge.
+Then, we can `TryMove` from the left face to the right one, via `SquareDir.Right`. The inverseDir would be `SquareDir.Left`.
 
-Crossing the edge from A to B moves you from A's local coordinates to B's. The transition from one to the other is a *rotation*.
+But moving from the right face to the top one, via `SquareDir.Up`, we'd find that the inverseDir would be `SquareDir.Right`! That is telling us that the frame of reference has rotated as we moved. And we could even measure that rotation:
 
-### Non-orientability
-
-
-### Non-trivial connections
+```csharp
+var actualDirection = (CellDir)SquareDir.Right;
+var expectedDirection = SquareCellType.Instance.Invert((CellDir)SquareDir.Up).Value;
+SquareCellType.Instance.TryGetRotation(actualDirection, expectedDirection, new Connection(), out var rotation);
+// Now rotation == SquareRotation.RotateCW
+```
