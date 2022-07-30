@@ -147,7 +147,7 @@ namespace Sylves
                         normal * dy.magnitude,
                         bitangent * dz.magnitude);
 
-                    jacobi = j3 * j1;
+                    jacobi = j1 * j3;
                 }
             }
 
