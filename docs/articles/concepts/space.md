@@ -23,7 +23,7 @@ Sylves contains many methods for querying how the cells are arranged in space.
 
 For advanced grids, partciularly MeshGrid, each cell of the grid may be a different shape, even though they share the same cell type.
 
-[TODO diagram]
+![](../../images/deformation.png)
 
 In this case, you can call [`GetDeformation`](xref:Sylves.IGrid.GetDeformation(Sylves.Cell)) which returns a [`Deformation`](xref:Sylves.Deformation). This class assists in smoothly interpolating accross that irregular shape.
 
