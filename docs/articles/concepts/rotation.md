@@ -10,16 +10,16 @@ Rotations are complicated to understand fully, and you are recommended to avoid 
 
 In Sylves, a `CellRotation` describes any rotation of a single cell that maps the cell onto itself.
 
-For example, for a square tile, there are 4 rotations, corresponding to rotating by 0, 90, 180 or 270 degrees.
+For example, for a square cell, there are 4 rotations, corresponding to rotating by 0, 90, 180 or 270 degrees.
 Rotating by, say, 45 degrees is not a rotation, as that would transform a square to a diamond, not back to the original square.
 
 There's also 4 reflections that map a square onto itself. Reflections are treated the same as rotations in Sylves, and usually we'll use rotation to refer to both of them.
 
-<TODO diagram of the 8 reflections>
+![](../../images/rotations_and_reflections.svg)
 
 Transformations that map something back onto itself are known as symmetries in mathematics.
 
-The actual enum  `CellRotation`. This is an empty enumeration - the actual values are specific to the cell type in question. So to work with rotations, you must either cast to a more specific type, like `SquareRotation`, or you must use the appropriate `ICellType` implementation, `SquareCellType.Instance`.
+`CellRotation` is actually an empty enumeration - the actual values are specific to the cell type in question. So to work with rotations, you must either cast to a more specific type, like `SquareRotation`, or you must use the appropriate `ICellType` implementation, `SquareCellType.Instance`.
 
 Rotations only consider a single cell at a time. For rotating an entire grid, see [Grid Symmetry](grid_symmetry.md) or [TransformModifier](xref:Sylves.TransformModifier).
 
@@ -30,26 +30,26 @@ There's also $n$ possible reflections, which are stored as negative numbers.
 
 So a 2d rotation will have `-n <= (int)rotation < n`.
 
-SquareCellType, HexCellType and NGonCellType [all work this way](https://en.wikipedia.org/wiki/Dihedral_group).
+`SquareCellType`, `HexCellType` and `NGonCellType` [all work this way](https://en.wikipedia.org/wiki/Dihedral_group).
 
-Sylves also supports CubeCellType, which supports all 48 rotations / reflections of a cube. 
+Sylves also supports `CubeCellType`, which uses `CubeRotation` that supports all 48 rotations / reflections of a cube.
 
 ## Basic usage
 
 Most of the key methods of rotations are on ICellType, as rotations only consider a single cell.
 
 * [`GetIdentity`](xref:Sylves.ICellType.GetIdentity) - gets the rotation that does nothing.
-* [`GetRotations`](xref:Sylves.ICellType.GetRotations(System.Boolean)) - gets all rotations (and reflections) of a cell
+* [`GetRotations`](xref:Sylves.ICellType.GetRotations(System.Boolean)) - gets all rotations (and optionally reflections) of a cell
 * [`Invert`](xref:Sylves.ICellType.Invert(Sylves.CellRotation)) - finds the rotation that undoes the given rotation
 * [`RotateCCW`](xref:Sylves.ICellType.RotateCCW)/[`RotateCW`](xref:Sylves.ICellType.RotateCW) - rotate left/right (2d cell types only)
 
 The main thing you can do with a rotation, is rotate things by it.
 
-* ['Rotate'](xref:Sylves.ICellType.Rotate(Sylves.CellDir,Sylves.CellRotation)) - rotate a `CellDir`.
-* ['Multiply'](xref:Sylves.ICellType.Multiply(Sylves.CellRotation,Sylves.CellRotation)) - compose two rotations together into a single one
-* ['GetMatrix'](xref:Sylves.ICellType.GetMatrix(Sylves.CellRotation)) - get a rotation as a matrix, so you can transform vectors.
+* [`Rotate`](xref:Sylves.ICellType.Rotate(Sylves.CellDir,Sylves.CellRotation)) - rotate a `CellDir` by a given `CellRotation`
+* [`Multiply`](xref:Sylves.ICellType.Multiply(Sylves.CellRotation,Sylves.CellRotation)) - compose two rotations together into a single one
+* [`GetMatrix`](xref:Sylves.ICellType.GetMatrix(Sylves.CellRotation)) - get a rotation as a matrix, so you can transform vectors.
 
-If you use concrete classes like `SquareRotation`, they usually have the `*` operator overloaded as a shorthand for applying rotations, and many other convenience methods.
+If you use specific classes like `SquareRotation`, they usually have the `*` operator overloaded as a shorthand for applying rotations, and many other convenience methods.
 
 ## TryMove and Rotation
 
@@ -89,3 +89,5 @@ var expectedDirection = SquareCellType.Instance.Invert((CellDir)SquareDir.Up).Va
 SquareCellType.Instance.TryGetRotation(actualDirection, expectedDirection, new Connection(), out var rotation);
 // Now rotation == SquareRotation.RotateCW
 ```
+
+This general concept is called rotation maps and is covered in [more details on my blog](https://www.boristhebrave.com/2022/07/31/rotation-graphs/).
