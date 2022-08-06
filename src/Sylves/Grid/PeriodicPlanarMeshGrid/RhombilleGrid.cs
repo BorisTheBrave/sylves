@@ -8,18 +8,18 @@ using UnityEngine;
 namespace Sylves
 {
     /// <summary>
-    /// Periodic 2d grid of triangles and hexagons.
-    /// https://en.wikipedia.org/wiki/Trihexagonal_tiling
+    /// Periodic 2d grid of diamond shapes.
+    /// https://en.wikipedia.org/wiki/Rhombille_tiling
     /// This is an specialization of <see cref="PeriodicPlanarMeshGrid"/>.
     /// </summary>
-    public class TriHexGrid : PeriodicPlanarMeshGrid
+    public class RhombilleGrid : PeriodicPlanarMeshGrid
     {
 
-        public TriHexGrid():base(TriHexMeshData(), new Vector2(1.0f, 0), new Vector2(0.5f, 1.0f))
+        public RhombilleGrid():base(RhombilleMeshData(), new Vector2(0, 1), new Vector2(0.75f, 0.5f))
         {
 
         }
-        private static MeshData TriHexMeshData()
+        private static MeshData RhombilleMeshData()
         {
             var meshData = new MeshData();
             meshData.vertices = new Vector3[]
@@ -30,17 +30,16 @@ namespace Sylves
                 new Vector3(-0.5f, 0, 0),
                 new Vector3(-0.25f, -0.5f, 0),
                 new Vector3(0.25f, -0.5f, 0),
-                new Vector3(0.75f, 0.5f, 0),
-                new Vector3(0.75f, -0.5f, 0),
+                new Vector3(0, 0 , 0),
             };
             meshData.indices = new[]{new []
             {
-                0, 1, 2, 3, 4, ~5,
-                6, 1, ~0,
-                7, 0, ~5,
+                0, 1, 2, 6,
+                2, 3, 4, 6,
+                4, 5, 0, 6,
             } };
             meshData.subMeshCount = 1;
-            meshData.topologies = new[] { MeshTopology.NGon };
+            meshData.topologies = new[] { MeshTopology.Quads };
             return meshData;
         }
 

@@ -7,6 +7,11 @@ using UnityEngine;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Periodic 2d grid of squares and triangles..
+    /// https://en.wikipedia.org/wiki/Snub_square_tiling
+    /// This is an specialization of <see cref="PeriodicPlanarMeshGrid"/>.
+    /// </summary>
     public class SquareSnubGrid : PeriodicPlanarMeshGrid
     {
         private static float o = Mathf.Sqrt(3) / 2 + 0.5f;

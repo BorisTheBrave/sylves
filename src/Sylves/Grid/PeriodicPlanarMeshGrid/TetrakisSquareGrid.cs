@@ -7,6 +7,11 @@ using UnityEngine;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Periodic 2d grid of triangles.
+    /// https://en.wikipedia.org/wiki/Tetrakis_square_tiling
+    /// This is an specialization of <see cref="PeriodicPlanarMeshGrid"/>.
+    /// </summary>
     public class TetrakisSquareGrid : PeriodicPlanarMeshGrid
     {
         public TetrakisSquareGrid():base(TetrakisSquareGridMeshData(), new Vector2(1, 0), new Vector2(0, 1))

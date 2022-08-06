@@ -75,6 +75,10 @@ namespace Sylves.Test
                 new SquareSnubGrid().BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))),
                 "snub.svg",
                 new Options { textScale = 0.5 });
+            Export(
+                new RhombilleGrid().BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))),
+                "rhombille.svg",
+                new Options { textScale = 0.5 });
         }
     }
 }

@@ -7,6 +7,11 @@ using UnityEngine;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Periodic 2d grid of pentagons.
+    /// https://en.wikipedia.org/wiki/Cairo_pentagonal_tiling
+    /// This is an specialization of <see cref="PeriodicPlanarMeshGrid"/>.
+    /// </summary>
     public class CairoGrid : PeriodicPlanarMeshGrid
     {
         private static float o = Mathf.Sqrt(3) / 2 + 0.5f;
