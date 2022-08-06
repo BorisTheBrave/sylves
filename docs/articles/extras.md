@@ -15,11 +15,3 @@ When compiling for Unity, these classes are disabled.
 ## Mesh operations
 
 Many of the mesh operations that Sylves uses for mesh grids, or deformations, can be used without reference to grids at all. See the classes in the Mesh subfolder.
-
-## Weird grids
-
-Some of the grids Sylves supplies are basically useless, and are only there to demonstrate how some features work.
-
-<xref:Sylves.MobiusSquareGrid>
-<xref:Sylves.CubiusGrid>
-

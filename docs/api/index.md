@@ -1,2 +1,1 @@
-# PLACEHOLDER
-TODO: Add .NET projects to the *src* folder and run `docfx` to generate **REAL** *API Documentation*!
+All Sylves classes can be explored from the sidebar on the left.

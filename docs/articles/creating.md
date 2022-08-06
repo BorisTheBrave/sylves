@@ -22,4 +22,4 @@ If you just want to customize an existing grid, there are various modifiers you 
 
 ## Write your own grid
 
-`IGrid` is of course and interface, and ultimately you can create your own implementations. Many of the more complex methods can be forward to methods in `DefaultGridImpl` which provides basic implementations.
+`IGrid` is of course and interface, and ultimately you can create your own implementations. Many of the more complex methods can be forwarded to methods in `DefaultGridImpl` which provides basic implementations.
