@@ -10,13 +10,13 @@ Treating a grid as a graph is handy for many common algorithms, such as path fin
 
 ## TryMove
 
-There's only one key method relating to the topology of a graphy.
+There's only one key method relating to the topology of a graph.
 
 ```csharp
 bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection);
 ```
 
-`TryMove` attempts to move from `cell`, along the edge labelled with `dir`. If it is sucessfully, it returns the cell along the edge as `dest`,
+`TryMove` attempts to move from `cell`, along the edge labelled with `dir`. If it is sucessful, it returns the cell along the edge as `dest`,
 and gives some information on the edge traversed, `inverseDir` and `connection`. See [rotations](rotation.md#trymove-and-rotation) for how to interpret these.
 
 With `TryMove` defined, an algorithm can explore the entire grid, one cell at a time.
@@ -28,8 +28,7 @@ Cell? Move(Cell cell, CellDir dir);
 IEnumerable<Cell> GetNeighbours(Cell cell)
 ```
 
-To make `TryMove` a bit easier to use, there is also `Move` which has a simpler signature, and the [`Walker`](xref:Sylves.Walker) class, which represents a object standing on a given cell facing a given direction.
-
+There is the [`Walker`](xref:Sylves.Walker) class, which represents a object standing on a given cell facing a given direction, and is a mutable interface to the same logic.
 
 ## ParallelTransport
 

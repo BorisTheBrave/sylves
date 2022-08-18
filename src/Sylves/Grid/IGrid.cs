@@ -63,8 +63,14 @@ namespace Sylves
 
         #region Relatives
 
+        /// <summary>
+        /// Returns the grid with any bounds removed.
+        /// </summary>
         IGrid Unbounded { get; }
 
+        /// <summary>
+        /// Returns the grid with most grid modifiers removed.
+        /// </summary>
         IGrid Unwrapped { get; }
 
         #endregion
@@ -81,6 +87,11 @@ namespace Sylves
         /// </summary>
         ICellType GetCellType(Cell cell);
 
+        /// <summary>
+        /// Returns true if the cell is in the grid (and within bounds).
+        /// This is one of the few methods that accepts any Cell object, most
+        /// other methods only work with the cells in the grid.
+        /// </summary>
         bool IsCellInGrid(Cell cell);
         #endregion
 
@@ -162,17 +173,42 @@ namespace Sylves
         #endregion
 
         #region Bounds
+        /// <summary>
+        /// Returns the bound currently applied to the grid.
+        /// </summary>
         IBound GetBound();
 
+        /// <summary>
+        /// Returns a bound that contains all the listed cells.
+        /// </summary>
         IBound GetBound(IEnumerable<Cell> cells);
 
+        /// <summary>
+        /// Returns a new grid restricted to just the given bound.
+        /// If the grid already has a bound, the new grid will have the intersection of both.
+        /// </summary>
         IGrid BoundBy(IBound bound);
 
+        /// <summary>
+        /// Returns a bound that contains cells included in both arguments.
+        /// </summary>
         IBound IntersectBounds(IBound bound, IBound other);
+
+        /// <summary>
+        /// Returns a bound that contains cells included in either argument.
+        /// </summary>
         IBound UnionBounds(IBound bound, IBound other);
+
         // TODO: Decide if this should return cells outside of grid.
+        /// <summary>
+        /// Returns the cells inside a given bound.
+        /// </summary>
         IEnumerable<Cell> GetCellsInBounds(IBound bound);
         
+        /// <summary>
+        /// Tests if a given cell is in bound.
+        /// i.e. returns true if the cell is listed in GetCellsInBounds.
+        /// </summary>
         bool IsCellInBound(Cell cell, IBound bound);
         #endregion
 
@@ -192,9 +228,20 @@ namespace Sylves
         #endregion
 
         #region Shape
-
+        /// <summary>
+        /// Returns a deformation mapping from the cell's co-ordinates 
+        /// to something that fits in the grids co-ordinates.
+        /// </summary>
         Deformation GetDeformation(Cell cell);
 
+        /// <summary>
+        /// For 2d cells, returns the polygon of the boundary of the cell.
+        /// For performance reasons, cells can share a vertices array, so you need to apply
+        /// a specific transform to get the polygon specific to a particular cell.
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="vertices">The vertices of the polygon. This should not be mutated.</param>
+        /// <param name="transform">A transformation that needs to be applied to each vertex.</param>
         void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform);
 
         #endregion

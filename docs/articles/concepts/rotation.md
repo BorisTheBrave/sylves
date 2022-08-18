@@ -53,7 +53,7 @@ If you use specific classes like `SquareRotation`, they usually have the `*` ope
 
 ## TryMove and Rotation
 
-A classic riddle goes: *"A bear travels one mile south, one mile west, then one mile north and finds itself back at home. What color is the bear?"*.
+A classic riddle goes: *"A bear travels one mile south, one mile east, then one mile north and finds itself back at home. What color is the bear?"*.
 
 The answer of course, is white - the only place on earth where this is possible is near the north pole. But it does illustrate an important about motion - when you travel on curved or distored surfaces, things work differently. Our bear took two 90 degree turns, but somehow ended up returning home at an angle.
 
