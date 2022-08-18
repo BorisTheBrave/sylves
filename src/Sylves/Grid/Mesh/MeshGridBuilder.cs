@@ -50,7 +50,7 @@ namespace Sylves
                     }
                     else
                     {
-                        deformation = MeshUtils.GetDeformation(data, face, submesh, meshGridOptions.InvertWinding);
+                        deformation = DeformationUtils.GetDeformation(data, face, submesh, meshGridOptions.InvertWinding);
                     }
                     var cellType = GetCellType(faceIndices.Count, meshGridOptions.DoubleOddFaces);
                     var trs = GetTRS2d(deformation, Vector3.zero);
@@ -168,7 +168,7 @@ namespace Sylves
                     {
                         // Despite having layerCellData, most stuff needs re-calculating.
                         var cell = new Cell(face, submesh, layer);
-                        var deformation = MeshUtils.GetDeformation(data, meshPrismGridOptions.LayerHeight, meshPrismGridOptions.LayerOffset, meshPrismGridOptions.SmoothNormals, face, layer, submesh, meshPrismGridOptions.InvertWinding);
+                        var deformation = DeformationUtils.GetDeformation(data, meshPrismGridOptions.LayerHeight, meshPrismGridOptions.LayerOffset, meshPrismGridOptions.SmoothNormals, face, layer, submesh, meshPrismGridOptions.InvertWinding);
                         var count = faceIndices.Count;
                         var cellType = PrismInfo.Get(layerCellData[new Cell(face, submesh, 0)].CellType).PrismCellType;
                         var trs = GetTRS(deformation, Vector3.zero);
