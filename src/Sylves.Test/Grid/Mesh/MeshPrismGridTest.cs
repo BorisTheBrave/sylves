@@ -69,7 +69,9 @@ namespace Sylves.Test
         {
             var g = new MeshPrismGrid(TestMeshes.PlaneXY, options);
             var hits = g.Raycast(new Vector3(0, 0, -10), Vector3.forward).ToList();
-            Assert.AreEqual(1, hits.Count);
+            Assert.AreEqual(2, hits.Count);
+            Assert.AreEqual(new Cell(0, 0, 0), hits[0].cell);
+            Assert.AreEqual(new Cell(0, 0, 1), hits[1].cell);
         }
         #endregion
 

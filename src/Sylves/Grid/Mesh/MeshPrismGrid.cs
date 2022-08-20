@@ -21,6 +21,38 @@ namespace Sylves
             this.meshPrismOptions = meshPrismOptions;
         }
 
+        #region Query
+        protected override RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
+        {
+            var meshCellData = CellData[cell] as MeshCellData;
+            if (meshCellData.CellType == CubeCellType.Instance)
+            {
+                if (meshCellData.PrismInfo.BackDir != (CellDir)CubeDir.Back)
+                {
+                    throw new System.NotImplementedException("UseXZPlane not supported");
+                }
+
+                GetCubeCellVertices(cell, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8);
+                var hit = MeshRaycast.RaycastCube(rayOrigin, direction, v1, v2, v3, v4, v5, v6, v7, v8);
+                if (hit != null)
+                {
+                    var hit2 = hit.Value;
+                    hit2.cell = cell;
+                    return hit2;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        #endregion
+
         #region Shape
 
         // Follows mesh conventions for vertex order (i.e. v1-v4 are the face vertices and v5-v8 are repeats at a different normal offset).

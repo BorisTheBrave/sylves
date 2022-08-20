@@ -313,69 +313,46 @@ namespace Sylves
 
         // Narrow phase
         // I.e. raycast, applied to a single cell
-        private RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
+        protected virtual RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
         {
-            var cellData = CellData[cell];
-            var cellType = UnwrapXZCellModifier(cellData.CellType);
-            if (cellType == CubeCellType.Instance)
+            var cellData = CellData[cell] as MeshCellData;
+            if (!IsPlanar)
             {
-                // TODO
+                throw new NotImplementedException();
+            }
+
+            var face = cellData.Face;
+            var prev = meshData.vertices[face[face.Count - 1]];
+            var bestD = float.PositiveInfinity;
+            var bestP = new Vector3();
+            var bestI = 0;
+            for (var i = 0; i < face.Count; i++)
+            {
+                var curr = meshData.vertices[face[i]];
+                if (MeshRaycast.RaycastSegment(rayOrigin, direction, prev, curr, out var p, out var d))
+                {
+                    if (d < bestD)
+                    {
+                        bestD = d;
+                        bestP = p;
+                        bestI = i;
+                    }
+                }
+                prev = curr;
+            }
+            if (bestD == float.PositiveInfinity)
+            {
                 return null;
-                /*
-                GetCellVertices(cell, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8);
-                var hit = MeshRaycast.RaycastCube(rayOrigin, direction, v1, v2, v3, v4, v5, v6, v7, v8);
-                if (hit != null)
-                {
-                    var hit2 = hit.Value;
-                    hit2.cell = cell;
-                    return hit2;
-                }
-                else
-                {
-                    return null;
-                }
-                */
-            } 
+            }
             else
             {
-                if(!IsPlanar)
+                return new RaycastInfo
                 {
-                    throw new NotImplementedException();
-                }
-
-                var face = ((MeshCellData)cellData).Face;
-                var prev = meshData.vertices[face[face.Count - 1]];
-                var bestD = float.PositiveInfinity;
-                var bestP = new Vector3();
-                var bestI = 0;
-                for (var i = 0; i < face.Count; i++)
-                {
-                    var curr = meshData.vertices[face[i]];
-                    if (MeshRaycast.RaycastSegment(rayOrigin, direction, prev, curr, out var p, out var d))
-                    {
-                        if (d < bestD)
-                        {
-                            bestD = d;
-                            bestP = p;
-                            bestI = i;
-                        }
-                    }
-                    prev = curr;
-                }
-                if(bestD == float.PositiveInfinity)
-                {
-                    return null;
-                }
-                else
-                {
-                    return new RaycastInfo
-                    {
-                        cell = cell,
-                        //cellDir = null,// TODO
-                        distance = bestD,
-                        point = bestP,
-                    };
-                }
+                    cell = cell,
+                    //cellDir = null,// TODO
+                    distance = bestD,
+                    point = bestP,
+                };
             }
         }
 
