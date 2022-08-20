@@ -60,7 +60,7 @@ namespace Sylves
             {
                 foreach (var face in MeshUtils.GetFaces(this, submesh))
                 {
-                    for(var i=0;i<face.Count;i++)
+                    for (var i = 0; i < face.Count; i++)
                     {
                         var i0 = face[i];
                         var i1 = face[(i + 1) % face.Count];
@@ -70,7 +70,6 @@ namespace Sylves
                         var v2 = vertices[i2];
                         normals[i1] += Vector3.Cross(v2 - v1, v0 - v1).normalized;
                     }
-
                 }
             }
             for(var i = 0; i < normals.Length; i++)

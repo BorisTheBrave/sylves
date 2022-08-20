@@ -13,6 +13,7 @@ namespace Sylves
     /// </summary>
     public static class QuadInterpolation
     {
+        // Follows mesh conventions for vertex order (i.e. v1-v4 are the face vertices and v5-v8 are repeats at a different normal offset).
         public static void GetCorners(MeshData mesh, int submesh, int face, bool invertWinding, float meshOffset1, float meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Quads)

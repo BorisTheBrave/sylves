@@ -12,6 +12,8 @@ namespace Sylves
     public class MeshCellData : DataDrivenCellData
     {
         public MeshUtils.Face Face { get; set; }
+
+        public PrismInfo PrismInfo { get; set; }
     }
 
     /// <summary>
@@ -50,23 +52,26 @@ namespace Sylves
             {
                 if (CellData[cell] is MeshCellData meshCellData)
                 {
-                    var face = ((MeshCellData)CellData[cell]).Face;
-                    var cellMin = meshData.vertices[face[0]];
-                    var cellMax = cellMin;
-                    for (var i = 1; i < face.Count; i++)
+                    if (meshCellData.PrismInfo == null)
                     {
-                        var v = meshData.vertices[face[i]];
-                        cellMin = Vector3.Min(cellMin, v);
-                        cellMax = Vector3.Max(cellMax, v);
+                        var face = ((MeshCellData)CellData[cell]).Face;
+                        var cellMin = meshData.vertices[face[0]];
+                        var cellMax = cellMin;
+                        for (var i = 1; i < face.Count; i++)
+                        {
+                            var v = meshData.vertices[face[i]];
+                            cellMin = Vector3.Min(cellMin, v);
+                            cellMax = Vector3.Max(cellMax, v);
+                        }
+                        var dim = cellMax - cellMin;
+                        hashCellSize = Vector3.Max(hashCellSize, dim);
+                        min = min == null ? cellMin : Vector3.Min(min.Value, cellMin);
+                        max = max == null ? cellMax : Vector3.Max(max.Value, cellMax);
+                        continue;
                     }
-                    var dim = cellMax - cellMin;
-                    hashCellSize = Vector3.Max(hashCellSize, dim);
-                    min = min == null ? cellMin : Vector3.Min(min.Value, cellMin);
-                    max = max == null ? cellMax : Vector3.Max(max.Value, cellMax);
                 }
-                else
+                // TODO: This is the wrong way to compute cell dimensions
                 {
-                    // TODO: This is the wrong way to compute cell dimensions
                     var cellTrs = GetTRS(cell);
                     var dim = Abs(cellTrs.ToMatrix().MultiplyVector(Vector3.one));
                     hashCellSize = Vector3.Max(hashCellSize, dim);

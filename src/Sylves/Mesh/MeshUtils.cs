@@ -63,6 +63,9 @@ namespace Sylves
             return true;
         }
 
+        /// <summary>
+        /// References a slice of indices for a face.
+        /// </summary>
         public struct Face : IEnumerable<int>
         {
             public Face(int[] indices, int offset, int length, bool invertWinding, bool negateTail = false)
@@ -137,6 +140,28 @@ namespace Sylves
                     if (NegateTail && i == Length - 1) index = ~index;
                     return index;
                 }
+            }
+
+            public IEnumerable<Vector3> GetFaceVertices(Vector3[] vertices)
+            {
+                foreach(var i in this)
+                {
+                    yield return vertices[i];
+                }
+            }
+
+            public IEnumerable<(Vector3, Vector3)> GetFaceVertexPairs(Vector3[] vertices)
+            {
+                var c = Count;
+                var prev = vertices[this[0]];
+                var first = prev;
+                for (var i = 1; i < c; i++)
+                {
+                    var curr = vertices[this[i]];
+                    yield return (prev, curr);
+                    prev = curr;
+                }
+                yield return (prev, first);
             }
         }
 

@@ -23,6 +23,7 @@ namespace Sylves
 
         #region Shape
 
+        // Follows mesh conventions for vertex order (i.e. v1-v4 are the face vertices and v5-v8 are repeats at a different normal offset).
         private void GetCubeCellVertices(Cell cell, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8)
         {
             // TODO: Share this code with QuadInterpolation.InterpolatePosition?
@@ -35,37 +36,55 @@ namespace Sylves
 
         private static readonly ILookup<CellDir, int> s_faces = new[]
         {
-                ((CellDir)(CubeDir.Down), 0),
-                ((CellDir)(CubeDir.Up), 1),
-                ((CellDir)(CubeDir.Left), 2),
-                ((CellDir)(CubeDir.Right), 3),
-                ((CellDir)(CubeDir.Back), 4),
-                ((CellDir)(CubeDir.Forward), 5),
+                ((CellDir)(CubeDir.Left), 0),
+                ((CellDir)(CubeDir.Right), 1),
+                ((CellDir)(CubeDir.Up), 2),
+                ((CellDir)(CubeDir.Down), 3),
+                ((CellDir)(CubeDir.Forward), 4),
+                ((CellDir)(CubeDir.Back), 5),
             }.ToLookup(x => x.Item1, x => x.Item2);
 
         private static readonly TRS s_trsIdentity = new TRS();
 
         public void GetMesh(Cell cell, out MeshData meshData, out TRS trs, out ILookup<CellDir, int> faces)
         {
-            GetCubeCellVertices(cell, out var v1, out var v2, out var v3, out var v4, out var v5, out var v6, out var v7, out var v8);
-            var vertices = new[] { v1, v2, v3, v4, v5, v6, v7, v8 };
-            var indices = new[]
+            var meshCellData = CellData[cell] as MeshCellData;
+            var cellType = meshCellData.CellType;
+            if (cellType is CubeCellType)
             {
-                0,1,2,3,
-                6,5,4,7,
-                4,5,1,0,
-                6,7,3,2,
-                0,3,7,4,
-                5,6,2,1,
-            };
+                if(meshCellData.PrismInfo.BackDir != (CellDir)CubeDir.Back)
+                {
+                    // TODO: This would be easy to support, just swap out s_faces.
+                    throw new System.NotImplementedException("UseXZPlane not supported");
+                }
 
-            meshData = new MeshData();
-            meshData.vertices = vertices;
-            meshData.indices = new[] { indices };
-            meshData.topologies = new[] { MeshTopology.Quads };
+                GetCubeCellVertices(cell, out var v1, out var v2, out var v3, out var v4, out var v5, out var v6, out var v7, out var v8);
+                var vertices = new[] { v1, v2, v3, v4, v5, v6, v7, v8 };
 
-            faces = s_faces;
-            trs = s_trsIdentity;
+                // z-forward convetion (see TestMeshes.Cube)
+                var indices = new[]
+                {
+                    7, 6, 2, 3, // Left
+                    0, 1, 5, 4, // Right
+                    2, 6, 5, 1, // Up
+                    0, 4, 7, 3, // Down
+                    4, 5, 6, 7, // Forward
+                    3, 2, 1, 0, // Back
+                };
+
+                meshData = new MeshData();
+                meshData.vertices = vertices;
+                meshData.indices = new[] { indices };
+                meshData.topologies = new[] { MeshTopology.Quads };
+                meshData.subMeshCount = 1;
+
+                faces = s_faces;
+                trs = s_trsIdentity;
+            }
+            else
+            {
+                throw new System.NotImplementedException($"Unimplemented celltype {cellType}");
+            }
         }
         #endregion
     }

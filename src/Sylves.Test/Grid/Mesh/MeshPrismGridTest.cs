@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -61,6 +62,14 @@ namespace Sylves.Test
             AssertAreEqual(new Vector3(0, 0, 0.5f), d.DeformPoint(new Vector3(0, 0, 0.5f)), 1e-6);
             AssertAreEqual(new Vector3(0, 0.5f, 0), d.DeformPoint(new Vector3(0, 0.5f, 0)), 1e-6);
             AssertAreEqual(new Vector3(0.5f, 0, 0), d.DeformPoint(new Vector3(0.5f, 0, 0)), 1e-6);
+        }
+
+        [Test]
+        public void TestPlaneXYRaycast()
+        {
+            var g = new MeshPrismGrid(TestMeshes.PlaneXY, options);
+            var hits = g.Raycast(new Vector3(0, 0, -10), Vector3.forward).ToList();
+            Assert.AreEqual(1, hits.Count);
         }
         #endregion
 

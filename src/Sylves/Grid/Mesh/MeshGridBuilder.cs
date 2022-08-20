@@ -170,7 +170,8 @@ namespace Sylves
                         var cell = new Cell(face, submesh, layer);
                         var deformation = DeformationUtils.GetDeformation(data, meshPrismGridOptions.LayerHeight, meshPrismGridOptions.LayerOffset, meshPrismGridOptions.SmoothNormals, face, layer, submesh, meshPrismGridOptions.InvertWinding);
                         var count = faceIndices.Count;
-                        var cellType = PrismInfo.Get(layerCellData[new Cell(face, submesh, 0)].CellType).PrismCellType;
+                        var prismInfo = PrismInfo.Get(layerCellData[new Cell(face, submesh, 0)].CellType);
+                        var cellType = prismInfo.PrismCellType;
                         var trs = GetTRS(deformation, Vector3.zero);
 
                         // Transform if necessary
@@ -181,11 +182,13 @@ namespace Sylves
                         }
 
 
-                        cellData[cell] = new DataDrivenCellData
+                        cellData[cell] = new MeshCellData
                         {
                             CellType = cellType,
                             Deformation = deformation,
                             TRS = trs,
+                            Face = faceIndices,
+                            PrismInfo = prismInfo,
                         };
                         face++;
                     }

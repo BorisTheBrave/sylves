@@ -8,6 +8,10 @@ namespace Sylves
     {
         private const float eps = 1e-7f;
 
+        /// <summary>
+        /// Performs a raycast in the XY plane of a ray vs a finite segment of a line.
+        /// z-coordinates are completely ignored.
+        /// </summary>
         public static bool RaycastSegment(Vector3 rayOrigin, Vector3 direction, Vector3 v0, Vector3 v1, out Vector3 point, out float distance)
         {
             v1 -= v0;
@@ -31,6 +35,9 @@ namespace Sylves
             }
         }
 
+        /// <summary>
+        /// Raycasts a ray vs a single triagnle.
+        /// </summary>
         public static bool RaycastTri(Vector3 rayOrigin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, out Vector3 point, out float distance)
         {
             //  Cribbed from a tutorial
@@ -90,50 +97,29 @@ namespace Sylves
             return true;
         }
 
+        // Uses z-forward convention, (see TestMeshes.Cube)
         public static RaycastInfo? RaycastCube(Vector3 rayOrigin, Vector3 direction, Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 v5, Vector3 v6, Vector3 v7, Vector3 v8)
         {
             Vector3 point;
             float bestDistance = float.MaxValue;
             float distance;
             RaycastInfo? bestHit = null;
-            if (RaycastTri(rayOrigin, direction, v1, v2, v3, out point, out distance) && distance < bestDistance)
+            if (RaycastTri(rayOrigin, direction, v8, v7, v3, out point, out distance) && distance < bestDistance)
             {
                 bestDistance = distance;
                 bestHit = new RaycastInfo
                 {
-                    cellDir = (CellDir)CubeDir.Down,
+                    cellDir = (CellDir)CubeDir.Left,
                     point = point,
                     distance = distance,
                 };
             }
-            if (RaycastTri(rayOrigin, direction, v1, v3, v4, out point, out distance) && distance < bestDistance)
+            if (RaycastTri(rayOrigin, direction, v8, v3, v4, out point, out distance) && distance < bestDistance)
             {
                 bestDistance = distance;
                 bestHit = new RaycastInfo
                 {
-                    cellDir = (CellDir)CubeDir.Down,
-                    point = point,
-                    distance = distance,
-                };
-            }
-
-            if (RaycastTri(rayOrigin, direction, v7, v6, v5, out point, out distance) && distance < bestDistance)
-            {
-                bestDistance = distance;
-                bestHit = new RaycastInfo
-                {
-                    cellDir = (CellDir)CubeDir.Up,
-                    point = point,
-                    distance = distance,
-                };
-            }
-
-            if (RaycastTri(rayOrigin, direction, v8, v7, v5, out point, out distance) && distance < bestDistance)
-            {
-                bestDistance = distance;
-                bestHit = new RaycastInfo
-                {
-                    cellDir = (CellDir)CubeDir.Up,
+                    cellDir = (CellDir)CubeDir.Left,
                     point = point,
                     distance = distance,
                 };
@@ -144,7 +130,7 @@ namespace Sylves
                 bestDistance = distance;
                 bestHit = new RaycastInfo
                 {
-                    cellDir = (CellDir)CubeDir.Left,
+                    cellDir = (CellDir)CubeDir.Right,
                     point = point,
                     distance = distance,
                 };
@@ -155,57 +141,57 @@ namespace Sylves
                 bestDistance = distance;
                 bestHit = new RaycastInfo
                 {
-                    cellDir = (CellDir)CubeDir.Left,
-                    point = point,
-                    distance = distance,
-                };
-            }
-
-            if (RaycastTri(rayOrigin, direction, v3, v4, v8, out point, out distance) && distance < bestDistance)
-            {
-                bestDistance = distance;
-                bestHit = new RaycastInfo
-                {
                     cellDir = (CellDir)CubeDir.Right,
                     point = point,
                     distance = distance,
                 };
             }
 
-            if (RaycastTri(rayOrigin, direction, v3, v8, v7, out point, out distance) && distance < bestDistance)
+            if (RaycastTri(rayOrigin, direction, v3, v7, v6, out point, out distance) && distance < bestDistance)
             {
                 bestDistance = distance;
                 bestHit = new RaycastInfo
                 {
-                    cellDir = (CellDir)CubeDir.Right,
+                    cellDir = (CellDir)CubeDir.Up,
                     point = point,
                     distance = distance,
                 };
             }
 
-            if (RaycastTri(rayOrigin, direction, v1, v4, v8, out point, out distance) && distance < bestDistance)
+            if (RaycastTri(rayOrigin, direction, v3, v6, v2, out point, out distance) && distance < bestDistance)
             {
                 bestDistance = distance;
                 bestHit = new RaycastInfo
                 {
-                    cellDir = (CellDir)CubeDir.Back,
+                    cellDir = (CellDir)CubeDir.Up,
                     point = point,
                     distance = distance,
                 };
             }
 
-            if (RaycastTri(rayOrigin, direction, v1, v8, v5, out point, out distance) && distance < bestDistance)
+            if (RaycastTri(rayOrigin, direction, v1, v5, v8, out point, out distance) && distance < bestDistance)
             {
                 bestDistance = distance;
                 bestHit = new RaycastInfo
                 {
-                    cellDir = (CellDir)CubeDir.Back,
+                    cellDir = (CellDir)CubeDir.Down,
                     point = point,
                     distance = distance,
                 };
             }
 
-            if (RaycastTri(rayOrigin, direction, v2, v3, v7, out point, out distance) && distance < bestDistance)
+            if (RaycastTri(rayOrigin, direction, v1, v8, v4, out point, out distance) && distance < bestDistance)
+            {
+                bestDistance = distance;
+                bestHit = new RaycastInfo
+                {
+                    cellDir = (CellDir)CubeDir.Down,
+                    point = point,
+                    distance = distance,
+                };
+            }
+
+            if (RaycastTri(rayOrigin, direction, v5, v6, v7, out point, out distance) && distance < bestDistance)
             {
                 bestDistance = distance;
                 bestHit = new RaycastInfo
@@ -216,12 +202,34 @@ namespace Sylves
                 };
             }
 
-            if (RaycastTri(rayOrigin, direction, v2, v7, v6, out point, out distance) && distance < bestDistance)
+            if (RaycastTri(rayOrigin, direction, v5, v7, v8, out point, out distance) && distance < bestDistance)
             {
                 bestDistance = distance;
                 bestHit = new RaycastInfo
                 {
                     cellDir = (CellDir)CubeDir.Forward,
+                    point = point,
+                    distance = distance,
+                };
+            }
+
+            if (RaycastTri(rayOrigin, direction, v4, v3, v2, out point, out distance) && distance < bestDistance)
+            {
+                bestDistance = distance;
+                bestHit = new RaycastInfo
+                {
+                    cellDir = (CellDir)CubeDir.Back,
+                    point = point,
+                    distance = distance,
+                };
+            }
+
+            if (RaycastTri(rayOrigin, direction, v4, v2, v1, out point, out distance) && distance < bestDistance)
+            {
+                bestDistance = distance;
+                bestHit = new RaycastInfo
+                {
+                    cellDir = (CellDir)CubeDir.Back,
                     point = point,
                     distance = distance,
                 };

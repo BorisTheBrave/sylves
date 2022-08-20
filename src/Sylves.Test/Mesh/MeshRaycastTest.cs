@@ -10,7 +10,7 @@ namespace Sylves.Test
         [Test]
         public void TestRaycast()
         {
-            var plane = TestMeshes.PlaneXZ;
+            var plane = TestMeshes.PlaneXY;
             QuadInterpolation.GetCorners(plane, 0, 0, false, -.5f, .5f, out var v1, out var v2, out var v3, out var v4, out var v5, out var v6, out var v7, out var v8);
             RaycastInfo? RaycastCube(Vector3 rayOrigin, Vector3 direction) =>
                 MeshRaycast.RaycastCube(rayOrigin, direction, v1, v2, v3, v4, v5, v6, v7, v8);
