@@ -62,7 +62,11 @@ namespace Sylves
         {
             // TODO: Need more permanent solution for this.
             // The default behaviour doesn't work as it uses one underlying, one not, but they have different cell types.
-            if(aGrid is XZModifier other)
+            if(aGrid is TransformModifier transformModifier)
+            {
+                aGrid = transformModifier.Underlying;
+            }
+            if (aGrid is XZModifier other)
             {
                 return Underlying.ParallelTransport(other.Underlying, aSrcCell, aDestCell, srcCell, startRotation, out destCell, out destRotation);
             }
