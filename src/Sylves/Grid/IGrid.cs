@@ -220,8 +220,11 @@ namespace Sylves
 
         /// <summary>
         /// Returns the appropriate transform for the cell.
-        /// The translation will always be to GetCellCenter.
-        /// Not inclusive of cell rotation, that should be applied first.
+        /// The translation will always be to GetCellCenter,
+        /// rotation reflects the particular orientation of this cell
+        /// and the scale will reflect cell sizing.
+        /// GetTRS is often "best effort", there might not be an obvious
+        /// linear transformation from the canonical cell to the grid cell.
         /// </summary>
         TRS GetTRS(Cell cell);
 

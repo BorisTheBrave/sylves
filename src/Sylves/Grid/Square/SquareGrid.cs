@@ -278,7 +278,7 @@ namespace Sylves
         /// The translation will always be to GetCellCenter.
         /// Not inclusive of cell rotation, that should be applied first.
         /// </summary>
-        public TRS GetTRS(Cell cell) => new TRS(GetCellCenter(cell));
+        public TRS GetTRS(Cell cell) => new TRS(GetCellCenter(cell), Quaternion.identity, new Vector3(cellSize.x, cellSize.y, 1));
         #endregion
 
         #region Shape

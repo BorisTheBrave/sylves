@@ -524,7 +524,12 @@ namespace Sylves
         /// The translation will always be to GetCellCenter.
         /// Not inclusive of cell rotation, that should be applied first.
         /// </summary>
-        public TRS GetTRS(Cell cell) => new TRS(GetCellCenter(cell));
+        public TRS GetTRS(Cell cell) => new TRS(
+            GetCellCenter(cell),
+            Quaternion.identity,
+            // Inverse of ComputeCellSize.
+            // Should this be saved somewhere?
+            new Vector3(cellSize.x / (orientation == TriangleOrientation.FlatTopped ? 1 : Sqrt3 / 2), cellSize.y / (orientation == TriangleOrientation.FlatTopped ? Sqrt3 / 2 : 1), 1));
         #endregion
 
         #region Shape

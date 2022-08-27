@@ -36,7 +36,13 @@ namespace Sylves
             }
         }
 
-        public override TRS GetTRS(Cell cell) => new TRS(this.GetCellCenter(cell));
+        public override TRS GetTRS(Cell cell)
+        {
+            var ut = base.GetTRS(cell);
+            return new TRS(ut.ToMatrix() * RotateYZ);
+            //return new TRS(ut.Position, ut.Rotation * RotateYZ.rotation, ut.Scale);
+            //return ut;
+        }
 
         public override IEnumerable<ICellType> GetCellTypes()
         {

@@ -88,7 +88,7 @@ namespace Sylves
         TriangleGrid childTriangles;
 
         public HexGrid(float cellSize, HexOrientation orientation = HexOrientation.PointyTopped, HexBound bound = null)
-            :this(cellSize *(orientation == HexOrientation.PointyTopped ? new Vector2(Sqrt3 / 2, 1) : new Vector2(1, Sqrt3 / 2)), orientation, bound)
+            :this(cellSize * (orientation == HexOrientation.PointyTopped ? new Vector2(Sqrt3 / 2, 1) : new Vector2(1, Sqrt3 / 2)), orientation, bound)
         {
         }
 
@@ -406,7 +406,12 @@ namespace Sylves
         /// The translation will always be to GetCellCenter.
         /// Not inclusive of cell rotation, that should be applied first.
         /// </summary>
-        public TRS GetTRS(Cell cell) => new TRS(GetCellCenter(cell));
+        public TRS GetTRS(Cell cell) => new TRS(
+            GetCellCenter(cell),
+            Quaternion.identity,
+            // Inverse of the conversion in the constructor.
+            // Should this be saved somewhere?
+            new Vector3(cellSize.x / (orientation == HexOrientation.PointyTopped ? Sqrt3 / 2 : 1), cellSize.y / (orientation == HexOrientation.PointyTopped ? 1 : Sqrt3 / 2), 1));
 
 
         #endregion

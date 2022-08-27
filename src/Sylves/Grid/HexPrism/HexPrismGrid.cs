@@ -308,20 +308,17 @@ namespace Sylves
         #endregion
 
         #region Position
-        /// <summary>
-        /// Returns the center of the cell in local space
-        /// </summary>
         public Vector3 GetCellCenter(Cell cell)
         {
             return hexGrid.GetCellCenter(GetHexCell(cell)) + cellSize.z * cell.z * Vector3.forward;
         }
 
-        /// <summary>
-        /// Returns the appropriate transform for the cell.
-        /// The translation will always be to GetCellCenter.
-        /// Not inclusive of cell rotation, that should be applied first.
-        /// </summary>
-        public TRS GetTRS(Cell cell) => new TRS(GetCellCenter(cell));
+        public TRS GetTRS(Cell cell) => new TRS(
+            GetCellCenter(cell),
+            Quaternion.identity,
+            // Inverse of the conversion in the constructor.
+            // Should this be saved somewhere?
+            new Vector3(cellSize.x / (orientation == HexOrientation.PointyTopped ? Sqrt3 / 2 : 1), cellSize.y / (orientation == HexOrientation.PointyTopped ? 1 : Sqrt3 / 2), cellSize.z));
 
 
         #endregion
