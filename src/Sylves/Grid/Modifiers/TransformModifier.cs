@@ -29,6 +29,8 @@ namespace Sylves
             this.iTransform = iTransform;
         }
 
+        public Matrix4x4 Transform => transform;
+
         protected override IGrid Rebind(IGrid underlying)
         {
             return new TransformModifier(underlying, transform, iTransform);

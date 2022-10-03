@@ -16,6 +16,8 @@
        href: concepts/rotation.md
     -  name: Symmetry
        href: concepts/grid_symmetry.md
+    -  name: Pathfinding
+       href: concepts/pathfinding.md
 - name: Tutorials
   items:
     -  name: Langton's Ant

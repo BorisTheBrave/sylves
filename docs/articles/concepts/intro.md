@@ -29,12 +29,12 @@ foreach(var cell in cells)
 A summary of all methods is [below](#grid-methods) and the full list in the [API reference](xref:Sylves.IGrid).
 
 Sylves supports an [extremely wide set of grids](../all_grids.md):
-* Planar grids (those confined to the XY plane), the most common grids seen in games.
-* 2d non-planar grids use 2d cells, but arranged in 3d space, can be used for 3d games where height is important, or for spheres and other shapes.
-* 3d grids (aka [honeycombs](https://en.wikipedia.org/wiki/Honeycomb_(geometry))) are useful for voxel style calculations.
-* Infinite grids allow you to not worry about the boundaries at all.
-* Irregular grids can have a different shape for every cell.
-* You can even [create your own grids](../creating.md).
+* **Planar grids** (those confined to the XY plane), the most common grids seen in games.
+* **2d non-planar grids** use 2d cells, but arranged in 3d space, can be used for 3d games where height is important, or for spheres and other shapes.
+* **3d grids** (aka [honeycombs](https://en.wikipedia.org/wiki/Honeycomb_(geometry))) are useful for voxel style calculations.
+* **Infinite grids** allow you to not worry about the boundaries at all.
+* **Irregular grids** can have a different shape for every cell.
+* You can even [**create your own grids**](../creating.md).
 
 NB: grids [do not store any data](storage.md), they are basically stateless. They just exist to as a way to interact with cells.
 
@@ -68,16 +68,17 @@ Other categories include:
 * Index - Converts between `Cell` and `int`, if you want to use an array for storage
 * [Bounds](bounds.md) - Methods of dealing with bounding boxes on the grid.
 * Query - Methods for finding cells in 3d space, such as point queries, raycasts, etc.
+* [Pathfinding](pathfinding.md) - Methods for finding a path between cells.
 
 ## Abstract and specific types
 
-IGrid itself is an interface. When working with a specific grid, you must construct an implementation of that interface. But the methods of the interface are necessarily abstract and cannot discuss your specific grid.
+`IGrid` itself is an interface. When working with a specific grid, you must construct an implementation of that interface. But the methods of the interface are necessarily abstract and cannot discuss your choice of grid.
 
 That means it some cases, you will need to *manually* cast to specific types, to get the most out of Sylves.
 
 1) When working with interfaces, such as `IGrid`, `ICellType`, `IBounds`, you need to know which implementation is relevant to you. The implementations often have *more* methods than the interface does. E.g. when using a `SquareGrid`, you'd also work with `SquareCellType` and `SquareBound`.
 
-2) When working with enums, like `CellDir` and `CellRotation`, you'll find that they are empty. These types are just a shorthand that *some* value is stored within. To be more specific, you'll need to cast them to specific types, like `SquareDir` and `SquareRotation`. The specific enums often come with methods and operator overloads.
+2) When working with enums like `CellDir` and `CellRotation`, you'll find that they are empty. These types are just a shorthand that *some* value is stored within. To be more specific, you'll need to cast them to specific types, like `SquareDir` and `SquareRotation`. The specific enums often come with methods and operator overloads.
 
 This table gives a summary of some of the specific classes backing each grid. The docs for each grid class list the same details.
 
