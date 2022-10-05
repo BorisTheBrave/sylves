@@ -12,7 +12,7 @@ namespace Sylves
 {
 
     // See https://en.wikipedia.org/wiki/Conway_polyhedron_notation
-    public static class ConwayOperators
+    internal static class ConwayOperators
     {
         private const float FAR = 1e10f;
 
