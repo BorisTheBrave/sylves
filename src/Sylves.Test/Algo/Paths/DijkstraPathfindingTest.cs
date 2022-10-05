@@ -28,9 +28,10 @@ namespace Sylves.Test
             var g = new SquareGrid(1);
             var pf = new DijkstraPathfinding(g, new Cell(), StepLengths.Uniform);
 
-            pf.Run(maxRange: 2.5f);
+            pf.Run(maxRange: 4.5f);
 
             Assert.AreEqual(4, pf.Distances[new Cell(2, 2)]);
+            Assert.IsFalse(pf.Distances.ContainsKey(new Cell(2, 3)));
         }
     }
 }

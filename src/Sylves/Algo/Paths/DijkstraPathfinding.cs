@@ -70,7 +70,7 @@ namespace Sylves
 
                         var d2 = d + length.Value;
                         var dest = step.Dest;
-                        if (!distances.TryGetValue(dest, out var d3) || d2 < d3)
+                        if ((!distances.TryGetValue(dest, out var d3) || d2 < d3) && d2 <= maxRange)
                         {
                             distances[dest] = d2;
                             steps[dest] = step;
