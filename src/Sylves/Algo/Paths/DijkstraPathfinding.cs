@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Computes Dijkstra's Algorithm.
+    /// </summary>
     public class DijkstraPathfinding
     {
         // Options
@@ -23,6 +26,12 @@ namespace Sylves
 
         public void Run(Cell? target = null, float maxRange = float.PositiveInfinity)
         {
+            // We use a simple binary heap, and simply insert duplicate entries if a distance decreases.
+            // Wikipedia: 
+            // "Chen et al.[11] examined priority queues specifically for use with Dijkstra's algorithm
+            // and concluded that in normal cases using a d-ary heap without decrease-key (instead duplicating
+            // nodes on the heap and ignoring redundant instances) resulted in better performance, despite
+            // the inferior theoretical performance guarantees. 
             var heap = new Heap<Cell, float>();
             heap.Insert(src, 0);
             distances[src] = 0;

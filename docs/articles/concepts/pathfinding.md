@@ -39,7 +39,7 @@ As FindDistances, but only returns cells within a given distance.
 
 Most of the pathfinding routines take some optional arguments.
 
-### `isAccessible`
+### isAccessible
 If isAccessible is set, the path only travels through points that this returns true for. It's equivalent to setting a MaskModifier on the grid itself.
 
 The default is all cells are accessible.
