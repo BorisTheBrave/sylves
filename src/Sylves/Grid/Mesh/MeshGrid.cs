@@ -324,44 +324,66 @@ namespace Sylves
         protected virtual RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
         {
             var cellData = CellData[cell] as MeshCellData;
-            if (!IsPlanar)
+            if (IsPlanar)
             {
-                throw new NotImplementedException();
-            }
-
-            var face = cellData.Face;
-            var prev = meshData.vertices[face[face.Count - 1]];
-            var bestD = float.PositiveInfinity;
-            var bestP = new Vector3();
-            var bestI = 0;
-            for (var i = 0; i < face.Count; i++)
-            {
-                var curr = meshData.vertices[face[i]];
-                if (MeshRaycast.RaycastSegment(rayOrigin, direction, prev, curr, out var p, out var d))
+                var face = cellData.Face;
+                var prev = meshData.vertices[face[face.Count - 1]];
+                var bestD = float.PositiveInfinity;
+                var bestP = new Vector3();
+                var bestI = 0;
+                for (var i = 0; i < face.Count; i++)
                 {
-                    if (d < bestD)
+                    var curr = meshData.vertices[face[i]];
+                    if (MeshRaycast.RaycastSegment(rayOrigin, direction, prev, curr, out var p, out var d))
                     {
-                        bestD = d;
-                        bestP = p;
-                        bestI = i;
+                        if (d < bestD)
+                        {
+                            bestD = d;
+                            bestP = p;
+                            bestI = i;
+                        }
                     }
+                    prev = curr;
                 }
-                prev = curr;
-            }
-            if (bestD == float.PositiveInfinity)
-            {
-                return null;
+                if (bestD == float.PositiveInfinity)
+                {
+                    return null;
+                }
+                else
+                {
+                    var cellDir = MeshGridBuilder.EdgeIndexToCellDir((bestI + face.Count - 1) % face.Count, face.Count, meshGridOptions.DoubleOddFaces);
+                    return new RaycastInfo
+                    {
+                        cell = cell,
+                        cellDir = cellDir,
+                        distance = bestD,
+                        point = bestP,
+                    };
+                }
             }
             else
             {
-                var cellDir = MeshGridBuilder.EdgeIndexToCellDir((bestI + face.Count - 1) % face.Count, face.Count, meshGridOptions.DoubleOddFaces);
-                return new RaycastInfo
+                // Currently does fan detection
+                // Doesn't work for convex faces
+                var face = ((MeshCellData)cellData).Face;
+                var v0 = meshData.vertices[face[0]];
+                var prev = meshData.vertices[face[face.Count - 1]];
+                for (var i = 1; i < face.Count; i++)
                 {
-                    cell = cell,
-                    cellDir = cellDir,
-                    distance = bestD,
-                    point = bestP,
-                };
+                    var v = meshData.vertices[face[i]];
+                    if (MeshRaycast.RaycastTri(rayOrigin, direction, v0, prev, v, out var point, out var distance))
+                    {
+                        return new RaycastInfo
+                        {
+                            cell = cell,
+                            cellDir = null,
+                            distance = distance,
+                            point = point,
+                        };
+                    }
+                    prev = v;
+                }
+                return null;
             }
         }
 

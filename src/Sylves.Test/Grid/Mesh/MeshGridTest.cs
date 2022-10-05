@@ -140,7 +140,7 @@ namespace Sylves.Test
         }
 
         [Test]
-        public void TestRaycast_2d()
+        public void TestRaycast_Planar()
         {
             var g = new MeshGrid(TestMeshes.PlaneXY);
             var results = g.Raycast(new Vector3(-0.6f, 0.1f, 0), Vector3.right);
@@ -151,7 +151,7 @@ namespace Sylves.Test
         }
 
         [Test]
-        public void TestRaycast_2d_Glancing()
+        public void TestRaycast_Planar_Glancing()
         {
             var g = new MeshGrid(TestMeshes.PlaneXY);
             var results = g.Raycast(new Vector3(-0.6f, -0.1f, 0), Vector3.right);
@@ -159,6 +159,17 @@ namespace Sylves.Test
             Assert.AreEqual(new Cell(), raycastInfo.cell);
             Assert.AreEqual(SquareDir.Left, (SquareDir?)raycastInfo.cellDir);
             Assert.AreEqual(0.1f, raycastInfo.distance, 1e-6);
+        }
+
+        [Test]
+        public void TestRaycast()
+        {
+            var g = new MeshGrid(TestMeshes.Cube);
+            var results = g.Raycast(new Vector3(-1.6f, -0.1f, 0), Vector3.right);
+            var raycastInfo = results.First();
+            Assert.AreEqual(new Cell((int)(CubeDir.Left), 0, 0), raycastInfo.cell);
+            Assert.AreEqual(null, raycastInfo.cellDir);
+            Assert.AreEqual(1.1f, raycastInfo.distance, 1e-6);
         }
     }
 }
