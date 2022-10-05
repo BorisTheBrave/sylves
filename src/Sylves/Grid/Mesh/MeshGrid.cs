@@ -11,8 +11,14 @@ namespace Sylves
 {
     public class MeshCellData : DataDrivenCellData
     {
+        /// <summary>
+        /// Details of the original face that this cell derives from 
+        /// </summary>
         public MeshUtils.Face Face { get; set; }
 
+        /// <summary>
+        /// For 3d cells, information about how the 2d face was extended into 3d. 
+        /// </summary>
         public PrismInfo PrismInfo { get; set; }
     }
 
@@ -23,12 +29,14 @@ namespace Sylves
     {
         private readonly MeshDetails meshDetails;
         protected readonly MeshData meshData;
+        private readonly MeshGridOptions meshGridOptions;
         protected bool is2d;
 
         public MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions = null) :
             base(MeshGridBuilder.Build(meshData, meshGridOptions ?? new MeshGridOptions()))
         {
             this.meshData = meshData;
+            this.meshGridOptions = meshGridOptions ?? new MeshGridOptions();
             meshDetails = BuildMeshDetails();
             is2d = true;
         }
@@ -346,10 +354,11 @@ namespace Sylves
             }
             else
             {
+                var cellDir = MeshGridBuilder.EdgeIndexToCellDir((bestI + face.Count - 1) % face.Count, face.Count, meshGridOptions.DoubleOddFaces);
                 return new RaycastInfo
                 {
                     cell = cell,
-                    //cellDir = null,// TODO
+                    cellDir = cellDir,
                     distance = bestD,
                     point = bestP,
                 };

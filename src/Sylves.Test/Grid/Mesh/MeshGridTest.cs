@@ -146,8 +146,7 @@ namespace Sylves.Test
             var results = g.Raycast(new Vector3(-0.6f, 0.1f, 0), Vector3.right);
             var raycastInfo = results.Single();
             Assert.AreEqual(new Cell(), raycastInfo.cell);
-            // TODO
-            //Assert.AreEqual(SquareDir.Left, (SquareDir?)raycastInfo.cellDir);
+            Assert.AreEqual(SquareDir.Left, (SquareDir?)raycastInfo.cellDir);
             Assert.AreEqual(0.1f, raycastInfo.distance, 1e-6);
         }
 
@@ -158,8 +157,7 @@ namespace Sylves.Test
             var results = g.Raycast(new Vector3(-0.6f, -0.1f, 0), Vector3.right);
             var raycastInfo = results.Single();
             Assert.AreEqual(new Cell(), raycastInfo.cell);
-            // TODO
-            //Assert.AreEqual(SquareDir.Left, (SquareDir?)raycastInfo.cellDir);
+            Assert.AreEqual(SquareDir.Left, (SquareDir?)raycastInfo.cellDir);
             Assert.AreEqual(0.1f, raycastInfo.distance, 1e-6);
         }
     }

@@ -92,8 +92,6 @@ namespace Sylves.Test
             // TODO: Also check some left right moves
         }
 
-
-
         [Test]
         public void TestCubeGetTRS()
         {

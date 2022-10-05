@@ -47,7 +47,7 @@ namespace Sylves
             }
             else
             {
-                throw new System.NotImplementedException();
+                throw new System.NotImplementedException("Raycasts vs non-cube cell types not supported yet");
             }
         }
 

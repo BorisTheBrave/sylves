@@ -115,14 +115,14 @@ namespace Sylves
                         }
                         else
                         {
-                            var cellDir = EdgeIndexToDir(indexCount, faceIndices.Count, meshGridOptions.DoubleOddFaces);
+                            var cellDir = EdgeIndexToCellDir(indexCount - 1, faceIndices.Count, meshGridOptions.DoubleOddFaces);
                             edgeStore.AddEdge(vertices[prev], vertices[index], new Cell(face, submesh), cellDir, moves);
                             prev = index;
                         }
                         indexCount++;
                     }
                     {
-                        var cellDir = EdgeIndexToDir(indexCount, faceIndices.Count, meshGridOptions.DoubleOddFaces);
+                        var cellDir = EdgeIndexToCellDir(indexCount - 1, faceIndices.Count, meshGridOptions.DoubleOddFaces);
                         edgeStore.AddEdge(vertices[prev], vertices[first], new Cell(face, submesh), cellDir, moves);
                     }
                     face++;
@@ -249,9 +249,15 @@ namespace Sylves
 
         #endregion
 
-        private static CellDir EdgeIndexToDir(int edgeIndex, int edgeCount, bool doubleOddFaces)
+        // Edge index i is the edge from vertex i to vertex i+1
+        public static CellDir EdgeIndexToCellDir(int edgeIndex, int edgeCount, bool doubleOddFaces)
         {
-            return (CellDir)(edgeCount % 2 == 1 && doubleOddFaces ? (edgeIndex - 1) * 2 : (edgeIndex - 1));
+            return (CellDir)(edgeCount % 2 == 1 && doubleOddFaces ? edgeIndex * 2 : edgeIndex);
+        }
+
+        public static int CellDirToEdgeIndex(CellDir cellDir, int edgeCount, bool doubleOddFaces)
+        {
+            return edgeCount % 2 == 1 && doubleOddFaces ? ((int)cellDir) / 2 : (int)cellDir;
         }
 
         private static ICellType GetCellType(int edgeCount, bool doubleOddFaces)

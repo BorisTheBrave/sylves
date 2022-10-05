@@ -122,16 +122,5 @@ namespace Sylves.Test
             var results = g.Raycast(start, end - start, 1);
             Assert.AreEqual(3, results.Count());
         }
-
-        [Test]
-        public void TestRaycast2()
-        {
-            var g = new SquareSnubGrid();
-            var start = new Vector3(-2.149999f, 0.633333f, 0);
-            var end = new Vector3(-1.949999f, 0.7333332f, 0);
-            var results = g.Raycast(start, end - start, 1).ToList();
-            Assert.AreEqual(0, results.Count);
-
-        }
     }
 }
