@@ -28,5 +28,26 @@ namespace Sylves.Test
             Test(new Vector3(0, 0, 1), CubeDir.Forward);
             Test(new Vector3(0, 0, -1), CubeDir.Back);
         }
+
+        [Test]
+        public void TestRaycastTri()
+        {
+            var hit = MeshRaycast.RaycastTri(Vector3.left, Vector3.right,
+                new Vector3(0, -1, -1), new Vector3(0, 1, -1), new Vector3(0, -1, 1),
+                out var position, out var distance, out var side);
+            Assert.IsTrue(hit);
+            Assert.AreEqual(Vector3.zero, position);
+            Assert.AreEqual(1.0f, distance);
+            Assert.IsTrue(side);
+
+            hit = MeshRaycast.RaycastTri(Vector3.right, Vector3.left,
+                new Vector3(0, -1, -1), new Vector3(0, 1, -1), new Vector3(0, -1, 1),
+                out position, out distance, out side);
+            Assert.IsTrue(hit);
+            Assert.AreEqual(Vector3.zero, position);
+            Assert.AreEqual(1.0f, distance);
+            Assert.IsFalse(side);
+
+        }
     }
 }

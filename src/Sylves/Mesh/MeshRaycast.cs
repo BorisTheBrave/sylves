@@ -40,6 +40,11 @@ namespace Sylves
         /// </summary>
         public static bool RaycastTri(Vector3 rayOrigin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, out Vector3 point, out float distance)
         {
+            return RaycastTri(rayOrigin, direction, v0, v1, v2, out point, out distance, out var _);
+        }
+
+        public static bool RaycastTri(Vector3 rayOrigin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, out Vector3 point, out float distance, out bool side)
+        {
             //  Cribbed from a tutorial
             // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/ray-triangle-intersection-geometric-solution
 
@@ -57,6 +62,7 @@ namespace Sylves
 
             // check if ray and plane are parallel ?
             float NdotRayDirection = Vector3.Dot(N, direction);
+            side = NdotRayDirection > 0;
             if (Mathf.Abs(NdotRayDirection) < eps) // almost 0 
                 return false; // they are parallel so they don't intersect ! 
 

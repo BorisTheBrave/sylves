@@ -173,39 +173,22 @@ namespace Sylves
         }
 
         // FindCell, applied to a single cell
-        private bool IsPointInCell(Vector3 position, Cell cell)
+        protected virtual bool IsPointInCell(Vector3 position, Cell cell)
         {
-            var cellData = CellData[cell];
-            var cellType = UnwrapXZCellModifier(cellData.CellType);
-            // TODO: Dispatch to celltype method?
-            // TODO: This should use actual cell shape
-            if (cellType == CubeCellType.Instance || 
-                cellType == SquareCellType.Instance)
+            // Currently does fan detection
+            // Doesn't work for convex faces
+            var cellData = (MeshCellData)CellData[cell];
+            var face = cellData.Face;
+            var v0 = meshData.vertices[face[0]];
+            var prev = meshData.vertices[face[face.Count - 1]];
+            for(var i=1;i<face.Count;i++)
             {
-            var cellLocalPoint = cellData.TRS.ToMatrix().inverse.MultiplyPoint3x4(position);
-                return Vector3Int.RoundToInt(cellLocalPoint) == Vector3Int.zero;
+                var v = meshData.vertices[face[i]];
+                if (IsPointInTriangle(position, v0, prev, v))
+                    return true;
+                prev = v;
             }
-            else
-            {
-                if(!IsPlanar)
-                {
-                    throw new NotImplementedException();
-                }
-
-                // Currently does fan detection
-                // Doesn't work for convex faces
-                var face = ((MeshCellData)cellData).Face;
-                var v0 = meshData.vertices[face[0]];
-                var prev = meshData.vertices[face[face.Count - 1]];
-                for(var i=1;i<face.Count;i++)
-                {
-                    var v = meshData.vertices[face[i]];
-                    if (IsPointInTriangle(position, v0, prev, v))
-                        return true;
-                    prev = v;
-                }
-                return false;
-            }
+            return false;
         }
         public override bool FindCell(Vector3 position, out Cell cell)
         {
@@ -321,6 +304,7 @@ namespace Sylves
 
         // Narrow phase
         // I.e. raycast, applied to a single cell
+        // Unlike raycast, this doesn't catch rays that start in the cell.
         protected virtual RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
         {
             var cellData = CellData[cell] as MeshCellData;

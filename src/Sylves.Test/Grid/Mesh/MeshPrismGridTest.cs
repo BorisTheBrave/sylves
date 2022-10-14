@@ -233,8 +233,9 @@ namespace Sylves.Test
         [Test]
         public void TestHex()
         {
-            var h = new HexGrid(1, bound: HexBound.Hexagon(3));
+            var h = new HexGrid(1, bound: HexBound.Hexagon(0));
             var meshData = h.ToMeshData();
+            meshData.RecalculateNormals();
             var g = new MeshPrismGrid(meshData, new MeshPrismGridOptions());
 
             GridTest.FindCell(g, new Cell());

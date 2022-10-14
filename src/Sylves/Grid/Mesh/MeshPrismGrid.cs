@@ -3,6 +3,7 @@ using UnityEngine;
 #endif
 
 
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sylves
@@ -51,6 +52,21 @@ namespace Sylves
             }
         }
 
+        protected override bool IsPointInCell(Vector3 position, Cell cell)
+        {
+            var c = 0;
+            foreach(var (v0, v1, v2, dir) in GetCellTriangleMesh(cell))
+            {
+                System.Console.WriteLine($"{cell} {v0} {v1} {v2} {dir}");
+                if(MeshRaycast.RaycastTri(position, Vector3.right, v0, v1, v2, out var _, out var _, out var side))
+                {
+                    System.Console.WriteLine($"hit {side}");
+                    c += side ? 1 : -1;
+                }
+            }
+            return c != 0;
+        }
+
         #endregion
 
         #region Shape
@@ -78,7 +94,51 @@ namespace Sylves
 
         private static readonly TRS s_trsIdentity = new TRS();
 
-        public void GetMesh(Cell cell, out MeshData meshData, out TRS trs, out ILookup<CellDir, int> faces)
+        public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetCellTriangleMesh(Cell cell)
+        {
+            var meshCellData = CellData[cell] as MeshCellData;
+            var face = meshCellData.Face;
+            var prismInfo = meshCellData.PrismInfo;
+            var vertices = meshData.vertices;
+            var normals = meshData.normals;
+            var (faceIndex, submesh, layer) = (cell.x, cell.y, cell.z);
+
+
+            var meshOffset1 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset - meshPrismOptions.LayerHeight / 2;
+            var meshOffset2 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset + meshPrismOptions.LayerHeight / 2;
+
+            // Explore all the square sides
+            for (var i = 0; i < face.Length; i++)
+            {
+                var v1 = vertices[face[i]];
+                var v2 = vertices[face[(i + 1) % face.Length]];
+                var n1 = normals[face[i]];
+                var n2 = normals[face[(i + 1) % face.Length]];
+                var baseCellDir = MeshGridBuilder.EdgeIndexToCellDir(i, face.Count, meshPrismOptions.DoubleOddFaces);
+                var cellDir = prismInfo.BaseToPrism(baseCellDir);
+                yield return (v1 + n1 * meshOffset1, v1 + n1 * meshOffset2, v2 + n2 * meshOffset2, cellDir);
+                yield return (v1 + n1 * meshOffset1, v2 + n2 * meshOffset2, v2 + n2 * meshOffset1, cellDir);
+            }
+            // Currently does fan detection
+            // Doesn't work for convex faces
+            {
+                var v0 = vertices[face[0]];
+                var n0 = normals[face[0]];
+                var v1 = vertices[face[face.Count - 1]];
+                var n1 = normals[face[face.Count - 1]];
+                for (var i = 1; i < face.Count; i++)
+                {
+                    var v2 = vertices[face[i]];
+                    var n2 = normals[face[i]];
+                    yield return (v0 + n0 * meshOffset2, v1 + n1 * meshOffset2, v2 + n2 * meshOffset2, prismInfo.ForwardDir);
+                    yield return (v0 + n0 * meshOffset1, v2 + n2 * meshOffset1, v1 + n1 * meshOffset1, prismInfo.BackDir);
+                    v1 = v2;
+                    n1 = n2;
+                }
+            }
+        }
+
+        public void GetCellMesh(Cell cell, out MeshData meshData, out TRS trs, out ILookup<CellDir, int> faces)
         {
             var meshCellData = CellData[cell] as MeshCellData;
             var cellType = meshCellData.CellType;
