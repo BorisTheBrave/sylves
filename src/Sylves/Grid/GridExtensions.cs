@@ -38,8 +38,28 @@ namespace Sylves
             }
         }
 
-        // TODO: Apply modifiiers
+        /// <summary>
+        /// Applies a linear transformation to each of the cells of the grid.
+        /// <see cref="TransformModifier"/>
+        /// </summary>
+        public static IGrid Transformed(this IGrid grid, Matrix4x4 transform) => new TransformModifier(grid, transform);
 
+        /// <summary>
+        /// Filters the grid cells to the given subset.
+        /// <see cref="MaskModifier"/>
+        /// </summary>
+        public static IGrid Masked(this IGrid grid, ISet<Cell> allCells) => new MaskModifier(grid, allCells);
+
+        /// <summary>
+        /// Filters the grid cells to the given subset.
+        /// <see cref="MaskModifier"/>
+        /// </summary>
+        public static IGrid Masked(this IGrid grid, Func<Cell, bool> containsFunc, IEnumerable<Cell> allCells = null) => new MaskModifier(grid, containsFunc, allCells);
+
+
+        /// <summary>
+        /// Converts a finite grid to a MeshData.
+        /// </summary>
         public static MeshData ToMeshData(this IGrid grid)
         {
             var vertices = new List<Vector3>();
