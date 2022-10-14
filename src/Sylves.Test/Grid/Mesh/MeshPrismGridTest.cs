@@ -214,7 +214,7 @@ namespace Sylves.Test
 
 
         [Test]
-        public void Triangle()
+        public void TestTriangle()
         {
 
             var grid = new MeshPrismGrid(TestMeshes.TrianglePlane, new Sylves.MeshPrismGridOptions
@@ -227,6 +227,17 @@ namespace Sylves.Test
             });
 
             Assert.IsNotNull(grid);
+        }
+
+
+        [Test]
+        public void TestHex()
+        {
+            var h = new HexGrid(1, bound: HexBound.Hexagon(3));
+            var meshData = h.ToMeshData();
+            var g = new MeshPrismGrid(meshData, new MeshPrismGridOptions());
+
+            GridTest.FindCell(g, new Cell());
         }
     }
 }

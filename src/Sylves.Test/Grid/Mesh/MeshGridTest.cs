@@ -171,5 +171,15 @@ namespace Sylves.Test
             Assert.AreEqual(null, raycastInfo.cellDir);
             Assert.AreEqual(1.1f, raycastInfo.distance, 1e-6);
         }
+
+        [Test]
+        public void TestHex()
+        {
+            var h = new HexGrid(1, bound: HexBound.Hexagon(3));
+            var meshData = h.ToMeshData();
+            var g = new MeshGrid(meshData);
+
+            GridTest.FindCell(g, new Cell());
+        }
     }
 }

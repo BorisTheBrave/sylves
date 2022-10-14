@@ -25,7 +25,7 @@ namespace Sylves
             var isTris = surfaceMesh.GetTopology(subMesh) == MeshTopology.Triangles;
 
             if (!isQuads && !isTris)
-                throw new Exception($"Cannot handle topology of type {surfaceMesh.GetTopology(subMesh)}");
+                return null;
 
             var interpolatePoint = isQuads
                 ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2)
