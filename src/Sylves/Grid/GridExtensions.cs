@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves
 {
@@ -33,6 +36,43 @@ namespace Sylves
                     yield return dest;
                 }
             }
+        }
+
+        // TODO: Apply modifiiers
+
+        public static MeshData ToMeshData(this IGrid grid)
+        {
+            var vertices = new List<Vector3>();
+            var indices = new List<int>();
+            bool allTris = true;
+            bool allQuads = true;
+            foreach(var cell in grid.GetCells())
+            {
+                grid.GetPolygon(cell, out var cellVerticies, out var transform);
+                foreach(var v in cellVerticies)
+                {
+                    indices.Add(vertices.Count);
+                    vertices.Add(transform.MultiplyPoint3x4(v));
+                }
+                indices[indices.Count - 1] = ~indices[indices.Count - 1];
+                if (cellVerticies.Length != 3) allTris = false;
+                if (cellVerticies.Length != 4) allQuads = false;
+            }
+            if(allTris || allQuads)
+            {
+                for(var i=0;i<indices.Count;i++)
+                {
+                    if (indices[i] < 0)
+                        indices[i] = ~indices[i];
+                }
+            }
+            return new MeshData
+            {
+                vertices = vertices.ToArray(),
+                indices = new[] { indices.ToArray() },
+                subMeshCount = 1,
+                topologies = new MeshTopology[] { allTris ? MeshTopology.Triangles : allQuads ? MeshTopology.Quads : MeshTopology.NGon },
+            };
         }
 
     }
