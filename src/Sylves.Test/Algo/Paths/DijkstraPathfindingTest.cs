@@ -22,6 +22,19 @@ namespace Sylves.Test
             Assert.AreEqual(4, path.Length);
         }
 
+
+        [Test]
+        public void TestNoPath()
+        {
+            var g = new SquareGrid(1, new SquareBound(0, 0, 3, 3));
+            var pf = new DijkstraPathfinding(g, new Cell(), StepLengths.Create(c => c.x != 1));
+
+            pf.Run(new Cell(2, 2));
+
+            var path = pf.ExtractPathTo(new Cell(2, 2));
+            Assert.IsNull(path);
+        }
+
         [Test]
         public void TestDistances()
         {

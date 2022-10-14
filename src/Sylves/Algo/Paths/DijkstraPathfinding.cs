@@ -85,6 +85,11 @@ namespace Sylves
 
         public CellPath ExtractPathTo(Cell target)
         {
+            if(target != src && !steps.ContainsKey(target))
+            {
+                return null;
+            }
+
             var pathSteps = new List<Step>();
             var cell = target;
             while(cell != src)
