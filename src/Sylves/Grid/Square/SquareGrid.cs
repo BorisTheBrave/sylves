@@ -10,6 +10,7 @@ namespace Sylves
     /// <summary>
     /// A regular square 2d grid.
     /// Covers both the infinite grid, and bounded versions.
+    /// Cell (0, 0) has center at (0.5, 0.5).
     /// Related classes:
     /// * <see cref="FTHexDir"/>/<see cref="PTHexDir"/>
     /// * <see cref="NGonCellType"/> (with n = 6)
