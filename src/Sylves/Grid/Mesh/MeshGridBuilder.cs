@@ -137,6 +137,11 @@ namespace Sylves
         private static readonly Matrix4x4 RotateYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 0, 1));
         public static DataDrivenData Build(MeshData meshData, MeshPrismGridOptions meshPrismGridOptions)
         {
+            if(meshData.normals == null)
+            {
+                throw new Exception($"Mesh data must include normals for MeshPrismGrid.");
+            }
+
             var data = new DataDrivenData
             {
                 Cells = new Dictionary<Cell, DataDrivenCellData>(),
