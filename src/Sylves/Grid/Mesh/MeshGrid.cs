@@ -420,10 +420,14 @@ namespace Sylves
                         return true;
                     }
                 }
-                else
+                else if(cellType is NGonPrismCellType ngonPrismCellType)
                 {
-                    throw new NotImplementedException($"Unsupported cellType {cellType}");
-
+                    var cellRotation = ngonPrismCellType.FromMatrix(m);
+                    if (cellRotation != null)
+                    {
+                        rotation = cellRotation.Value;
+                        return true;
+                    }
                 }
             }
 

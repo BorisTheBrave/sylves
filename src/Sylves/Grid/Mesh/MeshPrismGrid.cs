@@ -26,13 +26,9 @@ namespace Sylves
         protected override RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
         {
             var meshCellData = CellData[cell] as MeshCellData;
-            if (meshCellData.CellType == CubeCellType.Instance)
+            if (meshCellData.CellType == CubeCellType.Instance && meshCellData.PrismInfo.BackDir != (CellDir)CubeDir.Back)
             {
-                if (meshCellData.PrismInfo.BackDir != (CellDir)CubeDir.Back)
-                {
-                    throw new System.NotImplementedException("UseXZPlane not supported");
-                }
-
+                // Fast path?
                 GetCubeCellVertices(cell, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8);
                 var hit = MeshRaycast.RaycastCube(rayOrigin, direction, v1, v2, v3, v4, v5, v6, v7, v8);
                 if (hit != null)
@@ -48,7 +44,21 @@ namespace Sylves
             }
             else
             {
-                throw new System.NotImplementedException("Raycasts vs non-cube cell types not supported yet");
+                foreach(var (v0, v1, v2, cellDir) in GetCellTriangleMesh(cell))
+                {
+                    var hit = MeshRaycast.RaycastTri(rayOrigin, direction, v0, v1, v2, out var point, out var distance);
+                    if(hit)
+                    {
+                        return new RaycastInfo
+                        {
+                            cell = cell,
+                            cellDir = cellDir,
+                            distance = distance,
+                            point = point,
+                        };
+                    }
+                }
+                return null;
             }
         }
 
