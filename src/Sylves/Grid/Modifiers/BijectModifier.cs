@@ -150,6 +150,10 @@ namespace Sylves
         public override Deformation GetDeformation(Cell cell) => Underlying.GetDeformation(toUnderlying(cell));
 
         public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => Underlying.GetPolygon(toUnderlying(cell), out vertices, out transform);
+
+        public override IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => Underlying.GetTriangleMesh(toUnderlying(cell));
+
+        public override MeshData GetMeshData(Cell cell) => Underlying.GetMeshData(toUnderlying(cell));
         #endregion
 
         #region Query

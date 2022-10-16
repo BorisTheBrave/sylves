@@ -107,6 +107,10 @@ namespace Sylves
 
         public virtual void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => underlying.GetPolygon(cell, out vertices, out transform);
 
+        public virtual IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => underlying.GetTriangleMesh(cell);
+
+        public virtual MeshData GetMeshData(Cell cell) => underlying.GetMeshData(cell);
+
         #endregion
 
         #region Query

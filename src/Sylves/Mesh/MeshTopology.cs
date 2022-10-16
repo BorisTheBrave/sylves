@@ -12,7 +12,10 @@ namespace Sylves
         //LineStrip = 4,
         //Points = 5
 
-        // Final index of each face is bit inverted.
+        // Represents ngons of arbitrary number of sides
+        // The last index in each ngon is bit inverted (~index) to mark it.
+        // There's no equivalent in Unity for this, it needs triangulation before
+        // it can be used.
         NGon = -1,
     }
 }

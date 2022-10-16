@@ -17,6 +17,45 @@ namespace Sylves
 
         Vector3 cellSize;
 
+        private static MeshData CubeMeshData
+        {
+            get
+            {
+                var meshData = new MeshData();
+                Vector3[] vertices = {
+                    // Vertex order matches PlaneXY repeated twice
+                    // This is called z-forward convention.
+                    new Vector3 (+0.5f, -0.5f, -0.5f),
+                    new Vector3 (+0.5f, +0.5f, -0.5f),
+                    new Vector3 (-0.5f, +0.5f, -0.5f),
+                    new Vector3 (-0.5f, -0.5f, -0.5f),
+                    new Vector3 (+0.5f, -0.5f, +0.5f),
+                    new Vector3 (+0.5f, +0.5f, +0.5f),
+                    new Vector3 (-0.5f, +0.5f, +0.5f),
+                    new Vector3 (-0.5f, -0.5f, +0.5f),
+                };
+
+                // Faces in same order as CubeDir
+                // They are arranged so that 2nd edge points Up ( or Forward), matching CubeDir.Up().
+                int[] quads = {
+                    7, 6, 2, 3, // Left
+                    0, 1, 5, 4, // Right
+                    2, 6, 5, 1, // Up
+                    0, 4, 7, 3, // Down
+                    4, 5, 6, 7, // Forward
+                    3, 2, 1, 0, // Back
+                };
+
+                meshData.subMeshCount = 1;
+                meshData.vertices = vertices;
+                meshData.indices = new[] { quads };
+                meshData.topologies = new[] { MeshTopology.Quads };
+                meshData.RecalculateNormals();
+
+                return meshData;
+            }
+        }
+
         public CubeGrid(float cellSize, CubeBound bound = null)
             :this(new Vector3(cellSize, cellSize, cellSize), bound)
         {
@@ -286,6 +325,16 @@ namespace Sylves
         public Deformation GetDeformation(Cell cell) => Deformation.Identity;
 
         public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new Grid3dException();
+
+        public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MeshData GetMeshData(Cell cell)
+        {
+            return (Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(cellSize)) * CubeMeshData;
+        }
         #endregion
 
         #region Query

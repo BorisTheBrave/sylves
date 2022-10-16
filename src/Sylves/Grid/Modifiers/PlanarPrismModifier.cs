@@ -117,6 +117,10 @@ namespace Sylves
         {
             return (planarPrismOptions.LayerOffset + planarPrismOptions.LayerHeight * layer) * Vector3.forward;
         }
+        private Vector3 GetOffset(float layer)
+        {
+            return (planarPrismOptions.LayerOffset + planarPrismOptions.LayerHeight * layer) * Vector3.forward;
+        }
         private int GetLayer(Vector3 position)
         {
             return Mathf.RoundToInt((position.z - planarPrismOptions.LayerOffset) / planarPrismOptions.LayerHeight);
@@ -408,6 +412,54 @@ namespace Sylves
         }
 
         public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new Grid3dException();
+
+        public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
+        {
+            // Need some thought about how to do this.
+            throw new NotImplementedException();
+            //Underlying.GetPolygon(cell, out var vertices, out var transform);
+        }
+
+        public MeshData GetMeshData(Cell cell)
+        {
+            Underlying.GetPolygon(cell, out var polygon, out var transform);
+            var n = polygon.Length;
+            var layer = cell.z;
+
+            var vertices = new Vector3[n * 2];
+            var indices = new int[n * 4 + n * 2];
+            for (var i = 0; i < n; i++)
+            {
+                vertices[i] = transform.MultiplyPoint3x4(polygon[i]) + GetOffset(layer - 0.5f);
+                vertices[i + n] = transform.MultiplyPoint3x4(polygon[i]) + GetOffset(layer + 0.5f);
+            }
+
+            // Explore all the square sides
+            for (var i = 0; i < n; i++)
+            {
+                indices[i * 4 + 0] = i;
+                indices[i * 4 + 1] = (i + 1) % n;
+                indices[i * 4 + 2] = (i + 1) % n + n;
+                indices[i * 4 + 3] = ~(i + n);
+            }
+            // Top and bottom
+            for (var i = 0; i < n; i++)
+            {
+                indices[n * 4 + i] = n - 1 - i;
+                indices[n * 5 + i] = i;
+            }
+            indices[n * 5 - 1] = ~indices[n * 5 - 1];
+            indices[n * 6 - 1] = ~indices[n * 6 - 1];
+
+            return new MeshData
+            {
+                vertices = vertices,
+                indices = new[] { indices },
+                subMeshCount = 1,
+                topologies = new MeshTopology[] { MeshTopology.NGon },
+            };
+        }
+
 
         #endregion
 

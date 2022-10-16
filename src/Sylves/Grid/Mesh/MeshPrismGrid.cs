@@ -44,7 +44,7 @@ namespace Sylves
             }
             else
             {
-                foreach(var (v0, v1, v2, cellDir) in GetCellTriangleMesh(cell))
+                foreach(var (v0, v1, v2, cellDir) in GetTriangleMesh(cell))
                 {
                     var hit = MeshRaycast.RaycastTri(rayOrigin, direction, v0, v1, v2, out var point, out var distance);
                     if(hit)
@@ -65,7 +65,7 @@ namespace Sylves
         protected override bool IsPointInCell(Vector3 position, Cell cell)
         {
             var c = 0;
-            foreach(var (v0, v1, v2, dir) in GetCellTriangleMesh(cell))
+            foreach(var (v0, v1, v2, dir) in GetTriangleMesh(cell))
             {
                 System.Console.WriteLine($"{cell} {v0} {v1} {v2} {dir}");
                 if(MeshRaycast.RaycastTri(position, Vector3.right, v0, v1, v2, out var _, out var _, out var side))
@@ -104,7 +104,7 @@ namespace Sylves
 
         private static readonly TRS s_trsIdentity = new TRS();
 
-        public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetCellTriangleMesh(Cell cell)
+        public override IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
         {
             var meshCellData = CellData[cell] as MeshCellData;
             var face = meshCellData.Face;
@@ -147,6 +147,13 @@ namespace Sylves
                 }
             }
         }
+
+        public override MeshData GetMeshData(Cell cell)
+        {
+            GetCellMesh(cell, out var meshData, out var trs, out var _);
+            return trs.ToMatrix() * meshData;
+        }
+
 
         public void GetCellMesh(Cell cell, out MeshData meshData, out TRS trs, out ILookup<CellDir, int> faces)
         {

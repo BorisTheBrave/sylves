@@ -290,6 +290,16 @@ namespace Sylves
             vertices = polygon;
             transform = Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(new Vector3(cellSize.x, cellSize.y, 0));
         }
+
+        public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
+        {
+            throw new Grid2dException();
+        }
+
+        public MeshData GetMeshData(Cell cell)
+        {
+            throw new Grid2dException();
+        }
         #endregion
 
         #region Query

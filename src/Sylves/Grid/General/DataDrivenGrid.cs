@@ -141,6 +141,10 @@ namespace Sylves
 
         public virtual void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new System.NotImplementedException();
 
+        public virtual IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => throw new System.NotImplementedException();
+
+        public virtual MeshData GetMeshData(Cell cell) => throw new System.NotImplementedException();
+
         #endregion
 
         #region Query

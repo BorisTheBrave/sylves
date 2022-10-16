@@ -79,5 +79,24 @@ namespace Sylves
 
         }
         //public void RecalculateTangents();
+
+        public static MeshData operator*(Matrix4x4 m, MeshData meshData)
+        {
+            var it = m.inverse.transpose;
+            return new MeshData
+            {
+                subMeshCount = meshData.subMeshCount,
+                indices = meshData.indices,
+                topologies = meshData.topologies,
+                vertices = meshData.vertices.Select(m.MultiplyPoint3x4).ToArray(),
+                uv = meshData.uv,
+                normals = meshData.normals?.Select(it.MultiplyVector).ToArray(),
+                tangents = meshData.tangents?.Select(t =>
+                {
+                    var v = m.MultiplyVector(new Vector3(t.x, t.y, t.z));
+                    return new Vector4(v.x, v.y, v.z, t.w);
+                }).ToArray(),
+            };
+        }
     }
 }

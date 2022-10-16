@@ -123,6 +123,28 @@ namespace Sylves
         }
         #endregion
 
+        #region Shape
+
+        public static MeshData GetMeshData(IGrid grid, Cell cell)
+        {
+            var vertices = new List<Vector3>();
+            foreach(var (v1, v2, v3, _) in grid.GetTriangleMesh(cell))
+            {
+                vertices.Add(v1);
+                vertices.Add(v2);
+                vertices.Add(v3);
+            }
+            return new MeshData
+            {
+                vertices = vertices.ToArray(),
+                indices = new[] { Enumerable.Range(0, vertices.Count).ToArray() },
+                subMeshCount = 1,
+                topologies = new[] { MeshTopology.Triangles },
+            };
+        }
+
+        #endregion
+
         #region Symmetry
         public static GridSymmetry FindGridSymmetry(IGrid grid, ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation)
         {

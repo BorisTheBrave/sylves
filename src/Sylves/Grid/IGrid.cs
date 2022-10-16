@@ -249,6 +249,16 @@ namespace Sylves
         /// <param name="transform">A transformation that needs to be applied to each vertex.</param>
         void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform);
 
+        /// <summary>
+        /// For 3d cells, returns triangles on the boundary of a given cell, and which direction they correspond to.
+        /// </summary>
+        IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell);
+
+        /// <summary>
+        /// For 3d cells, returns the mesh of a given cell.
+        /// </summary>
+        MeshData GetMeshData(Cell cell);
+
         #endregion
 
         #region Query

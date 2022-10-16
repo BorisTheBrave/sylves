@@ -251,6 +251,16 @@ namespace Sylves
             centerGrid.GetPolygon(centerCell, out vertices, out transform);
             transform = Matrix4x4.Translate(ChunkOffset(chunk)) * transform;
         }
+
+        public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
+        {
+            throw new Grid2dException();
+        }
+
+        public MeshData GetMeshData(Cell cell)
+        {
+            throw new Grid2dException();
+        }
         #endregion
 
         #region Query

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -50,6 +51,17 @@ namespace Sylves
             Underlying.GetPolygon(cell, out vertices, out transform);
             transform = this.transform * transform;
         }
+
+        public override IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
+        {
+            foreach (var (v1, v2, v3, cellDir) in Underlying.GetTriangleMesh(cell))
+            {
+                yield return (transform.MultiplyPoint3x4(v1), transform.MultiplyPoint3x4(v2), transform.MultiplyPoint3x4(v3), cellDir);
+            }
+        }
+
+        public override MeshData GetMeshData(Cell cell) => transform * Underlying.GetMeshData(cell);
+
         #endregion
 
         #region Query

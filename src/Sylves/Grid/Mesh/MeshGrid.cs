@@ -492,6 +492,16 @@ namespace Sylves
                 vertices[i++] = meshData.vertices[index];
             }
         }
+
+        public override IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
+        {
+            throw new Grid2dException();
+        }
+
+        public override MeshData GetMeshData(Cell cell)
+        {
+            throw new Grid2dException();
+        }
         #endregion
     }
 }
