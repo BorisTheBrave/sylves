@@ -77,44 +77,7 @@ namespace Sylves.Test
             topologies = new[] { MeshTopology.Quads }
         };
 
-        public static MeshData Cube
-        {
-            get
-            {
-                var meshData = new MeshData();
-                Vector3[] vertices = {
-                    // Vertex order matches PlaneXY repeated twice
-                    // This is called z-forward convention.
-                    new Vector3 (+0.5f, -0.5f, -0.5f),
-                    new Vector3 (+0.5f, +0.5f, -0.5f),
-                    new Vector3 (-0.5f, +0.5f, -0.5f),
-                    new Vector3 (-0.5f, -0.5f, -0.5f),
-                    new Vector3 (+0.5f, -0.5f, +0.5f),
-                    new Vector3 (+0.5f, +0.5f, +0.5f),
-                    new Vector3 (-0.5f, +0.5f, +0.5f), 
-                    new Vector3 (-0.5f, -0.5f, +0.5f),
-                };
-
-                // Faces in same order as CubeDir
-                // They are arranged so that 2nd edge points Up ( or Forward), matching CubeDir.Up().
-                int[] quads = {
-                    7, 6, 2, 3, // Left
-                    0, 1, 5, 4, // Right
-                    2, 6, 5, 1, // Up
-                    0, 4, 7, 3, // Down
-                    4, 5, 6, 7, // Forward
-                    3, 2, 1, 0, // Back
-                };
-
-                meshData.subMeshCount = 1;
-                meshData.vertices = vertices;
-                meshData.indices = new[] { quads };
-                meshData.topologies = new[] { MeshTopology.Quads };
-                meshData.RecalculateNormals();
-
-                return meshData;
-            }
-        }
+        public static MeshData Cube => MeshPrimitives.Cube;
 
         private const float Sqrt3 = 1.73205080756888f;
 

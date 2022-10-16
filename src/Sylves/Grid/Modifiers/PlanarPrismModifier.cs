@@ -423,15 +423,23 @@ namespace Sylves
         public MeshData GetMeshData(Cell cell)
         {
             Underlying.GetPolygon(cell, out var polygon, out var transform);
-            var n = polygon.Length;
-            var layer = cell.z;
+            return ExtrudePolygonToPrism(
+                polygon, 
+                transform,
+                GetOffset(cell.z - 0.5f),
+                GetOffset(cell.z + 0.5f)
+                );
+        }
 
+        internal static MeshData ExtrudePolygonToPrism(Vector3[] polygon, Matrix4x4 transform, Vector3 backLayer, Vector3 frontLayer)
+        {
+            var n = polygon.Length;
             var vertices = new Vector3[n * 2];
             var indices = new int[n * 4 + n * 2];
             for (var i = 0; i < n; i++)
             {
-                vertices[i] = transform.MultiplyPoint3x4(polygon[i]) + GetOffset(layer - 0.5f);
-                vertices[i + n] = transform.MultiplyPoint3x4(polygon[i]) + GetOffset(layer + 0.5f);
+                vertices[i] = transform.MultiplyPoint3x4(polygon[i]) + backLayer;
+                vertices[i + n] = transform.MultiplyPoint3x4(polygon[i]) + frontLayer;
             }
 
             // Explore all the square sides

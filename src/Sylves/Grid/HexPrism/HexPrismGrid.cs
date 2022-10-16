@@ -15,6 +15,9 @@ namespace Sylves
         private static readonly ICellType[] ftCellTypes = { HexPrismCellType.Get(HexOrientation.FlatTopped) };
         private static readonly ICellType[] ptCellTypes = { HexPrismCellType.Get(HexOrientation.PointyTopped) };
 
+        private static readonly MeshData ftMeshData = PlanarPrismModifier.ExtrudePolygonToPrism(MeshPrimitives.ShapedFtHexPolygon(1, 1), Matrix4x4.identity, -0.5f * Vector3.forward, 0.5f * Vector3.forward);
+        private static readonly MeshData ptMeshData = PlanarPrismModifier.ExtrudePolygonToPrism(MeshPrimitives.ShapedFtHexPolygon(1, 1), Matrix4x4.identity, -0.5f * Vector3.forward, 0.5f * Vector3.forward);
+
         private readonly ICellType cellType;
 
         private readonly HexPrismBound bound;
@@ -326,7 +329,10 @@ namespace Sylves
         #region Shape
         public Deformation GetDeformation(Cell cell) => Deformation.Identity;
 
-        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new NotImplementedException();
+        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
+        {
+            throw new Grid3dException();
+        }
 
         public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
         {
@@ -335,7 +341,7 @@ namespace Sylves
 
         public MeshData GetMeshData(Cell cell)
         {
-            throw new NotImplementedException();
+            return (Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(cellSize)) * (orientation == HexOrientation.PointyTopped ? ptMeshData : ftMeshData);
         }
         #endregion
 

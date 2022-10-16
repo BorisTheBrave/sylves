@@ -54,25 +54,9 @@ namespace Sylves
         private static readonly ICellType[] ftCellTypes = {HexCellType.Get(HexOrientation.FlatTopped)};
         private static readonly ICellType[] ptCellTypes= { HexCellType.Get(HexOrientation.PointyTopped) };
 
-        private static readonly Vector3[] ptPolygon =
-        {
-            new Vector3(0.5f, -0.25f, 0),
-            new Vector3(0.5f, 0.25f, 0),
-            new Vector3(0, 0.5f, 0),
-            new Vector3(-0.5f, 0.25f, 0),
-            new Vector3(-0.5f, -0.25f, 0),
-            new Vector3(0, -0.5f, 0),
-        };
+        private static readonly Vector3[] ptPolygon = MeshPrimitives.ShapedPtHexPolygon(1, 1);
 
-        private static readonly Vector3[] ftPolygon =
-        {
-            new Vector3(0.5f, 0, 0),
-            new Vector3(0.25f, 0.5f, 0),
-            new Vector3(-0.25f, 0.5f, 0),
-            new Vector3(-0.5f, 0, 0),
-            new Vector3(-0.25f, -0.5f, 0),
-            new Vector3(0.25f, -0.5f, 0),
-        };
+        private static readonly Vector3[] ftPolygon = MeshPrimitives.ShapedFtHexPolygon(1, 1);
 
         private readonly ICellType cellType;
 
