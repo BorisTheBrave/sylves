@@ -20,6 +20,7 @@ namespace Sylves
             base(meshData, MeshGridBuilder.Build(meshData, meshPrismOptions), false)
         {
             this.meshPrismOptions = meshPrismOptions;
+            BuildMeshDetails();
         }
 
         #region Query
@@ -250,6 +251,33 @@ namespace Sylves
                 faces = outFaces.ToLookup(x => x.Item1, x => x.Item2);
             }
         }
+        #endregion
+
+        #region Impl
+
+        protected override (Vector3, Vector3) ComputeBounds(Cell cell)
+        {
+            var meshCellData = (MeshCellData)CellData[cell];
+            var minMeshOffset = meshPrismOptions.MinLayer * meshPrismOptions.LayerHeight + meshPrismOptions.LayerOffset;
+            var maxMeshOffset = meshPrismOptions.MaxLayer * meshPrismOptions.LayerHeight + meshPrismOptions.LayerOffset;
+
+            var face = meshCellData.Face;
+            var cellMin = meshData.vertices[face[0]];
+            var cellMax = cellMin;
+            for (var i = 1; i < face.Count; i++)
+            {
+                var v = meshData.vertices[face[i]];
+                var n = meshData.normals[face[i]];
+                var v1 = v + n * minMeshOffset;
+                var v2 = v + n * maxMeshOffset;
+                cellMin = Vector3.Min(cellMin, v1);
+                cellMax = Vector3.Max(cellMax, v1);
+                cellMin = Vector3.Min(cellMin, v2);
+                cellMax = Vector3.Max(cellMax, v2);
+            }
+            return (cellMin, cellMax);
+        }
+
         #endregion
     }
 }

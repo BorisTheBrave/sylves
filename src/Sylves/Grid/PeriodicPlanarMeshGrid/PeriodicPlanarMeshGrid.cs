@@ -65,7 +65,9 @@ namespace Sylves
                 }
             }
 
-            centerGrid = new MeshGrid(meshData, dataDrivenData, true);
+            var mg = new MeshGrid(meshData, dataDrivenData, true);
+            mg.BuildMeshDetails();
+            centerGrid = mg;
             this.strideX = strideX;
             this.strideY = strideY;
         }

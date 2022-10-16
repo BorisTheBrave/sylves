@@ -27,7 +27,7 @@ namespace Sylves
     /// </summary>
     public class MeshGrid : DataDrivenGrid
     {
-        private readonly MeshDetails meshDetails;
+        private MeshDetails meshDetails;
         protected readonly MeshData meshData;
         private readonly MeshGridOptions meshGridOptions;
         protected bool is2d;
@@ -37,7 +37,7 @@ namespace Sylves
         {
             this.meshData = meshData;
             this.meshGridOptions = meshGridOptions ?? new MeshGridOptions();
-            meshDetails = BuildMeshDetails();
+            BuildMeshDetails();
             is2d = true;
         }
 
@@ -45,45 +45,39 @@ namespace Sylves
             base(data)
         {
             this.meshData = meshData;
-            meshDetails = BuildMeshDetails();
             this.is2d = is2d;
         }
 
         #region Impl
 
-        private MeshDetails BuildMeshDetails()
+        protected virtual (Vector3, Vector3) ComputeBounds(Cell cell)
+        {
+            var meshCellData = (MeshCellData)CellData[cell];
+
+            var face = meshCellData.Face;
+            var cellMin = meshData.vertices[face[0]];
+            var cellMax = cellMin;
+            for (var i = 1; i < face.Count; i++)
+            {
+                var v = meshData.vertices[face[i]];
+                cellMin = Vector3.Min(cellMin, v);
+                cellMax = Vector3.Max(cellMax, v);
+            }
+            return (cellMin, cellMax);
+        }
+
+        internal void BuildMeshDetails()
         {
             var hashCellSize = new Vector3(float.Epsilon, float.Epsilon, float.Epsilon);
             Vector3? min = null;
             Vector3? max = null;
             foreach (var cell in GetCells())
             {
-                if (CellData[cell] is MeshCellData meshCellData)
-                {
-                    if (meshCellData.PrismInfo == null)
-                    {
-                        var face = ((MeshCellData)CellData[cell]).Face;
-                        var cellMin = meshData.vertices[face[0]];
-                        var cellMax = cellMin;
-                        for (var i = 1; i < face.Count; i++)
-                        {
-                            var v = meshData.vertices[face[i]];
-                            cellMin = Vector3.Min(cellMin, v);
-                            cellMax = Vector3.Max(cellMax, v);
-                        }
-                        var dim = cellMax - cellMin;
-                        hashCellSize = Vector3.Max(hashCellSize, dim);
-                        min = min == null ? cellMin : Vector3.Min(min.Value, cellMin);
-                        max = max == null ? cellMax : Vector3.Max(max.Value, cellMax);
-                        continue;
-                    }
-                }
-                // TODO: This is the wrong way to compute cell dimensions
-                {
-                    var cellTrs = GetTRS(cell);
-                    var dim = Abs(cellTrs.ToMatrix().MultiplyVector(Vector3.one));
-                    hashCellSize = Vector3.Max(hashCellSize, dim);
-                }
+                var (cellMin, cellMax) = ComputeBounds(cell);
+                var dim = cellMax - cellMin;
+                hashCellSize = Vector3.Max(hashCellSize, dim);
+                min = min == null ? cellMin : Vector3.Min(min.Value, cellMin);
+                max = max == null ? cellMax : Vector3.Max(max.Value, cellMax);
             }
             var meshDetails = new MeshDetails
             {
@@ -116,7 +110,7 @@ namespace Sylves
             meshDetails.hashCellBounds = new CubeBound(hashCellMin.Value, hashCellMax.Value + Vector3Int.one);
             meshDetails.expandedHashCellBounds = new CubeBound(hashCellMin.Value - Vector3Int.one, hashCellMax.Value + Vector3Int.one + Vector3Int.one);
 
-            return meshDetails;
+            this.meshDetails = meshDetails;
         }
 
         // Structure caching some additional data about the mesh
