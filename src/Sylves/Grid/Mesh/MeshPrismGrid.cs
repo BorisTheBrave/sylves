@@ -45,12 +45,15 @@ namespace Sylves
             }
             else
             {
-                foreach(var (v0, v1, v2, cellDir) in GetTriangleMesh(cell))
+                float bestDistance = float.MaxValue;
+                RaycastInfo? bestHit = null;
+                foreach (var (v0, v1, v2, cellDir) in GetTriangleMesh(cell))
                 {
                     var hit = MeshRaycast.RaycastTri(rayOrigin, direction, v0, v1, v2, out var point, out var distance);
-                    if(hit)
+                    if (hit && distance < bestDistance)
                     {
-                        return new RaycastInfo
+                        bestDistance = distance;
+                        bestHit = new RaycastInfo
                         {
                             cell = cell,
                             cellDir = cellDir,
@@ -59,7 +62,7 @@ namespace Sylves
                         };
                     }
                 }
-                return null;
+                return bestHit;
             }
         }
 
