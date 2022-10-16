@@ -339,9 +339,10 @@ namespace Sylves
             throw new NotImplementedException();
         }
 
-        public MeshData GetMeshData(Cell cell)
+        public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
         {
-            return (Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(cellSize)) * (orientation == HexOrientation.PointyTopped ? ptMeshData : ftMeshData);
+            meshData = orientation == HexOrientation.PointyTopped ? ptMeshData : ftMeshData;
+            transform = Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(cellSize);
         }
         #endregion
 

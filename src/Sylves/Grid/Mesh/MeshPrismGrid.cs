@@ -148,12 +148,11 @@ namespace Sylves
             }
         }
 
-        public override MeshData GetMeshData(Cell cell)
+        public override void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
         {
-            GetCellMesh(cell, out var meshData, out var trs, out var _);
-            return trs.ToMatrix() * meshData;
+            GetCellMesh(cell, out meshData, out var trs, out var _);
+            transform = trs.ToMatrix();
         }
-
 
         public void GetCellMesh(Cell cell, out MeshData meshData, out TRS trs, out ILookup<CellDir, int> faces)
         {
@@ -192,7 +191,63 @@ namespace Sylves
             }
             else
             {
-                throw new System.NotImplementedException($"Unimplemented celltype {cellType}");
+                // Similar to ExtrudePolygonToPrism
+                var face = meshCellData.Face;
+                var prismInfo = meshCellData.PrismInfo;
+                var vertices = this.meshData.vertices;
+                var normals = this.meshData.normals;
+                var (faceIndex, submesh, layer) = (cell.x, cell.y, cell.z);
+
+
+                var meshOffset1 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset - meshPrismOptions.LayerHeight / 2;
+                var meshOffset2 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset + meshPrismOptions.LayerHeight / 2;
+
+                var n = face.Length;
+                var outVertices = new Vector3[n * 2];
+                var outIndices = new int[n * 4 + n * 2];
+                var outFaces = new (CellDir, int)[n + 2];
+
+                // Find the vertices
+                for (var i = 0; i < n; i++)
+                {
+                    var v1 = vertices[face[i]];
+                    var n1 = normals[face[i]];
+                    outVertices[i] = v1 + n1 * meshOffset1;
+                    outVertices[i + n] = v1 + n1 * meshOffset2;
+                }
+
+                // Explore all the square sides
+                for (var i = 0; i < n; i++)
+                {
+                    outIndices[i * 4 + 0] = i;
+                    outIndices[i * 4 + 1] = (i + 1) % n;
+                    outIndices[i * 4 + 2] = (i + 1) % n + n;
+                    outIndices[i * 4 + 3] = ~(i + n);
+                    var baseCellDir = MeshGridBuilder.EdgeIndexToCellDir(i, face.Count, meshPrismOptions.DoubleOddFaces);
+                    var cellDir = prismInfo.BaseToPrism(baseCellDir);
+
+                    outFaces[i] = (baseCellDir, i);
+                }
+                // Top and bottom
+                for (var i = 0; i < n; i++)
+                {
+                    outIndices[n * 4 + i] = n - 1 - i;
+                    outIndices[n * 5 + i] = i;
+                }
+                outIndices[n * 5 - 1] = ~outIndices[n * 5 - 1];
+                outIndices[n * 6 - 1] = ~outIndices[n * 6 - 1];
+                outFaces[n] = (prismInfo.BackDir, n);
+                outFaces[n + 1] = (prismInfo.ForwardDir, n + 1);
+
+                meshData = new MeshData
+                {
+                    vertices = outVertices,
+                    indices = new[] { outIndices },
+                    subMeshCount = 1,
+                    topologies = new MeshTopology[] { MeshTopology.NGon },
+                };
+                trs = s_trsIdentity;
+                faces = outFaces.ToLookup(x => x.Item1, x => x.Item2);
             }
         }
         #endregion

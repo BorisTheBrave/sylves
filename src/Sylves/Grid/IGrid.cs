@@ -257,7 +257,7 @@ namespace Sylves
         /// <summary>
         /// For 3d cells, returns the mesh of a given cell.
         /// </summary>
-        MeshData GetMeshData(Cell cell);
+        void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform);
 
         #endregion
 

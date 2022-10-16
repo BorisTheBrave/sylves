@@ -95,5 +95,23 @@ namespace Sylves
             };
         }
 
+        public static Vector3[] GetPolygon(this IGrid grid, Cell cell)
+        {
+            grid.GetPolygon(cell, out var vertices, out var transform);
+            var r = new Vector3[vertices.Length];
+            for(var i=0; i<vertices.Length; i++)
+            {
+                r[i] = transform.MultiplyPoint3x4(vertices[i]);
+            }
+            return r;
+        }
+
+
+        public static MeshData GetMeshData(this IGrid grid, Cell cell)
+        {
+            grid.GetMeshData(cell, out var meshData, out var transform);
+            return transform * meshData;
+        }
+
     }
 }

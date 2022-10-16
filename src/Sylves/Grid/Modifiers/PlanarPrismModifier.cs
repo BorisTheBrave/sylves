@@ -420,15 +420,16 @@ namespace Sylves
             //Underlying.GetPolygon(cell, out var vertices, out var transform);
         }
 
-        public MeshData GetMeshData(Cell cell)
+        public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
         {
-            Underlying.GetPolygon(cell, out var polygon, out var transform);
-            return ExtrudePolygonToPrism(
-                polygon, 
-                transform,
+            Underlying.GetPolygon(cell, out var polygon, out var polyTransform);
+            meshData = ExtrudePolygonToPrism(
+                polygon,
+                polyTransform,
                 GetOffset(cell.z - 0.5f),
                 GetOffset(cell.z + 0.5f)
                 );
+            transform = Matrix4x4.identity;
         }
 
         internal static MeshData ExtrudePolygonToPrism(Vector3[] polygon, Matrix4x4 transform, Vector3 backLayer, Vector3 frontLayer)
@@ -436,6 +437,7 @@ namespace Sylves
             var n = polygon.Length;
             var vertices = new Vector3[n * 2];
             var indices = new int[n * 4 + n * 2];
+            // Find the vertices
             for (var i = 0; i < n; i++)
             {
                 vertices[i] = transform.MultiplyPoint3x4(polygon[i]) + backLayer;

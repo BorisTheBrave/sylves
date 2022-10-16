@@ -153,7 +153,7 @@ namespace Sylves
 
         public override IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => Underlying.GetTriangleMesh(toUnderlying(cell));
 
-        public override MeshData GetMeshData(Cell cell) => Underlying.GetMeshData(toUnderlying(cell));
+        public override void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => Underlying.GetMeshData(toUnderlying(cell), out meshData, out transform);
         #endregion
 
         #region Query

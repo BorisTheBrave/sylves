@@ -149,7 +149,9 @@ namespace Sylves
 
         public override bool Is2D => is2d;
 
-        public override bool IsPlanar => meshDetails.isPlanar;
+        public override bool Is3D => !is2d;
+
+        public override bool IsPlanar => is2d && meshDetails.isPlanar;
         #endregion
 
         #region Topology
@@ -498,7 +500,7 @@ namespace Sylves
             throw new Grid2dException();
         }
 
-        public override MeshData GetMeshData(Cell cell)
+        public override void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
         {
             throw new Grid2dException();
         }

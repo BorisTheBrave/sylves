@@ -48,8 +48,8 @@ namespace Sylves
 
         public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
         {
-            Underlying.GetPolygon(cell, out vertices, out transform);
-            transform = this.transform * transform;
+            Underlying.GetPolygon(cell, out vertices, out var uTransform);
+            transform = this.transform * uTransform;
         }
 
         public override IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
@@ -60,7 +60,11 @@ namespace Sylves
             }
         }
 
-        public override MeshData GetMeshData(Cell cell) => transform * Underlying.GetMeshData(cell);
+        public override void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
+        {
+            Underlying.GetMeshData(cell, out meshData, out var uTransform);
+            transform = this.transform * uTransform;
+        }
 
         #endregion
 

@@ -109,7 +109,7 @@ namespace Sylves
 
         public virtual IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => underlying.GetTriangleMesh(cell);
 
-        public virtual MeshData GetMeshData(Cell cell) => underlying.GetMeshData(cell);
+        public virtual void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => underlying.GetMeshData(cell, out meshData, out transform);
 
         #endregion
 
