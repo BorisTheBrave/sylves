@@ -236,7 +236,7 @@ namespace Sylves
                 for (var i = 0; i < n; i++)
                 {
                     outIndices[n * 4 + i] = n - 1 - i;
-                    outIndices[n * 5 + i] = i;
+                    outIndices[n * 5 + i] = n + i;
                 }
                 outIndices[n * 5 - 1] = ~outIndices[n * 5 - 1];
                 outIndices[n * 6 - 1] = ~outIndices[n * 6 - 1];
