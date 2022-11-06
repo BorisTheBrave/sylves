@@ -41,10 +41,12 @@ namespace Sylves
             is2d = true;
         }
 
-        internal MeshGrid(MeshData meshData, DataDrivenData data, bool is2d) :
+        // Internals constructor used for other meshgrid like grids.
+        internal MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions, DataDrivenData data, bool is2d) :
             base(data)
         {
             this.meshData = meshData;
+            this.meshGridOptions = meshGridOptions;
             this.is2d = is2d;
         }
 
