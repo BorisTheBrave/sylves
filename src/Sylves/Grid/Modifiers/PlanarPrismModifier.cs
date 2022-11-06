@@ -136,8 +136,10 @@ namespace Sylves
 
         private ISet<Cell> ToUnderlying(ISet<Cell> cells, int layer)
         {
-            // Naughty - not a bijection
-            return new BijectSet(cells, c => Split(c).cell, c => Combine(c, layer));
+            // Maybe later we could do this lazily.
+            // Biject set isn't quite right though - this isn't a bijection
+            var set = new HashSet<Cell>(cells.Select(c => Combine(c, layer)));
+            return set;
         }
 
         private GridSymmetry FromPlanar(GridSymmetry s, int layerOffset)

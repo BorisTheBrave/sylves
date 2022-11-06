@@ -34,10 +34,13 @@ namespace Sylves.Test
         public void TestBijection()
         {
             // Check a few round trips
-            //Assert.AreEqual(new Cell(0, 0, 0), TrianglePrismGrid.FromTriangleGrid(TrianglePrismGrid.ToTriangleGrid(new Cell(0, 0, 0))));
-            //Assert.AreEqual(new Cell(1, 0, 0), TrianglePrismGrid.FromTriangleGrid(TrianglePrismGrid.ToTriangleGrid(new Cell(1, 0, 0))));
-            //Assert.AreEqual(new Cell(1, 1, 0), TrianglePrismGrid.FromTriangleGrid(TrianglePrismGrid.ToTriangleGrid(new Cell(1, 1, 0))));
+            Assert.AreEqual(new Cell(0, 0, 0), TrianglePrismGrid.FromTriangleGrid(TrianglePrismGrid.ToTriangleGrid(new Cell(0, 0, 0))));
+            Assert.AreEqual(new Cell(1, 0, 0), TrianglePrismGrid.FromTriangleGrid(TrianglePrismGrid.ToTriangleGrid(new Cell(1, 0, 0))));
+            Assert.AreEqual(new Cell(1, 1, 0), TrianglePrismGrid.FromTriangleGrid(TrianglePrismGrid.ToTriangleGrid(new Cell(1, 1, 0))));
             Assert.AreEqual(new Cell(-1, 0, 0), TrianglePrismGrid.FromTriangleGrid(TrianglePrismGrid.ToTriangleGrid(new Cell(-1, 0, 0))));
+            Assert.AreEqual(new Cell(-2, 0, 0), TrianglePrismGrid.FromTriangleGrid(TrianglePrismGrid.ToTriangleGrid(new Cell(-2, 0, 0))));
+
+            Assert.AreEqual(new Cell(-1, 0, 3), TrianglePrismGrid.ToTriangleGrid(TrianglePrismGrid.FromTriangleGrid(new Cell(-1, 0, 3))));
 
             // Check where (0, 0, 0) goes (it's convenient if this points up, to match the cell type)
             Assert.AreEqual(new Cell(0, 0, 2), TrianglePrismGrid.ToTriangleGrid(new Cell(0, 0, 0)));
