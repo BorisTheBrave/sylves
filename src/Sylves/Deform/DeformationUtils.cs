@@ -127,6 +127,11 @@ namespace Sylves
         /// </summary>
         public static Deformation GetDeformation(MeshData surfaceMesh, int face, int subMesh, bool invertWinding)
         {
+            if(surfaceMesh.normals != null)
+            {
+                return GetDeformation(surfaceMesh, 1.0f, 0f, false, face, 0, subMesh, invertWinding);
+            }
+
             var isQuads = surfaceMesh.GetTopology(subMesh) == MeshTopology.Quads;
             var isTris = surfaceMesh.GetTopology(subMesh) == MeshTopology.Triangles;
 

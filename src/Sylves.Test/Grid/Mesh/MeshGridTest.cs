@@ -122,6 +122,32 @@ namespace Sylves.Test
 
 
         [Test]
+        public void TestCubeNoNormalGetDeform()
+        {
+            var meshData = new MeshData
+            {
+                indices = TestMeshes.Cube.indices,
+                vertices = TestMeshes.Cube.vertices,
+                subMeshCount = TestMeshes.Cube.subMeshCount,
+                topologies = TestMeshes.Cube.topologies,
+            };
+            var g = new MeshGrid(meshData);
+            // TestMeshes.Cube is arranged with this convenience for testing
+            Cell ToCell(CubeDir dir) => new Cell((int)dir, 0, 0);
+
+            var deformation = g.GetDeformation(ToCell(CubeDir.Left));
+            var expectedCenter = Vector3.left * 0.5f;
+            // zero gives the face center
+            AssertAreEqual(expectedCenter, deformation.DeformPoint(Vector3.zero), 1e-6);
+            // Without a normal, moving forward does nothing for 2d mesh grid
+            AssertAreEqual(expectedCenter, deformation.DeformPoint(Vector3.forward * 0.5f), 1e-6);
+            // An actual deformation
+            AssertAreEqual(expectedCenter + Vector3.up * 0.5f, deformation.DeformPoint(Vector3.up * 0.5f), 1e-6);
+
+            // We can probably trust the TRS points from here
+        }
+
+        [Test]
         public void TestCubeGetDeform()
         {
             var g = new MeshGrid(TestMeshes.Cube);
@@ -129,12 +155,13 @@ namespace Sylves.Test
             Cell ToCell(CubeDir dir) => new Cell((int)dir, 0, 0);
 
             var deformation = g.GetDeformation(ToCell(CubeDir.Left));
+            var expectedCenter = Vector3.left * 0.5f;
             // zero gives the face center
-            AssertAreEqual(Vector3.left * 0.5f, deformation.DeformPoint(Vector3.zero), 1e-6);
-            // Moving forward does nothing for 2d mesh grid
-            AssertAreEqual(Vector3.left * 0.5f, deformation.DeformPoint(Vector3.forward * 0.5f), 1e-6);
+            AssertAreEqual(expectedCenter, deformation.DeformPoint(Vector3.zero), 1e-6);
+            // Without a normal, moving forward does nothing for 2d mesh grid
+            AssertAreEqual(Vector3.left * 0.7886751f, deformation.DeformPoint(Vector3.forward * 0.5f), 1e-6);
             // An actual deformation
-            AssertAreEqual((Vector3.left + Vector3.up) * 0.5f, deformation.DeformPoint(Vector3.up * 0.5f), 1e-6);
+            AssertAreEqual(expectedCenter + Vector3.up * 0.5f, deformation.DeformPoint(Vector3.up * 0.5f), 1e-6);
 
             // We can probably trust the TRS points from here
         }
