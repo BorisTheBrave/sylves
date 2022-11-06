@@ -67,30 +67,47 @@ namespace Sylves
 
             // Copy deformed data
             var vertices = mesh.vertices;
-            var normals = mesh.normals;
-            var tangents = mesh.tangents;
             var vertexCount = vertices.Length;
-            var normalCount = normals.Length;
-            var tangentCount = tangents.Length;
             var newVertices = new Vector3[vertexCount];
-            var newNormals = new Vector3[normalCount];
-            var newTangents = new Vector4[tangentCount];
             for (var i = 0; i < vertexCount; i++)
             {
                 var p = vertices[i];
                 newVertices[i] = DeformPoint(p);
-                if (i < normalCount)
-                {
-                    newNormals[i] = DeformNormal(p, normals[i]);
-                }
-                if (i < tangentCount)
-                {
-                    newTangents[i] = DeformTangent(p, tangents[i]);
-                }
             }
             newMesh.vertices = newVertices;
-            newMesh.normals = newNormals;
-            newMesh.tangents = newTangents;
+
+            var normals = mesh.normals;
+            if (normals != null)
+            {
+                var normalCount = normals.Length;
+                var newNormals = new Vector3[normalCount];
+                for (var i = 0; i < vertexCount; i++)
+                {
+                    var p = vertices[i];
+                    if (i < normalCount)
+                    {
+                        newNormals[i] = DeformNormal(p, normals[i]);
+                    }
+                }
+                newMesh.normals = newNormals;
+            }
+            
+            var tangents = mesh.tangents;
+            if (tangents != null)
+            {
+                var tangentCount = tangents.Length;
+                var newTangents = new Vector4[tangentCount];
+                for (var i = 0; i < vertexCount; i++)
+                {
+                    var p = vertices[i];
+                    if (i < tangentCount)
+                    {
+                        newTangents[i] = DeformTangent(p, tangents[i]);
+                    }
+                }
+                newMesh.tangents = newTangents;
+            }
+
 
             // Copy untransformed data
             newMesh.uv = mesh.uv;
