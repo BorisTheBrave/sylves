@@ -6,6 +6,12 @@ using UnityEngine;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Handles cell information about cubes.
+    /// This is a 3d cell type, and it supports all 48 rotations / reflections of a cube.
+    /// 
+    /// The canonical shape (for use with deformations) is a unit cube centered at the origin.
+    /// </summary>
     public class CubeCellType : ICellType
     {
 

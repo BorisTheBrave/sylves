@@ -8,6 +8,8 @@ namespace Sylves
     /// <summary>
     /// Handles cell information about squares.
     /// This is a a customized version of NGonCellType and behaves virtually identically.
+    /// 
+    /// The canonical shape (for use with deformations) is a unit square in the XY centered at the origin, with normal pointing Z-forward.
     /// </summary>
     public class SquareCellType : ICellType
     {

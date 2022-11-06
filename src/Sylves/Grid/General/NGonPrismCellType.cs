@@ -10,6 +10,8 @@ namespace Sylves
 {
     /// <summary>
     /// Cell type for a regular polygon with n sides extended in the z-axis to a prism.
+    /// 
+    /// The canonical shape (for use with deformations) is the shape for the corresponding NGonCellType, extended to +-0.5 along the z-axis.
     /// </summary>
     public class NGonPrismCellType : ICellType
     {

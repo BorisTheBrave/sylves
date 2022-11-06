@@ -6,6 +6,8 @@ namespace Sylves
 {
     /// <summary>
     /// Provides information about promoting a 2d cell type to a 3d cell type via extrusion.
+    /// 
+    /// Usually this results in NGonPrismCellType, but squares go to CubeCellType, which has additional symmetry.
     /// </summary>
     public class PrismInfo
     {

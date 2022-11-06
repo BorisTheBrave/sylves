@@ -69,10 +69,15 @@ namespace Sylves
 
         private readonly HexOrientation orientation;
 
-        TriangleGrid childTriangles;
+        private readonly TriangleGrid childTriangles;
+
+        internal static Vector2 ComputeCellSize(float cellSize, HexOrientation orientation)
+        {
+            return cellSize * (orientation == HexOrientation.PointyTopped ? new Vector2(Sqrt3 / 2, 1) : new Vector2(1, Sqrt3 / 2));
+        }
 
         public HexGrid(float cellSize, HexOrientation orientation = HexOrientation.PointyTopped, HexBound bound = null)
-            :this(cellSize * (orientation == HexOrientation.PointyTopped ? new Vector2(Sqrt3 / 2, 1) : new Vector2(1, Sqrt3 / 2)), orientation, bound)
+            :this(ComputeCellSize(cellSize, orientation), orientation, bound)
         {
         }
 
