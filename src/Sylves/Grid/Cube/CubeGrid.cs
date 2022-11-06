@@ -283,6 +283,7 @@ namespace Sylves
 
         #region Shape
 
+        // TODO: This is not right
         public Deformation GetDeformation(Cell cell) => Deformation.Identity;
 
         public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new Grid3dException();
