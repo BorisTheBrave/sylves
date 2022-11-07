@@ -112,10 +112,10 @@ namespace Sylves
             }
 
             var deformation = new Deformation(interpolatePoint, DeformNormal, DeformTangent, invertWinding);
-            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY and a different scale)
+            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY)
             deformation = isQuads
                 ? deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix()
-                : deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix() * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Scale(new Vector3(Mathf.Sqrt(3), Mathf.Sqrt(3), 1));
+                : deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix() * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120));
             return deformation;
         }
 

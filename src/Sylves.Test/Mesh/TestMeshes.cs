@@ -81,7 +81,7 @@ namespace Sylves.Test
 
         private const float Sqrt3 = 1.73205080756888f;
 
-        // Corresponds to a triangle of size 1 as defined by triangle grid
+        // Corresponds to a triangle of incircle diamater 1, side length sqrt(3)
         public static MeshData Equilateral
         {
             get
@@ -94,9 +94,9 @@ namespace Sylves.Test
                         // Edge 1 points UpLeft
                         // Edge 2 points Down
                         // I.e. the CellDir is double the edge
-                        new Vector3(0.5f, -0.3333333333f * Sqrt3 / 2, 0),
-                        new Vector3(0, 0.6666666667f * Sqrt3 / 2, 0),
-                        new Vector3(-0.5f, -0.3333333333f * Sqrt3 / 2, 0),
+                        new Vector3(Sqrt3 / 2, -0.5f, 0),
+                        new Vector3(0, 1.0f, 0),
+                        new Vector3(-Sqrt3 / 2, -0.5f, 0),
                     },
                     indices = new[] { new[]
                         {
@@ -114,37 +114,6 @@ namespace Sylves.Test
                 };
             }
         }
-
-        /*
-        public static MeshData EquilateralXZ
-        {
-            get
-            {
-                return new MeshData
-                {
-                    vertices = new[]
-                    {
-                        new Vector3(0.5f, 0, 0.3333333333f * Sqrt3 / 2),
-                        new Vector3(0, 0, -0.6666666667f * Sqrt3 / 2),
-                        new Vector3(-0.5f, 0, 0.3333333333f * Sqrt3 / 2),
-                    },
-                    indices = new[] { new[]
-                        {
-                            0,1,2,
-                        }
-                    },
-                    normals = new[]
-                    {
-                        Vector3.up,
-                        Vector3.up,
-                        Vector3.up,
-                    },
-                    subMeshCount = 1,
-                    topologies = new[] { MeshTopology.Triangles }
-                };
-            }
-        }
-        */
 
         public static MeshData TrianglePlane
         {

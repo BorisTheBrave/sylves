@@ -184,5 +184,13 @@ namespace Sylves
                 return true;
             }
         }
+
+        // Utility methods. 
+
+        public float CircumcircleToIncircle(float diameter) => diameter * Mathf.Cos(Mathf.PI / n);
+        public float IncircleToCircumcircle(float diameter) => diameter / Mathf.Cos(Mathf.PI / n);
+
+        public float CircumcircleDiameterToSideLength(float diameter) => diameter * Mathf.Sin(Mathf.PI / n);
+        public float SideLengthToCircumcircleDiameter(float sideLength) => sideLength / Mathf.Sin(Mathf.PI / n);
     }
 }

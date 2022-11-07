@@ -76,11 +76,20 @@ namespace Sylves
             return cellSize * (orientation == HexOrientation.PointyTopped ? new Vector2(Sqrt3 / 2, 1) : new Vector2(1, Sqrt3 / 2));
         }
 
+        /// <summary>
+        /// Creates a hex grid where the side length is cellSize/2.
+        /// I.e. the incircle diameter is cellSize * sqrt(3) / 2 and circumcircle diameter is cellSize
+        /// 
+        /// </summary>
+
         public HexGrid(float cellSize, HexOrientation orientation = HexOrientation.PointyTopped, HexBound bound = null)
             :this(ComputeCellSize(cellSize, orientation), orientation, bound)
         {
         }
 
+        /// <summary>
+        /// Creates a hex grid where each hex has width and height given by cellSize.x and cellSize.y
+        /// </summary>
         public HexGrid(Vector2 cellSize, HexOrientation orientation = HexOrientation.PointyTopped, HexBound bound = null)
         {
             this.cellSize = cellSize;
@@ -88,6 +97,15 @@ namespace Sylves
             this.bound = bound;
             cellType = HexCellType.Get(orientation);
             childTriangles = new TriangleGrid(cellSize / 2, orientation == HexOrientation.FlatTopped ? TriangleOrientation.FlatTopped : TriangleOrientation.FlatSides);
+        }
+
+        /// <summary>
+        /// Creates a hex grid where each hex has the given incircle diameter.
+        /// The incircle diameter is the distance between the centers of two adjacent hexes.
+        /// </summary>
+        public static HexGrid WithIncircleDiameter(float diameter, HexOrientation orientation = HexOrientation.PointyTopped, HexBound bound = null)
+        {
+            return new HexGrid(diameter * Sqrt3, orientation, bound);
         }
 
         private void CheckBounded()

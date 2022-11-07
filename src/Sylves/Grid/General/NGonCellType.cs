@@ -12,9 +12,9 @@ namespace Sylves
     /// Cell type for a regular polygon with n sides.
     /// The CellDirs are simply the numbers 0 to n-1 with dir 0 being to the right.
     /// The CellRotations are the numbers 0 to n-1 for a CCW rotation of that many sides, 
-    /// plus numbers ~0 to ~n-1 for the reflections, where rotation ~0 has dir 0 as a fix point.
+    /// plus numbers ~0 to ~(n-1) for the reflections, where rotation ~0 has dir 0 as a fix point.
     /// 
-    /// The canonical shape (for use with deformations) is a regular polygon with size TODO in the XY centered at the origin, with normal pointing Z-forward.
+    /// The canonical shape (for use with deformations) is a regular polygon with incircle diamater 1.0 in the XY centered at the origin, with normal pointing Z-forward.
     /// </summary>
     public class NGonCellType : ICellType
     {

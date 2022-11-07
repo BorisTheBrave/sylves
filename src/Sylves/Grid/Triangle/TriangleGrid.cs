@@ -47,6 +47,16 @@ namespace Sylves
         FlatTopped,
     }
 
+    /// <summary>
+    /// A uniform tiling of triangles.
+    /// TriangleOrientation.FlatSides gives columns of triangles that alternate pointing left/right.
+    /// TriangleOrientation.FlatTopped gives rows of triangles that alternate pointing up/down.
+    /// 
+    /// In both cases, the cell type used is actually HexGridCellType. For each triangle, three of the hex directions
+    /// point towards neighbors, and the other three will point to nothing.
+    /// This is a similar setup to <see cref="MeshGridOptions.DoubleOddFaces"/>, and is usually simpler to work with
+    /// as it doesn't force you to consider some cells as rotated by 180 degrees.
+    /// </summary>
     public class TriangleGrid : IGrid
     {
         private const float Sqrt3 = 1.73205080756888f;
@@ -98,16 +108,23 @@ namespace Sylves
 
         private readonly IGrid altGrid;
 
-        internal static Vector2 ComputeCellSize(float cellSize, TriangleOrientation orientation)
+        internal static Vector2 ComputeCellSize(float cellSide, TriangleOrientation orientation)
         {
-            return cellSize * (orientation == TriangleOrientation.FlatTopped ? new Vector2(1, Sqrt3 / 2) : new Vector2(Sqrt3 / 2, 1));
+            return cellSide * (orientation == TriangleOrientation.FlatTopped ? new Vector2(1, Sqrt3 / 2) : new Vector2(Sqrt3 / 2, 1));
         }
 
-        public TriangleGrid(float cellSize, TriangleOrientation orientation = TriangleOrientation.FlatTopped, TriangleBound bound = null)
-            :this(ComputeCellSize(cellSize, orientation), orientation, bound)
+        /// <summary>
+        /// Creates a triangle grid where each triangle is equilateral and has each side length of cellSide.
+        /// I.e. the incircle diameter is cellSide * sqrt(1/3) and circumcircle diameter is 2 * cellSide * sqrt(1/3)
+        /// </summary>
+        public TriangleGrid(float cellSide, TriangleOrientation orientation = TriangleOrientation.FlatTopped, TriangleBound bound = null)
+            :this(ComputeCellSize(cellSide, orientation), orientation, bound)
         {
         }
 
+        /// <summary>
+        /// Creates a triangle grid where each triangle has width and height given by cellSize.x and cellSize.y
+        /// </summary>
         public TriangleGrid(Vector2 cellSize, TriangleOrientation orientation = TriangleOrientation.FlatTopped, TriangleBound bound = null)
         {
             this.cellSize = cellSize;
@@ -139,6 +156,15 @@ namespace Sylves
                     );
                 */
             }
+        }
+
+        /// <summary>
+        /// Creates a triangle grid where each triangle is equilateral and the given incircle diameter.
+        /// The incircle diameter is the distance between the centers of two adjacent triangles.
+        /// </summary>
+        public static TriangleGrid WithIncircleDiameter(float incircleDiameter, TriangleOrientation orientation = TriangleOrientation.FlatTopped, TriangleBound bound = null)
+        {
+            return new TriangleGrid(incircleDiameter * Sqrt3, orientation, bound);
         }
 
         private static Cell SwizzleXY(Cell c) => new Cell(c.y, c.x, c.z);
