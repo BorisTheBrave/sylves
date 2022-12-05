@@ -158,15 +158,27 @@ namespace Sylves
 
         #region Query
 
+
+
+        /// <summary>
+        /// Returns true if p is in the triangle po, p1, p2
+        /// </summary>
         private static bool IsPointInTriangle(Vector3 p, Vector3 p0, Vector3 p1, Vector3 p2)
         {
-            var s = (p0.x - p2.x) * (p.y - p2.y) - (p0.y - p2.y) * (p.x - p2.x);
-            var t = (p1.x - p0.x) * (p.y - p0.y) - (p1.y - p0.y) * (p.x - p0.x);
+            var n = Vector3.Cross(p1 - p0, p2 - p0);
+
+            var o = Vector3.Dot(p - p2, n);
+            const float epsilon = 1e-6f;
+            if (o < -epsilon || o > epsilon)
+                return false;
+
+            var s = Vector3.Dot(n, Vector3.Cross(p0 - p2, p - p2));
+            var t = Vector3.Dot(n, Vector3.Cross(p1 - p0, p - p0));
 
             if ((s < 0) != (t < 0) && s != 0 && t != 0)
                 return false;
 
-            var d = (p2.x - p1.x) * (p.y - p1.y) - (p2.y - p1.y) * (p.x - p1.x);
+            var d = Vector3.Dot(n, Vector3.Cross(p2 - p1, p - p1));
             return d == 0 || (d < 0) == (s + t <= 0);
         }
 
@@ -179,7 +191,7 @@ namespace Sylves
             var face = cellData.Face;
             var v0 = meshData.vertices[face[0]];
             var prev = meshData.vertices[face[face.Count - 1]];
-            for(var i=1;i<face.Count;i++)
+            for (var i = 1; i < face.Count; i++)
             {
                 var v = meshData.vertices[face[i]];
                 if (IsPointInTriangle(position, v0, prev, v))
@@ -188,6 +200,7 @@ namespace Sylves
             }
             return false;
         }
+
         public override bool FindCell(Vector3 position, out Cell cell)
         {
             // TODO: Maybe search the central hashcell first?
