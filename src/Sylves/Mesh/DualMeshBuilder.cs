@@ -66,34 +66,31 @@ namespace Sylves
         }
 
         // Move across an edge in primal mesh
-        private bool Flip(int face, int edge, out int destFace, out int backEdge)
+        private (int face, int edge)? Flip((int face, int edge) halfEdge)
         {
-            if (moves.TryGetValue((new Cell(face, 0), (CellDir)edge), out var t))
+            if (moves.TryGetValue((new Cell(halfEdge.face, 0), (CellDir)halfEdge.edge), out var t))
             {
                 var (destCell, inverseDir, connection) = t;
                 if (connection != new Connection())
                     throw new Exception("Cannot handle non-trivial connection");
-                destFace = destCell.x;
-                backEdge = (int)edge;
-                return true;
+                return (destCell.x, (int)inverseDir);
             }
             else
             {
-                destFace = default;
-                backEdge = default;
-                return false;
+                return null;
             }
         }
 
         // Moves one edge around a face in primal mesh
-        private int NextEdge(int face, int edge)
+        private (int face, int edge) NextHalfEdge((int face, int edge) halfEdge)
         {
-            return (edge + 1) % GetFace(face).Length;
+            var l = GetFace(halfEdge.face).Length;
+            return (halfEdge.face, (halfEdge.edge + 1) % l);
         }
-        private int PrevEdge(int face, int edge)
+        private (int face, int edge) PrevHalfEdge((int face, int edge) halfEdge)
         {
-            var l = GetFace(face).Length;
-            return (edge + l - 1) % l;
+            var l = GetFace(halfEdge.face).Length;
+            return (halfEdge.face, (halfEdge.edge + l - 1) % l);
         }
 
         private IEnumerable<(int, MeshUtils.Face)> GetFaces()
@@ -122,8 +119,9 @@ namespace Sylves
             {
                 for(var edge = 0;edge<face.Count;edge++)
                 {
+                    var he = (face: i, edge: edge);
                     // Check if we've already explored this arc/loop
-                    if (visited.Contains((i, edge)))
+                    if (visited.Contains(he))
                     {
                         continue;
                     }
@@ -136,24 +134,23 @@ namespace Sylves
                     (int, int) forwardHalfEdge = default;
                     (int, int) backHalfEdge = default;
                     {
-                        var currentFace = i;
-                        var currentEdge = edge;
+                        var currentHe = he;
                         var dualVertCount = 0;
                         while (true)
                         {
-                            visited.Add((currentFace, currentEdge));
-                            forwardCentroids.Add(faceCentroids[currentFace]);
-                            //mapping.Add((currentCell.x, currentCell.y, (int)currentDir, dualFaceCount, dualVertCount));
+                            visited.Add(currentHe);
+                            forwardCentroids.Add(faceCentroids[currentHe.face]);
+                            //mapping.Add((currentFace, currentEdge, dualFaceCount, dualVertCount));
 
-                            if(!Flip(currentFace, currentEdge, out var nextFace, out var nextEdge))
+                            var nextHe = Flip(currentHe);
+                            if(nextHe == null)
                             {
                                 isLoop = false;
-                                forwardHalfEdge = (currentFace, currentEdge);
+                                forwardHalfEdge = currentHe;
                                 break;
                             }
-                            currentFace = nextFace;
-                            currentEdge = NextEdge(nextFace, nextFace);
-                            if (currentFace == i && currentEdge == edge)
+                            currentHe = NextHalfEdge(nextHe.Value);
+                            if (currentHe == he)
                             {
                                 isLoop = true;
                                 break;
@@ -164,22 +161,20 @@ namespace Sylves
                     // Walk back if necessary
                     if (!isLoop)
                     {
-                        var currentFace = i;
-                        var currentEdge = edge;
+                        var currentHe = he;
                         while (true)
                         {
-                            //var currentFace = ((MeshCellData)cellData[cell]).Face;
-                            currentEdge = PrevEdge(currentFace, currentEdge);
-                            if (!Flip(currentFace, currentEdge, out var nextFace, out var nextEdge))
+                            currentHe = PrevHalfEdge(currentHe);
+                            var nextHe = Flip(currentHe);
+                            if (nextHe == null)
                             {
-                                backHalfEdge = (currentFace, currentEdge);
+                                backHalfEdge = currentHe;
                                 break;
                             }
-                            currentFace = nextFace;
-                            currentEdge = nextEdge;
-                            visited.Add((currentFace, currentEdge));
-                            backwardCentroids.Add(faceCentroids[currentFace]);
-                            //TODO: update mapping
+                            currentHe = nextHe.Value;
+                            visited.Add(currentHe);
+                            backwardCentroids.Add(faceCentroids[currentHe.face]);
+                            // TODO: update mapping
                         }
                     }
                     // Create face from arc/loop

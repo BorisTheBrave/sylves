@@ -13,10 +13,26 @@ namespace Sylves.Test
         [Test]
         public void TestDual()
         {
-            var r = ConwayOperators.Dual(ConwayOperators.Kis(TestMeshes.PlaneXY));
+            // Primal
+            //  ____         
+            // |\  /|               
+            // | \/ |               
+            // | /\ |               
+            // |/__\|               
+            //                      
+            // Dual
+            //   |     
+            //   /\    
+            //__/  \__ 
+            //  \  /   
+            //   \/    
+            //   |    
+            var mesh = ConwayOperators.Kis(TestMeshes.PlaneXY);
+            Assert.AreEqual(4, MeshUtils.GetFaces(mesh, 0).Count());
+            var r = ConwayOperators.Dual(mesh);
             Assert.AreEqual(5, MeshUtils.GetFaces(r, 0).Count());
             var r2 = ConwayOperators.Dual(r);
-            Assert.AreEqual(1, MeshUtils.GetFaces(r2, 0).Count());
+            Assert.AreEqual(4, MeshUtils.GetFaces(r2, 0).Count());
         }
     }
 }
