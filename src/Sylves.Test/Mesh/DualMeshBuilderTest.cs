@@ -11,8 +11,24 @@ namespace Sylves.Test
     internal class DualMeshBuilderTest
     {
         [Test]
-        public void Asdf()
+        public void TestDual()
         {
+            // Primal
+            //  ____         
+            // |\1 /|               
+            // |0\/2|               
+            // | /\ |               
+            // |/3_\|               
+            //                      
+            // Dual
+            //   |     
+            // 1 /\ 2  
+            //__/4 \__ 
+            //  \  /   
+            // 0 \/ 3  
+            //   |    
+
+
             var mesh = new MeshData
             {
                 vertices = new Vector3[]
@@ -53,7 +69,7 @@ namespace Sylves.Test
             Assert.AreEqual(new Vector3(0, -1E+10f, 0), dualMesh.vertices[10]);
             Assert.AreEqual(new Vector3(1E+10f, 0, 0), dualMesh.vertices[11]);
 
-            CollectionAssert.AreEquivalent(new[]
+            CollectionAssert.AreEqual(new []
             {
                 4,
                 0,
@@ -65,9 +81,9 @@ namespace Sylves.Test
                 ~7,
                 8,
                 2,
-                10,
-                ~9,
                 1,
+                ~9,
+                10,
                 3,
                 2,
                 ~11,
@@ -76,6 +92,22 @@ namespace Sylves.Test
                 2,
                 ~3,
             }, dualMesh.indices[0]);
+
+            CollectionAssert.AreEquivalent(new[] {
+                (0, 1, 0, 1),
+                (3, 2, 0, 2),
+                (1, 1, 1, 1),
+                (0, 2, 1, 2),
+                (2, 1, 2, 1),
+                (1, 2, 2, 2),
+                (3, 1, 3, 1),
+                (2, 2, 3, 2),
+                (0, 0, 4, 0),
+                (1, 0, 4, 1),
+                (2, 0, 4, 2),
+                (3, 0, 4, 3),
+            }, dmb.Mapping);
+
 
         }
     }

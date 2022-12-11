@@ -44,6 +44,8 @@ namespace Sylves
 
         public MeshData DualMeshData => meshEmitter.ToMeshData();
 
+        public List<(int primeFace, int primeVert, int dualFace, int dualVert)> Mapping => mapping;
+
         private static int[] BuildFaceCentroids(MeshData meshData, IDictionary<Cell, DataDrivenCellData> cellData, MeshEmitter meshEmitter)
         {
             var r = new int[cellData.Count];
@@ -146,9 +148,8 @@ namespace Sylves
                             while (true)
                             {
                                 visited.Add(currentHe);
+                                mapping.Add((currentHe.face, currentHe.edge, dualFaceCount, dualFaceIndices.Count + (isArc ? 1 : 0)));
                                 dualFaceIndices.Add(faceCentroids[currentHe.face]);
-                                mapping.Add((currentHe.face, currentHe.edge, dualFaceCount, dualVertCount));
-                                dualVertCount++;
 
                                 currentHe = PrevHalfEdge(currentHe);
                                 var nextHe = Flip(currentHe);
@@ -169,23 +170,27 @@ namespace Sylves
                         // Create face from arc/loop
                         if (!isFar)
                         {
-                            // Create point "at infinity" for the back end of the arc
-                            if (isArc)
+                            void AddArcPoint((int face, int edge) he, int otherIndex)
                             {
                                 // Find bisector of edge
-                                var backFace = GetFace(startHe.Item1);
-                                var i1 = backFace[startHe.Item2];
-                                var i2 = backFace[(startHe.Item2 + 1) % face.Length];
+                                var f = GetFace(he.face);
+                                var i1 = f[he.edge];
+                                var i2 = f[(he.edge + 1) % face.Length];
                                 var v = (meshData.vertices[i1] + meshData.vertices[i2]) / 2;
                                 // Extend to "infinity"
-                                var backCentroid = meshEmitter.vertices[dualFaceIndices[0]];
-                                v = (v - backCentroid).normalized * FAR;
+                                var centroid = meshEmitter.vertices[otherIndex];
+                                v = (v - centroid).normalized * FAR;
                                 outputIndices.Add(meshEmitter.AddVertex(
                                     v,
                                     new Vector2(),
                                     new Vector3(),
                                     new Vector4()
                                     ));
+                            }
+                            // Create point "at infinity" for the back end of the arc
+                            if (isArc)
+                            {
+                                AddArcPoint(startHe, dualFaceIndices[0]);
                             }
                             // Copy points from the arc/loop
                             for (var j = 0; j < dualFaceIndices.Count; j++)
@@ -195,20 +200,7 @@ namespace Sylves
                             // Create point "at infinity" for the forward end of the arc
                             if (isArc)
                             {
-                                var forwardFace = GetFace(endHe.Item1);
-                                // Find bisector of edge
-                                var i1 = forwardFace[(int)endHe.Item2];
-                                var i2 = forwardFace[(int)(endHe.Item2 + 1) % forwardFace.Length];
-                                var v = (meshData.vertices[i1] + meshData.vertices[i2]) / 2;
-                                // Extend to "infinity"
-                                var forwardCentroid = meshEmitter.vertices[dualFaceIndices[dualFaceIndices.Count - 1]];
-                                v = (v - forwardCentroid).normalized * FAR;
-                                outputIndices.Add(meshEmitter.AddVertex(
-                                    v,
-                                    new Vector2(),
-                                    new Vector3(),
-                                    new Vector4()
-                                    ));
+                                AddArcPoint(endHe, dualFaceIndices[dualFaceIndices.Count - 1]);
                             }
                             outputIndices[outputIndices.Count - 1] = ~outputIndices[outputIndices.Count - 1];
                             dualFaceCount++;
