@@ -109,124 +109,110 @@ namespace Sylves
         private void Build()
         {
             // Initialize temporary arrays
-            var forwardCentroids = new List<int>();
-            var backwardCentroids = new List<int>();
+            var dualFaceIndices = new List<int>(); // TODO: Eliminate this variable
             var outputIndices= new List<int>();
-            // Loop over every half edge
+
             var dualFaceCount = 0;
             var visited = new HashSet<(int face, int edge)>();
-            foreach(var (i, face) in GetFaces())
-            {
-                for(var edge = 0;edge<face.Count;edge++)
-                {
-                    var he = (face: i, edge: edge);
-                    // Check if we've already explored this arc/loop
-                    if (visited.Contains(he))
-                    {
-                        continue;
-                    }
-                    // Determine the vertex we are walking around
-                    bool isFar = isFarVertex[face[edge]];
-                    // Walk forword
-                    forwardCentroids.Clear();
-                    backwardCentroids.Clear();
-                    bool isLoop;
-                    (int, int) forwardHalfEdge = default;
-                    (int, int) backHalfEdge = default;
-                    {
-                        var currentHe = he;
-                        var dualVertCount = 0;
-                        while (true)
-                        {
-                            visited.Add(currentHe);
-                            forwardCentroids.Add(faceCentroids[currentHe.face]);
-                            //mapping.Add((currentFace, currentEdge, dualFaceCount, dualVertCount));
 
-                            var nextHe = Flip(currentHe);
-                            if(nextHe == null)
-                            {
-                                isLoop = false;
-                                forwardHalfEdge = currentHe;
-                                break;
-                            }
-                            currentHe = NextHalfEdge(nextHe.Value);
-                            if (currentHe == he)
-                            {
-                                isLoop = true;
-                                break;
-                            }
-                            dualVertCount++;
-                        }
-                    }
-                    // Walk back if necessary
-                    if (!isLoop)
+            // Do arcs first, then non-arcs
+            foreach (var isArc in new[] { true, false })
+            {
+                // Loop over every half edge
+                foreach (var (i, face) in GetFaces())
+                {
+                    for (var edge = 0; edge < face.Count; edge++)
                     {
-                        var currentHe = he;
-                        while (true)
+                        var startHe = (face: i, edge: edge);
+                        // Skip if not the start of arc, and we want it to be
+                        if(isArc && Flip(startHe) != null)
                         {
-                            currentHe = PrevHalfEdge(currentHe);
-                            var nextHe = Flip(currentHe);
-                            if (nextHe == null)
+                            continue;
+                        }
+                        // Skip if we've already explored this arc/loop
+                        if (visited.Contains(startHe))
+                        {
+                            continue;
+                        }
+                        // Determine the vertex we are walking around
+                        var vertex = face[edge];
+                        bool isFar = isFarVertex[vertex];
+                        // Walk forword
+                        dualFaceIndices.Clear();
+                        (int, int) endHe = default;
+                        {
+                            var currentHe = startHe;
+                            var dualVertCount = 0;
+                            while (true)
                             {
-                                backHalfEdge = currentHe;
-                                break;
+                                visited.Add(currentHe);
+                                dualFaceIndices.Add(faceCentroids[currentHe.face]);
+                                mapping.Add((currentHe.face, currentHe.edge, dualFaceCount, dualVertCount));
+                                dualVertCount++;
+
+                                currentHe = PrevHalfEdge(currentHe);
+                                var nextHe = Flip(currentHe);
+                                if (nextHe == null)
+                                {
+                                    if (!isArc) throw new Exception();
+                                    endHe = currentHe;
+                                    break;
+                                }
+                                currentHe = nextHe.Value;
+                                if (currentHe == startHe)
+                                {
+                                    if (isArc) throw new Exception();
+                                    break;
+                                }
                             }
-                            currentHe = nextHe.Value;
-                            visited.Add(currentHe);
-                            backwardCentroids.Add(faceCentroids[currentHe.face]);
-                            // TODO: update mapping
                         }
-                    }
-                    // Create face from arc/loop
-                    if (!isFar)
-                    {
-                        // Create point "at infinity" for the back end of the arc
-                        if (!isLoop)
+                        // Create face from arc/loop
+                        if (!isFar)
                         {
-                            // Find bisector of edge
-                            var backFace = GetFace(backHalfEdge.Item1);
-                            var i1 = backFace[backHalfEdge.Item2];
-                            var i2 = backFace[(backHalfEdge.Item2 + 1) % face.Length];
-                            var v = (meshData.vertices[i1] + meshData.vertices[i2]) / 2;
-                            // Extend to "infinity"
-                            var backCentroid = meshEmitter.vertices[backwardCentroids.Count > 0 ? backwardCentroids[backwardCentroids.Count - 1] : forwardCentroids[0]];
-                            v = (v - backCentroid).normalized * FAR;
-                            outputIndices.Add(meshEmitter.AddVertex(
-                                v,
-                                new Vector2(),
-                                new Vector3(),
-                                new Vector4()
-                                ));
+                            // Create point "at infinity" for the back end of the arc
+                            if (isArc)
+                            {
+                                // Find bisector of edge
+                                var backFace = GetFace(startHe.Item1);
+                                var i1 = backFace[startHe.Item2];
+                                var i2 = backFace[(startHe.Item2 + 1) % face.Length];
+                                var v = (meshData.vertices[i1] + meshData.vertices[i2]) / 2;
+                                // Extend to "infinity"
+                                var backCentroid = meshEmitter.vertices[dualFaceIndices[0]];
+                                v = (v - backCentroid).normalized * FAR;
+                                outputIndices.Add(meshEmitter.AddVertex(
+                                    v,
+                                    new Vector2(),
+                                    new Vector3(),
+                                    new Vector4()
+                                    ));
+                            }
+                            // Copy points from the arc/loop
+                            for (var j = 0; j < dualFaceIndices.Count; j++)
+                            {
+                                outputIndices.Add(dualFaceIndices[j]);
+                            }
+                            // Create point "at infinity" for the forward end of the arc
+                            if (isArc)
+                            {
+                                var forwardFace = GetFace(endHe.Item1);
+                                // Find bisector of edge
+                                var i1 = forwardFace[(int)endHe.Item2];
+                                var i2 = forwardFace[(int)(endHe.Item2 + 1) % forwardFace.Length];
+                                var v = (meshData.vertices[i1] + meshData.vertices[i2]) / 2;
+                                // Extend to "infinity"
+                                var forwardCentroid = meshEmitter.vertices[dualFaceIndices[dualFaceIndices.Count - 1]];
+                                v = (v - forwardCentroid).normalized * FAR;
+                                outputIndices.Add(meshEmitter.AddVertex(
+                                    v,
+                                    new Vector2(),
+                                    new Vector3(),
+                                    new Vector4()
+                                    ));
+                            }
+                            outputIndices[outputIndices.Count - 1] = ~outputIndices[outputIndices.Count - 1];
+                            dualFaceCount++;
                         }
-                        // Copy points from the arc/loop
-                        for (var j = backwardCentroids.Count - 1; j >= 0; j--)
-                        {
-                            outputIndices.Add(backwardCentroids[j]);
-                        }
-                        for (var j = 0; j < forwardCentroids.Count; j++)
-                        {
-                            outputIndices.Add(forwardCentroids[j]);
-                        }
-                        // Create point "at infinity" for the forward end of the arc
-                        if (!isLoop)
-                        {
-                            var forwardFace = GetFace(forwardHalfEdge.Item1);
-                            // Find bisector of edge
-                            var i1 = forwardFace[(int)forwardHalfEdge.Item2];
-                            var i2 = forwardFace[(int)(forwardHalfEdge.Item2 + 1) % forwardFace.Length];
-                            var v = (meshData.vertices[i1] + meshData.vertices[i2]) / 2;
-                            // Extend to "infinity"
-                            var forwardCentroid = meshEmitter.vertices[forwardCentroids[forwardCentroids.Count - 1]];
-                            v = (v - forwardCentroid).normalized * FAR;
-                            outputIndices.Add(meshEmitter.AddVertex(
-                                v,
-                                new Vector2(),
-                                new Vector3(),
-                                new Vector4()
-                                ));
-                        }
-                        outputIndices[outputIndices.Count - 1] = ~outputIndices[outputIndices.Count - 1];
-                        dualFaceCount++;
                     }
                 }
             }
