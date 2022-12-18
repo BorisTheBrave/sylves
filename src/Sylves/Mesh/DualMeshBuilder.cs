@@ -17,7 +17,7 @@ namespace Sylves
 
         // Recorded output
         MeshEmitter meshEmitter;
-        List<(int primeFace, int primeVert, int dualFace, int dualVert)> mapping;
+        List<(int primalFace, int primalVert, int dualFace, int dualVert)> mapping;
 
         // Further info about the primal mesh
         private int[] faceCentroids;
@@ -33,7 +33,7 @@ namespace Sylves
             this.cellData = ddd.Cells;
 
             meshEmitter = new MeshEmitter(meshData);
-            mapping = new List<(int primeFace,int primeVert, int dualFace,int dualVert)>();
+            mapping = new List<(int primalFace,int primalVert, int dualFace,int dualVert)>();
 
             faceCentroids = BuildFaceCentroids(meshData, cellData, meshEmitter);
 
@@ -44,7 +44,7 @@ namespace Sylves
 
         public MeshData DualMeshData => meshEmitter.ToMeshData();
 
-        public List<(int primeFace, int primeVert, int dualFace, int dualVert)> Mapping => mapping;
+        public List<(int primalFace, int primalVert, int dualFace, int dualVert)> Mapping => mapping;
 
         private static int[] BuildFaceCentroids(MeshData meshData, IDictionary<Cell, DataDrivenCellData> cellData, MeshEmitter meshEmitter)
         {
