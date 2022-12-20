@@ -1,0 +1,1151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="-2 -2 4 4"
+   version="1.1"
+   id="svg182"
+   sodipodi:docname="wrap_square_fake.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata188">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs186">
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Fade to Black or White"
+       id="filter1537">
+      <feColorMatrix
+         values="0.556886 0 0 0 0.443114 0 0.556886 0 0 0.443114 0 0 0.556886 0 0.443114 0 0 0 1 0"
+         id="feColorMatrix1535" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview184"
+     showgrid="false"
+     inkscape:zoom="76.721086"
+     inkscape:cx="4.6338814"
+     inkscape:cy="1.5728982"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg182"
+     inkscape:document-rotation="0" />
+  <g
+     id="g1509"
+     style="filter:url(#filter1537)">
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 0.5,-2.5 v 1 h -1 v -1 z"
+       id="path10-0" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 0.5,-1.5 v 1 h -1 v -1 z"
+       id="path12-9" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 1.5,-2.5 v 1 h -1 v -1 z"
+       id="path16-6" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 1.5,-1.5 v 1 h -1 v -1 z"
+       id="path18-8" />
+    <g
+       transform="matrix(0.5,0,0,0.5,0,-1.92)"
+       id="g108-5">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text98-5"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan92-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan94-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan96-1">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text106-6"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan100-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan102-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan104-5">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,0,-0.92)"
+       id="g126-1">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text116-4"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan110-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan112-4">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan114-2">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text124-6"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan118-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan120-6">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan122-4">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,1,-1.92)"
+       id="g162-1">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text152-6"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan146-0">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan148-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan150-2">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text160-2"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan154-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan156-4">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan158-7">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,1,-0.92)"
+       id="g180-6">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text170-4"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan164-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan166-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan168-3">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text178-5"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan172-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan174-4">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan176-6">0</tspan></text>
+    </g>
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -1.5,-0.5 v 1 h -1 v -1 z"
+       id="path10-4" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -1.5,0.5 v 1 h -1 v -1 z"
+       id="path12-4" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -0.5,-0.5 v 1 h -1 v -1 z"
+       id="path16-1" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -0.5,0.5 v 1 h -1 v -1 z"
+       id="path18-6" />
+    <g
+       transform="matrix(0.5,0,0,0.5,-2,0.08)"
+       id="g108-0">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text98-8"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan92-1">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan94-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan96-6">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text106-8"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan100-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan102-3">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan104-6">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-2,1.08)"
+       id="g126-6">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text116-7"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan110-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan112-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan114-8">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text124-0"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan118-1">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan120-0">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan122-3">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-1,0.08)"
+       id="g162-3">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text152-8"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan146-6">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan148-1">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan150-4">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text160-8"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan154-81">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan156-41">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan158-0">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-1,1.08)"
+       id="g180-8">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text170-0"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan164-9">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan166-5">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan168-9">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text178-9"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan172-0">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan174-9">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan176-4">0</tspan></text>
+    </g>
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -1.5,-2.5 v 1 h -1 v -1 z"
+       id="path10-46" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -1.5,-1.5 v 0.99999996 h -1 V -1.5 Z"
+       id="path12-7" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -0.5,-2.5 v 1 h -1 v -1 z"
+       id="path16-9" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -0.5,-1.5 v 0.99999996 h -1 V -1.5 Z"
+       id="path18-5" />
+    <g
+       transform="matrix(0.5,0,0,0.5,-2,-1.92)"
+       id="g108-4">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text98-80"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan92-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan94-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan96-4">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text106-85"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan100-4">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan102-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan104-1">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-2,-0.92000004)"
+       id="g126-7">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text116-1"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan110-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan112-6">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan114-1">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text124-2"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan118-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan120-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan122-6">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-0.99999999,-1.92)"
+       id="g162-7">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text152-7"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan146-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan148-3">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan150-6">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text160-7"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan154-5">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan156-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan158-5">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-0.99999999,-0.92000004)"
+       id="g180-0">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text170-3"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan164-7">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan166-23">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan168-2">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text178-95"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan172-00">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan174-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan176-1">0</tspan></text>
+    </g>
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 2.5,-2.5 v 1 h -1 v -1 z"
+       id="path10-08" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 2.5,-1.5 v 0.99999999 h -1 V -1.5 Z"
+       id="path12-1" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 3.5,-2.5 v 1 h -1 v -1 z"
+       id="path16-66" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 3.5,-1.5 v 0.99999999 h -1 V -1.5 Z"
+       id="path18-4" />
+    <g
+       transform="matrix(0.5,0,0,0.5,2,-1.92)"
+       id="g108-3">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text98-89"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan92-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan94-05">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan96-3">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text106-65"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan100-3">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan102-36">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan104-2">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,2,-0.92000001)"
+       id="g126-2">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text116-3"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan110-25">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan112-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan114-7">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text124-3"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan118-3">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan120-4">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan122-35">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,3,-1.92)"
+       id="g162-30">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text152-3"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan146-3">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan148-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan150-8">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text160-28"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan154-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan156-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan158-6">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,3,-0.92000001)"
+       id="g180-9">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text170-31"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan164-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan166-0">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan168-97">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text178-6"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan172-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan174-47">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan176-2">0</tspan></text>
+    </g>
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 2.5,-0.5 v 1 h -1 v -1 z"
+       id="path10-9" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 2.5,0.5 v 1 h -1 v -1 z"
+       id="path12-6" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 3.5,-0.5 v 1 h -1 v -1 z"
+       id="path16-8" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 3.5,0.5 v 1 h -1 v -1 z"
+       id="path18-7" />
+    <g
+       transform="matrix(0.5,0,0,0.5,2,0.08)"
+       id="g108-1">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text98-3"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan92-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan94-63">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan96-7">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text106-0"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan100-89">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan102-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan104-8">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,2,1.08)"
+       id="g126-75">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text116-14"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan110-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan112-3">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan114-6">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text124-7"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan118-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan120-23">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan122-9">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,3,0.08)"
+       id="g162-2">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text152-88"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan146-06">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan148-17">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan150-3">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text160-3"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan154-4">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan156-1">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan158-00">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,3,1.08)"
+       id="g180-61">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text170-2"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan164-4">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan166-3">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan168-4">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text178-8"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan172-6">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan174-88">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan176-9">0</tspan></text>
+    </g>
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 2.5,1.5 v 1 h -1 v -1 z"
+       id="path10-6" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 2.5,2.5 v 1 h -1 v -1 z"
+       id="path12-12" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 3.5,1.5 v 1 h -1 v -1 z"
+       id="path16-97" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 3.5,2.5 v 1 h -1 v -1 z"
+       id="path18-1" />
+    <g
+       transform="matrix(0.5,0,0,0.5,2,2.08)"
+       id="g108-8">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text98-6"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan92-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan94-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan96-68">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text106-1"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan100-35">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan102-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan104-3">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,2,3.08)"
+       id="g126-9">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text116-71"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan110-3">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan112-7">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan114-64">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text124-5"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan118-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan120-234">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan122-99">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,3,2.08)"
+       id="g162-6">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text152-9"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan146-9">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan148-11">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan150-22">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text160-89"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan154-0">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan156-98">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan158-1">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,3,3.08)"
+       id="g180-5">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text170-7"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan164-75">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan166-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan168-1">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text178-7"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan172-81">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan174-0">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan176-8">0</tspan></text>
+    </g>
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 0.5,1.5 v 1 h -1 v -1 z"
+       id="path10-1" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 0.5,2.5 v 1 h -1 v -1 z"
+       id="path12-5" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 1.5,1.5 v 1 h -1 v -1 z"
+       id="path16-4" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m 1.5,2.5 v 1 h -1 v -1 z"
+       id="path18-63" />
+    <g
+       transform="matrix(0.5,0,0,0.5,0,2.08)"
+       id="g108-41">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text98-33"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan92-55">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan94-60">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan96-18">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text106-5"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan100-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan102-84">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan104-4">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,0,3.08)"
+       id="g126-23">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text116-5"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan110-55">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan112-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan114-4">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text124-9"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan118-86">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan120-3">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan122-2">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,1,2.08)"
+       id="g162-9">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text152-5"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan146-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan148-20">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan150-5">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text160-39"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan154-88">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan156-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan158-72">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,1,3.08)"
+       id="g180-09">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text170-9"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan164-754">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan166-06">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan168-44">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text178-99"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan172-9">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan174-7">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan176-0">0</tspan></text>
+    </g>
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -1.5,1.5 v 1 h -1 v -1 z"
+       id="path10-2" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -1.5,2.5 v 1 h -1 v -1 z"
+       id="path12-0" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -0.50000005,1.5 v 1 H -1.5 v -1 z"
+       id="path16-46" />
+    <path
+       style="fill:#f4f4f1;stroke:#333333;stroke-width:0.1"
+       d="m -0.50000005,2.5 v 1 H -1.5 v -1 z"
+       id="path18-2" />
+    <g
+       transform="matrix(0.5,0,0,0.5,-2,2.08)"
+       id="g108-7">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text98-88"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan92-92">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan94-85">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan96-8">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text106-66"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan100-80">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan102-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan104-16">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-2,3.08)"
+       id="g126-8">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text116-41"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan110-52">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan112-23">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan114-47">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text124-8"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan118-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan120-9">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan122-61">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-1,2.08)"
+       id="g162-26">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text152-81"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan146-7">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan148-81">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan150-67">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text160-0"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan154-40">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan156-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan158-9">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-1,3.08)"
+       id="g180-98">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.05"
+         id="text170-6"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan164-15">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan166-30">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan168-93">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333"
+         id="text178-50"><tspan
+   style="font-weight:bold;fill:#59b300"
+   id="tspan172-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6"
+   id="tspan174-01">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6"
+   id="tspan176-7">0</tspan></text>
+    </g>
+  </g>
+  <!-- (-1, -1, 0) -->
+  <!-- (-1, 0, 0) -->
+  <!-- (-1, 1, 0) -->
+  <!-- (0, -1, 0) -->
+  <!-- (0, 0, 0) -->
+  <path
+     style="fill: rgb(244, 244, 241); stroke: rgb(51, 51, 51); stroke-width: 0.1"
+     d="M0.5 -0.5L0.5 0.5L-0.5 0.5L-0.5 -0.5Z"
+     id="path10" />
+  <!-- (0, 1, 0) -->
+  <path
+     style="fill: rgb(244, 244, 241); stroke: rgb(51, 51, 51); stroke-width: 0.1"
+     d="M0.5 0.5L0.5 1.5L-0.5 1.5L-0.5 0.5Z"
+     id="path12" />
+  <!-- (1, -1, 0) -->
+  <!-- (1, 0, 0) -->
+  <path
+     style="fill: rgb(244, 244, 241); stroke: rgb(51, 51, 51); stroke-width: 0.1"
+     d="M1.5 -0.5L1.5 0.5L0.5 0.5L0.5 -0.5Z"
+     id="path16" />
+  <!-- (1, 1, 0) -->
+  <path
+     style="fill: rgb(244, 244, 241); stroke: rgb(51, 51, 51); stroke-width: 0.1"
+     d="M1.5 0.5L1.5 1.5L0.5 1.5L0.5 0.5Z"
+     id="path18" />
+  <g
+     transform="translate(0,0.08) scale(0.5)"
+     id="g108">
+    <text
+       text-anchor="middle"
+       alignment-baseline="middle"
+       style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"
+       id="text98"><tspan
+   style="fill: hsl(90, 100%, 35%); font-weight: bold"
+   id="tspan92">0</tspan>, <tspan
+   style="fill: hsl(300, 80%, 50%); font-weight: bold"
+   id="tspan94">0</tspan>, <tspan
+   style="fill: hsl(200, 100%, 45%); font-weight: bold"
+   id="tspan96">0</tspan></text>
+    <text
+       text-anchor="middle"
+       alignment-baseline="middle"
+       style="fill: rgb(51, 51, 51); font-size: 0.3px;"
+       id="text106"><tspan
+   style="fill: hsl(90, 100%, 35%); font-weight: bold"
+   id="tspan100">0</tspan>, <tspan
+   style="fill: hsl(300, 80%, 50%); font-weight: bold"
+   id="tspan102">0</tspan>, <tspan
+   style="fill: hsl(200, 100%, 45%); font-weight: bold"
+   id="tspan104">0</tspan></text>
+  </g>
+  <g
+     transform="translate(0,1.08) scale(0.5)"
+     id="g126">
+    <text
+       text-anchor="middle"
+       alignment-baseline="middle"
+       style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"
+       id="text116"><tspan
+   style="fill: hsl(90, 100%, 35%); font-weight: bold"
+   id="tspan110">0</tspan>, <tspan
+   style="fill: hsl(300, 80%, 50%); font-weight: bold"
+   id="tspan112">1</tspan>, <tspan
+   style="fill: hsl(200, 100%, 45%); font-weight: bold"
+   id="tspan114">0</tspan></text>
+    <text
+       text-anchor="middle"
+       alignment-baseline="middle"
+       style="fill: rgb(51, 51, 51); font-size: 0.3px;"
+       id="text124"><tspan
+   style="fill: hsl(90, 100%, 35%); font-weight: bold"
+   id="tspan118">0</tspan>, <tspan
+   style="fill: hsl(300, 80%, 50%); font-weight: bold"
+   id="tspan120">1</tspan>, <tspan
+   style="fill: hsl(200, 100%, 45%); font-weight: bold"
+   id="tspan122">0</tspan></text>
+  </g>
+  <g
+     transform="translate(1,0.08) scale(0.5)"
+     id="g162">
+    <text
+       text-anchor="middle"
+       alignment-baseline="middle"
+       style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"
+       id="text152"><tspan
+   style="fill: hsl(90, 100%, 35%); font-weight: bold"
+   id="tspan146">1</tspan>, <tspan
+   style="fill: hsl(300, 80%, 50%); font-weight: bold"
+   id="tspan148">0</tspan>, <tspan
+   style="fill: hsl(200, 100%, 45%); font-weight: bold"
+   id="tspan150">0</tspan></text>
+    <text
+       text-anchor="middle"
+       alignment-baseline="middle"
+       style="fill: rgb(51, 51, 51); font-size: 0.3px;"
+       id="text160"><tspan
+   style="fill: hsl(90, 100%, 35%); font-weight: bold"
+   id="tspan154">1</tspan>, <tspan
+   style="fill: hsl(300, 80%, 50%); font-weight: bold"
+   id="tspan156">0</tspan>, <tspan
+   style="fill: hsl(200, 100%, 45%); font-weight: bold"
+   id="tspan158">0</tspan></text>
+  </g>
+  <g
+     transform="translate(1,1.08) scale(0.5)"
+     id="g180">
+    <text
+       text-anchor="middle"
+       alignment-baseline="middle"
+       style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"
+       id="text170"><tspan
+   style="fill: hsl(90, 100%, 35%); font-weight: bold"
+   id="tspan164">1</tspan>, <tspan
+   style="fill: hsl(300, 80%, 50%); font-weight: bold"
+   id="tspan166">1</tspan>, <tspan
+   style="fill: hsl(200, 100%, 45%); font-weight: bold"
+   id="tspan168">0</tspan></text>
+    <text
+       text-anchor="middle"
+       alignment-baseline="middle"
+       style="fill: rgb(51, 51, 51); font-size: 0.3px;"
+       id="text178"><tspan
+   style="fill: hsl(90, 100%, 35%); font-weight: bold"
+   id="tspan172">1</tspan>, <tspan
+   style="fill: hsl(300, 80%, 50%); font-weight: bold"
+   id="tspan174">1</tspan>, <tspan
+   style="fill: hsl(200, 100%, 45%); font-weight: bold"
+   id="tspan176">0</tspan></text>
+  </g>
+</svg>

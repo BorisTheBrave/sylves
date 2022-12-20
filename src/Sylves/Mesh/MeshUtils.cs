@@ -210,6 +210,14 @@ namespace Sylves
             }
         }
 
+        /// <summary>
+        /// Returns the indices of the faces of meshData.
+        /// </summary>
+        public static IEnumerable<Face> GetFaces(MeshData meshData, bool invertWinding = false)
+        {
+            return Enumerable.Range(0, meshData.subMeshCount).SelectMany(i => GetFaces(meshData, i, invertWinding));
+        }
+
         public static MeshData ToMesh(IGrid grid)
         {
             if(!grid.Is2D)

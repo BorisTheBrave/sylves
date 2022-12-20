@@ -64,28 +64,60 @@ namespace Sylves
         {
             var vertices = new List<Vector3>();
             var indices = new List<int>();
+
             bool allTris = true;
             bool allQuads = true;
-            foreach(var cell in grid.GetCells())
+            if (grid.Is2D)
             {
-                grid.GetPolygon(cell, out var cellVerticies, out var transform);
-                foreach(var v in cellVerticies)
+                foreach (var cell in grid.GetCells())
                 {
-                    indices.Add(vertices.Count);
-                    vertices.Add(transform.MultiplyPoint3x4(v));
+                    grid.GetPolygon(cell, out var cellVerticies, out var transform);
+                    foreach (var v in cellVerticies)
+                    {
+                        indices.Add(vertices.Count);
+                        vertices.Add(transform.MultiplyPoint3x4(v));
+                    }
+                    indices[indices.Count - 1] = ~indices[indices.Count - 1];
+                    if (cellVerticies.Length != 3) allTris = false;
+                    if (cellVerticies.Length != 4) allQuads = false;
                 }
-                indices[indices.Count - 1] = ~indices[indices.Count - 1];
-                if (cellVerticies.Length != 3) allTris = false;
-                if (cellVerticies.Length != 4) allQuads = false;
             }
-            if(allTris || allQuads)
+            else if(grid.Is3D)
             {
-                for(var i=0;i<indices.Count;i++)
+                foreach(var cell in grid.GetCells())
+                {
+                    grid.GetMeshData(cell, out var md, out var transform);
+                    var b = vertices.Count;
+                    foreach(var v in md.vertices)
+                    {
+                        vertices.Add(transform.MultiplyPoint3x4(v));
+                    }
+                    foreach(var face in MeshUtils.GetFaces(md))
+                    {
+                        foreach(var i in face)
+                        {
+                            indices.Add(i + b);
+                        }
+                        indices[indices.Count - 1] = ~indices[indices.Count - 1];
+                        if (face.Length != 3) allTris = false;
+                        if (face.Length != 4) allQuads = false;
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Grid must be 2d or 3d");
+            }
+
+            if (allTris || allQuads)
+            {
+                for (var i = 0; i < indices.Count; i++)
                 {
                     if (indices[i] < 0)
                         indices[i] = ~indices[i];
                 }
             }
+
             return new MeshData
             {
                 vertices = vertices.ToArray(),
