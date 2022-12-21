@@ -8,23 +8,25 @@ namespace Sylves
     /// <summary>
     /// A torus with a quarter turn. Demonstrates how Sylves handles non-orientability on 3d surfaces.
     /// </summary>
-    public class CubiusGrid : MeshGrid
+    public class CubiusGrid : MeshPrismGrid
     { 
         public CubiusGrid(int width, int height, float outerRadius = 10, float innerRadius = 3)
-            :base(MakeMeshData(width, height, outerRadius, innerRadius), new MeshGridOptions { }, MakeData(width, height, outerRadius, innerRadius), false)
+            :base(MakeMeshData(width, height, outerRadius, innerRadius), Options(width, height, outerRadius, innerRadius), MakeData(width, height, outerRadius, innerRadius), false)
         {
         }
+
+        private static MeshPrismGridOptions Options(int w, int h, float outerRadius, float innerRadius) => new MeshPrismGridOptions
+        {
+            LayerHeight = 2 * innerRadius / h,
+            LayerOffset = -2 * innerRadius / h * (h - 1) / 2,
+            MinLayer = 0,
+            MaxLayer = h,
+        };
 
         private static DataDrivenData MakeData(int w, int h, float outerRadius, float innerRadius)
         {
             var meshData = MakeMeshData(w, h, outerRadius, innerRadius);
-            var meshPrismGridOptions = new MeshPrismGridOptions
-            {
-                LayerHeight = 2 * innerRadius / h,
-                LayerOffset = -2 * innerRadius / h * (h - 1) / 2,
-                MinLayer = 0,
-                MaxLayer = h,
-            };
+            var meshPrismGridOptions = Options(w, h, outerRadius, innerRadius);
             var data = MeshGridBuilder.Build(meshData, meshPrismGridOptions);
             // Add connection back to start
             for (var y = 0; y < h; y++)
@@ -54,10 +56,11 @@ namespace Sylves
                     var y1 = Mathf.Sin(theta1);
                     var x2 = Mathf.Cos(theta2);
                     var y2 = Mathf.Sin(theta2);
+                    var yy = y * 2.0f / h - 1;
                     vertices[x + (w + 1) * y] = new Vector3(
-                        x1 * radius1 + x1 * x2 * radius2 * 2 * (y - h / 2.0f) / h,
-                        y1 * radius1 + y1 * x2 * radius2 * 2 * (y - h / 2.0f) / h,
-                        0            +      y2 * radius2 * 2 * (y - h / 2.0f) / h
+                        x1 * radius1 + x1 * x2 * radius2 * yy,
+                        y1 * radius1 + y1 * x2 * radius2 * yy,
+                        0            +      y2 * radius2 * yy
                         );
                     normals[x + (w + 1) * y] = new Vector3(
                         x1 * y2,

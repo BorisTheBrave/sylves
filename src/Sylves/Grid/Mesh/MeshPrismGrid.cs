@@ -23,6 +23,12 @@ namespace Sylves
             BuildMeshDetails();
         }
 
+        internal MeshPrismGrid(MeshData meshData, MeshPrismGridOptions meshPrismOptions, DataDrivenData data, bool is2d) :
+            base(meshData, meshPrismOptions, data, is2d)
+        {
+            this.meshPrismOptions = meshPrismOptions;
+        }
+
         #region Query
         protected override RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
         {
