@@ -18,7 +18,7 @@ These are the most common grids you are likely to want to use.
     <td><a href="xref:Sylves.SquareGrid">Square Grid</a></td>
 </tr>
 <tr>
-    <td>???</td>
+    <td><a href="../images/grids/cube.cube"><img class="grid-thumb" src="../images/grids/cube.png" /></img></td>
     <td><a href="xref:Sylves.CubeGrid">Cube Grid</a></td>
 </tr>
 <tr>
