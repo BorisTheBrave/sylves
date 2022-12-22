@@ -15,6 +15,7 @@ There's also [`MeshPrsimGrid`](xref:Sylves.MeshPrismGrid) which creates multiple
 If you just want to customize an existing grid, there are various modifiers you can apply that change an aspect of their behaviour.
 
 * <xref:Sylves.BijectModifier> - changes the cell co-ordinate system
+* <xref:Sylves.RavelModifier> - changes the cell co-ordinate system to lie along the x-axis
 * <xref:Sylves.MaskModifier> - restricts the grid to certain cells, similar to bounds
 * <xref:Sylves.TransformModifier> - applies a linear transformation to the physical space of the cells
 * <xref:Sylves.PlanarPrismModifier> - converts a flat 2d grid into a 3d grid by making multiple layers
