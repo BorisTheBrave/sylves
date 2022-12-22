@@ -71,19 +71,44 @@ You can create your own periodic grids with <xref:Sylves.PeriodicPlanarMeshGrid>
 
 Mesh grids accept a [mesh](xref:Sylves.MeshData) as the input, and base cells of the grid off faces of the mesh.
 
-* <xref:Sylves.MeshGrid> - Turns a mesh into a 2d grid, one cell per face.
-* <xref:Sylves.MeshPrismGrid> - Turns a mesh into a 3d grid, one cell being one extruded face in a given layer.
-* <xref:Sylves.PeriodicPlanarMeshGrid> - Can turn any planar mesh into a periodic grid by repeating the mesh at fixed intervals.
+<table>
+<tr>
+    <td><a href="../images/grids/meshgrid.svg"><img class="grid-thumb" src="../images/grids/meshgrid.svg" /></img></td>
+    <td><a href="xref:Sylves.MeshGrid">Mesh Grid</a><br/>Turns a mesh into a 2d grid, one cell per face. Doesn't need to be planar.</td>
+</tr>
+<tr>
+    <td>???</td>
+    <td><a href="xref:Sylves.MeshPrismGrid">MeshPrismGrid</a><br/>Turns a mesh into a 3d grid, one cell being one extruded face in a given layer.</td>
+</tr>
+<tr>
+    <td><a href="../images/grids/cairo.svg"><img class="grid-thumb" src="../images/grids/cairo.svg" /></img></td>
+    <td><a href="xref:Sylves.PeriodicPlanarMeshGrid">PeriodicPlanarMeshGrid</a><br/>Can turn any planar mesh into a periodic grid by repeating the mesh at fixed intervals.</td>
+</tr>
+</table>
 
 ## Prism Grids
 
 "Prism" are when you take a 2d polygon, and extrude it into a 3d shape. 
 This can convert 2d grids into 3d ones, usually with the z-cordinate being the "layer", i.e. offset from the original grid.
 
-* <xref:Sylves.MeshPrismGrid>
-* <xref:Sylves.HexPrismGrid>
-* <xref:Sylves.TrianglePrismGrid>
-* <xref:Sylves.PlanarPrismModifier>
+<table>
+<tr>
+    <td>???</td>
+    <td><a href="xref:Sylves.MeshPrismGrid">MeshPrismGrid</a><br/>Turns a mesh into a 3d grid, one cell being one extruded face in a given layer.</td>
+</tr>
+<tr>
+    <td><a href="../images/grids/hexprism.png"><img class="grid-thumb" src="../images/grids/hexprism.png" /></img></td>
+    <td><a href="xref:Sylves.HexPrismGrid">HexPrismGrid</a><br/>A special case of PlanarPrismModifier applied to a hex grid. </td>
+</tr>
+<tr>
+    <td>???</td>
+    <td><a href="xref:Sylves.TrianglePrismGrid">TrianglePrismGrid</a><br/>A special case of PlanarPrismModifier applied to a triangle grid. </td>
+</tr>
+<tr>
+    <td>???</td>
+    <td><a href="xref:Sylves.PlanarPrismModifier">PlanarPrismModifier</a><br/>Takes a 2d planar grid, and extends it into multiple layers along the third the dimension. </td>
+</tr>
+</table>
 
 ## Modifier grids
 

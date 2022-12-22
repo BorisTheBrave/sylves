@@ -132,6 +132,9 @@ namespace Sylves.Test
                 "rhombille.svg",
                 new Options { textScale = 0.5 });
 
+            // Mesh grids
+            Export(new MeshGrid(TestMeshes.Lion).Transformed(Matrix4x4.Scale(4f * Vector3.one)), "meshgrid.svg", new Options { textScale = null});
+
             // Modifier grids
             var centerSquare = new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))).Transformed(Matrix4x4.Translate(new Vector3(-0.5f, -0.5f, 0)));
 
@@ -159,6 +162,7 @@ namespace Sylves.Test
         {
             ExportObj(new CubeGrid(1, new CubeBound(new Vector3Int(-2, -2, -2), new Vector3Int(3, 3, 3))), "cube.obj");
             ExportObj(new HexPrismGrid(1, 1, bound: new HexPrismBound(HexBound.Hexagon(2), 0, 2)), "hexprism.obj");
+            ExportObj(new TrianglePrismGrid(1, 1, bound: new TrianglePrismBound(TriangleBound.Hexagon(2), 0, 2)), "triangleprism.obj");
             ExportObj(new MobiusSquareGrid(10, 10), "mobiussquare.obj");
             ExportObj(new CubiusGrid(8, 2), "cubius.obj");
 

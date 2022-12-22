@@ -16,7 +16,7 @@ namespace Sylves
         private static readonly ICellType[] ptCellTypes = { HexPrismCellType.Get(HexOrientation.PointyTopped) };
 
         private static readonly MeshData ftMeshData = PlanarPrismModifier.ExtrudePolygonToPrism(MeshPrimitives.ShapedFtHexPolygon(1, 1), Matrix4x4.identity, -0.5f * Vector3.forward, 0.5f * Vector3.forward);
-        private static readonly MeshData ptMeshData = PlanarPrismModifier.ExtrudePolygonToPrism(MeshPrimitives.ShapedFtHexPolygon(1, 1), Matrix4x4.identity, -0.5f * Vector3.forward, 0.5f * Vector3.forward);
+        private static readonly MeshData ptMeshData = PlanarPrismModifier.ExtrudePolygonToPrism(MeshPrimitives.ShapedPtHexPolygon(1, 1), Matrix4x4.identity, -0.5f * Vector3.forward, 0.5f * Vector3.forward);
 
         private readonly ICellType cellType;
 

@@ -39,12 +39,13 @@ namespace Sylves
 
         public void BeginSvg(string viewBox= "-5 -5 10 10")
         {
-            tw.Write($"<svg viewBox=\"{viewBox}\" xmlns=\"http://www.w3.org/2000/svg\">");
+            tw.WriteLine($"<svg viewBox=\"{viewBox}\" xmlns=\"http://www.w3.org/2000/svg\">");
+            tw.WriteLine("<style>path{stroke-linejoin: round}</style>");
         }
 
         public void EndSvg()
         {
-            tw.Write("</svg>");
+            tw.WriteLine("</svg>");
         }
 
         public void DrawCell(IGrid grid, Cell cell)

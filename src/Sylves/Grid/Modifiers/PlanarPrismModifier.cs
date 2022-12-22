@@ -458,7 +458,7 @@ namespace Sylves
             for (var i = 0; i < n; i++)
             {
                 indices[n * 4 + i] = n - 1 - i;
-                indices[n * 5 + i] = i;
+                indices[n * 5 + i] = n + i;
             }
             indices[n * 5 - 1] = ~indices[n * 5 - 1];
             indices[n * 6 - 1] = ~indices[n * 6 - 1];
