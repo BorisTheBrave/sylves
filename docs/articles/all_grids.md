@@ -4,7 +4,7 @@ This page provides a full list of grid classes available in Sylves. You can alwa
 
 
 <style>
-.grid-thumb {width: 200px; height: 200px; }
+.grid-thumb {width: 200px; min-width: 200px; height: 200px; }
 </style>
 
 ## Basic Grids
@@ -77,7 +77,7 @@ Mesh grids accept a [mesh](xref:Sylves.MeshData) as the input, and base cells of
     <td><a href="xref:Sylves.MeshGrid">Mesh Grid</a><br/>Turns a mesh into a 2d grid, one cell per face. Doesn't need to be planar.</td>
 </tr>
 <tr>
-    <td>???</td>
+    <td><a href="../images/grids/meshprism.png"><img class="grid-thumb" src="../images/grids/meshprism.png" /></img></td>
     <td><a href="xref:Sylves.MeshPrismGrid">MeshPrismGrid</a><br/>Turns a mesh into a 3d grid, one cell being one extruded face in a given layer.</td>
 </tr>
 <tr>
@@ -93,7 +93,7 @@ This can convert 2d grids into 3d ones, usually with the z-cordinate being the "
 
 <table>
 <tr>
-    <td>???</td>
+    <td><a href="../images/grids/meshprism.png"><img class="grid-thumb" src="../images/grids/meshprism.png" /></img></td>
     <td><a href="xref:Sylves.MeshPrismGrid">MeshPrismGrid</a><br/>Turns a mesh into a 3d grid, one cell being one extruded face in a given layer.</td>
 </tr>
 <tr>
@@ -101,11 +101,11 @@ This can convert 2d grids into 3d ones, usually with the z-cordinate being the "
     <td><a href="xref:Sylves.HexPrismGrid">HexPrismGrid</a><br/>A special case of PlanarPrismModifier applied to a hex grid. </td>
 </tr>
 <tr>
-    <td>???</td>
+    <td><a href="../images/grids/triangleprism.png"><img class="grid-thumb" src="../images/grids/triangleprism.png" /></img></td>
     <td><a href="xref:Sylves.TrianglePrismGrid">TrianglePrismGrid</a><br/>A special case of PlanarPrismModifier applied to a triangle grid. </td>
 </tr>
 <tr>
-    <td>???</td>
+    <td><a href="../images/grids/planarprismmodifier.png"><img class="grid-thumb" src="../images/grids/planarprismmodifier.png" /></img></td>
     <td><a href="xref:Sylves.PlanarPrismModifier">PlanarPrismModifier</a><br/>Takes a 2d planar grid, and extends it into multiple layers along the third the dimension. </td>
 </tr>
 </table>
@@ -128,7 +128,7 @@ Modifier grids let you customize an existing grid by systematically changing it 
     <td><a href="xref:Sylves.TransformModifier">TransformModifier</a><br/>Changes the world space positioning of the grid by a linear transform, leaving everything else unchanged.</td>
 </tr>
 <tr>
-    <td>???</td>
+    <td><a href="../images/grids/planarprismmodifier.png"><img class="grid-thumb" src="../images/grids/planarprismmodifier.png" /></img></td>
     <td><a href="xref:Sylves.PlanarPrismModifier">PlanarPrismModifier</a><br/>Takes a 2d planar grid, and extends it into multiple layers along the third the dimension.</td>
 </tr>
 <tr>

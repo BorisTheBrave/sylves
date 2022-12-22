@@ -354,7 +354,7 @@ new Vector3(0.000000f, 0.467809f, -0.110409f),
 new Vector3(0.000000f, 0.469649f, -0.133105f),
 new Vector3(0.000000f, 0.459222f, -0.113476f),
 new Vector3(0.000000f, 0.402605f, -0.038307f),
-                    }.Select(x=>new Vector3(x.z, -x.y, 0)).ToArray(),
+                    }.Select(x => new Vector3(x.z, -x.y, 0)).ToArray(),
                     indices = new[] { new[]
                         {
 3, 7, 6, 8, 5, 4, 91, ~1,
@@ -406,6 +406,56 @@ new Vector3(0.000000f, 0.402605f, -0.038307f),
                     },
                     subMeshCount = 1,
                     topologies = new[] { MeshTopology.NGon }
+                };
+            }
+        }
+        public static MeshData Icosahedron
+        {
+            get
+            {
+                return new MeshData
+                {
+                    vertices = new[]
+                    {
+                        new Vector3(0.000000f, 1.000000f, 0.000000f),
+                        new Vector3(-0.000000f, 0.447214f, 0.894427f),
+                        new Vector3(0.850651f, 0.447214f, 0.276393f),
+                        new Vector3(0.525731f, 0.447214f, -0.723607f),
+                        new Vector3(-0.525731f, 0.447214f, -0.723607f),
+                        new Vector3(-0.850651f, 0.447214f, 0.276393f),
+                        new Vector3(0.525731f, -0.447214f, 0.723607f),
+                        new Vector3(0.850651f, -0.447214f, -0.276393f),
+                        new Vector3(0.000000f, -0.447214f, -0.894427f),
+                        new Vector3(-0.850651f, -0.447214f, -0.276393f),
+                        new Vector3(-0.525731f, -0.447214f, 0.723607f),
+                        new Vector3(-0.000000f, -1.000000f, -0.000000f),
+                    }.ToArray(),
+                    indices = new[] { new[]
+                        {
+                            1, 3, 2,
+                            1, 4, 3,
+                            1, 5, 4,
+                            1, 6, 5,
+                            1, 2, 6,
+                            2, 3, 7,
+                            3, 8, 7,
+                            3, 4, 8,
+                            4, 9, 8,
+                            4, 5, 9,
+                            5, 10, 9,
+                            5, 6, 10,
+                            6, 11, 10,
+                            6, 2, 11,
+                            2, 7, 11,
+                            7, 8, 12,
+                            8, 9, 12,
+                            9, 10, 12,
+                            10, 11, 12,
+                            11, 7, 12,
+                        }.Select(x=>x>=0?x-1 : ~(~x -1)).ToArray()
+                    },
+                    subMeshCount = 1,
+                    topologies = new[] { MeshTopology.Triangles }
                 };
             }
         }

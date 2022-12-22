@@ -165,6 +165,11 @@ namespace Sylves.Test
             ExportObj(new TrianglePrismGrid(1, 1, bound: new TrianglePrismBound(TriangleBound.Hexagon(2), 0, 2)), "triangleprism.obj");
             ExportObj(new MobiusSquareGrid(10, 10), "mobiussquare.obj");
             ExportObj(new CubiusGrid(8, 2), "cubius.obj");
+            var cairoBound = new SquareBound(-3, -3, 3, 3);
+            ExportObj(new PlanarPrismModifier(new RavelModifier(new CairoGrid().BoundBy(cairoBound)), new PlanarPrismOptions { LayerHeight = 0.24f, }).BoundBy(new PlanarPrismBound { PlanarBound = cairoBound, MinLayer = 0, MaxLayer = 1}), "planarprismmodifier.obj");
+            var ico = TestMeshes.Icosahedron;
+            ico.RecalculateNormals();
+            ExportObj(new MeshPrismGrid(ico, new MeshPrismGridOptions { LayerHeight = 0.25f }), "meshprism.obj");
 
             /* Handy blender script for tweaking these
 import bpy
