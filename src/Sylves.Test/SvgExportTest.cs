@@ -157,8 +157,10 @@ namespace Sylves.Test
         [Test]
         public void ExportObjGrids()
         {
-            var grid = new CubeGrid(1, new CubeBound(new Vector3Int(-2, -2, -2), new Vector3Int(3, 3, 3)));
-            ExportObj(grid, "cube.obj");
+            ExportObj(new CubeGrid(1, new CubeBound(new Vector3Int(-2, -2, -2), new Vector3Int(3, 3, 3))), "cube.obj");
+            ExportObj(new HexPrismGrid(1, 1, bound: new HexPrismBound(HexBound.Hexagon(2), 0, 2)), "hexprism.obj");
+            ExportObj(new MobiusSquareGrid(10, 10), "mobiussquare.obj");
+            ExportObj(new CubiusGrid(8, 2), "cubius.obj");
 
             /* Handy blender script for tweaking these
 import bpy

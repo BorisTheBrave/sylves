@@ -116,6 +116,17 @@ Modifier grids let you customize an existing grid by systematically changing it 
 
 These grids don't classify neatly and usually serve as demos for various features.
 
-* <xref:Sylves.MobiusSquareGrid> - a square grid on a [Möbius strip](https://en.wikipedia.org/wiki/M%C3%B6bius_strip). Demonstrates how Sylves handles non-orientability on 2d surfaces.
-* <xref:Sylves.CubiusGrid> - A torus with a quarter turn. Demonstrates how Sylves handles non-orientability on 3d surfaces.
-* <xref:Sylves.WrappingSquareGrid> - WrapModifier applied to SquareGrid. This is a very common grid in games. 
+<table>
+<tr>
+    <td><a href="../images/grids/mobiussquare.png"><img class="grid-thumb" src="../images/grids/mobiussquare.png" /></img></td>
+    <td><a href="xref:Sylves.MobiusSquareGrid">MobiusSquareGrid</a><br/>A grid in the shape of a <a href="https://en.wikipedia.org/wiki/M%C3%B6bius_strip">Möbius strip</a>. This is mostly to demonstrate how Sylves handles <a href="https://en.wikipedia.org/wiki/Orientability">non-orientable surfaces</a>. </td>
+</tr>
+<tr>
+    <td><a href="../images/grids/cubius.png"><img class="grid-thumb" src="../images/grids/cubius.png" /></img></td>
+    <td><a href="xref:Sylves.CubiusGrid">CubiusGrid</a><br/>A <a href="https://en.wikipedia.org/wiki/M%C3%B6bius_strip">Möbius strip</a> with thickness, and only a quarter turn instead of a half turn. This is mostly to demonstrate how Sylves handles advanced cases of <a href="https://en.wikipedia.org/wiki/Holonomy">holonomy</a>. </td>
+</tr>
+<tr>
+    <td><a href="../images/grids/wrap_square_fake.svg"><img class="grid-thumb" src="../images/grids/wrap_square_fake.svg" /></img></td>
+    <td><a href="xref:Sylves.WrappingSquareGrid">WrappingSquareGrid</a><br/>Turns any bounded grid into a grid which connects back on itself when you leave the grounds. </td>
+</tr>
+</table>
