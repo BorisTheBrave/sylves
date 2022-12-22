@@ -174,11 +174,29 @@ namespace Sylves
         #endregion
 
         #region Index
-        public int IndexCount => throw new GridInfiniteException();
+        public int IndexCount
+        {
+            get
+            {
+                CheckBounded();
+                return centerGrid.IndexCount * this.bound.IndexCount;
+            }
+        }
 
-        public int GetIndex(Cell cell) => throw new GridInfiniteException();
+        public int GetIndex(Cell cell)
+        {
+            CheckBounded();
+            var (centerCell, chunk) = Split(cell);
+            return centerGrid.GetIndex(centerCell) + centerGrid.IndexCount * this.bound.GetIndex(chunk);
 
-        public Cell GetCellByIndex(int index) => throw new GridInfiniteException();
+        }
+
+        public Cell GetCellByIndex(int index)
+        {
+            var centerCell = centerGrid.GetCellByIndex(index % centerGrid.IndexCount);
+            var chunk = this.bound.GetCellByIndex(index / centerGrid.IndexCount);
+            return Combine(centerCell, chunk);
+        }
         #endregion
 
         #region Bounds

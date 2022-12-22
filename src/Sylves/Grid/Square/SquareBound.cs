@@ -52,6 +52,26 @@ namespace Sylves
             return new SquareBound(Vector2Int.Min(min, other.min), Vector2Int.Max(max, other.max));
         }
 
+        public int IndexCount
+        {
+            get
+            {
+                return size.x * size.y;
+            }
+        }
+
+        public int GetIndex(Vector2Int cell)
+        {
+            return (cell.x - min.x) + (cell.y - min.y) * size.x;
+        }
+
+        public Vector2Int GetCellByIndex(int index)
+        {
+            var x = index % size.x;
+            var y = index / size.x;
+            return new Vector2Int(x + min.x, y + min.y);
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
