@@ -2,14 +2,18 @@
 
 A [polygon mesh](https://en.wikipedia.org/wiki/Polygon_mesh) is a data tructure commonly used in computer graphics. Roughly speaking they are a collection of vertices, edges and vertices.
 
-Sylves mostly deals with meshs using the [MeshData](xref:Sylves.MeshData) class which closely mirrors how Unity stores them internally, but with extra support for faces with more than 4 vertices.
+Sylves mostly deals with meshs using the [MeshData](xref:Sylves.MeshData) class which closely mirrors how Unity stores them internally, but with [extra support](xref:Sylves.MeshTopology.NGon) for faces with more than 4 vertices.
 
 Meshes are closely related to grids and there are numerous methods in Sylves for dealing with them.
 
 ## Grid Conversion
 
+TODO
+
 <xref:Sylves.MeshGrid>
+
 <xref:Sylves.MeshPrismGrid>
+
 <xref:Sylves.PeriodicPlanarMeshGrid>
 
 <xref:Sylves.MeshUtils.ToMesh(Sylves.IGrid)>

@@ -17,7 +17,9 @@ Sylves contains many methods for querying how the cells are arranged in space.
 * [`Raycast`](xref:Sylves.IGrid.Raycast(Sylves.Vector3,Sylves.Vector3,System.Single)) - finds all the cells intersecting a ray extending out from a given point.
 ## Shape
 
-* [`GetPolygon`](xref:Sylves.IGrid.GetPolygon(Sylves.Cell,Sylves.Vector3[]@,Sylves.Matrix4x4@)) - *(2d only)* gives the vertices
+* [`GetPolygon`](xref:Sylves.IGrid.GetPolygon(Sylves.Cell,Sylves.Vector3[]@,Sylves.Matrix4x4@)) - *(2d only)* gives the vertices making up the polygon of the cell. There's also an [extension method](xref:Sylves.GridExtensions.GetMeshData(Sylves.IGrid,Sylves.Cell)) that's easier to use.
+* ['GetMeshData'](xref:Sylves.IGrid.GetMeshData(Sylves.Cell,Sylves.MeshData@,Sylves.Matrix4x4@)) - *(3d only)* Gets the mesh of a single cell.
+* ['ToMeshData'](xref:Sylves.GridExtensions.ToMeshData(Sylves.IGrid)) - Converst the whole grid to a mesh.
 
 ## Deformation
 

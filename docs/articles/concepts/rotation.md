@@ -19,7 +19,9 @@ There's also 4 reflections that map a square onto itself. Reflections are treate
 
 Transformations that map something back onto itself are known as symmetries in mathematics.
 
-`CellRotation` is actually an empty enumeration - the actual values are specific to the cell type in question. So to work with rotations, you must either cast to a more specific type, like `SquareRotation`, or you must use the appropriate `ICellType` implementation, `SquareCellType.Instance`.
+`CellRotation` is actually an empty enumeration - the actual values are specific to the cell type in question. For example, `SquareRotation` supplies values like `SquareRotation.RotateCW` and `SquareRotation.ReflectX` as values.
+
+If you want to work with rotations without using a specific type, you can use use the appropriate `ICellType` implementation, such as `SquareCellType.Instance`, which is detailed more in the [intro](intro.md#abstract-and-specific-types).
 
 Rotations only consider a single cell at a time. For rotating an entire grid, see [Grid Symmetry](grid_symmetry.md) or [TransformModifier](xref:Sylves.TransformModifier).
 
@@ -67,7 +69,7 @@ If you follow this path, you end up rotated 90 degrees from where you started! T
 
 ---
 
-In order to deal with this sort of situation, when you call [`IGrid.TryMove`](xref:Sylves.IGrid.TryMove(Sylves.Cell,Sylves.CellDir,Sylves.Cell@,Sylves.CellDir@,Sylves.Connection@)), in addition to returning the tile you move to, you get `inverseDir` and `connection`, which explain what is happening.
+In order to deal with this sort of situation, when you call [`IGrid.TryMove`](xref:Sylves.IGrid.TryMove(Sylves.Cell,Sylves.CellDir,Sylves.Cell@,Sylves.CellDir@,Sylves.Connection@)), in addition to returning the tile you move to, you get `inverseDir` and `connection`, which explain if any rotation is happening.
 
 Let's ignore connection for now, as it is irrelevant to the majority of grids. `inverseDir` returns the `CellDir` needed to move *back* to the original cell. Why is `inverseDir` so important?
 
@@ -91,3 +93,15 @@ SquareCellType.Instance.TryGetRotation(actualDirection, expectedDirection, new C
 ```
 
 This general concept is called rotation maps and is covered in [more details on my blog](https://www.boristhebrave.com/2022/07/31/rotation-graphs/).
+
+## Connection
+
+In addition to `inverseDir`, `TryMove` also supplies a [`Connection`](xref:Sylves.Connection) object. This is used for describing relationships between tiles even more complex than the above example.
+
+It's only used in very rare circumstances. For example imagine a grid on a <a href="https://en.wikipedia.org/wiki/M%C3%B6bius_strip">Möbius strip</a>.
+
+<img width="400px" src="../../images/grids/mobiussquare.png" />
+
+If you travel all the way around such a grid, you'll find yourself on the same cell, facing the same direction, but left and right have been flipped. [Connection.Mirror](xref:Sylves.Connection.Mirror) records whether to flip everything when you travel from one cell to another. To make the Möbius grid work, you must insert a dividing line that causes to mirror when you travel through it.
+
+Similarly [Connection.Rotation](xref:Sylves.Connection.Rotation) is used for 3d grids, and notes if you need to change your [roll angle](https://en.wikipedia.org/wiki/Degrees_of_freedom_(mechanics)) when moving cells.

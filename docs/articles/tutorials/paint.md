@@ -23,7 +23,7 @@ First we need a variable to define the grid.
 IGrid grid = new HexGrid(1);
 ```
 
-We'll start with a hexagon grid of size 1, but because we are using the `IGrid` interface, the code will work just as well with any other 2d planar grid supported by Sylves. Note that this grid is infinite in size as we didn't specify any [bounds](../concepts/bounds.md). That won't be a problem for us.
+We'll start with a hexagon grid of cell size 1. Because we are using the `IGrid` interface, the code will work just as well with any other 2d planar grid supported by Sylves. Note that this grid is infinite in size as we didn't specify any [bounds](../concepts/bounds.md). That won't be a problem for us.
 
 Next we need to define the canvas - i.e. what colors are stored in the grid. As explained in the [concepts](../concepts/storage.md), Sylves doesn't come with any storage classes, you can use your own. We'll just use standard Dictionary.
 
@@ -73,16 +73,16 @@ foreach (var cell in cells)
     // Read the color from the canvas.
     var color = canvas.TryGetValue(cell, out var c) ? c : defaultColor;
     // Read the vertices of the cell. 
-    grid.GetPolygon(cell, out var vertices, out var transform);
+    var vertices = grid.GetPolygon(cell);
     // Split up the polygon into triangles, and draw each one of them.
     // (NB: only works for convex polygons)
     GL.Begin(GL.TRIANGLES);
     GL.Color(color.linear);
     for (var i = 2; i < vertices.Length; i++)
     {
-        GL.Vertex(transform.MultiplyPoint3x4(vertices[0]));
-        GL.Vertex(transform.MultiplyPoint3x4(vertices[i]));
-        GL.Vertex(transform.MultiplyPoint3x4(vertices[i - 1]));
+        GL.Vertex(vertices[0]);
+        GL.Vertex(vertices[i]);
+        GL.Vertex(vertices[i - 1]);
     }
     GL.End();
 }
@@ -185,6 +185,9 @@ if (Input.GetMouseButtonDown(0))
 
 > [!Note]
 > Flood fills can cause problems on infinite grids. So the above algorithm will ignore any cells that haven't been painted at least once, i.e. cells not in `canvas`.
+
+> [!Note]
+> Sylves comes with [pathfinding](../concepts/pathfinding.md) methods like [Pathfinding.FindDistances](xref:Sylves.Pathfinding.FindDistances(Sylves.IGrid,Sylves.Cell,System.Func{Sylves.Cell,System.Boolean},System.Func{Sylves.Step,System.Nullable{System.Single}})) which we could have used here.
 
 # Summary
 

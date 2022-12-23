@@ -37,4 +37,5 @@ and not return cells outside the bound.
 
 To remove the bound from a grid, you can access [`grid.Unbounded`](xref:Sylves.IGrid.Unbounded).
 
-Note that you can use [`MaskModifier`](xref:Sylves.MaskModifier) like `BoundBy`, except `MaskModifier` accepts an arbitrary set of cells.
+> [!Note]
+> To restrict a grid to a set of cells not representable by a bound, use  [`MaskModifier`](xref:Sylves.MaskModifier).

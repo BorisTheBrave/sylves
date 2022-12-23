@@ -1,6 +1,6 @@
 # Pathfinding
 
-All grids in sylves describe connections from cell to cell. They can therefore be considered as a [graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)) and regular [pathfinding](https://en.wikipedia.org/wiki/Pathfinding) algorithms can be run on them.
+All grids in Sylves describe connections from cell to cell. They can therefore be considered as a [graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)) and regular [pathfinding](https://en.wikipedia.org/wiki/Pathfinding) algorithms can be run on them.
 
 Sylves comes with a variety of useful, configurable functions for path finding. However, path finding is a large topic and you can likely find specialized routines elsewhere that are more appropriate.
 
@@ -48,7 +48,7 @@ The default is all cells are accessible.
 
 If stepLengths is set, configures the distance between adjacent cells.
 
-The default is all adjacent cells are at at distance 1.0.
+The default is all steps are length 1.0.
 
 This is commonly set to `Pathfinding.GetEuclidianDistanceMetric(grid)` which sets the step length equal to the distance between cell centers.
 

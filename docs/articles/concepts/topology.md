@@ -28,7 +28,7 @@ Cell? IGrid.Move(Cell cell, CellDir dir);
 IEnumerable<Cell> IGrid.GetNeighbours(Cell cell)
 ```
 
-There is the [`Walker`](xref:Sylves.Walker) class, which represents a object standing on a given cell facing a given direction, and is a mutable interface to the same logic.
+There is also the [`Walker`](xref:Sylves.Walker) class, which represents a object standing on a given cell facing a given direction, and is a mutable interface to the same logic.
 
 ## ParallelTransport
 
@@ -54,4 +54,6 @@ myGrid.ParallelTransport(new SquareGrid(1), new Cell(0, 0, 0), new Cell(100, 0, 
 
 Describes a path which moves 100 units to the right, and asks that path to rebased to start at (1,2,3). If myGrid is also a square grid, then this will result in `destCell = (101, 2, 3)`, just as if we'd done the straightforward arithmetic.
 
-NB: [Grid symmetries](grid_symmetry.md) offers a similar feature to ParallelTransport, but only uses a single grid.
+
+> [!Note]
+> [Grid symmetries](grid_symmetry.md) offers a similar feature to ParallelTransport, but only uses a single grid.
