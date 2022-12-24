@@ -1,6 +1,6 @@
 # Grid Bestiary
 
-This page provides a full list of grid classes available in Sylves. You can always [create or customize your own grid](creating.md) if the ones here don't quite match your purpose.
+This page provides a full list of grid classes available in Sylves. You can always [create or customize your own grid](../creating.md) if the ones here don't quite match your purpose.
 
 
 <style>
@@ -18,7 +18,7 @@ These are the most common grids you are likely to want to use.
     <td><a href="squaregrid.md">Square Grid</a></td>
 </tr>
 <tr>
-    <td><a href="../../images/grids/cube.cube"><img class="grid-thumb" src="../../images/grids/cube.png" /></img></td>
+    <td><a href="../../images/grids/cube.png"><img class="grid-thumb" src="../../images/grids/cube.png" /></img></td>
     <td><a href="cubegrid.md">Cube Grid</a></td>
 </tr>
 <tr>

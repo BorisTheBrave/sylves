@@ -13,4 +13,4 @@ Furthermore:
 * Sylves handles many of the fiddlier grid operations, such as raycasts and pathfinding.
 * Sylves comes with a sophisticated notion of direction and [rotation](concepts/rotation.md)
 
-Read on to learn about the **[basic concepts of Sylves](concepts/intro.md)**, or work through some [**tutorials**](tutorials/).
+Read on to learn about the **[basic concepts of Sylves](concepts/intro.md)**, or work through some [**tutorials**](tutorials/index.md).
