@@ -11,29 +11,29 @@ namespace Sylves
     /// Converts a ICellType based in the XY plane to one
     /// in the XZ plane. It does this by rotating Y+ to Z-  (and Z+ to Y+)
     /// </summary>
-    public class XZCellModifier : ICellType
+    public class XZCellTypeModifier : ICellType
     {
-        private static readonly Dictionary<ICellType, XZCellModifier> cache = new Dictionary<ICellType, XZCellModifier>();
+        private static readonly Dictionary<ICellType, XZCellTypeModifier> cache = new Dictionary<ICellType, XZCellTypeModifier>();
 
         private static readonly Matrix4x4 RotateYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 0, 1));
         private static readonly Matrix4x4 RotateZY = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, -1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
 
         private readonly ICellType underlying;
 
-        private XZCellModifier(ICellType underlying)
+        private XZCellTypeModifier(ICellType underlying)
         {
             this.underlying = underlying;
         }
 
         public ICellType Underlying => underlying;
 
-        public static XZCellModifier Get(ICellType underlying)
+        public static XZCellTypeModifier Get(ICellType underlying)
         {
             if(cache.TryGetValue(underlying, out var v))
             {
                 return v;
             }
-            return cache[underlying] = new XZCellModifier(underlying);
+            return cache[underlying] = new XZCellTypeModifier(underlying);
         }
 
         // GetMatrix is the only nontrivial member

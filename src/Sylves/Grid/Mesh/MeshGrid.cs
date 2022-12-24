@@ -132,7 +132,7 @@ namespace Sylves
 
         ICellType UnwrapXZCellModifier(ICellType cellType)
         {
-            if(cellType is XZCellModifier modifier)
+            if(cellType is XZCellTypeModifier modifier)
             {
                 return modifier.Underlying;
             }

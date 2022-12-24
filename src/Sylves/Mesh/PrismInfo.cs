@@ -116,7 +116,7 @@ namespace Sylves
                 }
                 return prismInfo;
             }
-            if (baseCellType is XZCellModifier xzCellModifier)
+            if (baseCellType is XZCellTypeModifier xzCellModifier)
             {
                 var underlying = xzCellModifier.Underlying;
                 if(underlying == SquareCellType.Instance)
@@ -129,7 +129,7 @@ namespace Sylves
                 return new PrismInfo
                 {
                     BaseCellType = baseCellType,
-                    PrismCellType = XZCellModifier.Get(uPrismInfo.PrismCellType),
+                    PrismCellType = XZCellTypeModifier.Get(uPrismInfo.PrismCellType),
                     BackDir = uPrismInfo.BackDir,
                     ForwardDir = uPrismInfo.ForwardDir,
                     BaseToPrismDict = uPrismInfo.BaseToPrismDict,

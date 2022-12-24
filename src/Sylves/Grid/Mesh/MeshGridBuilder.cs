@@ -57,7 +57,7 @@ namespace Sylves
 
                     if (meshGridOptions.UseXZPlane)
                     {
-                        cellType = XZCellModifier.Get(cellType);
+                        cellType = XZCellTypeModifier.Get(cellType);
                         deformation = deformation * RotateYZ;
                         trs = new TRS(trs.ToMatrix() * RotateYZ);
                     }

@@ -25,14 +25,14 @@ namespace Sylves
         {
             if(underlying.IsSingleCellType)
             {
-                cellType = XZCellModifier.Get(underlying.GetCellTypes().Single());
+                cellType = XZCellTypeModifier.Get(underlying.GetCellTypes().Single());
                 cellTypes = new[] { cellType };
 
             }
             else
             {
                 cellType = null;
-                cellTypes = underlying.GetCellTypes().Select(XZCellModifier.Get).ToArray();
+                cellTypes = underlying.GetCellTypes().Select(XZCellTypeModifier.Get).ToArray();
             }
         }
 
@@ -51,7 +51,7 @@ namespace Sylves
 
         public override ICellType GetCellType(Cell cell)
         {
-            return cellType ?? XZCellModifier.Get(Underlying.GetCellType(cell));
+            return cellType ?? XZCellTypeModifier.Get(Underlying.GetCellType(cell));
         }
 
         protected override IGrid Rebind(IGrid underlying)
