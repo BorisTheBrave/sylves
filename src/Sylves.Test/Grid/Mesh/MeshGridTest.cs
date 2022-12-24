@@ -128,7 +128,6 @@ namespace Sylves.Test
             {
                 indices = TestMeshes.Cube.indices,
                 vertices = TestMeshes.Cube.vertices,
-                subMeshCount = TestMeshes.Cube.subMeshCount,
                 topologies = TestMeshes.Cube.topologies,
             };
             var g = new MeshGrid(meshData);

@@ -27,7 +27,6 @@ namespace Sylves.Test
                     Vector3.forward,
                     Vector3.forward,
                 },
-            subMeshCount = 1,
             topologies = new[] { MeshTopology.Quads }
         };
 
@@ -50,7 +49,6 @@ namespace Sylves.Test
                     Vector3.up,
                     Vector3.up,
                 },
-            subMeshCount = 1,
             topologies = new[] { MeshTopology.Quads }
         };
 
@@ -75,7 +73,6 @@ namespace Sylves.Test
                     Vector3.up,
                     Vector3.up,
                 },
-            subMeshCount = 1,
             topologies = new[] { MeshTopology.Quads }
         };
 
@@ -111,7 +108,6 @@ namespace Sylves.Test
                         Vector3.forward,
                         Vector3.forward,
                     },
-                    subMeshCount = 1,
                     topologies = new[] { MeshTopology.Triangles }
                 };
             }
@@ -143,7 +139,6 @@ namespace Sylves.Test
                         Vector3.up,
                         Vector3.up,
                     },
-                    subMeshCount = 1,
                     topologies = new[] { MeshTopology.Triangles }
                 };
             }
@@ -404,7 +399,6 @@ new Vector3(0.000000f, 0.402605f, -0.038307f),
 
                         }.Select(x=>x>=0?x-1 : ~(~x -1)).ToArray()
                     },
-                    subMeshCount = 1,
                     topologies = new[] { MeshTopology.NGon }
                 };
             }
@@ -454,7 +448,6 @@ new Vector3(0.000000f, 0.402605f, -0.038307f),
                             11, 7, 12,
                         }.Select(x=>x>=0?x-1 : ~(~x -1)).ToArray()
                     },
-                    subMeshCount = 1,
                     topologies = new[] { MeshTopology.Triangles }
                 };
             }

@@ -48,7 +48,6 @@ namespace Sylves.Test
                         0, 4, 1,
                     }
                 },
-                subMeshCount = 1,
                 topologies = new[] { MeshTopology.Triangles },
             };
 

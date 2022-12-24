@@ -22,7 +22,6 @@ namespace Sylves.Test
                     new Vector3(-0.5f, 0.5f, 0.0f),
                     new Vector3(-0.5f, -0.5f, 0.0f),
                 },
-                subMeshCount = 1,
                 topologies = new[] { MeshTopology.Quads }
             };
             plane.RecalculateNormals();
@@ -39,7 +38,6 @@ namespace Sylves.Test
                     new Vector3(-0.5f, 0.0f, 0.5f),
                     new Vector3(-0.5f, 0.0f, -0.5f),
                 },
-                subMeshCount = 1,
                 topologies = new[] { MeshTopology.Quads }
             };
             plane.RecalculateNormals();

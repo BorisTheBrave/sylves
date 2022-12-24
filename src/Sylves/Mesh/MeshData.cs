@@ -86,7 +86,6 @@ namespace Sylves
             var it = m.inverse.transpose;
             return new MeshData
             {
-                subMeshCount = meshData.subMeshCount,
                 indices = meshData.indices,
                 topologies = meshData.topologies,
                 vertices = meshData.vertices.Select(m.MultiplyPoint3x4).ToArray(),
