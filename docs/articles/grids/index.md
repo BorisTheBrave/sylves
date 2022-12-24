@@ -41,27 +41,27 @@ All the basic grids above are periodic, but some extra ones are supplied.
 <table>
 <tr>
     <td><a href="../../images/grids/cairo.svg"><img class="grid-thumb" src="../../images/grids/cairo.svg" /></img></td>
-    <td><a href="xref:Sylves.CairoGrid">Cairo Grid</a></td>
+    <td><a href="periodicplanarmeshgrid.md">Cairo Grid</a></td>
 </tr>
 <tr>
     <td><a href="../../images/grids/trihex.svg"><img class="grid-thumb" src="../../images/grids/trihex.svg" /></img></td>
-    <td><a href="xref:Sylves.TriHexGrid">TriHex Grid</a></td>
+    <td><a href="periodicplanarmeshgrid.md">TriHex Grid</a></td>
 </tr>
 <tr>
     <td><a href="../../images/grids/metahexagon.svg"><img class="grid-thumb" src="../../images/grids/metahexagon.svg" /></img></td>
-    <td><a href="xref:Sylves.MetaHexagonGrid">MetaHexagon Grid</a></td>
+    <td><a href="periodicplanarmeshgrid.md">MetaHexagon Grid</a></td>
 </tr>
 <tr>
     <td><a href="../../images/grids/squaresnub.svg"><img class="grid-thumb" src="../../images/grids/squaresnub.svg" /></img></td>
-    <td><a href="xref:Sylves.SquareSnubGrid">SquareSnub Grid</a></td>
+    <td><a href="periodicplanarmeshgrid.md">SquareSnub Grid</a></td>
 </tr>
 <tr>
     <td><a href="../../images/grids/tetrakissquare.svg"><img class="grid-thumb" src="../../images/grids/tetrakissquare.svg" /></img></td>
-    <td><a href="xref:Sylves.TetrakisSquareGrid">TetrakisSquare Grid</a></td>
+    <td><a href="periodicplanarmeshgrid.md">TetrakisSquare Grid</a></td>
 </tr>
 <tr>
     <td><a href="../../images/grids/rhombille.svg"><img class="grid-thumb" src="../../images/grids/rhombille.svg" /></img></td>
-    <td><a href="xref:Sylves.RhombilleGrid">Rhombille Grid</a></td>
+    <td><a href="periodicplanarmeshgrid.md">Rhombille Grid</a></td>
 </tr>
 </table>
 
@@ -82,7 +82,7 @@ Mesh grids accept a [mesh](xref:Sylves.MeshData) as the input, and base cells of
 </tr>
 <tr>
     <td><a href="../../images/grids/cairo.svg"><img class="grid-thumb" src="../../images/grids/cairo.svg" /></img></td>
-    <td><a href="xref:Sylves.PeriodicPlanarMeshGrid">PeriodicPlanarMeshGrid</a><br/>Can turn any planar mesh into a periodic grid by repeating the mesh at fixed intervals.</td>
+    <td><a href="periodicplanarmeshgrid.md">PeriodicPlanarMeshGrid</a><br/>Can turn any planar mesh into a periodic grid by repeating the mesh at fixed intervals.</td>
 </tr>
 </table>
 

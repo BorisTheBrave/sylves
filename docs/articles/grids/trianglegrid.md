@@ -15,6 +15,8 @@ TriangleGrid is a tiling of the plane with triangles. It supports both flat-topp
 <img width="200px" src="../../images/grids/tri_fs.svg" /></img>
 <img width="200px" src="../../images/grids/tri_ft.svg" /></img>
 
+## Cell co-ordinates
+
 The co-ordinate systems used are shown above - it uses three co-ordinates that always sum to 1 (for left and down pointing triangles) or 2 (for right or up pointing triangles). This scheme is explained more on [my blog](https://www.boristhebrave.com/2021/05/23/triangle-grids/).
 
 TriangleGrid comes with methods [IsUp](xref:Sylves.TriangleGrid.IsUp(Sylves.Cell))/[IsDown](xref:Sylves.TriangleGrid.IsDown(Sylves.Cell))/[IsLeft](xref:Sylves.TriangleGrid.IsLeft(Sylves.Cell))/[IsRight](xref:Sylves.TriangleGrid.IsRight(Sylves.Cell)) to determine which direction a given cell is pointing.

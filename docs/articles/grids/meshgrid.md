@@ -30,10 +30,13 @@ MeshData described a Mesh in a fashion nearly identical to [Unity's Mesh object]
 * [MeshTopology.Quads](xref:Sylves.MeshTopology.Quads) - Each set of four consecutive elements in the index array specifies one quad.
 * [MeshTopology.NGon](xref:Sylves.MeshTopology.NGon) - Each "run" of elements in the index array specifies one polygon. A run is a series of non-negative integers followed by a negative integer. The negative integer will be bitwise negated (the `~` operator) to convert it to an index.
 
-> [!Note]
-> You can use [MeshUtils.GetFaces](xref:Sylves.MeshUtils.GetFaces) to work with idices in a consistent fashion regardless of the MeshTopology type.
+<!--
+You can use [MeshUtils.GetFaces](xref:Sylves.MeshUtils.GetFaces) to work with idicies in a consistent fashion regardless of the MeshTopology type.
+-->
 
 Optionally, you can also supply, uvs, normals and tangents in a MeshData, for use cases that use those. You can also supply more than one index array and MeshTopology value, to breakdown the mesh into multiple submeshes, usally when each submesh uses a different material when rendering.
+
+Internally, MeshGrid stores cells in a [spatial hash](https://en.wikipedia.org/wiki/Glossary_of_computer_graphics#Spatial_hashing) to efficiently find cells when queried. This may lead to performance issues if the cells are wildy different sizes to each other.
 
 ## MeshGridOptions
 
@@ -64,3 +67,7 @@ It's often more convenient to work with even polygons as an about face is possib
 ## Cell co-ordinates
 
 The x value is used to index the face in the submesh, the y value indicates the submesh, if any, and the z value is unused.
+
+## Deformation
+
+TODO

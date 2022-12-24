@@ -14,7 +14,9 @@ SquareGrid is the most bog standard of all grids.
 
 <img width="200px" src="../../images/grids/square.svg" /></img>
 
+SquareGrid can also represent rectangles, just use the constructor which accepts a Vector2 cellSize.
+
+## Cell co-ordinates
+
 Increasing the x co-ordinate of a cell moves right, and the y co-ordinate up. The cell (0, 0) has bounds from 0 to 1 in each axis (for a grid with cell size of 1). That means that the cell center of cell (0, 0) is at `new Vector2(0.5f, 0.5f)`. This is the usual convention for square grids, but can be a bit surprising if you are not ready for it.
 
-
-SquareGrid can also represent rectangles, just use the constructor which accepts a Vector2 cellSize.

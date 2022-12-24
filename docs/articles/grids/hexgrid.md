@@ -15,6 +15,8 @@ HexGrid is a tiling of the plane with hexagons. It supports both flat-topped and
 <img width="200px" src="../../images/grids/hex_pt.svg" /></img>
 <img width="200px" src="../../images/grids/hex_ft.svg" /></img>
 
+## Cell co-ordinates
+
 The co-ordinate systems used are shown above - it uses three co-ordinates that always sum to zero. This scheme is explained in [more detail by Red Blob Games](https://www.redblobgames.com/grids/hexagons/).
 
 Cell (0, 0, 0) has it's center at `new Vector3(0, 0, 0)`.
