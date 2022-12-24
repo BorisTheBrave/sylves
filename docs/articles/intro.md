@@ -8,7 +8,7 @@ Sylves is a C# library for handling maths relating to grids, for games and proce
 
 Furthermore:
 
-* Sylves supports a [wide range of different grids](all_grids.md)
+* Sylves supports a [wide range of different grids](grids/index.md)
 * All grids in Sylves shares a common interface, [IGrid](concepts/intro.md), so algorithms can be written once and work on any grid. 
 * Sylves handles many of the fiddlier grid operations, such as raycasts and pathfinding.
 * Sylves comes with a sophisticated notion of direction and [rotation](concepts/rotation.md)

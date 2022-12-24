@@ -28,7 +28,7 @@ foreach(var cell in cells)
 
 A summary of all methods is [below](#grid-methods) and the full list in the [API reference](xref:Sylves.IGrid).
 
-Sylves supports an [extremely wide set of grids](../all_grids.md):
+Sylves supports an [extremely wide set of grids](../grids/index.md):
 * **Planar grids** (those confined to the XY plane), the most common grids seen in games.
 * **2d non-planar grids** use 2d cells, but arranged in 3d space, can be used for 3d games where height is important, or for spheres and other shapes.
 * **3d grids** (aka [honeycombs](https://en.wikipedia.org/wiki/Honeycomb_(geometry))) are useful for voxel style calculations.

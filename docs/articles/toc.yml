@@ -24,8 +24,17 @@
        href: tutorials/langton.md
     -  name: Paint Program
        href: tutorials/paint.md
-- name: All Grids
-  href: all_grids.md
+- name: Grids
+  href: grids/index.md
+  items:
+    -  name: SquareGrid
+       href: grids/squaregrid.md
+    -  name: CubeGrid
+       href: grids/Cubegrid.md
+    -  name: HexGrid
+       href: grids/hexgrid.md
+    -  name: TriangleGrid
+       href: grids/trianglegrid.md
 - name: Creating Grids
   href: creating.md
 - name: Extras

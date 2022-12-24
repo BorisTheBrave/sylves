@@ -56,7 +56,7 @@ The stepLengths function takes a [Step](xref:Sylves.Step) and returns the length
 
 ## Advanced API
 
-[DijkstraPathfinding](xref:Sylves.DijkstraPathfinding) and [AStartPathfinding](xref:Sylves.AStartPathfinding) give direct access to the two pathfinding algorithms available. 
+[DijkstraPathfinding](xref:Sylves.DijkstraPathfinding) and [AStarPathfinding](xref:Sylves.AStarPathfinding) give direct access to the two pathfinding algorithms available. 
 
 ## Useful notes
 

@@ -8,7 +8,7 @@ Each turn, it moves forward.
 * If it lands on a white square, it turns 90 degrees clockwise, then flips the color of the square to black.
 * If it lands on a black square, it turns 90 degrees counter-clockwise, then flips the color of the square to white.
 
-Let's code this using Sylves. First, we need to define the grid we are working on. Sylves comes with [`SquareGrid`](../all_grids.md#square-grid) for this purpose, which defaults to infinite size. We pass in 1f as the cell size, though the size of the grid isn't relevant to this tutorial.
+Let's code this using Sylves. First, we need to define the grid we are working on. Sylves comes with [`SquareGrid`](../grids/squaregrid.md) for this purpose, which defaults to infinite size. We pass in 1f as the cell size, though the size of the grid isn't relevant to this tutorial.
 
 ```csharp
 using Sylves;

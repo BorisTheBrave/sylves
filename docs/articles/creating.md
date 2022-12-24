@@ -1,6 +1,6 @@
 # Creating a grid
 
-Sylves comes with a [large array of built in grids](all_grids.md), but sometimes you need something more custom. This page describes the various ways to get even more range from your grids.
+Sylves comes with a [large array of built in grids](grids/index.md), but sometimes you need something more custom. This page describes the various ways to get even more range from your grids.
 
 ## Use MeshGrid
 

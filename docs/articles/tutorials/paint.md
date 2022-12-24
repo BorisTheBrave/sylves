@@ -193,6 +193,6 @@ if (Input.GetMouseButtonDown(0))
 
 More tools can be added to the program using other methods of IGrid. For example, `GetCellsIntersectsApprox` and `GetCellCenter` can be used together to find all cells within a given distance of the cursor, making a paint brush tool.
 
-At no point did we write a single line of maths relating to hexagons. That means that the same code would work just as well for a square grid, or the [many other grids](../all_grids.md) that Sylves comes with.
+At no point did we write a single line of maths relating to hexagons. That means that the same code would work just as well for a square grid, or the [many other grids](../grids/index.md) that Sylves comes with.
 
 The full program [Mosaic Paint](https://boristhebrave.itch.io/mosaic-paint) includes a number of features not shown in this tutorial. Take a look, and think about how you could achieve them with the [`IGrid`](xref:Sylves.IGrid) api.
