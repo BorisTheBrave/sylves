@@ -19,8 +19,18 @@ namespace Sylves.Test
             public Vector2 max = new Vector2(2, 2);
         }
 
+        private const bool IsSeed = false;
+
         public static void WriteGrid(IGrid grid, TextWriter tw, Options options)
         {
+            if(IsSeed)
+            {
+                if(grid.Unwrapped is PeriodicPlanarMeshGrid)
+                {
+                    grid = grid.BoundBy(new SquareBound(0, 0, 1, 1));
+                }
+                options.textScale = null;
+            }
             var b = new SvgBuilder(tw);
             /*
             Vector3 min = Vector3.zero, max = Vector3.zero;
