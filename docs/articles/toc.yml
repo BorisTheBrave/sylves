@@ -35,6 +35,10 @@
        href: grids/hexgrid.md
     -  name: TriangleGrid
        href: grids/trianglegrid.md
+    -  name: MeshGrid
+       href: grids/meshgrid.md
+    -  name: PeriodicPlanarMeshGrid
+       href: grids/periodicplanarmeshgrid.md
 - name: Creating Grids
   href: creating.md
 - name: Extras

@@ -1,0 +1,9 @@
+<svg viewBox="-2 -2 4 4" xmlns="http://www.w3.org/2000/svg">
+<style>path{stroke-linejoin: round}</style>
+<!-- (0, 0, 0) -->
+<path style="fill: rgb(244, 244, 241); stroke: rgb(51, 51, 51); stroke-width: 0.1" d="M1 0L0.5 1L-0.5 1L-1 0L-0.5 -1L0.5 -1Z"/>
+<!-- (1, 0, 0) -->
+<path style="fill: rgb(244, 244, 241); stroke: rgb(51, 51, 51); stroke-width: 0.1" d="M1.5 1L0.5 1L1 0Z"/>
+<!-- (2, 0, 0) -->
+<path style="fill: rgb(244, 244, 241); stroke: rgb(51, 51, 51); stroke-width: 0.1" d="M1.5 -1L1 0L0.5 -1Z"/>
+</svg>
