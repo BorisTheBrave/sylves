@@ -168,7 +168,6 @@ namespace Sylves
             {
                 indices = indices.Select(x => x.ToArray()).ToArray(),
                 vertices = vertices.ToArray(),
-                subMeshCount = indices.Count,
                 topologies = topologies.ToArray(),
                 uv = uv?.ToArray(),
                 normals = normals?.ToArray(),

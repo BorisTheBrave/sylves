@@ -66,7 +66,6 @@ namespace Sylves
                 indices = indices,
                 vertices = vertices,
                 topologies = Enumerable.Range(0, h).Select(_ => MeshTopology.Quads).ToArray(),
-                subMeshCount = h,
             };
         }
     }

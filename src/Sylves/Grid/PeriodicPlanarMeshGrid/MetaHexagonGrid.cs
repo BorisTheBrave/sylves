@@ -25,7 +25,6 @@ namespace Sylves
             {
                 0, 1, 2, 3, 4, ~5,
             } };
-            meshData.subMeshCount = 1;
             meshData.topologies = new[] { MeshTopology.NGon };
             return ConwayOperators.Meta(meshData);
         }

@@ -32,7 +32,6 @@ namespace Sylves
             {
                 0, 1, 2, 3,
             } };
-            meshData.subMeshCount = 1;
             meshData.topologies = new[] { MeshTopology.Quads };
             return ConwayOperators.Kis(meshData);
         }

@@ -138,7 +138,6 @@ namespace Sylves
             {
                 vertices = vertices.ToArray(),
                 indices = new[] { Enumerable.Range(0, vertices.Count).ToArray() },
-                subMeshCount = 1,
                 topologies = new[] { MeshTopology.Triangles },
             };
         }

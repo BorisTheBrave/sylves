@@ -39,7 +39,6 @@ namespace Sylves
                 6, 1, ~0,
                 7, 0, ~5,
             } };
-            meshData.subMeshCount = 1;
             meshData.topologies = new[] { MeshTopology.NGon };
             return meshData;
         }

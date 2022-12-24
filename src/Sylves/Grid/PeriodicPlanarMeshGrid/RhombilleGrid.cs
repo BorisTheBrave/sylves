@@ -38,7 +38,6 @@ namespace Sylves
                 2, 3, 4, 6,
                 4, 5, 0, 6,
             } };
-            meshData.subMeshCount = 1;
             meshData.topologies = new[] { MeshTopology.Quads };
             return meshData;
         }

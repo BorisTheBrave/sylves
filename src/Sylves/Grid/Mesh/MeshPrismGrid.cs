@@ -194,7 +194,6 @@ namespace Sylves
                 meshData.vertices = vertices;
                 meshData.indices = new[] { indices };
                 meshData.topologies = new[] { MeshTopology.Quads };
-                meshData.subMeshCount = 1;
 
                 faces = s_faces;
                 trs = s_trsIdentity;
@@ -253,7 +252,6 @@ namespace Sylves
                 {
                     vertices = outVertices,
                     indices = new[] { outIndices },
-                    subMeshCount = 1,
                     topologies = new MeshTopology[] { MeshTopology.NGon },
                 };
                 trs = s_trsIdentity;

@@ -10,13 +10,14 @@ namespace Sylves
     /// </summary>
     public class MeshData
     {
-        public int subMeshCount;
         public int[][] indices;
         public Sylves.MeshTopology[] topologies;
         public Vector3[] vertices;
         public Vector2[] uv;
         public Vector3[] normals;
         public Vector4[] tangents;
+
+        public int subMeshCount => topologies.Length;
 
         public MeshData()
         {

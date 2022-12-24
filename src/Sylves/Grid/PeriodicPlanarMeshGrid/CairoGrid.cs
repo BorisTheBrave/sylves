@@ -67,7 +67,6 @@ namespace Sylves
                 13, 14, 12, 4, ~5,
                 10, 18, 13, 5, ~3,
             } };
-            meshData.subMeshCount = 1;
             meshData.topologies = new[] { MeshTopology.NGon };
             return meshData;
         }

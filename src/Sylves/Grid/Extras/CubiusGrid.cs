@@ -89,7 +89,6 @@ namespace Sylves
                 vertices = vertices,
                 normals = normals,
                 topologies = Enumerable.Range(0, h).Select(_ => MeshTopology.Quads).ToArray(),
-                subMeshCount = h,
             };
             return meshData;
         }

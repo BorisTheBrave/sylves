@@ -122,7 +122,6 @@ namespace Sylves
             {
                 vertices = vertices.ToArray(),
                 indices = new[] { indices.ToArray() },
-                subMeshCount = 1,
                 topologies = new MeshTopology[] { allTris ? MeshTopology.Triangles : allQuads ? MeshTopology.Quads : MeshTopology.NGon },
             };
         }

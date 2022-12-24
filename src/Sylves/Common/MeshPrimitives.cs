@@ -82,7 +82,6 @@ namespace Sylves
                     3, 2, 1, 0, // Back
                 };
 
-                meshData.subMeshCount = 1;
                 meshData.vertices = vertices;
                 meshData.indices = new[] { quads };
                 meshData.topologies = new[] { MeshTopology.Quads };

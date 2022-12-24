@@ -467,7 +467,6 @@ namespace Sylves
             {
                 vertices = vertices,
                 indices = new[] { indices },
-                subMeshCount = 1,
                 topologies = new MeshTopology[] { MeshTopology.NGon },
             };
         }
