@@ -70,4 +70,6 @@ The x value is used to index the face in the submesh, the y value indicates the 
 
 ## Deformation
 
-TODO
+Even though each cell in the grid can have a unique shape, all cells with the same number of sides share the same cell type, `NGonCellType.Get(sides)`.
+
+Working with uniquely shaped cells can be tricky. It can be useful to use `MeshGrid.GetDeformation`, which provides a function that maps from a regular polygon to the specially shaped one of that cell. Using that you can warp a pre-made mesh to fit the cell exactly. There are some more details in the [concepts documentation](../concepts/space.md#deformation).

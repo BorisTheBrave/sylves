@@ -74,11 +74,11 @@ Mesh grids accept a [mesh](xref:Sylves.MeshData) as the input, and base cells of
 <table>
 <tr>
     <td><a href="../../images/grids/meshgrid.svg"><img class="grid-thumb" src="../../images/grids/meshgrid.svg" /></img></td>
-    <td><a href="xref:Sylves.MeshGrid">Mesh Grid</a><br/>Turns a mesh into a 2d grid, one cell per face. Doesn't need to be planar.</td>
+    <td><a href="meshgrid.md">Mesh Grid</a><br/>Turns a mesh into a 2d grid, one cell per face. Doesn't need to be planar.</td>
 </tr>
 <tr>
     <td><a href="../../images/grids/meshprism.png"><img class="grid-thumb" src="../../images/grids/meshprism.png" /></img></td>
-    <td><a href="xref:Sylves.MeshPrismGrid">MeshPrismGrid</a><br/>Turns a mesh into a 3d grid, one cell being one extruded face in a given layer.</td>
+    <td><a href="meshprismgrid.md">MeshPrismGrid</a><br/>Turns a mesh into a 3d grid, one cell being one extruded face in a given layer.</td>
 </tr>
 <tr>
     <td><a href="../../images/grids/cairo.svg"><img class="grid-thumb" src="../../images/grids/cairo.svg" /></img></td>
@@ -94,7 +94,7 @@ This can convert 2d grids into 3d ones, usually with the z-cordinate being the "
 <table>
 <tr>
     <td><a href="../../images/grids/meshprism.png"><img class="grid-thumb" src="../../images/grids/meshprism.png" /></img></td>
-    <td><a href="xref:Sylves.MeshPrismGrid">MeshPrismGrid</a><br/>Turns a mesh into a 3d grid, one cell being one extruded face in a given layer.</td>
+    <td><a href="meshprismgrid.md">MeshPrismGrid</a><br/>Turns a mesh into a 3d grid, one cell being one extruded face in a given layer.</td>
 </tr>
 <tr>
     <td><a href="../../images/grids/hexprism.png"><img class="grid-thumb" src="../../images/grids/hexprism.png" /></img></td>
@@ -110,34 +110,12 @@ This can convert 2d grids into 3d ones, usually with the z-cordinate being the "
 </tr>
 </table>
 
-## Modifier grids
+## Modifier Grids
 
 Modifier grids let you customize an existing grid by systematically changing it in some way.
 
-<table>
-<tr>
-    <td><a href="../../images/grids/biject_square.svg"><img class="grid-thumb" src="../../images/grids/biject_square.svg" /></img></td>
-    <td><a href="xref:Sylves.BijectModifier">BijectModifier</a><br/>Remaps the cells of the grid by changing their co-ordinates, without touching the position, shape or topology.</td>
-</tr>
-<tr>
-    <td><a href="../../images/grids/mask_square.svg"><img class="grid-thumb" src="../../images/grids/mask_square.svg" /></img></td>
-    <td><a href="xref:Sylves.MaskModifier">MaskModifier</a><br/>Filters the cells in the the grid to a customizable subset.</td>
-</tr>
-<tr>
-    <td><a href="../../images/grids/transform_square.svg"><img class="grid-thumb" src="../../images/grids/transform_square.svg" /></img></td>
-    <td><a href="xref:Sylves.TransformModifier">TransformModifier</a><br/>Changes the world space positioning of the grid by a linear transform, leaving everything else unchanged.</td>
-</tr>
-<tr>
-    <td><a href="../../images/grids/planarprismmodifier.png"><img class="grid-thumb" src="../../images/grids/planarprismmodifier.png" /></img></td>
-    <td><a href="xref:Sylves.PlanarPrismModifier">PlanarPrismModifier</a><br/>Takes a 2d planar grid, and extends it into multiple layers along the third the dimension.</td>
-</tr>
-<tr>
-    <td><a href="../../images/grids/wrap_square_fake.svg"><img class="grid-thumb" src="../../images/grids/wrap_square_fake.svg" /></img></td>
-    <td><a href="xref:Sylves.WrapModifier">WrapModifier</a><br/>Turns any bounded grid into a grid which connects back on itself when you leave the grounds. </td>
-</tr>
-</table>
-
-## Extra grids
+[!include[](../modifiers/_modifiers_table.md)]
+## Extra Grids
 
 These grids don't classify neatly and usually serve as demos for various features.
 

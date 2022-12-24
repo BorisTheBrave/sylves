@@ -25,12 +25,13 @@ The height of each layer (default 1).
 
 **LayerOffset**
 
-Determines the location 
+Determines the location of the center of each cell on layer 0, relative to the center of the corresponding mesh face, moving along the face normal.
+
+The default is 0, meaning that the center of each cell in layer 0 lies on the original mesh.
 
 **MinLayer**
 
 The minimum layer index.
-
 
 **MaxLayer**
 
@@ -49,4 +50,4 @@ The x value is used to index the face in the submesh, the y value indicates the 
 
 ## Deformation
 
-TODO
+Like MeshGrid, `MeshPrismGrid.GetDeformation` is a useful method for warping meshes to fit the cell.

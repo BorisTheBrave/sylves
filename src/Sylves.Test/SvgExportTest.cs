@@ -148,7 +148,10 @@ namespace Sylves.Test
             // Modifier grids
             var centerSquare = new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))).Transformed(Matrix4x4.Translate(new Vector3(-0.5f, -0.5f, 0)));
 
-
+            Export(
+                centerSquare,
+                "center_square.svg",
+                new Options { dim = 2 });
             Export(
                 new BijectModifier(centerSquare, x => new Cell((x.x + x.y) / 2, (x.x - x.y) / 2, x.z), x => new Cell(x.x - x.y, x.x + x.y, x.z)),
                 "biject_square.svg",
@@ -162,8 +165,12 @@ namespace Sylves.Test
                 "transform_square.svg",
                 new Options { dim = 2 });
             Export(
-                new WrapModifier(centerSquare.BoundBy(new SquareBound(new Vector2Int(-1, -1), new Vector2Int(2, 2))), x => new Cell((x.x + 1) % 3 - 1, (x.y + 1) % 3 - 1)),
+                new WrapModifier(centerSquare.BoundBy(new SquareBound(new Vector2Int(0, 0), new Vector2Int(2, 2))), x => new Cell(x.x % 2, x.y % 2)),
                 "wrap_square.svg",
+                new Options { dim = 2 });
+            Export(
+                new RavelModifier(centerSquare.BoundBy(new SquareBound(new Vector2Int(-1, -1), new Vector2Int(2, 2)))),
+                "ravel_square.svg",
                 new Options { dim = 2 });
         }
 
