@@ -60,8 +60,9 @@ namespace Sylves
         /// <summary>
         /// Converts a finite grid to a MeshData.
         /// </summary>
-        public static MeshData ToMeshData(this IGrid grid)
+        public static MeshData ToMeshData(this IGrid grid, IEnumerable<Cell> cells = null)
         {
+            cells = cells ?? grid.GetCells();
             var vertices = new List<Vector3>();
             var indices = new List<int>();
 
@@ -69,7 +70,7 @@ namespace Sylves
             bool allQuads = true;
             if (grid.Is2D)
             {
-                foreach (var cell in grid.GetCells())
+                foreach (var cell in cells)
                 {
                     grid.GetPolygon(cell, out var cellVerticies, out var transform);
                     foreach (var v in cellVerticies)
@@ -84,7 +85,7 @@ namespace Sylves
             }
             else if(grid.Is3D)
             {
-                foreach(var cell in grid.GetCells())
+                foreach(var cell in cells)
                 {
                     grid.GetMeshData(cell, out var md, out var transform);
                     var b = vertices.Count;

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -27,7 +28,6 @@ namespace Sylves
 #if UNITY
         public MeshData(Mesh mesh)
         {
-            this.subMeshCount = mesh.subMeshCount;
             this.indices = Enumerable.Range(0, subMeshCount).Select(mesh.GetIndices).ToArray();
             this.topologies = Enumerable.Range(0, subMeshCount).Select(x => (Sylves.MeshTopology)mesh.GetTopology(x)).ToArray();
 
@@ -35,6 +35,29 @@ namespace Sylves
             this.uv = mesh.uv;
             this.normals = mesh.normals;
             this.tangents = mesh.tangents;
+        }
+
+        public Mesh ToMesh()
+        {
+            var m = new Mesh();
+            m.vertices = vertices;
+            m.uv = uv;
+            m.normals = normals;
+            m.tangents = tangents;
+            m.subMeshCount = subMeshCount;
+            for (var i = 0; i < subMeshCount; i++)
+            {
+                switch (topologies[i])
+                {
+                    case MeshTopology.Triangles:
+                    case MeshTopology.Quads:
+                        m.SetIndices(indices[i], (UnityEngine.MeshTopology)topologies[i], i);
+                        break;
+                    default:
+                        throw new System.Exception($"Topology {topologies[i]} not supported by unity");
+                }
+            }
+            return m;
         }
 #endif
 
@@ -96,6 +119,76 @@ namespace Sylves
                     var v = m.MultiplyVector(new Vector3(t.x, t.y, t.z));
                     return new Vector4(v.x, v.y, v.z, t.w);
                 }).ToArray(),
+            };
+        }
+
+        public MeshData Triangulate()
+        {
+            var indices = new List<IList<int>>();
+            var topologies = new MeshTopology[subMeshCount];
+            for (var i = 0; i < subMeshCount; i++)
+            {
+                if (this.topologies[i] == MeshTopology.Triangles)
+                {
+                    indices.Add(this.indices[i]);
+                    topologies[i] = MeshTopology.Triangles;
+                    continue;
+                }
+                // Convert faces
+                var ii = new List<int>();
+                foreach (var face in MeshUtils.GetFaces(this, i))
+                {
+                    // Fan. TODO: Check concavity?
+                    for (var j = 2; j < face.Count; j++)
+                    {
+                        ii.Add(face[0]);
+                        ii.Add(face[j - 1]);
+                        ii.Add(face[j]);
+                    }
+                }
+                indices.Add(ii);
+                topologies[i] = MeshTopology.Triangles;
+            }
+
+            return new MeshData
+            {
+                indices = indices.Select(x => x.ToArray()).ToArray(),
+                topologies = topologies,
+                vertices = this.vertices,
+                normals = this.normals,
+                tangents = this.tangents,
+                uv = this.uv,
+            };
+        }
+
+        public MeshData InvertWinding()
+        {
+            var indices = new List<IList<int>>();
+            for (var subMesh = 0; subMesh < subMeshCount; subMesh++)
+            {
+                var ii = new List<int>();
+                foreach (var face in MeshUtils.GetFaces(this, subMesh, true))
+                {
+                    foreach(var i in face)
+                    {
+                        ii.Add(i);
+                    }
+                    if(topologies[subMesh] == MeshTopology.NGon)
+                    {
+                        ii[ii.Count - 1] = ~ii[ii.Count - 1];
+                    }
+                }
+                indices.Add(ii);
+            }
+
+            return new MeshData
+            {
+                indices = indices.Select(x => x.ToArray()).ToArray(),
+                topologies = this.topologies,
+                vertices = this.vertices,
+                normals = this.normals,
+                tangents = this.tangents,
+                uv = this.uv,
             };
         }
     }
