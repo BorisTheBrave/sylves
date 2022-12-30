@@ -28,8 +28,8 @@ Is there a finite number of cells in the grid. Infinite grids don't support some
 
 ### [`IsSingleCellType`](xref:Sylves.IGrid.IsSingleCellType)
 
-Do all cells of the grid share a single [cell type](intro.md#what-is-a-cell).
+Do all cells of the grid share a single [cell type](index.md#what-is-a-cell).
 
 ### [`GetCellTypes`](xref:Sylves.IGrid.GetCellTypes)
 
-All the [cell types](intro.md#what-is-a-cell) used by this grid.
+All the [cell types](index.md#what-is-a-cell) used by this grid.

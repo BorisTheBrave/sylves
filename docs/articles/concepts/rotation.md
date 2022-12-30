@@ -4,7 +4,7 @@ For many games and other usages of grids, you never need to worry about rotating
 
 But in other usages, the facing direction of objects matters, or you wish to re-use the same tile image in a different orientation. For these, sooner or later, you'll need to worry about rotations.
 
-Rotations are complicated to understand fully, and you are recommended to avoid them until you are comfortable with cells, cell types and grids, as described in the [intro](intro.md).
+Rotations are complicated to understand fully, and you are recommended to avoid them until you are comfortable with cells, cell types and grids, as described in the [key concepts](index.md).
 
 ## What is a rotation?
 
@@ -21,7 +21,7 @@ Transformations that map something back onto itself are known as symmetries in m
 
 `CellRotation` is actually an empty enumeration - the actual values are specific to the cell type in question. For example, `SquareRotation` supplies values like `SquareRotation.RotateCW` and `SquareRotation.ReflectX` as values.
 
-If you want to work with rotations without using a specific type, you can use use the appropriate `ICellType` implementation, such as `SquareCellType.Instance`, which is detailed more in the [intro](intro.md#abstract-and-specific-types).
+If you want to work with rotations without using a specific type, you can use use the appropriate `ICellType` implementation, such as `SquareCellType.Instance`, which is detailed more in the [key concepts](index.md#abstract-and-specific-types).
 
 Rotations only consider a single cell at a time. For rotating an entire grid, see [Grid Symmetry](grid_symmetry.md) or [TransformModifier](xref:Sylves.TransformModifier).
 

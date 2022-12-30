@@ -28,7 +28,7 @@ var startCell = new Cell(0, 0);
 var startDir = SquareDir.Up;
 ```
 
-Next we'll definte a [`Walker`](xref:Sylves.Walker). Walkers are a utility class for easily representing an entity that moves on a grid. Note that we need to cast from `SquareDir` to `CellDir`. The latter is a [abstract direction shared between all grid types](../concepts/intro.md#abstract-and-specific-types).
+Next we'll definte a [`Walker`](xref:Sylves.Walker). Walkers are a utility class for easily representing an entity that moves on a grid. Note that we need to cast from `SquareDir` to `CellDir`. The latter is a [abstract direction shared between all grid types](../concepts/index.md#abstract-and-specific-types).
 
 ```csharp
 var ant = new Walker(grid, startCell, (CellDir)startDir);

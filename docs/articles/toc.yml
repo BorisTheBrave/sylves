@@ -1,9 +1,10 @@
 - name: Introduction
   href: intro.md
 - name: Concepts
+  href: concepts/index.md
   items:
-    -  name: Intro
-       href: concepts/intro.md
+    -  name: Key Concepts
+       href: concepts/index.md
     -  name: Topology
        href: concepts/topology.md
     -  name: Storage
@@ -17,7 +18,7 @@
     -  name: Relatives
        href: concepts/relatives.md
     -  name: Indicies
-       href: concepts/index.md
+       href: concepts/indices.md
     -  name: Bounds
        href: concepts/bounds.md
     -  name: Query
