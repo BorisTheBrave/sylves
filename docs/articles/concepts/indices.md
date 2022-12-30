@@ -13,3 +13,5 @@ Indices are only available on finite grids.
 
 > [!Note]
 > When you change the [bounds](bounds.md) of a grid, the indices will change too. Use `Cell` to ensure stability.
+
+You can use the [ravel modifier](../modifiers/ravelmodifier.md) to make the cell co-ordinates exactly match the indices.

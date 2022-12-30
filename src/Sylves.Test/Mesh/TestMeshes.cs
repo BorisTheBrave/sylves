@@ -349,7 +349,7 @@ new Vector3(0.000000f, 0.467809f, -0.110409f),
 new Vector3(0.000000f, 0.469649f, -0.133105f),
 new Vector3(0.000000f, 0.459222f, -0.113476f),
 new Vector3(0.000000f, 0.402605f, -0.038307f),
-                    }.Select(x => new Vector3(x.z, -x.y, 0)).ToArray(),
+                    }.Select(x => new Vector3(x.z, x.y, 0)).ToArray(),
                     indices = new[] { new[]
                         {
 3, 7, 6, 8, 5, 4, 91, ~1,
