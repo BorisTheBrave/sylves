@@ -26,9 +26,9 @@ namespace Sylves
 
         #region Basics
 
-        public virtual bool Is2D => underlying.Is2D;
+        public virtual bool Is2d => underlying.Is2d;
 
-        public virtual bool Is3D => underlying.Is3D;
+        public virtual bool Is3d => underlying.Is3d;
 
         public virtual bool IsPlanar => underlying.IsPlanar;
 

@@ -19,12 +19,12 @@ namespace Sylves
         /// <summary>
         /// True if this grid uses 2d cell types 
         /// </summary>
-        bool Is2D { get; }
+        bool Is2d { get; }
 
         /// <summary>
         /// True if this grid uses 3d cell types 
         /// </summary>
-        bool Is3D { get; }
+        bool Is3d { get; }
 
         /// <summary>
         /// True if this grid uses 2d cell types, and all cells fit in the XY plane. 

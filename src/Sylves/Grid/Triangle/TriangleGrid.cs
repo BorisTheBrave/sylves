@@ -184,9 +184,9 @@ namespace Sylves
         private bool IsUpOrLeft(Cell cell) => (orientation == TriangleOrientation.FlatSides) ^ (cell.x + cell.y + cell.z == 2);
 
         #region Basics
-        public bool Is2D => true;
+        public bool Is2d => true;
 
-        public bool Is3D => false;
+        public bool Is3d => false;
 
         public bool IsPlanar => true;
 

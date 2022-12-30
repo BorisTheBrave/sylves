@@ -68,7 +68,7 @@ namespace Sylves
 
             bool allTris = true;
             bool allQuads = true;
-            if (grid.Is2D)
+            if (grid.Is2d)
             {
                 foreach (var cell in cells)
                 {
@@ -83,7 +83,7 @@ namespace Sylves
                     if (cellVerticies.Length != 4) allQuads = false;
                 }
             }
-            else if(grid.Is3D)
+            else if(grid.Is3d)
             {
                 foreach(var cell in cells)
                 {

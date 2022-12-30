@@ -2,11 +2,11 @@
 
 Every grid exports some basic details about what sort of grid it is.
 
-### [`Is2D`](xref:Sylves.IGrid.Is2D)
+### [`Is2d`](xref:Sylves.IGrid.Is2d)
 
 Are the cells flat surfaces. Note: the flat shapes can still rotate in all dimensions. The surface of a cube is 2d.
 
-### [`Is3D`](xref:Sylves.IGrid.Is3D)
+### [`Is3d`](xref:Sylves.IGrid.Is3d)
 
 Are the cells 3d shapes like [polyhedra](https://en.wikipedia.org/wiki/Honeycomb_(geometry)).
 

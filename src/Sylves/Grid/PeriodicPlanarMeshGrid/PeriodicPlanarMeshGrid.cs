@@ -105,9 +105,9 @@ namespace Sylves
 
         #region Basics
 
-        public bool Is2D => true;
+        public bool Is2d => true;
 
-        public bool Is3D => false;
+        public bool Is3d => false;
 
         public bool IsPlanar => true;
 

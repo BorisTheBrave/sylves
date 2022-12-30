@@ -63,7 +63,7 @@ namespace Sylves
             this.underlying = underlying;
             this.planarPrismOptions = planarPrismOptions ?? new PlanarPrismOptions();
             this.bound = bound;
-            if (!underlying.Is2D)
+            if (!underlying.Is2d)
             {
                 throw new Exception("Underlying should be a 2d grid");
             }
@@ -163,9 +163,9 @@ namespace Sylves
 
         #region Basics
 
-        public virtual bool Is2D => false;
+        public virtual bool Is2d => false;
 
-        public virtual bool Is3D => true;
+        public virtual bool Is3d => true;
 
         public virtual bool IsPlanar => false;
 

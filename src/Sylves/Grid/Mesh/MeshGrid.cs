@@ -143,9 +143,9 @@ namespace Sylves
 
         #region Basics
 
-        public override bool Is2D => is2d;
+        public override bool Is2d => is2d;
 
-        public override bool Is3D => !is2d;
+        public override bool Is3d => !is2d;
 
         public override bool IsPlanar => is2d && meshDetails.isPlanar;
         #endregion

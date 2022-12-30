@@ -220,7 +220,7 @@ namespace Sylves
 
         public static MeshData ToMesh(IGrid grid)
         {
-            if(!grid.Is2D)
+            if(!grid.Is2d)
             {
                 throw new Exception("Can only make a mesh from a 2d grid");
             }

@@ -41,9 +41,9 @@ namespace Sylves
         private static Cell FromVector3Int(Vector3Int v) => (Cell)v;
 
         #region Basics
-        public bool Is2D => false;
+        public bool Is2d => false;
 
-        public bool Is3D => true;
+        public bool Is3d => true;
 
         public bool IsPlanar => true;
 
