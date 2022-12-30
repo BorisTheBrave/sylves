@@ -12,6 +12,6 @@ Furthermore:
 * All grids in Sylves shares a common interface, [IGrid](concepts/intro.md), so algorithms can be written once and work on any grid. 
 * Sylves handles many of the fiddlier grid operations, such as raycasts and pathfinding.
 * Sylves comes with a sophisticated notion of direction and [rotation](concepts/rotation.md)
-* Sylves supports [mesh deformation](concepts/space.md#deformation) to squeeze meshes to fit irregular polygons.
+* Sylves supports [mesh deformation](concepts/shape.md#deformation) to squeeze meshes to fit irregular polygons.
 
 Read on to learn about the **[basic concepts of Sylves](concepts/intro.md)**, or work through some [**tutorials**](tutorials/index.md).

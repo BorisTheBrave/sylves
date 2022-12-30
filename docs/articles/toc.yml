@@ -6,14 +6,24 @@
        href: concepts/intro.md
     -  name: Topology
        href: concepts/topology.md
-    -  name: Space
-       href: concepts/space.md
-    -  name: Bounds
-       href: concepts/bounds.md
     -  name: Storage
        href: concepts/storage.md
     -  name: Rotation
        href: concepts/rotation.md
+    -  name: Info
+       href: concepts/info.md
+    -  name: Position
+       href: concepts/position.md
+    -  name: Relatives
+       href: concepts/relatives.md
+    -  name: Indicies
+       href: concepts/index.md
+    -  name: Bounds
+       href: concepts/bounds.md
+    -  name: Query
+       href: concepts/query.md
+    -  name: Shape
+       href: concepts/shape.md
     -  name: Symmetry
        href: concepts/grid_symmetry.md
     -  name: Pathfinding

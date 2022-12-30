@@ -8,19 +8,16 @@ Meshes are closely related to grids and there are numerous methods in Sylves for
 
 ## Grid Conversion
 
-TODO
+There are several classes for converting to/from meshes.
 
-<xref:Sylves.MeshGrid>
-
-<xref:Sylves.MeshPrismGrid>
-
-<xref:Sylves.PeriodicPlanarMeshGrid>
-
-<xref:Sylves.MeshUtils.ToMesh(Sylves.IGrid)>
+* [MeshGrid](../grids/meshgrid.md)
+* [MeshPrismGrid](../grids/meshprismgrid.md)
+* [PeriodicPlanarMeshGrid](../grids/periodicplanarmeshgrid.md)
+* [MeshUtils.ToMesh](xref:Sylves.MeshUtils.ToMesh(Sylves.IGrid))
 
 ## Deformation
 
-The [grid deformation functionality](space.md#deformation) can be used from any mesh with [`Sylves.DeformationUtils.GetDeformation`](xref:Sylves.DeformationUtils.GetDeformation(Sylves.MeshData,System.Single,System.Single,System.Boolean,System.Int32,System.Int32,System.Int32,System.Boolean)).
+The [grid deformation functionality](shape.md#deformation) can be used from any mesh with [`Sylves.DeformationUtils.GetDeformation`](xref:Sylves.DeformationUtils.GetDeformation(Sylves.MeshData,System.Single,System.Single,System.Boolean,System.Int32,System.Int32,System.Int32,System.Boolean)).
 
 
 

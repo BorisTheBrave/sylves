@@ -8,7 +8,7 @@ The edges of the graph are labelled with [cell dirs](xref:Sylves.CellDir) and [r
 
 Treating a grid as a graph is handy for many common algorithms, such as path finding and distance fields.
 
-## TryMove
+## [TryMove](xref:Sylves.IGrid.TryMove(Sylves.Cell,Sylves.CellDir,Sylves.Cell@,Sylves.CellDir@,Sylves.Connection@))
 
 There's only one key method relating to the topology of a graph.
 

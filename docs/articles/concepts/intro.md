@@ -59,17 +59,20 @@ Most of the other methods of `ICellType` deal with [rotations](rotation.md).
 
 The methods of `IGrid` can be rougly split into several categories. The most important being:
 
-* Basics - Factual info about the grid, such as if is 2d, infinite, etc
+* [Info](info.md) - Factual info about the grid, such as if is 2d, infinite, etc
 * [Topology](topology.md) - Information about moving about the grid. This generally treats the grid as a network of cells, with links between adjacent cells.
-* [Position](space.md) - Describes how the cells are laid out in 3d space, and their shape.
+* [Position](position.md) - Describes how the cells are laid out in 3d space, and their shape.
 
 Other categories include:
 
-* Relatives - Provides other grids related to the current grid.
-* Index - Converts between `Cell` and `int`, if you want to use an array for storage
+* [Relatives](relatives.md) - Provides other grids related to the current grid.
+* [Index](index.md) - Converts between `Cell` and `int`, if you want to use an array for storage
 * [Bounds](bounds.md) - Methods of dealing with bounding boxes on the grid.
-* Query - Methods for finding cells in 3d space, such as point queries, raycasts, etc.
+* [Query](query.md) - Methods for finding cells in 3d space, such as point queries, raycasts, etc.
+* [Shape](shape.md) - Methods for finding the precise shape and border of a cell
 * [Pathfinding](pathfinding.md) - Methods for finding a path between cells.
+
+You can see all methods in the [API for IGrid](xref:Sylves.IGrid) and [the grid extension methods](xref:Sylves.GridExtensions).
 
 ## Abstract and specific types
 
