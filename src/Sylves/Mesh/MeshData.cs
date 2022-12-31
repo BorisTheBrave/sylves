@@ -28,13 +28,13 @@ namespace Sylves
 #if UNITY
         public MeshData(Mesh mesh)
         {
-            this.indices = Enumerable.Range(0, subMeshCount).Select(mesh.GetIndices).ToArray();
-            this.topologies = Enumerable.Range(0, subMeshCount).Select(x => (Sylves.MeshTopology)mesh.GetTopology(x)).ToArray();
+            this.indices = Enumerable.Range(0, mesh.subMeshCount).Select(mesh.GetIndices).ToArray();
+            this.topologies = Enumerable.Range(0, mesh.subMeshCount).Select(x => (Sylves.MeshTopology)mesh.GetTopology(x)).ToArray();
 
             this.vertices = mesh.vertices;
-            this.uv = mesh.uv;
-            this.normals = mesh.normals;
-            this.tangents = mesh.tangents;
+            this.uv = mesh.uv == null || mesh.uv.Length == 0 ? null : mesh.uv;
+            this.normals = mesh.normals == null || mesh.normals.Length == 0 ? null : mesh.normals;
+            this.tangents = mesh.tangents == null || mesh.tangents.Length == 0 ? null : mesh.tangents;
         }
 
         public Mesh ToMesh()

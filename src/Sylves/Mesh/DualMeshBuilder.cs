@@ -112,7 +112,7 @@ namespace Sylves
         {
             // Initialize temporary arrays
             var dualFaceIndices = new List<int>(); // TODO: Eliminate this variable
-            var outputIndices= new List<int>();
+            var outputIndices = new List<int>();
 
             var dualFaceCount = 0;
             var visited = new HashSet<(int face, int edge)>();
