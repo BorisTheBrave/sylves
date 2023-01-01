@@ -38,11 +38,37 @@ namespace Sylves
             rotationsAndReflections = rotations.Concat(Enumerable.Range(0, n).Select(x => (CellRotation)~x)).ToArray();
         }
 
+        /// <summary>
+        /// Returns the cell type corresponding to a polygon with n sides.
+        /// </summary>
         public static ICellType Get(int n)
         {
             if (instances.TryGetValue(n, out var cellType))
                 return cellType;
             return instances[n] = new NGonCellType(n);
+        }
+
+        /// <summary>
+        /// Returns <see cref="N"/> for cellType is an NGonCellType.
+        /// Also returns similar values for SquareCellType and HexCellType,
+        /// as they are compatible with NGonCellType.
+        /// Other celltypes return null.
+        /// </summary>
+        public static int? Extract(ICellType cellType)
+        {
+            if (cellType is NGonCellType ngct)
+            {
+                return ngct.N;
+            }
+            if (cellType is SquareCellType)
+            {
+                return 4;
+            }
+            if (cellType is HexCellType)
+            {
+                return 6;
+            }
+            return null;
         }
 
 
