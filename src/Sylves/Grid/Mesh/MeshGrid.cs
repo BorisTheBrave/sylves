@@ -494,6 +494,7 @@ namespace Sylves
 
         public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
         {
+            // TODO: This data should be cached
             var face = ((MeshCellData)CellData[cell]).Face;
             transform = Matrix4x4.identity;
             vertices = new Vector3[face.Length];

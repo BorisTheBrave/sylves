@@ -14,4 +14,4 @@ Furthermore:
 * Sylves comes with a sophisticated notion of direction and [rotation](concepts/rotation.md)
 * Sylves supports [mesh deformation](concepts/shape.md#deformation) to squeeze meshes to fit irregular polygons.
 
-Read on to learn about the **[basic concepts of Sylves](concepts/index.md)**, or work through some [**tutorials**](tutorials/index.md).
+Read on to learn about the **[basic concepts of Sylves](concepts/index.md)**, work through some [**tutorials**](tutorials/index.md), or see an **[online demo](https://boristhebrave.itch.io/sylves-demos)**.

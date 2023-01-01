@@ -8,7 +8,9 @@
     <p>Designed to support as many grids as possible, for as many use cases</p>
     <p class="lead">
       <a class="btn btn-primary btl-lg" href="articles/index.md" role="button">Getting Started</a>
-      <a class="btn btn-primary btl-lg" href="#TODO" role="button">Download Latest</a>
+      <a class="btn btn-primary btl-lg" href="https://github.com/BorisTheBrave/sylves/releases" role="button">Download Latest</a>
+    <a class="btn btn-primary btl-lg" href="https://boristhebrave.itch.io/sylves-demos" role="button">Try a demo</a>
+      https://boristhebrave.itch.io/sylves-demos
       <a class="btn btn-primary btl-lg" href="articles/release_notes.md" role="button">Release Notes</a>
     </p>
   </div>
@@ -56,22 +58,19 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox" style="width:100%; height: 320px !important;">
           <div class="item active">
-            <a href="#TODO"><img src="images/grids/square.svg"/></a>
+            <a href="articles/grids/squaregrid.md"><img src="images/grids/square.svg"/></a>
           </div>
           <div class="item">
-            <a href="#TODO"><img src="images/grids/square.svg" style="width:100%; height: 320px"/></a>
+            <a href="https://boristhebrave.itch.io/sylves-demos"><img src="images/demo/cellpicker.gif" style="height: 320px"/></a>
           </div>
           <div class="item">
-            <a href="#TODO"><img src="images/demo/cellpicker.gif" style="height: 320px"/></a>
+            <a href="https://boristhebrave.itch.io/sylves-demos"><img src="images/demo/pathfinding.png" style="height: 320px"/></a>
           </div>
           <div class="item">
-            <a href="#TODO"><img src="images/demo/pathfinding.png" style="height: 320px"/></a>
+            <a href="https://boristhebrave.itch.io/sylves-demos"><img src="images/demo/polyominoes.gif" style="height: 320px"/></a>
           </div>
           <div class="item">
-            <a href="#TODO"><img src="images/demo/polyominoes.gif" style="height: 320px"/></a>
-          </div>
-          <div class="item">
-            <a href="#TODO">
+            <a href="https://boristhebrave.itch.io/sylves-demos">
                 <video src="images/demo/langton.webm" autoplay loop muted style="width:100%; height: 320px">
                 </video>
             </a>
