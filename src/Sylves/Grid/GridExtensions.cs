@@ -29,13 +29,21 @@ namespace Sylves
         /// </summary>
         public static IEnumerable<Cell> GetNeighbours(this IGrid grid, Cell cell)
         {
-            foreach(var dir in grid.GetCellDirs(cell))
+            foreach (var dir in grid.GetCellDirs(cell))
             {
-                if(grid.TryMove(cell, dir, out var dest, out var _, out var _))
+                if (grid.TryMove(cell, dir, out var dest, out var _, out var _))
                 {
                     yield return dest;
                 }
             }
+        }
+
+        /// <summary>
+        /// Finds the cell containg the give position
+        /// </summary>
+        public static Cell? FindCell(this IGrid grid, Vector3 position)
+        {
+            return grid.FindCell(position, out var cell) ? cell : (Cell?)null;
         }
 
         /// <summary>
