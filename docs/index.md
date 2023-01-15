@@ -69,10 +69,7 @@
             <a href="https://boristhebrave.itch.io/sylves-demos"><img src="images/demo/polyominoes.gif" style="height: 320px"/></a>
           </div>
           <div class="item">
-            <a href="https://boristhebrave.itch.io/sylves-demos">
-                <video src="images/demo/langton.webm" autoplay loop muted style="width:100%; height: 320px">
-                </video>
-            </a>
+            <a href="https://boristhebrave.itch.io/sylves-demos"><img src="images/demo/langton.gif" style="height: 320px"/></a>
           </div>
         </div>
         <!-- Controls -->
