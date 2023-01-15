@@ -9,8 +9,7 @@
     <p class="lead">
       <a class="btn btn-primary btl-lg" href="articles/index.md" role="button">Getting Started</a>
       <a class="btn btn-primary btl-lg" href="https://github.com/BorisTheBrave/sylves/releases" role="button">Download Latest</a>
-    <a class="btn btn-primary btl-lg" href="https://boristhebrave.itch.io/sylves-demos" role="button">Try a demo</a>
-      https://boristhebrave.itch.io/sylves-demos
+      <a class="btn btn-primary btl-lg" href="https://boristhebrave.itch.io/sylves-demos" role="button">Try a demo</a>
       <a class="btn btn-primary btl-lg" href="articles/release_notes.md" role="button">Release Notes</a>
     </p>
   </div>
