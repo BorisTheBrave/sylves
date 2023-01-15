@@ -1,7 +1,7 @@
 <div class="container">
 
   <div class="jumbotron">
-    <h1 class="display-4">Sylves</h1>
+    <h1 class="display-4">Sylves v0.1</h1>
     <p class="lead">Handles the maths and algorithms of the geometry of grids</p>
     <small class="text-muted"><a class="github-link" href="https://github.com/BorisTheBrave/sylves">View in Github</a><small>
     <hr class="my-4">
