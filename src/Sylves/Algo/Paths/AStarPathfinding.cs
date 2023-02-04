@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Implementation class for the A* Pathfinding algorithm.
+    /// This algorith takes an admissible heuristic, and uses it to find the shortest path
+    /// 
+    /// </summary>
     public class AStarPathfinding
     {
         // Options

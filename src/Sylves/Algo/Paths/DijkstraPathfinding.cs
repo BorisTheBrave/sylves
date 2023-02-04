@@ -5,6 +5,8 @@ namespace Sylves
 {
     /// <summary>
     /// Computes Dijkstra's Algorithm.
+    /// 
+    /// This class to find paths starting at source, and terminating at a single point, or a range of points.
     /// </summary>
     public class DijkstraPathfinding
     {
