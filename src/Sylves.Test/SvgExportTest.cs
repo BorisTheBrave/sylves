@@ -44,7 +44,7 @@ namespace Sylves.Test
             }*/
             var min = options.min;
             var max = options.max;
-            b.BeginSvg($"{min.x} {min.y} {max.x - min.x} {max.y-min.y}");
+            b.BeginSvg($"{min.x} {-max.y} {max.x - min.x} {max.y-min.y}");
             foreach (var cell in grid.GetCells())
             {
                 b.DrawCell(grid, cell);
