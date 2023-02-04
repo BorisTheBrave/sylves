@@ -1,3 +1,13 @@
+---
+title: Sylves Documentation
+documentType: index
+_disableFooter: true
+_disableBreadcrumb: true
+_disableNavbar: true
+_disableToc: true
+_gitContribute: false
+---
+
 <div class="container">
 
   <div class="jumbotron">
