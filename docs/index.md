@@ -26,7 +26,7 @@ _disableDocFxScripts: true
 
 <!--navigation-->
 <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top sticky-navigation">
-    <a class="navbar-brand mx-auto" href="index.html">
+    <a class="navbar-brand mx-auto" href="index.md">
         Syles
         <img src="logo.svg" style="display: inline"/>
     </a>
@@ -131,7 +131,7 @@ foreach(var cell in cells)
                 <h3>Grids as geometry</h3>
                 <p class="text-muted lead">
                     Grid cells have known <a href="articles/concepts/shape.md">shapes</a> and <a href="articles/concepts/position.md">positions</a>, that can easily be <a href="articles/concepts/query.md">queried</a>.<br/>
-                    Tiles can be warped to fit irregular grids with <a href="articles/concepts/shape.html#deformation">deformation<a/>.
+                    Tiles can be warped to fit irregular grids with <a href="articles/concepts/shape.md#deformation">deformation<a/>.
                 </p>
             </div>
             <div class="col-md-6 order-1 order-md-2">
@@ -145,7 +145,7 @@ foreach(var cell in cells)
             <div class="col-md-6 my-md-auto">
                 <h3>Fully documented</h3>
                 <p class="text-muted lead">
-                    Sylves comes with <a href="articles/">conceptual documentation</a>, a full <a href="api/">API reference</a>, <a href="articles/tutorials">tutorials</a> and even a <a href="https://github.com/BorisTheBrave/sylves-demos/">working Unity project</a> demoing the features.
+                    Sylves comes with <a href="articles/index.md">conceptual documentation</a>, a full <a href="api/index.md">API reference</a>, <a href="articles/tutorials/index.md">tutorials</a> and even a <a href="https://github.com/BorisTheBrave/sylves-demos/">working Unity project</a> demoing the features.
                 </p>
             </div>
         </div>
