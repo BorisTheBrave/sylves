@@ -27,8 +27,7 @@ _disableDocFxScripts: true
 <!--navigation-->
 <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top sticky-navigation">
     <a class="navbar-brand mx-auto" href="index.md">
-        Syles
-        <img src="logo.svg" style="display: inline"/>
+        <img src="images/logo_cropped.png" style="display: inline; width: 200px"/>
     </a>
     <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" 
             data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

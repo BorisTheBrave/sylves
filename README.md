@@ -1,5 +1,7 @@
 # Sylves
 
+<img src="docs/images/logo_cropped.png" width="400px"/>
+
 Sylves is a C# library for to help you handle working with 2d and 3d grids.
 
 **[Documentation](https://www.boristhebrave.com/docs/sylves/1/)**
@@ -14,9 +16,6 @@ The key features include:
  * Methods for working with meshes, such as remeshing, and deforming them to fit a grid cells.
  * Fully Unity compatible, or works as a standalone library.
 
-
-
-
 # See also
-https://github.com/BorisTheBrave/grids
-https://www.redblobgames.com/grids/hexagons
+* https://github.com/BorisTheBrave/grids
+* https://www.redblobgames.com/grids/hexagons
