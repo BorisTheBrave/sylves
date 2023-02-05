@@ -14,7 +14,7 @@ SquareGrid is the most bog standard of all grids.
 
 <img width="200px" src="../../images/grids/square.svg" /></img>
 
-SquareGrid can also represent rectangles, just use the constructor which accepts a Vector2 cellSize.
+SquareGrid can also represent rectangles, just use the constructor which accepts a `Vector2 cellSize`.
 
 ## Cell co-ordinates
 

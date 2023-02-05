@@ -15,7 +15,7 @@ This modifier converts a grid into a wrapping grid, i.e. if you leave one side o
 
 The WrapModifier modifier works as follows. To take a step in the wrapped grid, first take a step in the unbounded grid, then jump from that cell to a "canonical" cell found inside the bounds of the grid.
 
-So it's necessary to supply both a bounded grid, and a canonicalize function. The function is responsible for moving back inside.
+So it's necessary to supply both a bounded grid, and a canonicalize function. This function is responsible for moving back inside the bounds.
 
 In this example, we start with an infinite square grid. We then make a bounded grid that only contains 4 cells: (0, 0), (0, 1), (1, 0) and (1, 1). Finally, we make a `Canonicalize` function that replaces any cell in the infinte grid with the corresponding one of the 4 cells inside the bounds.
 

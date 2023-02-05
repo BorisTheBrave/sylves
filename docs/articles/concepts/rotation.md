@@ -23,7 +23,7 @@ Transformations that map something back onto itself are known as symmetries in m
 
 If you want to work with rotations without using a specific type, you can use use the appropriate `ICellType` implementation, such as `SquareCellType.Instance`, which is detailed more in the [key concepts](index.md#abstract-and-specific-types).
 
-Rotations only consider a single cell at a time. For rotating an entire grid, see [Grid Symmetry](grid_symmetry.md) or [TransformModifier](xref:Sylves.TransformModifier).
+Rotations only consider a single cell at a time. For rotating an entire grid, see [Grid Symmetry](grid_symmetry.md) or [TransformModifier](../modifiers/transformmodifier.md).
 
 ### 2d/3d rotations
 

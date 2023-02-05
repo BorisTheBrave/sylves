@@ -19,12 +19,20 @@ HexGrid is a tiling of the plane with hexagons. It supports both flat-topped and
 
 The co-ordinate systems used are shown above - it uses three co-ordinates that always sum to zero. This scheme is explained in [more detail by Red Blob Games](https://www.redblobgames.com/grids/hexagons/).
 
-Cell (0, 0, 0) has it's center at `new Vector3(0, 0, 0)`.
+Cell (0, 0, 0) has its center at `new Vector3(0, 0, 0)`.
 
 ## Subdivision into triangles
 
 HexGrid comes with extra methods to help subdivide each hex into six of the triangles found on a corresponding [triangle grid](trianglegrid.md).
 
-  - [GetChildTriangleGrid](xref:Sylves.HexGrid.GetChildTriangleGrid) - Returns the triangle grid that subdivides this grid.
-  - [GetChildTriangles](xref:Sylves.HexGrid.GetChildTriangles(Sylves.Cell)) - returns the cells for the 6 triangles in the child triangle grid that fill up this hex cell.
-  - [GetTriangleParent](xref:Sylves.HexGrid.GetTriangleParent(Sylves.Cell)) - returns the hex cell that contains the triangle cell passed in.
+### [GetChildTriangleGrid](xref:Sylves.HexGrid.GetChildTriangleGrid)
+
+Returns the triangle grid that subdivides this grid.
+
+### [GetChildTriangles](xref:Sylves.HexGrid.GetChildTriangles(Sylves.Cell))
+
+Returns the cells for the 6 triangles in the child triangle grid that fill up this hex cell.
+
+### [GetTriangleParent](xref:Sylves.HexGrid.GetTriangleParent(Sylves.Cell))
+
+Returns the hex cell that contains the triangle cell passed in.

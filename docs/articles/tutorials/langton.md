@@ -1,5 +1,8 @@
 # Langton's Ant
 
+> [!Note]
+> The source code for this tutorial can also be found in the <a href="https://github.com/BorisTheBrave/sylves-demos/tree/main/Assets/Langton">demo code</a>
+
 [Langton's ant](https://en.wikipedia.org/wiki/Langton%27s_ant) is a simple mathematical game played on a square grid.
 
 The idea is you imagine an ant on an infinite grid of white cells.
@@ -7,6 +10,8 @@ The idea is you imagine an ant on an infinite grid of white cells.
 Each turn, it moves forward.
 * If it lands on a white square, it turns 90 degrees clockwise, then flips the color of the square to black.
 * If it lands on a black square, it turns 90 degrees counter-clockwise, then flips the color of the square to white.
+
+<a href="https://boristhebrave.itch.io/sylves-demos"><img width="400px" src="../../images/demo/langton.gif"/></a>
 
 Let's code this using Sylves. First, we need to define the grid we are working on. Sylves comes with [`SquareGrid`](../grids/squaregrid.md) for this purpose, which defaults to infinite size. We pass in 1f as the cell size, though the size of the grid isn't relevant to this tutorial.
 

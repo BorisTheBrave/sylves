@@ -63,4 +63,4 @@ This grid comes with several built in subclasses to demonstrate some common tili
 
 ## Cell co-ordinates
 
-The x value indicates the face in the mesh, and the y and z values indicate the multiple of stride moved in the two directiosn.
+The x value indicates the face in the mesh, and the y and z values indicate the multiple of stride moved in the two directions.

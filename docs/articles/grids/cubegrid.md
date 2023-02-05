@@ -19,7 +19,7 @@ Increasing the x co-ordinate of a cell moves right, and the y co-ordinate up and
 
 `CubeRotation` supports rotations on all three axes, so there are 48 possible values (of which 24 are various reflections).
 
-CubeGrid can also represent cuboids, just use the constructor which accepts a Vector3 cellSize.
+CubeGrid can also represent cuboids, just use the constructor which accepts a `Vector3 cellSize`.
 
 ## Cell co-ordinates
 
