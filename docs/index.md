@@ -16,7 +16,7 @@ _disableDocFxScripts: true
 <link href="https://fonts.googleapis.com/css?family=Arimo:400,400i,700,700i" rel="stylesheet">
 
 <!--vendors styles-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <!-- Bootstrap CSS / Color Scheme -->
 <link rel="stylesheet" href="styles/css/purple.css" id="theme-color">
@@ -46,7 +46,13 @@ _disableDocFxScripts: true
                 <a class="nav-link page-scroll" href="articles/index.md">Get Started</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link page-scroll" href="https://boristhebrave.itch.io/sylves-demos">Demo</a>
+                <a class="nav-link" href="https://boristhebrave.itch.io/sylves-demos">Demo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/BorisTheBrave/sylves"><i class="fa-brands fa-github"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://discord.gg/Enzu2rrJFD"><i class="fa-brands fa-discord"></i></a>
             </li>
         </ul>
         <!--
@@ -64,7 +70,7 @@ _disableDocFxScripts: true
             <div class="col-md-12 mx-auto my-auto text-center">
                 <h1>Sylves - Handle the maths and algorithms of the geometry of grids</h1>
                 <p class="lead mt-4 mb-5">
-                    A C# Library usable from Unity or .NET suitable for games and procedural generation.
+                    An open-source C# Library usable from Unity or .NET suitable for games and procedural generation.
                 </p>
                 <p>
                     <a class="btn btn-primary btl-lg" href="articles/index.md" role="button">Getting Started</a>
