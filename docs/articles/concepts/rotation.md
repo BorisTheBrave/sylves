@@ -27,8 +27,8 @@ Rotations only consider a single cell at a time. For rotating an entire grid, se
 
 ### 2d/3d rotations
 
-2d rotations are the easiest to consider. If a polygon has $n$ sides, then there are $n$ rotations, each a multiple of $360 / n$ degrees, which are stored as positive integers in counterclockwise order.
-There's also $n$ possible reflections, which are stored as negative numbers.
+2d rotations are the easiest to consider. If a polygon has `n` sides, then there are `n` rotations, each a multiple of `360 / n` degrees, which are stored as positive integers in counterclockwise order.
+There's also `n` possible reflections, which are stored as negative numbers.
 
 So a 2d rotation will have `-n <= (int)rotation < n`.
 
