@@ -13,10 +13,21 @@ the specific class that grid uses is documented with the grid. The classes are u
 
 `IGrid` has many methods for working with bounds. Probably the most important are
 
-* [`GetBound`](xref:Sylves.IGrid.GetBound(System.Collections.Generic.IEnumerable{Sylves.Cell})) - finds the smallest bound that contains all the given cells
-* [`GetCellsInBounds`](xref:Sylves.IGrid.GetCellsInBounds(Sylves.IBound)) - finds all the cells inside a bound
-* [`IsCellInBound`](xref:Sylves.IGrid.IsCellInBound(Sylves.Cell,Sylves.IBound)) - tests if a given cell is inside a bound.
-* [`IntersectBounds`](xref:Sylves.IGrid.IntersectBounds(Sylves.IBound,Sylves.IBound))/[`UnionBounds`](xref:Sylves.IGrid.UnionBounds(Sylves.IBound,Sylves.IBound)) - combines two bounds into one.
+### [`GetBound`](xref:Sylves.IGrid.GetBound(System.Collections.Generic.IEnumerable{Sylves.Cell}))
+
+Finds the smallest bound that contains all the given cells
+
+### [`GetCellsInBounds`](xref:Sylves.IGrid.GetCellsInBounds(Sylves.IBound)) 
+
+Finds all the cells inside a bound
+
+### [`IsCellInBound`](xref:Sylves.IGrid.IsCellInBound(Sylves.Cell,Sylves.IBound))
+
+Tests if a given cell is inside a bound.
+
+### [`IntersectBounds`](xref:Sylves.IGrid.IntersectBounds(Sylves.IBound,Sylves.IBound))/[`UnionBounds`](xref:Sylves.IGrid.UnionBounds(Sylves.IBound,Sylves.IBound))
+
+Combines two bounds into one.
 
 Most of these methods will also accept a `null` bound, meaning the entire grid.
 

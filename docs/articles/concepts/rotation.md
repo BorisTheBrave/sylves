@@ -40,18 +40,39 @@ Sylves also supports `CubeCellType`, which uses `CubeRotation` that supports all
 
 Most of the key methods of rotations are on ICellType, as rotations only consider a single cell.
 
-* [`GetIdentity`](xref:Sylves.ICellType.GetIdentity) - gets the rotation that does nothing.
-* [`GetRotations`](xref:Sylves.ICellType.GetRotations(System.Boolean)) - gets all rotations (and optionally reflections) of a cell
-* [`Invert`](xref:Sylves.ICellType.Invert(Sylves.CellRotation)) - finds the rotation that undoes the given rotation
-* [`RotateCCW`](xref:Sylves.ICellType.RotateCCW)/[`RotateCW`](xref:Sylves.ICellType.RotateCW) - rotate left/right (2d cell types only)
+### [`GetIdentity`](xref:Sylves.ICellType.GetIdentity)
 
-The main thing you can do with a rotation, is rotate things by it.
+Gets the rotation that does nothing.
 
-* [`Rotate`](xref:Sylves.ICellType.Rotate(Sylves.CellDir,Sylves.CellRotation)) - rotate a `CellDir` by a given `CellRotation`
-* [`Multiply`](xref:Sylves.ICellType.Multiply(Sylves.CellRotation,Sylves.CellRotation)) - compose two rotations together into a single one
-* [`GetMatrix`](xref:Sylves.ICellType.GetMatrix(Sylves.CellRotation)) - get a rotation as a matrix, so you can transform vectors.
+### [`GetRotations`](xref:Sylves.ICellType.GetRotations(System.Boolean))
 
-If you use specific classes like `SquareRotation`, they usually have the `*` operator overloaded as a shorthand for applying rotations, and many other convenience methods.
+Gets all rotations (and optionally reflections) of a cell.
+
+### [`Invert`](xref:Sylves.ICellType.Invert(Sylves.CellRotation))
+
+Finds the rotation that undoes the given rotation.
+
+### [`RotateCCW`](xref:Sylves.ICellType.RotateCCW)/[`RotateCW`](xref:Sylves.ICellType.RotateCW)
+
+Rotate left/right (2d cell types only)
+
+
+Then there are methods for applying the rotation:
+
+### [`Rotate`](xref:Sylves.ICellType.Rotate(Sylves.CellDir,Sylves.CellRotation))
+
+Rotate a `CellDir` by a given `CellRotation`.
+
+### [`Multiply`](xref:Sylves.ICellType.Multiply(Sylves.CellRotation,Sylves.CellRotation))
+
+Compose two rotations together into a single one.
+
+### [`GetMatrix`](xref:Sylves.ICellType.GetMatrix(Sylves.CellRotation)) 
+
+Get a rotation as a matrix, so you can transform vectors.
+
+> [!Note]
+> If you use specific classes like `SquareRotation`, they usually have the `*` operator overloaded as a shorthand for applying rotations, and many other convenience methods.
 
 ## TryMove and Rotation
 
