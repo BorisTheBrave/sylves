@@ -6,6 +6,8 @@ _disableBreadcrumb: true
 _disableNavbar: true
 _disableToc: true
 _gitContribute: false
+_disableDocFxStyle: true
+_disableDocFxScripts: true
 ---
 
 <!-- Mostly cribbed from the free Union theme -->
@@ -67,7 +69,13 @@ _gitContribute: false
                     <a class="btn btn-primary btl-lg" href="https://boristhebrave.itch.io/sylves-demos" role="button">Try a demo</a>
                     <a class="btn btn-primary btl-lg" href="articles/release_notes.md" role="button">Release Notes</a>
                 </p>
-                <p><img class="img-fluid" src="styles/img/mockup.png" alt="Mockup" /></p>
+                <p>
+                    <!--<img class="img-fluid" src="styles/img/mockup.png" alt="Mockup" />-->
+                    <pre><code class="lang-csharp hljs">
+using Sylves;
+var grid = new SquareGrid(1f);
+                    </code></pre>
+                </p>
             </div>
         </div>
     </div>
