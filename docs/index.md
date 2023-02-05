@@ -21,6 +21,9 @@ _disableDocFxScripts: true
 <!-- Bootstrap CSS / Color Scheme -->
 <link rel="stylesheet" href="styles/css/purple.css" id="theme-color">
 
+<link rel="stylesheet"
+      href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/base16/zenburn.min.css">
+
 <!--navigation-->
 <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top sticky-navigation">
     <a class="navbar-brand mx-auto" href="index.html">
@@ -58,7 +61,7 @@ _disableDocFxScripts: true
 <section class="pt-7 pt-md-8" id="home">
     <div class="container">
         <div class="row">
-            <div class="col-md-8 mx-auto my-auto text-center">
+            <div class="col-md-12 mx-auto my-auto text-center">
                 <h1>Sylves - Handle the maths and algorithms of the geometry of grids</h1>
                 <p class="lead mt-4 mb-5">
                     A C# Library usable from Unity or .NET suitable for games and procedural generation.
@@ -69,12 +72,20 @@ _disableDocFxScripts: true
                     <a class="btn btn-primary btl-lg" href="https://boristhebrave.itch.io/sylves-demos" role="button">Try a demo</a>
                     <a class="btn btn-primary btl-lg" href="articles/release_notes.md" role="button">Release Notes</a>
                 </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 mx-auto my-auto">
                 <p>
-                    <!--<img class="img-fluid" src="styles/img/mockup.png" alt="Mockup" />-->
-                    <pre><code class="lang-csharp hljs">
-using Sylves;
-var grid = new SquareGrid(1f);
-                    </code></pre>
+                    <pre><code class="lang-csharp hljs">// Create a 10x10 grid of squares of size 1.
+var grid = new SquareGrid(1, new SquareBound(0, 0, 10, 10));
+// List all 100 cells
+var cells = grid.GetCells();
+// Print the centers of each cell.
+foreach(var cell in cells)
+{
+    Console.Log($"{cell}: {grid.GetCellCenter(cell)}");
+}</code></pre>
                 </p>
             </div>
         </div>
@@ -561,3 +572,7 @@ var grid = new SquareGrid(1f);
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.5.0/feather.min.js"></script>
 <script src="styles/js/scripts.js"></script>
+<script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+<script>
+      hljs.highlightAll();
+</script>
