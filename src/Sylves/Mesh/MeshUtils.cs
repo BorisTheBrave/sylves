@@ -66,7 +66,7 @@ namespace Sylves
         /// <summary>
         /// References a slice of indices for a face.
         /// </summary>
-        public struct Face : IEnumerable<int>
+        public struct Face : IReadOnlyList<int>
         {
             public Face(int[] indices, int offset, int length, bool invertWinding, bool negateTail = false)
             {
