@@ -55,12 +55,15 @@ namespace Sylves
                 foreach (var face in MeshUtils.GetFaces(meshData, submesh))
                 {
                     var centroid = meshEmitter.Average(face);
+                    var last = meshEmitter.Average(face[face.Count - 1], face[0]);
+                    var prev = last;
                     for (var i = 0; i < face.Count; i++)
                     {
                         var i1 = face[i];
                         var i2 = face[(i + 1) % face.Count];
-                        var b = meshEmitter.Average(i1, i2);
-                        meshEmitter.AddFace(centroid, i1, b, i2);
+                        var b = i == face.Count - 1 ? last : meshEmitter.Average(i1, i2);
+                        meshEmitter.AddFace(centroid, prev, i1, b);
+                        prev = b;
                     }
                 }
                 meshEmitter.EndSubMesh();
