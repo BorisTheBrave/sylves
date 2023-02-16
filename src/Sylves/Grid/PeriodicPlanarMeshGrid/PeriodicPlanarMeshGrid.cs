@@ -236,8 +236,8 @@ namespace Sylves
 
         public bool IsCellInBound(Cell cell, IBound bound)
         {
-            var chunk = Split(cell).chunk;
-            return ((SquareBound)bound).Contains(new Cell(chunk.x, chunk.y));
+            var (centerCell, chunk) = Split(cell);
+            return (bound == null || ((SquareBound)bound).Contains(new Cell(chunk.x, chunk.y))) && 0 <= centerCell.x && centerCell.x < centerGrid.IndexCount;
         }
         #endregion
 
