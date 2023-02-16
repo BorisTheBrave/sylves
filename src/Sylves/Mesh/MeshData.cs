@@ -61,6 +61,12 @@ namespace Sylves
         }
 #endif
 
+        // Shallow clone
+        public MeshData Clone()
+        {
+            return MemberwiseClone() as MeshData;
+        }
+
         public int[] GetIndices(int submesh)
         {
             return indices[submesh];

@@ -473,7 +473,7 @@ namespace Sylves
         #endregion
 
         #region Shape
-        protected IReadOnlyList<int> GetBaseFaceIndices(Cell cell)
+        public IReadOnlyList<int> GetFaceIndices(Cell cell)
         {
             var (face, submesh, layer) = (cell.x, cell.y, cell.z);
             var topology = meshData.GetTopology(submesh);
@@ -484,11 +484,10 @@ namespace Sylves
             else if (topology == MeshTopology.Quads)
             {
                 return new ArraySegment<int>(meshData.indices[submesh], face * 4, 4);
-
             }
             else
             {
-                throw new Exception($"Unsupported topology {topology}");
+                return ((MeshCellData)CellData[cell]).Face;
             }
         }
 
