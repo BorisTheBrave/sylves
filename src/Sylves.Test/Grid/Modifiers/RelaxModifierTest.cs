@@ -21,7 +21,7 @@ namespace Sylves.Test
             var hexAndNeighbours = new[] { hex }.Concat(g.GetNeighbours(hex)).ToList();
             Assert.AreEqual(hex, g.FindCell(v));
 
-            var nearby = RelaxModifier.FindNearbyHexes(v);
+            var nearby = NearbyHexes.FindNearbyHexes(v);
 
             var actual = new[] {nearby.Hex1, nearby.Hex2, nearby.Hex3};
             var expected = hexAndNeighbours.OrderBy(x => (g.GetCellCenter(x) - v).magnitude).Take(3).ToList();

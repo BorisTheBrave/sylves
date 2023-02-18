@@ -79,23 +79,22 @@ namespace Sylves.Test
                 strideX,
                 strideY,
                 aabbBottomLeft,
-                aabbSize,
-                bound: new SquareBound(-2, -2, 2, 2)
+                aabbSize
                 );
 
-            GridDocsExportTest.Export(g, "ts_grid.svg", new GridDocsExportTest.Options
+            foreach(var i in new[] { 0, 1, 2, 3, 100 })
             {
-                textScale = null,
-                min = new Vector2(-3, -3),
-                max = new Vector2(3, 3),
-            });
+                IGrid g2 = i == 0 ? g : new RelaxModifier(g, n, 1e-1f, relaxIterations: i);
 
-            GridDocsExportTest.Export(RelaxModifier.Create(g, n, 1e-1f), "ts2_grid.svg", new GridDocsExportTest.Options
-            {
-                textScale = null,
-                min = new Vector2(-3, -3),
-                max = new Vector2(3, 3),
-            });
+                g2 = g2.BoundBy(new SquareBound(-3, -3, 3, 3));
+
+                GridDocsExportTest.Export(g2, $"ts{i}_grid.svg", new GridDocsExportTest.Options
+                {
+                    textScale = null,
+                    min = new Vector2(-3, -3),
+                    max = new Vector2(3, 3),
+                });
+            }
         }
     }
 }

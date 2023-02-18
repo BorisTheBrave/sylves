@@ -35,23 +35,24 @@ namespace Sylves
     // Implementation very heavily based on PeriodPlanarMeshGrid
     public class PlanarLazyGrid : IGrid
     {
-        private readonly Func<Vector2Int, MeshData> getMeshData;
-        private readonly Vector2 strideX;
-        private readonly Vector2 strideY;
-        private readonly Vector2 aabbBottomLeft;
-        private readonly Vector2 aabbSize;
-        private readonly MeshGridOptions meshGridOptions;
-        private readonly SquareBound bound;
-        private readonly IEnumerable<ICellType> cellTypes;
-        private readonly ICachePolicy cachePolicy;
+        private Func<Vector2Int, MeshData> getMeshData;
+        private Vector2 strideX;
+        private Vector2 strideY;
+        private Vector2 aabbBottomLeft;
+        private Vector2 aabbSize;
+        private MeshGridOptions meshGridOptions;
+        private SquareBound bound;
+        private IEnumerable<ICellType> cellTypes;
+        private ICachePolicy cachePolicy;
         // Stores the mesh data, and also the parsed edges and cells of that mesh
-        private readonly IDictionary<Cell, (MeshData, DataDrivenData, EdgeStore)> meshDatas;
+        private IDictionary<Cell, (MeshData, DataDrivenData, EdgeStore)> meshDatas;
         // Stores a grid per chunk. The cells are all (x, 0, 0), and moves are relative so, you must offset co-ordinates to work with it.
         // The positions of cells on the other hand, do not need offsetting
-        private readonly IDictionary<Cell, MeshGrid> meshGrids;
-        private readonly AabbChunks aabbChunks;
+        private IDictionary<Cell, MeshGrid> meshGrids;
+        private AabbChunks aabbChunks;
 
-        private PlanarLazyGrid(PlanarLazyGrid original, SquareBound bound)
+        // Clone constructor. Clones share the same cache!
+        protected PlanarLazyGrid(PlanarLazyGrid original, SquareBound bound)
         {
             getMeshData = original.getMeshData;
             strideX = original.strideX;
@@ -65,12 +66,22 @@ namespace Sylves
             meshGrids = original.meshGrids;
             aabbChunks = original.aabbChunks;
 
-            this.bound = original.bound;
+            this.bound = bound;
         }
-
 
         public PlanarLazyGrid(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
+            Setup(getMeshData, strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
+        }
+
+        // You must call setup
+        protected PlanarLazyGrid()
+        {
+        }
+
+        protected void Setup(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        {
+
             this.getMeshData = getMeshData;
             this.strideX = strideX;
             this.strideY = strideY;
@@ -179,7 +190,7 @@ namespace Sylves
 
         public bool IsPlanar => true;
 
-        public bool IsRepeating => true;
+        public bool IsRepeating => false;
 
         public bool IsOrientable => true;
 
@@ -193,7 +204,7 @@ namespace Sylves
 
         #region Relatives
 
-        public IGrid Unbounded => bound == null ? this : new PlanarLazyGrid(this, null);
+        public virtual IGrid Unbounded => bound == null ? this : new PlanarLazyGrid(this, null);
 
         public IGrid Unwrapped => this;
 
@@ -281,7 +292,7 @@ namespace Sylves
             return new SquareBound(min, max + Vector2Int.one);
         }
 
-        public IGrid BoundBy(IBound bound) => new PlanarLazyGrid(this, (SquareBound)bound);
+        public virtual IGrid BoundBy(IBound bound) => new PlanarLazyGrid(this, (SquareBound)bound);
 
         public IBound IntersectBounds(IBound bound, IBound other)
         {
