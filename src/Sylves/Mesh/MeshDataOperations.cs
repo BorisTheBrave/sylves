@@ -117,20 +117,33 @@ namespace Sylves
         }
 
         /// <summary>
-        /// Merges all vertices that are within a given distance of each othher
+        /// Merges all vertices that are within a given distance of each other
         /// </summary>
         public static MeshData Weld(this MeshData md, float tol = 1e-7f)
+        {
+            return Weld(md, out var _, tol);
+        }
+
+        /// <summary>
+        /// Merges all vertices that are within a given distance of each other
+        /// </summary>
+        public static MeshData Weld(this MeshData md, out int[] indexMap, float tol = 1e-7f)
         {
             // TODO: More efficient implementation with spatial hash
             // TODO: Average welded points?
 
             int weldCount = 0;
-            var map = new int?[md.vertices.Length];
+            var map = new int[md.vertices.Length];
+            for (var i = 0; i < md.vertices.Length; ++i)
+            {
+                map[i] = -1;
+            }
+
             var invMap = new int[md.vertices.Length];
             for (var i = 0; i < md.vertices.Length; ++i)
             {
                 // Already welded
-                if (map[i] != null)
+                if (map[i] != -1)
                     continue;
                 map[i] = weldCount;
                 invMap[weldCount] = i;
@@ -146,7 +159,7 @@ namespace Sylves
             }
             var result = new MeshData();
             result.topologies = md.topologies;
-            result.indices = md.indices.Select(ix => ix.Select(i => (i >= 0 ? map[i] : ~map[~i]).Value).ToArray()).ToArray();
+            result.indices = md.indices.Select(ix => ix.Select(i => (i >= 0 ? map[i] : ~map[~i])).ToArray()).ToArray();
             T[] MapArray<T>(T[] data)
             {
                 if (data == null)
@@ -163,6 +176,7 @@ namespace Sylves
             result.normals = MapArray(md.normals);
             result.tangents = MapArray(md.tangents);
 
+            indexMap = map;
             return result;
         }
 
@@ -201,5 +215,65 @@ namespace Sylves
             result.vertices = vertices;
             return result;
         }
+
+        public static MeshData Concat(IEnumerable<MeshData> mds, out List<int[]> indexMaps)
+        {
+            // TODO: Should this use MeshEmitter?
+            List<Vector3> vertices = new List<Vector3>();
+            List<Vector2> uv = null;
+            List<Vector3> normal = null;
+            List<Vector4> tangents = null;
+            var i = 0;
+            void Fill<T>(ref List<T> dest, T[] src)
+            {
+                if (src == null && dest == null)
+                    return;
+                if((src == null ^ dest == null) && i != 0)
+                {
+                    throw new Exception($"Cannot concat mesh {i} as it has different data from the first mesh.");
+                }
+                if(dest == null && i == 0)
+                {
+                    dest = new List<T>();
+                }
+                dest.AddRange(src);
+            }
+            var indices = new List<int>();
+            indexMaps = new List<int[]>();
+            var topologies = new[] { MeshTopology.NGon };
+            foreach (var md in mds)
+            {
+                if (md.subMeshCount != 1)
+                {
+                    throw new NotImplementedException("Concat doesn't support submeshes");
+                }
+                var indexMap = Enumerable.Range(vertices.Count, md.vertices.Length).ToArray();
+                foreach(var face in MeshUtils.GetFaces(md, 0))
+                {
+                    foreach(var ii in face)
+                    {
+                        indices.Add(ii + vertices.Count);
+                    }
+                    indices[indices.Count - 1] = ~indices[indices.Count - 1];
+                }
+                indexMaps.Add(indexMap);
+
+                Fill(ref vertices, md.vertices);
+                Fill(ref uv, md.uv);
+                Fill(ref normal, md.normals);
+                Fill(ref tangents, md.tangents);
+                i++;
+            }
+            return new MeshData
+            {
+                indices = new[] { indices.ToArray() },
+                topologies = topologies,
+                vertices = vertices.ToArray(),
+                normals = normal?.ToArray(),
+                uv = uv?.ToArray(),
+                tangents = tangents?.ToArray(),
+            };
+        }
+
     }
 }

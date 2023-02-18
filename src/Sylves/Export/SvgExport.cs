@@ -53,7 +53,7 @@ namespace Sylves
 
         public void DrawCell(IGrid grid, Cell cell)
         {
-            var cellPolyStyle = "fill: rgb(244, 244, 241); stroke: rgb(51, 51, 51); stroke-width: 0.1";
+            var cellPolyStyle = "fill: rgb(244, 244, 241); stroke: rgb(51, 51, 51); stroke-width: 0.01";
 
             grid.GetPolygon(cell, out var vertices, out var transform);
             tw.WriteLine($"<!-- {cell} -->");

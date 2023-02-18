@@ -56,9 +56,6 @@ namespace Sylves.Test
                 // Weld vertices
                 meshData = meshData.Weld(1e-1f);
 
-                // Relax mesh
-                meshData = meshData.Relax(3);
-
                 return meshData;
             }
 
@@ -88,7 +85,16 @@ namespace Sylves.Test
 
             GridDocsExportTest.Export(g, "ts_grid.svg", new GridDocsExportTest.Options
             {
-                textScale = null
+                textScale = null,
+                min = new Vector2(-3, -3),
+                max = new Vector2(3, 3),
+            });
+
+            GridDocsExportTest.Export(RelaxModifier.Create(g, n, 1e-1f), "ts2_grid.svg", new GridDocsExportTest.Options
+            {
+                textScale = null,
+                min = new Vector2(-3, -3),
+                max = new Vector2(3, 3),
             });
         }
     }

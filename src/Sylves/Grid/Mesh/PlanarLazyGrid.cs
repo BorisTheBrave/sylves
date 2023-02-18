@@ -134,6 +134,7 @@ namespace Sylves
             }
 
             var mg = new MeshGrid(meshData, meshGridOptions, dataDrivenData, true);
+            mg.BuildMeshDetails();
 
             return meshGrids[cell] = mg;
         }

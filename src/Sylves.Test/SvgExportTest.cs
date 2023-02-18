@@ -59,7 +59,7 @@ namespace Sylves.Test
             b.EndSvg();
         }
 
-        public void Export(IGrid g, string filename, Options options = null)
+        public static void Export(IGrid g, string filename, Options options = null)
         {
             var fullPath = Path.GetFullPath(filename);
             using (var file = File.Open(fullPath, FileMode.Create))
