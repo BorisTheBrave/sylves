@@ -8,7 +8,7 @@ namespace Sylves
     // Works by splitting up the plane into hexes
     // Each hex is joined with its 6 neighbours and relaxed to make overlapping patches
     // Each point is a blend of the three nearest patches
-    public class RelaxModifier : BasePlanarLazyGrid
+    public class RelaxModifier : PlanarLazyGrid
     {
         private readonly IGrid underlying;
         private readonly float chunkSize;
@@ -17,11 +17,6 @@ namespace Sylves
 
         // Description of the chunking used
         HexGrid chunkGrid;
-        Vector2 strideX;
-        Vector2 strideY;
-        Vector2 aabbBottomLeft;
-        Vector2 aabbSize;
-
 
         // Caches
 
@@ -48,15 +43,6 @@ namespace Sylves
             cachePolicy = cachePolicy ?? CachePolicy.Always;
 
             chunkGrid = new HexGrid(chunkSize);
-
-            // Work out the dimensions of the chunk grid, needed for PlanarLazyGrid
-            strideX = ToVector2(chunkGrid.GetCellCenter(ChunkToCell(new Vector2Int(1, 0))));
-            strideY = ToVector2(chunkGrid.GetCellCenter(ChunkToCell(new Vector2Int(0, 1))));
-
-            var polygon = chunkGrid.GetPolygon(ChunkToCell(new Vector2Int())).Select(ToVector2);
-            aabbBottomLeft = polygon.Aggregate(Vector2.Min);
-            var aabbTopRight = polygon.Aggregate(Vector2.Max);
-            aabbSize = aabbTopRight - aabbBottomLeft;
 
             unrelaxedChunks = cachePolicy.GetDictionary<MeshData>(chunkGrid);
             relaxedPatches = cachePolicy.GetDictionary<(MeshData, Dictionary<Cell, int[]>)>(chunkGrid);
@@ -89,44 +75,34 @@ namespace Sylves
 
             }
 
-            base.Setup(strideX, strideY, aabbBottomLeft, aabbSize, bound: bound, cellTypes: cellTypes);
+            base.Setup(GetRelaxedChunk, chunkGrid, bound: bound, cellTypes: cellTypes);
         }
 
         // Clone constructor. Clones share the same cache!
-        private RelaxModifier(RelaxModifier original, SquareBound bound):base(original, bound)
+        private RelaxModifier(RelaxModifier original, SquareBound bound)
+            :base(original, bound)
         {
             underlying = original.underlying;
             chunkSize = original.chunkSize;
             weldTolerance = original.weldTolerance;
             relaxIterations = original.relaxIterations;
             chunkGrid = original.chunkGrid;
-            strideX = original.strideX;
-            strideY = original.strideY;
-            aabbBottomLeft = original.aabbBottomLeft;
-            aabbSize = original.aabbSize;
             unrelaxedChunks = original.unrelaxedChunks;
             relaxedPatches = original.relaxedPatches;
         }
 
-
-
         #region Calculations
 
-        private static Vector2 ToVector2(Vector3 v) => new Vector2(v.x, v.y);
         private static Vector3 ToVector3(Vector2 v) => new Vector3(v.x, v.y, 0);
 
-        private static Cell ChunkToCell(Vector2Int chunk) => new Cell(chunk.x, chunk.y, -chunk.x - chunk.y);
-        private static Vector2Int CellToChunk(Cell cell) => new Vector2Int(cell.x, cell.y);
-
         // Unrelaxed chunks are just the raw mesh data taken from underlying
-        MeshData GetUnrelaxedChunk(Vector2Int chunk)
+        MeshData GetUnrelaxedChunk(Cell hex)
         {
-            var hex = ChunkToCell(chunk);
             if (unrelaxedChunks.ContainsKey(hex))
                 return unrelaxedChunks[hex];
 
             // Get cells near the chunk
-            var min = aabbBottomLeft + chunk.x * strideX + chunk.y * strideY;
+            var min = aabbBottomLeft + hex.x * strideX + hex.y * strideY;
             var max = min + aabbSize;
             var unfilteredCells = underlying.GetCellsIntersectsApprox(ToVector3(min), ToVector3(max));
 
@@ -141,15 +117,14 @@ namespace Sylves
 
         // Relaxed patches are the result of concatting several unrelaxed chunks together,
         // then relaxing them
-        (MeshData meshData, Dictionary<Cell, int[]> indexMaps) GetRelaxedPatch(Vector2Int chunk)
+        (MeshData meshData, Dictionary<Cell, int[]> indexMaps) GetRelaxedPatch(Cell hex)
         {
-            var hex = ChunkToCell(chunk);
             if (relaxedPatches.ContainsKey(hex))
                 return relaxedPatches[hex];
 
             var nearbyChunks = new[] { hex }.Concat(chunkGrid.GetNeighbours(hex));
 
-            var md = MeshDataOperations.Concat(nearbyChunks.Select(c => GetUnrelaxedChunk(CellToChunk(c))), out var concatIndexMaps);
+            var md = MeshDataOperations.Concat(nearbyChunks.Select(c => GetUnrelaxedChunk(c)), out var concatIndexMaps);
 
             md = md.Weld(out var weldIndexMap, weldTolerance).Relax(relaxIterations);
 
@@ -161,11 +136,9 @@ namespace Sylves
 
         // The actual mesh data matches the unrelaxed chunk
         // but with position data interpolated from several relaxed patches.
-        MeshData GetRelaxedChunk(Vector2Int chunk)
+        MeshData GetRelaxedChunk(Cell hex)
         {
-            var hex = ChunkToCell(chunk);
-
-            var unrelaxed = GetUnrelaxedChunk(chunk);
+            var unrelaxed = GetUnrelaxedChunk(hex);
 
             var result = unrelaxed.Clone();
             result.vertices = new Vector3[unrelaxed.vertices.Length];
@@ -174,9 +147,9 @@ namespace Sylves
             {
                 var v = unrelaxed.vertices[i];
                 var nearbyHexes = NearbyHexes.FindNearbyHexes(v / chunkSize);
-                var patch1 = GetRelaxedPatch(CellToChunk(nearbyHexes.Hex1));
-                var patch2 = GetRelaxedPatch(CellToChunk(nearbyHexes.Hex2));
-                var patch3 = GetRelaxedPatch(CellToChunk(nearbyHexes.Hex3));
+                var patch1 = GetRelaxedPatch(nearbyHexes.Hex1);
+                var patch2 = GetRelaxedPatch(nearbyHexes.Hex2);
+                var patch3 = GetRelaxedPatch(nearbyHexes.Hex3);
                 var v1 = patch1.meshData.vertices[patch1.indexMaps[hex][i]];
                 var v2 = patch2.meshData.vertices[patch2.indexMaps[hex][i]];
                 var v3 = patch3.meshData.vertices[patch3.indexMaps[hex][i]];
@@ -185,11 +158,6 @@ namespace Sylves
                     v3 * nearbyHexes.Weight3;
             }
             return result;
-        }
-
-        protected override MeshData GetMeshData(Vector2Int v)
-        {
-            return GetRelaxedChunk(v);
         }
         #endregion
 
