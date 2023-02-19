@@ -60,6 +60,7 @@ namespace Sylves
             this.weldTolerance = weldTolerance;
             this.relaxIterations = relaxIterations;
 
+            // Infer celltypes from underlying if possible
             IEnumerable<ICellType> cellTypes = null;
             try
             {
@@ -69,7 +70,21 @@ namespace Sylves
 
             }
 
-            base.Setup(GetRelaxedChunk, strideX, strideY, aabbBottomLeft, aabbSize, cellTypes: cellTypes);
+            // Infer bound from underlying if possible
+            // Perhaps this should be done lazily?
+            SquareBound bound = null;
+            if(underlying.IsFinite)
+            {
+                var chunkCells = underlying.GetCells()
+                    .Select(underlying.GetCellCenter)
+                    .Select(chunkGrid.FindCell)
+                    .OfType<Cell>();
+                var chunkBound = (HexBound)chunkGrid.GetBound(chunkCells);
+                bound = new SquareBound(new Vector2Int(chunkBound.min.x, chunkBound.min.y), new Vector2Int(chunkBound.max.x, chunkBound.max.y));
+
+            }
+
+            base.Setup(GetRelaxedChunk, strideX, strideY, aabbBottomLeft, aabbSize, bound: bound, cellTypes: cellTypes);
         }
 
         // Clone constructor. Clones share the same cache!
@@ -168,7 +183,28 @@ namespace Sylves
         }
         #endregion
 
+
         // Maybe more should be override to pass through stuff from underlying?
+
+        #region Basics
+
+        public virtual bool Is2d => underlying.Is2d;
+
+        public virtual bool Is3d => underlying.Is3d;
+
+        public virtual bool IsPlanar => underlying.IsPlanar;
+
+        public virtual bool IsRepeating => underlying.IsRepeating;
+
+        public virtual bool IsOrientable => underlying.IsOrientable;
+
+        public virtual bool IsFinite => base.IsFinite || underlying.IsFinite;
+
+        public virtual bool IsSingleCellType => underlying.IsSingleCellType;
+
+        public virtual IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes();
+
+        #endregion
 
         #region Relatives
         public override IGrid Unbounded => new RelaxModifier(this, null);
