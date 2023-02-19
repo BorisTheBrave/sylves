@@ -33,9 +33,8 @@ namespace Sylves
     /// then stitched together.
     /// </summary>
     // Implementation very heavily based on PeriodPlanarMeshGrid
-    public class PlanarLazyGrid : IGrid
+    public abstract class BasePlanarLazyGrid : IGrid
     {
-        private Func<Vector2Int, MeshData> getMeshData;
         private Vector2 strideX;
         private Vector2 strideY;
         private Vector2 aabbBottomLeft;
@@ -52,9 +51,8 @@ namespace Sylves
         private AabbChunks aabbChunks;
 
         // Clone constructor. Clones share the same cache!
-        protected PlanarLazyGrid(PlanarLazyGrid original, SquareBound bound)
+        protected BasePlanarLazyGrid(BasePlanarLazyGrid original, SquareBound bound)
         {
-            getMeshData = original.getMeshData;
             strideX = original.strideX;
             strideY = original.strideY;
             aabbBottomLeft = original.aabbBottomLeft;
@@ -69,20 +67,19 @@ namespace Sylves
             this.bound = bound;
         }
 
-        public PlanarLazyGrid(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        public BasePlanarLazyGrid(Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-            Setup(getMeshData, strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
+            Setup(strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
-        // You must call setup
-        protected PlanarLazyGrid()
+        // You must call setup if using this constructor.
+        protected BasePlanarLazyGrid()
         {
+
         }
 
-        protected void Setup(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        protected void Setup(Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-
-            this.getMeshData = getMeshData;
             this.strideX = strideX;
             this.strideY = strideY;
             this.aabbBottomLeft = aabbBottomLeft;
@@ -96,14 +93,16 @@ namespace Sylves
             aabbChunks = new AabbChunks(strideX, strideY, aabbBottomLeft, aabbSize);
         }
 
-        private (MeshData, DataDrivenData, EdgeStore) GetMeshData(Vector2Int v)
+        protected abstract MeshData GetMeshData(Vector2Int v);
+
+        private (MeshData, DataDrivenData, EdgeStore) GetMeshDataCached(Vector2Int v)
         {
             var cell = new Cell(v.x, v.y);
             if (meshDatas.TryGetValue(cell, out var x))
             {
                 return x;
             }
-            var meshData = getMeshData(v);
+            var meshData = GetMeshData(v);
 
             if(meshData.subMeshCount > 1)
             {
@@ -125,7 +124,7 @@ namespace Sylves
                 return meshGrid;
             }
 
-            var (meshData, dataDrivenData, edgeStore) = GetMeshData(v);
+            var (meshData, dataDrivenData, edgeStore) = GetMeshDataCached(v);
 
             var chunkOffset = ChunkOffset2(v);
             foreach(var chunk in aabbChunks.GetChunkIntersects(aabbBottomLeft + chunkOffset, aabbBottomLeft + chunkOffset + aabbSize))
@@ -134,7 +133,7 @@ namespace Sylves
                 if (chunk == v)
                     continue;
 
-                var otherEdges = GetMeshData(chunk).Item3.UnmatchedEdges;
+                var otherEdges = GetMeshDataCached(chunk).Item3.UnmatchedEdges;
 
                 foreach (var edgeTuple in otherEdges)
                 {
@@ -204,7 +203,7 @@ namespace Sylves
 
         #region Relatives
 
-        public virtual IGrid Unbounded => bound == null ? this : new PlanarLazyGrid(this, null);
+        public abstract IGrid Unbounded { get; }
 
         public IGrid Unwrapped => this;
 
@@ -292,7 +291,7 @@ namespace Sylves
             return new SquareBound(min, max + Vector2Int.one);
         }
 
-        public virtual IGrid BoundBy(IBound bound) => new PlanarLazyGrid(this, (SquareBound)bound);
+        public abstract IGrid BoundBy(IBound bound);
 
         public IBound IntersectBounds(IBound bound, IBound other)
         {
@@ -321,7 +320,7 @@ namespace Sylves
         {
             var (meshCell, chunk) = Split(cell);
             return (bound == null || ((SquareBound)bound).Contains(new Cell(chunk.x, chunk.y)))
-                && 0 <= meshCell.x && meshCell.x < GetMeshData(chunk).Item2.Cells.Count;
+                && 0 <= meshCell.x && meshCell.x < GetMeshDataCached(chunk).Item2.Cells.Count;
         }
         #endregion
 
@@ -469,6 +468,27 @@ namespace Sylves
             throw new NotImplementedException();
         }
         #endregion
+    }
+    public class PlanarLazyGrid : BasePlanarLazyGrid
+    {
+        private readonly Func<Vector2Int, MeshData> getMeshData;
 
+        public PlanarLazyGrid(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+            : base(strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy)
+        {
+            this.getMeshData = getMeshData;
+        }
+
+        protected PlanarLazyGrid(PlanarLazyGrid original, SquareBound bound)
+            : base(original, bound)
+        {
+            this.getMeshData = original.getMeshData;
+        }
+
+        protected override MeshData GetMeshData(Vector2Int v) => getMeshData(v);
+
+        public override IGrid Unbounded => GetBound() == null ? this : new PlanarLazyGrid(this, null);
+
+        public override IGrid BoundBy(IBound bound) => new PlanarLazyGrid(this, (SquareBound)bound);
     }
 }

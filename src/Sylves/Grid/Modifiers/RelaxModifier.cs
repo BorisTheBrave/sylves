@@ -8,7 +8,7 @@ namespace Sylves
     // Works by splitting up the plane into hexes
     // Each hex is joined with its 6 neighbours and relaxed to make overlapping patches
     // Each point is a blend of the three nearest patches
-    public class RelaxModifier : PlanarLazyGrid
+    public class RelaxModifier : BasePlanarLazyGrid
     {
         private readonly IGrid underlying;
         private readonly float chunkSize;
@@ -89,7 +89,7 @@ namespace Sylves
 
             }
 
-            base.Setup(GetRelaxedChunk, strideX, strideY, aabbBottomLeft, aabbSize, bound: bound, cellTypes: cellTypes);
+            base.Setup(strideX, strideY, aabbBottomLeft, aabbSize, bound: bound, cellTypes: cellTypes);
         }
 
         // Clone constructor. Clones share the same cache!
@@ -185,6 +185,11 @@ namespace Sylves
                     v3 * nearbyHexes.Weight3;
             }
             return result;
+        }
+
+        protected override MeshData GetMeshData(Vector2Int v)
+        {
+            return GetRelaxedChunk(v);
         }
         #endregion
 
