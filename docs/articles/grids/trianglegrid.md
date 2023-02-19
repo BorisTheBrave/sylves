@@ -4,16 +4,16 @@
 <tr><th colspan="2">Quick facts</th></tr>
 <tr><td>Grid</td><td><a href="xref:Sylves.TriangleGrid">TriangleGrid</a></td></tr>
 <tr><td>CellType</td><td><a href="xref:Sylves.HexCellType">HexCellType</a></td></tr>
-<tr><td>CellDir</td><td><a href="xref:Sylves.PTHexDir">PTHexDir</a> / <a href="xref:Sylves.PTHexDir">FTHexDir</a></td></tr>
+<tr><td>CellDir</td><td><a href="xref:Sylves.PTHexDir">PTHexDir</a> (for <a href="xref:Sylves.TriangleOrientation.FlatSides">flat-sides grids</a>) <br/> <a href="xref:Sylves.PTHexDir">FTHexDir</a> (for <a href="xref:Sylves.TriangleOrientation.FlatTopped">flat-topped grids</a>)</td></tr>
 <tr><td>CellRotation</td><td><a href="xref:Sylves.HexRotation">HexRotation</a></td></tr>
 <tr><td>Bound</td><td><a href="xref:Sylves.TriangleBound">TriangleBound</a></td></tr>
 <tr><td>Properties</td><td>2d, Planar, Repeating, Infinite</td></tr>
 </table>
 
-TriangleGrid is a tiling of the plane with triangles. It supports both flat-topped and flat-sides varieties.
+TriangleGrid is a tiling of the plane with triangles. It supports both <a href="xref:Sylves.TriangleOrientation.FlatTopped">flat-topped</a> and <a href="xref:Sylves.TriangleOrientation.FlatSides">flat-sides</a> varieties.
 
-<img width="200px" src="../../images/grids/tri_fs.svg" /></img>
 <img width="200px" src="../../images/grids/tri_ft.svg" /></img>
+<img width="200px" src="../../images/grids/tri_fs.svg" /></img>
 
 ## Cell co-ordinates
 
