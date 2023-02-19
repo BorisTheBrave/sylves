@@ -339,9 +339,9 @@ namespace Sylves
                     minCell.x = Math.Max(minCell.x, bound.min.x);
                     minCell.y = Math.Max(minCell.y, bound.min.y);
                     minCell.z = Math.Max(minCell.z, bound.min.z);
-                    maxCell.x = Math.Min(minCell.x, bound.max.x - 1);
-                    maxCell.y = Math.Min(minCell.y, bound.max.y - 1);
-                    maxCell.z = Math.Min(minCell.z, bound.max.z - 1);
+                    maxCell.x = Math.Min(maxCell.x, bound.max.x - 1);
+                    maxCell.y = Math.Min(maxCell.y, bound.max.y - 1);
+                    maxCell.z = Math.Min(maxCell.z, bound.max.z - 1);
                 }
 
                 // Loop over cels

@@ -643,6 +643,7 @@ namespace Sylves
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
+            // TODO: Respect bounds
             if (orientation == TriangleOrientation.FlatSides)
             {
                 foreach (var cell in altGrid.GetCellsIntersectsApprox(min, max))
