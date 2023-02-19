@@ -40,6 +40,11 @@ namespace Sylves
             ICachePolicy cachePolicy = null)
             :base()
         {
+            if (!underlying.IsPlanar)
+            {
+                throw new NotImplementedException("RelaxModifier only supports planar grids");
+            }
+
             cachePolicy = cachePolicy ?? CachePolicy.Always;
 
             chunkGrid = new HexGrid(chunkSize);
