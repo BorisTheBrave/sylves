@@ -141,7 +141,6 @@ namespace Sylves
         public static MeshData Weld(this MeshData md, out int[] indexMap, float tol = 1e-7f)
         {
             // TODO: Average welded points?
-            // TODO: Is this hashing scheme buggy for 0.999 then 1.000?
 
             var vertexLookup = new Dictionary<Vector3Int, int>();
 
@@ -172,8 +171,9 @@ namespace Sylves
                 if (found)
                     continue;
 
-                
-                vertexLookup[vi] = weldCount;
+                // We use an offset when *storing* the vertex, to avoid boundary issues
+                var vi2 = Vector3Int.FloorToInt(md.vertices[i] / tol + 0.5f * Vector3.one);
+                vertexLookup[vi2] = weldCount;
                 map[i] = weldCount;
                 invMap[weldCount] = i;
                 weldCount++;
