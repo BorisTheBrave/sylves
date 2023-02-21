@@ -23,4 +23,8 @@
     <td><a href="../../images/grids/wrap_square_fake.svg"><img class="grid-thumb" src="../../images/grids/wrap_square_fake.svg" /></img></td>
     <td><a href="../modifiers/wrapmodifier.md">WrapModifier</a><br/>Turns any bounded grid into a grid which connects back on itself when you leave the grounds. </td>
 </tr>
+<tr>
+    <td><a href="../../images/grids/relax_square.svg"><img class="grid-thumb" src="../../images/grids/relax_square.svg" /></img></td>
+    <td><a href="../modifiers/relaxmodifier.md">RelaxModifier</a><br/>Applies mesh relaxation to any grid, smoothing out sharp edges.</td>
+</tr>
 </table>

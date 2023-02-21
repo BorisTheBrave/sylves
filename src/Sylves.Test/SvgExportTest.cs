@@ -148,6 +148,7 @@ namespace Sylves.Test
 
             // Extras grids
             Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-2, -2), new Vector2Int(3, 3))), "townscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
+            Export(new TownscaperGrid(4, 0).BoundBy(new SquareBound(new Vector2Int(-2, -2), new Vector2Int(3, 3))), "unrelaxedtownscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
 
             // Modifier grids
             var centerSquare = new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))).Transformed(Matrix4x4.Translate(new Vector3(-0.5f, -0.5f, 0)));

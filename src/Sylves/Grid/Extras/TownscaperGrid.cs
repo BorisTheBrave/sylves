@@ -52,7 +52,7 @@ namespace Sylves
     {
         const float weldTolerance = 1e-2f;
 
-        public TownscaperGrid(int n) : base(new UnrelaxedTownscaperGrid(n, weldTolerance), n, weldTolerance: weldTolerance)
+        public TownscaperGrid(int n, int relaxIterations = 10) : base(new UnrelaxedTownscaperGrid(n, weldTolerance), n, relaxIterations: relaxIterations, weldTolerance: weldTolerance)
         {
 
         }
