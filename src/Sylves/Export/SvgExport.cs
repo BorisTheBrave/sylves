@@ -40,10 +40,17 @@ namespace Sylves
 
         public TextWriter TextWriter => tw;
 
-        public void BeginSvg(string viewBox= "-5 -5 10 10")
+        public void BeginSvg(string viewBox= "-5 -5 10 10", float strokeWidth=0.1f)
         {
             tw.WriteLine($"<svg viewBox=\"{viewBox}\" xmlns=\"http://www.w3.org/2000/svg\">");
-            tw.WriteLine("<style>path{stroke-linejoin: round}</style>");
+            tw.WriteLine("<style>");
+            tw.WriteLine($@".cell-path {{
+                stroke-linejoin: round;
+                fill: rgb(244, 244, 241);
+                stroke: rgb(51, 51, 51);
+                stroke-width: {strokeWidth}
+            }}");
+            tw.WriteLine("</style>");
         }
 
         public void EndSvg()
@@ -53,11 +60,9 @@ namespace Sylves
 
         public void DrawCell(IGrid grid, Cell cell)
         {
-            var cellPolyStyle = "fill: rgb(244, 244, 241); stroke: rgb(51, 51, 51); stroke-width: 0.01";
-
             grid.GetPolygon(cell, out var vertices, out var transform);
             tw.WriteLine($"<!-- {cell} -->");
-            tw.Write($@"<path style=""{cellPolyStyle}"" d=""");
+            tw.Write($@"<path class=""cell-path"" d=""");
             SvgExport.WritePathCommands(vertices, globalTransform * transform, tw);
             tw.WriteLine("\"/>");
         }

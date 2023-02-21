@@ -15,6 +15,7 @@ namespace Sylves.Test
         {
             public int dim = 3;
             public double? textScale = 1;
+            public float strokeWidth = 0.1f;
             public Vector2 min = new Vector2(-2, -2);
             public Vector2 max = new Vector2(2, 2);
         }
@@ -44,7 +45,7 @@ namespace Sylves.Test
             }*/
             var min = options.min;
             var max = options.max;
-            b.BeginSvg($"{min.x} {-max.y} {max.x - min.x} {max.y-min.y}");
+            b.BeginSvg($"{min.x} {-max.y} {max.x - min.x} {max.y-min.y}", options.strokeWidth);
             foreach (var cell in grid.GetCells())
             {
                 b.DrawCell(grid, cell);
@@ -145,6 +146,9 @@ namespace Sylves.Test
             // Mesh grids
             Export(new MeshGrid(TestMeshes.Lion).Transformed(Matrix4x4.Scale(4f * Vector3.one)), "meshgrid.svg", new Options { textScale = null});
 
+            // Extras grids
+            Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-2, -2), new Vector2Int(3, 3))), "townscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
+
             // Modifier grids
             var centerSquare = new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))).Transformed(Matrix4x4.Translate(new Vector3(-0.5f, -0.5f, 0)));
 
@@ -172,6 +176,10 @@ namespace Sylves.Test
                 new RavelModifier(centerSquare.BoundBy(new SquareBound(new Vector2Int(-1, -1), new Vector2Int(2, 2)))),
                 "ravel_square.svg",
                 new Options { dim = 2 });
+            Export(
+                new RelaxModifier(centerSquare, relaxIterations: 10),
+                "relax_square.svg",
+                new Options { dim = 2, textScale = null });
         }
 
         [Test]
