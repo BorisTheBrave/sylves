@@ -116,6 +116,17 @@ namespace Sylves
             return result;
         }
 
+        private static readonly Vector3Int[] WeldOffsets = {
+            new Vector3Int(0, 0, 0),
+            new Vector3Int(0, 0, 1),
+            new Vector3Int(0, 1, 0),
+            new Vector3Int(0, 1, 1),
+            new Vector3Int(1, 0, 0),
+            new Vector3Int(1, 0, 1),
+            new Vector3Int(1, 1, 0),
+            new Vector3Int(1, 1, 1),
+        };
+
         /// <summary>
         /// Merges all vertices that are within a given distance of each other
         /// </summary>
@@ -129,8 +140,10 @@ namespace Sylves
         /// </summary>
         public static MeshData Weld(this MeshData md, out int[] indexMap, float tol = 1e-7f)
         {
-            // TODO: More efficient implementation with spatial hash
             // TODO: Average welded points?
+            // TODO: Is this hashing scheme buggy for 0.999 then 1.000?
+
+            var vertexLookup = new Dictionary<Vector3Int, int>();
 
             int weldCount = 0;
             var map = new int[md.vertices.Length];
@@ -142,19 +155,27 @@ namespace Sylves
             var invMap = new int[md.vertices.Length];
             for (var i = 0; i < md.vertices.Length; ++i)
             {
-                // Already welded
-                if (map[i] != -1)
-                    continue;
-                map[i] = weldCount;
-                invMap[weldCount] = i;
-                for (var j = i + 1; j < md.vertices.Length; ++j)
+                var vi = Vector3Int.FloorToInt(md.vertices[i] / tol);
+
+                bool found = false;
+                foreach(var offset in WeldOffsets)
                 {
-                    if (Vector3.Distance(md.vertices[i], md.vertices[j]) < tol)
+                    if (vertexLookup.TryGetValue(vi + offset, out var index))
                     {
-                        map[j] = weldCount;
-                        invMap[weldCount] = j;
+                        // Weld to index
+                        map[i] = index;
+                        invMap[index] = i;
+                        found = true;
+                        break;
                     }
                 }
+                if (found)
+                    continue;
+
+                
+                vertexLookup[vi] = weldCount;
+                map[i] = weldCount;
+                invMap[weldCount] = i;
                 weldCount++;
             }
             var result = new MeshData();
