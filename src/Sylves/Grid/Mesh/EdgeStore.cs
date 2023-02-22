@@ -101,8 +101,9 @@ namespace Sylves
         {
             if(!MatchEdge(v1, v2, cell, dir, moves))
             {
-                var v1i = Vector3Int.FloorToInt(v1 / tolerance);
-                var v2i = Vector3Int.FloorToInt(v2 / tolerance);
+                // We use an offset when *storing* the vertex, to avoid boundary issues
+                var v1i = Vector3Int.FloorToInt(v1 / tolerance + 0.5f * Vector3.one);
+                var v2i = Vector3Int.FloorToInt(v2 / tolerance + 0.5f * Vector3.one);
                 unmatchedEdges.Add((v1i, v2i), (v1, v2, cell, dir));
                 vertexCount[v1i] = 1 + (vertexCount.TryGetValue(v1i, out var c) ? c : 0);
                 vertexCount[v2i] = 1 + (vertexCount.TryGetValue(v2i, out c) ? c : 0);
