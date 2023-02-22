@@ -84,6 +84,10 @@ Mesh grids accept a [mesh](xref:Sylves.MeshData) as the input, and base cells of
     <td><a href="../../images/grids/cairo.svg"><img class="grid-thumb" src="../../images/grids/cairo.svg" /></img></td>
     <td><a href="periodicplanarmeshgrid.md">PeriodicPlanarMeshGrid</a><br/>Can turn any planar mesh into a periodic grid by repeating the mesh at fixed intervals.</td>
 </tr>
+<tr>
+    <td><a href="../../images/grids/townscaper.svg"><img class="grid-thumb" src="../../images/grids/unrelaxedtownscaper.svg" /></img></td>
+    <td><a href="xref:Sylves.PlanarLazyGrid">PlanarLazyGrid</a><br/>Like PeriodicPlanarMeshGrid, splits the plane into periodic chunks and draws a mesh in each chunk. But the meshes are lazily loaded from a user-specified function, so don't have to repeat.</td>
+</tr>
 </table>
 
 ## Prism Grids
@@ -131,5 +135,9 @@ These grids don't classify neatly and usually serve as demos for various feature
 <tr>
     <td><a href="../../images/grids/wrap_square_fake.svg"><img class="grid-thumb" src="../../images/grids/wrap_square_fake.svg" /></img></td>
     <td><a href="xref:Sylves.WrappingSquareGrid">WrappingSquareGrid</a><br/>Turns any bounded grid into a grid which connects back on itself when you leave the grounds. </td>
+</tr>
+<tr>
+    <td><a href="../../images/grids/townscaper.svg"><img class="grid-thumb" src="../../images/grids/townscaper.svg" /></img></td>
+    <td><a href="xref:Sylves.TownscaperGrid">TownscaperGrid</a><br/>This is a specific implementation of <a href="planarlazygrid">PlanarLazyGrid</a> with a <a href="../modifiers/relaxmodifier.md">RelaxModifier</a> applied. It is modelled after the grid used for <a href="https://store.steampowered.com/app/1291340/Townscaper/">Townscaper</a></td>
 </tr>
 </table>

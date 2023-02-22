@@ -32,10 +32,10 @@ namespace Sylves
             // Randomly pair the triangles of that grid
             var seed = hex.x * 1000 + hex.y;
             var random = new Random(seed);
-            meshData = meshData.RandomPairing(random.NextDouble);
+            meshData = meshData.MaxRandomPairing(random.NextDouble);
 
             // Split into quads
-            meshData = ConwayOperators.Ortho(meshData);
+            //meshData = ConwayOperators.Ortho(meshData);
 
             // Weld vertices
             meshData = meshData.Weld(weldTolerance);

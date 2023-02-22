@@ -147,8 +147,8 @@ namespace Sylves.Test
             Export(new MeshGrid(TestMeshes.Lion).Transformed(Matrix4x4.Scale(4f * Vector3.one)), "meshgrid.svg", new Options { textScale = null});
 
             // Extras grids
-            Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-2, -2), new Vector2Int(3, 3))), "townscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
-            Export(new TownscaperGrid(4, 0).BoundBy(new SquareBound(new Vector2Int(-2, -2), new Vector2Int(3, 3))), "unrelaxedtownscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
+            Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "townscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
+            Export(new TownscaperGrid(4, 0).BoundBy(new SquareBound(new Vector2Int(-2, -2), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "unrelaxedtownscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
 
             // Modifier grids
             var centerSquare = new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))).Transformed(Matrix4x4.Translate(new Vector3(-0.5f, -0.5f, 0)));

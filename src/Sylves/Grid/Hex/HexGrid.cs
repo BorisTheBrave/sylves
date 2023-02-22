@@ -81,7 +81,6 @@ namespace Sylves
         /// I.e. the incircle diameter is cellSize * sqrt(3) / 2 and circumcircle diameter is cellSize
         /// 
         /// </summary>
-
         public HexGrid(float cellSize, HexOrientation orientation = HexOrientation.PointyTopped, HexBound bound = null)
             :this(ComputeCellSize(cellSize, orientation), orientation, bound)
         {
