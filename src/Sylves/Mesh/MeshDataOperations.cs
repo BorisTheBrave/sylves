@@ -61,6 +61,11 @@ namespace Sylves
                 }
             }
 
+            return ApplyPairing(md, meshGrid, pairs, unpaired);
+        }
+
+        private static MeshData ApplyPairing(MeshData md, MeshGrid meshGrid, IEnumerable<(Cell, CellDir, Cell, CellDir)> pairs, HashSet<Cell> unpaired)
+        {
             // New mesh data with pairs of triangles merged
             var indices = new List<int>();
             foreach (var (cell, dir, dest, inverseDir) in pairs)
@@ -114,6 +119,122 @@ namespace Sylves
             result.topologies = new[] { MeshTopology.NGon };
 
             return result;
+        }
+
+
+        /// <summary>
+        /// Randomly picks pairs of adjacent faces in the mesh, and merges them into one larger face.
+        /// Always finds a maximal possible set of pairs via the "augmenting path" algorithm.
+        /// </summary>
+        public static MeshData MaxRandomPairing(this MeshData md, Func<double> randomDouble = null)
+        {
+
+            if (md.topologies.Length != 1)
+            {
+                throw new NotImplementedException("Method doesn't support submeshes");
+            }
+            if (!md.topologies.All(x => x == MeshTopology.Triangles))
+            {
+                // This would be quite easy to improve.
+                throw new NotImplementedException("RandomPairing only supports triangular topology currently.");
+            }
+
+            randomDouble = randomDouble ?? new Random().NextDouble;
+            var meshGrid = new MeshGrid(md);
+            var cells = meshGrid.GetCells().ToList();
+            var unpaired = new HashSet<Cell>(cells);
+            var pairs = new Dictionary<Cell, (CellDir, Cell, CellDir)>();
+
+            RandomShuffle(cells, randomDouble);
+            foreach(var cell in cells)
+            {
+                if (!unpaired.Contains(cell))
+                    continue;
+
+                // Find random augmenting path
+                var visited = new HashSet<Cell>();
+                var prev = new Dictionary<Cell, (CellDir, Cell, CellDir)>();
+                var queue = new Queue<Cell>();
+                Cell? dest = null;
+                queue.Enqueue(cell);
+                while(queue.Count > 0)
+                {
+                    var c = queue.Dequeue();
+                    var dirs = RandomShuffle(meshGrid.GetCellDirs(cell).ToList(), randomDouble);
+                    foreach(var dir in dirs)
+                    {
+                        if(!meshGrid.TryMove(c, dir, out var next, out var invDir, out var _))
+                            continue;
+
+                        if(visited.Contains(next))
+                            continue;
+
+                        visited.Add(next);
+                        prev[next] = (dir, c, invDir);
+
+                        if(unpaired.Contains(next))
+                        {
+                            // End of augmenting path
+                            dest = next;
+                            break;
+                        }
+                        else
+                        {
+                            var nextPair = pairs[next].Item2;
+                            queue.Enqueue(nextPair);
+                        }
+                    }
+                    // Are we done
+                    if (dest != null)
+                        break;
+                }
+
+                if(dest == null)
+                {
+                    // No augmenting path, give up
+                    // NB: This is only valid for connected graphs, perhaps we
+                    // should not do it?
+                    break;
+                }
+                else
+                {
+                    // Flip all pairs along the augmenting path
+                    var curr = dest.Value;
+                    while(true)
+                    {
+                        var (dir, p, invDir) = prev[curr];
+                        if(unpaired.Contains(p))
+                        {
+                            // Walked back to start of path
+                            // Set new pair
+                            unpaired.Remove(p);
+                            unpaired.Remove(curr);
+                            pairs[p] = (dir, curr, invDir);
+                            pairs[curr] = (invDir, p, dir);
+                            // And we're done
+                            break;
+                        }
+                        else
+                        {
+                            var (pDir, pp, pInvDir) = pairs[p];
+                            // Unset old pair
+                            pairs.Remove(p);
+                            pairs.Remove(pp);
+                            unpaired.Add(p);
+                            unpaired.Add(pp);
+                            // Set new pair
+                            unpaired.Remove(p);
+                            unpaired.Remove(curr);
+                            pairs[p] = (dir, curr, invDir);
+                            pairs[curr] = (invDir, p, dir);
+                            // Move on
+                            curr = pp;
+                        }
+                    }
+                }
+            }
+
+            return ApplyPairing(md, meshGrid, pairs.Select(kv => (kv.Key, kv.Value.Item1, kv.Value.Item2, kv.Value.Item3)), unpaired);
         }
 
         private static readonly Vector3Int[] WeldOffsets = {
