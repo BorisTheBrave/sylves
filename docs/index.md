@@ -463,6 +463,19 @@ foreach(var cell in cells)
                     </div>
                 </div>
             </div>
+            <div class="col-md-6 mb-5">
+                <div class="card">
+                    <a href="articles/tutorials/townscaper.md">
+                        <img class="card-img-top" width="300px" src="images/grids/townscaper.svg" alt="Townscaper Tutorial">
+                    </a>
+                    <div class="card-body">
+                        <a href="articles/tutorials/townscaper.md">
+                            <h5 class="card-title">Townscaper</h5>
+                            <p class="card-text">How to recreate the grids from indie hit Townscaper.</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <!--
             <div class="col-md-6 mx-auto text-center mt-5">
                 <a href="#" class="btn btn-primary">Explore more posts</a>
