@@ -74,9 +74,12 @@ namespace Sylves
             Setup(getMeshData, strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
-
-
         public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        {
+            Setup(getMeshData, chunkGrid, meshGridOptions, bound, cellTypes, cachePolicy);
+        }
+
+        public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             Setup(getMeshData, chunkGrid, meshGridOptions, bound, cellTypes, cachePolicy);
         }
@@ -100,6 +103,22 @@ namespace Sylves
 
             Setup(
                 chunk => getMeshData(new Cell(chunk.x, chunk.y, -chunk.x - chunk.y)),
+                strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
+        }
+
+        protected void Setup(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        {
+            // Work out the dimensions of the chunk grid
+            var strideX = ToVector2(chunkGrid.GetCellCenter(new Cell(1, 0)));
+            var strideY = ToVector2(chunkGrid.GetCellCenter(new Cell(0, 1)));
+
+            var polygon = chunkGrid.GetPolygon(new Cell()).Select(ToVector2);
+            var aabbBottomLeft = polygon.Aggregate(Vector2.Min);
+            var aabbTopRight = polygon.Aggregate(Vector2.Max);
+            var aabbSize = aabbTopRight - aabbBottomLeft;
+
+            Setup(
+                chunk => getMeshData(new Cell(chunk.x, chunk.y)),
                 strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
