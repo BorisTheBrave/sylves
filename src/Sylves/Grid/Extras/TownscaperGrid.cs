@@ -30,12 +30,12 @@ namespace Sylves
             var meshData = Matrix4x4.Translate(offset) * triangleGrid.ToMeshData();
 
             // Randomly pair the triangles of that grid
-            var seed = hex.x * 1000 + hex.y;
+            var seed = HashUtils.Hash(hex);
             var random = new Random(seed);
             meshData = meshData.MaxRandomPairing(random.NextDouble);
 
             // Split into quads
-            //meshData = ConwayOperators.Ortho(meshData);
+            meshData = ConwayOperators.Ortho(meshData);
 
             // Weld vertices
             meshData = meshData.Weld(weldTolerance);

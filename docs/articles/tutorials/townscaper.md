@@ -67,7 +67,7 @@ MeshData GetMeshData(Cell hex)
     var triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(4));
     var meshData = triangleGrid.ToMeshData();
     meshData = Matrix4x4.Translate(hexGrid.GetCellCenter(hex)) * meshData;
-    var seed = hex.x + 1000 * hex.y;
+    var seed = HashUtils.Hash(hex);
     meshData = meshData.RandomPairing(new Random(seed).NextDouble);
     meshData = ConwayOperators.Ortho(meshData);
     meshData = meshData.Weld();
