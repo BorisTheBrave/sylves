@@ -31,7 +31,8 @@ var triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatSides, bound: 
 
 This creates a grid of triangles with side 0.5, and restricts it to a hexagon that has 4 triangles per side.
 
-TODO: image.
+<img width="300px" src="../../images/townscaper_tutorial_1.svg" /></img>
+
 
 Then, we convert to a mesh. The next steps are then all mesh operations Sylves supplies.
 
@@ -51,7 +52,14 @@ meshData = meshData.Weld();
 meshData = meshData.Relax();
 ```
 
-TODO: images
+<figure>
+<img width="200px" src="../../images/townscaper_tutorial_1.svg" /></img>
+<img width="200px" src="../../images/townscaper_tutorial_2.svg" /></img>
+<img width="200px" src="../../images/townscaper_tutorial_3.svg" /></img>
+<img width="200px" src="../../images/townscaper_tutorial_4.svg" /></img>
+<figcaption>The mesh after each stage of processing.</figcaption>
+</figure>
+
 
 ## Making an infinite grid.
 
@@ -99,18 +107,6 @@ var townscaperGrid = new RelaxModifier(unrelaxedGrid, 4);
 ```
 
 <img width="300px" src="../../images/grids/townscaper.svg" /></img>
-
-## Going 3d
-
-Of course, Townscaper is actually a 3d game. Each cell in the 2d grid extends upwards into a column of 3d cells. Sylves has the [PlanarPrismModifier](../modifiers/planarprismmodifier.md) for doing exactly that.
-
-```csharp
-var height = 100;
-var options = new PlanarPrismOptions{};
-var townscaper3dGrid = new PlanarPrismModifier(townscaperGrid, options, 0, height);
-```
-
-TODO: Image
 
 ## Enhancements
 

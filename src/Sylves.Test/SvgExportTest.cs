@@ -184,6 +184,36 @@ namespace Sylves.Test
         }
 
         [Test]
+        public void ExportTutorialImages()
+        {
+            var triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(4));
+            var meshData = triangleGrid.ToMeshData();
+
+            {
+                var options = new Options { textScale = null, strokeWidth = 0.05f, };
+
+                Export(new MeshGrid(meshData), "townscaper_tutorial_1.svg", options);
+                meshData = meshData.RandomPairing(new Random(1).NextDouble);
+                Export(new MeshGrid(meshData), "townscaper_tutorial_2.svg", options);
+                meshData = ConwayOperators.Ortho(meshData);
+                Export(new MeshGrid(meshData), "townscaper_tutorial_3.svg", options);
+                meshData = meshData.Weld();
+                meshData = meshData.Relax();
+                Export(new MeshGrid(meshData), "townscaper_tutorial_4.svg", options);
+            }
+
+            // TODO: This doesn't work as PlanarPrismModifier needs the 3rd coordinate for itself.
+            if(false)
+            {
+                var height = 100;
+                var options = new PlanarPrismOptions { };
+                var townscaperGrid = new TownscaperGrid(4).BoundBy(new SquareBound(-1, -1, 0, 0));
+                var townscaper3dGrid = new PlanarPrismModifier(townscaperGrid, options, 0, height);
+                ExportObj(townscaper3dGrid, "townscaper_tutorial_5.obj");
+            }
+        }
+
+        [Test]
         public void ExportObjGrids()
         {
             ExportObj(new CubeGrid(1, new CubeBound(new Vector3Int(-2, -2, -2), new Vector3Int(3, 3, 3))), "cube.obj");
