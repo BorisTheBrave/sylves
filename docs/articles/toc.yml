@@ -29,12 +29,16 @@
        href: concepts/grid_symmetry.md
     -  name: Pathfinding
        href: concepts/pathfinding.md
+    -  name: Caching
+       href: concepts/caching.md
 - name: Tutorials
   items:
     -  name: Langton's Ant
        href: tutorials/langton.md
     -  name: Paint Program
        href: tutorials/paint.md
+    -  name: Townscaper
+       href: tutorials/townscaper.md
 - name: Grids
   href: grids/index.md
   items:
@@ -50,6 +54,8 @@
        href: grids/meshgrid.md
     -  name: PeriodicPlanarMeshGrid
        href: grids/periodicplanarmeshgrid.md
+    -  name: PlanarLazyGrid
+       href: grids/planarlazygrid.md
 - name: Modifiers
   href: modifiers/index.md
   items:
@@ -65,6 +71,8 @@
        href: modifiers/planarprismmodifier.md
     -  name: WrapModifier
        href: modifiers/wrapmodifier.md
+    -  name: RelaxModifier
+       href: modifiers/relaxmodifier.md
 - name: Creating Grids
   href: creating.md
 - name: Extras

@@ -58,7 +58,6 @@ TODO: images
 To go from a single hex to an infinite grid, we need to to create a hex grid, and fill each one of the hexes with a mesh generated in the above fashion. Let's turn the above into a function.
 
 ```csharp
-
 // The grid of our hexes that need filling with meshes.
 // Each hex is 4 from top to bottom, which perfectly matches the size of meshes generated.
 HexGrid hexGrid = new HexGrid(4, HexOrientation.PointyTopped);

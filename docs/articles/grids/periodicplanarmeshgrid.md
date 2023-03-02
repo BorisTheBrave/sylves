@@ -1,3 +1,5 @@
+# PeriodicPlanarMeshGrid
+
 <table>
 <tr><th colspan="2">Quick facts</th></tr>
 <tr><td>Grid</td><td><a href="xref:Sylves.PeriodicPlanarMeshGrid">PeriodicPlanarMeshGrid</a></td></tr>

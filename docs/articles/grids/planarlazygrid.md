@@ -13,6 +13,8 @@
 
 PlanarLazyGrid is a variant of [PeriodicPlanarMeshGrid](periodicplanarmeshgrid.md). While PeriodicPlanarMeshGrid takes a single mesh, and repeats it over the plane, instead PlanarLazyGrid uses a *different* mesh at each position, called a **chunk**, stitching them all together.
 
+<img width="200px" src="../../images/grids/unrelaxedtownscaper.svg" /></img>
+
 To do so, you must supply a function that builds each of the meshes for the chunk, and give some information about the placement of each mesh, which must be periodic. PlanarLazyGrid will invoke the function as necessary (i.e. *lazily*) and store the results, stitching together the meshes into a single grid.
 
 ## Constructor
@@ -29,7 +31,7 @@ The arguments are
 * `aabbBottomLeft`, `aabbSize` - These give constant bounds on the output of `getMeshData(new Vector2Int(0, 0))`, and similarly for other chunks, translated by strideX/strideY. The [aabb](https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection)'s of chunks *may* overlap.
 * `MeshGridOptions` - as documented in [MeshGrid](meshgrid.md#meshgridoptions)
 * `bound` - the [bounds](../concepts/bounds.md) to restrict this grid to. This restricts which chunks are generated, there's no bounds within-chunks.
-* `cellTypes` - the value to output for [`IGrid.GetCellTypes()`](xref:Sylves.IGrid.GetCellTypes())
+* `cellTypes` - the value to output for [`IGrid.GetCellTypes`](xref:Sylves.IGrid.GetCellTypes)
 * `cachePolicy` - see [caching](../concepts/caching.md).
 
 ### Alternative constructor
@@ -38,6 +40,8 @@ To make it easier to work with, there are alternative constructors for common pe
 
 ```csharp
 public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+
 ```
 
 Here, each mesh is expected to fill a single cell of `chunkGrid`. `getMeshData` takes a `Cell` argument naming the cell to be filled. Other arguments work the same.
