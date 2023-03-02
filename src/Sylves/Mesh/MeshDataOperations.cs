@@ -7,6 +7,11 @@ namespace Sylves
 {
     public static class MeshDataOperations
     {
+        /// <summary>
+        /// Tolerance used for operations like Weld and EdgeStore.
+        /// </summary>
+        public const float DefaultTolerance = 1e-6f;
+
         private static IList<T> RandomShuffle<T>(IList<T> list, Func<double> randomDouble)
         {
             for (var i = 0; i < list.Count; i++)
@@ -251,15 +256,15 @@ namespace Sylves
         /// <summary>
         /// Merges all vertices that are within a given distance of each other
         /// </summary>
-        public static MeshData Weld(this MeshData md, float tol = 1e-7f)
+        public static MeshData Weld(this MeshData md, float tolerance = DefaultTolerance)
         {
-            return Weld(md, out var _, tol);
+            return Weld(md, out var _, tolerance);
         }
 
         /// <summary>
         /// Merges all vertices that are within a given distance of each other
         /// </summary>
-        public static MeshData Weld(this MeshData md, out int[] indexMap, float tol = 1e-7f)
+        public static MeshData Weld(this MeshData md, out int[] indexMap, float tolerance = DefaultTolerance)
         {
             // TODO: Average welded points?
 
@@ -275,10 +280,10 @@ namespace Sylves
             var invMap = new int[md.vertices.Length];
             for (var i = 0; i < md.vertices.Length; ++i)
             {
-                var vi = Vector3Int.FloorToInt(md.vertices[i] / tol);
+                var vi = Vector3Int.FloorToInt(md.vertices[i] / tolerance);
 
                 bool found = false;
-                foreach(var offset in WeldOffsets)
+                foreach (var offset in WeldOffsets)
                 {
                     if (vertexLookup.TryGetValue(vi + offset, out var index))
                     {
@@ -293,7 +298,7 @@ namespace Sylves
                     continue;
 
                 // We use an offset when *storing* the vertex, to avoid boundary issues
-                var vi2 = Vector3Int.FloorToInt(md.vertices[i] / tol + 0.5f * Vector3.one);
+                var vi2 = Vector3Int.FloorToInt(md.vertices[i] / tolerance + 0.5f * Vector3.one);
                 vertexLookup[vi2] = weldCount;
                 map[i] = weldCount;
                 invMap[weldCount] = i;

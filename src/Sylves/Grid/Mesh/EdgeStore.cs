@@ -13,24 +13,26 @@ namespace Sylves
     /// </summary>
     internal class EdgeStore
     {
-        private const float tolerance = 1e-6f;
+        private float tolerance;
 
         // the face, submesh and edge ids, stored by start/end points of the edge.
         private Dictionary<(Vector3Int, Vector3Int), (Vector3, Vector3, Cell, CellDir)> unmatchedEdges;
         private Dictionary<Vector3Int, int> vertexCount;
 
 
-        public EdgeStore()
+        public EdgeStore(float tolerance = MeshDataOperations.DefaultTolerance)
         {
+            this.tolerance = tolerance;
             unmatchedEdges = new Dictionary<(Vector3Int, Vector3Int), (Vector3, Vector3, Cell, CellDir)>();
             vertexCount = new Dictionary<Vector3Int, int>();
         }
 
         private EdgeStore(Dictionary<(Vector3Int, Vector3Int), (Vector3, Vector3, Cell, CellDir)> unmatchedEdges,
-            Dictionary<Vector3Int, int> vertexCount)
+            Dictionary<Vector3Int, int> vertexCount, float tolerance)
         {
             this.unmatchedEdges = unmatchedEdges;
             this.vertexCount = vertexCount;
+            this.tolerance = tolerance;
         }
 
         public IEnumerable<(Vector3 v1, Vector3 v2, Cell cell, CellDir dir)> UnmatchedEdges
@@ -113,7 +115,8 @@ namespace Sylves
         public EdgeStore Clone()
         {
             return new EdgeStore(unmatchedEdges.ToDictionary(x => x.Key, x => x.Value), 
-                vertexCount.ToDictionary(x=>x.Key, x=>x.Value));
+                vertexCount.ToDictionary(x=>x.Key, x=>x.Value),
+                tolerance);
         }
     }
 }
