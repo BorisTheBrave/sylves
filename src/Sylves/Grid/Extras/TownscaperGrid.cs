@@ -9,16 +9,16 @@ namespace Sylves
     internal class UnrelaxedTownscaperGrid : PlanarLazyGrid
     {
         private readonly int n;
-        private readonly float weldTolerance;
+        private readonly float tolerance;
         private readonly HexGrid chunkGrid;
 
-        public UnrelaxedTownscaperGrid(int n, float weldTolerance) : base()
+        public UnrelaxedTownscaperGrid(int n, float tolerance) : base()
         {
             this.n = n;
-            this.weldTolerance = weldTolerance;
+            this.tolerance = tolerance;
             chunkGrid = new HexGrid(n);
 
-            base.Setup(GetMeshData, chunkGrid);
+            base.Setup(GetMeshData, chunkGrid, new MeshGridOptions { Tolerance = tolerance });
         }
 
         private MeshData GetMeshData(Cell hex)
@@ -38,7 +38,7 @@ namespace Sylves
             meshData = ConwayOperators.Ortho(meshData);
 
             // Weld vertices
-            meshData = meshData.Weld(weldTolerance);
+            meshData = meshData.Weld(tolerance);
 
             return meshData;
         }
@@ -50,9 +50,9 @@ namespace Sylves
     /// </summary>
     public class TownscaperGrid : RelaxModifier
     {
-        const float weldTolerance = 1e-2f;
+        const float tolerance = 1e-2f;
 
-        public TownscaperGrid(int n, int relaxIterations = 10) : base(new UnrelaxedTownscaperGrid(n, weldTolerance), n, relaxIterations: relaxIterations, weldTolerance: weldTolerance)
+        public TownscaperGrid(int n, int relaxIterations = 10) : base(new UnrelaxedTownscaperGrid(n, tolerance), n, relaxIterations: relaxIterations, weldTolerance: tolerance)
         {
 
         }
