@@ -28,5 +28,10 @@ namespace Sylves
         /// It's often more convenient to work with even polygons as an about face is possible.
         /// </summary>
         public bool DoubleOddFaces { get; set; }
+
+        /// <summary>
+        /// Snap distance for vertices.
+        /// </summary>
+        public float Tolerance { get; set; } = MeshDataOperations.DefaultTolerance;
     }
 }

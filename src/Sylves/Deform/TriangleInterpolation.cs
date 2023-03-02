@@ -54,6 +54,12 @@ namespace Sylves
             return Interpolate(v1, v2, v3, v4, v5, v6);
         }
 
+        public static Func<Vector3, Matrix4x4> JacobiPosition(MeshData mesh, int submesh, int face, bool invertWinding, float meshOffset1, float meshOffset2)
+        {
+            GetCorners(mesh, submesh, face, invertWinding, meshOffset1, meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6);
+            return Jacobi(v1, v2, v3, v4, v5, v6);
+        }
+
         public static void GetCorners(MeshData mesh, int submesh, int face, bool invertWinding, out Vector3 v1, out Vector3 v2, out Vector3 v3)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Triangles)
@@ -87,6 +93,12 @@ namespace Sylves
         {
             GetCorners(mesh, submesh, face, invertWinding, out Vector3 v1, out Vector3 v2, out Vector3 v3);
             return Interpolate(v1, v2, v3);
+        }
+
+        public static Func<Vector3, Matrix4x4> JacobiPosition(MeshData mesh, int submesh, int face, bool invertWinding)
+        {
+            GetCorners(mesh, submesh, face, invertWinding, out Vector3 v1, out Vector3 v2, out Vector3 v3);
+            return Jacobi(v1, v2, v3);
         }
 
         public static Func<Vector3, Vector3> InterpolateNormal(MeshData mesh, int submesh, int face, bool invertWinding)
@@ -234,6 +246,33 @@ namespace Sylves
             return InterpolatePoint;
         }
 
+
+
+        public static Func<Vector3, Matrix4x4> Jacobi(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 v5, Vector3 v6)
+        {
+            Matrix4x4 JacobiPoint(Vector3 p)
+            {
+                var b = StdBarycentric(new Vector2(p.x, p.z));
+                var (dbdx, dbdz) = StdBarycentricDiff();
+                // Linear interpolate on each axis in turn
+                var u1 = b.x * v1 + b.y * v2 + b.z * v3;
+                var u2 = b.x * v4 + b.y * v5 + b.z * v6;
+                var du1dx = dbdx.x * v1 + dbdx.y * v2 + dbdx.z * v3;
+                var du2dx = dbdx.x * v4 + dbdx.y * v5 + dbdx.z * v6;
+                var du1dz = dbdz.x * v1 + dbdz.y * v2 + dbdz.z * v3;
+                var du2dz = dbdz.x * v4 + dbdz.y * v5 + dbdz.z * v6;
+                var y1 = 0.5f - p.y;
+                var y2 = 0.5f + p.y;
+                var o = y1 * u1 + y2 * u2;
+                var dodx = y1 * du1dx + y2 * du2dx;
+                var dodz = y1 * du1dz + y2 * du2dz;
+                var dody = u2 - u1;
+                return VectorUtils.ToMatrix(dodx, dody, dodz, o);
+            }
+
+            return JacobiPoint;
+        }
+
         /// <summary>
         /// Linear interpolates from a triangle of size Sqrt(3) in the XZ plane to the triangle supplied by v1 to v3
         /// The z value of p is unused.
@@ -250,6 +289,29 @@ namespace Sylves
             }
 
             return InterpolatePoint;
+        }
+
+        /// <summary>
+        /// Linear interpolates from a triangle of size Sqrt(3) in the XZ plane to the triangle supplied by v1 to v3, returning the jacobi
+        /// The z value of p is unused.
+        /// </summary>
+        /// <param name="v1">Final location of (0, 0, 1)</param>
+        /// <param name="v2">Final location of (sqrt(3) / 2, 0, -0.5)</param>
+        /// <param name="v3">Final location of (-sqrt(3) / 2, 0, 0.5)</param>
+        public static Func<Vector3, Matrix4x4> Jacobi(Vector3 v1, Vector3 v2, Vector3 v3)
+        {
+            Matrix4x4 JacobiPoint(Vector3 p)
+            {
+                var b = StdBarycentric(new Vector2(p.x, p.z));
+                var (dbdx, dbdz) = StdBarycentricDiff();
+                var o = b.x * v1 + b.y * v2 + b.z * v3;
+                var dodx = dbdx.x * v1 + dbdx.y * v2 + dbdx.z * v3;
+                var dodz = dbdz.x * v1 + dbdz.y * v2 + dbdz.z * v3;
+                return VectorUtils.ToMatrix(dodx, Vector3.zero, dodz, o);
+
+            }
+
+            return JacobiPoint;
         }
 
         public static Func<Vector3, Vector4> Interpolate(Vector4 v1, Vector4 v2, Vector4 v3, Vector4 v4, Vector4 v5, Vector4 v6)
@@ -298,6 +360,15 @@ namespace Sylves
             */
         }
 
+        private static (Vector3, Vector3) StdBarycentricDiff()
+        {
+            const float a = 1 / 3f;
+            const float b = 2 / 3f;
+            const float c = 0.57735026919f; // 1 / sqrt(3)
+
+            return (new Vector3(0, c, -c), new Vector3(b, -a, -a));
+        }
+
 
         // https://gamedev.stackexchange.com/a/23745
         private static Vector3 Barycentric(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
@@ -314,6 +385,5 @@ namespace Sylves
             var u = 1.0f - v - w;
             return new Vector3(u, v, w);
         }
-
     }
 }

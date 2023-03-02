@@ -31,6 +31,10 @@ namespace Sylves
                 ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2)
                 : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2);
 
+            var jacobiPoint = isQuads
+                ? QuadInterpolation.JacobiPosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2)
+                : TriangleInterpolation.JacobiPosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2);
+
             var interpolateNormal = !smoothNormals ? null : isQuads
                 ? QuadInterpolation.InterpolateNormal(surfaceMesh, subMesh, face, invertWinding)
                 : TriangleInterpolation.InterpolateNormal(surfaceMesh, subMesh, face, invertWinding);
@@ -47,15 +51,11 @@ namespace Sylves
             {
                 var m = 1e-3f;
 
-                // TODO: Do some actual differentation
-                var t = interpolatePoint(p);
-                var dx = (interpolatePoint(p + Vector3.right * m) - t) / m;
-                var dy = (interpolatePoint(p + Vector3.up * m) - t) / m;
-                var dz = (interpolatePoint(p + Vector3.forward * m) - t) / m;
+                var j = jacobiPoint(p);
 
                 if (!smoothNormals)
                 {
-                    jacobi = ToMatrix(dx, dy, dz);
+                    jacobi = j;
                 }
                 else
                 {
@@ -91,27 +91,16 @@ namespace Sylves
                         );
 
                     var j1 = ToMatrix(
-                        tangent3 * dx.magnitude,
-                        normal * dy.magnitude,
-                        bitangent * dz.magnitude);
+                        tangent3 *  j.column0.magnitude,
+                        normal * j.column1.magnitude,
+                        bitangent * j.column2.magnitude);
 
                     jacobi = j1 * j3;
+                    jacobi = new Matrix4x4(jacobi.column0, jacobi.column1, jacobi.column2, j.column3);
                 }
             }
 
-            Vector3 DeformNormal(Vector3 p, Vector3 v)
-            {
-                GetJacobi(p, out var jacobi);
-                return jacobi.inverse.transpose.MultiplyVector(v).normalized;
-            }
-
-            Vector4 DeformTangent(Vector3 p, Vector4 v)
-            {
-                GetJacobi(p, out var jacobi);
-                return jacobi * v;
-            }
-
-            var deformation = new Deformation(interpolatePoint, DeformNormal, DeformTangent, invertWinding);
+            var deformation = new Deformation(interpolatePoint, GetJacobi, invertWinding);
             // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY)
             deformation = isQuads
                 ? deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix()
@@ -144,7 +133,16 @@ namespace Sylves
                 ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding)
                 : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding);
 
-            var deformation = new Deformation(interpolatePoint, null, null, invertWinding);
+            var jacobiPoint = isQuads
+                ? QuadInterpolation.JacobiPosition(surfaceMesh, subMesh, face, invertWinding)
+                : TriangleInterpolation.JacobiPosition(surfaceMesh, subMesh, face, invertWinding);
+
+            void GetJacobi(Vector3 p, out Matrix4x4 jacobi)
+            {
+                jacobi = jacobiPoint(p);
+            }
+
+            var deformation = new Deformation(interpolatePoint, GetJacobi, invertWinding: invertWinding);
             // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY).
             deformation = deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix();
             return deformation;

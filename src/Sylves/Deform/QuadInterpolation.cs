@@ -62,6 +62,15 @@ namespace Sylves
             return Interpolate(v1, v2, v3, v4, v5, v6, v7, v8);
         }
 
+        /// <summary>
+        /// Returns the Jacobi (derivative) of InterpolatePosition
+        /// </summary>
+        public static Func<Vector3, Matrix4x4> JacobiPosition(MeshData mesh, int submesh, int face, bool invertWinding, float meshOffset1, float meshOffset2)
+        {
+            GetCorners(mesh, submesh, face, invertWinding, meshOffset1, meshOffset2, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8);
+            return Jacobi(v1, v2, v3, v4, v5, v6, v7, v8);
+        }
+
         public static void GetCorners(MeshData mesh, int submesh, int face, bool invertWinding, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4)
         {
             if (mesh.GetTopology(submesh) != MeshTopology.Quads)
@@ -98,6 +107,12 @@ namespace Sylves
         {
             GetCorners(mesh, submesh, face, invertWinding, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4);
             return Interpolate(v1, v2, v3, v4);
+        }
+
+        public static Func<Vector3, Matrix4x4> JacobiPosition(MeshData mesh, int submesh, int face, bool invertWinding)
+        {
+            GetCorners(mesh, submesh, face, invertWinding, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4);
+            return Jacobi(v1, v2, v3, v4);
         }
 
         public static Func<Vector3, Vector3> InterpolateNormal(MeshData mesh, int submesh, int face, bool invertWinding)
@@ -305,6 +320,54 @@ namespace Sylves
             return TrilinearInterpolatePoint;
         }
 
+
+        /// <summary>
+        /// Tiilinear interpolates from a unit cube to the polyhedron supplied by v1 to v8, returning the jacobi
+        /// The z value of p is unused.
+        /// </summary>
+        /// <param name="v1">Final location of (-0.5, -0.5, -0.5)</param>
+        /// <param name="v2">Final location of (-0.5, -0.5, 0.5)</param>
+        /// <param name="v3">Final location of (0.5, -0.5, 0.5)</param>
+        /// <param name="v4">Final location of (0.5, -0.5, -0.5)</param>
+        /// <param name="v5">Final location of (-0.5, 0.5, -0.5)</param>
+        /// <param name="v6">Final location of (-0.5, 0.5, 0.5)</param>
+        /// <param name="v7">Final location of (0.5, 0.5, 0.5)</param>
+        /// <param name="v8">Final location of (0.5, 0.5, -0.5)</param>
+        public static Func<Vector3, Matrix4x4> Jacobi(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 v5, Vector3 v6, Vector3 v7, Vector3 v8)
+        {
+            Matrix4x4 TrilinearJacobiPoint(Vector3 p)
+            {
+                //Perform linear interpolation and it's derivative
+                var x1 = 0.5f - p.x;
+                var x2 = 0.5f + p.x;
+                var y1 = 0.5f - p.y;
+                var y2 = 0.5f + p.y;
+                var z1 = 0.5f - p.z;
+                var z2 = 0.5f + p.z;
+                var u1 = z1 * v1 + z2 * v2;
+                var u2 = z1 * v4 + z2 * v3;
+                var u3 = z1 * v5 + z2 * v6;
+                var u4 = z1 * v8 + z2 * v7;
+                var du1dz = v2 - v1;
+                var du2dz = v3 - v4;
+                var du3dz = v6 - v5;
+                var du4dz = v7 - v8;
+                var w1 = x1 * u1 + x2 * u2;
+                var w2 = x1 * u3 + x2 * u4;
+                var dw1dz = x1 * du1dz + x2 * du2dz;
+                var dw2dz = x1 * du3dz + x2 * du4dz;
+                var dw1dx = u2 - u1;
+                var dw2dx = u4 - u3;
+                var z = y1 * w1 + y2 * w2;
+                var dzdz = y1 * dw1dz + y2 * dw2dz;
+                var dzdx = y1 * dw1dx + y2 * dw2dx;
+                var dzdy = w2 - w1;
+                return VectorUtils.ToMatrix(dzdx, dzdy, dzdz, z);
+            }
+
+            return TrilinearJacobiPoint;
+        }
+
         /// <summary>
         /// Bilinear interpolates from a unit square in the XZ plane to the quad supplied by v1 to v4
         /// The z value of p is unused.
@@ -330,6 +393,38 @@ namespace Sylves
             }
 
             return TrilinearInterpolatePoint;
+        }
+
+        /// <summary>
+        /// Bilinear interpolates from a unit square in the XZ plane to the quad supplied by v1 to v4, returning the jacobi
+        /// The z value of p is unused.
+        /// </summary>
+        /// <param name="v1">Final location of (-0.5, 0, -0.5)</param>
+        /// <param name="v2">Final location of (-0.5, 0, 0.5)</param>
+        /// <param name="v3">Final location of (0.5, 0, 0.5)</param>
+        /// <param name="v4">Final location of (0.5, 0, -0.5)</param>
+        public static Func<Vector3, Matrix4x4> Jacobi(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
+        {
+            Matrix4x4 TrilinearJacobiPoint(Vector3 p)
+            {
+                //Perform linear interpolation.
+                var x1 = 0.5f - p.x;
+                var x2 = 0.5f + p.x;
+                var y1 = 0.5f - p.y;
+                var y2 = 0.5f + p.y;
+                var z1 = 0.5f - p.z;
+                var z2 = 0.5f + p.z;
+                var u1 = z1 * v1 + z2 * v2;
+                var u2 = z1 * v4 + z2 * v3;
+                var du1dz = v2 - v1;
+                var du2dz = v3 - v4;
+                var o = x1 * u1 + x2 * u2;
+                var dodx = u2 - u1;
+                var dodz = x1 * du1dz + x2 * du2dz;
+                return VectorUtils.ToMatrix(dodx, Vector3.zero, dodz, o);
+            }
+
+            return TrilinearJacobiPoint;
         }
 
 

@@ -12,19 +12,85 @@ namespace Sylves
     /// </summary>
     public class Deformation
     {
-        public Deformation(Func<Vector3, Vector3> deformPoint, Func<Vector3, Vector3, Vector3> deformNormal, Func<Vector3, Vector4, Vector4> deformTangent, bool invertWinding)
+        public delegate void GetJacobiFunc(Vector3 p, out Matrix4x4 jacobi);
+
+        public Deformation(Func<Vector3, Vector3> deformPoint, Func<Vector3, Vector3, Vector3> deformNormal, Func<Vector3, Vector4, Vector4> deformTangent, GetJacobiFunc getJacobi, bool invertWinding)
         {
             InnerDeformPoint = deformPoint;
             InnerDeformNormal = deformNormal;
             InnerDeformTangent = deformTangent;
+            InnerGetJacobi = getJacobi;
             InnerInvertWinding = invertWinding;
         }
 
-        public static Deformation Identity = new Deformation(p => p, (p, n) => n, (p, t) => t, false);
+        // Variant constructors where we build the other functiosn needed
+
+        public Deformation(Func<Vector3, Vector3> deformPoint, GetJacobiFunc getJacobi, bool invertWinding)
+        {
+            Vector3 DeformNormal(Vector3 p, Vector3 v)
+            {
+                getJacobi(p, out var j);
+                return j.inverse.transpose.MultiplyVector(v).normalized;
+            }
+
+            Vector4 DeformTangent(Vector3 p, Vector4 v)
+            {
+                getJacobi(p, out var j);
+                return j * v;
+            }
+
+            InnerDeformPoint = deformPoint;
+            InnerDeformNormal = DeformNormal;
+            InnerDeformTangent = DeformTangent;
+            InnerGetJacobi = getJacobi;
+            InnerInvertWinding = invertWinding;
+        }
+
+        public Deformation(Func<Vector3, Vector3> deformPoint, float step = 1e-3f, bool invertWinding = false)
+        {
+            void GetJacobi(Vector3 p, out Matrix4x4 j)
+            {
+                var m = step;
+
+                // Numerical differentation
+                var t = deformPoint(p);
+                var dx = (deformPoint(p + Vector3.right * m) - t) / m;
+                var dy = (deformPoint(p + Vector3.up * m) - t) / m;
+                var dz = (deformPoint(p + Vector3.forward * m) - t) / m;
+
+                j = VectorUtils.ToMatrix(dx, dy, dz, t);
+            }
+
+            Vector3 DeformNormal(Vector3 p, Vector3 v)
+            {
+                GetJacobi(p, out var j);
+                return j.inverse.transpose.MultiplyVector(v).normalized;
+            }
+
+            Vector4 DeformTangent(Vector3 p, Vector4 v)
+            {
+                GetJacobi(p, out var j);
+                return j * v;
+            }
+
+            InnerDeformPoint = deformPoint;
+            InnerDeformNormal = DeformNormal;
+            InnerDeformTangent = DeformTangent;
+            InnerGetJacobi = GetJacobi;
+            InnerInvertWinding = invertWinding;
+        }
+
+        private static void GetIdentityJacobi(Vector3 p, out Matrix4x4 j)
+        {
+            j = Matrix4x4.Translate(p);
+        }
+
+        public static Deformation Identity = new Deformation(p => p, (p, n) => n, (p, t) => t, GetIdentityJacobi, false);
 
         public Func<Vector3, Vector3> InnerDeformPoint { get; set; }
         public Func<Vector3, Vector3, Vector3> InnerDeformNormal { get; set; }
         public Func<Vector3, Vector4, Vector4> InnerDeformTangent { get; set; }
+        public GetJacobiFunc InnerGetJacobi { get; set; }
         public bool InnerInvertWinding { get; set; }
 
         public Matrix4x4 PreDeform = Matrix4x4.identity;
@@ -58,12 +124,29 @@ namespace Sylves
             return new Vector4(t5.x, t5.y, t5.z, t4.w);
         }
 
+        public void GetJacobi(Vector3 p, out Matrix4x4 j)
+        {
+            InnerGetJacobi(PreDeform.MultiplyPoint3x4(p), out var ij);
+            var x = PostDeform.MultiplyVector(ij.MultiplyVector(PreDeform.MultiplyVector(Vector3.right)));
+            var y = PostDeform.MultiplyVector(ij.MultiplyVector(PreDeform.MultiplyVector(Vector3.up)));
+            var z = PostDeform.MultiplyVector(ij.MultiplyVector(PreDeform.MultiplyVector(Vector3.forward)));
+            j = VectorUtils.ToMatrix(x, y, z, PostDeform.MultiplyPoint3x4(VectorUtils.ToVector3(ij.column3)));
+        }
+
+        public Matrix4x4 GetJacobi(Vector3 p)
+        {
+            GetJacobi(p, out var j);
+            return j;
+        }
+
 // TODO: Operate on MeshData isntead?
 #if UNITY
         private Mesh Deform(Mesh mesh, int submeshStart, int submeshCount)
         {
             var newMesh = new Mesh();
             newMesh.subMeshCount = submeshCount;
+
+            // TODO: Use jacobi instead?
 
             // Copy deformed data
             var vertices = mesh.vertices;

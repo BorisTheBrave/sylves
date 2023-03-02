@@ -76,16 +76,11 @@ namespace Sylves
 
         private static TRS GetTRS2d(Deformation deformation, Vector3 p)
         {
-            var center = deformation.DeformPoint(p);
-            var e = 1e-4f;
-            var x = (deformation.DeformPoint(p + Vector3.right * e) - center) / e;
-            /*
-            var z = (deformation.DeformPoint(p + Vector3.forward * e) - center) / e;
-            var y = Vector3.Cross(x, z).normalized;
-            */
-            var y = (deformation.DeformPoint(p + Vector3.up * e) - center) / e;
+            deformation.GetJacobi(p, out var jacobi);
+            var x = VectorUtils.ToVector3(jacobi.column0);
+            var y = VectorUtils.ToVector3(jacobi.column1);
             var z = Vector3.Cross(x, y).normalized;
-            var m = ToMatrix(x, y, z, new Vector4(center.x, center.y, center.z, 1));
+            var m = new Matrix4x4(jacobi.column0, jacobi.column1, ToVector4(z), jacobi.column3);
 
             return new TRS(m);
         }
@@ -96,7 +91,7 @@ namespace Sylves
         private static EdgeStore BuildMoves(MeshData data, MeshGridOptions meshGridOptions, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
         {
             var vertices = data.vertices;
-            var edgeStore = new EdgeStore();
+            var edgeStore = new EdgeStore(meshGridOptions.Tolerance);
 
             for (var submesh = 0; submesh < data.subMeshCount; submesh++)
             {
@@ -214,14 +209,9 @@ namespace Sylves
 
         private static TRS GetTRS(Deformation deformation, Vector3 p)
         {
-            var center = deformation.DeformPoint(p);
-            var e = 1e-4f;
-            var x = (deformation.DeformPoint(p + Vector3.right * e) - center) / e;
-            var y = (deformation.DeformPoint(p + Vector3.up * e) - center) / e;
-            var z = (deformation.DeformPoint(p + Vector3.forward * e) - center) / e;
-            var m = ToMatrix(x, y, z, new Vector4(center.x, center.y, center.z, 1));
+            deformation.GetJacobi(p, out var jacobi);
 
-            return new TRS(m);
+            return new TRS(jacobi);
         }
 
         // Given a single layer of moves,

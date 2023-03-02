@@ -8,6 +8,7 @@
 * Fixed bug with square and cube grid bounds.
 * Fixed Ortho operator.
 * Fixed floating point precision issues in MeshGrid and similar.
+* Updated Deformation to use analytic rather than numerical derivatives.
 
 # 0.1
 
