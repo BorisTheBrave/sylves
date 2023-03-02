@@ -207,5 +207,17 @@ namespace Sylves.Test
 
             GridTest.FindCell(g, new Cell());
         }
+
+        // Test precision issues far from the origin
+        [Test]
+        public void TestFar()
+        {
+            var g = new UnrelaxedTownscaperGrid(4, 1e-2f).BoundBy(new SquareBound(38, -1, 39, 0));
+            foreach (var c in g.GetCells())
+            {
+                Assert.IsFalse(float.IsNaN(g.GetCellCenter(c).x), c.ToString());
+            }
+
+        }
     }
 }
