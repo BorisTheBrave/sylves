@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves
 {
@@ -38,7 +40,7 @@ namespace Sylves
                 throw new NotImplementedException("RandomPairing only supports triangular topology currently.");
             }
 
-            randomDouble = randomDouble ?? new Random().NextDouble;
+            randomDouble = randomDouble ?? new System.Random().NextDouble;
             var meshGrid = new MeshGrid(md);
             var cells = meshGrid.GetCells().ToList();
             var unpaired = new HashSet<Cell>(cells);
@@ -144,7 +146,7 @@ namespace Sylves
                 throw new NotImplementedException("RandomPairing only supports triangular topology currently.");
             }
 
-            randomDouble = randomDouble ?? new Random().NextDouble;
+            randomDouble = randomDouble ?? new System.Random().NextDouble;
             var meshGrid = new MeshGrid(md);
             var cells = meshGrid.GetCells().ToList();
             var unpaired = new HashSet<Cell>(cells);

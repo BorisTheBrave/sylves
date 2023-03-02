@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves
 {
@@ -31,7 +31,7 @@ namespace Sylves
 
             // Randomly pair the triangles of that grid
             var seed = HashUtils.Hash(hex);
-            var random = new Random(seed);
+            var random = new System.Random(seed);
             meshData = meshData.RandomPairing(random.NextDouble);
 
             // Split into quads

@@ -193,7 +193,7 @@ namespace Sylves.Test
                 var options = new Options { textScale = null, strokeWidth = 0.05f, };
 
                 Export(new MeshGrid(meshData), "townscaper_tutorial_1.svg", options);
-                meshData = meshData.RandomPairing(new Random(1).NextDouble);
+                meshData = meshData.RandomPairing(new System.Random(1).NextDouble);
                 Export(new MeshGrid(meshData), "townscaper_tutorial_2.svg", options);
                 meshData = ConwayOperators.Ortho(meshData);
                 Export(new MeshGrid(meshData), "townscaper_tutorial_3.svg", options);
