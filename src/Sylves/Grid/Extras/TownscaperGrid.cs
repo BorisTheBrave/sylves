@@ -32,7 +32,7 @@ namespace Sylves
             // Randomly pair the triangles of that grid
             var seed = HashUtils.Hash(hex);
             var random = new Random(seed);
-            meshData = meshData.MaxRandomPairing(random.NextDouble);
+            meshData = meshData.RandomPairing(random.NextDouble);
 
             // Split into quads
             meshData = ConwayOperators.Ortho(meshData);
