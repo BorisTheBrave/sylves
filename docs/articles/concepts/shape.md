@@ -19,10 +19,10 @@ Converts the whole grid to a mesh.
 
 ## Deformation
 
-For advanced grids, partciularly [MeshGrid](../grids/meshgrid.md), each cell of the grid may be a different shape, even though they share the same cell type.
+For advanced grids, particularly [MeshGrid](../grids/meshgrid.md), each cell of the grid may be a different shape, even though they share the same cell type.
 
 ![](../../images/deformation.png)
 
-In this case, you can call [`GetDeformation`](xref:Sylves.IGrid.GetDeformation(Sylves.Cell)) which returns a [`Deformation`](xref:Sylves.Deformation). This class assists in smoothly interpolating accross that irregular shape.
+In this case, you can call [`GetDeformation`](xref:Sylves.IGrid.GetDeformation(Sylves.Cell)) which returns a [`Deformation`](xref:Sylves.Deformation). This class assists in smoothly interpolating across that irregular shape.
 
 Each deformation is a continuous map, which maps a cell from its canonical shape (a regular square, triangle, etc) to the shape of a specific cell in the grid. This is done via linear/bilinear or trilinear interpolation as appropriate.
