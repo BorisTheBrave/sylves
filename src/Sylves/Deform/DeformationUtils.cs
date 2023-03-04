@@ -91,12 +91,12 @@ namespace Sylves
                         );
 
                     var j1 = ToMatrix(
-                        tangent3 *  j.column0.magnitude,
-                        normal * j.column1.magnitude,
-                        bitangent * j.column2.magnitude);
+                        tangent3 *  j.GetColumn(0).magnitude,
+                        normal * j.GetColumn(1).magnitude,
+                        bitangent * j.GetColumn(2).magnitude);
 
                     jacobi = j1 * j3;
-                    jacobi = new Matrix4x4(jacobi.column0, jacobi.column1, jacobi.column2, j.column3);
+                    jacobi = new Matrix4x4(jacobi.GetColumn(0), jacobi.GetColumn(1), jacobi.GetColumn(2), j.GetColumn(3));
                 }
             }
 

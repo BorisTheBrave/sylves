@@ -39,12 +39,12 @@ The arguments are
 To make it easier to work with, there are alternative constructors for common periodic spacing:
 
 ```csharp
-public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
-public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
 
 ```
 
-Here, each mesh is expected to fill a single cell of `chunkGrid`. `getMeshData` takes a `Cell` argument naming the cell to be filled. Other arguments work the same.
+Here, each mesh is expected to fill a single cell of `chunkGrid`. `getMeshData` takes a `Cell` argument naming the cell to be filled. `margin` allows the meshes to go outside the bounds of the cell by a fixed amount. Other arguments work the same.
 
 ## Cell co-ordinates
 

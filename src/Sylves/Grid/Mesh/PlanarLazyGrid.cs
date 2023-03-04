@@ -69,19 +69,51 @@ namespace Sylves
             this.bound = bound;
         }
 
+        /// <summary>
+        /// Constructs a planar lazy grid that calls getMeshData to fill a chunked plane with a mesh per chunk.
+        /// </summary>
+        /// <param name="getMeshData">The function supplying the meshes per chunk.</param>
+        /// <param name="strideX">The step from one chunk to the next.</param>
+        /// <param name="strideY">The step from one chunk to the next.</param>
+        /// <param name="aabbBottomLeft">The bottom left point of the central chunk. This should bound getMeshData(new Vector2(0, 0))</param>
+        /// <param name="aabbSize">The size of each chunk. This should bound getMeshData(new Vector2(0, 0))</param>
+        /// <param name="meshGridOptions">Options to use when converting meshes to the grid.</param>
+        /// <param name="bound">Bounds which chunks are generated.</param>
+        /// <param name="cellTypes">What should the response of GetCellType </param>
+        /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
         public PlanarLazyGrid(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             Setup(getMeshData, strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
-        public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        /// <summary>
+        /// Constructs a planar lazy grid that calls getMeshData to fill a hex grid with a mesh per cell.
+        /// </summary>
+        /// <param name="getMeshData">The function supplying the mesh per cell of chunkGrid</param>
+        /// <param name="chunkGrid">Each cell of this grid becomes a chunk of the PlanarLazyGrid.</param>
+        /// <param name="margin">The output of getMeshData should be fit inside the shape of chunkGrid cell, expanded by margin.</param>
+        /// <param name="meshGridOptions">Options to use when converting meshes to the grid.</param>
+        /// <param name="bound">Bounds which chunks are generated.</param>
+        /// <param name="cellTypes">What should the response of GetCellType </param>
+        /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
+        public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-            Setup(getMeshData, chunkGrid, meshGridOptions, bound, cellTypes, cachePolicy);
+            Setup(getMeshData, chunkGrid, margin, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
-        public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        /// <summary>
+        /// Constructs a planar lazy grid that calls getMeshData to fill a square grid with a mesh per cell.
+        /// </summary>
+        /// <param name="getMeshData">The function supplying the mesh per cell of chunkGrid</param>
+        /// <param name="chunkGrid">Each cell of this grid becomes a chunk of the PlanarLazyGrid.</param>
+        /// <param name="margin">The output of getMeshData should be fit inside the shape of chunkGrid cell, expanded by margin.</param>
+        /// <param name="meshGridOptions">Options to use when converting meshes to the grid.</param>
+        /// <param name="bound">Bounds which chunks are generated.</param>
+        /// <param name="cellTypes">What should the response of GetCellType </param>
+        /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
+        public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-            Setup(getMeshData, chunkGrid, meshGridOptions, bound, cellTypes, cachePolicy);
+            Setup(getMeshData, chunkGrid, margin, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
         // You must call setup if using this constructor.
@@ -90,7 +122,7 @@ namespace Sylves
 
         }
 
-        protected void Setup(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        protected void Setup(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             // Work out the dimensions of the chunk grid
             var strideX = ToVector2(chunkGrid.GetCellCenter(new Cell(1, 0, -1)));
@@ -103,10 +135,10 @@ namespace Sylves
 
             Setup(
                 chunk => getMeshData(new Cell(chunk.x, chunk.y, -chunk.x - chunk.y)),
-                strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
+                strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
-        protected void Setup(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        protected void Setup(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             // Work out the dimensions of the chunk grid
             var strideX = ToVector2(chunkGrid.GetCellCenter(new Cell(1, 0)));
@@ -119,7 +151,7 @@ namespace Sylves
 
             Setup(
                 chunk => getMeshData(new Cell(chunk.x, chunk.y)),
-                strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
+                strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
         private static Vector2 ToVector2(Vector3 v) => new Vector2(v.x, v.y);

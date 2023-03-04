@@ -130,7 +130,7 @@ namespace Sylves
             var x = PostDeform.MultiplyVector(ij.MultiplyVector(PreDeform.MultiplyVector(Vector3.right)));
             var y = PostDeform.MultiplyVector(ij.MultiplyVector(PreDeform.MultiplyVector(Vector3.up)));
             var z = PostDeform.MultiplyVector(ij.MultiplyVector(PreDeform.MultiplyVector(Vector3.forward)));
-            j = VectorUtils.ToMatrix(x, y, z, PostDeform.MultiplyPoint3x4(VectorUtils.ToVector3(ij.column3)));
+            j = VectorUtils.ToMatrix(x, y, z, PostDeform.MultiplyPoint3x4(VectorUtils.ToVector3(ij.GetColumn(3))));
         }
 
         public Matrix4x4 GetJacobi(Vector3 p)

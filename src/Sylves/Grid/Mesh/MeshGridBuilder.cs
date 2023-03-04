@@ -77,10 +77,10 @@ namespace Sylves
         private static TRS GetTRS2d(Deformation deformation, Vector3 p)
         {
             deformation.GetJacobi(p, out var jacobi);
-            var x = VectorUtils.ToVector3(jacobi.column0);
-            var y = VectorUtils.ToVector3(jacobi.column1);
+            var x = VectorUtils.ToVector3(jacobi.GetColumn(0));
+            var y = VectorUtils.ToVector3(jacobi.GetColumn(1));
             var z = Vector3.Cross(x, y).normalized;
-            var m = new Matrix4x4(jacobi.column0, jacobi.column1, ToVector4(z), jacobi.column3);
+            var m = new Matrix4x4(jacobi.GetColumn(0), jacobi.GetColumn(1), ToVector4(z), jacobi.GetColumn(3));
 
             return new TRS(m);
         }

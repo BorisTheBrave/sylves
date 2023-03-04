@@ -466,7 +466,10 @@ foreach(var cell in cells)
             <div class="col-md-6 mb-5">
                 <div class="card">
                     <a href="articles/tutorials/townscaper.md">
-                        <img class="card-img-top" width="300px" src="images/grids/townscaper.svg" alt="Townscaper Tutorial">
+                         <video width="430" autoplay loop muted>
+                            <source src="images/townscaper_pan.webm" type="video/webm">
+                            Your browser does not support the video tag.
+                            </video> 
                     </a>
                     <div class="card-body">
                         <a href="articles/tutorials/townscaper.md">

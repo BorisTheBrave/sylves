@@ -77,7 +77,9 @@ namespace Sylves
 
             }
 
-            base.Setup(GetRelaxedChunk, chunkGrid, bound: bound, cellTypes: cellTypes);
+            var margin = chunkSize / 2;
+
+            base.Setup(GetRelaxedChunk, chunkGrid, margin, bound: bound, cellTypes: cellTypes);
         }
 
         // Clone constructor. Clones share the same cache!

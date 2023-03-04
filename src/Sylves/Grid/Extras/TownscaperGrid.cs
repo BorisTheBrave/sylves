@@ -18,7 +18,7 @@ namespace Sylves
             this.tolerance = tolerance;
             chunkGrid = new HexGrid(n);
 
-            base.Setup(GetMeshData, chunkGrid, new MeshGridOptions { Tolerance = tolerance });
+            base.Setup(GetMeshData, chunkGrid, meshGridOptions: new MeshGridOptions { Tolerance = tolerance });
         }
 
         private MeshData GetMeshData(Cell hex)
