@@ -54,8 +54,8 @@
        href: grids/meshgrid.md
     -  name: PeriodicPlanarMeshGrid
        href: grids/periodicplanarmeshgrid.md
-    -  name: PlanarLazyGrid
-       href: grids/planarlazygrid.md
+    -  name: PlanarLazyMeshGrid
+       href: grids/planarlazymeshgrid.md
 - name: Modifiers
   href: modifiers/index.md
   items:

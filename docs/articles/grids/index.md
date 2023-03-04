@@ -86,7 +86,7 @@ Mesh grids accept a [mesh](xref:Sylves.MeshData) as the input, and base cells of
 </tr>
 <tr>
     <td><a href="../../images/grids/townscaper.svg"><img class="grid-thumb" src="../../images/grids/unrelaxedtownscaper.svg" /></img></td>
-    <td><a href="xref:Sylves.PlanarLazyGrid">PlanarLazyGrid</a><br/>Like PeriodicPlanarMeshGrid, splits the plane into periodic chunks and draws a mesh in each chunk. But the meshes are lazily loaded from a user-specified function, so don't have to repeat.</td>
+    <td><a href="xref:Sylves.PlanarLazyMeshGrid">PlanarLazyMeshGrid</a><br/>Like PeriodicPlanarMeshGrid, splits the plane into periodic chunks and draws a mesh in each chunk. But the meshes are lazily loaded from a user-specified function, so don't have to repeat.</td>
 </tr>
 </table>
 
@@ -138,6 +138,6 @@ These grids don't classify neatly and usually serve as demos for various feature
 </tr>
 <tr>
     <td><a href="../../images/grids/townscaper.svg"><img class="grid-thumb" src="../../images/grids/townscaper.svg" /></img></td>
-    <td><a href="xref:Sylves.TownscaperGrid">TownscaperGrid</a><br/>This is a specific implementation of <a href="planarlazygrid.md">PlanarLazyGrid</a> with a <a href="../modifiers/relaxmodifier.md">RelaxModifier</a> applied. It is modelled after the grid used for <a href="https://store.steampowered.com/app/1291340/Townscaper/">Townscaper</a></td>
+    <td><a href="xref:Sylves.TownscaperGrid">TownscaperGrid</a><br/>This is a specific implementation of <a href="planarlazymeshgrid.md">PlanarLazyMeshGrid</a> with a <a href="../modifiers/relaxmodifier.md">RelaxModifier</a> applied. It is modelled after the grid used for <a href="https://store.steampowered.com/app/1291340/Townscaper/">Townscaper</a></td>
 </tr>
 </table>

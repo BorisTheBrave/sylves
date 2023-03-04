@@ -89,10 +89,10 @@ The key differences are:
 * The mesh is no longer being relaxed. <br/>
   We need the mesh to exactly fill the hex so that we can detect which edges border another hex, and relaxation would get in the way. Relaxation will be handled later instead.
 
-With this function, we can use [PlanarLazyGrid](../grids/planarlazygrid.md), a powerful grid for customization. It takes a mesh function such as the above, and lazily evaluates it to fill the infinite plane as needed. It supports any periodic setup, but we'll use it with a HexGrid specifically.
+With this function, we can use [PlanarLazyMeshGrid](../grids/planarlazymeshgrid.md), a powerful grid for customization. It takes a mesh function such as the above, and lazily evaluates it to fill the infinite plane as needed. It supports any periodic setup, but we'll use it with a HexGrid specifically.
 
 ```csharp
-var unrelaxedGrid = new PlanarLazyGrid(GetMeshData, hexGrid);
+var unrelaxedGrid = new PlanarLazyMeshGrid(GetMeshData, hexGrid);
 ```
 
 <img width="300px" src="../../images/grids/unrelaxedtownscaper.svg" /></img>

@@ -10,7 +10,7 @@ namespace Sylves
     // Works by splitting up the plane into hexes
     // Each hex is joined with its 6 neighbours and relaxed to make overlapping patches
     // Each point is a blend of the three nearest patches
-    public class RelaxModifier : PlanarLazyGrid
+    public class RelaxModifier : PlanarLazyMeshGrid
     {
         private readonly IGrid underlying;
         private readonly float chunkSize;

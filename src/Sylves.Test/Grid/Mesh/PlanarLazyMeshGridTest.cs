@@ -7,12 +7,12 @@ using UnityEngine;
 namespace Sylves.Test
 {
     [TestFixture]
-    public class PlanarLazyGridTest
+    public class PlanarLazyMeshGridTest
     {
         [Test]
-        public void TestPlanarLazyGrid()
+        public void TestPlanarLazyMeshGrid()
         {
-            var g = new PlanarLazyGrid(
+            var g = new PlanarLazyMeshGrid(
                 chunk => Matrix4x4.Translate(new Vector3(chunk.x, chunk.y, 0)) * TestMeshes.PlaneXY,
                 Vector2.right,
                 Vector2.up,

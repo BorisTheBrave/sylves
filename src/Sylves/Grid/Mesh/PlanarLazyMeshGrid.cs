@@ -33,7 +33,7 @@ namespace Sylves
     /// then stitched together.
     /// </summary>
     // Implementation very heavily based on PeriodPlanarMeshGrid
-    public class PlanarLazyGrid : IGrid
+    public class PlanarLazyMeshGrid : IGrid
     {
         private Func<Vector2Int, MeshData> getMeshData;
         protected Vector2 strideX;
@@ -52,7 +52,7 @@ namespace Sylves
         private AabbChunks aabbChunks;
 
         // Clone constructor. Clones share the same cache!
-        protected PlanarLazyGrid(PlanarLazyGrid original, SquareBound bound)
+        protected PlanarLazyMeshGrid(PlanarLazyMeshGrid original, SquareBound bound)
         {
             getMeshData = original.getMeshData;
             strideX = original.strideX;
@@ -81,7 +81,7 @@ namespace Sylves
         /// <param name="bound">Bounds which chunks are generated.</param>
         /// <param name="cellTypes">What should the response of GetCellType </param>
         /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
-        public PlanarLazyGrid(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        public PlanarLazyMeshGrid(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             Setup(getMeshData, strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
         }
@@ -90,13 +90,13 @@ namespace Sylves
         /// Constructs a planar lazy grid that calls getMeshData to fill a hex grid with a mesh per cell.
         /// </summary>
         /// <param name="getMeshData">The function supplying the mesh per cell of chunkGrid</param>
-        /// <param name="chunkGrid">Each cell of this grid becomes a chunk of the PlanarLazyGrid.</param>
+        /// <param name="chunkGrid">Each cell of this grid becomes a chunk of the PlanarLazyMeshGrid.</param>
         /// <param name="margin">The output of getMeshData should be fit inside the shape of chunkGrid cell, expanded by margin.</param>
         /// <param name="meshGridOptions">Options to use when converting meshes to the grid.</param>
         /// <param name="bound">Bounds which chunks are generated.</param>
         /// <param name="cellTypes">What should the response of GetCellType </param>
         /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
-        public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        public PlanarLazyMeshGrid(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             Setup(getMeshData, chunkGrid, margin, meshGridOptions, bound, cellTypes, cachePolicy);
         }
@@ -105,19 +105,19 @@ namespace Sylves
         /// Constructs a planar lazy grid that calls getMeshData to fill a square grid with a mesh per cell.
         /// </summary>
         /// <param name="getMeshData">The function supplying the mesh per cell of chunkGrid</param>
-        /// <param name="chunkGrid">Each cell of this grid becomes a chunk of the PlanarLazyGrid.</param>
+        /// <param name="chunkGrid">Each cell of this grid becomes a chunk of the PlanarLazyMeshGrid.</param>
         /// <param name="margin">The output of getMeshData should be fit inside the shape of chunkGrid cell, expanded by margin.</param>
         /// <param name="meshGridOptions">Options to use when converting meshes to the grid.</param>
         /// <param name="bound">Bounds which chunks are generated.</param>
         /// <param name="cellTypes">What should the response of GetCellType </param>
         /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
-        public PlanarLazyGrid(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        public PlanarLazyMeshGrid(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             Setup(getMeshData, chunkGrid, margin, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
         // You must call setup if using this constructor.
-        protected PlanarLazyGrid()
+        protected PlanarLazyMeshGrid()
         {
 
         }
@@ -183,7 +183,7 @@ namespace Sylves
 
             if(meshData.subMeshCount > 1)
             {
-                throw new Exception("PlanarLazyGrid doesn't support submeshes");
+                throw new Exception("PlanarLazyMeshGrid doesn't support submeshes");
             }
 
             // TODO: Check bounds are within the chunk
@@ -280,7 +280,7 @@ namespace Sylves
 
         #region Relatives
 
-        public virtual IGrid Unbounded => GetBound() == null ? this : new PlanarLazyGrid(this, null);
+        public virtual IGrid Unbounded => GetBound() == null ? this : new PlanarLazyMeshGrid(this, null);
 
         public IGrid Unwrapped => this;
 
@@ -368,7 +368,7 @@ namespace Sylves
             return new SquareBound(min, max + Vector2Int.one);
         }
 
-        public virtual IGrid BoundBy(IBound bound) => new PlanarLazyGrid(this, (SquareBound)bound);
+        public virtual IGrid BoundBy(IBound bound) => new PlanarLazyMeshGrid(this, (SquareBound)bound);
 
         public IBound IntersectBounds(IBound bound, IBound other)
         {

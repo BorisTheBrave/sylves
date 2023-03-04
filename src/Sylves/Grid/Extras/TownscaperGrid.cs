@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Sylves
 {
     // The townscaper grid, without the extra relaxation step
-    internal class UnrelaxedTownscaperGrid : PlanarLazyGrid
+    internal class UnrelaxedTownscaperGrid : PlanarLazyMeshGrid
     {
         private readonly int n;
         private readonly float tolerance;

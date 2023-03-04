@@ -8,7 +8,7 @@ Sylves comes with a [large array of built in grids](grids/index.md), but sometim
 
 This is by far the easiest way to create practically useful grids as the tooling is so plentiful.
 
-There's also [`MeshPrsimGrid`](xref:Sylves.MeshPrismGrid) which creates multiple cells per face, using extrusion to arrange the cells into layers, and [`PeriodicPlanarMeshGrid`](xref:Sylves.PeriodicPlanarMeshGrid) which repeats a mesh at fixed intervals across an infinite 2d plane, and [`PlanarLazyGrid`](xref:Sylves.PlanarLazyGrid) which generates a different mesh at fixed intervals.
+There's also [`MeshPrsimGrid`](xref:Sylves.MeshPrismGrid) which creates multiple cells per face, using extrusion to arrange the cells into layers, and [`PeriodicPlanarMeshGrid`](xref:Sylves.PeriodicPlanarMeshGrid) which repeats a mesh at fixed intervals across an infinite 2d plane, and [`PlanarLazyMeshGrid`](xref:Sylves.PlanarLazyMeshGrid) which generates a different mesh at fixed intervals.
 
 ## Use modifiers
 
