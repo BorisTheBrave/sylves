@@ -1,4 +1,4 @@
-# Unreleased
+# 0.2
 
 * Added [RelaxModifier](modifiers/relaxmodifier.md)
 * Added [PlanarLazyMeshGrid](grids/planarlazymeshgrid.md)
