@@ -305,9 +305,8 @@ namespace Sylves
         #region Query
         public bool FindCell(Vector3 position, out Cell cell)
         {
-            position -= new Vector3(.5f, .5f, 0);
-            var x = Mathf.RoundToInt(position.x / cellSize.x);
-            var y = Mathf.RoundToInt(position.y / cellSize.y);
+            var x = Mathf.FloorToInt(position.x / cellSize.x);
+            var y = Mathf.FloorToInt(position.y / cellSize.y);
             var z = 0;
             cell = new Cell(x, y, z);
             return true;

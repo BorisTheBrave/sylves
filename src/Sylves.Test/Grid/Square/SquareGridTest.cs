@@ -26,6 +26,14 @@ namespace Sylves.Test
         }
 
         [Test]
+        public void TestFindCellScaled()
+        {
+            var g = new SquareGrid(new Vector2(30, 30));
+            var c = g.FindCell(new Vector3(20.1f, -13.1f, -3.4f));
+            Assert.AreEqual(new Cell(0, -1, 0), c);
+        }
+
+        [Test]
         public void TestFindBasicPath()
         {
             var g = new SquareGrid(1);
