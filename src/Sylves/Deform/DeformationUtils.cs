@@ -103,7 +103,7 @@ namespace Sylves
             var deformation = new Deformation(interpolatePoint, GetJacobi, invertWinding);
             // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY)
             deformation = isQuads
-                ? deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix()
+                ? deformation
                 : deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix() * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120));
             return deformation;
         }
@@ -143,8 +143,6 @@ namespace Sylves
             }
 
             var deformation = new Deformation(interpolatePoint, GetJacobi, invertWinding: invertWinding);
-            // Adjusts from Deformation (XZ) conventions to Mesh conventions (XY).
-            deformation = deformation * ((CubeRotation)(CellRotation)0x821).ToMatrix();
             return deformation;
         }
 

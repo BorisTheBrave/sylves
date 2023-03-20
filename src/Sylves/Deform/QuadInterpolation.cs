@@ -8,7 +8,7 @@ namespace Sylves
 
     /// <summary>
     /// Supplies various bilinear and trilinear interpolation methods.
-    /// For historic reasons, the conventions are based on a XZ plane
+    /// The conventions are based on a XY plane
     /// using either a unit square or unit cube.
     /// </summary>
     public static class QuadInterpolation
@@ -249,13 +249,13 @@ namespace Sylves
                 var y2 = 0.5f + p.y;
                 var z1 = 0.5f - p.z;
                 var z2 = 0.5f + p.z;
-                var u1 = z1 * v1 + z2 * v2;
-                var u2 = z1 * v4 + z2 * v3;
-                var u3 = z1 * v5 + z2 * v6;
-                var u4 = z1 * v8 + z2 * v7;
+                var u1 = y1 * v4 + y2 * v3;
+                var u2 = y1 * v1 + y2 * v2;
+                var u3 = y1 * v8 + y2 * v7;
+                var u4 = y1 * v5 + y2 * v6;
                 var w1 = x1 * u1 + x2 * u2;
                 var w2 = x1 * u3 + x2 * u4;
-                var z = y1 * w1 + y2 * w2;
+                var z = z1 * w1 + z2 * w2;
                 return z;
             }
 
@@ -274,10 +274,8 @@ namespace Sylves
                 var x2 = 0.5f + p.x;
                 var y1 = 0.5f - p.y;
                 var y2 = 0.5f + p.y;
-                var z1 = 0.5f - p.z;
-                var z2 = 0.5f + p.z;
-                var u1 = z1 * v1 + z2 * v2;
-                var u2 = z1 * v4 + z2 * v3;
+                var u1 = y1 * v4 + y2 * v3;
+                var u2 = y1 * v1 + y2 * v2;
                 return x1 * u1 + x2 * u2;
             }
 
@@ -307,13 +305,13 @@ namespace Sylves
                 var y2 = 0.5f + p.y;
                 var z1 = 0.5f - p.z;
                 var z2 = 0.5f + p.z;
-                var u1 = z1 * v1 + z2 * v2;
-                var u2 = z1 * v4 + z2 * v3;
-                var u3 = z1 * v5 + z2 * v6;
-                var u4 = z1 * v8 + z2 * v7;
+                var u1 = y1 * v4 + y2 * v3;
+                var u2 = y1 * v1 + y2 * v2;
+                var u3 = y1 * v8 + y2 * v7;
+                var u4 = y1 * v5 + y2 * v6;
                 var w1 = x1 * u1 + x2 * u2;
                 var w2 = x1 * u3 + x2 * u4;
-                var z = y1 * w1 + y2 * w2;
+                var z = z1 * w1 + z2 * w2;
                 return z;
             }
 
@@ -344,24 +342,24 @@ namespace Sylves
                 var y2 = 0.5f + p.y;
                 var z1 = 0.5f - p.z;
                 var z2 = 0.5f + p.z;
-                var u1 = z1 * v1 + z2 * v2;
-                var u2 = z1 * v4 + z2 * v3;
-                var u3 = z1 * v5 + z2 * v6;
-                var u4 = z1 * v8 + z2 * v7;
-                var du1dz = v2 - v1;
-                var du2dz = v3 - v4;
-                var du3dz = v6 - v5;
-                var du4dz = v7 - v8;
+                var u1 = y1 * v4 + y2 * v3;
+                var u2 = y1 * v1 + y2 * v2;
+                var u3 = y1 * v8 + y2 * v7;
+                var u4 = y1 * v5 + y2 * v6;
+                var du1dy = v3 - v4;
+                var du2dy = v2 - v1;
+                var du3dy = v7 - v8;
+                var du4dy = v6 - v5;
                 var w1 = x1 * u1 + x2 * u2;
                 var w2 = x1 * u3 + x2 * u4;
-                var dw1dz = x1 * du1dz + x2 * du2dz;
-                var dw2dz = x1 * du3dz + x2 * du4dz;
+                var dw1dy = x1 * du1dy + x2 * du2dy;
+                var dw2dy = x1 * du3dy + x2 * du4dy;
                 var dw1dx = u2 - u1;
                 var dw2dx = u4 - u3;
-                var z = y1 * w1 + y2 * w2;
-                var dzdz = y1 * dw1dz + y2 * dw2dz;
-                var dzdx = y1 * dw1dx + y2 * dw2dx;
-                var dzdy = w2 - w1;
+                var z = z1 * w1 + z2 * w2;
+                var dzdy = z1 * dw1dy + z2 * dw2dy;
+                var dzdx = z1 * dw1dx + z2 * dw2dx;
+                var dzdz = w2 - w1;
                 return VectorUtils.ToMatrix(dzdx, dzdy, dzdz, z);
             }
 
@@ -385,10 +383,8 @@ namespace Sylves
                 var x2 = 0.5f + p.x;
                 var y1 = 0.5f - p.y;
                 var y2 = 0.5f + p.y;
-                var z1 = 0.5f - p.z;
-                var z2 = 0.5f + p.z;
-                var u1 = z1 * v1 + z2 * v2;
-                var u2 = z1 * v4 + z2 * v3;
+                var u1 = y1 * v4 + y2 * v3;
+                var u2 = y1 * v1 + y2 * v2;
                 return x1 * u1 + x2 * u2;
             }
 
@@ -412,16 +408,14 @@ namespace Sylves
                 var x2 = 0.5f + p.x;
                 var y1 = 0.5f - p.y;
                 var y2 = 0.5f + p.y;
-                var z1 = 0.5f - p.z;
-                var z2 = 0.5f + p.z;
-                var u1 = z1 * v1 + z2 * v2;
-                var u2 = z1 * v4 + z2 * v3;
-                var du1dz = v2 - v1;
-                var du2dz = v3 - v4;
+                var u1 = y1 * v4 + y2 * v3;
+                var u2 = y1 * v1 + y2 * v2;
+                var du1dy = v3 - v4;
+                var du2dy = v2 - v1;
                 var o = x1 * u1 + x2 * u2;
                 var dodx = u2 - u1;
-                var dodz = x1 * du1dz + x2 * du2dz;
-                return VectorUtils.ToMatrix(dodx, Vector3.zero, dodz, o);
+                var dody = x1 * du1dy + x2 * du2dy;
+                return VectorUtils.ToMatrix(dodx, dody, Vector3.zero, o);
             }
 
             return TrilinearJacobiPoint;
@@ -442,13 +436,13 @@ namespace Sylves
                 var y2 = 0.5f + p.y;
                 var z1 = 0.5f - p.z;
                 var z2 = 0.5f + p.z;
-                var u1 = z1 * v1 + z2 * v2;
-                var u2 = z1 * v4 + z2 * v3;
-                var u3 = z1 * v5 + z2 * v6;
-                var u4 = z1 * v8 + z2 * v7;
+                var u1 = y1 * v4 + y2 * v3;
+                var u2 = y1 * v1 + y2 * v2;
+                var u3 = y1 * v8 + y2 * v7;
+                var u4 = y1 * v5 + y2 * v6;
                 var w1 = x1 * u1 + x2 * u2;
                 var w2 = x1 * u3 + x2 * u4;
-                var z = y1 * w1 + y2 * w2;
+                var z = z1 * w1 + z2 * w2;
                 return z;
             }
 
@@ -467,10 +461,8 @@ namespace Sylves
                 var x2 = 0.5f + p.x;
                 var y1 = 0.5f - p.y;
                 var y2 = 0.5f + p.y;
-                var z1 = 0.5f - p.z;
-                var z2 = 0.5f + p.z;
-                var u1 = z1 * v1 + z2 * v2;
-                var u2 = z1 * v4 + z2 * v3;
+                var u1 = y1 * v4 + y2 * v3;
+                var u2 = y1 * v1 + y2 * v2;
                 return x1 * u1 + x2 * u2;
             }
 
