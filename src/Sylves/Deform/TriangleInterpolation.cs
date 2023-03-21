@@ -208,6 +208,43 @@ namespace Sylves
             return Interpolate(v1, v2, v3);
         }
 
+        public static Func<Vector3, Matrix4x4> JacobiUv(MeshData mesh, int submesh, int face, bool invertWinding)
+        {
+            if (mesh.GetTopology(submesh) != MeshTopology.Triangles)
+            {
+                throw new Exception($"Mesh topology {mesh.GetTopology(submesh)} not supported.");
+            }
+            //if (!mesh.HasVertexAttribute(UnityEngine.Rendering.VertexAttribute.Tangent))
+            if (mesh.tangents.Length == 0)
+            {
+                throw new Exception($"Mesh needs tangents to calculate smoothed normals. You need to select \"Calculate\" the tangent field of the import options.");
+            }
+
+            var uvs = mesh.uv;
+
+            var indices = mesh.GetIndices(submesh);
+            int i1, i2, i3;
+            if (invertWinding)
+            {
+                i1 = indices[face * 3 + 2];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 3 + 0];
+                i2 = indices[face * 3 + 1];
+                i3 = indices[face * 3 + 2];
+            }
+            // Find new bounding cage
+
+            var v1 = uvs[i1];
+            var v2 = uvs[i2];
+            var v3 = uvs[i3];
+
+            return Jacobi(v1, v2, v3);
+        }
+
         public static Func<Vector3, Vector2> Interpolate(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4, Vector2 v5, Vector2 v6)
         {
             Vector2 InterpolatePoint(Vector3 p)
@@ -231,6 +268,22 @@ namespace Sylves
             }
 
             return InterpolatePoint;
+        }
+
+        public static Func<Vector3, Matrix4x4> Jacobi(Vector2 v1, Vector2 v2, Vector2 v3)
+        {
+            Matrix4x4 JacobiPoint(Vector3 p)
+            {
+                var b = StdBarycentric(new Vector2(p.x, p.y));
+                var (dbdx, dbdy) = StdBarycentricDiff();
+                var o = b.x * v1 + b.y * v2 + b.z * v3;
+                var dodx = dbdx.x * v1 + dbdx.y * v2 + dbdx.z * v3;
+                var dody = dbdy.x * v1 + dbdy.y * v2 + dbdy.z * v3;
+                return VectorUtils.ToMatrix(new Vector3(dodx.x, dodx.y, 0), new Vector3(dody.x, dody.y, 0), Vector3.zero, new Vector3(o.x, o.y, 0));
+
+            }
+
+            return JacobiPoint;
         }
 
         public static Func<Vector3, Vector3> Interpolate(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 v5, Vector3 v6)

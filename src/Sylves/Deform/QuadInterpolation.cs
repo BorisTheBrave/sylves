@@ -235,6 +235,50 @@ namespace Sylves
             return Interpolate(v1, v2, v3, v4);
         }
 
+
+        public static Func<Vector3, Matrix4x4> JacobiUv(MeshData mesh, int submesh, int face, bool invertWinding)
+        {
+            if (mesh.GetTopology(submesh) != MeshTopology.Quads)
+            {
+                throw new Exception($"Mesh topology {mesh.GetTopology(submesh)} not supported. You need to select \"Keep Quads\" in the import options.");
+            }
+            //if (!mesh.HasVertexAttribute(UnityEngine.Rendering.VertexAttribute.Tangent))
+            if (mesh.tangents.Length == 0)
+            {
+                throw new Exception($"Mesh needs tangents to calculate smoothed normals. You need to select \"Calculate\" the tangent field of the import options.");
+            }
+
+            var uvs = mesh.uv;
+
+            var indices = mesh.GetIndices(submesh);
+            int i1, i2, i3, i4;
+            if (invertWinding)
+            {
+
+                i1 = indices[face * 4 + 3];
+                i2 = indices[face * 4 + 2];
+                i3 = indices[face * 4 + 1];
+                i4 = indices[face * 4 + 0];
+            }
+            else
+            {
+                i1 = indices[face * 4 + 0];
+                i2 = indices[face * 4 + 1];
+                i3 = indices[face * 4 + 2];
+                i4 = indices[face * 4 + 3];
+            }
+            // Find new bounding cage
+
+            var v1 = uvs[i1];
+            var v2 = uvs[i2];
+            var v3 = uvs[i3];
+            var v4 = uvs[i4];
+
+
+            // TODO: Bilienar interpolate
+            return Jacobi(v1, v2, v3, v4);
+        }
+
         /// <summary>
         /// As the Vector3 Interpolate, only in 2 dimensions.
         /// </summary>
@@ -281,6 +325,32 @@ namespace Sylves
 
             return TrilinearInterpolatePoint;
         }
+
+        /// <summary>
+        /// As the Vector3 jacobi, only in 2 dimensions.
+        /// </summary>
+        public static Func<Vector3, Matrix4x4> Jacobi(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
+        {
+            Matrix4x4 TrilinearJacobiPoint(Vector3 p)
+            {
+                //Perform linear interpolation.
+                var x1 = 0.5f - p.x;
+                var x2 = 0.5f + p.x;
+                var y1 = 0.5f - p.y;
+                var y2 = 0.5f + p.y;
+                var u1 = y1 * v4 + y2 * v3;
+                var u2 = y1 * v1 + y2 * v2;
+                var du1dy = v3 - v4;
+                var du2dy = v2 - v1;
+                var o = x1 * u1 + x2 * u2;
+                var dodx = u2 - u1;
+                var dody = x1 * du1dy + x2 * du2dy;
+                return VectorUtils.ToMatrix(new Vector3(dodx.x, dodx.y, 0), new Vector3(dody.x, dody.y, 0), Vector3.zero, new Vector3(o.x, o.y, 0));
+            }
+
+            return TrilinearJacobiPoint;
+        }
+
 
         /// <summary>
         /// Tiilinear interpolates from a unit cube to the polyhedron supplied by v1 to v8

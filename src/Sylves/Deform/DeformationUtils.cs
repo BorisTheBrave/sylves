@@ -41,9 +41,9 @@ namespace Sylves
                 ? QuadInterpolation.InterpolateTangent(surfaceMesh, subMesh, face, invertWinding)
                 : TriangleInterpolation.InterpolateTangent(surfaceMesh, subMesh, face, invertWinding);
 
-            var interpolateUv = !smoothNormals ? null : isQuads
-                ? QuadInterpolation.InterpolateUv(surfaceMesh, subMesh, face, invertWinding)
-                : TriangleInterpolation.InterpolateUv(surfaceMesh, subMesh, face, invertWinding);
+            var jacobiUv = !smoothNormals ? null : isQuads
+                ? QuadInterpolation.JacobiUv(surfaceMesh, subMesh, face, invertWinding)
+                : TriangleInterpolation.JacobiUv(surfaceMesh, subMesh, face, invertWinding);
 
             void GetJacobi(Vector3 p, out Matrix4x4 jacobi)
             {
@@ -76,15 +76,11 @@ namespace Sylves
                     var tangent3 = ToVector3(tangent4).normalized;
                     var bitangent = (tangent4.w * Vector3.Cross(normal, tangent3)).normalized;
 
-                    // TODO: Do some actual differentation
-                    var t2 = interpolateUv(p);
-                    var dx2 = (interpolateUv(p + Vector3.right * m) - t2) / m;
-                    var dy2 = (interpolateUv(p + Vector3.up * m) - t2) / m;
-                    //var dz2 = (interpolateUv(p + Vector3.forward * m) - t2) / m;// Always zero
+                    var t2 = jacobiUv(p);
 
                     var j3 = ToMatrix(
-                        new Vector3(dx2.x, 0, dx2.y).normalized,
-                        new Vector3(dy2.x, 0, dy2.y).normalized,
+                        new Vector3(t2.m00, 0, t2.m10).normalized,
+                        new Vector3(t2.m01, 0, t2.m11).normalized,
                         new Vector3(0, 1, 0)
                         );
 
