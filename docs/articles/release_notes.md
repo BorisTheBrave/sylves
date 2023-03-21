@@ -1,3 +1,7 @@
+# Unreleased
+* Changed Quad/TriangleInterpolation to use same conventions as rest of Sylves
+* Fixed SquareGrid.FindCell for non unit sized grids
+
 # 0.2
 
 * Added [RelaxModifier](modifiers/relaxmodifier.md)
