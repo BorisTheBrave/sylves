@@ -6,11 +6,12 @@ using UnityEngine;
 namespace Sylves
 {
     /// <summary>
-    /// Supplies various linear interpolation methods from a triangle
-    /// For historic reasons, the conventions are based on a XZ plane,
-    /// with an equilateral triangle of side sqrt(3), vertices, top, bottomright, bottomleft
-    /// z axis extends from -0.5 to 1.0
-    /// x axis from -sqrt(3)/2 to sqrt(3)/2
+    /// Supplies various linear interpolation methods from a triangle.
+    /// The conventions are based on a XY plane,
+    /// with an equilateral triangle of side 1, vertices:
+    ///  (0.5f, -0.5f / Sqrt3)
+    ///  (0, 1 / Sqrt3)
+    ///  (-0.5f, -0.5f / Sqrt3)
     /// </summary>
     public static class TriangleInterpolation
     {
@@ -211,11 +212,11 @@ namespace Sylves
         {
             Vector2 InterpolatePoint(Vector3 p)
             {
-                var b = StdBarycentric(new Vector2(p.x, p.z));
+                var b = StdBarycentric(new Vector2(p.x, p.y));
                 // Linear interpolate on each axis in turn
                 var u1 = b.x * v1 + b.y * v2 + b.z * v3;
                 var u2 = b.x * v4 + b.y * v5 + b.z * v6;
-                return (0.5f - p.y) * u1 + (0.5f + p.y) * u2;
+                return (0.5f - p.x) * u1 + (0.5f + p.x) * u2;
             }
 
             return InterpolatePoint;
@@ -225,7 +226,7 @@ namespace Sylves
         {
             Vector2 InterpolatePoint(Vector3 p)
             {
-                var b = StdBarycentric(new Vector2(p.x, p.z));
+                var b = StdBarycentric(new Vector2(p.x, p.y));
                 return b.x * v1 + b.y * v2 + b.z * v3;
             }
 
@@ -236,11 +237,11 @@ namespace Sylves
         {
             Vector3 InterpolatePoint(Vector3 p)
             {
-                var b = StdBarycentric(new Vector2(p.x, p.z));
+                var b = StdBarycentric(new Vector2(p.x, p.y));
                 // Linear interpolate on each axis in turn
                 var u1 = b.x * v1 + b.y * v2 + b.z * v3;
                 var u2 = b.x * v4 + b.y * v5 + b.z * v6;
-                return (0.5f - p.y) * u1 + (0.5f + p.y) * u2;
+                return (0.5f - p.z) * u1 + (0.5f + p.z) * u2;
             }
 
             return InterpolatePoint;
@@ -252,21 +253,21 @@ namespace Sylves
         {
             Matrix4x4 JacobiPoint(Vector3 p)
             {
-                var b = StdBarycentric(new Vector2(p.x, p.z));
-                var (dbdx, dbdz) = StdBarycentricDiff();
+                var b = StdBarycentric(new Vector2(p.x, p.y));
+                var (dbdx, dbdy) = StdBarycentricDiff();
                 // Linear interpolate on each axis in turn
                 var u1 = b.x * v1 + b.y * v2 + b.z * v3;
                 var u2 = b.x * v4 + b.y * v5 + b.z * v6;
                 var du1dx = dbdx.x * v1 + dbdx.y * v2 + dbdx.z * v3;
                 var du2dx = dbdx.x * v4 + dbdx.y * v5 + dbdx.z * v6;
-                var du1dz = dbdz.x * v1 + dbdz.y * v2 + dbdz.z * v3;
-                var du2dz = dbdz.x * v4 + dbdz.y * v5 + dbdz.z * v6;
-                var y1 = 0.5f - p.y;
-                var y2 = 0.5f + p.y;
-                var o = y1 * u1 + y2 * u2;
-                var dodx = y1 * du1dx + y2 * du2dx;
-                var dodz = y1 * du1dz + y2 * du2dz;
-                var dody = u2 - u1;
+                var du1dy = dbdy.x * v1 + dbdy.y * v2 + dbdy.z * v3;
+                var du2dy = dbdy.x * v4 + dbdy.y * v5 + dbdy.z * v6;
+                var z1 = 0.5f - p.z;
+                var z2 = 0.5f + p.z;
+                var o = z1 * u1 + z2 * u2;
+                var dodx = z1 * du1dx + z2 * du2dx;
+                var dody = z1 * du1dy + z2 * du2dy;
+                var dodz = u2 - u1;
                 return VectorUtils.ToMatrix(dodx, dody, dodz, o);
             }
 
@@ -274,40 +275,30 @@ namespace Sylves
         }
 
         /// <summary>
-        /// Linear interpolates from a triangle of size Sqrt(3) in the XZ plane to the triangle supplied by v1 to v3
+        /// Linear interpolates from a triangle of size 1 in the XY plane to the triangle supplied by v1 to v3
         /// The z value of p is unused.
         /// </summary>
-        /// <param name="v1">Final location of (0, 0, 1)</param>
-        /// <param name="v2">Final location of (sqrt(3) / 2, 0, -0.5)</param>
-        /// <param name="v3">Final location of (-sqrt(3) / 2, 0, 0.5)</param>
         public static Func<Vector3, Vector3> Interpolate(Vector3 v1, Vector3 v2, Vector3 v3)
         {
             Vector3 InterpolatePoint(Vector3 p)
             {
-                var b = StdBarycentric(new Vector2(p.x, p.z));
+                var b = StdBarycentric(new Vector2(p.x, p.y));
                 return b.x * v1 + b.y * v2 + b.z * v3;
             }
 
             return InterpolatePoint;
         }
 
-        /// <summary>
-        /// Linear interpolates from a triangle of size Sqrt(3) in the XZ plane to the triangle supplied by v1 to v3, returning the jacobi
-        /// The z value of p is unused.
-        /// </summary>
-        /// <param name="v1">Final location of (0, 0, 1)</param>
-        /// <param name="v2">Final location of (sqrt(3) / 2, 0, -0.5)</param>
-        /// <param name="v3">Final location of (-sqrt(3) / 2, 0, 0.5)</param>
         public static Func<Vector3, Matrix4x4> Jacobi(Vector3 v1, Vector3 v2, Vector3 v3)
         {
             Matrix4x4 JacobiPoint(Vector3 p)
             {
-                var b = StdBarycentric(new Vector2(p.x, p.z));
-                var (dbdx, dbdz) = StdBarycentricDiff();
+                var b = StdBarycentric(new Vector2(p.x, p.y));
+                var (dbdx, dbdy) = StdBarycentricDiff();
                 var o = b.x * v1 + b.y * v2 + b.z * v3;
                 var dodx = dbdx.x * v1 + dbdx.y * v2 + dbdx.z * v3;
-                var dodz = dbdz.x * v1 + dbdz.y * v2 + dbdz.z * v3;
-                return VectorUtils.ToMatrix(dodx, Vector3.zero, dodz, o);
+                var dody = dbdy.x * v1 + dbdy.y * v2 + dbdy.z * v3;
+                return VectorUtils.ToMatrix(dodx, dody, Vector3.zero, o);
 
             }
 
@@ -318,11 +309,11 @@ namespace Sylves
         {
             Vector4 InterpolatePoint(Vector3 p)
             {
-                var b = StdBarycentric(new Vector2(p.x, p.z));
+                var b = StdBarycentric(new Vector2(p.x, p.y));
                 // Linear interpolate on each axis in turn
                 var u1 = b.x * v1 + b.y * v2 + b.z * v3;
                 var u2 = b.x * v4 + b.y * v5 + b.z * v6;
-                return (0.5f - p.y) * u1 + (0.5f + p.y) * u2;
+                return (0.5f - p.z) * u1 + (0.5f + p.z) * u2;
             }
 
             return InterpolatePoint;
@@ -332,41 +323,37 @@ namespace Sylves
         {
             Vector4 InterpolatePoint(Vector3 p)
             {
-                var b = StdBarycentric(new Vector2(p.x, p.z));
+                var b = StdBarycentric(new Vector2(p.x, p.y));
                 return b.x * v1 + b.y * v2 + b.z * v3;
             }
 
             return InterpolatePoint;
         }
 
-        // Assumes a standard equilateral triangle 
+        // Assumes a standard equilateral triangle (see TestMeshes.Equilateral)
         private static Vector3 StdBarycentric(Vector2 p)
         {
-            const float a = 1 / 3f;
-            const float b = 2 / 3f;
-            const float c = 0.57735026919f; // 1 / sqrt(3)
+            const float sqrt3 = 1.73205080756888f;
+            const float o = 1 / 3f;
+            const float a = 1 / 3f * sqrt3;
+            const float b = 2 / 3f * sqrt3;
+            const float c = 0.57735026919f * sqrt3;
 
             return new Vector3(
-                a +           b * p.y,
-                a + c * p.x - a * p.y,
-                a - c * p.x - a * p.y
+                o + c * p.x - a * p.y,
+                o +           b * p.y,
+                o - c * p.x - a * p.y
                 );
-            /*
-            return Barycentric(
-                p,
-                new Vector2(0, 1),
-                new Vector2(Mathf.Sqrt(3) / 2, -.5f),
-                new Vector2(-Mathf.Sqrt(3) / 2, -.5f));
-            */
         }
 
         private static (Vector3, Vector3) StdBarycentricDiff()
         {
-            const float a = 1 / 3f;
-            const float b = 2 / 3f;
-            const float c = 0.57735026919f; // 1 / sqrt(3)
+            const float sqrt3 = 1.73205080756888f;
+            const float a = 1 / 3f * sqrt3;
+            const float b = 2 / 3f * sqrt3;
+            const float c = 0.57735026919f * sqrt3;
 
-            return (new Vector3(0, c, -c), new Vector3(b, -a, -a));
+            return (new Vector3(c, 0, -c), new Vector3(-a, b, -a));
         }
 
 

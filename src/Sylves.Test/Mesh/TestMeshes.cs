@@ -80,7 +80,10 @@ namespace Sylves.Test
 
         private const float Sqrt3 = 1.73205080756888f;
 
-        // Corresponds to a triangle of incircle diamater 1, side length sqrt(3)
+        
+        // An equilateral triangle of side 1, pointing up,
+        // centered at the origin
+        // with sides UpRight, UpLeft and Down
         public static MeshData Equilateral
         {
             get
@@ -93,9 +96,9 @@ namespace Sylves.Test
                         // Edge 1 points UpLeft
                         // Edge 2 points Down
                         // I.e. the CellDir is double the edge
-                        new Vector3(Sqrt3 / 2, -0.5f, 0),
-                        new Vector3(0, 1.0f, 0),
-                        new Vector3(-Sqrt3 / 2, -0.5f, 0),
+                        new Vector3(0.5f, -0.5f / Sqrt3, 0),
+                        new Vector3(0, 1 / Sqrt3, 0),
+                        new Vector3(-0.5f, -0.5f / Sqrt3, 0),
                     },
                     indices = new[] { new[]
                         {
@@ -121,10 +124,10 @@ namespace Sylves.Test
                 {
                     vertices = new[]
                     {
-                        new Vector3(1.5f, 0,1.5f),
-                        new Vector3(1.5f, 0,-1.5f),
-                        new Vector3(-1.5f, 0,-1.5f),
-                        new Vector3(-1.5f, 0,1.5f),
+                        new Vector3(1.5f, 0, 1.5f),
+                        new Vector3(1.5f, 0, -1.5f),
+                        new Vector3(-1.5f, 0, -1.5f),
+                        new Vector3(-1.5f, 0, 1.5f),
                     },
                     indices = new[] { new[]
                         {
