@@ -12,8 +12,6 @@ namespace Sylves
 {
     public static class DeformationUtils
     {
-        private static readonly Matrix4x4 RotateZY = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, -1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
-
         /// <summary>
         /// Returns a deformation that transforms from cell co-ordinates to a prism defined by the mesh and the given parameters.
         /// For quad meshes, cell co-ordinates is a unit cube centered at the origin.
@@ -81,13 +79,13 @@ namespace Sylves
                     // TODO: Do some actual differentation
                     var t2 = interpolateUv(p);
                     var dx2 = (interpolateUv(p + Vector3.right * m) - t2) / m;
-                    //var dy2 = (trilinearInterpolateUv(p + Vector3.up * m) - t2) / m;// Always zero
-                    var dz2 = (interpolateUv(p + Vector3.forward * m) - t2) / m;
+                    var dy2 = (interpolateUv(p + Vector3.up * m) - t2) / m;
+                    //var dz2 = (interpolateUv(p + Vector3.forward * m) - t2) / m;// Always zero
 
                     var j3 = ToMatrix(
                         new Vector3(dx2.x, 0, dx2.y).normalized,
-                        new Vector3(0, 1, 0),
-                        new Vector3(dz2.x, 0, dz2.y).normalized
+                        new Vector3(dy2.x, 0, dy2.y).normalized,
+                        new Vector3(0, 1, 0)
                         );
 
                     var j1 = ToMatrix(
