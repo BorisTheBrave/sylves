@@ -70,6 +70,13 @@ namespace Sylves
             return (CellDir)(cubeRotation * cubeDir);
         }
 
+        public CellCorner Rotate(CellCorner corner, CellRotation rotation)
+        {
+            var cubeRotation = (CubeRotation)rotation;
+            var cubeCorner = (CubeCorner)corner;
+            return (CellCorner)(cubeRotation * cubeCorner);
+        }
+
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
         {
             resultDir = Rotate(dir, rotation);

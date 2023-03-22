@@ -202,7 +202,7 @@ namespace Sylves
 
         internal static CellDir Rotate(CellDir dir, CellRotation rotation, int n)
         {
-            if((int)rotation >= 0)
+            if ((int)rotation >= 0)
             {
                 return (CellDir)(((int)dir + (int)rotation) % n);
             }
@@ -212,9 +212,26 @@ namespace Sylves
             }
         }
 
+        internal static CellCorner Rotate(CellCorner corner, CellRotation rotation, int n)
+        {
+            if ((int)rotation >= 0)
+            {
+                return (CellCorner)(((int)corner + (int)rotation) % n);
+            }
+            else
+            {
+                return (CellCorner)((1 + n - (int)corner + ~(int)rotation) % n);
+            }
+        }
+
         public CellDir Rotate(CellDir dir, CellRotation rotation)
         {
             return Rotate(dir, rotation, n);
+        }
+
+        public CellCorner Rotate(CellCorner corner, CellRotation rotation)
+        {
+            return Rotate(corner, rotation, n);
         }
 
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)

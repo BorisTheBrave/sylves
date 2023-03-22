@@ -48,6 +48,13 @@ namespace Sylves
             return IsAxial(dir) ? dir : (CellDir)((HexRotation)rotation * (PTHexDir)dir);
         }
 
+        public CellCorner Rotate(CellCorner corner, CellRotation rotation)
+        {
+            var hexCorner = (PTHexCorner)((int)corner % 6);
+            hexCorner = (HexRotation)rotation * hexCorner;
+            return (CellCorner)(hexCorner + ((int)corner > 6 ? 6 : 0));
+        }
+
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
         {
             if (dir == (CellDir)PTHexPrismDir.Forward)

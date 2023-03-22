@@ -115,7 +115,13 @@ namespace Sylves
         public CellDir Rotate(CellDir dir, CellRotation rotation)
         {
             return IsAxial(dir) ? dir : NGonCellType.Rotate(dir, rotation, n);
+        }
 
+        public CellCorner Rotate(CellCorner corner, CellRotation rotation)
+        {
+            var ngonCorner = (CellCorner)((int)corner % n);
+            ngonCorner = NGonCellType.Rotate(ngonCorner, rotation, n);
+            return (CellCorner)(ngonCorner + ((int)corner > n ? n : 0));
         }
 
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)

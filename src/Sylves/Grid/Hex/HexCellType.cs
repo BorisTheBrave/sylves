@@ -99,6 +99,8 @@ namespace Sylves
 
         public CellDir Rotate(CellDir dir, CellRotation rotation) => (CellDir)((HexRotation)rotation * (PTHexDir)dir);
 
+        public CellCorner Rotate(CellCorner corner, CellRotation rotation) => (CellCorner)((HexRotation)rotation * (PTHexCorner)corner);
+
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
         {
             connection = new Connection {  Mirror = (int)rotation < 0 };

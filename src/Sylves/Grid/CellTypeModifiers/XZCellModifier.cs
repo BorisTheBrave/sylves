@@ -86,6 +86,11 @@ namespace Sylves
             return underlying.Rotate(dir, rotation);
         }
 
+        public CellCorner Rotate(CellCorner corner, CellRotation rotation)
+        {
+            return underlying.Rotate(corner, rotation);
+        }
+
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
         {
             underlying.Rotate(dir, rotation, out resultDir, out connection);

@@ -32,6 +32,8 @@ namespace Sylves
 
         CellDir Rotate(CellDir dir, CellRotation rotation);
 
+        CellCorner Rotate(CellCorner dir, CellRotation rotation);
+
         void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection);
 
         CellRotation RotateCW { get; }
