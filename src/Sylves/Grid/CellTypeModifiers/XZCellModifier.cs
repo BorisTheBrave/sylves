@@ -46,6 +46,11 @@ namespace Sylves
 
         public CellRotation RotateCCW => underlying.RotateCCW;
 
+        public IEnumerable<CellCorner> GetCellCorners()
+        {
+            return underlying.GetCellCorners();
+        }
+
         public IEnumerable<CellDir> GetCellDirs()
         {
             return underlying.GetCellDirs();

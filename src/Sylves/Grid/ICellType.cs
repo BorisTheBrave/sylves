@@ -16,6 +16,10 @@ namespace Sylves
 
         CellDir? Invert(CellDir dir);
 
+        // Corners
+
+        IEnumerable<CellCorner> GetCellCorners();
+
         // Rotations
 
         IList<CellRotation> GetRotations(bool includeReflections = false);

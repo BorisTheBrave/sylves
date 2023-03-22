@@ -23,6 +23,14 @@ namespace Sylves
             (CellDir) SquareDir.Down,
         };
 
+        private static readonly CellCorner[] allCellCorners = new[]
+        {
+            (CellCorner) SquareCorner.DownRight,
+            (CellCorner) SquareCorner.UpRight,
+            (CellCorner) SquareCorner.UpLeft,
+            (CellCorner) SquareCorner.DownLeft,
+        };
+
         private static readonly CellRotation[] allRotations = new[]
         {
             (CellRotation) 0,
@@ -50,6 +58,8 @@ namespace Sylves
         public IEnumerable<CellDir> GetCellDirs() => allCellDirs;
 
         public CellDir? Invert(CellDir dir) => (CellDir)((SquareDir)dir).Inverted();
+
+        public IEnumerable<CellCorner> GetCellCorners() => allCellCorners;
 
         // Rotations
 

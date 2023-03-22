@@ -255,6 +255,23 @@ namespace Sylves
             return ToDir(r * dir.Forward());
         }
 
+        public static CubeCorner operator *(CubeRotation r, CubeCorner corner)
+        {
+            var c = (int)corner;
+            var x = (c >> 0) & 1;
+            var y = (c >> 1) & 1;
+            var z = (c >> 2) & 1;
+            // Invert
+            x = x ^ ((r.value >> 11) & 1);
+            y = y ^ ((r.value >> 7) & 1);
+            z = z ^ ((r.value >> 3) & 1);
+            // Permute
+            var o = (x << ((r.value >> 8) & 3)) |
+                (y << ((r.value >> 4) & 3)) |
+                (z << ((r.value >> 0) & 3));
+            return (CubeCorner)o;
+        }
+
         public static CubeBound operator *(CubeRotation rotation, CubeBound bound)
         {
             var a = rotation * bound.min;

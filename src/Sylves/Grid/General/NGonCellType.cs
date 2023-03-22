@@ -27,6 +27,7 @@ namespace Sylves
         private int n;
 
         private CellDir[] dirs;
+        private CellCorner[] corners;
         private CellRotation[] rotations;
         private CellRotation[] rotationsAndReflections;
 
@@ -34,6 +35,7 @@ namespace Sylves
         {
             this.n = n;
             dirs = Enumerable.Range(0, n).Select(x => (CellDir)x).ToArray();
+            corners = Enumerable.Range(0, n).Select(x => (CellCorner)x).ToArray();
             rotations = Enumerable.Range(0, n).Select(x => (CellRotation)x).ToArray();
             rotationsAndReflections = rotations.Concat(Enumerable.Range(0, n).Select(x => (CellRotation)~x)).ToArray();
         }
@@ -81,10 +83,9 @@ namespace Sylves
 
         public CellRotation RotateCW => (CellRotation)(n - 1);
 
-        public IEnumerable<CellDir> GetCellDirs()
-        {
-            return dirs;
-        }
+        public IEnumerable<CellCorner> GetCellCorners() => corners;
+
+        public IEnumerable<CellDir> GetCellDirs() => dirs;
 
         public CellRotation GetIdentity()
         {

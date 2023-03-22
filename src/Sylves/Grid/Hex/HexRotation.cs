@@ -103,6 +103,15 @@ namespace Sylves
 
         public static FTHexDir operator *(HexRotation rotation, FTHexDir dir) => (FTHexDir)(rotation * (PTHexDir)dir);
 
+        public static PTHexCorner operator *(HexRotation rotation, PTHexCorner dir)
+        {
+            var side = (int)(dir);
+            var newSide = (rotation.IsReflection ? rotation.Rotation - side + 7 : rotation.Rotation + side) % 6;
+            return (PTHexCorner)(newSide);
+        }
+
+        public static FTHexCorner operator *(HexRotation rotation, FTHexCorner dir) => (FTHexCorner)(rotation * (PTHexCorner)dir);
+
         public static HexBound operator *(HexRotation rotation, HexBound bound)
         {
             // Operates exactly the same as the cube case.

@@ -12,6 +12,7 @@ namespace Sylves
         private static HexPrismCellType ptInstance = new HexPrismCellType(HexOrientation.PointyTopped);
 
         private readonly HexOrientation orientation;
+        private readonly CellCorner[] corners;
         private readonly CellDir[] dirs;
         private readonly CellRotation[] rotations;
         private readonly CellRotation[] rotationsAndReflections;
@@ -19,6 +20,7 @@ namespace Sylves
         private HexPrismCellType(HexOrientation orientation)
         {
             dirs = Enumerable.Range(0, 6).Select(x => (CellDir)x).Concat(new[] { (CellDir)PTHexPrismDir.Forward, (CellDir)PTHexPrismDir.Back }).ToArray();
+            corners = Enumerable.Range(0, 12).Select(x => (CellCorner)x).ToArray();
             rotations = Enumerable.Range(0, 6).Select(x => (CellRotation)x).ToArray();
             rotationsAndReflections = rotations.Concat(Enumerable.Range(0, 6).Select(x => (CellRotation)~x)).ToArray();
             this.orientation = orientation;
@@ -28,6 +30,7 @@ namespace Sylves
 
         private bool IsAxial(CellDir dir) => ((PTHexPrismDir)dir).IsAxial();
 
+        public IEnumerable<CellCorner> GetCellCorners() => corners;
         public IEnumerable<CellDir> GetCellDirs() => dirs;
 
         public CellDir? Invert(CellDir dir) => (CellDir)((PTHexPrismDir)dir).Inverted();

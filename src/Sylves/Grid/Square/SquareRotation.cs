@@ -83,7 +83,7 @@ namespace Sylves
         public static SquareRotation operator *(SquareRotation a, SquareRotation b)
         {
             var isReflection = a.IsReflection ^ b.IsReflection;
-            var rotation = a * (b * 0);
+            var rotation = a * (b * (SquareDir)0);
             return new SquareRotation(isReflection ? (short)~rotation : (short)rotation);
         }
 
@@ -92,6 +92,13 @@ namespace Sylves
             var side = (int)(dir);
             var newSide = (rotation.IsReflection ? rotation.Rotation - side + 4 : rotation.Rotation + side) % 4;
             return (SquareDir)(newSide);
+        }
+
+        public static SquareCorner operator *(SquareRotation rotation, SquareCorner dir)
+        {
+            var side = (int)(dir);
+            var newSide = (rotation.IsReflection ? rotation.Rotation - side + 5 : rotation.Rotation + side) % 4;
+            return (SquareCorner)(newSide);
         }
 
         public static SquareBound operator *(SquareRotation rotation, SquareBound bound)

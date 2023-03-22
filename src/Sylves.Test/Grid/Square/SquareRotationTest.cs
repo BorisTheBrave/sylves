@@ -41,5 +41,20 @@ namespace Sylves.Test
 
             TestUtils.AssertAreEqual(r.ToMatrix(), rb.ToMatrix() * ra.ToMatrix(), 1e-6);
         }
+
+        [Test]
+        public void TestRotate()
+        {
+            Assert.AreEqual(SquareDir.Up, SquareRotation.RotateCCW * SquareDir.Right);
+            Assert.AreEqual(SquareCorner.UpRight, SquareRotation.RotateCCW * SquareCorner.DownRight);
+
+
+            Assert.AreEqual(SquareDir.Right, SquareRotation.ReflectY * SquareDir.Right);
+            Assert.AreEqual(SquareCorner.UpRight, SquareRotation.ReflectY * SquareCorner.DownRight);
+
+
+            Assert.AreEqual(SquareDir.Left, SquareRotation.ReflectX * SquareDir.Right);
+            Assert.AreEqual(SquareCorner.DownLeft, SquareRotation.ReflectX * SquareCorner.DownRight);
+        }
     }
 }

@@ -17,6 +17,19 @@ namespace Sylves
 
         private static readonly CubeCellType instance = new CubeCellType();
 
+
+        private static readonly CellCorner[] allCellCorners = new[]
+        {
+            (CellCorner) CubeCorner.BackDownLeft,
+            (CellCorner) CubeCorner.BackDownRight,
+            (CellCorner) CubeCorner.BackUpLeft,
+            (CellCorner) CubeCorner.BackUpRight,
+            (CellCorner) CubeCorner.ForwardDownLeft,
+            (CellCorner) CubeCorner.ForwardDownRight,
+            (CellCorner) CubeCorner.ForwardUpLeft,
+            (CellCorner) CubeCorner.ForwardUpRight,
+        };
+
         private static readonly CellDir[] allCellDirs = new[]
         {
             (CellDir) CubeDir.Left,
@@ -33,6 +46,8 @@ namespace Sylves
         public static CubeCellType Instance => instance;
 
         private CubeCellType() { }
+
+        public IEnumerable<CellCorner> GetCellCorners() => allCellCorners;
 
         public IEnumerable<CellDir> GetCellDirs() => allCellDirs;
 

@@ -13,12 +13,14 @@ namespace Sylves
 
         private readonly HexOrientation orientation;
         private readonly CellDir[] dirs;
+        private readonly CellCorner[] corners;
         private readonly CellRotation[] rotations;
         private readonly CellRotation[] rotationsAndReflections;
 
         private HexCellType(HexOrientation orientation)
         {
             dirs = Enumerable.Range(0, 6).Select(x => (CellDir)x).ToArray();
+            corners = Enumerable.Range(0, 6).Select(x => (CellCorner)x).ToArray();
             rotations = Enumerable.Range(0, 6).Select(x => (CellRotation)x).ToArray();
             rotationsAndReflections = rotations.Concat(Enumerable.Range(0, 6).Select(x => (CellRotation)~x)).ToArray();
             this.orientation = orientation;
@@ -31,10 +33,9 @@ namespace Sylves
         public CellRotation ReflectY => orientation == HexOrientation.FlatTopped ? HexRotation.FTReflectY : HexRotation.PTReflectY;
         public CellRotation ReflectX => orientation == HexOrientation.FlatTopped ? HexRotation.FTReflectX : HexRotation.PTReflectX;
 
-        public IEnumerable<CellDir> GetCellDirs()
-        {
-            return dirs;
-        }
+        public IEnumerable<CellCorner> GetCellCorners() => corners;
+
+        public IEnumerable<CellDir> GetCellDirs() => dirs;
 
         public CellRotation GetIdentity()
         {

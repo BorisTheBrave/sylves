@@ -184,6 +184,7 @@ namespace Sylves.Test
         }
 
         [Test]
+        [Ignore("slow!")]
         public void ExportTutorialImages()
         {
             var triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(4));
