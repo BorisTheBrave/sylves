@@ -25,8 +25,10 @@ namespace Sylves
             this.underlying = underlying;
         }
 
+        /// <inheritdoc />
         public ICellType Underlying => underlying;
 
+        /// <inheritdoc />
         public static XZCellTypeModifier Get(ICellType underlying)
         {
             if(cache.TryGetValue(underlying, out var v))
@@ -36,60 +38,73 @@ namespace Sylves
             return cache[underlying] = new XZCellTypeModifier(underlying);
         }
 
+        /// <inheritdoc />
         public CellRotation RotateCW => underlying.RotateCW;
 
+        /// <inheritdoc />
         public CellRotation RotateCCW => underlying.RotateCCW;
 
+        /// <inheritdoc />
         public IEnumerable<CellCorner> GetCellCorners()
         {
             return underlying.GetCellCorners();
         }
 
+        /// <inheritdoc />
         public IEnumerable<CellDir> GetCellDirs()
         {
             return underlying.GetCellDirs();
         }
 
+        /// <inheritdoc />
         public CellRotation GetIdentity()
         {
             return underlying.GetIdentity();
         }
 
+        /// <inheritdoc />
         public IList<CellRotation> GetRotations(bool includeReflections = false)
         {
             return underlying.GetRotations(includeReflections);
         }
 
+        /// <inheritdoc />
         public CellDir? Invert(CellDir dir)
         {
             return underlying.Invert(dir);
         }
 
+        /// <inheritdoc />
         public CellRotation Invert(CellRotation a)
         {
             return underlying.Invert(a);
         }
 
+        /// <inheritdoc />
         public CellRotation Multiply(CellRotation a, CellRotation b)
         {
             return underlying.Multiply(a, b);
         }
 
+        /// <inheritdoc />
         public CellDir Rotate(CellDir dir, CellRotation rotation)
         {
             return underlying.Rotate(dir, rotation);
         }
 
+        /// <inheritdoc />
         public CellCorner Rotate(CellCorner corner, CellRotation rotation)
         {
             return underlying.Rotate(corner, rotation);
         }
 
+        /// <inheritdoc />
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
         {
             underlying.Rotate(dir, rotation, out resultDir, out connection);
         }
 
+        /// <inheritdoc />
         public bool TryGetRotation(CellDir fromDir, CellDir toDir, Connection connection, out CellRotation cellRotation)
         {
             return underlying.TryGetRotation(fromDir, toDir, connection, out cellRotation);
@@ -98,11 +113,13 @@ namespace Sylves
 
 
         // Notrivial methods at the bottom
+        /// <inheritdoc />
         public Matrix4x4 GetMatrix(CellRotation cellRotation)
         {
             return RotateZY * underlying.GetMatrix(cellRotation) * RotateYZ;
         }
 
+        /// <inheritdoc />
         public Vector3 GetCornerPosition(CellCorner corner)
         {
             return RotateZY.MultiplyVector(underlying.GetCornerPosition(corner));

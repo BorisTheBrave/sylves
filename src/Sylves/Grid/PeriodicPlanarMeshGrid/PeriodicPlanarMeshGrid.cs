@@ -105,18 +105,25 @@ namespace Sylves
 
         #region Basics
 
+        /// <inheritdoc />
         public bool Is2d => true;
 
+        /// <inheritdoc />
         public bool Is3d => false;
 
+        /// <inheritdoc />
         public bool IsPlanar => true;
 
+        /// <inheritdoc />
         public bool IsRepeating => true;
 
+        /// <inheritdoc />
         public bool IsOrientable => true;
 
+        /// <inheritdoc />
         public bool IsFinite => false;
 
+        /// <inheritdoc />
         public bool IsSingleCellType => centerGrid.IsSingleCellType;
 
         public IEnumerable<ICellType> GetCellTypes() => centerGrid.GetCellTypes();
@@ -125,22 +132,27 @@ namespace Sylves
 
         #region Relatives
 
+        /// <inheritdoc />
         public IGrid Unbounded => new PeriodicPlanarMeshGrid(aabbChunks, centerGrid, strideX, strideY, null);
 
+        /// <inheritdoc />
         public IGrid Unwrapped => this;
 
         #endregion
 
         #region Cell info
 
+        /// <inheritdoc />
         public IEnumerable<Cell> GetCells()
         {
             CheckBounded();
             return GetCellsInBounds(bound);
         }
 
+        /// <inheritdoc />
         public ICellType GetCellType(Cell cell) => centerGrid.GetCellType(Split(cell).centerCell);
 
+        /// <inheritdoc />
         public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
         #endregion
 
@@ -174,6 +186,7 @@ namespace Sylves
         #endregion
 
         #region Index
+        /// <inheritdoc />
         public int IndexCount
         {
             get
@@ -183,6 +196,7 @@ namespace Sylves
             }
         }
 
+        /// <inheritdoc />
         public int GetIndex(Cell cell)
         {
             CheckBounded();
@@ -191,6 +205,7 @@ namespace Sylves
 
         }
 
+        /// <inheritdoc />
         public Cell GetCellByIndex(int index)
         {
             var centerCell = centerGrid.GetCellByIndex(index % centerGrid.IndexCount);
@@ -200,8 +215,10 @@ namespace Sylves
         #endregion
 
         #region Bounds
+        /// <inheritdoc />
         public IBound GetBound() => bound;
 
+        /// <inheritdoc />
         public IBound GetBound(IEnumerable<Cell> cells)
         {
             var min = cells.Select(x => Split(x).chunk).Aggregate(Vector2Int.Min);
@@ -209,20 +226,24 @@ namespace Sylves
             return new SquareBound(min, max + Vector2Int.one);
         }
 
+        /// <inheritdoc />
         public IGrid BoundBy(IBound bound) => new PeriodicPlanarMeshGrid(aabbChunks, centerGrid, strideX, strideY, (SquareBound)IntersectBounds(this.bound, bound));
 
+        /// <inheritdoc />
         public IBound IntersectBounds(IBound bound, IBound other)
         {
             if (bound == null) return other;
             if (other == null) return bound;
             return ((SquareBound)bound).Intersect((SquareBound)other);
         }
+        /// <inheritdoc />
         public IBound UnionBounds(IBound bound, IBound other)
         {
             if (bound == null) return null;
             if (other == null) return null;
             return ((SquareBound)bound).Union((SquareBound)other);
         }
+        /// <inheritdoc />
         public IEnumerable<Cell> GetCellsInBounds(IBound bound)
         {
             foreach (var chunk in (SquareBound)bound)
@@ -234,6 +255,7 @@ namespace Sylves
             }
         }
 
+        /// <inheritdoc />
         public bool IsCellInBound(Cell cell, IBound bound)
         {
             var (centerCell, chunk) = Split(cell);
@@ -242,12 +264,14 @@ namespace Sylves
         #endregion
 
         #region Position
+        /// <inheritdoc />
         public Vector3 GetCellCenter(Cell cell)
         {
             var (centerCell, chunk) = Split(cell);
             return centerGrid.GetCellCenter(centerCell) + ChunkOffset(chunk);
         }
 
+        /// <inheritdoc />
         public TRS GetTRS(Cell cell)
         {
             var (centerCell, chunk) = Split(cell);
@@ -258,6 +282,7 @@ namespace Sylves
         #endregion
 
         #region Shape
+        /// <inheritdoc />
         public Deformation GetDeformation(Cell cell)
         {
             var (centerCell, chunk) = Split(cell);
@@ -265,6 +290,7 @@ namespace Sylves
             return Matrix4x4.Translate(ChunkOffset(chunk)) * deformation;
         }
 
+        /// <inheritdoc />
         public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
         {
             var (centerCell, chunk) = Split(cell);
@@ -272,11 +298,13 @@ namespace Sylves
             transform = Matrix4x4.Translate(ChunkOffset(chunk)) * transform;
         }
 
+        /// <inheritdoc />
         public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
         {
             throw new Grid2dException();
         }
 
+        /// <inheritdoc />
         public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
         {
             throw new Grid2dException();
@@ -284,6 +312,7 @@ namespace Sylves
         #endregion
 
         #region Query
+        /// <inheritdoc />
         public bool FindCell(Vector3 position, out Cell cell)
         {
             var pos2 = new Vector2(position.x, position.y);
@@ -300,6 +329,7 @@ namespace Sylves
             return false;
         }
 
+        /// <inheritdoc />
         public bool FindCell(
             Matrix4x4 matrix,
             out Cell cell,
@@ -316,6 +346,7 @@ namespace Sylves
             return centerGrid.FindCell(Matrix4x4.Translate(-ChunkOffset(chunk)) * matrix, out var _, out rotation);
         }
 
+        /// <inheritdoc />
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
             var min2 = new Vector2(min.x, min.y);
@@ -330,6 +361,7 @@ namespace Sylves
             }
         }
 
+        /// <inheritdoc />
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
             var origin2 = new Vector2(origin.x, origin.y);
@@ -372,16 +404,19 @@ namespace Sylves
 
         #region Symmetry
 
+        /// <inheritdoc />
         public GridSymmetry FindGridSymmetry(ISet<Cell> src, ISet<Cell> dest, Cell srcCell, CellRotation cellRotation)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public bool TryApplySymmetry(GridSymmetry s, IBound srcBound, out IBound destBound)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r)
         {
             throw new NotImplementedException();

@@ -4,6 +4,11 @@ using System.Diagnostics;
 namespace Sylves
 {
 #if !UNITY
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    /// <summary>
+    /// A pure .NET implemenation of Unity's Vector2Int.
+    /// See Unity's docs for more details.
+    /// </summary>
     public struct Vector2Int
     {
         [DebuggerStepThrough]
