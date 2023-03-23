@@ -111,6 +111,9 @@ namespace Sylves
         {
             return ((SquareRotation)cellRotation).ToMatrix();
         }
+
+        public Vector3 GetCornerPosition(CellCorner corner) => ((SquareCorner)corner).GetPosition();
+
         public CellRotation RotateCW => SquareRotation.RotateCW;
         public CellRotation RotateCCW => SquareRotation.RotateCCW;
     }

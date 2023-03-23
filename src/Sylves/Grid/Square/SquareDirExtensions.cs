@@ -26,5 +26,18 @@ namespace Sylves
         {
             return (SquareDir)((((int)dir) + 2) % 4);
         }
+
+        /// <returns>The position of a corner in a unit square centered on the origin.</returns>
+        public static Vector3 GetPosition(this SquareCorner corner)
+        {
+            switch (corner)
+            {
+                case SquareCorner.DownRight: return new Vector3(0.5f, -0.5f, 0);
+                case SquareCorner.UpRight: return new Vector3(0.5f, 0.5f, 0);
+                case SquareCorner.UpLeft: return new Vector3(-0.5f, 0.5f, 0);
+                case SquareCorner.DownLeft: return new Vector3(-0.5f, -0.5f, 0);
+            }
+            throw new Exception($"{corner} is not a valid value for SquareCorner");
+        }
     }
 }

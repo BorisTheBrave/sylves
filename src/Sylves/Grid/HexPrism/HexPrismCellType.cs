@@ -52,7 +52,7 @@ namespace Sylves
         {
             var hexCorner = (PTHexCorner)((int)corner % 6);
             hexCorner = (HexRotation)rotation * hexCorner;
-            return (CellCorner)(hexCorner + ((int)corner > 6 ? 6 : 0));
+            return (CellCorner)(hexCorner + ((int)corner >= 6 ? 6 : 0));
         }
 
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
@@ -122,11 +122,20 @@ namespace Sylves
             }
         }
 
-        public Matrix4x4 GetMatrix(CellRotation cellRotation) => ((HexRotation)cellRotation).ToMatrix(orientation);
-
         public CellRotation ReflectY => orientation == HexOrientation.FlatTopped ? HexRotation.FTReflectY : HexRotation.PTReflectY;
         public CellRotation ReflectX => orientation == HexOrientation.FlatTopped ? HexRotation.FTReflectX : HexRotation.PTReflectX;
         public CellRotation RotateCW => HexRotation.RotateCW;
         public CellRotation RotateCCW => HexRotation.RotateCCW;
+
+        public Matrix4x4 GetMatrix(CellRotation cellRotation) => ((HexRotation)cellRotation).ToMatrix(orientation);
+
+        public Vector3 GetCornerPosition(CellCorner corner)
+        {
+            var flatCorner = (int)corner % 6;
+            var flatPosition = orientation == HexOrientation.FlatTopped ? ((FTHexCorner)flatCorner).GetPosition() : ((PTHexCorner)flatCorner).GetPosition();
+            return flatPosition + (((int)corner) >= 6 ? new Vector3(0, 0, 0.5f) : new Vector3(0, 0, -0.5f));
+        }
+
+
     }
 }

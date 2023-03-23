@@ -154,5 +154,7 @@ namespace Sylves
         {
             return ((CubeRotation)cellRotation).ToMatrix();
         }
+
+        public Vector3 GetCornerPosition(CellCorner corner) => ((CubeCorner)corner).GetPosition();
     }
 }

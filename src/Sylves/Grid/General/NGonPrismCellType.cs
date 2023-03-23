@@ -63,11 +63,6 @@ namespace Sylves
             return (CellRotation)0;
         }
 
-        public Matrix4x4 GetMatrix(CellRotation cellRotation)
-        {
-            return NGonCellType.GetMatrix(cellRotation, n);
-        }
-
         public CellRotation? FromMatrix(Matrix4x4 matrix)
         {
             return NGonCellType.FromMatrix(matrix, n);
@@ -121,7 +116,7 @@ namespace Sylves
         {
             var ngonCorner = (CellCorner)((int)corner % n);
             ngonCorner = NGonCellType.Rotate(ngonCorner, rotation, n);
-            return (CellCorner)(ngonCorner + ((int)corner > n ? n : 0));
+            return (CellCorner)(ngonCorner + ((int)corner >= n ? n : 0));
         }
 
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
@@ -199,5 +194,17 @@ namespace Sylves
 
         public float CircumcircleDiameterToSideLength(float diameter) => diameter * Mathf.Sin(Mathf.PI / n);
         public float SideLengthToCircumcircleDiameter(float sideLength) => sideLength / Mathf.Sin(Mathf.PI / n);
+
+        public Matrix4x4 GetMatrix(CellRotation cellRotation)
+        {
+            return NGonCellType.GetMatrix(cellRotation, n);
+        }
+
+        public Vector3 GetCornerPosition(CellCorner corner)
+        {
+            var flatCorner = (int)corner % n;
+            var flatPosition = NGonCellType.GetCornerPosition(corner, n);
+            return flatPosition + (((int)corner) >= n ? new Vector3(0, 0, 0.5f) : new Vector3(0, 0, -0.5f));
+        }
     }
 }

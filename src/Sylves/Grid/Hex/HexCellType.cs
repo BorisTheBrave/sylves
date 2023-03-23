@@ -42,11 +42,6 @@ namespace Sylves
             return (CellRotation)0;
         }
 
-        public Matrix4x4 GetMatrix(CellRotation cellRotation)
-        {
-            return ((HexRotation)cellRotation).ToMatrix(orientation);
-        }
-
         public IList<CellRotation> GetRotations(bool includeReflections = false)
         {
             return includeReflections ? rotationsAndReflections : rotations;
@@ -122,5 +117,14 @@ namespace Sylves
         }
         public CellRotation RotateCW => HexRotation.RotateCW;
         public CellRotation RotateCCW => HexRotation.RotateCCW;
+
+
+
+        public Matrix4x4 GetMatrix(CellRotation cellRotation)
+        {
+            return ((HexRotation)cellRotation).ToMatrix(orientation);
+        }
+
+        public Vector3 GetCornerPosition(CellCorner corner) => orientation == HexOrientation.FlatTopped ? ((FTHexCorner)corner).GetPosition() : ((PTHexCorner)corner).GetPosition();
     }
 }

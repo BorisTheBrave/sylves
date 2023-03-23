@@ -56,5 +56,24 @@ namespace Sylves
 
         /// <returns>Returns the face dir with the opposite normal vector.</returns>
         public static CubeDir Inverted(this CubeDir dir) => (CubeDir)(1 ^ (int)dir);
+
+
+
+        /// <returns>The position of a corner in a unit cube centered on the origin.</returns>
+        public static Vector3 GetPosition(this CubeCorner corner)
+        {
+            switch (corner)
+            {
+                case CubeCorner.BackDownRight: return new Vector3(0.5f, -0.5f, -0.5f);
+                case CubeCorner.BackUpRight: return new Vector3(0.5f, 0.5f, -0.5f);
+                case CubeCorner.BackUpLeft: return new Vector3(-0.5f, 0.5f, -0.5f);
+                case CubeCorner.BackDownLeft: return new Vector3(-0.5f, -0.5f, -0.5f);
+                case CubeCorner.ForwardDownRight: return new Vector3(0.5f, -0.5f, 0.5f);
+                case CubeCorner.ForwardUpRight: return new Vector3(0.5f, 0.5f, 0.5f);
+                case CubeCorner.ForwardUpLeft: return new Vector3(-0.5f, 0.5f, 0.5f);
+                case CubeCorner.ForwardDownLeft: return new Vector3(-0.5f, -0.5f, 0.5f);
+            }
+            throw new Exception($"{corner} is not a valid value for CubeCorner");
+        }
     }
 }

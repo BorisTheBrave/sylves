@@ -92,21 +92,6 @@ namespace Sylves
             return (CellRotation)0;
         }
 
-        internal static Matrix4x4 GetMatrix(CellRotation cellRotation, int n)
-        {
-            var i = (int)cellRotation;
-            var rot = i < 0 ? ~i : i;
-            var isReflection = i < 0;
-            var m = isReflection ? Matrix4x4.Scale(new Vector3(1, -1, 1)) : Matrix4x4.identity;
-            m = Matrix4x4.Rotate(Quaternion.Euler(0, 0, 360.0f / n * rot)) * m;
-            return m;
-        }
-
-        public Matrix4x4 GetMatrix(CellRotation cellRotation)
-        {
-            return GetMatrix(cellRotation, n);
-        }
-
         internal static CellRotation? FromMatrix(Matrix4x4 matrix, int n)
         {
             // Check that this matrix doesn't touch the z-axis
@@ -254,6 +239,32 @@ namespace Sylves
                 rotation = (CellRotation)(delta % n);
             }
             return true;
+        }
+
+        public Matrix4x4 GetMatrix(CellRotation cellRotation)
+        {
+            return GetMatrix(cellRotation, n);
+        }
+
+        internal static Matrix4x4 GetMatrix(CellRotation cellRotation, int n)
+        {
+            var i = (int)cellRotation;
+            var rot = i < 0 ? ~i : i;
+            var isReflection = i < 0;
+            var m = isReflection ? Matrix4x4.Scale(new Vector3(1, -1, 1)) : Matrix4x4.identity;
+            m = Matrix4x4.Rotate(Quaternion.Euler(0, 0, 360.0f / n * rot)) * m;
+            return m;
+        }
+
+        public Vector3 GetCornerPosition(CellCorner corner)
+        {
+            return GetCornerPosition(corner, n);
+        }
+
+        internal static Vector3 GetCornerPosition(CellCorner corner, int n)
+        {
+            var angle = (-0.5f + (int)corner) / n * Mathf.PI * 2;
+            return new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0);
         }
     }
 }

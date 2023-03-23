@@ -36,12 +36,6 @@ namespace Sylves
             return cache[underlying] = new XZCellTypeModifier(underlying);
         }
 
-        // GetMatrix is the only nontrivial member
-        public Matrix4x4 GetMatrix(CellRotation cellRotation)
-        {
-            return RotateZY * underlying.GetMatrix(cellRotation) * RotateYZ;
-        }
-
         public CellRotation RotateCW => underlying.RotateCW;
 
         public CellRotation RotateCCW => underlying.RotateCCW;
@@ -100,5 +94,19 @@ namespace Sylves
         {
             return underlying.TryGetRotation(fromDir, toDir, connection, out cellRotation);
         }
+
+
+
+        // Notrivial methods at the bottom
+        public Matrix4x4 GetMatrix(CellRotation cellRotation)
+        {
+            return RotateZY * underlying.GetMatrix(cellRotation) * RotateYZ;
+        }
+
+        public Vector3 GetCornerPosition(CellCorner corner)
+        {
+            return RotateZY.MultiplyVector(underlying.GetCornerPosition(corner));
+        }
+
     }
 }
