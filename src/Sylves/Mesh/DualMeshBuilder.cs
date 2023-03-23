@@ -144,7 +144,6 @@ namespace Sylves
                         (int, int) endHe = default;
                         {
                             var currentHe = startHe;
-                            var dualVertCount = 0;
                             while (true)
                             {
                                 visited.Add(currentHe);

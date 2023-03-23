@@ -47,8 +47,6 @@ namespace Sylves
 
             void GetJacobi(Vector3 p, out Matrix4x4 jacobi)
             {
-                var m = 1e-3f;
-
                 var j = jacobiPoint(p);
 
                 if (!smoothNormals)

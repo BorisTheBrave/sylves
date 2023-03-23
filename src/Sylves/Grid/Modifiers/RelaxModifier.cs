@@ -58,7 +58,7 @@ namespace Sylves
             try
             {
                 cellTypes = underlying.GetCellTypes();
-            } catch (Exception ex)
+            } catch (Exception)
             {
 
             }
@@ -170,21 +170,21 @@ namespace Sylves
 
         #region Basics
 
-        public virtual bool Is2d => underlying.Is2d;
+        public override bool Is2d => underlying.Is2d;
 
-        public virtual bool Is3d => underlying.Is3d;
+        public override bool Is3d => underlying.Is3d;
 
-        public virtual bool IsPlanar => underlying.IsPlanar;
+        public override bool IsPlanar => underlying.IsPlanar;
 
-        public virtual bool IsRepeating => underlying.IsRepeating;
+        public override bool IsRepeating => underlying.IsRepeating;
 
-        public virtual bool IsOrientable => underlying.IsOrientable;
+        public override bool IsOrientable => underlying.IsOrientable;
 
-        public virtual bool IsFinite => base.IsFinite || underlying.IsFinite;
+        public override bool IsFinite => base.IsFinite || underlying.IsFinite;
 
-        public virtual bool IsSingleCellType => underlying.IsSingleCellType;
+        public override bool IsSingleCellType => underlying.IsSingleCellType;
 
-        public virtual IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes();
+        public override IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes();
 
         #endregion
 

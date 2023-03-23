@@ -24,9 +24,10 @@ namespace Sylves.Test
 
         public static void WriteGrid(IGrid grid, TextWriter tw, Options options)
         {
-            if(IsSeed)
+#pragma warning disable CS0162 // Unreachable code detected
+            if (IsSeed)
             {
-                if(grid.Unwrapped is PeriodicPlanarMeshGrid)
+                if (grid.Unwrapped is PeriodicPlanarMeshGrid)
                 {
                     grid = grid.BoundBy(new SquareBound(0, 0, 1, 1));
                 }
@@ -60,7 +61,7 @@ namespace Sylves.Test
             b.EndSvg();
         }
 
-        public static void Export(IGrid g, string filename, Options options = null)
+        public static void Export(IGrid g, string filename, Options? options = null)
         {
             var fullPath = Path.GetFullPath(filename);
             using (var file = File.Open(fullPath, FileMode.Create))

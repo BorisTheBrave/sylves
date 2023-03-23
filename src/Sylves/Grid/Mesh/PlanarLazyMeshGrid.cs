@@ -260,21 +260,21 @@ namespace Sylves
 
         #region Basics
 
-        public bool Is2d => true;
+        public virtual bool Is2d => true;
 
-        public bool Is3d => false;
+        public virtual bool Is3d => false;
 
-        public bool IsPlanar => true;
+        public virtual bool IsPlanar => true;
 
-        public bool IsRepeating => false;
+        public virtual bool IsRepeating => false;
 
-        public bool IsOrientable => true;
+        public virtual bool IsOrientable => true;
 
-        public bool IsFinite => bound != null;
+        public virtual bool IsFinite => bound != null;
 
-        public bool IsSingleCellType => false;
+        public virtual bool IsSingleCellType => false;
 
-        public IEnumerable<ICellType> GetCellTypes() => cellTypes ?? throw new Exception("Unknown cell types");
+        public virtual IEnumerable<ICellType> GetCellTypes() => cellTypes ?? throw new Exception("Unknown cell types");
 
         #endregion
 
