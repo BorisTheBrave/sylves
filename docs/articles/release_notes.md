@@ -2,6 +2,7 @@
 * Changed Quad/TriangleInterpolation to use same conventions as rest of Sylves
 * Fixed SquareGrid.FindCell for non unit sized grids
 * Introduce [CellCorner](xref:Sylves.CellCorner)
+* Fix precision issues in triangle/hex raycasts.
 
 # 0.2
 

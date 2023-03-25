@@ -803,9 +803,16 @@ namespace Sylves
 
             while (true)
             {
+                // Find the next line crossed. We filter out lines that 
+                // aren't bordering the current triangle, do deal with precision issues
+                var ta2 = (stepa == 1) != isUp ? ta : float.PositiveInfinity;
+                var tb2 = (stepb == 1) != isUp ? tb : float.PositiveInfinity;
+                var tc2 = (stepc == 1) != isUp ? tc : float.PositiveInfinity;
+
+
                 float t;
                 CellDir cellDir;
-                if (ta <= tb && ta <= tc && (stepa == 1) != isUp)
+                if (ta2 <= tb2 && ta2 <= tc2)
                 {
                     if (ta > maxDistance) yield break;
                     t = ta;
@@ -814,7 +821,7 @@ namespace Sylves
                     cellDir = cellDirX;
                     if (bound != null && (a >= bound.max.x || a < bound.min.x)) yield break;
                 }
-                else if (tb <= ta && tb <= tc && (stepb == 1) != isUp)
+                else if (tb2 <= ta2 && tb2 <= tc2)
                 {
                     if (tb > maxDistance) yield break;
                     t = tb;
