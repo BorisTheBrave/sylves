@@ -94,8 +94,8 @@ namespace Sylves
         public void Normalize()
         {
             var m = magnitude;
-            this.x *= m;
-            this.y *= m;
+            this.x /= m;
+            this.y /= m;
         }
         public void Scale(Vector2 scale)
         {
