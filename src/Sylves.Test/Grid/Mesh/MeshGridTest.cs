@@ -187,6 +187,37 @@ namespace Sylves.Test
             Assert.AreEqual(0.1f, raycastInfo.distance, 1e-6);
         }
 
+
+        [Test]
+        public void TestRaycast_Planar_StartsInside()
+        {
+            var g = new MeshGrid(ConwayOperators.Ortho(TestMeshes.PlaneXY));
+            var results = g.Raycast(new Vector3(-0.25f, -0.25f, 0), Vector3.right);
+            var raycastInfo = results.ToList();
+            Assert.AreEqual(2, raycastInfo.Count);
+            //Assert.AreEqual(new Cell(), raycastInfo[0].cell);
+            //Assert.AreEqual(SquareDir.Left, (SquareDir?)raycastInfo.cellDir);
+            //Assert.AreEqual(0.1f, raycastInfo.distance, 1e-6);
+        }
+
+        [Test]
+        public void TestRaycast_Planar_Miss()
+        {
+            var g = new MeshGrid(ConwayOperators.Ortho(TestMeshes.PlaneXY));
+            var results = g.Raycast(new Vector3(-0.25f, -0.25f, 1), Vector3.right);
+            var raycastInfo = results.ToList();
+            Assert.AreEqual(0, raycastInfo.Count);
+        }
+
+        [Test]
+        public void TestRaycast_Planar_Perp()
+        {
+            var g = new MeshGrid(ConwayOperators.Ortho(TestMeshes.PlaneXY));
+            var results = g.Raycast(new Vector3(-0.25f, -0.25f, 1), Vector3.back);
+            var raycastInfo = results.ToList();
+            Assert.AreEqual(1, raycastInfo.Count);
+        }
+
         [Test]
         public void TestRaycast()
         {

@@ -27,6 +27,9 @@ namespace Sylves
     /// </summary>
     public class MeshGrid : DataDrivenGrid
     {
+        // Epsilon for judging if something is in the plane XY
+        private const float PlanarThickness = 1e-35f;
+
         private MeshDetails meshDetails;
         protected readonly MeshData meshData;
         private readonly MeshGridOptions meshGridOptions;
@@ -70,7 +73,7 @@ namespace Sylves
 
         internal void BuildMeshDetails()
         {
-            var hashCellSize = new Vector3(float.Epsilon, float.Epsilon, float.Epsilon);
+            var hashCellSize = new Vector3(PlanarThickness, PlanarThickness, PlanarThickness);
             Vector3? min = null;
             Vector3? max = null;
             foreach (var cell in GetCells())
@@ -168,8 +171,7 @@ namespace Sylves
             var n = Vector3.Cross(p1 - p0, p2 - p0);
 
             var o = Vector3.Dot(p - p2, n);
-            const float epsilon = 1e-6f;
-            if (o < -epsilon || o > epsilon)
+            if (o < -PlanarThickness || o > PlanarThickness)
                 return false;
 
             var s = Vector3.Dot(n, Vector3.Cross(p0 - p2, p - p2));
@@ -318,67 +320,72 @@ namespace Sylves
         // Unlike raycast, this doesn't catch rays that start in the cell.
         protected virtual RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
         {
-            var cellData = CellData[cell] as MeshCellData;
-            if (IsPlanar)
+            // Detect special planar case
+            if (IsPlanar && direction.z == 0)
             {
-                var face = cellData.Face;
-                var prev = meshData.vertices[face[face.Count - 1]];
-                var bestD = float.PositiveInfinity;
-                var bestP = new Vector3();
-                var bestI = 0;
-                for (var i = 0; i < face.Count; i++)
+                return RaycastCell2D(cell, rayOrigin, direction);
+            }
+            // Normal 3d raycast
+            // Currently does fan detection
+            // Doesn't work for convex faces
+            var cellData = CellData[cell] as MeshCellData;
+            var face = cellData.Face;
+            var v0 = meshData.vertices[face[0]];
+            var prev = meshData.vertices[face[face.Count - 1]];
+            for (var i = 1; i < face.Count; i++)
+            {
+                var v = meshData.vertices[face[i]];
+                if (MeshRaycast.RaycastTri(rayOrigin, direction, v0, prev, v, out var point, out var distance))
                 {
-                    var curr = meshData.vertices[face[i]];
-                    if (MeshRaycast.RaycastSegment(rayOrigin, direction, prev, curr, out var p, out var d))
-                    {
-                        if (d < bestD)
-                        {
-                            bestD = d;
-                            bestP = p;
-                            bestI = i;
-                        }
-                    }
-                    prev = curr;
-                }
-                if (bestD == float.PositiveInfinity)
-                {
-                    return null;
-                }
-                else
-                {
-                    var cellDir = MeshGridBuilder.EdgeIndexToCellDir((bestI + face.Count - 1) % face.Count, face.Count, meshGridOptions.DoubleOddFaces);
                     return new RaycastInfo
                     {
                         cell = cell,
-                        cellDir = cellDir,
-                        distance = bestD,
-                        point = bestP,
+                        cellDir = null,
+                        distance = distance,
+                        point = point,
                     };
                 }
+                prev = v;
+            }
+            return null;
+        }
+
+        private RaycastInfo? RaycastCell2D(Cell cell, Vector3 rayOrigin, Vector3 direction)
+        {
+            var cellData = CellData[cell] as MeshCellData;
+            var face = cellData.Face;
+            var prev = meshData.vertices[face[face.Count - 1]];
+            var bestD = float.PositiveInfinity;
+            var bestP = new Vector3();
+            var bestI = 0;
+            for (var i = 0; i < face.Count; i++)
+            {
+                var curr = meshData.vertices[face[i]];
+                if (MeshRaycast.RaycastSegment(rayOrigin, direction, prev, curr, out var p, out var d))
+                {
+                    if (d < bestD)
+                    {
+                        bestD = d;
+                        bestP = p;
+                        bestI = i;
+                    }
+                }
+                prev = curr;
+            }
+            if (bestD == float.PositiveInfinity)
+            {
+                return null;
             }
             else
             {
-                // Currently does fan detection
-                // Doesn't work for convex faces
-                var face = ((MeshCellData)cellData).Face;
-                var v0 = meshData.vertices[face[0]];
-                var prev = meshData.vertices[face[face.Count - 1]];
-                for (var i = 1; i < face.Count; i++)
+                var cellDir = MeshGridBuilder.EdgeIndexToCellDir((bestI + face.Count - 1) % face.Count, face.Count, meshGridOptions.DoubleOddFaces);
+                return new RaycastInfo
                 {
-                    var v = meshData.vertices[face[i]];
-                    if (MeshRaycast.RaycastTri(rayOrigin, direction, v0, prev, v, out var point, out var distance))
-                    {
-                        return new RaycastInfo
-                        {
-                            cell = cell,
-                            cellDir = null,
-                            distance = distance,
-                            point = point,
-                        };
-                    }
-                    prev = v;
-                }
-                return null;
+                    cell = cell,
+                    cellDir = cellDir,
+                    distance = bestD,
+                    point = bestP,
+                };
             }
         }
 
