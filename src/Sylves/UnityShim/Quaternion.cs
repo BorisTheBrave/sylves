@@ -79,7 +79,16 @@ namespace Sylves
         public Quaternion normalized { get; }
 
         public static float Angle(Quaternion a, Quaternion b);
-        public static Quaternion AngleAxis(float angle, Vector3 axis);
+        */
+        public static Quaternion AngleAxis(float angle, Vector3 axis)
+        {
+            angle *= Mathf.PI / 180;
+            axis.Normalize();
+            var c = Mathf.Cos(angle / 2);
+            var s = Mathf.Sin(angle / 2);
+            return new Quaternion(axis.x * s, axis.y * s, axis.z * s, c);
+        }
+        /*
         public static float Dot(Quaternion a, Quaternion b);
         */
         public static Quaternion Euler(Vector3 euler)
