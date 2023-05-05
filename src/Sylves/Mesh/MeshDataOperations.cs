@@ -365,6 +365,54 @@ namespace Sylves
             return result;
         }
 
+        // Smooths the vertices of each face to make it closer to a regular polygon.
+        public static MeshData FaceRelax(this MeshData md, int iterations = 3)
+        {
+            var vertices = md.vertices;
+
+            for (var it = 0; it < iterations; it++)
+            {
+                var nextVertices = new Vector3[vertices.Length];
+                var nextVerticesN = new int[vertices.Length];
+                foreach (var face in MeshUtils.GetFaces(md))
+                {
+                    var n = face.Count;
+                    // TODO: Precompute this outside of iteration loop?
+                    var centroid = new Vector3();
+                    var normal = new Vector3();
+                    for (var i = 0; i < face.Count; i++)
+                    {
+                        centroid += vertices[face[i]];
+                        normal += Vector3.Cross(vertices[face[i]], vertices[face[(i + 1) % n]]);
+                    }
+                    centroid /= n;
+                    normal.Normalize();
+                    var p = new Vector3();
+                    var r = Matrix4x4.Rotate(Quaternion.AngleAxis(360f / n, normal));
+                    for (var i = 0; i < face.Count; i++)
+                    {
+                        p += vertices[face[i]] - centroid;
+                        p = r.MultiplyVector(p);
+                    }
+                    p /= n;
+                    for (var i = 0; i < face.Count; i++)
+                    {
+                        nextVertices[face[i]] += p + centroid;
+                        nextVerticesN[face[i]] += 1;
+                        p = r.MultiplyVector(p);
+                    }
+                }
+                for (var i = 0; i < nextVertices.Length; i++)
+                {
+                    nextVertices[i] /= nextVerticesN[i];
+                }
+                vertices = nextVertices;
+            }
+            var result = md.Clone();
+            result.vertices = vertices;
+            return result;
+        }
+
         public static MeshData Concat(IEnumerable<MeshData> mds, out List<int[]> indexMaps)
         {
             // TODO: Should this use MeshEmitter?
