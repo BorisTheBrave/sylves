@@ -64,6 +64,16 @@ namespace Sylves.Test
         }
 
         [Test]
+        public void TestRaycast2()
+        {
+            var g = new SquareGrid(1000);
+            var start = g.GetCellCenter(new Cell(0, 0, 0));
+            var end = g.GetCellCenter(new Cell(2, 1, 0));
+            var infos = g.Raycast(start, end - start, 1).ToList();
+            Assert.AreEqual(4, infos.Count);
+        }
+
+        [Test]
         public void TestGridSymmetry()
         {
             var g = new SquareGrid(1);

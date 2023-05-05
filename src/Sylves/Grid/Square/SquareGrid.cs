@@ -370,8 +370,8 @@ namespace Sylves
 
             var stepx = Math.Sign(dx);
             var stepy = Math.Sign(dy);
-            var idx = Math.Abs(1 / direction.x);
-            var idy = Math.Abs(1 / direction.y);
+            var idx = Math.Abs(1 / dx);
+            var idy = Math.Abs(1 / dy);
             var cellDirX = (CellDir)(dx >= 0 ? SquareDir.Left : SquareDir.Right);
             var cellDirY = (CellDir)(dy >= 0 ? SquareDir.Down : SquareDir.Up);
 
