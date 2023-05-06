@@ -66,8 +66,14 @@ namespace Sylves
                     return false;
                 }
 
+                // We conjugate the connection.
+                // This somehow corrects for the fact we're going to use TryGetRotation on the *inverse*
+                // dirs, rather than the actual dirs.
+                var mirror = new Connection { Mirror = true };
+                var conjConnection = mirror * middleConnection * mirror;
+
                 // Overall connection from next src to next dest
-                var connection = bConnection * middleConnection * aConnection.GetInverse();
+                var connection = bConnection * conjConnection * aConnection.GetInverse();
                 var nextCellType = bGrid.GetCellType(bDestCell);// TODO: Avoid calling GetCellType so frequently?
 
                 if(!nextCellType.TryGetRotation(aInverseDir, bInverseDir, connection, out destRotation))

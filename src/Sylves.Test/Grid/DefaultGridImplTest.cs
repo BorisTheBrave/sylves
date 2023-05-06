@@ -63,6 +63,13 @@ namespace Sylves.Test
             Assert.AreEqual(new Cell(0, 7), destCell);
             Assert.AreEqual((CellRotation)SquareRotation.ReflectY, destRotation);
 
+            // Tests rotating connections
+            var cg = new CubeGrid(1);
+            Assert.IsTrue(DefaultGridImpl.ParallelTransport(cg, new Cell(0, 0, 0), new Cell(0, 1, 0), cg, new Cell(0, 1, 5), (CellRotation)528, out destCell, out destRotation));
+            Assert.IsTrue(success);
+            Assert.AreEqual(new Cell(0, 2, 5), destCell);
+            Assert.AreEqual((CellRotation)528, destRotation);
+
             // TODO: Make tests that deal with non trivial inverseDirs
         }
 
