@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Sylves
 {
-
     public class TrianglePrismGrid : PlanarPrismModifier
     {
         public TrianglePrismGrid(float cellSize, float layerHeight, TriangleOrientation orientation = TriangleOrientation.FlatTopped, TrianglePrismBound bound = null) :
@@ -32,8 +31,8 @@ namespace Sylves
 
         internal static Cell ToTriangleGrid(Cell c)
         {
-            var odd = 1 - (c.x & 1);
-            var x = (c.x - (c.x & 1)) / 2;
+            var odd = c.x & 1;
+            var x = (c.x + odd) / 2;
             var y = c.y;
             var z = -x - y + 1 + odd;
             return new Cell(x, y, z);
@@ -41,7 +40,7 @@ namespace Sylves
 
         internal static Cell FromTriangleGrid(Cell c)
         {
-            return new Cell(c.x * 2 + 1 - (c.x + c.y + c.z - 1), c.y, 0);
+            return new Cell(c.x * 2 - (c.x + c.y + c.z - 1), c.y, 0);
         }
 
         public override IGrid Unwrapped => this;
