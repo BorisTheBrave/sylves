@@ -8,24 +8,6 @@ using UnityEngine;
 
 namespace Sylves
 {
-    public interface ICachePolicy
-    {
-        IDictionary<Cell, Value> GetDictionary<Value>(IGrid grid);
-    }
-
-
-    public static class CachePolicy
-    {
-        public static ICachePolicy Always => new AlwaysCachePolicy();
-    }
-
-    class AlwaysCachePolicy : ICachePolicy
-    {
-        public IDictionary<Cell, Value> GetDictionary<Value>(IGrid grid)
-        {
-            return new Dictionary<Cell, Value>();
-        }
-    }
 
     /// <summary>
     /// An infinite planar grid. The plane is split into overlapping chunks,
