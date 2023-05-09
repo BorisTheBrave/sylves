@@ -60,6 +60,7 @@ namespace Sylves
         public IGrid Unbounded => this;
 
         public IGrid Unwrapped => this;
+        public virtual IDualMapping GetDual() => throw new System.NotSupportedException();
 
         #endregion
 

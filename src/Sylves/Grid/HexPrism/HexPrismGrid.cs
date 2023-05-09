@@ -94,6 +94,8 @@ namespace Sylves
 
         public IGrid Unwrapped => this;
 
+        public virtual IDualMapping GetDual() => throw new NotSupportedException();
+
         public HexGrid HexGrid => hexGrid;
 
         public static Cell GetHexCell(Cell hexPrismCell)

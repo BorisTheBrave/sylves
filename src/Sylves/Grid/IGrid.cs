@@ -73,6 +73,8 @@ namespace Sylves
         /// </summary>
         IGrid Unwrapped { get; }
 
+        IDualMapping GetDual();
+
         #endregion
 
         #region Cell info

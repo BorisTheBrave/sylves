@@ -78,6 +78,64 @@ namespace Sylves
         }
 
         public IGrid Unwrapped => this;
+
+        public IDualMapping GetDual()
+        {
+            var dualBound = bound == null ? null :
+                new CubeBound(bound.min, bound.max + Vector3Int.one);
+
+            var translation = Matrix4x4.Translate(new Vector3(-cellSize.x / 2, -cellSize.y / 2, -cellSize.z / 2));
+
+            return new DualMapping(this, new CubeGrid(cellSize, dualBound).Transformed(translation));
+        }
+
+        private class DualMapping : BasicDualMapping
+        {
+            public DualMapping(CubeGrid baseGrid, IGrid dualGrid) : base(baseGrid, dualGrid)
+            {
+
+            }
+
+            public override (Cell cell, CellCorner corner)? ToDual(Cell cell, CellCorner corner)
+            {
+                switch ((CubeCorner)corner)
+                {
+                    case CubeCorner.BackDownLeft:
+                        break;
+                    case CubeCorner.BackDownRight:
+                        cell.x += 1;
+                        break;
+                    case CubeCorner.BackUpLeft:
+                        cell.y += 1;
+                        break;
+                    case CubeCorner.BackUpRight:
+                        cell.x += 1;
+                        cell.y += 1;
+                        break;
+                    case CubeCorner.ForwardDownLeft:
+                        cell.z += 1;
+                        break;
+                    case CubeCorner.ForwardDownRight:
+                        cell.x += 1;
+                        cell.z += 1;
+                        break;
+                    case CubeCorner.ForwardUpLeft:
+                        cell.y += 1;
+                        cell.z += 1;
+                        break;
+                    case CubeCorner.ForwardUpRight:
+                        cell.x += 1;
+                        cell.y += 1;
+                        cell.z += 1;
+                        break;
+                    default:
+                        throw new Exception($"Unexpected corner {corner}");
+                }
+                return (cell, (CellCorner)((int)corner ^ 7));
+            }
+
+            public override (Cell cell, CellCorner corner)? ToBase(Cell cell, CellCorner corner) => ToDual(cell - Vector3Int.one, corner);
+        }
         #endregion
 
         #region Cell info

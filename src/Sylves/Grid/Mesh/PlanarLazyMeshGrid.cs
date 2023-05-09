@@ -266,6 +266,8 @@ namespace Sylves
 
         public IGrid Unwrapped => this;
 
+        public virtual IDualMapping GetDual() => throw new NotImplementedException();
+
         #endregion
 
         #region Cell info

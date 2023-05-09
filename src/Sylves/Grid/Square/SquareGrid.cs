@@ -103,6 +103,49 @@ namespace Sylves
         }
 
         public IGrid Unwrapped => this;
+
+        public IDualMapping GetDual()
+        {
+            var dualBound = bound == null ? null :
+                new SquareBound(bound.min, bound.max + Vector2Int.one);
+
+            var translation = Matrix4x4.Translate(new Vector3(-cellSize.x / 2, -cellSize.y / 2, 0));
+
+            return new DualMapping(this, new SquareGrid(cellSize, dualBound).Transformed(translation));
+        }
+
+        private class DualMapping : BasicDualMapping
+        {
+            public DualMapping(SquareGrid baseGrid, IGrid dualGrid):base(baseGrid, dualGrid)
+            {
+
+            }
+
+            public override (Cell cell, CellCorner corner)? ToDual(Cell cell, CellCorner corner)
+            {
+                var squareCorner = (SquareCorner)corner;
+                switch(squareCorner)
+                {
+                    case SquareCorner.DownRight:
+                        cell.x += 1;
+                        break;
+                    case SquareCorner.UpRight:
+                        cell.x += 1;
+                        cell.y += 1;
+                        break;
+                    case SquareCorner.UpLeft:
+                        cell.y += 1;
+                        break;
+                    case SquareCorner.DownLeft:
+                        break;
+                    default:
+                        throw new Exception($"Unexpected corner {corner}");
+                }
+                return (cell, (CellCorner)((int)corner ^ 3));
+            }
+
+            public override (Cell cell, CellCorner corner)? ToBase(Cell cell, CellCorner corner) => ToDual(cell - new Vector3Int(1, 1, 0), corner);
+        }
         #endregion
 
         #region Cell info

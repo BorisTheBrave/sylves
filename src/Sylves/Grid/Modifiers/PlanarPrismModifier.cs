@@ -190,6 +190,7 @@ namespace Sylves
 
         public virtual IGrid Unwrapped => underlying.Unwrapped;
         public virtual IGrid Underlying => underlying;
+        public virtual IDualMapping GetDual() => throw new NotSupportedException();
         #endregion
 
         #region Cell info

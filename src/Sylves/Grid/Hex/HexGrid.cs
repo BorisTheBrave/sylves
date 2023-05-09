@@ -157,6 +157,8 @@ namespace Sylves
 
         public IGrid Unwrapped => this;
 
+        public virtual IDualMapping GetDual() => throw new System.NotSupportedException();
+
         public Cell[] GetChildTriangles(Cell cell)
         {
             var a = cell.x - cell.y;

@@ -221,6 +221,8 @@ namespace Sylves
         }
 
         public IGrid Unwrapped => this;
+        public virtual IDualMapping GetDual() => throw new NotSupportedException();
+
         #endregion
 
         #region Cell info

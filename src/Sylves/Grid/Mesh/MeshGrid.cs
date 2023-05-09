@@ -153,6 +153,55 @@ namespace Sylves
         public override bool IsPlanar => is2d && meshDetails.isPlanar;
         #endregion
 
+        #region Relatives
+
+        public IDualMapping GetDual()
+        {
+            var dmb = new DualMeshBuilder(meshData);
+            var dualGrid = new MeshGrid(dmb.DualMeshData, meshGridOptions);
+            return new DualMapping(this, dualGrid, dmb.Mapping);
+        }
+
+        private class DualMapping : BasicDualMapping
+        {
+            Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toDual;
+            Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toBase;
+
+            public DualMapping(MeshGrid baseGrid, MeshGrid dualGrid, List<(int primalFace, int primalVert, int dualFace, int dualVert)> rawMapping) : base(baseGrid, dualGrid)
+            {
+                toDual = rawMapping.ToDictionary(
+                    x => (new Cell(x.primalFace, 0, 0), (CellCorner)x.primalVert),
+                    x => (new Cell(x.dualFace, 0, 0), (CellCorner)x.dualVert));
+                toBase = toDual.ToDictionary(kv => kv.Value, kv => kv.Key);
+            }
+
+            public override (Cell cell, CellCorner corner)? ToDual(Cell cell, CellCorner corner)
+            {
+                if (toDual.TryGetValue((cell, corner), out var r))
+                {
+                    return r;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            public override (Cell cell, CellCorner corner)? ToBase(Cell cell, CellCorner corner)
+            {
+
+                if (toBase.TryGetValue((cell, corner), out var r))
+                {
+                    return r;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        #endregion
+
         #region Topology
 
         // TODO: Pathfind on mesh, without involving layers
