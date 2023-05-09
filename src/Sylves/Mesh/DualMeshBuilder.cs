@@ -8,6 +8,9 @@ namespace Sylves
 {
     public class DualMeshBuilder
     {
+        // "far" vertices are those very far from the origin.
+        // They are used as a standin for "off to infinity"
+        // We do not attempt to build dual cells around them.
         private const float FAR = 1e10f;
 
         // Fundamental data about the primal mesh
