@@ -421,13 +421,20 @@ namespace Sylves
             List<Vector3> normal = null;
             List<Vector4> tangents = null;
             var i = 0;
-            void Fill<T>(ref List<T> dest, T[] src)
+            void Fill<T>(ref List<T> dest, T[] src, string name)
             {
                 if (src == null && dest == null)
                     return;
                 if((src == null ^ dest == null) && i != 0)
                 {
-                    throw new Exception($"Cannot concat mesh {i} as it has different data from the first mesh.");
+                    if (src == null)
+                    {
+                        throw new Exception($"Cannot concat mesh {i} as it has no {name} data but mesh 0 does.");
+                    }
+                    else
+                    {
+                        throw new Exception($"Cannot concat mesh {i} as it has {name} data but mesh 0 does not.");
+                    }
                 }
                 if(dest == null && i == 0)
                 {
@@ -455,10 +462,10 @@ namespace Sylves
                 }
                 indexMaps.Add(indexMap);
 
-                Fill(ref vertices, md.vertices);
-                Fill(ref uv, md.uv);
-                Fill(ref normal, md.normals);
-                Fill(ref tangents, md.tangents);
+                Fill(ref vertices, md.vertices, "vertices");
+                Fill(ref uv, md.uv, "uv");
+                Fill(ref normal, md.normals, "normals");
+                Fill(ref tangents, md.tangents, "tangents");
                 i++;
             }
             return new MeshData
