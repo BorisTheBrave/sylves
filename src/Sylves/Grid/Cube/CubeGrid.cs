@@ -96,7 +96,7 @@ namespace Sylves
 
             }
 
-            public override (Cell cell, CellCorner corner)? ToDual(Cell cell, CellCorner corner)
+            public override (Cell cell, CellCorner corner)? ToDualPair(Cell cell, CellCorner corner)
             {
                 switch ((CubeCorner)corner)
                 {
@@ -134,7 +134,7 @@ namespace Sylves
                 return (cell, (CellCorner)((int)corner ^ 7));
             }
 
-            public override (Cell cell, CellCorner corner)? ToBase(Cell cell, CellCorner corner) => ToDual(cell - Vector3Int.one, corner);
+            public override (Cell cell, CellCorner corner)? ToBasePair(Cell cell, CellCorner corner) => ToDualPair(cell - Vector3Int.one, corner);
         }
         #endregion
 

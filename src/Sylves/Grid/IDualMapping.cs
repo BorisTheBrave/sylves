@@ -12,9 +12,9 @@ namespace Sylves
         IGrid BaseGrid { get; }
         IGrid DualGrid { get; }
 
-        (Cell cell, CellCorner corner)? ToDual(Cell cell, CellCorner corner);
+        (Cell cell, CellCorner corner)? ToDualPair(Cell cell, CellCorner corner);
 
-        (Cell cell, CellCorner corner)? ToBase(Cell cell, CellCorner corner);
+        (Cell cell, CellCorner corner)? ToBasePair(Cell cell, CellCorner corner);
     }
 
     // TODO: An implementation that works for any 2d grid
@@ -37,12 +37,12 @@ namespace Sylves
 
         public IGrid DualGrid => throw new NotImplementedException();
 
-        public (Cell cell, CellCorner corner)? ToBase(Cell cell, CellCorner corner)
+        public (Cell cell, CellCorner corner)? ToBasePair(Cell cell, CellCorner corner)
         {
             throw new NotImplementedException();
         }
 
-        public (Cell cell, CellCorner corner)? ToDual(Cell cell, CellCorner corner)
+        public (Cell cell, CellCorner corner)? ToDualPair(Cell cell, CellCorner corner)
         {
             throw new NotImplementedException();
         }
@@ -176,15 +176,32 @@ namespace Sylves
         public IGrid BaseGrid { get; }
         public IGrid DualGrid { get; }
 
-        public abstract (Cell cell, CellCorner corner)? ToBase(Cell cell, CellCorner corner);
-        public abstract (Cell cell, CellCorner corner)? ToDual(Cell cell, CellCorner corner);
+        public abstract (Cell cell, CellCorner corner)? ToBasePair(Cell cell, CellCorner corner);
+        public abstract (Cell cell, CellCorner corner)? ToDualPair(Cell cell, CellCorner corner);
 
     }
 
     public static class DualMappingExtensions
     {
-        public static Cell? ToDualCell(this IDualMapping dm, Cell cell, CellCorner corner) => dm.ToDual(cell, corner)?.cell;
-        public static Cell? ToBaseCell(this IDualMapping dm, Cell cell, CellCorner corner) => dm.ToBase(cell, corner)?.cell;
+        public static Cell? ToDualCell(this IDualMapping dm, Cell cell, CellCorner corner) => dm.ToDualPair(cell, corner)?.cell;
+        public static Cell? ToBaseCell(this IDualMapping dm, Cell cell, CellCorner corner) => dm.ToBasePair(cell, corner)?.cell;
+
+        public static IEnumerable<(Cell cell, CellCorner corner)> DualNeighbours(this IDualMapping dm, Cell cell)
+        {
+            // TODO: Perhaps have this overridable as many grids will have swifter methods
+            var cellType = dm.BaseGrid.GetCellType(cell);
+            foreach(var corner in cellType.GetCellCorners())
+            {
+                var t = dm.ToDualPair(cell, corner);
+                if(t != null)
+                {
+                    yield return t.Value;
+                }
+            }
+        }
+
+        // TODO: Be less lazy
+        public static IEnumerable<(Cell cell, CellCorner corner)> BaseNeighbours(this IDualMapping dm, Cell cell) => dm.Reversed().DualNeighbours(cell);
 
 
         public static IDualMapping Reversed(this IDualMapping dualMapping)
@@ -214,9 +231,9 @@ namespace Sylves
 
             public IGrid DualGrid => underlying.BaseGrid;
 
-            public (Cell cell, CellCorner corner)? ToBase(Cell cell, CellCorner corner) => underlying.ToDual(cell, corner);
+            public (Cell cell, CellCorner corner)? ToBasePair(Cell cell, CellCorner corner) => underlying.ToDualPair(cell, corner);
 
-            public (Cell cell, CellCorner corner)? ToDual(Cell cell, CellCorner corner) => underlying.ToBase(cell, corner);
+            public (Cell cell, CellCorner corner)? ToDualPair(Cell cell, CellCorner corner) => underlying.ToBasePair(cell, corner);
         }
 
     }

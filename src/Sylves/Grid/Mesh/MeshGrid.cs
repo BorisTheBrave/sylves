@@ -175,7 +175,7 @@ namespace Sylves
                 toBase = toDual.ToDictionary(kv => kv.Value, kv => kv.Key);
             }
 
-            public override (Cell cell, CellCorner corner)? ToDual(Cell cell, CellCorner corner)
+            public override (Cell cell, CellCorner corner)? ToDualPair(Cell cell, CellCorner corner)
             {
                 if (toDual.TryGetValue((cell, corner), out var r))
                 {
@@ -187,7 +187,7 @@ namespace Sylves
                 }
             }
 
-            public override (Cell cell, CellCorner corner)? ToBase(Cell cell, CellCorner corner)
+            public override (Cell cell, CellCorner corner)? ToBasePair(Cell cell, CellCorner corner)
             {
 
                 if (toBase.TryGetValue((cell, corner), out var r))
