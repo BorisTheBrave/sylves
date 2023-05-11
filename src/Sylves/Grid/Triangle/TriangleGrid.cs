@@ -768,7 +768,21 @@ namespace Sylves
                     maxDistance -= mint;
                     extraDistance = mint;
                     origin += direction * mint;
-                    startOnBorder = ta1 == mint ? 0 : tb1 == mint ? 1 : 2;
+                    if (ta1 == mint)
+                    {
+                        startOnBorder = 0;
+                        fa = 0;
+                    }
+                    else if (tb1 == mint)
+                    {
+                        startOnBorder = 1;
+                        fb = 0;
+                    }
+                    else
+                    {
+                        startOnBorder = 2;
+                        fc = 0;
+                    }
                 }
                 else
                 {
