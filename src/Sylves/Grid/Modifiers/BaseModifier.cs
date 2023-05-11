@@ -99,7 +99,7 @@ namespace Sylves
 
         #region Position
         public virtual Vector3 GetCellCenter(Cell cell) => underlying.GetCellCenter(cell);
-
+        public virtual Vector3 GetCellCorner(Cell cell, CellCorner corner) => underlying.GetCellCorner(cell, corner);
         public virtual TRS GetTRS(Cell cell) => underlying.GetTRS(cell);
         #endregion
 

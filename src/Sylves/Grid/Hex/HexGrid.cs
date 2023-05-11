@@ -409,6 +409,12 @@ namespace Sylves
             }
         }
 
+        public Vector3 GetCellCorner(Cell cell, CellCorner corner)
+        {
+            GetPolygon(cell, out var vertices, out var transform);
+            return transform.MultiplyPoint3x4(vertices[(int)corner]);
+        }
+
         /// <summary>
         /// Returns the appropriate transform for the cell.
         /// The translation will always be to GetCellCenter.

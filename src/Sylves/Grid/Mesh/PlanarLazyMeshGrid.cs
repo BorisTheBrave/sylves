@@ -393,6 +393,13 @@ namespace Sylves
             return GetMeshGrid(chunk).GetCellCenter(meshCell);
         }
 
+        public Vector3 GetCellCorner(Cell cell, CellCorner cellCorner)
+        {
+
+            var (centerCell, chunk) = Split(cell);
+            return GetMeshGrid(chunk).GetCellCorner(centerCell, cellCorner);
+        }
+
         public TRS GetTRS(Cell cell)
         {
             var (meshCell, chunk) = Split(cell);

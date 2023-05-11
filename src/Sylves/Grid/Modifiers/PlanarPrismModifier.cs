@@ -396,6 +396,16 @@ namespace Sylves
             return underlying.GetCellCenter(uCell) + GetOffset(layer);
         }
 
+        public virtual Vector3 GetCellCorner(Cell cell, CellCorner corner)
+        {
+            var (uCell, layer) = Split(cell);
+            var underlyingCellType = underlying.GetCellType(uCell);
+            var prismInfo = PrismInfo.Get(underlyingCellType);
+            var (uCorner, isForward) = prismInfo.PrismToBaseCorners[corner];
+            return underlying.GetCellCorner(uCell, uCorner) + GetOffset(layer + (isForward ? 0.5f : -0.5f));
+        }
+
+
         public virtual TRS GetTRS(Cell cell)
         {
 

@@ -142,6 +142,7 @@ namespace Sylves
 
         #region Position
         public override Vector3 GetCellCenter(Cell cell) => Underlying.GetCellCenter(toUnderlying(cell));
+        public override Vector3 GetCellCorner(Cell cell, CellCorner corner) => Underlying.GetCellCorner(toUnderlying(cell), corner);
 
         public override TRS GetTRS(Cell cell) => Underlying.GetTRS(toUnderlying(cell));
         #endregion

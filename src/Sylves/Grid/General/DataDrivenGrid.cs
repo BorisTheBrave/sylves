@@ -133,6 +133,8 @@ namespace Sylves
         #region Position
         public Vector3 GetCellCenter(Cell cell) => GetTRS(cell).Position;
 
+        public abstract Vector3 GetCellCorner(Cell cell, CellCorner cellCorner);
+
         public TRS GetTRS(Cell cell) => cellData[cell].TRS;
 
         #endregion
