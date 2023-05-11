@@ -267,6 +267,16 @@ namespace Sylves
             return edgeCount % 2 == 1 && doubleOddFaces ? ((int)cellDir) / 2 : (int)cellDir;
         }
 
+        public static CellCorner VertexIndexToCellCorner(int index, int edgeCount, bool doubleOddFaces)
+        {
+            return (CellCorner)(edgeCount % 2 == 1 && doubleOddFaces ? index * 2 : index);
+        }
+
+        public static int CellCornerToVertexIndex(CellCorner corner, int edgeCount, bool doubleOddFaces)
+        {
+            return edgeCount % 2 == 1 && doubleOddFaces ? ((int)corner) / 2 : (int)corner;
+        }
+
         private static ICellType GetCellType(int edgeCount, bool doubleOddFaces)
         {
             return edgeCount == 3 && doubleOddFaces ? HexCellType.Get(HexOrientation.FlatTopped) :

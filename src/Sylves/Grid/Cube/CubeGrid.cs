@@ -272,6 +272,12 @@ namespace Sylves
             return Vector3.Scale(cellSize, (Vector3Int)(cell) + new Vector3(0.5f, 0.5f, 0.5f));
         }
 
+        public Vector3 GetCellCorner(Cell cell, CellCorner corner)
+        {
+            return Vector3.Scale(cellSize, (Vector3Int)(cell) + new Vector3(0.5f, 0.5f, 0.5f) + ((CubeCorner)corner).GetPosition());
+        }
+
+
         /// <summary>
         /// Returns the appropriate transform for the cell.
         /// The translation will always be to GetCellCenter.

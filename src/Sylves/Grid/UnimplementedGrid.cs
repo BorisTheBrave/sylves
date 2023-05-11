@@ -31,7 +31,6 @@ namespace Sylves
         public IGrid Unbounded => throw new NotImplementedException();
 
         public IGrid Unwrapped => throw new NotImplementedException();
-        public virtual IDualMapping GetDual() => throw new NotImplementedException();
 
         #endregion
 
@@ -86,6 +85,8 @@ namespace Sylves
 
         #region Position
         public Vector3 GetCellCenter(Cell cell) => throw new NotImplementedException();
+
+        public Vector3 GetCellCorner(Cell cell, CellCorner cellCorner) => throw new NotImplementedException();
 
         public TRS GetTRS(Cell cell) => throw new NotImplementedException();
 

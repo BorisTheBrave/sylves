@@ -159,6 +159,17 @@ namespace Sylves
         //public override IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell);
         #endregion
 
+        #region Position
+        public override Vector3 GetCellCorner(Cell cell, CellCorner corner)
+        {
+            GetPolygon(cell, out var vertices, out var transform);
+            var i = MeshGridBuilder.CellCornerToVertexIndex(corner, ((MeshCellData)CellData[cell]).Face.Count, meshGridOptions.DoubleOddFaces);
+            return transform.MultiplyPoint3x4(vertices[i]);
+
+        }
+
+        #endregion
+
         #region Query
 
 

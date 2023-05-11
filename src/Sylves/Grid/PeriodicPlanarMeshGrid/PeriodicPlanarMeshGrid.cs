@@ -271,6 +271,13 @@ namespace Sylves
             return centerGrid.GetCellCenter(centerCell) + ChunkOffset(chunk);
         }
 
+        public Vector3 GetCellCorner(Cell cell, CellCorner cellCorner)
+        {
+
+            var (centerCell, chunk) = Split(cell);
+            return centerGrid.GetCellCorner(centerCell, cellCorner) + ChunkOffset(chunk);
+        }
+
         /// <inheritdoc />
         public TRS GetTRS(Cell cell)
         {

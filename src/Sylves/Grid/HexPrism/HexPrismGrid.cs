@@ -315,6 +315,12 @@ namespace Sylves
         {
             return hexGrid.GetCellCenter(GetHexCell(cell)) + cellSize.z * cell.z * Vector3.forward;
         }
+        public Vector3 GetCellCorner(Cell cell, CellCorner corner)
+        {
+            var hexCell = GetHexCell(cell);
+            var hexCorner = (CellCorner)((int)corner % 6);
+            return hexGrid.GetCellCorner(hexCell, hexCorner) + cellSize.z * (cell.z + ((int)corner >= 6 ? 0.5f : -0.5f)) * Vector3.forward;
+        }
 
         public TRS GetTRS(Cell cell) => new TRS(
             GetCellCenter(cell),

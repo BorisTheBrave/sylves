@@ -39,6 +39,7 @@ namespace Sylves
 
         #region Position
         public override Vector3 GetCellCenter(Cell cell) => transform.MultiplyPoint3x4(Underlying.GetCellCenter(cell));
+        public override Vector3 GetCellCorner(Cell cell, CellCorner corner) => transform.MultiplyPoint3x4(Underlying.GetCellCorner(cell, corner));
 
         public override TRS GetTRS(Cell cell) => new TRS(transform * Underlying.GetTRS(cell).ToMatrix());
         #endregion

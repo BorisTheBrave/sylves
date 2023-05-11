@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Sylves
@@ -17,14 +18,21 @@ namespace Sylves
             PrismCellType = CubeCellType.Instance,
             ForwardDir = (CellDir)CubeDir.Forward,
             BackDir = (CellDir)CubeDir.Back,
-            BaseToPrismDict = new Dictionary<CellDir, CellDir>
+            BaseToPrismDirs = new Dictionary<CellDir, CellDir>
             {
                 {(CellDir)SquareDir.Left, (CellDir)CubeDir.Left},
                 {(CellDir)SquareDir.Right, (CellDir)CubeDir.Right},
                 {(CellDir)SquareDir.Up, (CellDir)CubeDir.Up},
                 {(CellDir)SquareDir.Down, (CellDir)CubeDir.Down},
             },
-        };
+            BaseToPrismCorners = new Dictionary<CellCorner, (CellCorner, CellCorner)>
+            {
+                {(CellCorner)SquareCorner.DownLeft, ((CellCorner)CubeCorner.BackDownLeft, (CellCorner)CubeCorner.ForwardDownLeft)},
+                {(CellCorner)SquareCorner.DownRight, ((CellCorner)CubeCorner.BackDownRight, (CellCorner)CubeCorner.ForwardDownRight)},
+                {(CellCorner)SquareCorner.UpLeft, ((CellCorner)CubeCorner.BackUpLeft, (CellCorner)CubeCorner.ForwardUpLeft)},
+                {(CellCorner)SquareCorner.UpRight, ((CellCorner)CubeCorner.BackUpRight, (CellCorner)CubeCorner.ForwardUpRight)},
+            },
+        }.Setup();
 
         private static PrismInfo xzSquarePrismInfo = new PrismInfo
         {
@@ -32,14 +40,24 @@ namespace Sylves
             PrismCellType = CubeCellType.Instance,
             ForwardDir = (CellDir)CubeDir.Up,
             BackDir = (CellDir)CubeDir.Down,
-            BaseToPrismDict = new Dictionary<CellDir, CellDir>
+            BaseToPrismDirs = new Dictionary<CellDir, CellDir>
             {
                 {(CellDir)SquareDir.Left, (CellDir)CubeDir.Left},
                 {(CellDir)SquareDir.Right, (CellDir)CubeDir.Right},
                 {(CellDir)SquareDir.Up, (CellDir)CubeDir.Back},
                 {(CellDir)SquareDir.Down, (CellDir)CubeDir.Forward},
             },
-        };
+            BaseToPrismCorners = new Dictionary<CellCorner, (CellCorner, CellCorner)>
+            {
+                {(CellCorner)SquareCorner.DownLeft, ((CellCorner)CubeCorner.ForwardDownLeft, (CellCorner)CubeCorner.ForwardUpLeft)},
+                {(CellCorner)SquareCorner.DownRight, ((CellCorner)CubeCorner.ForwardDownRight, (CellCorner)CubeCorner.ForwardUpRight)},
+                {(CellCorner)SquareCorner.UpLeft, ((CellCorner)CubeCorner.BackDownLeft, (CellCorner)CubeCorner.BackUpLeft)},
+                {(CellCorner)SquareCorner.UpRight, ((CellCorner)CubeCorner.BackDownRight, (CellCorner)CubeCorner.BackUpRight)},
+            },
+        }.Setup();
+
+        private static Dictionary<CellCorner, (CellCorner, CellCorner)> BaseToPrismCornersNGon(int n) =>
+            Enumerable.Range(0, n).ToDictionary(i => (CellCorner)i, i => ((CellCorner)i, (CellCorner)(n + i)));
 
         private static IDictionary<int, PrismInfo> nGonPrismInfo = new Dictionary<int, PrismInfo>
         {
@@ -54,7 +72,8 @@ namespace Sylves
             PrismCellType = HexPrismCellType.Get(HexOrientation.FlatTopped),
             ForwardDir = (CellDir)PTHexPrismDir.Forward,
             BackDir = (CellDir)PTHexPrismDir.Back,
-        };
+            BaseToPrismCorners = BaseToPrismCornersNGon(6),
+        }.Setup();
 
         private static PrismInfo ptHexPrismInfo = new PrismInfo
         {
@@ -63,7 +82,8 @@ namespace Sylves
             PrismCellType = HexPrismCellType.Get(HexOrientation.PointyTopped),
             ForwardDir = (CellDir)PTHexPrismDir.Forward,
             BackDir = (CellDir)PTHexPrismDir.Back,
-        };
+            BaseToPrismCorners = BaseToPrismCornersNGon(6),
+        }.Setup();
 
 
 
@@ -72,7 +92,11 @@ namespace Sylves
         public ICellType BaseCellType { get; set; }
         public ICellType PrismCellType { get; set; }
 
-        public Dictionary<CellDir, CellDir> BaseToPrismDict { get; set; }
+        public Dictionary<CellDir, CellDir> BaseToPrismDirs { get; set; }
+
+        // (back, foward)
+        public Dictionary<CellCorner, (CellCorner Back, CellCorner Forward)> BaseToPrismCorners { get; set; }
+        public Dictionary<CellCorner, (CellCorner Corner, bool IsForward)> PrismToBaseCorners { get; set; }
 
         public CellDir ForwardDir { get; set; }
 
@@ -80,11 +104,21 @@ namespace Sylves
 
         public CellDir BaseToPrism(CellDir baseDir)
         {
-            if(BaseToPrismDict == null)
+            if(BaseToPrismDirs == null)
             {
                 return baseDir;
             }
-            return BaseToPrismDict[baseDir];
+            return BaseToPrismDirs[baseDir];
+        }
+
+        public CellCorner BaseToPrism(CellCorner baseCorner, bool isForward)
+        {
+            if (BaseToPrismCorners == null)
+            {
+                return baseCorner;
+            }
+            var t = BaseToPrismCorners[baseCorner];
+            return isForward ? t.Item2 : t.Item1;
         }
 
         public static PrismInfo Get(ICellType baseCellType)
@@ -112,7 +146,8 @@ namespace Sylves
                         BackDir = (CellDir)(n + 1),
                         BaseCellType = ngct,
                         PrismCellType = NGonPrismCellType.Get(n),
-                    };
+                        BaseToPrismCorners = BaseToPrismCornersNGon(6),
+                    }.Setup();
                 }
                 return prismInfo;
             }
@@ -132,10 +167,24 @@ namespace Sylves
                     PrismCellType = XZCellTypeModifier.Get(uPrismInfo.PrismCellType),
                     BackDir = uPrismInfo.BackDir,
                     ForwardDir = uPrismInfo.ForwardDir,
-                    BaseToPrismDict = uPrismInfo.BaseToPrismDict,
-                };
+                    BaseToPrismDirs = uPrismInfo.BaseToPrismDirs,
+                }.Setup();
             }
             throw new NotImplementedException($"No prism info for cell type {baseCellType}");
+        }
+
+        private PrismInfo Setup()
+        {
+            if (BaseToPrismCorners != null)
+            {
+                PrismToBaseCorners = new Dictionary<CellCorner, (CellCorner Corner, bool IsForward)>();
+                foreach (var kv in BaseToPrismCorners)
+                {
+                    PrismToBaseCorners[kv.Value.Back] = (kv.Key, false);
+                    PrismToBaseCorners[kv.Value.Forward] = (kv.Key, true);
+                }
+            }
+            return this;
         }
     }
 }

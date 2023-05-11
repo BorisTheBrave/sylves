@@ -221,6 +221,11 @@ namespace Sylves
         Vector3 GetCellCenter(Cell cell);
 
         /// <summary>
+        /// Returns the position of a corner.
+        /// </summary>
+        Vector3 GetCellCorner(Cell cell, CellCorner corner);
+
+        /// <summary>
         /// Returns the appropriate transform for the cell.
         /// The translation will always be to GetCellCenter,
         /// rotation reflects the particular orientation of this cell

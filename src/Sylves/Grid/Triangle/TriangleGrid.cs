@@ -86,16 +86,16 @@ namespace Sylves
 
         private static readonly Vector3[] leftPolygon =
         {
-            new Vector3(0.3333333333f, -0.5f, 0),
             new Vector3(0.3333333333f, 0.5f, 0),
             new Vector3(-0.6666666667f, 0, 0),
+            new Vector3(0.3333333333f, -0.5f, 0),
         };
 
         private static readonly Vector3[] rightPolygon =
         {
-            new Vector3(-0.3333333333f, -0.5f, 0),
             new Vector3(0.6666666667f, 0, 0),
             new Vector3(-0.3333333333f, 0.5f, 0),
+            new Vector3(-0.3333333333f, -0.5f, 0),
         };
 
         readonly ICellType cellType;
@@ -543,6 +543,12 @@ namespace Sylves
                     (0.5f * cell.y                       + -0.5f * cell.z) * cellSize.y,
                     0);
             }
+        }
+
+        public Vector3 GetCellCorner(Cell cell, CellCorner corner)
+        {
+            GetPolygon(cell, out var vertices, out var transform);
+            return transform.MultiplyPoint3x4(vertices[(int)corner / 2]);
         }
 
         /// <summary>
