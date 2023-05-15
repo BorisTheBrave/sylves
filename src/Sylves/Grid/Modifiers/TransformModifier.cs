@@ -92,7 +92,7 @@ namespace Sylves
         public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
             origin = iTransform.MultiplyPoint3x4(origin);
-            direction = iTransform.MultiplyPoint3x4(direction);
+            direction = iTransform.MultiplyVector(direction);
             // TODO: Worry about maxDistance?
             foreach(var info in Underlying.Raycast(origin, direction, maxDistance))
             {
