@@ -120,11 +120,10 @@ namespace Sylves
             {
 
             }
-
-            public override (Cell cell, CellCorner corner)? ToDualPair(Cell cell, CellCorner corner)
+            private (Cell cell, CellCorner inverseCorner)? ToPair(Cell cell, CellCorner corner, IGrid outGrid)
             {
                 var squareCorner = (SquareCorner)corner;
-                switch(squareCorner)
+                switch (squareCorner)
                 {
                     case SquareCorner.DownRight:
                         cell.x += 1;
@@ -141,10 +140,15 @@ namespace Sylves
                     default:
                         throw new Exception($"Unexpected corner {corner}");
                 }
+                if (!outGrid.IsCellInGrid(cell))
+                {
+                    return null;
+                }
                 return (cell, (CellCorner)((int)corner ^ 3));
             }
 
-            public override (Cell cell, CellCorner corner)? ToBasePair(Cell cell, CellCorner corner) => ToDualPair(cell - new Vector3Int(1, 1, 0), corner);
+            public override (Cell cell, CellCorner inverseCorner)? ToDualPair(Cell cell, CellCorner corner) => ToPair(cell, corner, DualGrid);
+            public override (Cell cell, CellCorner inverseCorner)? ToBasePair(Cell cell, CellCorner corner) => ToPair(cell - new Vector3Int(1, 1, 0), corner, BaseGrid);
         }
         #endregion
 
