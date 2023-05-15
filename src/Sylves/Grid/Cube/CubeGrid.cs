@@ -45,7 +45,7 @@ namespace Sylves
 
         public bool Is3d => true;
 
-        public bool IsPlanar => true;
+        public bool IsPlanar => false;
 
         public bool IsRepeating => true;
 
