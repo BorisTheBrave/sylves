@@ -112,6 +112,25 @@ namespace Sylves
 
         public static FTHexCorner operator *(HexRotation rotation, FTHexCorner dir) => (FTHexCorner)(rotation * (PTHexCorner)dir);
 
+
+        public static FSTriangleDir operator *(HexRotation rotation, FSTriangleDir dir)
+        {
+            var side = (int)(dir);
+            var newSide = (rotation.IsReflection ? rotation.Rotation - side + 6 : rotation.Rotation + side) % 6;
+            return (FSTriangleDir)(newSide);
+        }
+
+        public static FTTriangleDir operator *(HexRotation rotation, FTTriangleDir dir) => (FTTriangleDir)(rotation * (FSTriangleDir)dir);
+
+        public static FSTriangleCorner operator *(HexRotation rotation, FSTriangleCorner dir)
+        {
+            var side = (int)(dir);
+            var newSide = (rotation.IsReflection ? rotation.Rotation - side + 7 : rotation.Rotation + side) % 6;
+            return (FSTriangleCorner)(newSide);
+        }
+
+        public static FTTriangleCorner operator *(HexRotation rotation, FTTriangleCorner dir) => (FTTriangleCorner)(rotation * (FSTriangleCorner)dir);
+
         public static HexBound operator *(HexRotation rotation, HexBound bound)
         {
             // Operates exactly the same as the cube case.

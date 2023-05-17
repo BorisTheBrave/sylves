@@ -52,7 +52,7 @@ namespace Sylves
     /// TriangleOrientation.FlatSides gives columns of triangles that alternate pointing left/right.
     /// TriangleOrientation.FlatTopped gives rows of triangles that alternate pointing up/down.
     /// 
-    /// In both cases, the cell type used is actually HexGridCellType. For each triangle, three of the hex directions
+    /// In both cases, the cell type used is actually TriangleCellType. For each triangle, three of the directions
     /// point towards neighbors, and the other three will point to nothing.
     /// This is a similar setup to <see cref="MeshGridOptions.DoubleOddFaces"/>, and is usually simpler to work with
     /// as it doesn't force you to consider some cells as rotated by 180 degrees.
@@ -61,13 +61,13 @@ namespace Sylves
     {
         private const float Sqrt3 = 1.73205080756888f;
 
-        private static readonly ICellType[] ftCellTypes = { HexCellType.Get(HexOrientation.FlatTopped) };
-        private static readonly ICellType[] fsCellTypes = { HexCellType.Get(HexOrientation.PointyTopped) };
+        private static readonly ICellType[] ftCellTypes = { TriangleCellType.Get(TriangleOrientation.FlatTopped) };
+        private static readonly ICellType[] fsCellTypes = { TriangleCellType.Get(TriangleOrientation.FlatSides) };
 
-        // Also used for PTHexDir Right, UpLeft, DownLeft
-        private static readonly CellDir[] cellDirsA = { (CellDir)FTHexDir.UpRight, (CellDir)FTHexDir.UpLeft, (CellDir)FTHexDir.Down };
-        // Also used for PTHexDir UpRight, Left, DownRight
-        private static readonly CellDir[] cellDirsB = { (CellDir)FTHexDir.Up, (CellDir)FTHexDir.DownLeft, (CellDir)FTHexDir.DownRight };
+        // Also used for FSTriangleDir Right, UpLeft, DownLeft
+        private static readonly CellDir[] cellDirsA = { (CellDir)FTTriangleDir.UpRight, (CellDir)FTTriangleDir.UpLeft, (CellDir)FTTriangleDir.Down };
+        // Also used for FSTriangleDir UpRight, Left, DownRight
+        private static readonly CellDir[] cellDirsB = { (CellDir)FTTriangleDir.Up, (CellDir)FTTriangleDir.DownLeft, (CellDir)FTTriangleDir.DownRight };
 
         // The triangle polygons, scaled to fit in a unit square
         private static readonly Vector3[] upPolygon =
@@ -130,7 +130,7 @@ namespace Sylves
             this.cellSize = cellSize;
             this.orientation = orientation;
             this.bound = bound;
-            this.cellType = HexCellType.Get(orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
+            this.cellType = TriangleCellType.Get(orientation);
             if(orientation == TriangleOrientation.FlatSides)
             {
                 // altGrid has the same topology and cell centers

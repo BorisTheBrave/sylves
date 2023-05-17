@@ -269,7 +269,7 @@ namespace Sylves
 
         private static ICellType GetCellType(int edgeCount, bool doubleOddFaces)
         {
-            return edgeCount == 3 && doubleOddFaces ? HexCellType.Get(HexOrientation.FlatTopped) :
+            return edgeCount == 3 && doubleOddFaces ? TriangleCellType.Get(TriangleOrientation.FlatTopped) :
                 edgeCount == 4 ? SquareCellType.Instance :
                 edgeCount % 2 == 1 && doubleOddFaces ? NGonCellType.Get(edgeCount * 2) 
                 : NGonCellType.Get(edgeCount);
