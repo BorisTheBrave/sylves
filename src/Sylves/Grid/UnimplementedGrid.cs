@@ -32,6 +32,8 @@ namespace Sylves
 
         public IGrid Unwrapped => throw new NotImplementedException();
 
+        public virtual IDualMapping GetDual() => throw new NotImplementedException();
+
         #endregion
 
         #region Cell info

@@ -155,7 +155,7 @@ namespace Sylves
 
         #region Relatives
 
-        public IDualMapping GetDual()
+        public override IDualMapping GetDual()
         {
             var dmb = new DualMeshBuilder(meshData);
             var dualGrid = new MeshGrid(dmb.DualMeshData, meshGridOptions);
