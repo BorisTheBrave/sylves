@@ -139,9 +139,9 @@ namespace Sylves
                 return (cell, (CellCorner)((int)corner ^ 7));
             }
 
-            public override (Cell cell, CellCorner inverseCorner)? ToDualPair(Cell cell, CellCorner corner) => ToPair(cell, corner, DualGrid);
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner) => ToPair(baseCell, corner, DualGrid);
 
-            public override (Cell cell, CellCorner inverseCorner)? ToBasePair(Cell cell, CellCorner corner) => ToPair(cell - Vector3Int.one, corner, BaseGrid);
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner) => ToPair(dualCell - Vector3Int.one, corner, BaseGrid);
         }
         #endregion
 
