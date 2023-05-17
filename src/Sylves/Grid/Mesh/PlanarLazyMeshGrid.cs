@@ -315,6 +315,11 @@ namespace Sylves
             var (meshCell, chunk) = Split(cell);
             return GetMeshGrid(chunk).GetCellDirs(meshCell);
         }
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell)
+        {
+            var (meshCell, chunk) = Split(cell);
+            return GetMeshGrid(chunk).GetCellCorners(meshCell);
+        }
 
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => throw new NotImplementedException();
 

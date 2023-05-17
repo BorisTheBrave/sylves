@@ -103,6 +103,7 @@ namespace Sylves
 
         // TODO: Do we want to enhance this?
         public IEnumerable<CellDir> GetCellDirs(Cell cell) => GetCellType(cell).GetCellDirs();
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell) => GetCellType(cell).GetCellCorners();
 
         public virtual IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => DefaultGridImpl.FindBasicPath(this, startCell, destCell);
 

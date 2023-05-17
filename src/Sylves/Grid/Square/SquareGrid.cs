@@ -213,6 +213,11 @@ namespace Sylves
         {
             return SquareCellType.Instance.GetCellDirs();
         }
+
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell)
+        {
+            return SquareCellType.Instance.GetCellCorners();
+        }
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
         {
             var cell = startCell;

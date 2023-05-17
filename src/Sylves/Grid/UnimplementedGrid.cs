@@ -57,6 +57,8 @@ namespace Sylves
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell) => throw new NotImplementedException();
 
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell) => throw new NotImplementedException();
+
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => throw new NotImplementedException();
 
         #endregion

@@ -72,6 +72,7 @@ namespace Sylves
             underlying.ParallelTransport(aGrid, aSrcCell, aDestCell, srcCell, startRotation, out destCell, out destRotation);
 
         public virtual IEnumerable<CellDir> GetCellDirs(Cell cell) => underlying.GetCellDirs(cell);
+        public virtual IEnumerable<CellCorner> GetCellCorners(Cell cell) => underlying.GetCellCorners(cell);
         public virtual IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => underlying.FindBasicPath(startCell, destCell);
 
         #endregion

@@ -258,6 +258,11 @@ namespace Sylves
         {
             return cellType.GetCellDirs();
         }
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell)
+        {
+            return cellType.GetCellCorners();
+        }
+
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
         {
             // Double check we really have "cube co-ordinates" otherwise this will loop for ever

@@ -266,6 +266,22 @@ namespace Sylves
             yield return forwardDir;
             yield return backDir;
         }
+
+
+
+        public virtual IEnumerable<CellCorner> GetCellCorners(Cell cell)
+        {
+            var (uCell, layer) = Split(cell);
+            var underlyingCellType = underlying.GetCellType(uCell);
+            var prismInfo = PrismInfo.Get(underlyingCellType);
+            foreach(var corner in underlying.GetCellCorners(uCell))
+            {
+                var (f, b) = prismInfo.BaseToPrismCorners[corner];
+                yield return f;
+                yield return b;
+            }
+        }
+
         public virtual IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
         {
             var (startUCell, startLayer) = Split(startCell);

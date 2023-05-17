@@ -217,6 +217,11 @@ namespace Sylves
             return CubeCellType.Instance.GetCellDirs();
         }
 
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell)
+        {
+            return CubeCellType.Instance.GetCellCorners();
+        }
+
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
         {
             var cell = startCell;

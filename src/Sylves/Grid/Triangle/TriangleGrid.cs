@@ -69,6 +69,12 @@ namespace Sylves
         // Also used for FSTriangleDir UpRight, Left, DownRight
         private static readonly CellDir[] cellDirsB = { (CellDir)FTTriangleDir.Up, (CellDir)FTTriangleDir.DownLeft, (CellDir)FTTriangleDir.DownRight };
 
+
+        // Also used for FSTriangleDir Right, UpLeft, DownLeft
+        private static readonly CellCorner[] cellCornersA = { (CellCorner)FTTriangleCorner.DownRight, (CellCorner)FTTriangleCorner.Up, (CellCorner)FTTriangleCorner.DownLeft };
+        // Also used for FSTriangleDir UpRight, Left, DownRight
+        private static readonly CellCorner[] cellCornersB = { (CellCorner)FTTriangleDir.UpRight, (CellCorner)FTTriangleDir.UpLeft, (CellCorner)FTTriangleDir.Down };
+
         // The triangle polygons, scaled to fit in a unit square
         private static readonly Vector3[] upPolygon =
         {
@@ -320,6 +326,18 @@ namespace Sylves
             else
             {
                 return cellDirsB;
+            }
+        }
+
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell)
+        {
+            if (IsUpOrLeft(cell))
+            {
+                return cellCornersB;
+            }
+            else
+            {
+                return cellCornersA;
             }
         }
 

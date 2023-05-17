@@ -144,6 +144,9 @@ namespace Sylves
         /// </summary>
         IEnumerable<CellDir> GetCellDirs(Cell cell);
 
+        IEnumerable<CellCorner> GetCellCorners(Cell cell);
+
+
         /// <summary>
         /// Returns a ordered series of cells and directions, starting a startCell,
         /// such that moving in the given direction gives the next cell in the sequence,

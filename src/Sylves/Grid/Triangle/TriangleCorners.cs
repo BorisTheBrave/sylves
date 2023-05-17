@@ -28,7 +28,7 @@ namespace Sylves
         UpRight,
         UpLeft,
         Left,
-        DownRight,
         DownLeft,
+        DownRight,
     }
 }

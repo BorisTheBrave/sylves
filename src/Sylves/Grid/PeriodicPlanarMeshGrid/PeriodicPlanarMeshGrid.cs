@@ -183,6 +183,8 @@ namespace Sylves
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell) => centerGrid.GetCellDirs(Split(cell).centerCell);
 
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell) => centerGrid.GetCellCorners(Split(cell).centerCell);
+
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => throw new NotImplementedException();
 
         #endregion
