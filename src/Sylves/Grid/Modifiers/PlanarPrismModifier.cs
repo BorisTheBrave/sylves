@@ -100,7 +100,10 @@ namespace Sylves
                 inverseDir = (CellDir)((int)CubeDir.Forward + (int)CubeDir.Back - (int)cellDir);
                 return (int)cellDir >= (int)CubeDir.Forward;
             }
-            else if (underlyingCellType == HexCellType.Get(HexOrientation.FlatTopped) || underlyingCellType == HexCellType.Get(HexOrientation.PointyTopped))
+            else if (underlyingCellType == HexCellType.Get(HexOrientation.FlatTopped) ||
+                     underlyingCellType == HexCellType.Get(HexOrientation.PointyTopped) ||
+                     underlyingCellType == TriangleCellType.Get(TriangleOrientation.FlatTopped) ||
+                     underlyingCellType == TriangleCellType.Get(TriangleOrientation.FlatSides))
             {
                 isForward = (int)cellDir == (int)PTHexPrismDir.Forward;
                 inverseDir = (CellDir)((int)PTHexPrismDir.Forward + (int)PTHexPrismDir.Back - (int)cellDir);
