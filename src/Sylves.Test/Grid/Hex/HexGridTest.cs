@@ -130,5 +130,19 @@ namespace Sylves.Test
             var g = new HexGrid(1);
             GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
         }
+
+        [Test]
+        public void TestDualMapping()
+        {
+            var g = new HexGrid(1, HexOrientation.FlatTopped);
+            var dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(0, 0, 0));
+            GridTest.DualMapping(dual, new Cell(8, -4, -4));
+
+            g = new HexGrid(1, HexOrientation.PointyTopped);
+            dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(0, 0, 0));
+            GridTest.DualMapping(dual, new Cell(8, -4, -4));
+        }
     }
 }

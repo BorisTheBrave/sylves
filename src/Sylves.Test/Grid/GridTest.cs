@@ -5,7 +5,7 @@ using UnityEngine;
 #endif
 
 
-namespace Sylves
+namespace Sylves.Test
 {
     /// <summary>
     /// Generic test methods for grids.
@@ -92,6 +92,18 @@ namespace Sylves
             Assert.AreEqual(cellType.GetIdentity(), s.Rotation);
             Assert.AreEqual(expectedSrcDest ?? cell, s.Src);
             Assert.AreEqual(expectedSrcDest ?? cell, s.Dest);
+        }
+
+        public static void DualMapping(IDualMapping dualMapping, Cell cell)
+        {
+            foreach (var (corner, dualCell, invCorner) in dualMapping.DualNeighbours(cell))
+            {
+                // Check round trip
+                Assert.AreEqual(cell, dualMapping.ToBaseCell(dualCell, invCorner), $"Couldn't round trip {cell},{corner} <-> {dualCell},{invCorner}");
+                // Check corner positions
+                TestUtils.AssertAreEqual(dualMapping.DualGrid.GetCellCenter(dualCell), dualMapping.BaseGrid.GetCellCorner(cell, corner), 1e-6, $"Dual Cell Center of {dualCell} does not match corner {corner} of {cell}");
+                TestUtils.AssertAreEqual(dualMapping.BaseGrid.GetCellCenter(cell), dualMapping.DualGrid.GetCellCorner(dualCell, invCorner), 1e-6, $"Cell Center of {cell} does not match dual corner {dualCell} of {invCorner}");
+            }
         }
     }
 }

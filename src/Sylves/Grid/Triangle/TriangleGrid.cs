@@ -183,6 +183,8 @@ namespace Sylves
             }
         }
 
+        public TriangleOrientation Orientation => orientation;
+
         public bool IsUp(Cell cell) => orientation == TriangleOrientation.FlatTopped && cell.x + cell.y + cell.z == 2;
         public bool IsDown(Cell cell) => orientation == TriangleOrientation.FlatTopped && cell.x + cell.y + cell.z == 1;
         public bool IsLeft(Cell cell) => orientation == TriangleOrientation.FlatSides && cell.x + cell.y + cell.z == 1;
@@ -227,7 +229,118 @@ namespace Sylves
         }
 
         public IGrid Unwrapped => this;
-        public virtual IDualMapping GetDual() => throw new NotSupportedException();
+        public virtual IDualMapping GetDual()
+        {
+            // TODO
+            var dualBound = bound == null ? null :
+                new HexBound(bound.min, bound.max + Vector3Int.one);
+
+            // Note hex orientation is flipped vs triangle orientation
+            if (orientation == TriangleOrientation.FlatTopped)
+            {
+                var hexCellSize = new Vector2(cellSize.x, cellSize.y * 4/3);
+                return new DualMapping(this, new HexGrid(hexCellSize, HexOrientation.PointyTopped, dualBound));
+            }
+            else
+            {
+
+                var hexCellSize = new Vector2(cellSize.x * 4 / 3, cellSize.y);
+                return new DualMapping(this, new HexGrid(hexCellSize, HexOrientation.FlatTopped, dualBound));
+            }
+        }
+
+        internal class DualMapping : BasicDualMapping
+        {
+            private TriangleOrientation baseOrientation;
+
+            public DualMapping(TriangleGrid baseGrid, HexGrid dualGrid) : base(baseGrid, dualGrid)
+            {
+                baseOrientation = baseGrid.orientation;
+            }
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell cell, CellCorner corner)
+            {
+                Cell dest;
+                CellCorner destCorner;
+                if (baseOrientation == TriangleOrientation.FlatTopped)
+                {
+                    switch ((FTTriangleCorner)corner)
+                    {
+                        // See HexGrid.TryMove
+                        case FTTriangleCorner.UpRight: dest = cell + new Vector3Int(0, 0, -1); destCorner = (CellCorner)PTHexCorner.DownLeft; break;
+                        case FTTriangleCorner.Up: dest = cell + new Vector3Int(-1, 0, -1); destCorner = (CellCorner)PTHexCorner.Down; break;
+                        case FTTriangleCorner.UpLeft: dest = cell + new Vector3Int(-1, 0, 0); destCorner = (CellCorner)PTHexCorner.DownRight; break;
+                        case FTTriangleCorner.DownLeft: dest = cell + new Vector3Int(-1, -1, 0); destCorner = (CellCorner)PTHexCorner.UpRight; break;
+                        case FTTriangleCorner.Down: dest = cell + new Vector3Int(0, -1, 0); destCorner = (CellCorner)PTHexCorner.Up; break;
+                        case FTTriangleCorner.DownRight: dest = cell + new Vector3Int(0, -1, -1); destCorner = (CellCorner)PTHexCorner.UpLeft; break;
+                        default:
+                            throw new Exception($"Unexpected corner {corner}");
+                    }
+                }
+                else
+                {
+                    switch ((FSTriangleCorner)corner)
+                    {
+                        // See HexGrid.TryMove
+                        case FSTriangleCorner.Right: dest = cell + new Vector3Int(0, -1, -1); destCorner = (CellCorner)FTHexCorner.Left; break;
+                        case FSTriangleCorner.UpRight: dest = cell + new Vector3Int(0, 0, -1); destCorner = (CellCorner)FTHexCorner.DownLeft; break;
+                        case FSTriangleCorner.UpLeft: dest = cell + new Vector3Int(-1, 0, -1); destCorner = (CellCorner)FTHexCorner.DownRight; break;
+                        case FSTriangleCorner.Left: dest = cell + new Vector3Int(-1, 0, 0); destCorner = (CellCorner)FTHexCorner.Right; break;
+                        case FSTriangleCorner.DownLeft: dest = cell + new Vector3Int(-1, -1, 0); destCorner = (CellCorner)FTHexCorner.UpRight; break;
+                        case FSTriangleCorner.DownRight: dest = cell + new Vector3Int(0, -1, 0); destCorner = (CellCorner)FTHexCorner.UpLeft; break;
+                        default:
+                            throw new Exception($"Unexpected corner {corner}");
+                    }
+                }
+                var s = dest.x + dest.y + dest.z;
+                if (s != 0 || !DualGrid.IsCellInGrid(dest))
+                {
+                    return null;
+                }
+                return (dest, destCorner);
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell cell, CellCorner corner)
+            {
+                Cell dest;
+                CellCorner destCorner;
+                if (baseOrientation == TriangleOrientation.FlatTopped)
+                {
+                    switch ((PTHexCorner)corner)
+                    {
+                        // See HexGrid.TryMove
+                        case PTHexCorner.DownLeft: dest = cell - new Vector3Int(0, 0, -1); destCorner = (CellCorner)FTTriangleCorner.UpRight; break;
+                        case PTHexCorner.Down: dest = cell - new Vector3Int(-1, 0, -1); destCorner = (CellCorner)FTTriangleCorner.Up; break;
+                        case PTHexCorner.DownRight: dest = cell - new Vector3Int(-1, 0, 0); destCorner = (CellCorner)FTTriangleCorner.UpLeft; break;
+                        case PTHexCorner.UpRight: dest = cell - new Vector3Int(-1, -1, 0); destCorner = (CellCorner)FTTriangleCorner.DownLeft; break;
+                        case PTHexCorner.Up: dest = cell - new Vector3Int(0, -1, 0); destCorner = (CellCorner)FTTriangleCorner.Down; break;
+                        case PTHexCorner.UpLeft: dest = cell - new Vector3Int(0, -1, -1); destCorner = (CellCorner)FTTriangleCorner.DownRight; break;
+                        default:
+                            throw new Exception($"Unexpected corner {corner}");
+                    }
+                }
+                else
+                {
+                    switch ((FTHexCorner)corner)
+                    {
+                        // See HexGrid.TryMove
+                        case FTHexCorner.Left: dest = cell - new Vector3Int(0, -1, -1); destCorner = (CellCorner)FSTriangleCorner.Right; break;
+                        case FTHexCorner.DownLeft: dest = cell - new Vector3Int(0, 0, -1); destCorner = (CellCorner)FSTriangleCorner.UpRight; break;
+                        case FTHexCorner.DownRight: dest = cell - new Vector3Int(-1, 0, -1); destCorner = (CellCorner)FSTriangleCorner.UpLeft; break;
+                        case FTHexCorner.Right: dest = cell - new Vector3Int(-1, 0, 0); destCorner = (CellCorner)FSTriangleCorner.Left; break;
+                        case FTHexCorner.UpRight: dest = cell - new Vector3Int(-1, -1, 0); destCorner = (CellCorner)FSTriangleCorner.DownLeft; break;
+                        case FTHexCorner.UpLeft: dest = cell - new Vector3Int(0, -1, 0); destCorner = (CellCorner)FSTriangleCorner.DownRight; break;
+                        default:
+                            throw new Exception($"Unexpected corner {corner}");
+                    }
+                }
+                var s = dest.x + dest.y + dest.z;
+                if ((s != 1 && s != 2) || !DualGrid.IsCellInGrid(dest))
+                {
+                    return null;
+                }
+                return (dest, destCorner);
+            }
+        }
 
         #endregion
 

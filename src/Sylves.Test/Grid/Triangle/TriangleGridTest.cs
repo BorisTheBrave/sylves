@@ -190,5 +190,22 @@ namespace Sylves.Test
             }
             Assert.AreEqual(size.x * size.z * 2, b.Count());
         }
+
+        [Test]
+        public void TestDualMapping()
+        {
+            var g = new TriangleGrid(1, TriangleOrientation.FlatTopped);
+            var dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(1, 0, 0));
+            GridTest.DualMapping(dual, new Cell(1, 1, 0));
+            GridTest.DualMapping(dual, new Cell(8, -4, -2));
+
+
+            g = new TriangleGrid(1, TriangleOrientation.FlatSides);
+            dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(1, 0, 0));
+            GridTest.DualMapping(dual, new Cell(1, 1, 0));
+            GridTest.DualMapping(dual, new Cell(8, -4, -2));
+        }
     }
 }

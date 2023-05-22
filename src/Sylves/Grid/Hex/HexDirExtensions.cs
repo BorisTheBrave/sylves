@@ -53,12 +53,14 @@ namespace Sylves
             return (FTHexDir)((((int)dir) + 3) % 6);
         }
 
+        // TODO: Avoid allocation here
         /// <returns>The position of a corner in a unit hexcentered on the origin.</returns>
         public static Vector3 GetPosition(this FTHexCorner corner)
         {
             return MeshPrimitives.FtHexPolygon[(int)corner];
         }
 
+        // TODO: Avoid allocation here
         /// <returns>The position of a corner in a unit hexcentered on the origin.</returns>
         public static Vector3 GetPosition(this PTHexCorner corner)
         {

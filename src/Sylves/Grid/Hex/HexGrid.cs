@@ -115,6 +115,8 @@ namespace Sylves
             }
         }
 
+        public HexOrientation Orientation => orientation;
+
         #region Basics
         public bool Is2d => true;
 
@@ -157,7 +159,25 @@ namespace Sylves
 
         public IGrid Unwrapped => this;
 
-        public virtual IDualMapping GetDual() => throw new System.NotSupportedException();
+        public virtual IDualMapping GetDual()
+        {
+            // TODO
+            var dualBound = bound == null ? null :
+                new TriangleBound(bound.min, bound.max + Vector3Int.one);
+
+            // Note hex orientation is flipped vs triangle orientation
+            if (orientation == HexOrientation.FlatTopped)
+            {
+                var triCellSize = new Vector2(cellSize.x, cellSize.y / 4 * 3);
+                return new TriangleGrid.DualMapping(new TriangleGrid(triCellSize, TriangleOrientation.FlatSides, dualBound), this);
+            }
+            else
+            {
+
+                var triCellSize = new Vector2(cellSize.x / 4 * 3, cellSize.y);
+                return new TriangleGrid.DualMapping(new TriangleGrid(triCellSize, TriangleOrientation.FlatTopped, dualBound), this);
+            }
+        }
 
         public Cell[] GetChildTriangles(Cell cell)
         {
