@@ -51,6 +51,15 @@ namespace Sylves
         /// </summary>
         bool IsSingleCellType { get; }
 
+        /// <summary>
+        /// Returns the number of co-ordinates needed to identify a cell.
+        /// i.e.
+        /// dim 1 means cell.y === 0 and cell.z === 0
+        /// dim 2 means cell.z === 0
+        /// dim 3 means all three co-ordinates are relevant.
+        /// </summary>
+        int CoordinateDimension { get; }
+
         // TODO: Supports MeshDistortion
         // TODO: Similar to Orientable for cell rotation
 

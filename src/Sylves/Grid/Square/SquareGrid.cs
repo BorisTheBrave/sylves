@@ -80,6 +80,8 @@ namespace Sylves
 
         public bool IsSingleCellType => true;
 
+        public int CoordinateDimension => 2;
+
         public IEnumerable<ICellType> GetCellTypes()
         {
             return cellTypes;

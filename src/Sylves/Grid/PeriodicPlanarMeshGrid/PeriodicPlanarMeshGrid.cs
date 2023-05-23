@@ -126,6 +126,8 @@ namespace Sylves
         /// <inheritdoc />
         public bool IsSingleCellType => centerGrid.IsSingleCellType;
 
+        public int CoordinateDimension => 3;
+
         public IEnumerable<ICellType> GetCellTypes() => centerGrid.GetCellTypes();
 
         #endregion

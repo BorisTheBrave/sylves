@@ -256,6 +256,8 @@ namespace Sylves
 
         public virtual bool IsSingleCellType => false;
 
+        public virtual int CoordinateDimension => 3;
+
         public virtual IEnumerable<ICellType> GetCellTypes() => cellTypes ?? throw new Exception("Unknown cell types");
 
         #endregion

@@ -72,6 +72,36 @@ namespace Sylves
             }
         }
 
+        /*
+        // Reduces a grid to only using the x-y co-ordinates.
+        // TODO: Should this be a method on IGrid
+        private IGrid CompressXY(IGrid grid)
+        {
+            if (grid.Is3d)
+            {
+                throw new Exception("Grid is already a 3d grid, cannot apply PlanarPrismModifier");
+            }
+            if(grid.CoordinateDimension <= 2)
+            {
+                return grid;
+            }
+            if (grid is TransformModifier tf)
+            {
+                return CompressXY(tf.Underlying).Transformed(tf.Transform);
+            }
+            if(grid is TriangleGrid tg)
+            {
+                return tg.CompressXY();
+            }
+            if(grid is HexGrid hg)
+            {
+                // This is fake, but it works for the specific case of PlanarPrismModifier
+                return hg;
+            }
+            throw new Exception($"Unrecognized grid type: {grid.GetType()} uses 2 or 3 co-ordinates.");
+        }
+        */
+
         internal (Cell cell, int layer) Split(Cell cell)
         {
             return (new Cell(cell.x, cell.y), cell.z);
@@ -178,6 +208,8 @@ namespace Sylves
         public virtual bool IsFinite => bound != null && underlying.IsFinite;
 
         public virtual bool IsSingleCellType => underlying.IsSingleCellType;
+
+        public int CoordinateDimension => 3;
 
         public virtual IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes().Select(PrismCellType);
 

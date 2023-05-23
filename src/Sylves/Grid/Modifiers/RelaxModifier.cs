@@ -184,6 +184,8 @@ namespace Sylves
 
         public override bool IsSingleCellType => underlying.IsSingleCellType;
 
+        public override int CoordinateDimension => underlying.CoordinateDimension;
+
         public override IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes();
 
         #endregion

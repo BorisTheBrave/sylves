@@ -151,6 +151,8 @@ namespace Sylves
         public override bool Is3d => !is2d;
 
         public override bool IsPlanar => is2d && meshDetails.isPlanar;
+
+        public override int CoordinateDimension => is2d ? (meshData.subMeshCount == 1 ? 1 : 2) : 3;
         #endregion
 
         #region Relatives

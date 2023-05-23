@@ -24,6 +24,8 @@ namespace Sylves
 
         public bool IsSingleCellType => throw new NotImplementedException();
 
+        public int CoordinateDimension => throw new NotImplementedException();
+
         public IEnumerable<ICellType> GetCellTypes() => throw new NotImplementedException();
         #endregion
 

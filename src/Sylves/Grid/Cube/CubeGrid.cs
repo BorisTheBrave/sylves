@@ -55,6 +55,8 @@ namespace Sylves
 
         public bool IsSingleCellType => true;
 
+        public int CoordinateDimension => 3;
+
         public IEnumerable<ICellType> GetCellTypes()
         {
             return cellTypes;

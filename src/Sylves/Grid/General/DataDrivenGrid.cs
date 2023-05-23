@@ -49,6 +49,8 @@ namespace Sylves
         public bool IsOrientable => false;
         public bool IsFinite => true;
         public bool IsSingleCellType => cellTypes.Length == 1;
+
+        public virtual int CoordinateDimension => 3;
         public IEnumerable<ICellType> GetCellTypes()
         {
             return cellTypes;

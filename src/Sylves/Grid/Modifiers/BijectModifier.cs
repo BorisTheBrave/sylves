@@ -15,11 +15,13 @@ namespace Sylves
     {
         private readonly Func<Cell, Cell> toUnderlying;
         private readonly Func<Cell, Cell> fromUnderlying;
+        private readonly int coordinateDimension;
 
-        public BijectModifier(IGrid underlying, Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) : base(underlying)
+        public BijectModifier(IGrid underlying, Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying, int coordinateDimension = 3) : base(underlying)
         {
             this.toUnderlying = toUnderlying;
             this.fromUnderlying = fromUnderlying;
+            this.coordinateDimension = coordinateDimension;
         }
 
 
@@ -61,6 +63,10 @@ namespace Sylves
         {
             return new BijectModifier(underlying, toUnderlying, fromUnderlying);
         }
+
+        #region Basics
+        public override int CoordinateDimension => coordinateDimension;
+        #endregion
 
         #region Relatives
 
