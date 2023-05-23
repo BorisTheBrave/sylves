@@ -70,37 +70,47 @@ namespace Sylves
             {
                 throw new Exception("Underlying should be a planar grid");
             }
+            if (underlying.CoordinateDimension >= 3)
+            {
+                throw new Exception("Underlying should be a grid that doesn't use the z coordinate (i.e. CoordinateDimension <= 2)");
+            }
         }
 
-        /*
-        // Reduces a grid to only using the x-y co-ordinates.
+        // Reduces a grid to only using the x-y co-ordinates, if necessary
         // TODO: Should this be a method on IGrid
-        private IGrid CompressXY(IGrid grid)
+        private (Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) CompressXY(IGrid grid)
         {
-            if (grid.Is3d)
-            {
-                throw new Exception("Grid is already a 3d grid, cannot apply PlanarPrismModifier");
-            }
-            if(grid.CoordinateDimension <= 2)
-            {
-                return grid;
-            }
             if (grid is TransformModifier tf)
             {
-                return CompressXY(tf.Underlying).Transformed(tf.Transform);
+                return CompressXY(tf.Underlying);
             }
             if(grid is TriangleGrid tg)
             {
-                return tg.CompressXY();
+                Cell ToTriangleGrid(Cell c)
+                {
+                    var odd = (c.x & 1);
+                    var x = (c.x - odd) / 2;
+                    var y = c.y;
+                    var z = -x - y + 1 + odd;
+                    return new Cell(x, y, z);
+                }
+
+                Cell FromTriangleGrid(Cell c) => new Cell(c.x * 2 + (c.x + c.y + c.z - 1), c.y, 0);
+                return (ToTriangleGrid, FromTriangleGrid);
             }
             if(grid is HexGrid hg)
             {
-                // This is fake, but it works for the specific case of PlanarPrismModifier
-                return hg;
+                // Strictly speaking, this is not needed due to some hexgrid magic that ignores z coords
+                // but we do it anyway as it's more convenient
+                return (c => new Cell(c.x, c.y, -c.x-c.y), c => new Cell(c.x, c.y));
             }
-            throw new Exception($"Unrecognized grid type: {grid.GetType()} uses 2 or 3 co-ordinates.");
+            if (grid.CoordinateDimension <= 2)
+            {
+                return (null, null);
+            }
+            // TODO: Some sort of generic compression?
+            throw new Exception($"Unrecognized grid type: {grid.GetType()} 3 co-ordinates, and there's no method for reducing this.");
         }
-        */
 
         internal (Cell cell, int layer) Split(Cell cell)
         {
@@ -226,21 +236,26 @@ namespace Sylves
         public virtual IGrid Unwrapped => underlying.Unwrapped;
         public virtual IGrid Underlying => underlying;
 
+        private static Func<Cell, Cell> Identity = x => x;
+
         public virtual IDualMapping GetDual()
         {
             var dm = underlying.GetDual();
-            var dualGrid = new PlanarPrismModifier(dm.DualGrid, new PlanarPrismOptions
-            {
-                LayerHeight = planarPrismOptions.LayerHeight,
-                LayerOffset = planarPrismOptions.LayerOffset - 0.5f * planarPrismOptions.LayerHeight,
-            }, bound == null ? null : new PlanarPrismBound
-            {
-                MinLayer = bound.MinLayer,
-                MaxLayer = bound.MaxLayer + 1,
-                PlanarBound = dm.DualGrid.GetBound(),
-            });
+            var (to, from) = CompressXY(dm.DualGrid);
+            var dualGrid = new PlanarPrismModifier(
+                from == null ? dm.DualGrid : new BijectModifier(dm.DualGrid, to, from, 2),
+                new PlanarPrismOptions
+                {
+                    LayerHeight = planarPrismOptions.LayerHeight,
+                    LayerOffset = planarPrismOptions.LayerOffset - 0.5f * planarPrismOptions.LayerHeight,
+                }, bound == null ? null : new PlanarPrismBound
+                {
+                    MinLayer = bound.MinLayer,
+                    MaxLayer = bound.MaxLayer + 1,
+                    PlanarBound = dm.DualGrid.GetBound(),
+                });
 
-            return new DualMapping(this, dualGrid, dm);
+            return new DualMapping(this, dualGrid, dm, to ?? Identity, from ?? Identity);
         }
 
 
@@ -249,12 +264,16 @@ namespace Sylves
             private readonly PlanarPrismModifier baseGrid;
             private readonly PlanarPrismModifier dualGrid;
             private readonly IDualMapping planarDualMapping;
+            private readonly Func<Cell, Cell> toUnderlying;
+            private readonly Func<Cell, Cell> fromUnderlying;
 
-            public DualMapping(PlanarPrismModifier baseGrid, PlanarPrismModifier dualGrid, IDualMapping planarDualMapping) : base(baseGrid, dualGrid)
+            public DualMapping(PlanarPrismModifier baseGrid, PlanarPrismModifier dualGrid, IDualMapping planarDualMapping, Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) : base(baseGrid, dualGrid)
             {
                 this.baseGrid = baseGrid;
                 this.dualGrid = dualGrid;
                 this.planarDualMapping = planarDualMapping;
+                this.toUnderlying = toUnderlying;
+                this.fromUnderlying = fromUnderlying;
             }
             public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner)
             {
@@ -269,7 +288,7 @@ namespace Sylves
                 var underlyingDualCellType = dualGrid.underlying.GetCellType(uDualCell);
                 var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
                 var corners = dualPrismInfo.BaseToPrismCorners[uInverseCorner];
-                var dualCell = dualGrid.Combine(uDualCell, layer + (isForward ? 1 : 0));
+                var dualCell = dualGrid.Combine(fromUnderlying(uDualCell), layer + (isForward ? 1 : 0));
                 if (!dualGrid.IsCellInGrid(dualCell))
                     return null;
                 return (dualCell, isForward ? corners.Back : corners.Forward);
@@ -279,6 +298,7 @@ namespace Sylves
             public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner)
             {
                 var (uDualCell, layer) = dualGrid.Split(dualCell);
+                uDualCell = toUnderlying(uDualCell);
                 var underlyingDualCellType = dualGrid.underlying.GetCellType(uDualCell);
                 var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
                 var (uDualCorner, isForward) = dualPrismInfo.PrismToBaseCorners[corner];

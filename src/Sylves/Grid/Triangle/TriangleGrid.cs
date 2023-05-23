@@ -232,25 +232,6 @@ namespace Sylves
 
         public IGrid Unwrapped => this;
 
-        /// <summary>
-        /// Returns an equivalent grid that only uses XY co-ordinates.
-        /// </summary>
-        public IGrid CompressXY()
-        {
-            Cell ToTriangleGrid(Cell c)
-            {
-                var odd = (c.x & 1);
-                var x = (c.x - odd) / 2;
-                var y = c.y;
-                var z = -x - y + 1 + odd;
-                return new Cell(x, y, z);
-            }
-
-            Cell FromTriangleGrid(Cell c) => new Cell(c.x * 2 + (c.x + c.y + c.z - 1), c.y, 0);
-
-            return new BijectModifier(this, ToTriangleGrid, FromTriangleGrid);
-        }
-
         public virtual IDualMapping GetDual()
         {
             // TODO

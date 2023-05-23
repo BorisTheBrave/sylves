@@ -61,7 +61,7 @@ namespace Sylves
 
         protected override IGrid Rebind(IGrid underlying)
         {
-            return new BijectModifier(underlying, toUnderlying, fromUnderlying);
+            return new BijectModifier(underlying, toUnderlying, fromUnderlying, coordinateDimension);
         }
 
         #region Basics

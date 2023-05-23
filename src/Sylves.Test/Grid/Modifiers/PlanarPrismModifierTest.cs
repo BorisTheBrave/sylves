@@ -30,7 +30,7 @@ namespace Sylves.Test
                     return new PlanarPrismModifier(new SquareGrid(1), new PlanarPrismOptions { }); ;
                 case 1:
                     return new PlanarPrismModifier(
-                        new BijectModifier(new TriangleGrid(1), ToTriangleGrid, FromTriangleGrid),
+                        new BijectModifier(new TriangleGrid(1), ToTriangleGrid, FromTriangleGrid, 2),
                         new PlanarPrismOptions { });
                 default:
                     throw new Exception();
@@ -81,7 +81,6 @@ namespace Sylves.Test
         [TestCaseSource(nameof(GridTypes))]
         public void TestDualMapping(int gridType)
         {
-            gridType = 1;
             var g = GetGrid(gridType);
             var dual = g.GetDual();
             GridTest.DualMapping(dual, new Cell(0, 0, 0));
