@@ -99,16 +99,15 @@ namespace Sylves
         public virtual IDualMapping GetDual()
         {
             var dm = hexGrid.GetDual();
-            var dualGrid = new PlanarPrismModifier(dm.DualGrid, new PlanarPrismOptions
-            {
-                LayerHeight = cellSize.z,
-                LayerOffset = -0.5f * cellSize.z,
-            }, bound == null ? null : new PlanarPrismBound
-            {
-                MinLayer = bound.layerMin,
-                MaxLayer = bound.layerMax + 1,
-                PlanarBound = dm.DualGrid.GetBound(),
-            });
+            var triangleGrid = (TriangleGrid)dm.DualGrid;
+            var triangleBound = (TriangleBound)triangleGrid.GetBound();
+
+            // This is almost like TrianglePrismGrid, but it's offset
+            var dualGrid = new PlanarPrismModifier(
+                new BijectModifier(triangleGrid, TrianglePrismGrid.ToTriangleGrid, TrianglePrismGrid.FromTriangleGrid, 2),
+                new PlanarPrismOptions { LayerHeight = cellSize.z, LayerOffset = -0.5f * cellSize.z },
+                bound == null ? null : new PlanarPrismBound { PlanarBound = triangleBound, MinLayer = bound.layerMin, MaxLayer = bound.layerMax + 1 }
+            );
             return new DualMapping(this, dualGrid, dm);
         }
 
@@ -137,7 +136,7 @@ namespace Sylves
                 var underlyingDualCellType = dualGrid.Underlying.GetCellType(uDualCell);
                 var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
                 var corners = dualPrismInfo.BaseToPrismCorners[uInverseCorner];
-                var dualCell = dualGrid.Combine(uDualCell, layer + (isForward ? 1 : 0));
+                var dualCell = dualGrid.Combine(TrianglePrismGrid.FromTriangleGrid(uDualCell), layer + (isForward ? 1 : 0));
                 if (!dualGrid.IsCellInGrid(dualCell))
                     return null;
                 return (dualCell, isForward ? corners.Back : corners.Forward);
@@ -147,6 +146,7 @@ namespace Sylves
             public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner)
             {
                 var (uDualCell, layer) = dualGrid.Split(dualCell);
+                uDualCell = TrianglePrismGrid.ToTriangleGrid(uDualCell);
                 var underlyingDualCellType = dualGrid.Underlying.GetCellType(uDualCell);
                 var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
                 var (uDualCorner, isForward) = dualPrismInfo.PrismToBaseCorners[corner];

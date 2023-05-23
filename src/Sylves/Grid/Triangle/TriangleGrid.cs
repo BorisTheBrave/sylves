@@ -185,6 +185,8 @@ namespace Sylves
 
         public TriangleOrientation Orientation => orientation;
 
+        public Vector2 CellSize => cellSize;
+
         public bool IsUp(Cell cell) => orientation == TriangleOrientation.FlatTopped && cell.x + cell.y + cell.z == 2;
         public bool IsDown(Cell cell) => orientation == TriangleOrientation.FlatTopped && cell.x + cell.y + cell.z == 1;
         public bool IsLeft(Cell cell) => orientation == TriangleOrientation.FlatSides && cell.x + cell.y + cell.z == 1;

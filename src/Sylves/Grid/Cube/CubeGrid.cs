@@ -40,6 +40,8 @@ namespace Sylves
         private static Vector3Int ToVector3Int(Cell cell) => (Vector3Int)cell;
         private static Cell FromVector3Int(Vector3Int v) => (Cell)v;
 
+        public Vector3 CellSize => cellSize;
+
         #region Basics
         public bool Is2d => false;
 

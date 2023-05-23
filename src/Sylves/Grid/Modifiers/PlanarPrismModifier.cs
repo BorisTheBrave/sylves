@@ -86,17 +86,7 @@ namespace Sylves
             }
             if(grid is TriangleGrid tg)
             {
-                Cell ToTriangleGrid(Cell c)
-                {
-                    var odd = (c.x & 1);
-                    var x = (c.x - odd) / 2;
-                    var y = c.y;
-                    var z = -x - y + 1 + odd;
-                    return new Cell(x, y, z);
-                }
-
-                Cell FromTriangleGrid(Cell c) => new Cell(c.x * 2 + (c.x + c.y + c.z - 1), c.y, 0);
-                return (ToTriangleGrid, FromTriangleGrid);
+                return (TrianglePrismGrid.ToTriangleGrid, TrianglePrismGrid.FromTriangleGrid);
             }
             if(grid is HexGrid hg)
             {
@@ -108,8 +98,20 @@ namespace Sylves
             {
                 return (null, null);
             }
-            // TODO: Some sort of generic compression?
-            throw new Exception($"Unrecognized grid type: {grid.GetType()} 3 co-ordinates, and there's no method for reducing this.");
+
+            Cell Compress(Cell c)
+            {
+                checked {
+                    var i = IntUtils.Zip((short)c.y, (short)c.z);
+                    return new Cell(c.x, i);
+                }
+            }
+            Cell Uncompress(Cell c)
+            {
+                var (y, z) = IntUtils.Unzip(c.y);
+                return new Cell(c.x, y, z);
+            }
+            return (Uncompress, Compress);
         }
 
         internal (Cell cell, int layer) Split(Cell cell)
