@@ -144,7 +144,7 @@ namespace Sylves
                 {
                     return null;
                 }
-                return (cell, (CellCorner)((int)corner ^ 3));
+                return (cell, (CellCorner)(((int)corner + 2) % 4));
             }
             public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner) => ToPair(baseCell, corner, DualGrid);
 

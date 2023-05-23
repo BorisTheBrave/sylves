@@ -94,7 +94,73 @@ namespace Sylves
 
         public IGrid Unwrapped => this;
 
-        public virtual IDualMapping GetDual() => throw new NotSupportedException();
+        public virtual IDualMapping GetDual()
+        {
+            var dm = hexGrid.GetDual();
+            var dualGrid = new PlanarPrismModifier(dm.DualGrid, new PlanarPrismOptions
+            {
+                LayerHeight = cellSize.z,
+                LayerOffset = -0.5f * cellSize.z,
+            }, bound == null ? null : new PlanarPrismBound
+            {
+                MinLayer = bound.layerMin,
+                MaxLayer = bound.layerMax + 1,
+                PlanarBound = dm.DualGrid.GetBound(),
+            });
+            return new DualMapping(this, dualGrid, dm);
+        }
+
+        private class DualMapping : BasicDualMapping
+        {
+            private readonly HexPrismGrid baseGrid;
+            private readonly PlanarPrismModifier dualGrid;
+            private readonly IDualMapping planarDualMapping;
+
+            public DualMapping(HexPrismGrid baseGrid, PlanarPrismModifier dualGrid, IDualMapping planarDualMapping) : base(baseGrid, dualGrid)
+            {
+                this.baseGrid = baseGrid;
+                this.dualGrid = dualGrid;
+                this.planarDualMapping = planarDualMapping;
+            }
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner)
+            {
+                var (uCell, layer) = baseGrid.Split(baseCell);
+                var underlyingCellType = baseGrid.hexGrid.GetCellType(uCell);
+                var prismInfo = PrismInfo.Get(underlyingCellType);
+                var (uCorner, isForward) = prismInfo.PrismToBaseCorners[corner];
+                var t = planarDualMapping.ToDualPair(uCell, uCorner);
+                if (t == null)
+                    return null;
+                var (uDualCell, uInverseCorner) = t.Value;
+                var underlyingDualCellType = dualGrid.Underlying.GetCellType(uDualCell);
+                var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
+                var corners = dualPrismInfo.BaseToPrismCorners[uInverseCorner];
+                var dualCell = dualGrid.Combine(uDualCell, layer + (isForward ? 1 : 0));
+                if (!dualGrid.IsCellInGrid(dualCell))
+                    return null;
+                return (dualCell, isForward ? corners.Back : corners.Forward);
+
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner)
+            {
+                var (uDualCell, layer) = dualGrid.Split(dualCell);
+                var underlyingDualCellType = dualGrid.Underlying.GetCellType(uDualCell);
+                var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
+                var (uDualCorner, isForward) = dualPrismInfo.PrismToBaseCorners[corner];
+                var t = planarDualMapping.ToBasePair(uDualCell, uDualCorner);
+                if (t == null)
+                    return null;
+                var (uCell, uInverseCorner) = t.Value;
+                var underlyingCellType = baseGrid.hexGrid.GetCellType(uCell);
+                var prismInfo = PrismInfo.Get(underlyingCellType);
+                var corners = prismInfo.BaseToPrismCorners[uInverseCorner];
+                var baseCell = baseGrid.Combine(uCell, layer + (isForward ? 0 : -1));
+                if (!baseGrid.IsCellInGrid(baseCell))
+                    return null;
+                return (baseCell, isForward ? corners.Back : corners.Forward);
+            }
+        }
 
         public HexGrid HexGrid => hexGrid;
 

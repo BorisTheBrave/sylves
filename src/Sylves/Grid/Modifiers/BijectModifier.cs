@@ -62,6 +62,40 @@ namespace Sylves
             return new BijectModifier(underlying, toUnderlying, fromUnderlying);
         }
 
+        #region Relatives
+
+        public override IDualMapping GetDual()
+        {
+            var dm = Underlying.GetDual();
+            return new DualMapping(this, dm.DualGrid, dm);
+        }
+
+        private class DualMapping : BasicDualMapping
+        {
+            private readonly BijectModifier baseGrid;
+            private readonly IDualMapping underlyingDualMapping;
+
+            public DualMapping(BijectModifier baseGrid, IGrid dualGrid, IDualMapping underlyingDualMapping) : base(baseGrid, dualGrid)
+            {
+                this.baseGrid = baseGrid;
+                this.underlyingDualMapping = underlyingDualMapping;
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner)
+            {
+                var t = underlyingDualMapping.ToBasePair(dualCell, corner);
+                if (t == null)
+                    return null;
+                return (baseGrid.fromUnderlying(t.Value.baseCell), t.Value.inverseCorner);
+            }
+
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner)
+            {
+                return underlyingDualMapping.ToDualPair(baseGrid.toUnderlying(baseCell), corner);
+            }
+        }
+
+        #endregion
 
         #region Cell info
 

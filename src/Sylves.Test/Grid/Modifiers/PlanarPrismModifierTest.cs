@@ -75,5 +75,16 @@ namespace Sylves.Test
             var g = GetGrid(gridType);
             GridTest.FindBasicPath(g, new Cell(1, 0, 0), new Cell(2, 0, -5));
         }
+
+
+        [Test]
+        [TestCaseSource(nameof(GridTypes))]
+        public void TestDualMapping(int gridType)
+        {
+            gridType = 1;
+            var g = GetGrid(gridType);
+            var dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(0, 0, 0));
+        }
     }
 }

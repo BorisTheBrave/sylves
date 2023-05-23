@@ -168,14 +168,14 @@ namespace Sylves
             // Note hex orientation is flipped vs triangle orientation
             if (orientation == HexOrientation.FlatTopped)
             {
-                var triCellSize = new Vector2(cellSize.x, cellSize.y / 4 * 3);
-                return new TriangleGrid.DualMapping(new TriangleGrid(triCellSize, TriangleOrientation.FlatSides, dualBound), this);
+                var triCellSize = new Vector2(cellSize.x / (4f / 3), cellSize.y);
+                return new TriangleGrid.DualMapping(new TriangleGrid(triCellSize, TriangleOrientation.FlatSides, dualBound), this).Reversed();
             }
             else
             {
 
-                var triCellSize = new Vector2(cellSize.x / 4 * 3, cellSize.y);
-                return new TriangleGrid.DualMapping(new TriangleGrid(triCellSize, TriangleOrientation.FlatTopped, dualBound), this);
+                var triCellSize = new Vector2(cellSize.x, cellSize.y / (4f / 3));
+                return new TriangleGrid.DualMapping(new TriangleGrid(triCellSize, TriangleOrientation.FlatTopped, dualBound), this).Reversed();
             }
         }
 

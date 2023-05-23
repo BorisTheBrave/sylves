@@ -72,12 +72,12 @@ namespace Sylves
             }
         }
 
-        private (Cell cell, int layer) Split(Cell cell)
+        internal (Cell cell, int layer) Split(Cell cell)
         {
             return (new Cell(cell.x, cell.y), cell.z);
         }
 
-        private Cell Combine(Cell cell, int layer)
+        internal Cell Combine(Cell cell, int layer)
         {
             return new Cell(cell.x, cell.y, layer);
         }
@@ -193,7 +193,76 @@ namespace Sylves
 
         public virtual IGrid Unwrapped => underlying.Unwrapped;
         public virtual IGrid Underlying => underlying;
-        public virtual IDualMapping GetDual() => throw new NotSupportedException();
+
+        public virtual IDualMapping GetDual()
+        {
+            var dm = underlying.GetDual();
+            var dualGrid = new PlanarPrismModifier(dm.DualGrid, new PlanarPrismOptions
+            {
+                LayerHeight = planarPrismOptions.LayerHeight,
+                LayerOffset = planarPrismOptions.LayerOffset - 0.5f * planarPrismOptions.LayerHeight,
+            }, bound == null ? null : new PlanarPrismBound
+            {
+                MinLayer = bound.MinLayer,
+                MaxLayer = bound.MaxLayer + 1,
+                PlanarBound = dm.DualGrid.GetBound(),
+            });
+
+            return new DualMapping(this, dualGrid, dm);
+        }
+
+
+        private class DualMapping : BasicDualMapping
+        {
+            private readonly PlanarPrismModifier baseGrid;
+            private readonly PlanarPrismModifier dualGrid;
+            private readonly IDualMapping planarDualMapping;
+
+            public DualMapping(PlanarPrismModifier baseGrid, PlanarPrismModifier dualGrid, IDualMapping planarDualMapping) : base(baseGrid, dualGrid)
+            {
+                this.baseGrid = baseGrid;
+                this.dualGrid = dualGrid;
+                this.planarDualMapping = planarDualMapping;
+            }
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner)
+            {
+                var (uCell, layer) = baseGrid.Split(baseCell);
+                var underlyingCellType = baseGrid.underlying.GetCellType(uCell);
+                var prismInfo = PrismInfo.Get(underlyingCellType);
+                var (uCorner, isForward) = prismInfo.PrismToBaseCorners[corner];
+                var t = planarDualMapping.ToDualPair(uCell, uCorner);
+                if (t == null)
+                    return null;
+                var (uDualCell, uInverseCorner) = t.Value;
+                var underlyingDualCellType = dualGrid.underlying.GetCellType(uDualCell);
+                var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
+                var corners = dualPrismInfo.BaseToPrismCorners[uInverseCorner];
+                var dualCell = dualGrid.Combine(uDualCell, layer + (isForward ? 1 : 0));
+                if (!dualGrid.IsCellInGrid(dualCell))
+                    return null;
+                return (dualCell, isForward ? corners.Back : corners.Forward);
+
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner)
+            {
+                var (uDualCell, layer) = dualGrid.Split(dualCell);
+                var underlyingDualCellType = dualGrid.underlying.GetCellType(uDualCell);
+                var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
+                var (uDualCorner, isForward) = dualPrismInfo.PrismToBaseCorners[corner];
+                var t = planarDualMapping.ToBasePair(uDualCell, uDualCorner);
+                if (t == null)
+                    return null;
+                var (uCell, uInverseCorner) = t.Value;
+                var underlyingCellType = baseGrid.underlying.GetCellType(uCell);
+                var prismInfo = PrismInfo.Get(underlyingCellType);
+                var corners = prismInfo.BaseToPrismCorners[uInverseCorner];
+                var baseCell = baseGrid.Combine(uCell, layer + (isForward ? 0 : -1));
+                if (!baseGrid.IsCellInGrid(baseCell))
+                    return null;
+                return (baseCell, isForward ? corners.Back : corners.Forward);
+            }
+        }
         #endregion
 
         #region Cell info

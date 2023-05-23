@@ -238,13 +238,13 @@ namespace Sylves
             // Note hex orientation is flipped vs triangle orientation
             if (orientation == TriangleOrientation.FlatTopped)
             {
-                var hexCellSize = new Vector2(cellSize.x, cellSize.y * 4/3);
+                var hexCellSize = new Vector2(cellSize.x, cellSize.y * (4f / 3));
                 return new DualMapping(this, new HexGrid(hexCellSize, HexOrientation.PointyTopped, dualBound));
             }
             else
             {
 
-                var hexCellSize = new Vector2(cellSize.x * 4 / 3, cellSize.y);
+                var hexCellSize = new Vector2(cellSize.x * (4f / 3), cellSize.y);
                 return new DualMapping(this, new HexGrid(hexCellSize, HexOrientation.FlatTopped, dualBound));
             }
         }

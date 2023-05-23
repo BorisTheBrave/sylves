@@ -96,6 +96,7 @@ namespace Sylves.Test
 
         public static void DualMapping(IDualMapping dualMapping, Cell cell)
         {
+            var atLeastOne = false;
             foreach (var (corner, dualCell, invCorner) in dualMapping.DualNeighbours(cell))
             {
                 // Check round trip
@@ -103,7 +104,10 @@ namespace Sylves.Test
                 // Check corner positions
                 TestUtils.AssertAreEqual(dualMapping.DualGrid.GetCellCenter(dualCell), dualMapping.BaseGrid.GetCellCorner(cell, corner), 1e-6, $"Dual Cell Center of {dualCell} does not match corner {corner} of {cell}");
                 TestUtils.AssertAreEqual(dualMapping.BaseGrid.GetCellCenter(cell), dualMapping.DualGrid.GetCellCorner(dualCell, invCorner), 1e-6, $"Cell Center of {cell} does not match dual corner {dualCell} of {invCorner}");
+
+                atLeastOne = true;
             }
+            Assert.IsTrue(atLeastOne);
         }
     }
 }

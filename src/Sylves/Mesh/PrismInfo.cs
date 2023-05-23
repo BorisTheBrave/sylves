@@ -92,7 +92,8 @@ namespace Sylves
             PrismCellType = TrianglePrismCellType.Get(TriangleOrientation.FlatTopped),
             ForwardDir = (CellDir)FSTrianglePrismDir.Forward,
             BackDir = (CellDir)FSTrianglePrismDir.Back,
-        };
+            BaseToPrismCorners = BaseToPrismCornersNGon(6),
+        }.Setup();
 
         private static PrismInfo fsTrianglePrismInfo = new PrismInfo
         {
@@ -101,7 +102,8 @@ namespace Sylves
             PrismCellType = TrianglePrismCellType.Get(TriangleOrientation.FlatSides),
             ForwardDir = (CellDir)FSTrianglePrismDir.Forward,
             BackDir = (CellDir)FSTrianglePrismDir.Back,
-        };
+            BaseToPrismCorners = BaseToPrismCornersNGon(6),
+        }.Setup();
 
 
 
