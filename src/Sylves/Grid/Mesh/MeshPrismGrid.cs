@@ -29,6 +29,76 @@ namespace Sylves
             this.meshPrismOptions = meshPrismOptions;
         }
 
+        #region Relatives
+
+        public override IDualMapping GetDual()
+        {
+            var dmb = new DualMeshBuilder(meshData);
+            var dualGrid = new MeshPrismGrid(dmb.DualMeshData, new MeshPrismGridOptions(meshPrismOptions)
+            {
+                MinLayer = meshPrismOptions.MinLayer,
+                MaxLayer = meshPrismOptions.MaxLayer + 1,
+                LayerOffset = meshPrismOptions.LayerOffset - 0.5f * meshPrismOptions.LayerHeight,
+            });
+            return new DualMapping(this, dualGrid, dmb.Mapping, meshPrismOptions.MinLayer, meshPrismOptions.MaxLayer);
+        }
+
+        private class DualMapping : BasicDualMapping
+        {
+            Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toDual;
+            Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toBase;
+
+            public DualMapping(MeshPrismGrid baseGrid, MeshPrismGrid dualGrid, List<(int primalFace, int primalVert, int dualFace, int dualVert)> rawMapping, int minLayer, int maxLayer) : base(baseGrid, dualGrid)
+            {
+                toDual = new Dictionary<(Cell, CellCorner), (Cell, CellCorner)>();
+                foreach(var (primalFace, primalVert, dualFace, dualVert) in rawMapping)
+                {
+                    var basePrismInfo = (baseGrid.CellData[new Cell(primalFace, 0, 0)] as MeshCellData).PrismInfo;
+                    var dualPrismInfo = (dualGrid.CellData[new Cell(dualFace, 0, 0)] as MeshCellData).PrismInfo;
+                    var (primalBack, primalForward) = basePrismInfo.BaseToPrismCorners[(CellCorner)primalVert];
+                    var (dualBack, dualForward) = dualPrismInfo.BaseToPrismCorners[(CellCorner)dualVert];
+                    foreach (var layer in Enumerable.Range(minLayer, maxLayer - minLayer))
+                    {
+                        toDual.Add(
+                            (new Cell(primalFace, 0, layer), primalForward),
+                            (new Cell(dualFace, 0, layer + 1), dualBack)
+                            );
+                        toDual.Add(
+                            (new Cell(primalFace, 0, layer), primalBack),
+                            (new Cell(dualFace, 0, layer), dualForward)
+                            );
+                    }
+                }
+                toBase = toDual.ToDictionary(kv => kv.Value, kv => kv.Key);
+            }
+
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell cell, CellCorner corner)
+            {
+                if (toDual.TryGetValue((cell, corner), out var r))
+                {
+                    return r;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell cell, CellCorner corner)
+            {
+
+                if (toBase.TryGetValue((cell, corner), out var r))
+                {
+                    return r;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        #endregion
+
         #region Query
         protected override RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
         {

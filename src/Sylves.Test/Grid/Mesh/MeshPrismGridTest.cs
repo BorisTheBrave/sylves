@@ -240,5 +240,14 @@ namespace Sylves.Test
 
             GridTest.FindCell(g, new Cell());
         }
+
+
+        [Test]
+        public void TestDualMapping()
+        {
+            var g = new MeshPrismGrid(TestMeshes.Cube, options);
+            var dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(0, 0, 0), checkPositions: false);
+        }
     }
 }
