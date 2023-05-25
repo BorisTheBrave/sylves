@@ -15,14 +15,16 @@ namespace Sylves
     public class PeriodicPlanarMeshGrid : IGrid
     {
         private readonly AabbChunks aabbChunks;
+        private readonly MeshData centerMeshData;
         private readonly DataDrivenGrid centerGrid;
         private readonly Vector2 strideX;
         private readonly Vector2 strideY;
         private SquareBound bound;
 
-        private PeriodicPlanarMeshGrid(AabbChunks aabbChunks, DataDrivenGrid centerGrid, Vector2 strideX, Vector2 strideY, SquareBound bound)
+        private PeriodicPlanarMeshGrid(AabbChunks aabbChunks, MeshData centerMeshData, DataDrivenGrid centerGrid, Vector2 strideX, Vector2 strideY, SquareBound bound)
         {
             this.aabbChunks = aabbChunks;
+            this.centerMeshData = centerMeshData;
             this.centerGrid = centerGrid;
             this.strideX = strideX;
             this.strideY = strideY;
@@ -67,6 +69,7 @@ namespace Sylves
 
             var mg = new MeshGrid(meshData, new MeshGridOptions { }, dataDrivenData, true);
             mg.BuildMeshDetails();
+            centerMeshData = meshData;
             centerGrid = mg;
             this.strideX = strideX;
             this.strideY = strideY;
@@ -87,17 +90,17 @@ namespace Sylves
             return chunkOffset;
         }
 
-        private (Cell centerCell, Vector2Int chunk) Split(Cell cell)
+        private static (Cell centerCell, Vector2Int chunk) Split(Cell cell)
         {
             return (new Cell(cell.x, 0, 0), new Vector2Int(cell.y, cell.z));
         }
 
-        private Cell Combine(Cell centerCell, Vector2Int chunk)
+        private static Cell Combine(Cell centerCell, Vector2Int chunk)
         {
             return new Cell(centerCell.x, chunk.x, chunk.y);
         }
 
-        private Vector3Int Promote(Vector2Int chunk)
+        private static Vector3Int Promote(Vector2Int chunk)
         {
             return new Vector3Int(0, chunk.x, chunk.y);
         }
@@ -135,12 +138,122 @@ namespace Sylves
         #region Relatives
 
         /// <inheritdoc />
-        public IGrid Unbounded => new PeriodicPlanarMeshGrid(aabbChunks, centerGrid, strideX, strideY, null);
+        public IGrid Unbounded => new PeriodicPlanarMeshGrid(aabbChunks, centerMeshData, centerGrid, strideX, strideY, null);
 
         /// <inheritdoc />
         public IGrid Unwrapped => this;
 
-        public virtual IDualMapping GetDual() => throw new NotSupportedException();
+        public virtual IDualMapping GetDual()
+        {
+            // Like in the constructor, use offset copies of the mesh
+            // This can probably be done more efficiently.
+            // We ensure chunk (0, 0) is first for conveneince
+            var (min, max) = aabbChunks.GetChunkBounds(new Vector2Int());
+            var meshDatas = new List<MeshData> { centerMeshData };
+            var chunks = new List<Vector2Int> {  new Vector2Int() };
+            foreach (var chunk in aabbChunks.GetChunkIntersects(min, max))
+            {
+                if (chunk == new Vector2Int())
+                    continue;
+                var chunkOffset = ChunkOffset(chunk);
+                var offsetMeshData = Matrix4x4.Translate(chunkOffset) * centerMeshData;
+                meshDatas.Add(offsetMeshData);
+                chunks.Add(chunk);
+            }
+            // Once we've got all meshes, merge them together and compute the dual
+            var mergedMeshData = MeshDataOperations.Concat(meshDatas, out var mergeIndexMap);
+            var weldedMeshData = mergedMeshData.Weld(out var weldIndexMap);
+            var dmb = new DualMeshBuilder(weldedMeshData);
+
+            // There's too many faces in dualGrid, work out which ones to keep,
+            // and re-index them
+            var keepFaces = new List<bool>();
+            var keptFaceIndices = new List<int>();
+            var keptFaceCount = 0;
+            foreach(var face in MeshUtils.GetFaces(dmb.DualMeshData))
+            {
+                var centroid = face.Select(i => dmb.DualMeshData.vertices[i]).Aggregate((a, b) => a + b) / face.Count;
+                var isCentral = aabbChunks.GetUniqueChunk(new Vector2(centroid.x, centroid.y)) == new Vector2Int(0, 0);
+                if(isCentral)
+                {
+                    keepFaces.Add(true);
+                    keptFaceIndices.Add(keptFaceCount);
+                    keptFaceCount++;
+                }
+                else
+                {
+                    keepFaces.Add(false);
+                    keptFaceIndices.Add(-1);
+                }
+            }
+
+            // Mesh filtered to just kept faces
+            var dualMesh = dmb.DualMeshData.FaceFilter((f, i) => keepFaces[i]);
+            var dualGrid = new PeriodicPlanarMeshGrid(dualMesh, strideX, strideY);
+
+            // Convert primal faces back to which chunk they are from,
+            // and compress dual faces to just hose kept
+            var centralFaceCount = centerGrid.IndexCount;
+            (int, Vector2Int) MapPrimalFace(int primalFace)
+            {
+                return (primalFace % centralFaceCount, chunks[primalFace / centralFaceCount]);
+            }
+            int MapDualFace(int dualFace)
+            {
+                return keptFaceIndices[dualFace];
+            }
+            var mapping = dmb.Mapping
+                .Where(x => keepFaces[x.dualFace])
+                .Select(x => (MapPrimalFace(x.primalFace), x.primalVert, MapDualFace(x.dualFace), x.dualVert))
+                .ToList();
+
+            return new DualMapping(this, dualGrid, mapping);
+        }
+
+
+        private class DualMapping : BasicDualMapping
+        {
+            Dictionary<(Cell, CellCorner), (Cell, Vector2Int, CellCorner)> toDual;
+            Dictionary<(Cell, CellCorner), (Cell, Vector2Int, CellCorner)> toBase;
+
+            public DualMapping(PeriodicPlanarMeshGrid baseGrid, PeriodicPlanarMeshGrid dualGrid, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)> rawMapping) : base(baseGrid, dualGrid)
+            {
+                toDual = toBase = rawMapping.ToDictionary(
+                    x => (new Cell(x.primal.face, 0, 0), (CellCorner)x.primalVert),
+                    x => (new Cell(x.dualFace, 0, 0), x.primal.chunk, (CellCorner)x.dualVert));
+                toBase = rawMapping.ToDictionary(
+                    x => (new Cell(x.dualFace, 0, 0), (CellCorner)x.dualVert),
+                    x => (new Cell(x.primal.face, 0, 0), x.primal.chunk, (CellCorner)x.primalVert));
+            }
+
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell cell, CellCorner corner)
+            {
+                var (centerCell, chunk) = Split(cell);
+                if (toDual.TryGetValue((centerCell, corner), out var r))
+                {
+                    var (dualCell, primalChunk, dualVert) = r;
+                    return (Combine(dualCell, -primalChunk) + Promote(chunk), dualVert);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell cell, CellCorner corner)
+            {
+                var (centerCell, chunk) = Split(cell);
+                if (toBase.TryGetValue((centerCell, corner), out var r))
+                {
+                    var (primalCell, primalChunk, primalVert) = r;
+                    return (Combine(primalCell, primalChunk) + Promote(chunk), primalVert);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         #endregion
 
@@ -233,7 +346,7 @@ namespace Sylves
         }
 
         /// <inheritdoc />
-        public IGrid BoundBy(IBound bound) => new PeriodicPlanarMeshGrid(aabbChunks, centerGrid, strideX, strideY, (SquareBound)IntersectBounds(this.bound, bound));
+        public IGrid BoundBy(IBound bound) => new PeriodicPlanarMeshGrid(aabbChunks, centerMeshData, centerGrid, strideX, strideY, (SquareBound)IntersectBounds(this.bound, bound));
 
         /// <inheritdoc />
         public IBound IntersectBounds(IBound bound, IBound other)

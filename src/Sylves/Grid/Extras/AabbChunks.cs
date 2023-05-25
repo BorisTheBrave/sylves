@@ -54,6 +54,12 @@ namespace Sylves
             return (bl, tr);
         }
 
+        // Partitions the plane so that every point is associated with one chunk it belongs to
+        public Vector2Int? GetUniqueChunk(Vector2 pos)
+        {
+            return GetChunkIntersects(pos, pos).Cast<Vector2Int?>().FirstOrDefault();
+        }
+
         // Linear transformation that maps strideX to (1, 0) and strideY to (0, 1).
         private Vector2 Inv(Vector2 v)
         {
