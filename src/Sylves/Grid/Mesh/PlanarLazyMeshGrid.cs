@@ -219,16 +219,16 @@ namespace Sylves
             return strideX * chunk.x + strideY * chunk.y;
         }
 
-        private (Cell meshCell, Vector2Int chunk) Split(Cell cell)
+        private static (Cell meshCell, Vector2Int chunk) Split(Cell cell)
         {
             return (new Cell(cell.x, 0, 0), new Vector2Int(cell.y, cell.z));
         }
 
-        private Cell Combine(Cell meshCell, Vector2Int chunk)
+        private static Cell Combine(Cell meshCell, Vector2Int chunk)
         {
             return new Cell(meshCell.x, chunk.x, chunk.y);
         }
-        private Vector3Int Promote(Vector2Int chunk)
+        private static Vector3Int Promote(Vector2Int chunk)
         {
             return new Vector3Int(0, chunk.x, chunk.y);
         }
@@ -268,7 +268,194 @@ namespace Sylves
 
         public IGrid Unwrapped => this;
 
-        public virtual IDualMapping GetDual() => throw new NotImplementedException();
+
+        public IDualMapping GetDual()
+        {
+            // Gets the dual for a single chunk,
+            // and also the mapping of everything that maps *to* it.
+            (MeshData, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)>) GetDualData(Vector2Int currentChunk)
+            {
+                // Like in the constructor, use offset copies of the mesh
+                // This can probably be done more efficiently.
+                var (min, max) = aabbChunks.GetChunkBounds(currentChunk);
+                var meshDatas = new List<MeshData>();
+                var meshDataFaceCounts = new List<int>();
+                var chunks = new List<Vector2Int>();
+                foreach (var chunk in aabbChunks.GetChunkIntersects(min, max))
+                {
+                    var chunkOffset = ChunkOffset(chunk);
+                    var mdc = GetMeshDataCached(chunk);
+                    meshDatas.Add(mdc.Item1);
+                    meshDataFaceCounts.Add(mdc.Item2.Cells.Count);
+                    chunks.Add(chunk);
+                }
+
+                // Once we've got all meshes, merge them together and compute the dual
+                var mergedMeshData = MeshDataOperations.Concat(meshDatas, out var mergeIndexMap);
+                var weldedMeshData = mergedMeshData.Weld(out var weldIndexMap);
+                var dmb = new DualMeshBuilder(weldedMeshData);
+
+                // There's too many faces in dualGrid, work out which ones to keep,
+                // and re-index them
+                var keepFaces = new List<bool>();
+                var keptFaceIndices = new List<int>();
+                var keptFaceCount = 0;
+                foreach (var face in MeshUtils.GetFaces(dmb.DualMeshData))
+                {
+                    var centroid = face.Select(i => dmb.DualMeshData.vertices[i]).Aggregate((a, b) => a + b) / face.Count;
+                    var isCentral = aabbChunks.GetUniqueChunk(new Vector2(centroid.x, centroid.y)) == currentChunk;
+                    if (isCentral)
+                    {
+                        keepFaces.Add(true);
+                        keptFaceIndices.Add(keptFaceCount);
+                        keptFaceCount++;
+                    }
+                    else
+                    {
+                        keepFaces.Add(false);
+                        keptFaceIndices.Add(-1);
+                    }
+                }
+
+                // Mesh filtered to just kept faces
+                var dualMesh = dmb.DualMeshData.FaceFilter((f, i) => keepFaces[i]);
+
+
+                // Convert primal faces back to which chunk they are from,
+                // and compress dual faces to just hose kept
+                var primalFaceMap = new Dictionary<int, (int, Vector2Int)>();
+                {
+                    int primalFace = 0;
+                    for (var i=0;i<chunks.Count;i++)
+                    {
+                        for(var f=0;f<meshDataFaceCounts[i];f++)
+                        {
+                            primalFaceMap[primalFace] = (f, chunks[i]);
+                            primalFace++;
+                        }
+                    }
+                }
+                (int, Vector2Int) MapPrimalFace(int primalFace)
+                {
+                    return primalFaceMap[primalFace];
+                }
+                int MapDualFace(int dualFace)
+                {
+                    return keptFaceIndices[dualFace];
+                }
+                var mapping = dmb.Mapping
+                    .Where(x => keepFaces[x.dualFace])
+                    .Select(x => (MapPrimalFace(x.primalFace), x.primalVert, MapDualFace(x.dualFace), x.dualVert))
+                    .ToList();
+
+                return (dualMesh, mapping);
+            }
+
+            var dualDataCache = cachePolicy.GetDictionary<(MeshData, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)>)>(this);
+
+            (MeshData, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)>) GetDualDataCached(Vector2Int currentChunk)
+            {
+                var cell = new Cell(currentChunk.x, currentChunk.y);
+                if (dualDataCache.TryGetValue(cell, out var dd))
+                {
+                    return dd;
+                }
+                return dualDataCache[cell] = GetDualData(currentChunk);
+            }
+
+            // TODO: These need to be increased in size.
+            var dualAabbBottomLeft = aabbBottomLeft;
+            var dualAabbSize = aabbSize;
+            var dualGrid = new PlanarLazyMeshGrid(c => GetDualDataCached(c).Item1, strideX, strideY, dualAabbBottomLeft, dualAabbSize, meshGridOptions, cachePolicy: cachePolicy);
+            // TODO: Bound
+
+            return new DualMapping(this, dualGrid, c => GetDualData(c).Item2, cachePolicy);
+        }
+
+
+        private class DualMapping : BasicDualMapping
+        {
+            private readonly IDictionary<Cell, Dictionary<(Cell, CellCorner), (Cell, Vector2Int, CellCorner)>> toDualCache;
+            private readonly IDictionary<Cell, Dictionary<(Cell, CellCorner), (Cell, Vector2Int, CellCorner)>> toBaseCache;
+            private readonly PlanarLazyMeshGrid baseGrid;
+            private readonly Func<Vector2Int, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)>> mappingByDualChunkCached;
+
+            public DualMapping(PlanarLazyMeshGrid baseGrid, PlanarLazyMeshGrid dualGrid, Func<Vector2Int, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)>> mappingByDualChunkCached, ICachePolicy cachePolicy) : base(baseGrid, dualGrid)
+            {
+
+                toDualCache = cachePolicy.GetDictionary<Dictionary<(Cell, CellCorner), (Cell, Vector2Int, CellCorner)>>(baseGrid);
+                toBaseCache = cachePolicy.GetDictionary<Dictionary<(Cell, CellCorner), (Cell, Vector2Int, CellCorner)>>(baseGrid);
+                this.baseGrid = baseGrid;
+                this.mappingByDualChunkCached = mappingByDualChunkCached;
+            }
+
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell cell, CellCorner corner)
+            {
+                var (centerCell, chunk) = Split(cell);
+                if (!toDualCache.TryGetValue(new Cell(chunk.x, chunk.y), out var toDual))
+                {
+                    // Compute toDual
+                    // Because we only have mappings per-*dual*-chunk, we need to aggregate several mappings
+
+                    var (min, max) = baseGrid.aabbChunks.GetChunkBounds(chunk);
+                    /*
+                    toDualCache[new Cell(chunk.x, chunk.y)] = toDual = baseGrid.aabbChunks.GetChunkIntersects(min, max)
+                        .SelectMany(dualChunk => mappingByDualChunkCached(dualChunk)
+                            .Where(x => x.primal.chunk == chunk)
+                            .Select(x => (dualChunk, x)))
+                        .ToDictionary(x => (new Cell(x.x.primal.face, 0, 0), (CellCorner)x.x.primalVert),
+                                      x => (new Cell(x.x.dualFace, 0, 0), x.dualChunk, (CellCorner)x.x.dualVert));
+                    */
+
+                    toDualCache[new Cell(chunk.x, chunk.y)] = toDual = new Dictionary<(Cell, CellCorner), (Cell, Vector2Int, CellCorner)>();
+                    foreach(var dualChunk in baseGrid.aabbChunks.GetChunkIntersects(min, max))
+                    {
+                        var mapping = mappingByDualChunkCached(dualChunk);
+                        foreach(var x in mapping)
+                        {
+                            if (x.primal.chunk != chunk)
+                                continue;
+                            toDual.Add((new Cell(x.primal.face, 0, 0), (CellCorner)x.primalVert),
+                                       (new Cell(x.dualFace, 0, 0), dualChunk, (CellCorner)x.dualVert));
+                        }
+                    }
+
+                }
+
+                if (toDual.TryGetValue((centerCell, corner), out var r))
+                {
+                    var (dualCell, dualChunk, dualVert) = r;
+                    return (Combine(dualCell, dualChunk), dualVert);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell cell, CellCorner corner)
+            {
+                var (centerCell, chunk) = Split(cell);
+                if (!toBaseCache.TryGetValue(new Cell(chunk.x, chunk.y), out var toBase))
+                {
+                    // Compute toBase
+                    toBaseCache[new Cell(chunk.x, chunk.y)] = toBase = mappingByDualChunkCached(chunk)
+                        .ToDictionary(
+                            x => (new Cell(x.dualFace, 0, 0), (CellCorner)x.dualVert),
+                            x => (new Cell(x.primal.face, 0, 0), x.primal.chunk, (CellCorner)x.primalVert)); ;
+                }
+
+                if (toBase.TryGetValue((centerCell, corner), out var r))
+                {
+                    var (primalCell, primalChunk, primalVert) = r;
+                    return (Combine(primalCell, primalChunk), primalVert);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         #endregion
 
