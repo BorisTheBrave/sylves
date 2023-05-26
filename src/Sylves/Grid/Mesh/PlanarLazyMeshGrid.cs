@@ -298,7 +298,7 @@ namespace Sylves
 
                 // Once we've got all meshes, merge them together and compute the dual
                 var mergedMeshData = MeshDataOperations.Concat(meshDatas, out var mergeIndexMap);
-                var weldedMeshData = mergedMeshData.Weld(out var weldIndexMap);
+                var weldedMeshData = mergedMeshData.Weld(out var weldIndexMap, meshGridOptions.Tolerance);
                 var dmb = new DualMeshBuilder(weldedMeshData);
                 var dualMeshData = dmb.DualMeshData;
 

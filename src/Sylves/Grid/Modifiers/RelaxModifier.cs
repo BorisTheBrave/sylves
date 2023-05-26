@@ -85,7 +85,7 @@ namespace Sylves
 
             var margin = chunkSize / 2;
 
-            base.Setup(GetRelaxedChunk, chunkGrid, margin, bound: bound, cellTypes: cellTypes);
+            base.Setup(GetRelaxedChunk, chunkGrid, margin, meshGridOptions: new MeshGridOptions { Tolerance = weldTolerance }, bound: bound, cellTypes: cellTypes);
 
             if (underlying is PlanarLazyMeshGrid pg)
             {
