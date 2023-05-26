@@ -112,6 +112,20 @@ namespace Sylves
 
         #region Calculations
 
+        // We can give tighter bounds here as we know that we're hex based,
+        // and also that the margin added to the bounds is irrelevant.
+        protected override IEnumerable<Vector2Int> GetAdjacentChunks(Vector2Int chunk)
+        {
+            // Just hard code the hex adjacencies
+            yield return new Vector2Int(chunk.x - 1, chunk.y);
+            yield return new Vector2Int(chunk.x - 1, chunk.y + 1);
+            yield return new Vector2Int(chunk.x, chunk.y - 1);
+            yield return new Vector2Int(chunk.x, chunk.y); // Self
+            yield return new Vector2Int(chunk.x, chunk.y + 1);
+            yield return new Vector2Int(chunk.x + 1, chunk.y - 1);
+            yield return new Vector2Int(chunk.x + 1, chunk.y);
+        }
+
         private static Vector3 ToVector3(Vector2 v) => new Vector3(v.x, v.y, 0);
 
         // Unrelaxed chunks are just the raw mesh data taken from underlying

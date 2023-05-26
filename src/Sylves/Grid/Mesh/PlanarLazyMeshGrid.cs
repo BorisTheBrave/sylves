@@ -175,6 +175,13 @@ namespace Sylves
             return meshDatas[cell] = (meshData, dataDrivenData, edgeStore);
         }
 
+        // Returns the chungs that could have adjacencies to the current chunk
+        protected virtual IEnumerable<Vector2Int> GetAdjacentChunks(Vector2Int chunk)
+        {
+            // By default, any two intersecting chunks could have adjacencies.
+            return aabbChunks.GetChunkIntersects(chunk);
+        }
+
         private MeshGrid GetMeshGrid(Vector2Int v)
         {
             var cell = new Cell(v.x, v.y);
@@ -185,7 +192,7 @@ namespace Sylves
 
             var (meshData, dataDrivenData, edgeStore) = GetMeshDataCached(v);
 
-            foreach(var chunk in aabbChunks.GetChunkIntersects(v))
+            foreach(var chunk in GetAdjacentChunks(v))
             {
                 // Skip this chunk as it's already in edgeStore
                 if (chunk == v)
@@ -280,7 +287,7 @@ namespace Sylves
                 var meshDatas = new List<MeshData>();
                 var meshDataFaceCounts = new List<int>();
                 var chunks = new List<Vector2Int>();
-                foreach (var chunk in aabbChunks.GetChunkIntersects(currentChunk))
+                foreach (var chunk in GetAdjacentChunks(currentChunk))
                 {
                     var chunkOffset = ChunkOffset(chunk);
                     var mdc = GetMeshDataCached(chunk);
