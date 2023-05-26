@@ -21,6 +21,7 @@ namespace Sylves
         // Recorded output
         MeshEmitter meshEmitter;
         List<(int primalFace, int primalVert, int dualFace, int dualVert)> mapping;
+        MeshData dualMeshData;
 
         // Further info about the primal mesh
         private int[] faceCentroids;
@@ -36,7 +37,7 @@ namespace Sylves
             this.cellData = ddd.Cells;
 
             meshEmitter = new MeshEmitter(meshData);
-            mapping = new List<(int primalFace,int primalVert, int dualFace,int dualVert)>();
+            mapping = new List<(int primalFace, int primalVert, int dualFace, int dualVert)>();
 
             faceCentroids = BuildFaceCentroids(meshData, cellData, meshEmitter);
 
@@ -45,7 +46,7 @@ namespace Sylves
             Build();
         }
 
-        public MeshData DualMeshData => meshEmitter.ToMeshData();
+        public MeshData DualMeshData => dualMeshData;
 
         public List<(int primalFace, int primalVert, int dualFace, int dualVert)> Mapping => mapping;
 
@@ -130,7 +131,7 @@ namespace Sylves
                     {
                         var startHe = (face: i, edge: edge);
                         // Skip if not the start of arc, and we want it to be
-                        if(isArc && Flip(startHe) != null)
+                        if (isArc && Flip(startHe) != null)
                         {
                             continue;
                         }
@@ -211,7 +212,8 @@ namespace Sylves
                 }
             }
             meshEmitter.AddSubmesh(outputIndices, MeshTopology.NGon);
-        }
 
+            dualMeshData = meshEmitter.ToMeshData();
+        }
     }
 }

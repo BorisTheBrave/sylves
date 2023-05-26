@@ -299,15 +299,16 @@ namespace Sylves
                 var mergedMeshData = MeshDataOperations.Concat(meshDatas, out var mergeIndexMap);
                 var weldedMeshData = mergedMeshData.Weld(out var weldIndexMap);
                 var dmb = new DualMeshBuilder(weldedMeshData);
+                var dualMeshData = dmb.DualMeshData;
 
                 // There's too many faces in dualGrid, work out which ones to keep,
                 // and re-index them
                 var keepFaces = new List<bool>();
                 var keptFaceIndices = new List<int>();
                 var keptFaceCount = 0;
-                foreach (var face in MeshUtils.GetFaces(dmb.DualMeshData))
+                foreach (var face in MeshUtils.GetFaces(dualMeshData))
                 {
-                    var centroid = face.Select(i => dmb.DualMeshData.vertices[i]).Aggregate((a, b) => a + b) / face.Count;
+                    var centroid = face.Select(i => dualMeshData.vertices[i]).Aggregate((a, b) => a + b) / face.Count;
                     var isCentral = aabbChunks.GetUniqueChunk(new Vector2(centroid.x, centroid.y)) == currentChunk;
                     if (isCentral)
                     {
@@ -323,7 +324,7 @@ namespace Sylves
                 }
 
                 // Mesh filtered to just kept faces
-                var dualMesh = dmb.DualMeshData.FaceFilter((f, i) => keepFaces[i]);
+                var dualMesh = dualMeshData.FaceFilter((f, i) => keepFaces[i]);
 
 
                 // Convert primal faces back to which chunk they are from,
