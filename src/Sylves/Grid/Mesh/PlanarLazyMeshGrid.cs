@@ -18,10 +18,10 @@ namespace Sylves
     public class PlanarLazyMeshGrid : IGrid
     {
         private Func<Vector2Int, MeshData> getMeshData;
-        protected Vector2 strideX;
-        protected Vector2 strideY;
-        protected Vector2 aabbBottomLeft;
-        protected Vector2 aabbSize;
+        private Vector2 strideX;
+        private Vector2 strideY;
+        private Vector2 aabbBottomLeft;
+        private Vector2 aabbSize;
         private MeshGridOptions meshGridOptions;
         private SquareBound bound;
         private IEnumerable<ICellType> cellTypes;
@@ -154,7 +154,7 @@ namespace Sylves
             aabbChunks = new AabbChunks(strideX, strideY, aabbBottomLeft, aabbSize);
         }
 
-        private (MeshData, DataDrivenData, EdgeStore) GetMeshDataCached(Vector2Int v)
+        internal (MeshData meshData, DataDrivenData dataDrivenData, EdgeStore edgeStore) GetMeshDataCached(Vector2Int v)
         {
             var cell = new Cell(v.x, v.y);
             if (meshDatas.TryGetValue(cell, out var x))
@@ -192,7 +192,7 @@ namespace Sylves
                 if (chunk == v)
                     continue;
 
-                var otherEdges = GetMeshDataCached(chunk).Item3.UnmatchedEdges;
+                var otherEdges = GetMeshDataCached(chunk).edgeStore.UnmatchedEdges;
 
                 foreach (var edgeTuple in otherEdges)
                 {
@@ -239,6 +239,11 @@ namespace Sylves
                 throw new GridInfiniteException();
             }
         }
+
+        public Vector2 StrideX => strideX;
+        public Vector2 StrideY => strideY;
+        public Vector2 AabbBottomLeft => aabbBottomLeft;
+        public Vector2 AabbSize => aabbSize;
 
         #region Basics
 

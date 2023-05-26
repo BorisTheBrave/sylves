@@ -17,6 +17,12 @@ namespace Sylves
         private readonly float weldTolerance;
         private readonly int relaxIterations;
 
+        // Fast path optimization
+        // If the underlying mesh shares the same structure as the relax modifier,
+        // we can save our selves some effort.
+        // This is mostly for use with Townscaper.
+        private readonly bool passThroughMesh;
+
         // Description of the chunking used
         HexGrid chunkGrid;
 
@@ -80,6 +86,15 @@ namespace Sylves
             var margin = chunkSize / 2;
 
             base.Setup(GetRelaxedChunk, chunkGrid, margin, bound: bound, cellTypes: cellTypes);
+
+            if (underlying is PlanarLazyMeshGrid pg)
+            {
+                // Compare dimensions.
+                // This isn't strictly accurate (pg could have same aabb dimensions but not fit in a hex), but meh.
+                var a = ((StrideX, StrideY, AabbBottomLeft, AabbSize));
+                var b = ((pg.StrideX, pg.StrideY, pg.AabbBottomLeft - margin * Vector2.one, pg.AabbSize + 2 * margin * Vector2.one));
+                passThroughMesh = a == b;
+            }
         }
 
         // Clone constructor. Clones share the same cache!
@@ -105,9 +120,16 @@ namespace Sylves
             if (unrelaxedChunks.ContainsKey(hex))
                 return unrelaxedChunks[hex];
 
+            if (passThroughMesh)
+            {
+                // Underlying chunks match relax chunks, so we can safely just
+                // pass the underlying chunk through here.
+                return unrelaxedChunks[hex] = (underlying as PlanarLazyMeshGrid).GetMeshDataCached(new Vector2Int(hex.x, hex.y)).meshData;
+            }
+
             // Get cells near the chunk
-            var min = aabbBottomLeft + hex.x * strideX + hex.y * strideY;
-            var max = min + aabbSize;
+            var min = AabbBottomLeft + hex.x * StrideX + hex.y * StrideY;
+            var max = min + AabbSize;
             var unfilteredCells = underlying.GetCellsIntersectsApprox(ToVector3(min), ToVector3(max));
 
             // Filter to precisely cells in this chunk
