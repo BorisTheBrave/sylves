@@ -185,8 +185,7 @@ namespace Sylves
 
             var (meshData, dataDrivenData, edgeStore) = GetMeshDataCached(v);
 
-            var chunkOffset = ChunkOffset2(v);
-            foreach(var chunk in aabbChunks.GetChunkIntersects(aabbBottomLeft + chunkOffset, aabbBottomLeft + chunkOffset + aabbSize))
+            foreach(var chunk in aabbChunks.GetChunkIntersects(v))
             {
                 // Skip this chunk as it's already in edgeStore
                 if (chunk == v)
@@ -213,10 +212,6 @@ namespace Sylves
             var chunkOffset2 = strideX * chunk.x + strideY * chunk.y;
             var chunkOffset = new Vector3(chunkOffset2.x, chunkOffset2.y, 0);
             return chunkOffset;
-        }
-        private Vector2 ChunkOffset2(Vector2Int chunk)
-        {
-            return strideX * chunk.x + strideY * chunk.y;
         }
 
         private static (Cell meshCell, Vector2Int chunk) Split(Cell cell)
@@ -282,11 +277,10 @@ namespace Sylves
             {
                 // Like in the constructor, use offset copies of the mesh
                 // This can probably be done more efficiently.
-                var (min, max) = aabbChunks.GetChunkBounds(currentChunk);
                 var meshDatas = new List<MeshData>();
                 var meshDataFaceCounts = new List<int>();
                 var chunks = new List<Vector2Int>();
-                foreach (var chunk in aabbChunks.GetChunkIntersects(min, max))
+                foreach (var chunk in aabbChunks.GetChunkIntersects(currentChunk))
                 {
                     var chunkOffset = ChunkOffset(chunk);
                     var mdc = GetMeshDataCached(chunk);
@@ -403,7 +397,6 @@ namespace Sylves
                     // Compute toDual
                     // Because we only have mappings per-*dual*-chunk, we need to aggregate several mappings
 
-                    var (min, max) = baseGrid.aabbChunks.GetChunkBounds(chunk);
                     /*
                     toDualCache[new Cell(chunk.x, chunk.y)] = toDual = baseGrid.aabbChunks.GetChunkIntersects(min, max)
                         .SelectMany(dualChunk => mappingByDualChunkCached(dualChunk)
@@ -414,7 +407,7 @@ namespace Sylves
                     */
 
                     toDualCache[new Cell(chunk.x, chunk.y)] = toDual = new Dictionary<(Cell, CellCorner), (Cell, Vector2Int, CellCorner)>();
-                    foreach(var dualChunk in baseGrid.aabbChunks.GetChunkIntersects(min, max))
+                    foreach(var dualChunk in baseGrid.aabbChunks.GetChunkIntersects(chunk))
                     {
                         var mapping = mappingByDualChunkCached(dualChunk);
                         foreach(var x in mapping)

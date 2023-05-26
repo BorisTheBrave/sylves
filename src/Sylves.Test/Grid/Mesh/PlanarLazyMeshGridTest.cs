@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -39,6 +40,22 @@ namespace Sylves.Test
 
             GridTest.DualMapping(dm, new Cell(0, 0, 0));
             GridTest.DualMapping(dm, new Cell(0, 10, 10));
+        }
+
+        [Test]
+        public void TestConnectivity()
+        {
+            var g = new UnrelaxedTownscaperGrid(1, 1e-2f);
+            var min = new Vector3(-10, -10, 0);
+            var max = new Vector3(10, 10, 0);
+            foreach (var cell in g.GetCellsIntersectsApprox(min, max))
+            {
+                //Assert.AreEqual(4, g.GetNeighbours(cell).Count(), $"Cell {cell} doesn't have 4 neighbours");
+                foreach(var dir in SquareCellType.Instance.GetCellDirs())
+                {
+                    Assert.IsNotNull(g.Move(cell, dir), $"Cell {cell} doesn't have neighbour in dir {dir}");
+                }
+            }
         }
     }
 }

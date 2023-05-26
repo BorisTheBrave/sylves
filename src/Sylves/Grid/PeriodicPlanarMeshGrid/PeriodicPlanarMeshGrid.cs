@@ -148,10 +148,9 @@ namespace Sylves
             // Like in the constructor, use offset copies of the mesh
             // This can probably be done more efficiently.
             // We ensure chunk (0, 0) is first for conveneince
-            var (min, max) = aabbChunks.GetChunkBounds(new Vector2Int());
             var meshDatas = new List<MeshData> { centerMeshData };
             var chunks = new List<Vector2Int> {  new Vector2Int() };
-            foreach (var chunk in aabbChunks.GetChunkIntersects(min, max))
+            foreach (var chunk in aabbChunks.GetChunkIntersects(new Vector2Int()))
             {
                 if (chunk == new Vector2Int())
                     continue;
