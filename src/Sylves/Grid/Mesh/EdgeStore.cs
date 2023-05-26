@@ -56,7 +56,7 @@ namespace Sylves
 
         // Attempts to pair the new edge with the unmapped edges.
         // On success, adds it to moves and returns true.
-        public bool MatchEdge(Vector3 v1, Vector3 v2, Cell cell, CellDir dir, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
+        public bool MatchEdge(Vector3 v1, Vector3 v2, Cell cell, CellDir dir, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves, bool clearEdge = true)
         {
             var v1i = Vector3Int.FloorToInt(v1 / tolerance);
             var v2i = Vector3Int.FloorToInt(v2 / tolerance);
@@ -67,7 +67,7 @@ namespace Sylves
                 if (!vertexCount.TryGetValue(w1, out var c) || c <= 0)
                     continue;
 
-                foreach (var o2 in Offsets) 
+                foreach (var o2 in Offsets)
                 {
                     var w2 = v2i + o2;
                     if (unmatchedEdges.TryGetValue((w2, w1), out var match))
@@ -76,9 +76,12 @@ namespace Sylves
                         var (_, _, cell2, dir2) = match;
                         moves.Add((cell, dir), (cell2, dir2, new Connection()));
                         moves.Add((cell2, dir2), (cell, dir, new Connection()));
-                        unmatchedEdges.Remove((w2, w1));
-                        vertexCount[w2]--;
-                        vertexCount[w1]--;
+                        if (clearEdge)
+                        {
+                            unmatchedEdges.Remove((w2, w1));
+                            vertexCount[w2]--;
+                            vertexCount[w1]--;
+                        }
                         return true;
                     }
                     else if (unmatchedEdges.TryGetValue((w1, w2), out match))
@@ -87,9 +90,12 @@ namespace Sylves
                         var (_, _, cell2, dir2) = match;
                         moves.Add((cell, dir), (cell2, dir2, new Connection { Mirror = true }));
                         moves.Add((cell2, dir2), (cell, dir, new Connection { Mirror = true }));
-                        unmatchedEdges.Remove((w1, w2));
-                        vertexCount[w1]--;
-                        vertexCount[w2]--;
+                        if (clearEdge)
+                        {
+                            unmatchedEdges.Remove((w1, w2));
+                            vertexCount[w1]--;
+                            vertexCount[w2]--;
+                        }
                         return true;
                     }
                 }
@@ -101,7 +107,7 @@ namespace Sylves
         // MatchEdge, and if it fails, adds the edge to unmatchedEdges
         public void AddEdge(Vector3 v1, Vector3 v2, Cell cell, CellDir dir, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves)
         {
-            if(!MatchEdge(v1, v2, cell, dir, moves))
+            if (!MatchEdge(v1, v2, cell, dir, moves))
             {
                 // We use an offset when *storing* the vertex, to avoid boundary issues
                 var v1i = Vector3Int.FloorToInt(v1 / tolerance + 0.5f * Vector3.one);
@@ -114,8 +120,8 @@ namespace Sylves
 
         public EdgeStore Clone()
         {
-            return new EdgeStore(unmatchedEdges.ToDictionary(x => x.Key, x => x.Value), 
-                vertexCount.ToDictionary(x=>x.Key, x=>x.Value),
+            return new EdgeStore(unmatchedEdges.ToDictionary(x => x.Key, x => x.Value),
+                vertexCount.ToDictionary(x => x.Key, x => x.Value),
                 tolerance);
         }
     }

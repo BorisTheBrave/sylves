@@ -198,7 +198,7 @@ namespace Sylves
                 {
                     var (v1, v2, c, dir) = edgeTuple;
                     c += Promote(chunk) - Promote(v);
-                    edgeStore.MatchEdge(v1, v2, c, dir, dataDrivenData.Moves);
+                    edgeStore.MatchEdge(v1, v2, c, dir, dataDrivenData.Moves, clearEdge: false);
                 }
             }
 
