@@ -154,6 +154,11 @@ namespace Sylves
             aabbChunks = new AabbChunks(strideX, strideY, aabbBottomLeft, aabbSize);
         }
 
+        /// <summary>
+        /// Returns the mesh data for a chunk, plus also some processed details.
+        /// Note that dataDrivenData/edgeStore is relative to the current chunk, so you need to add Promote(chunk) to
+        /// the cells to the absolute values.
+        /// </summary>
         internal (MeshData meshData, DataDrivenData dataDrivenData, EdgeStore edgeStore) GetMeshDataCached(Vector2Int v)
         {
             var cell = new Cell(v.x, v.y);
@@ -204,6 +209,7 @@ namespace Sylves
                 {
                     var (v1, v2, c, dir) = edgeTuple;
                     c += Promote(chunk) - Promote(v);
+                    // This is nasty, it is *mutating* cached data.
                     edgeStore.MatchEdge(v1, v2, c, dir, dataDrivenData.Moves, clearEdge: false);
                 }
             }
@@ -280,26 +286,12 @@ namespace Sylves
         {
             // Gets the dual for a single chunk,
             // and also the mapping of everything that maps *to* it.
-            (MeshData, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)>) GetDualData(Vector2Int currentChunk)
+            (MeshData meshData, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)> mapping) GetDualData(Vector2Int currentChunk)
             {
-                // Like in the constructor, use offset copies of the mesh
-                // This can probably be done more efficiently.
-                var meshDatas = new List<MeshData>();
-                var meshDataFaceCounts = new List<int>();
-                var chunks = new List<Vector2Int>();
-                foreach (var chunk in GetAdjacentChunks(currentChunk))
-                {
-                    var chunkOffset = ChunkOffset(chunk);
-                    var mdc = GetMeshDataCached(chunk);
-                    meshDatas.Add(mdc.Item1);
-                    meshDataFaceCounts.Add(mdc.Item2.Cells.Count);
-                    chunks.Add(chunk);
-                }
 
-                // Once we've got all meshes, merge them together and compute the dual
-                var mergedMeshData = MeshDataOperations.Concat(meshDatas, out var mergeIndexMap);
-                var weldedMeshData = mergedMeshData.Weld(out var weldIndexMap, meshGridOptions.Tolerance);
-                var dmb = new DualMeshBuilder(weldedMeshData);
+                var (weldedMeshData, primalFaceMap, ddd) = ConcatChunks(GetAdjacentChunks(currentChunk).ToList());
+
+                var dmb = new DualMeshBuilder(weldedMeshData, ddd);
                 var dualMeshData = dmb.DualMeshData;
 
                 // There's too many faces in dualGrid, work out which ones to keep,
@@ -327,32 +319,11 @@ namespace Sylves
                 // Mesh filtered to just kept faces
                 var dualMesh = dualMeshData.FaceFilter((f, i) => keepFaces[i]);
 
-
                 // Convert primal faces back to which chunk they are from,
-                // and compress dual faces to just hose kept
-                var primalFaceMap = new Dictionary<int, (int, Vector2Int)>();
-                {
-                    int primalFace = 0;
-                    for (var i=0;i<chunks.Count;i++)
-                    {
-                        for(var f=0;f<meshDataFaceCounts[i];f++)
-                        {
-                            primalFaceMap[primalFace] = (f, chunks[i]);
-                            primalFace++;
-                        }
-                    }
-                }
-                (int, Vector2Int) MapPrimalFace(int primalFace)
-                {
-                    return primalFaceMap[primalFace];
-                }
-                int MapDualFace(int dualFace)
-                {
-                    return keptFaceIndices[dualFace];
-                }
+                // and compress dual faces to just yhose kept
                 var mapping = dmb.Mapping
                     .Where(x => keepFaces[x.dualFace])
-                    .Select(x => (MapPrimalFace(x.primalFace), x.primalVert, MapDualFace(x.dualFace), x.dualVert))
+                    .Select(x => (primalFaceMap[x.primalFace], x.primalVert, keptFaceIndices[x.dualFace], x.dualVert))
                     .ToList();
 
                 return (dualMesh, mapping);
@@ -360,7 +331,7 @@ namespace Sylves
 
             var dualDataCache = cachePolicy.GetDictionary<(MeshData, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)>)>(this);
 
-            (MeshData, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)>) GetDualDataCached(Vector2Int currentChunk)
+            (MeshData meshData, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)> mapping) GetDualDataCached(Vector2Int currentChunk)
             {
                 var cell = new Cell(currentChunk.x, currentChunk.y);
                 if (dualDataCache.TryGetValue(cell, out var dd))
@@ -373,10 +344,90 @@ namespace Sylves
             // TODO: These need to be increased in size.
             var dualAabbBottomLeft = aabbBottomLeft;
             var dualAabbSize = aabbSize;
-            var dualGrid = new PlanarLazyMeshGrid(c => GetDualDataCached(c).Item1, strideX, strideY, dualAabbBottomLeft, dualAabbSize, meshGridOptions, cachePolicy: cachePolicy);
+            var dualGrid = new PlanarLazyMeshGrid(c => GetDualDataCached(c).meshData, strideX, strideY, dualAabbBottomLeft, dualAabbSize, meshGridOptions, cachePolicy: cachePolicy);
             // TODO: Bound
 
-            return new DualMapping(this, dualGrid, c => GetDualDataCached(c).Item2, cachePolicy);
+            return new DualMapping(this, dualGrid, c => GetDualDataCached(c).mapping, cachePolicy);
+        }
+
+        // Returns a single mesh that contains the concat of many chunks,
+        // Plus a mapping back to the original cells
+        // Plus also computes DataDrivenData, in terms of the new mesh
+        // (i.e. ddd = MeshGridBuilder.Build(meshData(meshData))
+        private (MeshData meshData, Dictionary<int, (int, Vector2Int)> faceToCell, DataDrivenData ddd) ConcatChunks(IList<Vector2Int> chunks)
+        {
+            // Like in the constructor, use offset copies of the mesh
+            // This can probably be done more efficiently.
+            var meshDatas = new List<MeshData>();
+            var chunkDdds = new List<DataDrivenData>();
+            foreach (var chunk in chunks)
+            {
+                // GetMeshGrid mutates cached data, so we need to call it even though we don't use the results, ugh
+                GetMeshGrid(chunk);
+                var mdc = GetMeshDataCached(chunk);
+                meshDatas.Add(mdc.meshData);
+                chunkDdds.Add(mdc.dataDrivenData);
+            }
+
+            // Once we've got all meshes, merge them together and compute the dual
+            var mergedMeshData = MeshDataOperations.Concat(meshDatas, out var mergeIndexMap);
+
+
+            // Build additional data about each face.
+            // There's several different conventions here
+            // * primal - the face id as it appears in mergedMeshData
+            // * relativeOriginalCell - the cell as it appears in chunkDdds
+            // * originalCell - the cell as it appears in this.
+
+            var primalFaceMap = new Dictionary<int, (int, Vector2Int)>();
+            var originalToNewMap = new Dictionary<Cell, Cell>();
+            var cells = new Dictionary<Cell, DataDrivenCellData>();
+            var moves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>();
+
+            // TODO: Can probably avoid this with some rewriting
+            var primalFaces = MeshUtils.GetFaces(mergedMeshData).ToList();
+            int primalFaceIndex = 0;
+            for (var i = 0; i < chunks.Count; i++)
+            {
+                var chunk = chunks[i];
+                var chunkDdd = chunkDdds[i];
+                var count = chunkDdd.Cells.Count;
+
+                for (var f = 0; f < count; f++)
+                {
+                    var relativeOriginalCell = new Cell(f, 0);
+                    var originalCell = relativeOriginalCell + Promote(chunk);
+                    var newCell = new Cell(primalFaceIndex, 0);
+
+                    primalFaceMap[primalFaceIndex] = (f, chunk);
+                    var cellData = chunkDdd.Cells[relativeOriginalCell].Clone() as MeshCellData;
+                    cellData.Face = primalFaces[primalFaceIndex];
+                    cells[newCell] = cellData;
+                    originalToNewMap[originalCell] = newCell;
+                    primalFaceIndex++;
+                }
+            }
+
+            for (var i = 0; i < chunks.Count; i++)
+            {
+                var chunk = chunks[i];
+                var chunkDdd = chunkDdds[i];
+                foreach (var move in chunkDdd.Moves)
+                {
+                    var from = move.Key.Item1 + Promote(chunk);
+                    var to = move.Value.Item1 + Promote(chunk);
+                    if (!originalToNewMap.ContainsKey(to))
+                        continue;
+                    if (!originalToNewMap.ContainsKey(from))
+                        continue;
+                    moves[(originalToNewMap[from], move.Key.Item2)] = 
+                        (originalToNewMap[to], move.Value.Item2, move.Value.Item3);
+                }
+            }
+
+
+            return (mergedMeshData, primalFaceMap, new DataDrivenData { Moves = moves, Cells = cells});
+
         }
 
 

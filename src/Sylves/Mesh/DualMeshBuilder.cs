@@ -27,12 +27,15 @@ namespace Sylves
         private int[] faceCentroids;
         private bool[] isFarVertex;
 
-        public DualMeshBuilder(MeshData meshData)
+        public DualMeshBuilder(MeshData meshData):this(meshData, MeshGridBuilder.Build(meshData, new MeshGridOptions()))
+        {
+        }
+
+        internal DualMeshBuilder(MeshData meshData, DataDrivenData ddd)
         {
             if (meshData.subMeshCount != 1)
                 throw new ArgumentException("Can only build dual mesh for a mesh data with a single submesh");
             this.meshData = meshData;
-            var ddd = MeshGridBuilder.Build(meshData, new MeshGridOptions());
             this.moves = ddd.Moves;
             this.cellData = ddd.Cells;
 
@@ -53,10 +56,23 @@ namespace Sylves
         private static int[] BuildFaceCentroids(MeshData meshData, IDictionary<Cell, DataDrivenCellData> cellData, MeshEmitter meshEmitter)
         {
             var r = new int[cellData.Count];
-            foreach (var kv in cellData)
+            // Fast path if we don't need recompute anything.
+            // TODO: Unclear when this is useful?
+            if (false)
             {
-                var centroid = meshEmitter.Average(((MeshCellData)kv.Value).Face, meshData);
-                r[kv.Key.x] = centroid;
+                foreach (var kv in cellData)
+                {
+                    var centroid = meshEmitter.AddVertex(kv.Value.TRS.Position);
+                    r[kv.Key.x] = centroid;
+                }
+            }
+            else
+            {
+                foreach (var kv in cellData)
+                {
+                    var centroid = meshEmitter.Average(((MeshCellData)kv.Value).Face, meshData);
+                    r[kv.Key.x] = centroid;
+                }
             }
             return r;
         }

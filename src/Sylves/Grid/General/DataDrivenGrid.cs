@@ -12,6 +12,11 @@ namespace Sylves
         public TRS TRS { get; set; }
         public Deformation Deformation { get; set; }
         public ICellType CellType { get; set; }
+
+        public DataDrivenCellData Clone()
+        {
+            return (DataDrivenCellData)MemberwiseClone();
+        }
     }
 
     public class DataDrivenData
