@@ -288,10 +288,19 @@ namespace Sylves
             // and also the mapping of everything that maps *to* it.
             (MeshData meshData, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)> mapping) GetDualData(Vector2Int currentChunk)
             {
+                // This works by building a grid of everything nearby, computing it's dual,
+                // filtering the dual so we don't get duplicates between chunks,
+                // and doing a ton of mapping.
 
-                var (weldedMeshData, primalFaceMap, ddd) = ConcatChunks(GetAdjacentChunks(currentChunk).ToList());
+                // I'm not super happy with this.
+                // We end up doing a ton of work that is thrown out as mergedMeshData is pretty large.
+                // and then PlanarLazyMeshGrid still ends up matching by vertex.
+                // There has to be a better way of doing this, possibly giving up on using DualMeshBuilder entirely.
 
-                var dmb = new DualMeshBuilder(weldedMeshData, ddd);
+
+                var (mergedMeshData, primalFaceMap, ddd) = ConcatChunks(GetAdjacentChunks(currentChunk).ToList());
+
+                var dmb = new DualMeshBuilder(mergedMeshData, ddd);
                 var dualMeshData = dmb.DualMeshData;
 
                 // There's too many faces in dualGrid, work out which ones to keep,
