@@ -376,7 +376,7 @@ namespace Sylves
             var dualGrid = new PlanarLazyMeshGrid(c => GetDualDataCached(c).Item1, strideX, strideY, dualAabbBottomLeft, dualAabbSize, meshGridOptions, cachePolicy: cachePolicy);
             // TODO: Bound
 
-            return new DualMapping(this, dualGrid, c => GetDualData(c).Item2, cachePolicy);
+            return new DualMapping(this, dualGrid, c => GetDualDataCached(c).Item2, cachePolicy);
         }
 
 
