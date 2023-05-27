@@ -45,7 +45,7 @@ namespace Sylves.Test
         [Test]
         public void TestConnectivity()
         {
-            var g = new UnrelaxedTownscaperGrid(1, 1e-2f);
+            var g = new TownscaperGrid(1);
             var min = new Vector3(-10, -10, 0);
             var max = new Vector3(10, 10, 0);
             foreach (var cell in g.GetCellsIntersectsApprox(min, max))
