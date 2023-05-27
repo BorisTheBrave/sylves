@@ -110,7 +110,7 @@ namespace Sylves.Test
 
                 atLeastOne = true;
             }
-            Assert.IsTrue(atLeastOne);
+            Assert.IsTrue(atLeastOne, $"Cell {cell} has no neighbours");
         }
     }
 }
