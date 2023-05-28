@@ -65,8 +65,6 @@ namespace Sylves
 
         }
 
-        private static Vector2 ToVector2(Vector3 v) => new Vector2(v.x, v.y);
-
         protected void Setup(Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             this.strideX = strideX;
@@ -189,7 +187,7 @@ namespace Sylves
 
         #region Topology
 
-        public bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
+        public virtual bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
             var (meshCell, chunk) = Split(cell);
             if (GetMeshGridCached(chunk).TryMove(meshCell, dir, out dest, out inverseDir, out connection))
