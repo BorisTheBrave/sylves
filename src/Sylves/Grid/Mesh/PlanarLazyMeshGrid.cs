@@ -122,7 +122,7 @@ namespace Sylves
         {
             this.getMeshData = getMeshData;
             this.meshGridOptions = meshGridOptions ?? new MeshGridOptions();
-            meshDatas = cachePolicy.GetDictionary<(MeshData, DataDrivenData, EdgeStore)>(this);
+            meshDatas = (cachePolicy ?? CachePolicy.Always).GetDictionary<(MeshData, DataDrivenData, EdgeStore)>(this);
 
             base.Setup(strideX, strideY, aabbBottomLeft, aabbSize, bound, cellTypes, cachePolicy);
         }
