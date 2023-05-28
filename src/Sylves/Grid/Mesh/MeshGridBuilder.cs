@@ -33,7 +33,7 @@ namespace Sylves
             return data;
         }
 
-        private static void BuildCellData(MeshData data, MeshGridOptions meshGridOptions, IDictionary<Cell, DataDrivenCellData> cellData)
+        internal static void BuildCellData(MeshData data, MeshGridOptions meshGridOptions, IDictionary<Cell, DataDrivenCellData> cellData)
         {
             for (var submesh = 0; submesh < data.subMeshCount; submesh++)
             {

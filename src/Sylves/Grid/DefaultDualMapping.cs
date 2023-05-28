@@ -292,8 +292,17 @@ namespace Sylves
         protected override MeshGrid GetMeshGrid(Vector2Int v)
         {
             var meshData = GetMeshDataCached(v).meshData;
-            // TODO: Disable building Moves, we won't be using it.
-            return new MeshGrid(meshData);
+            // Builds MeshGrid, but skips edge matching as we don't need it.
+            var meshGridOptions = new MeshGridOptions();
+            var data = new DataDrivenData
+            {
+                Cells = new Dictionary<Cell, DataDrivenCellData>(),
+                Moves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>(),
+            };
+            MeshGridBuilder.BuildCellData(meshData, meshGridOptions, data.Cells);
+            var meshGrid = new MeshGrid(meshData, new MeshGridOptions { }, data, true);
+            meshGrid.BuildMeshDetails();
+            return meshGrid;
         }
 
 
