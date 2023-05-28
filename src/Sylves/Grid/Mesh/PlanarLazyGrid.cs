@@ -164,7 +164,7 @@ namespace Sylves
 
         public IDualMapping GetDual()
         {
-            throw new Exception();
+            return new DefaultDualMapping(this, cachePolicy);
         }
         #endregion
 

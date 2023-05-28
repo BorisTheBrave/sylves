@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 using System.Linq;
 #if UNITY
 using UnityEngine;
@@ -40,6 +41,27 @@ namespace Sylves.Test
 
             GridTest.DualMapping(dm, new Cell(0, 0, 0));
             GridTest.DualMapping(dm, new Cell(0, 10, 10));
+        }
+
+
+        [Test]
+        public void TestBoundedDual()
+        {
+            var g = new PlanarLazyMeshGrid(
+                chunk => Matrix4x4.Translate(new Vector3(chunk.x, chunk.y, 0)) * TestMeshes.PlaneXY,
+                Vector2.right,
+                Vector2.up,
+                new Vector2(-.5f, -.5f),
+                Vector2.one,
+                bound: new SquareBound(new Vector2Int(0, 0), new Vector2Int(1, 1))
+                );
+
+            var dm = g.GetDual();
+
+            GridTest.DualMapping(dm, new Cell(0, 0, 0));
+            GridTest.DualMapping(dm, new Cell(0, 1, 1));
+
+            Assert.AreEqual(9, dm.DualGrid.GetCells().Count());
         }
 
         [Test]
