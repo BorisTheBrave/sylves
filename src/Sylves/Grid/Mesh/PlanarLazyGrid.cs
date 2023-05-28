@@ -82,7 +82,8 @@ namespace Sylves
         protected virtual IEnumerable<Vector2Int> GetAdjacentChunks(Vector2Int chunk)
         {
             // By default, any two intersecting chunks could have adjacencies.
-            return aabbChunks.GetChunkIntersects(chunk);
+            return aabbChunks.GetChunkIntersects(chunk)
+                .Where(x => bound == null || bound.Contains(x));
         }
 
         // Returns a mesh grid for the given chunk.

@@ -53,7 +53,11 @@ namespace Sylves
             getCellsByChunk = chunk => grid.GetCellsInBounds(new SquareBound(chunk, chunk + Vector2Int.one));
             MakeCaches(cachePolicy);
 
-            base.Setup(grid.StrideX, grid.StrideY, grid.AabbBottomLeft - grid.AabbSize * 0.5f, grid.AabbSize * 2, cachePolicy: cachePolicy);
+            // Dual cells are put in a chunk based off a primal cell's chunk,
+            // so this bound always works.
+            SquareBound bound = grid.GetBound() as SquareBound;
+
+            base.Setup(grid.StrideX, grid.StrideY, grid.AabbBottomLeft - grid.AabbSize * 0.5f, grid.AabbSize * 2, bound, cachePolicy: cachePolicy);
         }
 
         private DefaultDualMapping(DefaultDualMapping other, SquareBound bound):base(other, bound)
@@ -117,7 +121,8 @@ namespace Sylves
         {
             var visited = new HashSet<(Cell cell, CellDir dir)>();
             var mapping = new List<(Cell primalCell, CellCorner primalCorner, Cell dualCell, CellCorner dualCorner)>();
-            int dualCellCount = 0;
+            var dualCellCount = 0;
+            var arcEnds = new List<((Cell cell, CellDir dir) startHe, (Cell cell, CellDir dir) endHe)?>();
 
 
             var primalCells = getCellsByChunk(v);
@@ -126,6 +131,7 @@ namespace Sylves
                 foreach(var primalCorner in baseGrid.GetCellCorners(primalCell))
                 {
                     // Find the dual cell on corner by walking around the corner
+                    var dualCell = Combine(new Cell(dualCellCount, 0), v);
 
                     var startHe = (cell: primalCell, dir: CornerToDir(primalCorner));
                     // Skip if we've already explored this arc/loop
@@ -137,12 +143,14 @@ namespace Sylves
                     var currentHe = startHe;
                     (Cell cell, CellDir dir) endHe = default;
                     var dualCorner = 0;
+                    var dualCorner2 = 0;
                     var minChunk = Split(currentHe.cell).chunk;
                     var oldMappingCount = mapping.Count;
+                    bool isArc = false;
                     while(true)
                     {
                         visited.Add(currentHe);
-                        mapping.Add((currentHe.cell, DirToCorner(currentHe.dir), Combine(new Cell(dualCellCount, 0), v), (CellCorner)dualCorner));
+                        mapping.Add((currentHe.cell, DirToCorner(currentHe.dir), dualCell, (CellCorner)dualCorner));
                         minChunk = LexMin(minChunk, Split(currentHe.cell).chunk);
                         dualCorner++;
 
@@ -150,15 +158,33 @@ namespace Sylves
                         var nextHe = Flip(currentHe);
                         if (nextHe == null)
                         {
-                            //if (!isArc) throw new Exception();
+                            isArc = true;
                             endHe = currentHe;
                             break;
                         }
                         currentHe = nextHe.Value;
                         if (currentHe == startHe)
                         {
-                            //if (isArc) throw new Exception();
                             break;
+                        }
+                    }
+                    if(isArc)
+                    {
+                        // Not a full loop. So we need to work *backwards* from startHe, too
+                        currentHe = startHe;
+                        while(true)
+                        {
+                            var nextHe = Flip(currentHe);
+                            if(nextHe == null)
+                            {
+                                break;
+                            }
+                            currentHe = NextHalfEdge(currentHe);
+
+                            visited.Add(currentHe);
+                            mapping.Add((currentHe.cell, DirToCorner(currentHe.dir), Combine(new Cell(dualCellCount, 0), v), (CellCorner)dualCorner2));
+                            minChunk = LexMin(minChunk, Split(currentHe.cell).chunk);
+                            dualCorner2--;
                         }
                     }
 
@@ -168,7 +194,25 @@ namespace Sylves
                     var keepDualCell = minChunk == v;
                     if (keepDualCell)
                     {
-                        dualCellCount ++;
+                        dualCellCount++;
+                        if (isArc)
+                        {
+                            arcEnds.Add((currentHe, endHe));
+                        }
+                        else
+                        {
+                            arcEnds.Add(null);
+                        }
+
+                        if(dualCorner2 < 0)
+                        {
+                            // Mapping has some negative indices in it, fix them up
+                            var totalCorners = (dualCorner - dualCorner2);
+                            for(var i=oldMappingCount + dualCorner;i<mapping.Count;i++)
+                            {
+                                mapping[i] = (mapping[i].primalCell, mapping[i].primalCorner, mapping[i].dualCell, mapping[i].dualCorner + totalCorners);
+                            }
+                        }
                     }
                     else
                     {
@@ -184,29 +228,47 @@ namespace Sylves
 
             // Make a vertex for every primal cell mentioned in mappings (this includes cells not in current chunk)
             var allPrimalCells = mapping.Select(x => x.primalCell).Distinct().ToList();
-            var vertices = new Vector3[allPrimalCells.Count];
+            var vertices = new List<Vector3>(allPrimalCells.Count);
             var primalCellToVertex = new Dictionary<Cell, int>();
             for(var i=0;i<allPrimalCells.Count;i++)
             {
                 var p = baseGrid.GetCellCenter(allPrimalCells[i]);
-                vertices[i] = p;
+                vertices.Add(p);
                 primalCellToVertex[allPrimalCells[i]] = i;
             }
 
             // For each dual cell, make a face
             var indices = new List<int>();
+            // TODO: Mapping is contiguous, we don't really need this group by or order by
             foreach(var mappingGroup in mapping.GroupBy(x=>x.dualCell))
             {
                 foreach(var item in mappingGroup.OrderBy(x=>x.dualCorner))
                 {
                     indices.Add(primalCellToVertex[item.primalCell]);
                 }
+                var arcEnd = arcEnds[mappingGroup.Key.x];
+                if(arcEnd != null)
+                {
+                    // Add some extra vertices to terminate the arc
+                    void AddArcPoint((Cell cell, CellDir dir) he)
+                    {
+                        var corner1 = DirToCorner(he.dir);
+                        var corner2 = NextCorner(he.cell, corner1);
+
+                        var p = (baseGrid.GetCellCorner(he.cell, corner1) + baseGrid.GetCellCorner(he.cell, corner2)) / 2;
+                        // TODO: Extend to infinity like in DualMeshBuilder?
+                        indices.Add(vertices.Count);
+                        vertices.Add(p);
+                    }
+                    AddArcPoint(arcEnd.Value.endHe);
+                    AddArcPoint(arcEnd.Value.startHe);
+                }
                 indices[indices.Count - 1] = ~indices[indices.Count - 1];
             }
 
             var meshData = new MeshData
             {
-                vertices = vertices,
+                vertices = vertices.ToArray(),
                 indices = new[] { indices.ToArray() },
                 topologies = new[] { MeshTopology.NGon },
             };
@@ -260,6 +322,18 @@ namespace Sylves
             return (halfEdge.cell, l);
         }
 
+        private CellCorner NextCorner(Cell cell, CellCorner corner)
+        {
+            var cellType = baseGrid.GetCellType(cell);
+            return cellType.Rotate(corner, cellType.RotateCCW);
+        }
+
+        private CellCorner PrevCorner(Cell cell, CellCorner corner)
+        {
+            var cellType = baseGrid.GetCellType(cell);
+            return cellType.Rotate(corner, cellType.RotateCW);
+        }
+
         private static Vector2Int LexMin(Vector2Int a, Vector2Int b)
         {
             if (a.x < b.x) return a;
@@ -276,31 +350,45 @@ namespace Sylves
             // corresponds to moving from one corner to another of a particular primal cell.
             // TODO: We have to check two different primal cells, to account for the boundary.
 
+            // Try first corner
             var corner = DirToCorner(dir);
             var t = ToBasePair(cell, corner);
-            if (t == null)
+            if (t != null)
             {
-                dest = default;
-                inverseDir = default;
-                connection = default;
-                return false;
-            }
-            var (primalCell, primalCorner) = t.Value;
-            var cellType = baseGrid.GetCellType(primalCell);
-            primalCorner = cellType.Rotate(primalCorner, cellType.RotateCW);
-            var t2 = ToDualPair(primalCell, primalCorner);
-            if(t2 == null)
-            {
-                dest = default;
-                inverseDir = default;
-                connection = default;
-                return false;
+                var (primalCell, primalCorner) = t.Value;
+                primalCorner = PrevCorner(primalCell, primalCorner);
+                var t2 = ToDualPair(primalCell, primalCorner);
+                if (t2 != null)
+                {
+                    dest = t2.Value.dualCell;
+                    inverseDir = CornerToDir(t2.Value.inverseCorner);
+                    connection = new Connection();
+                    return true;
+                }
             }
 
-            dest = t2.Value.dualCell;
-            inverseDir = CornerToDir(t2.Value.inverseCorner);
-            connection = new Connection();
-            return true;
+            // Try other corner
+            var cellType = GetCellType(cell);
+            corner = cellType.Rotate(corner, cellType.RotateCW);
+            t = ToBasePair(cell, corner);
+            if (t != null)
+            {
+                var (primalCell, primalCorner) = t.Value;
+                primalCorner = NextCorner(primalCell, primalCorner);
+                var t2 = ToDualPair(primalCell, primalCorner);
+                if (t2 != null)
+                {
+                    dest = t2.Value.dualCell;
+                    inverseDir = CornerToDir(t2.Value.inverseCorner);
+                    connection = new Connection();
+                    return true;
+                }
+            }
+
+            dest = default;
+            inverseDir = default;
+            connection = default;
+            return false;
         }
 
 

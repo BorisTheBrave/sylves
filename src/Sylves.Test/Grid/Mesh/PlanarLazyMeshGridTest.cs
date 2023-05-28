@@ -48,7 +48,10 @@ namespace Sylves.Test
         public void TestBoundedDual()
         {
             var g = new PlanarLazyMeshGrid(
-                chunk => Matrix4x4.Translate(new Vector3(chunk.x, chunk.y, 0)) * TestMeshes.PlaneXY,
+                chunk => {
+                    Assert.AreEqual(new Vector2Int(), chunk, $"Out of bounds chunk evaluated {chunk}");
+                    return Matrix4x4.Translate(new Vector3(chunk.x, chunk.y, 0)) * TestMeshes.PlaneXY;
+                    },
                 Vector2.right,
                 Vector2.up,
                 new Vector2(-.5f, -.5f),
@@ -58,10 +61,15 @@ namespace Sylves.Test
 
             var dm = g.GetDual();
 
-            GridTest.DualMapping(dm, new Cell(0, 0, 0));
-            GridTest.DualMapping(dm, new Cell(0, 1, 1));
+            GridTest.DualMapping(dm, new Cell(0, 0, 0), checkPositions: false);
 
-            Assert.AreEqual(9, dm.DualGrid.GetCells().Count());
+            var dualGrid = dm.DualGrid;
+            Assert.AreEqual(4, dualGrid.GetCells().Count());
+
+            foreach(var cell in dualGrid.GetCells())
+            {
+                Assert.AreEqual(2, dualGrid.GetNeighbours(cell).Count());
+            }
         }
 
         [Test]
