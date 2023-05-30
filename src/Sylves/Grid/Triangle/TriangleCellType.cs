@@ -8,9 +8,21 @@ using UnityEngine;
 
 namespace Sylves
 {
+
     /// <summary>
-    /// As this supports triangles pointing both ways, there are 6 dirs, and 6 corners.
-    /// So this class is really quite similar to HexCellType
+    /// <summary>
+    /// Cell type for a regular hexagon with 6 sides. 
+    /// Supports both flat topped and flat sides orientations.
+    /// Up/down triangles are given separate dirs and corners, so you can distinguish them without needing
+    /// separate cell types. Thus this cell type is quite similar to HexCellType.
+    /// 
+    /// 
+    /// CellDirs are FSTriangleDir/FTTriangleDir, integers 0 to 5.
+    /// CellCorners are FSTriangleCorner/FTDirableCorner, integers 0 to 5.
+    /// The CellRotations are the numbers 0 to 5 for a CCW rotation of that many sides, 
+    /// plus numbers ~0 to ~5 for the reflections, where rotation ~0 has dir 0 as a fix point.
+    /// 
+    /// The canonical shape (for use with deformations) is a regular triangle with incircle diamater 1.0 in the XY centered at the origin, with normal pointing Z-forward.
     /// </summary>
     public class TriangleCellType : ICellType
     {

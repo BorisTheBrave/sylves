@@ -6,6 +6,16 @@ using UnityEngine;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Cell type for a regular hexagon with 6 sides. 
+    /// Supports both flat and pointy topped orientations.
+    /// CellDirs are PTHexDir/FTHexDir, integers 0 to 5.
+    /// CellCorners are PTHexCorner/FTHexCorner, integers 0 to 5.
+    /// The CellRotations are the numbers 0 to 5 for a CCW rotation of that many sides, 
+    /// plus numbers ~0 to ~5 for the reflections, where rotation ~0 has dir 0 as a fix point.
+    /// 
+    /// The canonical shape (for use with deformations) is a regular hexagon with incircle diamater 1.0 in the XY centered at the origin, with normal pointing Z-forward.
+    /// </summary>
     public class HexCellType : ICellType
     {
         private static HexCellType ftInstance = new HexCellType(HexOrientation.FlatTopped);

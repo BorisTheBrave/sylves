@@ -27,9 +27,9 @@ namespace Sylves
 
 
         /// <summary>
-        /// Vertices of a pointy-topped regular hexagon with unit radius and side length.
+        /// Vertices of a pointy-topped regular hexagon with 0.5 inradius.
         /// </summary>
-        public static Vector3[] PtHexPolygon => ShapedPtHexPolygon(Mathf.Sqrt(3) / 2, 1);
+        public static Vector3[] PtHexPolygon => ShapedPtHexPolygon(1, 2 / Mathf.Sqrt(3));
 
         /// <summary>
         /// Vertices of a flat-topped hexagon that fits inside an origin centered rectangle of size width by height.
@@ -46,9 +46,9 @@ namespace Sylves
 
 
         /// <summary>
-        /// Vertices of a flat-topped polygon with unit radius and side length.
+        /// Vertices of a flat-topped polygon with with 0.5 inradius.
         /// </summary>
-        public static Vector3[] FtHexPolygon => ShapedFtHexPolygon(1, Mathf.Sqrt(3) / 2);
+        public static Vector3[] FtHexPolygon => ShapedFtHexPolygon(2/ Mathf.Sqrt(3), 1);
 
         /// <summary>
         /// MeshData for a unity cube centered at the origin.
