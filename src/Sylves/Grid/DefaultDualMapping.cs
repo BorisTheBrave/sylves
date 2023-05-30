@@ -9,17 +9,23 @@ using UnityEngine;
 namespace Sylves
 {
     // Converts any planar grid into a dual mapping.
-    // It does this lazily in chungs, so it supports infinite grids
+    // It does this lazily in chunks, so it supports infinite grids
     internal class DefaultDualMapping : PlanarLazyGrid, IDualMapping
     {
         private IGrid baseGrid;
 
         private Func<Vector2Int, IEnumerable<Cell>> getCellsByChunk;
 
-        // Stores the mesh data, and also some details of the mapping
+        // Various caches
+
+        // Stores the mesh data per chunk, and also some details of the mapping
         private IDictionary<Cell, (MeshData meshData, List<(Cell primalCell, CellCorner primalCorner, Cell dualCell, CellCorner dualCorner)> mapping)> meshDatas;
+        // Stores the mapping from base (primal) to dual, per chunk
         private IDictionary<Cell, Dictionary<(Cell, CellCorner), (Cell, CellCorner)>> toDual;
+        // Stores the mapping from dual to base (primal), per chunk
         private IDictionary<Cell, Dictionary<(Cell, CellCorner), (Cell, CellCorner)>> toBase;
+        // Stores the cached moves
+        private IDictionary<Cell, Dictionary<CellDir, (Cell, CellDir)>> moves;
 
 
         public DefaultDualMapping(IGrid planarGrid, float chunkSize, ICachePolicy cachePolicy)
@@ -63,11 +69,15 @@ namespace Sylves
             base.Setup(grid.StrideX, grid.StrideY, grid.AabbBottomLeft - grid.AabbSize * 0.5f, grid.AabbSize * 2, bound, cachePolicy: cachePolicy);
         }
 
+        // Clone constructor. Clones share the same cache!
         private DefaultDualMapping(DefaultDualMapping other, SquareBound bound):base(other, bound)
         {
             baseGrid = other.baseGrid;
             getCellsByChunk = other.getCellsByChunk;
             meshDatas = other.meshDatas;
+            toDual = other.toDual;
+            toBase = other.toBase;
+            moves = other.moves;
         }
 
 
@@ -80,6 +90,7 @@ namespace Sylves
             meshDatas = cachePolicy.GetDictionary<(MeshData meshData, List<(Cell primalCell, CellCorner primalCorner, Cell dualCell, CellCorner dualCorner)> mapping)>(this);
             toDual = cachePolicy.GetDictionary<Dictionary<(Cell, CellCorner), (Cell, CellCorner)>>(this);
             toBase = cachePolicy.GetDictionary<Dictionary<(Cell, CellCorner), (Cell, CellCorner)>>(this);
+            moves = cachePolicy.GetDictionary<Dictionary<CellDir, (Cell, CellDir)>>(this);
 
         }
 
@@ -117,9 +128,9 @@ namespace Sylves
         // dir n is between corners n and (n+1)
         private CellCorner DirToCorner(CellDir dir) => (CellCorner)dir;
 
-        // We directly provide a mesh grid, rather than a MeshData (the usualy way to use PlanarLazyMeshGrid)
-        // That's because we don't want to do edge matching between meshes - we already know that data due to the 
-        // dual structure
+
+        // Compute the dual grid for a given chunk, and also the mapping between the base (primal) grid and the dual.
+        // The mapping may refer to primal cells from several chunks, but it's exhaustive for the dual cells of the requested chunk.
         private (MeshData meshData, List<(Cell primalCell, CellCorner primalCorner, Cell dualCell, CellCorner dualCorner)> mapping) GetMeshData(Vector2Int v)
         {
             var visited = new HashSet<(Cell cell, CellDir dir)>();
@@ -128,6 +139,7 @@ namespace Sylves
             var arcEnds = new List<((Cell cell, CellDir dir) startHe, (Cell cell, CellDir dir) endHe)?>();
 
 
+            // Visit every corner of every cell in the primal chunk.
             var primalCells = getCellsByChunk(v);
             foreach(var primalCell in primalCells)
             {
@@ -192,7 +204,7 @@ namespace Sylves
                     }
 
                     // If a dual cell borders several chunks, 
-                    // It'll be visited multiple times.
+                    // It'll be visited in several calls to GetMeshData.
                     // This ensures we keep only a unique one
                     var keepDualCell = minChunk == v;
                     if (keepDualCell)
@@ -289,6 +301,8 @@ namespace Sylves
             return meshDatas[cell] = GetMeshData(v);
         }
 
+        // Converts the meshData to a meshGrid.
+        // Unlike PlanarLazyMeshGrid, there's no need for edge matching.
         protected override MeshGrid GetMeshGrid(Vector2Int v)
         {
             var meshData = GetMeshDataCached(v).meshData;
@@ -354,13 +368,25 @@ namespace Sylves
             return b;
         }
 
+        // Each move in the dual grid corresponds to moving from one corner to another of a particular primal cell.
+        // We can use this to translate moves in the dual grid to operations in the primal grid.
+        // This means we don't need worry about crossing chunk boundaries.
         public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
-            // TODO: Cache this
+            //  Unused
+            connection = default;
 
-            // Each move in the dual grid
-            // corresponds to moving from one corner to another of a particular primal cell.
-            // TODO: We have to check two different primal cells, to account for the boundary.
+            // Check if result is in cache
+            if(!moves.TryGetValue(cell, out var moveDict))
+            {
+                moves[cell] = moveDict = new Dictionary<CellDir, (Cell, CellDir)>();
+            }
+
+            if(moveDict.TryGetValue(dir, out var t1))
+            {
+                (dest, inverseDir) = t1;
+                return true;
+            }
 
             // Try first corner
             var corner = DirToCorner(dir);
@@ -374,7 +400,7 @@ namespace Sylves
                 {
                     dest = t2.Value.dualCell;
                     inverseDir = CornerToDir(t2.Value.inverseCorner);
-                    connection = new Connection();
+                    moveDict[dir] = (dest, inverseDir);
                     return true;
                 }
             }
@@ -392,14 +418,13 @@ namespace Sylves
                 {
                     dest = t2.Value.dualCell;
                     inverseDir = CornerToDir(t2.Value.inverseCorner);
-                    connection = new Connection();
+                    moveDict[dir] = (dest, inverseDir);
                     return true;
                 }
             }
 
             dest = default;
             inverseDir = default;
-            connection = default;
             return false;
         }
 
