@@ -2,7 +2,7 @@
 * Changed Quad/TriangleInterpolation to use same conventions as rest of Sylves
 * Introduce [CellCorner](xref:Sylves.CellCorner) and related operations.
 * Added [dual grids](concepts/dual.md).
-* Added [ChisledPathfinding](xref:sylves.ChisledPathfinding).
+* Added [ChisledPathfinding](xref:Sylves.ChisledPathfinding).
 * Added [FaceRelax](xref:Sylves.MeshDataOperations.FaceRelax(Sylves.MeshData,System.Int32)) and [FaceFilter](xref:Sylves.MeshDataOperations.FaceFilter(Sylves.MeshData,System.Func{Sylves.MeshUtils.Face,System.Int32,System.Boolean})) operations
 * Improved mesh smoothing option for mesh deformation.
 * Fixed SquareGrid.FindCell for non unit sized grids

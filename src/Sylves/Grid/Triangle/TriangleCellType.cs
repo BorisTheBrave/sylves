@@ -10,7 +10,6 @@ namespace Sylves
 {
 
     /// <summary>
-    /// <summary>
     /// Cell type for a regular hexagon with 6 sides. 
     /// Supports both flat topped and flat sides orientations.
     /// Up/down triangles are given separate dirs and corners, so you can distinguish them without needing
