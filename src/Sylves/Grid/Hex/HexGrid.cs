@@ -115,6 +115,8 @@ namespace Sylves
             }
         }
 
+        public HexOrientation Orientation => orientation;
+
         #region Basics
         public bool Is2d => true;
 
@@ -129,6 +131,8 @@ namespace Sylves
         public bool IsFinite => bound != null;
 
         public bool IsSingleCellType => true;
+
+        public int CoordinateDimension => 3;
 
         /// <summary>
         /// Returns the full list of cell types that can be returned by <see cref="GetCellType(Cell)"/>
@@ -156,6 +160,26 @@ namespace Sylves
         }
 
         public IGrid Unwrapped => this;
+
+        public virtual IDualMapping GetDual()
+        {
+            // TODO
+            var dualBound = bound == null ? null :
+                new TriangleBound(bound.min, bound.max + Vector3Int.one);
+
+            // Note hex orientation is flipped vs triangle orientation
+            if (orientation == HexOrientation.FlatTopped)
+            {
+                var triCellSize = new Vector2(cellSize.x / (4f / 3), cellSize.y);
+                return new TriangleGrid.DualMapping(new TriangleGrid(triCellSize, TriangleOrientation.FlatSides, dualBound), this).Reversed();
+            }
+            else
+            {
+
+                var triCellSize = new Vector2(cellSize.x, cellSize.y / (4f / 3));
+                return new TriangleGrid.DualMapping(new TriangleGrid(triCellSize, TriangleOrientation.FlatTopped, dualBound), this).Reversed();
+            }
+        }
 
         public Cell[] GetChildTriangles(Cell cell)
         {
@@ -256,6 +280,11 @@ namespace Sylves
         {
             return cellType.GetCellDirs();
         }
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell)
+        {
+            return cellType.GetCellCorners();
+        }
+
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
         {
             // Double check we really have "cube co-ordinates" otherwise this will loop for ever

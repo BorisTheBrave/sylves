@@ -122,5 +122,16 @@ namespace Sylves.Test
             var results = g.Raycast(start, end - start, 1);
             Assert.AreEqual(3, results.Count());
         }
+
+        [Test]
+        public void TestDual()
+        {
+            var g = new PeriodicPlanarMeshGrid(TestMeshes.PlaneXY, Vector2.right, Vector2.up);
+            var dm = g.GetDual();
+            GridTest.DualMapping(dm, new Cell(0, 0, 0));
+
+            Assert.AreEqual(4, dm.DualNeighbours(new Cell(0, 0, 0)).Count());
+            Assert.AreEqual(4, dm.BaseNeighbours(new Cell(0, 0, 0)).Count());
+        }
     }
 }

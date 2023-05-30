@@ -50,6 +50,12 @@ namespace Sylves
                 stroke: rgb(51, 51, 51);
                 stroke-width: {strokeWidth}
             }}");
+            tw.WriteLine($@".dual .cell-path {{
+                fill: none;
+                stroke: rgb(255, 0, 0);
+                stroke-opacity: 0.5;
+                stroke-width: {strokeWidth / 3}
+            }}");
             tw.WriteLine("</style>");
         }
 

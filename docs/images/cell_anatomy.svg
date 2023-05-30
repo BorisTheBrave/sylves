@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="134.1924mm"
+   width="217.74403mm"
    height="101.56508mm"
-   viewBox="0 0 134.1924 101.56508"
+   viewBox="0 0 217.74404 101.56508"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
@@ -23,17 +23,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="138.82126"
-     inkscape:cy="163.97633"
+     inkscape:zoom="1.979899"
+     inkscape:cx="572.11093"
+     inkscape:cy="210.75211"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="2560"
-     inkscape:window-height="1377"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:window-width="3840"
+     inkscape:window-height="2066"
+     inkscape:window-x="2869"
+     inkscape:window-y="-11"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,7 +51,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-35.106746,-79.335768)">
+     transform="translate(9.6033724,-79.335768)">
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.264999;stroke-opacity:1;stop-color:#000000"
        id="rect833"
@@ -131,52 +131,117 @@
            y="174.52542"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke:#ffffff;stroke-width:1.4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">SquareDir.Down</tspan></text>
     </g>
-    <g
-       id="g1225">
-      <text
-         xml:space="preserve"
-         style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+       x="140.47218"
+       y="131.92046"
+       id="text905"><tspan
+         sodipodi:role="line"
+         id="tspan903"
          x="140.47218"
          y="131.92046"
-         id="text905"><tspan
-           sodipodi:role="line"
-           id="tspan903"
-           x="140.47218"
-           y="131.92046"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareDir.Right</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareDir.Right</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+       x="98.155792"
+       y="87.993004"
+       id="text905-6"><tspan
+         sodipodi:role="line"
+         id="tspan903-6"
          x="98.155792"
          y="87.993004"
-         id="text905-6"><tspan
-           sodipodi:role="line"
-           id="tspan903-6"
-           x="98.155792"
-           y="87.993004"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareDir.Up</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareDir.Up</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+       x="61.907478"
+       y="130.77298"
+       id="text905-5"><tspan
+         sodipodi:role="line"
+         id="tspan903-1"
          x="61.907478"
          y="130.77298"
-         id="text905-5"><tspan
-           sodipodi:role="line"
-           id="tspan903-1"
-           x="61.907478"
-           y="130.77298"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareDir.Left</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareDir.Left</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+       x="97.791962"
+       y="174.52542"
+       id="text905-6-5"><tspan
+         sodipodi:role="line"
+         id="tspan903-6-2"
          x="97.791962"
          y="174.52542"
-         id="text905-6-5"><tspan
-           sodipodi:role="line"
-           id="tspan903-6-2"
-           x="97.791962"
-           y="174.52542"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareDir.Down</tspan></text>
-    </g>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareDir.Down</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+       x="160.5174"
+       y="93.567276"
+       id="text880"><tspan
+         sodipodi:role="line"
+         id="tspan878"
+         x="160.5174"
+         y="93.567276"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareCorner.UpRight</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+       x="166.67653"
+       y="170.81792"
+       id="text880-0"><tspan
+         sodipodi:role="line"
+         id="tspan878-1"
+         x="166.67653"
+         y="170.81792"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareCorner.DownRight</tspan></text>
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.264583;stop-color:#000000"
+       id="path862"
+       cx="133.2522"
+       cy="165.53018"
+       r="2.271791" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.264583;stop-color:#000000"
+       id="path862-1"
+       cx="132.85129"
+       cy="96.441017"
+       r="2.271791" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.264583;stop-color:#000000"
+       id="path862-5"
+       cx="63.895741"
+       cy="96.307373"
+       r="2.271791" />
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+       x="35.969795"
+       y="94.235451"
+       id="text902"><tspan
+         sodipodi:role="line"
+         id="tspan900"
+         x="35.969795"
+         y="94.235451"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareCorner.UpLeft</tspan></text>
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.264583;stop-color:#000000"
+       id="path862-5-3"
+       cx="63.895744"
+       cy="165.26292"
+       r="2.271791" />
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Geom;-inkscape-font-specification:Geom;stroke-width:0.264583"
+       x="29.83453"
+       y="170.95155"
+       id="text906"><tspan
+         sodipodi:role="line"
+         id="tspan904"
+         x="29.834528"
+         y="170.95155"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;stroke-width:0.264583">SquareCorner.DownLeft</tspan></text>
   </g>
 </svg>

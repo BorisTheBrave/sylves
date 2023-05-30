@@ -24,6 +24,8 @@ namespace Sylves
 
         public bool IsSingleCellType => throw new NotImplementedException();
 
+        public int CoordinateDimension => throw new NotImplementedException();
+
         public IEnumerable<ICellType> GetCellTypes() => throw new NotImplementedException();
         #endregion
 
@@ -31,6 +33,8 @@ namespace Sylves
         public IGrid Unbounded => throw new NotImplementedException();
 
         public IGrid Unwrapped => throw new NotImplementedException();
+
+        public virtual IDualMapping GetDual() => throw new NotImplementedException();
 
         #endregion
 
@@ -54,6 +58,8 @@ namespace Sylves
 
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell) => throw new NotImplementedException();
+
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell) => throw new NotImplementedException();
 
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => throw new NotImplementedException();
 

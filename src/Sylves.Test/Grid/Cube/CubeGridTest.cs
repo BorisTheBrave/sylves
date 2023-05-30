@@ -111,5 +111,14 @@ namespace Sylves.Test
             var g = new CubeGrid(1);
             GridTest.FindGridSymmetry(g, new Cell(0, 0, 0));
         }
+
+        [Test]
+        public void TestDualMapping()
+        {
+            var g = new CubeGrid(1);
+            var dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(0, 0, 0));
+            GridTest.DualMapping(dual, new Cell(8, -4, 0));
+        }
     }
 }

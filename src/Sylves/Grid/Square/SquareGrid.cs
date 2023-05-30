@@ -80,6 +80,8 @@ namespace Sylves
 
         public bool IsSingleCellType => true;
 
+        public int CoordinateDimension => 2;
+
         public IEnumerable<ICellType> GetCellTypes()
         {
             return cellTypes;
@@ -103,6 +105,53 @@ namespace Sylves
         }
 
         public IGrid Unwrapped => this;
+
+        public IDualMapping GetDual()
+        {
+            var dualBound = bound == null ? null :
+                new SquareBound(bound.min, bound.max + Vector2Int.one);
+
+            var translation = Matrix4x4.Translate(new Vector3(-cellSize.x / 2, -cellSize.y / 2, 0));
+
+            return new DualMapping(this, new SquareGrid(cellSize, dualBound).Transformed(translation));
+        }
+
+        private class DualMapping : BasicDualMapping
+        {
+            public DualMapping(SquareGrid baseGrid, IGrid dualGrid):base(baseGrid, dualGrid)
+            {
+
+            }
+            private (Cell cell, CellCorner inverseCorner)? ToPair(Cell cell, CellCorner corner, IGrid outGrid)
+            {
+                var squareCorner = (SquareCorner)corner;
+                switch (squareCorner)
+                {
+                    case SquareCorner.DownRight:
+                        cell.x += 1;
+                        break;
+                    case SquareCorner.UpRight:
+                        cell.x += 1;
+                        cell.y += 1;
+                        break;
+                    case SquareCorner.UpLeft:
+                        cell.y += 1;
+                        break;
+                    case SquareCorner.DownLeft:
+                        break;
+                    default:
+                        throw new Exception($"Unexpected corner {corner}");
+                }
+                if (!outGrid.IsCellInGrid(cell))
+                {
+                    return null;
+                }
+                return (cell, (CellCorner)(((int)corner + 2) % 4));
+            }
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner) => ToPair(baseCell, corner, DualGrid);
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner) => ToPair(dualCell - new Vector3Int(1, 1, 0), corner, BaseGrid);
+        }
         #endregion
 
         #region Cell info
@@ -165,6 +214,11 @@ namespace Sylves
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
             return SquareCellType.Instance.GetCellDirs();
+        }
+
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell)
+        {
+            return SquareCellType.Instance.GetCellCorners();
         }
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
         {

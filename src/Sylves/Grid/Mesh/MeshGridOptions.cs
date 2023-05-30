@@ -6,6 +6,19 @@ namespace Sylves
 {
     public class MeshGridOptions
     {
+        public MeshGridOptions()
+        {
+
+        }
+
+        public MeshGridOptions(MeshGridOptions other)
+        {
+            UseXZPlane = other.UseXZPlane;
+            InvertWinding = other.InvertWinding;
+            DoubleOddFaces = other.DoubleOddFaces;
+            Tolerance = other.Tolerance;
+        }
+
         /// <summary>
         /// If set, assumes the 2d plane that a face maps from is in the XZ axis.
         /// </summary>

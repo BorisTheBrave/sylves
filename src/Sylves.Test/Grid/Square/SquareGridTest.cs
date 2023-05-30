@@ -111,5 +111,14 @@ namespace Sylves.Test
                 Assert.AreEqual((CellRotation)2, s.Rotation);
             }
         }
+
+        [Test]
+        public void TestDualMapping()
+        {
+            var g = new SquareGrid(1);
+            var dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(0, 0, 0));
+            GridTest.DualMapping(dual, new Cell(8, -4, 0));
+        }
     }
 }

@@ -51,6 +51,15 @@ namespace Sylves
         /// </summary>
         bool IsSingleCellType { get; }
 
+        /// <summary>
+        /// Returns the number of co-ordinates needed to identify a cell.
+        /// i.e.
+        /// dim 1 means cell.y === 0 and cell.z === 0
+        /// dim 2 means cell.z === 0
+        /// dim 3 means all three co-ordinates are relevant.
+        /// </summary>
+        int CoordinateDimension { get; }
+
         // TODO: Supports MeshDistortion
         // TODO: Similar to Orientable for cell rotation
 
@@ -72,6 +81,8 @@ namespace Sylves
         /// Returns the grid with most grid modifiers removed.
         /// </summary>
         IGrid Unwrapped { get; }
+
+        IDualMapping GetDual();
 
         #endregion
 
@@ -141,6 +152,9 @@ namespace Sylves
         /// This usually just forwards to <see cref="ICellType.GetCellDirs()"/>
         /// </summary>
         IEnumerable<CellDir> GetCellDirs(Cell cell);
+
+        IEnumerable<CellCorner> GetCellCorners(Cell cell);
+
 
         /// <summary>
         /// Returns a ordered series of cells and directions, starting a startCell,

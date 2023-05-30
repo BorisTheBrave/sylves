@@ -9,6 +9,6 @@ namespace Sylves
     /// </summary>
     public class RavelModifier : BijectModifier
     {
-        public RavelModifier(IGrid underlying) : base(underlying, c => underlying.GetCellByIndex(c.x), c => new Cell(underlying.GetIndex(c), 0)) { }
+        public RavelModifier(IGrid underlying) : base(underlying, c => underlying.GetCellByIndex(c.x), c => new Cell(underlying.GetIndex(c), 0), 1) { }
     }
 }

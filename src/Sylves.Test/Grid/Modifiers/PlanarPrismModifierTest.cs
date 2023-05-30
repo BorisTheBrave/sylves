@@ -10,18 +10,6 @@ namespace Sylves.Test
     [TestFixture]
     internal class PlanarPrismModifierTest
     {
-
-        private static Cell ToTriangleGrid(Cell c)
-        {
-            var odd = (c.x & 1);
-            var x = (c.x - odd) / 2;
-            var y = c.y;
-            var z = -x - y + 1 + odd;
-            return new Cell(x, y, z);
-        }
-
-        private static Cell FromTriangleGrid(Cell c) => new Cell(c.x * 2 + (c.x + c.y + c.z - 1), c.y, 0);
-
         private PlanarPrismModifier GetGrid(int gridType)
         {
             switch (gridType)
@@ -30,7 +18,7 @@ namespace Sylves.Test
                     return new PlanarPrismModifier(new SquareGrid(1), new PlanarPrismOptions { }); ;
                 case 1:
                     return new PlanarPrismModifier(
-                        new BijectModifier(new TriangleGrid(1), ToTriangleGrid, FromTriangleGrid),
+                        new BijectModifier(new TriangleGrid(1), TrianglePrismGrid.ToTriangleGrid, TrianglePrismGrid.FromTriangleGrid, 2),
                         new PlanarPrismOptions { });
                 default:
                     throw new Exception();
@@ -46,7 +34,7 @@ namespace Sylves.Test
         public void TestTriangleRoundtrip(int x, int y, int z)
         {
             var c = new Cell(x, y, z);
-            Assert.AreEqual(c, FromTriangleGrid(ToTriangleGrid(c)));
+            Assert.AreEqual(c, TrianglePrismGrid.FromTriangleGrid(TrianglePrismGrid.ToTriangleGrid(c)));
         }
 
         [Test]
@@ -74,6 +62,16 @@ namespace Sylves.Test
         {
             var g = GetGrid(gridType);
             GridTest.FindBasicPath(g, new Cell(1, 0, 0), new Cell(2, 0, -5));
+        }
+
+
+        [Test]
+        [TestCaseSource(nameof(GridTypes))]
+        public void TestDualMapping(int gridType)
+        {
+            var g = GetGrid(gridType);
+            var dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(0, 0, 0));
         }
     }
 }

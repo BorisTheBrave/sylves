@@ -70,14 +70,56 @@ namespace Sylves
             {
                 throw new Exception("Underlying should be a planar grid");
             }
+            if (underlying.CoordinateDimension >= 3)
+            {
+                throw new Exception("Underlying should be a grid that doesn't use the z coordinate (i.e. CoordinateDimension <= 2)");
+            }
         }
 
-        private (Cell cell, int layer) Split(Cell cell)
+        // Reduces a grid to only using the x-y co-ordinates, if necessary
+        // TODO: Should this be a method on IGrid
+        private (Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) CompressXY(IGrid grid)
+        {
+            if (grid is TransformModifier tf)
+            {
+                return CompressXY(tf.Underlying);
+            }
+            if(grid is TriangleGrid tg)
+            {
+                return (TrianglePrismGrid.ToTriangleGrid, TrianglePrismGrid.FromTriangleGrid);
+            }
+            if(grid is HexGrid hg)
+            {
+                // Strictly speaking, this is not needed due to some hexgrid magic that ignores z coords
+                // but we do it anyway as it's more convenient
+                return (c => new Cell(c.x, c.y, -c.x-c.y), c => new Cell(c.x, c.y));
+            }
+            if (grid.CoordinateDimension <= 2)
+            {
+                return (null, null);
+            }
+
+            Cell Compress(Cell c)
+            {
+                checked {
+                    var i = IntUtils.Zip((short)c.y, (short)c.z);
+                    return new Cell(c.x, i);
+                }
+            }
+            Cell Uncompress(Cell c)
+            {
+                var (y, z) = IntUtils.Unzip(c.y);
+                return new Cell(c.x, y, z);
+            }
+            return (Uncompress, Compress);
+        }
+
+        internal (Cell cell, int layer) Split(Cell cell)
         {
             return (new Cell(cell.x, cell.y), cell.z);
         }
 
-        private Cell Combine(Cell cell, int layer)
+        internal Cell Combine(Cell cell, int layer)
         {
             return new Cell(cell.x, cell.y, layer);
         }
@@ -100,7 +142,10 @@ namespace Sylves
                 inverseDir = (CellDir)((int)CubeDir.Forward + (int)CubeDir.Back - (int)cellDir);
                 return (int)cellDir >= (int)CubeDir.Forward;
             }
-            else if (underlyingCellType == HexCellType.Get(HexOrientation.FlatTopped) || underlyingCellType == HexCellType.Get(HexOrientation.PointyTopped))
+            else if (underlyingCellType == HexCellType.Get(HexOrientation.FlatTopped) ||
+                     underlyingCellType == HexCellType.Get(HexOrientation.PointyTopped) ||
+                     underlyingCellType == TriangleCellType.Get(TriangleOrientation.FlatTopped) ||
+                     underlyingCellType == TriangleCellType.Get(TriangleOrientation.FlatSides))
             {
                 isForward = (int)cellDir == (int)PTHexPrismDir.Forward;
                 inverseDir = (CellDir)((int)PTHexPrismDir.Forward + (int)PTHexPrismDir.Back - (int)cellDir);
@@ -176,6 +221,8 @@ namespace Sylves
 
         public virtual bool IsSingleCellType => underlying.IsSingleCellType;
 
+        public int CoordinateDimension => 3;
+
         public virtual IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes().Select(PrismCellType);
 
         #endregion
@@ -190,6 +237,86 @@ namespace Sylves
 
         public virtual IGrid Unwrapped => underlying.Unwrapped;
         public virtual IGrid Underlying => underlying;
+
+        private static Func<Cell, Cell> Identity = x => x;
+
+        public virtual IDualMapping GetDual()
+        {
+            var dm = underlying.GetDual();
+            var (to, from) = CompressXY(dm.DualGrid);
+            var dualGrid = new PlanarPrismModifier(
+                from == null ? dm.DualGrid : new BijectModifier(dm.DualGrid, to, from, 2),
+                new PlanarPrismOptions
+                {
+                    LayerHeight = planarPrismOptions.LayerHeight,
+                    LayerOffset = planarPrismOptions.LayerOffset - 0.5f * planarPrismOptions.LayerHeight,
+                }, bound == null ? null : new PlanarPrismBound
+                {
+                    MinLayer = bound.MinLayer,
+                    MaxLayer = bound.MaxLayer + 1,
+                    PlanarBound = dm.DualGrid.GetBound(),
+                });
+
+            return new DualMapping(this, dualGrid, dm, to ?? Identity, from ?? Identity);
+        }
+
+
+        private class DualMapping : BasicDualMapping
+        {
+            private readonly PlanarPrismModifier baseGrid;
+            private readonly PlanarPrismModifier dualGrid;
+            private readonly IDualMapping planarDualMapping;
+            private readonly Func<Cell, Cell> toUnderlying;
+            private readonly Func<Cell, Cell> fromUnderlying;
+
+            public DualMapping(PlanarPrismModifier baseGrid, PlanarPrismModifier dualGrid, IDualMapping planarDualMapping, Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) : base(baseGrid, dualGrid)
+            {
+                this.baseGrid = baseGrid;
+                this.dualGrid = dualGrid;
+                this.planarDualMapping = planarDualMapping;
+                this.toUnderlying = toUnderlying;
+                this.fromUnderlying = fromUnderlying;
+            }
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner)
+            {
+                var (uCell, layer) = baseGrid.Split(baseCell);
+                var underlyingCellType = baseGrid.underlying.GetCellType(uCell);
+                var prismInfo = PrismInfo.Get(underlyingCellType);
+                var (uCorner, isForward) = prismInfo.PrismToBaseCorners[corner];
+                var t = planarDualMapping.ToDualPair(uCell, uCorner);
+                if (t == null)
+                    return null;
+                var (uDualCell, uInverseCorner) = t.Value;
+                var underlyingDualCellType = dualGrid.underlying.GetCellType(uDualCell);
+                var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
+                var corners = dualPrismInfo.BaseToPrismCorners[uInverseCorner];
+                var dualCell = dualGrid.Combine(fromUnderlying(uDualCell), layer + (isForward ? 1 : 0));
+                if (!dualGrid.IsCellInGrid(dualCell))
+                    return null;
+                return (dualCell, isForward ? corners.Back : corners.Forward);
+
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner)
+            {
+                var (uDualCell, layer) = dualGrid.Split(dualCell);
+                uDualCell = toUnderlying(uDualCell);
+                var underlyingDualCellType = dualGrid.underlying.GetCellType(uDualCell);
+                var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
+                var (uDualCorner, isForward) = dualPrismInfo.PrismToBaseCorners[corner];
+                var t = planarDualMapping.ToBasePair(uDualCell, uDualCorner);
+                if (t == null)
+                    return null;
+                var (uCell, uInverseCorner) = t.Value;
+                var underlyingCellType = baseGrid.underlying.GetCellType(uCell);
+                var prismInfo = PrismInfo.Get(underlyingCellType);
+                var corners = prismInfo.BaseToPrismCorners[uInverseCorner];
+                var baseCell = baseGrid.Combine(uCell, layer + (isForward ? 0 : -1));
+                if (!baseGrid.IsCellInGrid(baseCell))
+                    return null;
+                return (baseCell, isForward ? corners.Back : corners.Forward);
+            }
+        }
         #endregion
 
         #region Cell info
@@ -265,6 +392,22 @@ namespace Sylves
             yield return forwardDir;
             yield return backDir;
         }
+
+
+
+        public virtual IEnumerable<CellCorner> GetCellCorners(Cell cell)
+        {
+            var (uCell, layer) = Split(cell);
+            var underlyingCellType = underlying.GetCellType(uCell);
+            var prismInfo = PrismInfo.Get(underlyingCellType);
+            foreach(var corner in underlying.GetCellCorners(uCell))
+            {
+                var (f, b) = prismInfo.BaseToPrismCorners[corner];
+                yield return f;
+                yield return b;
+            }
+        }
+
         public virtual IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)
         {
             var (startUCell, startLayer) = Split(startCell);

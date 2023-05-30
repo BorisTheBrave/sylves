@@ -21,11 +21,11 @@ namespace Sylves.Test
             Assert.AreEqual(v1.y, v2.y, delta, $"Comparing {v1} to {v2}");
         }
 
-        public static void AssertAreEqual(Vector3 v1, Vector3 v2, double delta)
+        public static void AssertAreEqual(Vector3 v1, Vector3 v2, double delta, string message = "")
         {
-            Assert.AreEqual(v1.x, v2.x, delta, $"Comparing {v1} to {v2}");
-            Assert.AreEqual(v1.y, v2.y, delta, $"Comparing {v1} to {v2}");
-            Assert.AreEqual(v1.z, v2.z, delta, $"Comparing {v1} to {v2}");
+            Assert.AreEqual(v1.x, v2.x, delta, $"Comparing {v1} to {v2} {message}");
+            Assert.AreEqual(v1.y, v2.y, delta, $"Comparing {v1} to {v2} {message}");
+            Assert.AreEqual(v1.z, v2.z, delta, $"Comparing {v1} to {v2} {message}");
         }
 
         public static void AssertAreEqual(Matrix4x4 m1, Matrix4x4 m2, double delta, string message = "")

@@ -40,12 +40,14 @@ namespace Sylves
         private static Vector3Int ToVector3Int(Cell cell) => (Vector3Int)cell;
         private static Cell FromVector3Int(Vector3Int v) => (Cell)v;
 
+        public Vector3 CellSize => cellSize;
+
         #region Basics
         public bool Is2d => false;
 
         public bool Is3d => true;
 
-        public bool IsPlanar => true;
+        public bool IsPlanar => false;
 
         public bool IsRepeating => true;
 
@@ -54,6 +56,8 @@ namespace Sylves
         public bool IsFinite => bound != null;
 
         public bool IsSingleCellType => true;
+
+        public int CoordinateDimension => 3;
 
         public IEnumerable<ICellType> GetCellTypes()
         {
@@ -78,6 +82,71 @@ namespace Sylves
         }
 
         public IGrid Unwrapped => this;
+
+        public IDualMapping GetDual()
+        {
+            var dualBound = bound == null ? null :
+                new CubeBound(bound.min, bound.max + Vector3Int.one);
+
+            var translation = Matrix4x4.Translate(new Vector3(-cellSize.x / 2, -cellSize.y / 2, -cellSize.z / 2));
+
+            return new DualMapping(this, new CubeGrid(cellSize, dualBound).Transformed(translation));
+        }
+
+        private class DualMapping : BasicDualMapping
+        {
+            public DualMapping(CubeGrid baseGrid, IGrid dualGrid) : base(baseGrid, dualGrid)
+            {
+
+            }
+
+            private (Cell cell, CellCorner inverseCorner)? ToPair(Cell cell, CellCorner corner, IGrid outGrid)
+            {
+
+                switch ((CubeCorner)corner)
+                {
+                    case CubeCorner.BackDownLeft:
+                        break;
+                    case CubeCorner.BackDownRight:
+                        cell.x += 1;
+                        break;
+                    case CubeCorner.BackUpLeft:
+                        cell.y += 1;
+                        break;
+                    case CubeCorner.BackUpRight:
+                        cell.x += 1;
+                        cell.y += 1;
+                        break;
+                    case CubeCorner.ForwardDownLeft:
+                        cell.z += 1;
+                        break;
+                    case CubeCorner.ForwardDownRight:
+                        cell.x += 1;
+                        cell.z += 1;
+                        break;
+                    case CubeCorner.ForwardUpLeft:
+                        cell.y += 1;
+                        cell.z += 1;
+                        break;
+                    case CubeCorner.ForwardUpRight:
+                        cell.x += 1;
+                        cell.y += 1;
+                        cell.z += 1;
+                        break;
+                    default:
+                        throw new Exception($"Unexpected corner {corner}");
+                }
+                if (!outGrid.IsCellInGrid(cell))
+                {
+                    return null;
+                }
+                return (cell, (CellCorner)((int)corner ^ 7));
+            }
+
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner) => ToPair(baseCell, corner, DualGrid);
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner) => ToPair(dualCell - Vector3Int.one, corner, BaseGrid);
+        }
         #endregion
 
         #region Cell info
@@ -150,6 +219,11 @@ namespace Sylves
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
             return CubeCellType.Instance.GetCellDirs();
+        }
+
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell)
+        {
+            return CubeCellType.Instance.GetCellCorners();
         }
 
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell)

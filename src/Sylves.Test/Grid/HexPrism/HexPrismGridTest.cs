@@ -65,5 +65,21 @@ namespace Sylves.Test
                 Assert.IsNotNull(s);
             }
         }
+
+
+
+        [Test]
+        public void TestDualMapping()
+        {
+            var g = new HexPrismGrid(1, 1, HexOrientation.FlatTopped);
+            var dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(0, 0, 0));
+            GridTest.DualMapping(dual, new Cell(8, -4, -4));
+
+            g = new HexPrismGrid(1, 1, HexOrientation.PointyTopped);
+            dual = g.GetDual();
+            GridTest.DualMapping(dual, new Cell(0, 0, 0));
+            GridTest.DualMapping(dual, new Cell(8, -4, -4));
+        }
     }
 }

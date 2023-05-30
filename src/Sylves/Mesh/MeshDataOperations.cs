@@ -479,5 +479,30 @@ namespace Sylves
             };
         }
 
+        public static MeshData FaceFilter(this MeshData md, Func<MeshUtils.Face, int, bool> filterFunc)
+        {
+            var indices = new int[md.subMeshCount][];
+            for(var subMesh =0; subMesh < md.subMeshCount;subMesh++)
+            {
+                var ii = new List<int>();
+                var faceIndex = 0;
+                foreach(var face in MeshUtils.GetFaces(md, subMesh))
+                {
+                    if(filterFunc(face, faceIndex))
+                    {
+                        ii.AddRange(face);
+                        if(md.topologies[subMesh] == MeshTopology.NGon)
+                        {
+                            ii[ii.Count - 1] = ~ii[ii.Count - 1];
+                        }
+                    }
+                    faceIndex++;
+                }
+                indices[subMesh] = ii.ToArray();
+            }
+            var r = md.Clone();
+            r.indices = indices;
+            return r;
+        }
     }
 }

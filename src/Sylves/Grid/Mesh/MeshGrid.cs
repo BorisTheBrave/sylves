@@ -45,6 +45,7 @@ namespace Sylves
         }
 
         // Internals constructor used for other meshgrid like grids.
+        // You need to call BuildMeshDetails() after calling this.
         internal MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions, DataDrivenData data, bool is2d) :
             base(data)
         {
@@ -151,6 +152,57 @@ namespace Sylves
         public override bool Is3d => !is2d;
 
         public override bool IsPlanar => is2d && meshDetails.isPlanar;
+
+        public override int CoordinateDimension => is2d ? (meshData.subMeshCount == 1 ? 1 : 2) : 3;
+        #endregion
+
+        #region Relatives
+
+        public override IDualMapping GetDual()
+        {
+            var dmb = new DualMeshBuilder(meshData);
+            var dualGrid = new MeshGrid(dmb.DualMeshData, meshGridOptions);
+            return new DualMapping(this, dualGrid, dmb.Mapping);
+        }
+
+        private class DualMapping : BasicDualMapping
+        {
+            Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toDual;
+            Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toBase;
+
+            public DualMapping(MeshGrid baseGrid, MeshGrid dualGrid, List<(int primalFace, int primalVert, int dualFace, int dualVert)> rawMapping) : base(baseGrid, dualGrid)
+            {
+                toDual = rawMapping.ToDictionary(
+                    x => (new Cell(x.primalFace, 0, 0), (CellCorner)x.primalVert),
+                    x => (new Cell(x.dualFace, 0, 0), (CellCorner)x.dualVert));
+                toBase = toDual.ToDictionary(kv => kv.Value, kv => kv.Key);
+            }
+
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell cell, CellCorner corner)
+            {
+                if (toDual.TryGetValue((cell, corner), out var r))
+                {
+                    return r;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell cell, CellCorner corner)
+            {
+
+                if (toBase.TryGetValue((cell, corner), out var r))
+                {
+                    return r;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
         #endregion
 
         #region Topology

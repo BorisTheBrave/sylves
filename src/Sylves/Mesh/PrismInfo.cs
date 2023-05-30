@@ -85,6 +85,26 @@ namespace Sylves
             BaseToPrismCorners = BaseToPrismCornersNGon(6),
         }.Setup();
 
+        private static PrismInfo ftTrianglePrismInfo = new PrismInfo
+        {
+
+            BaseCellType = TriangleCellType.Get(TriangleOrientation.FlatTopped),
+            PrismCellType = TrianglePrismCellType.Get(TriangleOrientation.FlatTopped),
+            ForwardDir = (CellDir)FSTrianglePrismDir.Forward,
+            BackDir = (CellDir)FSTrianglePrismDir.Back,
+            BaseToPrismCorners = BaseToPrismCornersNGon(6),
+        }.Setup();
+
+        private static PrismInfo fsTrianglePrismInfo = new PrismInfo
+        {
+
+            BaseCellType = TriangleCellType.Get(TriangleOrientation.FlatSides),
+            PrismCellType = TrianglePrismCellType.Get(TriangleOrientation.FlatSides),
+            ForwardDir = (CellDir)FSTrianglePrismDir.Forward,
+            BackDir = (CellDir)FSTrianglePrismDir.Back,
+            BaseToPrismCorners = BaseToPrismCornersNGon(6),
+        }.Setup();
+
 
 
         private PrismInfo() { }
@@ -127,13 +147,21 @@ namespace Sylves
             {
                 return squarePrismInfo;
             }
-            if(baseCellType == HexCellType.Get(HexOrientation.FlatTopped))
+            if (baseCellType == HexCellType.Get(HexOrientation.FlatTopped))
             {
                 return ftHexPrismInfo;
             }
             if (baseCellType == HexCellType.Get(HexOrientation.PointyTopped))
             {
                 return ptHexPrismInfo;
+            }
+            if (baseCellType == TriangleCellType.Get(TriangleOrientation.FlatTopped))
+            {
+                return ftTrianglePrismInfo;
+            }
+            if (baseCellType == TriangleCellType.Get(TriangleOrientation.FlatSides))
+            {
+                return fsTrianglePrismInfo;
             }
             if (baseCellType is NGonCellType ngct)
             {

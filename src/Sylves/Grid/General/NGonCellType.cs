@@ -264,7 +264,20 @@ namespace Sylves
         internal static Vector3 GetCornerPosition(CellCorner corner, int n)
         {
             var angle = (-0.5f + (int)corner) / n * Mathf.PI * 2;
-            return new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0);
+            var circumradius = InradiusToCircumradius(0.5f, n);
+            return new Vector3(Mathf.Sin(angle) * circumradius, Mathf.Cos(angle) * circumradius, 0);
         }
+
+        internal static float SideLengthToInradius(float sideLength, int n) => 0.5f * sideLength * Mathf.Cos(Mathf.PI / n) / Mathf.Sin(Mathf.PI / n);
+
+        internal static float InradiusToSideLength(float inradius, int n) => inradius / SideLengthToInradius(1, n);
+
+        internal static float SideLengthToCircumradius(float sideLength, int n) => 0.5f * sideLength / Mathf.Sin(Mathf.PI / n);
+        internal static float CircumradiusToSideLength(float circumradius, int n) => circumradius / SideLengthToCircumradius(1, n);
+
+        internal static float InradiusToCircumradius(float inradius, int n) => inradius / Mathf.Cos(Mathf.PI / n);
+
+
+
     }
 }

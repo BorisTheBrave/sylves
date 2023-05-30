@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 #if UNITY
@@ -18,9 +19,25 @@ namespace Sylves.Test
             public float strokeWidth = 0.1f;
             public Vector2 min = new Vector2(-2, -2);
             public Vector2 max = new Vector2(2, 2);
+            public bool includeDual = false;
         }
 
         private const bool IsSeed = false;
+
+        public static void WriteCells(IGrid grid, IEnumerable<Cell> cells, TextWriter tw, SvgBuilder b, Options options)
+        {
+            foreach (var cell in cells)
+            {
+                b.DrawCell(grid, cell);
+            }
+            if (options.textScale != null)
+            {
+                foreach (var cell in cells)
+                {
+                    b.DrawCoordinateLabel(grid, cell, options.dim, options.textScale.Value);
+                }
+            }
+        }
 
         public static void WriteGrid(IGrid grid, TextWriter tw, Options options)
         {
@@ -47,20 +64,18 @@ namespace Sylves.Test
             var min = options.min;
             var max = options.max;
             b.BeginSvg($"{min.x} {-max.y} {max.x - min.x} {max.y-min.y}", options.strokeWidth);
-            foreach (var cell in grid.GetCells())
+            WriteCells(grid, grid.GetCells(), tw, b, options);
+
+            if(options.includeDual)
             {
-                b.DrawCell(grid, cell);
+                var dualGrid = grid.GetDual().DualGrid;
+                tw.WriteLine("<g class=\"dual\">");
+                WriteCells(dualGrid, dualGrid.GetCells(), tw, b, options);
+                tw.WriteLine("</g>");
             }
-            if (options.textScale != null)
-            {
-                foreach (var cell in grid.GetCells())
-                {
-                    b.DrawCoordinateLabel(grid, cell, options.dim, options.textScale.Value);
-                }
-            }
+
             b.EndSvg();
         }
-
         public static void Export(IGrid g, string filename, Options? options = null)
         {
             var fullPath = Path.GetFullPath(filename);
@@ -259,6 +274,15 @@ node_tree.links.new(mix.outputs[0], composite.inputs[0])
 mix.inputs[0].default_value = 0.433333
 
             */
+        }
+
+        [Test]
+        public void ExportDualGrid()
+        {
+            Export(new SquareGrid(1, new SquareBound(new Vector2Int(-3, -3), new Vector2Int(3, 3))), "square_dual.svg", new Options { textScale = null, includeDual = true,});
+            Export(new HexGrid(1, bound: HexBound.Hexagon(3)), "hex_dual.svg", new Options { textScale = null, includeDual = true,});
+            Export(new TriangleGrid(1, bound: TriangleBound.Hexagon(3)), "tri_dual.svg", new Options { textScale = null, includeDual = true,});
+            Export(new SquareGrid(1, new SquareBound(new Vector2Int(-0, -0), new Vector2Int(1, 1))), "bounded_square_dual.svg", new Options { textScale = null, includeDual = true, min=new Vector2(-1.1f, -1.1f), max = new Vector2(1.1f, 1.1f) });
         }
     }
 }

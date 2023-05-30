@@ -10,6 +10,8 @@ namespace Sylves
     // Experimentals
     internal class AabbChunks
     {
+        const float eps = 1e-6f;
+
         private readonly Vector2 strideX;
         private readonly Vector2 strideY;
         private readonly Vector2 aabbBottomLeft;
@@ -54,12 +56,32 @@ namespace Sylves
             return (bl, tr);
         }
 
+        // Partitions the plane so that every point is associated with one chunk it belongs to
+        public Vector2Int? GetUniqueChunk(Vector2 pos)
+        {
+            return GetChunkIntersects(pos, pos).Cast<Vector2Int?>().FirstOrDefault();
+        }
+
         // Linear transformation that maps strideX to (1, 0) and strideY to (0, 1).
         private Vector2 Inv(Vector2 v)
         {
             return invStrideX * v.x + invStrideY * v.y;
         }
 
+        // Returns all the chunks that overlap the given chunk.
+        // It's inclusive on all sides.
+        // Roughly equivalent to GetChunkIntersections(GetChunkBounds(chunk))
+        // but less prone to rounding issues
+        public IEnumerable<Vector2Int> GetChunkIntersects(Vector2Int chunk)
+        {
+            // Evaluate bounds on a central chunk
+            // This cuts down on floating point issues as the chunks get further from the origin.
+            var (min, max) = GetChunkBounds(new Vector2Int());
+            return GetChunkIntersects(min, max).Select(x => x + chunk);
+        }
+
+
+        // Returns all the chunks that overlap min/max
         public IEnumerable<Vector2Int> GetChunkIntersects(Vector2 min, Vector2 max)
         {
             min -= aabbSize + aabbBottomLeft;

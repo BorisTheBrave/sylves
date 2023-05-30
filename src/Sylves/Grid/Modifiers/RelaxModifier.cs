@@ -10,12 +10,18 @@ namespace Sylves
     // Works by splitting up the plane into hexes
     // Each hex is joined with its 6 neighbours and relaxed to make overlapping patches
     // Each point is a blend of the three nearest patches
-    public class RelaxModifier : PlanarLazyMeshGrid
+    public class RelaxModifier : PlanarLazyGrid
     {
         private readonly IGrid underlying;
         private readonly float chunkSize;
         private readonly float weldTolerance;
         private readonly int relaxIterations;
+
+        // Fast path optimization
+        // If the underlying mesh shares the same structure as the relax modifier,
+        // we can save our selves some effort.
+        // This is mostly for use with Townscaper.
+        private readonly bool passThroughMesh;
 
         // Description of the chunking used
         HexGrid chunkGrid;
@@ -79,7 +85,32 @@ namespace Sylves
 
             var margin = chunkSize / 2;
 
-            base.Setup(GetRelaxedChunk, chunkGrid, margin, bound: bound, cellTypes: cellTypes);
+            Setup(chunkGrid, margin, bound: bound, cellTypes: cellTypes);
+
+            if (underlying is PlanarLazyMeshGrid pg)
+            {
+                // Compare dimensions.
+                // This isn't strictly accurate (pg could have same aabb dimensions but not fit in a hex), but meh.
+                var a = ((StrideX, StrideY, AabbBottomLeft, AabbSize));
+                var b = ((pg.StrideX, pg.StrideY, pg.AabbBottomLeft - margin * Vector2.one, pg.AabbSize + 2 * margin * Vector2.one));
+                passThroughMesh = a == b;
+            }
+        }
+
+        private static Vector2 ToVector2(Vector3 v) => new Vector2(v.x, v.y);
+
+        private void Setup(HexGrid chunkGrid, float margin = 0.0f, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        {
+            // Work out the dimensions of the chunk grid
+            var strideX = ToVector2(chunkGrid.GetCellCenter(new Cell(1, 0, -1)));
+            var strideY = ToVector2(chunkGrid.GetCellCenter(new Cell(0, 1, -1)));
+
+            var polygon = chunkGrid.GetPolygon(new Cell()).Select(ToVector2);
+            var aabbBottomLeft = polygon.Aggregate(Vector2.Min);
+            var aabbTopRight = polygon.Aggregate(Vector2.Max);
+            var aabbSize = aabbTopRight - aabbBottomLeft;
+
+            base.Setup(strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, bound, cellTypes, cachePolicy);
         }
 
         // Clone constructor. Clones share the same cache!
@@ -97,6 +128,33 @@ namespace Sylves
 
         #region Calculations
 
+        // We can give tighter bounds here as we know that we're hex based,
+        // and also that the margin added to the bounds is irrelevant.
+        protected override IEnumerable<Vector2Int> GetAdjacentChunks(Vector2Int chunk)
+        {
+            // Just hard code the hex adjacencies
+            yield return new Vector2Int(chunk.x - 1, chunk.y);
+            yield return new Vector2Int(chunk.x - 1, chunk.y + 1);
+            yield return new Vector2Int(chunk.x, chunk.y - 1);
+            yield return new Vector2Int(chunk.x, chunk.y); // Self
+            yield return new Vector2Int(chunk.x, chunk.y + 1);
+            yield return new Vector2Int(chunk.x + 1, chunk.y - 1);
+            yield return new Vector2Int(chunk.x + 1, chunk.y);
+        }
+
+        protected override MeshGrid GetMeshGrid(Vector2Int v)
+        {
+            // Unlikc PlanarLazyMeshGrid, there's no need to do edge detection here,
+            // as Trymove just forwards to underlying
+            var meshData = GetRelaxedChunk(new Cell(v.x, v.y, -v.x - v.y));
+            return new MeshGrid(meshData, new MeshGridOptions { Tolerance = weldTolerance });
+        }
+
+        public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
+        {
+            return underlying.TryMove(cell, dir, out dest, out inverseDir, out connection);
+        }
+
         private static Vector3 ToVector3(Vector2 v) => new Vector3(v.x, v.y, 0);
 
         // Unrelaxed chunks are just the raw mesh data taken from underlying
@@ -105,9 +163,16 @@ namespace Sylves
             if (unrelaxedChunks.ContainsKey(hex))
                 return unrelaxedChunks[hex];
 
+            if (passThroughMesh)
+            {
+                // Underlying chunks match relax chunks, so we can safely just
+                // pass the underlying chunk through here.
+                return unrelaxedChunks[hex] = (underlying as PlanarLazyMeshGrid).GetMeshDataCached(new Vector2Int(hex.x, hex.y)).meshData;
+            }
+
             // Get cells near the chunk
-            var min = aabbBottomLeft + hex.x * strideX + hex.y * strideY;
-            var max = min + aabbSize;
+            var min = AabbBottomLeft + hex.x * StrideX + hex.y * StrideY;
+            var max = min + AabbSize;
             var unfilteredCells = underlying.GetCellsIntersectsApprox(ToVector3(min), ToVector3(max));
 
             // Filter to precisely cells in this chunk
@@ -183,6 +248,8 @@ namespace Sylves
         public override bool IsFinite => base.IsFinite || underlying.IsFinite;
 
         public override bool IsSingleCellType => underlying.IsSingleCellType;
+
+        public override int CoordinateDimension => underlying.CoordinateDimension;
 
         public override IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes();
 

@@ -21,22 +21,26 @@ namespace Sylves
         // Recorded output
         MeshEmitter meshEmitter;
         List<(int primalFace, int primalVert, int dualFace, int dualVert)> mapping;
+        MeshData dualMeshData;
 
         // Further info about the primal mesh
         private int[] faceCentroids;
         private bool[] isFarVertex;
 
-        public DualMeshBuilder(MeshData meshData)
+        public DualMeshBuilder(MeshData meshData):this(meshData, MeshGridBuilder.Build(meshData, new MeshGridOptions()))
+        {
+        }
+
+        internal DualMeshBuilder(MeshData meshData, DataDrivenData ddd)
         {
             if (meshData.subMeshCount != 1)
                 throw new ArgumentException("Can only build dual mesh for a mesh data with a single submesh");
             this.meshData = meshData;
-            var ddd = MeshGridBuilder.Build(meshData, new MeshGridOptions());
             this.moves = ddd.Moves;
             this.cellData = ddd.Cells;
 
             meshEmitter = new MeshEmitter(meshData);
-            mapping = new List<(int primalFace,int primalVert, int dualFace,int dualVert)>();
+            mapping = new List<(int primalFace, int primalVert, int dualFace, int dualVert)>();
 
             faceCentroids = BuildFaceCentroids(meshData, cellData, meshEmitter);
 
@@ -45,17 +49,30 @@ namespace Sylves
             Build();
         }
 
-        public MeshData DualMeshData => meshEmitter.ToMeshData();
+        public MeshData DualMeshData => dualMeshData;
 
         public List<(int primalFace, int primalVert, int dualFace, int dualVert)> Mapping => mapping;
 
         private static int[] BuildFaceCentroids(MeshData meshData, IDictionary<Cell, DataDrivenCellData> cellData, MeshEmitter meshEmitter)
         {
             var r = new int[cellData.Count];
-            foreach (var kv in cellData)
+            // Fast path if we don't need recompute anything.
+            // TODO: Unclear when this is useful?
+            if (false)
             {
-                var centroid = meshEmitter.Average(((MeshCellData)kv.Value).Face, meshData);
-                r[kv.Key.x] = centroid;
+                foreach (var kv in cellData)
+                {
+                    var centroid = meshEmitter.AddVertex(kv.Value.TRS.Position);
+                    r[kv.Key.x] = centroid;
+                }
+            }
+            else
+            {
+                foreach (var kv in cellData)
+                {
+                    var centroid = meshEmitter.Average(((MeshCellData)kv.Value).Face, meshData);
+                    r[kv.Key.x] = centroid;
+                }
             }
             return r;
         }
@@ -130,7 +147,7 @@ namespace Sylves
                     {
                         var startHe = (face: i, edge: edge);
                         // Skip if not the start of arc, and we want it to be
-                        if(isArc && Flip(startHe) != null)
+                        if (isArc && Flip(startHe) != null)
                         {
                             continue;
                         }
@@ -211,7 +228,8 @@ namespace Sylves
                 }
             }
             meshEmitter.AddSubmesh(outputIndices, MeshTopology.NGon);
-        }
 
+            dualMeshData = meshEmitter.ToMeshData();
+        }
     }
 }

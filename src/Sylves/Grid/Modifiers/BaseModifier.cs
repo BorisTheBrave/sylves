@@ -40,6 +40,8 @@ namespace Sylves
 
         public virtual bool IsSingleCellType => underlying.IsSingleCellType;
 
+        public virtual int CoordinateDimension => underlying.CoordinateDimension;
+
         public virtual IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes();
 
         #endregion
@@ -49,6 +51,7 @@ namespace Sylves
         public virtual IGrid Unbounded => Rebind(underlying.Unbounded);
         public virtual IGrid Unwrapped => underlying.Unwrapped;
         public virtual IGrid Underlying => underlying;
+        public virtual IDualMapping GetDual() => underlying.GetDual();
         #endregion
 
         #region Cell info
@@ -71,6 +74,7 @@ namespace Sylves
             underlying.ParallelTransport(aGrid, aSrcCell, aDestCell, srcCell, startRotation, out destCell, out destRotation);
 
         public virtual IEnumerable<CellDir> GetCellDirs(Cell cell) => underlying.GetCellDirs(cell);
+        public virtual IEnumerable<CellCorner> GetCellCorners(Cell cell) => underlying.GetCellCorners(cell);
         public virtual IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => underlying.FindBasicPath(startCell, destCell);
 
         #endregion

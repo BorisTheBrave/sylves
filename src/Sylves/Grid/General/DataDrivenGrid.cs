@@ -12,6 +12,11 @@ namespace Sylves
         public TRS TRS { get; set; }
         public Deformation Deformation { get; set; }
         public ICellType CellType { get; set; }
+
+        public DataDrivenCellData Clone()
+        {
+            return (DataDrivenCellData)MemberwiseClone();
+        }
     }
 
     public class DataDrivenData
@@ -49,6 +54,8 @@ namespace Sylves
         public bool IsOrientable => false;
         public bool IsFinite => true;
         public bool IsSingleCellType => cellTypes.Length == 1;
+
+        public virtual int CoordinateDimension => 3;
         public IEnumerable<ICellType> GetCellTypes()
         {
             return cellTypes;
@@ -60,6 +67,7 @@ namespace Sylves
         public IGrid Unbounded => this;
 
         public IGrid Unwrapped => this;
+        public virtual IDualMapping GetDual() => throw new System.NotSupportedException();
 
         #endregion
 
@@ -102,6 +110,7 @@ namespace Sylves
 
         // TODO: Do we want to enhance this?
         public IEnumerable<CellDir> GetCellDirs(Cell cell) => GetCellType(cell).GetCellDirs();
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell) => GetCellType(cell).GetCellCorners();
 
         public virtual IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => DefaultGridImpl.FindBasicPath(this, startCell, destCell);
 
