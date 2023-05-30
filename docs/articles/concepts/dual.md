@@ -4,7 +4,16 @@ Each grid in Sylves can be converted into a dual grid. The dual grid of a base g
 
 Dual grids are based on a concept from maths of [dual graphs](https://en.wikipedia.org/wiki/Dual_graph)/[dual polyhedra](https://en./.wikipedia.org/wiki/Dual_polyhedron)/[dual tilings](https://mathworld.wolfram.com/DualTessellation.html).
 
-// TODO: Some example duals
+Some grids (black) with the dual grid overlaid in red.
+
+
+<figure>
+<img src="../../images/duals/square_dual.svg" width="200"/><br/>
+<img src="../../images/duals/hex_dual.svg" width="200"/><br/>
+<img src="../../images/duals/tri_dual.svg" width="200"/>
+</figure>
+
+The dual of the square grid is another square grid, while the dual of a hex grid is a triangle grid, and visa versa.
 
 ## Working with Dual Grids
 
@@ -70,7 +79,7 @@ Finds the corresponding base cell to a corner of a dual cell.
 
 Finds all dual cells that correspond to some corner of the base cell, and returns the corners and pairs.
 
-### [`BaseNeighbours`](xref:Sylves.DualMappingExtensions.VaseNeighbours(Sylves.IDualMapping,Sylves.Cell))
+### [`BaseNeighbours`](xref:Sylves.DualMappingExtensions.BaseNeighbours(Sylves.IDualMapping,Sylves.Cell))
 
 Finds all base cells that correspond to some corner of the dual cell, and returns the corners and pairs.
 
@@ -93,7 +102,9 @@ to go back to the original cell you started with. It has a number of technical u
 
 Dual grids become a bit more fiddly on grids with boundaries. The idea is that vertices and cells are swapped when going base <-> dual, but that idea starts to break down at borders. In these cases, Sylves typically makes the dual grid *larger* than the base grid. That means there is a cell in the dual grid for every vertex in the base grid. But there may be some vertices in the dual grid that don't have a cell in the base grid. Some of the methods return nullable types for this reason.
 
-// TODO: Diagram
+<figure>
+<img src="../../images/duals/bounded_square_dual.svg" width="200"/>
+</figure>
 
 ## Marching squares example
 

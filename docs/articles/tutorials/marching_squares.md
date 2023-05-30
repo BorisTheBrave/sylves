@@ -14,7 +14,7 @@ The dual grid is a grid with one cell per vertex in the base grid. Sylves comes 
 
 ## Setup
 
-We define the grids we use. I'm using a square grid for simplicity. Square grids are so simple, you'll notice the Sylves code is a bit more verbose than just doing all the calculations yourself. But in fact this code and tutorial is generic and will work with any grid in Sylves. Try it out on a triangle grid.
+We define the grids we use. I'm using a square grid for simplicity. Square grids are so simple, you'll notice the Sylves code is a bit more verbose than just doing all the calculations yourself. But in fact this code and tutorial is generic and will work with any grid in Sylves.
 
 ```csharp
 // Make the grid we're going to fill with tiles
@@ -37,6 +37,8 @@ Dictionary<Cell, bool> data = dualGrid.GetCells()
 ## Getting the tile
 
 Now we have our stored data, we want to compute which tile to put into each cell of the square grid. We'll use a well known bitwise trick. There are 4 corners to each square, and each has an independent boolean value. We can store the four booleans as 4 bits in an integer, and get a number between 0 and 15, which can be used to index an array containing our tiles.
+
+<img src="../../images/marching_squares_tiles.png">
 
 In Sylves, the corners are numbered counter clockwise, starting from DownRight.
 ```csharp
@@ -69,7 +71,7 @@ int GetTile(Cell baseCell)
 
 We can generate the full map simply by running this method on every baseCell (`baseGrid.GetCells()`).
 
-// TODO: Image
+<img src="../../images/marching_squares_map.png">
 
 ## Extensions
 
