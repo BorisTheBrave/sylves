@@ -10,11 +10,10 @@ namespace Sylves
 {
 
     /// <summary>
-    /// An infinite planar grid. The plane is split into overlapping chunks, which each has a grid associated.
-    /// This class requires you to compute intra-chunk neighbours yourself, which is often tricky.
-    /// Use PlanarLazyMeshGrid to have that done automatically.
+    /// An infinite planar grid. The plane is split into overlapping periodic chunks, which each has a MeshGrid associated.
+    /// This class requires you to compute inter-chunk neighbours yourself, which is often tricky.
+    /// You are recommended to use PlanarLazyMeshGrid instead, which handles this automatically.
     /// </summary>
-    // Implementation based on PeriodPlanarMeshGrid
     public abstract class PlanarLazyGrid : IGrid
     {
         private Vector2 strideX;

@@ -29,6 +29,8 @@
        href: concepts/grid_symmetry.md
     -  name: Pathfinding
        href: concepts/pathfinding.md
+    -  name: Dual
+       href: concepts/dual.md
     -  name: Caching
        href: concepts/caching.md
 - name: Tutorials
@@ -39,6 +41,8 @@
        href: tutorials/paint.md
     -  name: Townscaper
        href: tutorials/townscaper.md
+    -  name: Marching Squares
+       href: tutorials/marching_squares.md
 - name: Grids
   href: grids/index.md
   items:

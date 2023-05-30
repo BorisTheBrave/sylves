@@ -71,6 +71,7 @@ Other categories include:
 * [Query](query.md) - Methods for finding cells in 3d space, such as point queries, raycasts, etc.
 * [Shape](shape.md) - Methods for finding the precise shape and border of a cell
 * [Pathfinding](pathfinding.md) - Methods for finding a path between cells.
+* [Dual](dual.md) - Methods for referring to the vertices of a grid.
 
 You can see all methods in the [API for IGrid](xref:Sylves.IGrid) and [the grid extension methods](xref:Sylves.GridExtensions).
 

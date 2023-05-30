@@ -9,11 +9,25 @@ namespace Sylves
 {
     public interface IDualMapping
     {
+        /// <summary>
+        /// The grid this mapping was constructed from.
+        /// </summary>
         IGrid BaseGrid { get; }
+
+        /// <summary>
+        /// The dual grid to map to.
+        /// </summary>
         IGrid DualGrid { get; }
 
+        /// <summary>
+        /// Finds the corresponding dual cell to a corner of a base cell, and the corner of the dual cell that returns back.
+        /// </summary>
         (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner);
 
+
+        /// <summary>
+        /// Finds the corresponding base cell to a corner of a dual cell, and the corner of the base cell that returns back.
+        /// </summary>
         (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner);
     }
     internal abstract class BasicDualMapping : IDualMapping
@@ -34,16 +48,26 @@ namespace Sylves
 
     public static class DualMappingExtensions
     {
-        public static Cell? ToDualCell(this IDualMapping dm, Cell cell, CellCorner corner) => dm.ToDualPair(cell, corner)?.dualCell;
-        public static Cell? ToBaseCell(this IDualMapping dm, Cell cell, CellCorner corner) => dm.ToBasePair(cell, corner)?.baseCell;
+        /// <summary>
+        /// Finds the corresponding dual cell to a corner of a base cell.
+        /// </summary>
+        public static Cell? ToDualCell(this IDualMapping dm, Cell baseCell, CellCorner corner) => dm.ToDualPair(baseCell, corner)?.dualCell;
 
-        public static IEnumerable<(CellCorner corner, Cell dualCell, CellCorner inverseCorner)> DualNeighbours(this IDualMapping dm, Cell cell)
+        /// <summary>
+        /// Finds the corresponding base cell to a corner of a dual cell.
+        /// </summary>
+        public static Cell? ToBaseCell(this IDualMapping dm, Cell dualCell, CellCorner corner) => dm.ToBasePair(dualCell, corner)?.baseCell;
+
+        /// <summary>
+        /// Finds all dual cells that correspond to some corner of the base cell, and returns the corners and pairs.
+        /// </summary>
+        public static IEnumerable<(CellCorner corner, Cell dualCell, CellCorner inverseCorner)> DualNeighbours(this IDualMapping dm, Cell baseCell)
         {
             // TODO: Perhaps have this overridable as many grids will have swifter methods
-            var cellType = dm.BaseGrid.GetCellType(cell);
+            var cellType = dm.BaseGrid.GetCellType(baseCell);
             foreach(var corner in cellType.GetCellCorners())
             {
-                var t = dm.ToDualPair(cell, corner);
+                var t = dm.ToDualPair(baseCell, corner);
                 if(t != null)
                 {
                     yield return (corner, t.Value.dualCell, t.Value.inverseCorner);
@@ -51,8 +75,11 @@ namespace Sylves
             }
         }
 
+        /// <summary>
+        /// Finds all base cells that correspond to some corner of the dual cell, and returns the corners and pairs.
+        /// </summary>
         // TODO: Be less lazy
-        public static IEnumerable<(CellCorner corner, Cell baseCell, CellCorner inverseCorner)> BaseNeighbours(this IDualMapping dm, Cell cell) => dm.Reversed().DualNeighbours(cell);
+        public static IEnumerable<(CellCorner corner, Cell baseCell, CellCorner inverseCorner)> BaseNeighbours(this IDualMapping dm, Cell dualCell) => dm.Reversed().DualNeighbours(dualCell);
 
 
         public static IDualMapping Reversed(this IDualMapping dualMapping)
