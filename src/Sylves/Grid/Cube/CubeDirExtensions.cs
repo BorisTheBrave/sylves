@@ -21,7 +21,7 @@ namespace Sylves
                 case CubeDir.Down:
                     return new Vector3Int(0, 0, 1);
             }
-            throw new Exception();
+            throw new Exception($"Unrecognized dir {dir}");
         }
 
         /// <returns>The normal vector for a given face.</returns>
@@ -36,7 +36,7 @@ namespace Sylves
                 case CubeDir.Forward: return new Vector3Int(0, 0, 1);
                 case CubeDir.Back: return new Vector3Int(0, 0, -1);
             }
-            throw new Exception();
+            throw new Exception($"Unrecognized dir {dir}");
         }
 
         /// <returns>Cross product of Up() and Forward().</returns>
@@ -51,7 +51,7 @@ namespace Sylves
                 case CubeDir.Forward: return Vector3Int.right;
                 case CubeDir.Back: return Vector3Int.left;
             }
-            throw new Exception();
+            throw new Exception($"Unrecognized dir {dir}");
         }
 
         /// <returns>Returns the face dir with the opposite normal vector.</returns>
