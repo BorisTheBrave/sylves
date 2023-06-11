@@ -98,7 +98,7 @@ namespace Sylves
             }
             else
             {
-                return (CellRotation)(n - (int)a);
+                return (CellRotation)((n - (int)a) % n);
             }
         }
 

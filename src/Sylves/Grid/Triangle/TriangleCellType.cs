@@ -78,7 +78,7 @@ namespace Sylves
             }
             else
             {
-                return (CellRotation)(6 - (int)a);
+                return (CellRotation)((6 - (int)a) % 6);
             }
         }
 

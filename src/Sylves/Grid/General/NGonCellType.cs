@@ -148,7 +148,7 @@ namespace Sylves
             }
             else
             {
-                return (CellRotation)(n - (int)a);
+                return (CellRotation)((n - (int)a) % n);
             }
         }
 
@@ -265,7 +265,7 @@ namespace Sylves
         {
             var angle = (-0.5f + (int)corner) / n * Mathf.PI * 2;
             var circumradius = InradiusToCircumradius(0.5f, n);
-            return new Vector3(Mathf.Sin(angle) * circumradius, Mathf.Cos(angle) * circumradius, 0);
+            return new Vector3(Mathf.Cos(angle) * circumradius, Mathf.Sin(angle) * circumradius, 0);
         }
 
         internal static float SideLengthToInradius(float sideLength, int n) => 0.5f * sideLength * Mathf.Cos(Mathf.PI / n) / Mathf.Sin(Mathf.PI / n);

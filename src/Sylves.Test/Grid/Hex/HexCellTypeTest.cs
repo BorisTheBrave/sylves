@@ -27,5 +27,12 @@ namespace Sylves.Test
         {
             GridTest.TryGetRotation(HexCellType.Get(orientation));
         }
+
+        [Test]
+        public void Inverse()
+        {
+            var ct = HexCellType.Get(HexOrientation.PointyTopped);
+            Assert.AreEqual(ct.GetIdentity(), ct.Invert(ct.GetIdentity()));
+        }
     }
 }
