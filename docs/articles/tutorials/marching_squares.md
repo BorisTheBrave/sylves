@@ -140,7 +140,7 @@ class TileAndRotation
 
 // Setup
 var cellType = SquareCellType.Instance;
-var tileIndexCount = (int)Math.Pow(cellType.GetCellCorners().Count(), 2); // 16 for squares
+var tileIndexCount = (int)Math.Pow(2, cellType.GetCellCorners().Count()); // 16 for squares
 var rotationTable = new TileAndRotation[tileIndexCount];
 
 // Some utility methods, using the bitwise trick
