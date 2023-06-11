@@ -96,5 +96,9 @@ namespace Sylves
         /// Note: This method describes the canonical cell shape, but many shapes of cell might reference this cell type.
         /// </summary>
         Vector3 GetCornerPosition(CellCorner corner);
+
+        string Format(CellRotation rotation);
+        string Format(CellDir dir);
+        string Format(CellCorner corner);
     }
 }

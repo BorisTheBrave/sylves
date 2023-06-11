@@ -125,5 +125,19 @@ namespace Sylves
             return RotateZY.MultiplyVector(underlying.GetCornerPosition(corner));
         }
 
+        private string Reformat(string s)
+        {
+            return s
+                .Replace("Up", "Ba!!!ck")
+                .Replace("Back", "Do!!!wn")
+                .Replace("Down", "Fo!!!rward")
+                .Replace("Forward", "U!!!p")
+                .Replace("!!!", "");
+        }
+
+        public string Format(CellRotation rotation) => Reformat(underlying.Format(rotation));
+        public string Format(CellDir dir) => Reformat(underlying.Format(dir));
+        public string Format(CellCorner corner) => Reformat(underlying.Format(corner));
+
     }
 }

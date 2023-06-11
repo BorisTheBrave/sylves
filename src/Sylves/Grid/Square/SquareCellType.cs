@@ -116,5 +116,10 @@ namespace Sylves
 
         public CellRotation RotateCW => SquareRotation.RotateCW;
         public CellRotation RotateCCW => SquareRotation.RotateCCW;
+
+
+        public string Format(CellRotation rotation) => NGonCellType.Format(rotation, 4);
+        public string Format(CellDir dir) => ((SquareDir)dir).ToString();
+        public string Format(CellCorner corner) => ((SquareCorner)corner).ToString();
     }
 }

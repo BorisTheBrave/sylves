@@ -136,5 +136,9 @@ namespace Sylves
         }
 
         public Vector3 GetCornerPosition(CellCorner corner) => orientation == HexOrientation.FlatTopped ? ((FTHexCorner)corner).GetPosition() : ((PTHexCorner)corner).GetPosition();
+
+        public string Format(CellRotation rotation) => NGonCellType.Format(rotation, 6);
+        public string Format(CellDir dir) => orientation == HexOrientation.FlatTopped ? ((FTHexDir)dir).ToString() : ((PTHexDir)dir).ToString();
+        public string Format(CellCorner corner) => orientation == HexOrientation.FlatTopped ? ((FTHexCorner)corner).ToString() : ((PTHexCorner)corner).ToString();
     }
 }

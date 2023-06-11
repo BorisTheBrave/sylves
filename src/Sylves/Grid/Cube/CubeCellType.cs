@@ -156,5 +156,9 @@ namespace Sylves
         }
 
         public Vector3 GetCornerPosition(CellCorner corner) => ((CubeCorner)corner).GetPosition();
+
+        public string Format(CellRotation rotation) => rotation == CubeRotation.Identity ? "I" : rotation.ToString();
+        public string Format(CellDir dir) => ((CubeDir)dir).ToString();
+        public string Format(CellCorner corner) => ((CubeCorner)corner).ToString();
     }
 }

@@ -145,5 +145,9 @@ namespace Sylves
 
         // TODO
         public Vector3 GetCornerPosition(CellCorner corner) => throw new NotImplementedException();
+
+        public string Format(CellRotation rotation) => NGonCellType.Format(rotation, 6);
+        public string Format(CellDir dir) => orientation == TriangleOrientation.FlatSides? ((FSTriangleDir)dir).ToString() : ((FTTriangleDir)dir).ToString();
+        public string Format(CellCorner corner) => orientation == TriangleOrientation.FlatTopped ? ((FSTriangleCorner)corner).ToString() : ((FTTriangleCorner)corner).ToString();
     }
 }

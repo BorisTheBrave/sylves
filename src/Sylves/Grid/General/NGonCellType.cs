@@ -277,7 +277,13 @@ namespace Sylves
 
         internal static float InradiusToCircumradius(float inradius, int n) => inradius / Mathf.Cos(Mathf.PI / n);
 
+        public static string Format(CellRotation rotation, int n) => ((int)rotation).ToString();
 
+        public static string Format(CellDir dir, int n) => ((int)dir).ToString();
+        public static string Format(CellCorner corner, int n) => ((int)corner).ToString();
 
+        public string Format(CellRotation rotation) => Format(rotation, N);
+        public string Format(CellDir dir) => Format(dir, N);
+        public string Format(CellCorner corner) => Format(corner, N);
     }
 }

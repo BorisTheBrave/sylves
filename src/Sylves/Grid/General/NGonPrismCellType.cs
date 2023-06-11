@@ -206,5 +206,14 @@ namespace Sylves
             var flatPosition = NGonCellType.GetCornerPosition(corner, n);
             return flatPosition + (((int)corner) >= n ? new Vector3(0, 0, 0.5f) : new Vector3(0, 0, -0.5f));
         }
+
+        public string Format(CellRotation rotation) => NGonCellType.Format(rotation, N);
+        public string Format(CellDir dir) => dir == (CellDir)n ? "Forward" : dir == (CellDir)(n + 1) ? "Back" : NGonCellType.Format(dir, N);
+        public string Format(CellCorner corner)
+        {
+            var flatCorner = (int)corner % N;
+            return (flatCorner >= 6 ? "Forward" : "Back") + NGonCellType.Format(corner, N);
+                
+        }
     }
 }

@@ -137,5 +137,14 @@ namespace Sylves
         }
 
 
+        public string Format(CellRotation rotation) => NGonCellType.Format(rotation, 6);
+        public string Format(CellDir dir) => orientation == HexOrientation.FlatTopped ? ((FTHexPrismDir)dir).ToString() : ((PTHexPrismDir)dir).ToString();
+        public string Format(CellCorner corner)
+        {
+            var flatCorner = (int)corner % 6;
+            return (flatCorner >= 6 ? "Forward" : "Back") +
+                (orientation == HexOrientation.FlatTopped ? ((FTHexCorner)flatCorner).ToString() : ((PTHexCorner)flatCorner).ToString());
+        }
+
     }
 }
