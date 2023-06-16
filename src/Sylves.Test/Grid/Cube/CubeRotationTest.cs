@@ -19,6 +19,8 @@ namespace Sylves.Test
                 var r2 = CubeRotation.FromMatrix(m);
                 Assert.AreEqual(r, r2);
             }
+
+            Assert.AreEqual(CubeRotation.Identity, CubeRotation.FromMatrix(Matrix4x4.Scale(new Vector3(10, 10, 10))));
         }
 
         [Test]

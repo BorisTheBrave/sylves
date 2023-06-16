@@ -145,7 +145,7 @@ namespace Sylves
         {
             Vector4 Rotate(Vector3Int v)
             {
-                var v1 = matrix.MultiplyVector(v);
+                var v1 = matrix.MultiplyVector(v).normalized;
                 var v2 = new Vector4(Mathf.RoundToInt(v1.x), Mathf.RoundToInt(v1.y), Mathf.RoundToInt(v1.z), 0);
 
                 return v2;

@@ -95,7 +95,7 @@ namespace Sylves
         internal static CellRotation? FromMatrix(Matrix4x4 matrix, int n)
         {
             // Check that this matrix doesn't touch the z-axis
-            var forward = matrix.MultiplyVector(Vector3.forward);
+            var forward = matrix.MultiplyVector(Vector3.forward).normalized;
             if (Vector3.Distance(forward, Vector3.forward) > 1e-2f)
             {
                 return null;

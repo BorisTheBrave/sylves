@@ -37,5 +37,11 @@ namespace Sylves.Test
             Assert.AreEqual(FTHexDir.UpRight, HexRotation.FTReflectY * FTHexDir.DownRight);
             Assert.AreEqual(FTHexCorner.Right, HexRotation.FTReflectY * FTHexCorner.Right);
         }
+
+        [Test]
+        public void TestFromMatrix()
+        {
+            Assert.AreEqual(HexRotation.Identity, HexRotation.FromMatrix(Matrix4x4.Scale(new Vector3(10, 10, 10)), HexOrientation.FlatTopped));
+        }
     }
 }

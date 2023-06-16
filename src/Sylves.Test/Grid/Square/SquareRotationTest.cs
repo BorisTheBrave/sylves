@@ -18,6 +18,8 @@ namespace Sylves.Test
                 var r2 = SquareRotation.FromMatrix(m);
                 Assert.AreEqual(r, r2);
             }
+
+            Assert.AreEqual(SquareRotation.Identity, SquareRotation.FromMatrix(Matrix4x4.Scale(new Vector3(10, 10, 10))));
         }
 
         [Test]

@@ -190,7 +190,7 @@ namespace Sylves
             const float eps = 1e-6f;
 
             // Check it's a rotation in the XY plane
-            var forward = m.MultiplyVector(Vector3.forward);
+            var forward = m.MultiplyVector(Vector3.forward).normalized;
             if (Vector3.Distance(forward, Vector3.forward) > eps)
             {
                 return null;
