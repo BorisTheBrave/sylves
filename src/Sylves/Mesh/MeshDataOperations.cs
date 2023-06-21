@@ -270,6 +270,9 @@ namespace Sylves
         {
             // TODO: Average welded points?
 
+            // Pick a base point near the mesh, this avoids overflow.
+            var basePoint = md.vertices.Length > 0 ? md.vertices[0] : default;
+
             var vertexLookup = new Dictionary<Vector3Int, int>();
 
             int weldCount = 0;
@@ -282,7 +285,7 @@ namespace Sylves
             var invMap = new int[md.vertices.Length];
             for (var i = 0; i < md.vertices.Length; ++i)
             {
-                var vi = Vector3Int.FloorToInt(md.vertices[i] / tolerance);
+                var vi = Vector3Int.FloorToInt((md.vertices[i] - basePoint) / tolerance);
 
                 bool found = false;
                 foreach (var offset in WeldOffsets)
@@ -300,7 +303,7 @@ namespace Sylves
                     continue;
 
                 // We use an offset when *storing* the vertex, to avoid boundary issues
-                var vi2 = Vector3Int.FloorToInt(md.vertices[i] / tolerance + 0.5f * Vector3.one);
+                var vi2 = Vector3Int.FloorToInt((md.vertices[i] - basePoint) / tolerance + 0.5f * Vector3.one);
                 vertexLookup[vi2] = weldCount;
                 map[i] = weldCount;
                 invMap[weldCount] = i;

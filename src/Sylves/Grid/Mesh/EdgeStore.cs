@@ -13,16 +13,18 @@ namespace Sylves
     /// </summary>
     internal class EdgeStore
     {
-        private float tolerance;
+        private readonly float tolerance;
+        private readonly Vector3Int basePoint;
 
         // the face, submesh and edge ids, stored by start/end points of the edge.
         private Dictionary<(Vector3Int, Vector3Int), (Vector3, Vector3, Cell, CellDir)> unmatchedEdges;
         private Dictionary<Vector3Int, int> vertexCount;
 
 
-        public EdgeStore(float tolerance = MeshDataOperations.DefaultTolerance)
+        public EdgeStore(float tolerance = MeshDataOperations.DefaultTolerance, Vector3Int basePoint = default)
         {
             this.tolerance = tolerance;
+            this.basePoint = basePoint;
             unmatchedEdges = new Dictionary<(Vector3Int, Vector3Int), (Vector3, Vector3, Cell, CellDir)>();
             vertexCount = new Dictionary<Vector3Int, int>();
         }
@@ -58,8 +60,8 @@ namespace Sylves
         // On success, adds it to moves and returns true.
         public bool MatchEdge(Vector3 v1, Vector3 v2, Cell cell, CellDir dir, IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves, bool clearEdge = true)
         {
-            var v1i = Vector3Int.FloorToInt(v1 / tolerance);
-            var v2i = Vector3Int.FloorToInt(v2 / tolerance);
+            var v1i = Vector3Int.FloorToInt((v1 - basePoint) / tolerance);
+            var v2i = Vector3Int.FloorToInt((v2 - basePoint) / tolerance);
             foreach (var o1 in Offsets)
             {
                 var w1 = v1i + o1;
@@ -110,8 +112,8 @@ namespace Sylves
             if (!MatchEdge(v1, v2, cell, dir, moves))
             {
                 // We use an offset when *storing* the vertex, to avoid boundary issues
-                var v1i = Vector3Int.FloorToInt(v1 / tolerance + 0.5f * Vector3.one);
-                var v2i = Vector3Int.FloorToInt(v2 / tolerance + 0.5f * Vector3.one);
+                var v1i = Vector3Int.FloorToInt((v1 - basePoint) / tolerance + 0.5f * Vector3.one);
+                var v2i = Vector3Int.FloorToInt((v2 - basePoint) / tolerance + 0.5f * Vector3.one);
                 unmatchedEdges.Add((v1i, v2i), (v1, v2, cell, dir));
                 vertexCount[v1i] = 1 + (vertexCount.TryGetValue(v1i, out var c) ? c : 0);
                 vertexCount[v2i] = 1 + (vertexCount.TryGetValue(v2i, out c) ? c : 0);
