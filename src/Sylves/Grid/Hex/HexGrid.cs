@@ -381,7 +381,7 @@ namespace Sylves
             {
                 var current = (Vector3Int)(enumerator.Current);
                 min = Vector3Int.Min(min, current);
-                max = Vector3Int.Min(max, current);
+                max = Vector3Int.Max(max, current);
             }
             return new HexBound(min, max + Vector3Int.one);
         }

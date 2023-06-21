@@ -287,7 +287,7 @@ namespace Sylves
             {
                 var current = ToVector2Int(enumerator.Current);
                 min = Vector2Int.Min(min, current);
-                max = Vector2Int.Min(max, current);
+                max = Vector2Int.Max(max, current);
             }
             return new SquareBound(min, max + Vector2Int.one);
         }
