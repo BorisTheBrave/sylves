@@ -43,9 +43,9 @@ namespace Sylves
         /// <param name="bound">Bounds which chunks are generated.</param>
         /// <param name="cellTypes">What should the response of GetCellType </param>
         /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
-        public PlanarLazyMeshGrid(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        public PlanarLazyMeshGrid(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, bool translateMeshData=false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-            Setup(getMeshData, strideX, strideY, aabbBottomLeft, aabbSize, meshGridOptions, bound, cellTypes, cachePolicy);
+            Setup(getMeshData, strideX, strideY, aabbBottomLeft, aabbSize, translateMeshData, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Sylves
         /// <param name="bound">Bounds which chunks are generated.</param>
         /// <param name="cellTypes">What should the response of GetCellType </param>
         /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
-        public PlanarLazyMeshGrid(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        public PlanarLazyMeshGrid(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, bool translateMeshData = false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-            Setup(getMeshData, chunkGrid, margin, meshGridOptions, bound, cellTypes, cachePolicy);
+            Setup(getMeshData, chunkGrid, margin, translateMeshData, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
         /// <summary>
@@ -73,9 +73,9 @@ namespace Sylves
         /// <param name="bound">Bounds which chunks are generated.</param>
         /// <param name="cellTypes">What should the response of GetCellType </param>
         /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
-        public PlanarLazyMeshGrid(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        public PlanarLazyMeshGrid(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, bool translateMeshData = false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-            Setup(getMeshData, chunkGrid, margin, meshGridOptions, bound, cellTypes, cachePolicy);
+            Setup(getMeshData, chunkGrid, margin, translateMeshData, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
         // You must call setup if using this constructor.
@@ -84,7 +84,7 @@ namespace Sylves
 
         }
 
-        protected void Setup(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        protected void Setup(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, bool translateMeshData = false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             // Work out the dimensions of the chunk grid
             var strideX = ToVector2(chunkGrid.GetCellCenter(new Cell(1, 0, -1)));
@@ -97,10 +97,10 @@ namespace Sylves
 
             Setup(
                 chunk => getMeshData(new Cell(chunk.x, chunk.y, -chunk.x - chunk.y)),
-                strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, meshGridOptions, bound, cellTypes, cachePolicy);
+                strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, translateMeshData, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
-        protected void Setup(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        protected void Setup(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, bool translateMeshData = false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             // Work out the dimensions of the chunk grid
             var strideX = ToVector2(chunkGrid.GetCellCenter(new Cell(1, 0)));
@@ -113,18 +113,18 @@ namespace Sylves
 
             Setup(
                 chunk => getMeshData(new Cell(chunk.x, chunk.y)),
-                strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, meshGridOptions, bound, cellTypes, cachePolicy);
+                strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, translateMeshData, meshGridOptions, bound, cellTypes, cachePolicy);
         }
 
         private static Vector2 ToVector2(Vector3 v) => new Vector2(v.x, v.y);
 
-        protected void Setup(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        protected void Setup(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, bool translateMeshData = false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             this.getMeshData = getMeshData;
             this.meshGridOptions = meshGridOptions ?? new MeshGridOptions();
             meshDatas = (cachePolicy ?? CachePolicy.Always).GetDictionary<(MeshData, DataDrivenData, EdgeStore)>(this);
 
-            base.Setup(strideX, strideY, aabbBottomLeft, aabbSize, bound, cellTypes, cachePolicy);
+            base.Setup(strideX, strideY, aabbBottomLeft, aabbSize, translateMeshData, bound, cellTypes, cachePolicy);
         }
 
         /// <summary>
@@ -171,6 +171,12 @@ namespace Sylves
                 foreach (var edgeTuple in otherEdges)
                 {
                     var (v1, v2, c, dir) = edgeTuple;
+                    if(TranslateMeshData)
+                    {
+                        var t = ChunkOffset(chunk - v);
+                        v1 += t;
+                        v2 += t;
+                    }
                     c += Promote(chunk) - Promote(v);
                     // This is nasty, it is *mutating* cached data.
                     edgeStore.MatchEdge(v1, v2, c, dir, dataDrivenData.Moves, clearEdge: false);

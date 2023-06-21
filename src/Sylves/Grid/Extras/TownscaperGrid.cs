@@ -18,16 +18,14 @@ namespace Sylves
             this.tolerance = tolerance;
             chunkGrid = new HexGrid(n);
 
-            base.Setup(GetMeshData, chunkGrid, meshGridOptions: new MeshGridOptions { Tolerance = tolerance });
+            base.Setup(GetMeshData, chunkGrid, translateMeshData: true, meshGridOptions: new MeshGridOptions { Tolerance = tolerance });
         }
 
         private MeshData GetMeshData(Cell hex)
         {
-            var offset = chunkGrid.GetCellCenter(hex);
-
             // Make a triangle grid that fills the chunk
             var triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(n));
-            var meshData = Matrix4x4.Translate(offset) * triangleGrid.ToMeshData();
+            var meshData = triangleGrid.ToMeshData();
 
             // Randomly pair the triangles of that grid
             var seed = HashUtils.Hash(hex);

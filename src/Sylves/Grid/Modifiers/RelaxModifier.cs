@@ -110,7 +110,7 @@ namespace Sylves
             var aabbTopRight = polygon.Aggregate(Vector2.Max);
             var aabbSize = aabbTopRight - aabbBottomLeft;
 
-            base.Setup(strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, bound, cellTypes, cachePolicy);
+            base.Setup(strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, false, bound, cellTypes, cachePolicy);
         }
 
         // Clone constructor. Clones share the same cache!
@@ -167,7 +167,15 @@ namespace Sylves
             {
                 // Underlying chunks match relax chunks, so we can safely just
                 // pass the underlying chunk through here.
-                return unrelaxedChunks[hex] = (underlying as PlanarLazyMeshGrid).GetMeshDataCached(new Vector2Int(hex.x, hex.y)).meshData;
+                var planarLazyMeshGrid = underlying as PlanarLazyMeshGrid;
+                var chunk = new Vector2Int(hex.x, hex.y);
+                var meshData = (underlying as PlanarLazyMeshGrid).GetMeshDataCached(chunk).meshData;
+                // TODO: Support this better;
+                if(planarLazyMeshGrid.TranslateMeshData)
+                {
+                    meshData = Matrix4x4.Translate(ChunkOffset(chunk)) * meshData;
+                }
+                return unrelaxedChunks[hex] = meshData; 
             }
 
             // Get cells near the chunk

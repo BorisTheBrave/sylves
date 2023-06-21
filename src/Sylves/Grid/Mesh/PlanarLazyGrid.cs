@@ -20,6 +20,7 @@ namespace Sylves
         private Vector2 strideY;
         private Vector2 aabbBottomLeft;
         private Vector2 aabbSize;
+        private bool translateMeshData;
         private SquareBound bound;
         private IEnumerable<ICellType> cellTypes;
         private ICachePolicy cachePolicy;
@@ -35,6 +36,7 @@ namespace Sylves
             strideY = original.strideY;
             aabbBottomLeft = original.aabbBottomLeft;
             aabbSize = original.aabbSize;
+            translateMeshData = original.translateMeshData;
             cellTypes = original.cellTypes;
             cachePolicy = original.cachePolicy;
             meshGrids = original.meshGrids;
@@ -55,7 +57,7 @@ namespace Sylves
         /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
         public PlanarLazyGrid(Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-            Setup(strideX, strideY, aabbBottomLeft, aabbSize, bound, cellTypes, cachePolicy);
+            Setup(strideX, strideY, aabbBottomLeft, aabbSize, translateMeshData, bound, cellTypes, cachePolicy);
         }
 
         // You must call setup if using this constructor.
@@ -64,18 +66,21 @@ namespace Sylves
 
         }
 
-        protected void Setup(Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
+        protected void Setup(Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, bool translateMeshData = false, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             this.strideX = strideX;
             this.strideY = strideY;
             this.aabbBottomLeft = aabbBottomLeft;
             this.aabbSize = aabbSize;
+            this.translateMeshData = translateMeshData;
             this.bound = bound;
             this.cellTypes = cellTypes;
             this.cachePolicy = cachePolicy ?? CachePolicy.Always;
             meshGrids = this.cachePolicy.GetDictionary<MeshGrid>(this);
             aabbChunks = new AabbChunks(strideX, strideY, aabbBottomLeft, aabbSize);
         }
+
+        internal bool TranslateMeshData => translateMeshData;
 
         // Returns the chunks that could have adjacencies to the current chunk
         protected virtual IEnumerable<Vector2Int> GetAdjacentChunks(Vector2Int chunk)
@@ -106,6 +111,8 @@ namespace Sylves
             var chunkOffset = new Vector3(chunkOffset2.x, chunkOffset2.y, 0);
             return chunkOffset;
         }
+
+        private Vector3 MeshTranslation(Vector2Int chunk) => translateMeshData ? ChunkOffset(chunk) : new Vector3();
 
         protected static (Cell meshCell, Vector2Int chunk) Split(Cell cell)
         {
@@ -293,20 +300,25 @@ namespace Sylves
         public Vector3 GetCellCenter(Cell cell)
         {
             var (meshCell, chunk) = Split(cell);
-            return GetMeshGridCached(chunk).GetCellCenter(meshCell);
+            return GetMeshGridCached(chunk).GetCellCenter(meshCell) + MeshTranslation(chunk);
         }
 
         public Vector3 GetCellCorner(Cell cell, CellCorner cellCorner)
         {
 
             var (centerCell, chunk) = Split(cell);
-            return GetMeshGridCached(chunk).GetCellCorner(centerCell, cellCorner);
+            return GetMeshGridCached(chunk).GetCellCorner(centerCell, cellCorner) + MeshTranslation(chunk);
         }
 
         public TRS GetTRS(Cell cell)
         {
             var (meshCell, chunk) = Split(cell);
-            return GetMeshGridCached(chunk).GetTRS(meshCell);
+            var trs = GetMeshGridCached(chunk).GetTRS(meshCell);
+            if(translateMeshData)
+            {
+                trs = new TRS(trs.Position + MeshTranslation(chunk), trs.Rotation, trs.Scale);
+            }
+            return trs;
         }
 
         #endregion
@@ -315,13 +327,14 @@ namespace Sylves
         public Deformation GetDeformation(Cell cell)
         {
             var (meshCell, chunk) = Split(cell);
-            return GetMeshGridCached(chunk).GetDeformation(meshCell);
+            return Matrix4x4.Translate(MeshTranslation(chunk)) * GetMeshGridCached(chunk).GetDeformation(meshCell);
         }
 
         public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
         {
             var (meshCell, chunk) = Split(cell);
             GetMeshGridCached(chunk).GetPolygon(meshCell, out vertices, out transform);
+            transform = Matrix4x4.Translate(MeshTranslation(chunk)) * transform;
         }
 
         public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
@@ -342,7 +355,7 @@ namespace Sylves
             foreach (var chunk in aabbChunks.GetChunkIntersects(pos2, pos2))
             {
                 var meshGrid = GetMeshGridCached(chunk);
-                if (meshGrid.FindCell(position, out cell))
+                if (meshGrid.FindCell(position - MeshTranslation(chunk), out cell))
                 {
                     cell += Promote(chunk);
                     return true;
@@ -365,7 +378,7 @@ namespace Sylves
             }
             var (_, chunk) = Split(cell);
             var meshGrid = GetMeshGridCached(chunk);
-            return meshGrid.FindCell(matrix, out var _, out rotation);
+            return meshGrid.FindCell(matrix * Matrix4x4.Translate(-MeshTranslation(chunk)), out var _, out rotation);
         }
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
@@ -374,7 +387,8 @@ namespace Sylves
             var max2 = new Vector2(max.x, max.y);
             foreach (var chunk in aabbChunks.GetChunkIntersects(min2, max2))
             {
-                foreach (var meshCell in GetMeshGridCached(chunk).GetCellsIntersectsApprox(min, max))
+                var t = MeshTranslation(chunk);
+                foreach (var meshCell in GetMeshGridCached(chunk).GetCellsIntersectsApprox(min - t, max - t))
                 {
                     yield return Combine(meshCell, chunk);
                 }
@@ -398,15 +412,15 @@ namespace Sylves
                 }
 
                 var chunk = new Vector2Int(chunkRaycastInfo.cell.x, chunkRaycastInfo.cell.y);
-                var chunkOffset = ChunkOffset(chunk);
-                foreach (var raycastInfo in GetMeshGridCached(chunk).Raycast(origin, direction, maxDistance))
+                var t = MeshTranslation(chunk);
+                foreach (var raycastInfo in GetMeshGridCached(chunk).Raycast(origin - t, direction, maxDistance))
                 {
                     queuedRaycastInfos.Add(new RaycastInfo
                     {
                         cell = raycastInfo.cell + Promote(chunk),
                         cellDir = raycastInfo.cellDir,
                         distance = raycastInfo.distance,
-                        point = raycastInfo.point + chunkOffset,
+                        point = raycastInfo.point + t,
                     });
                 }
             }

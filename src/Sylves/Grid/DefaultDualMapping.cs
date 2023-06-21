@@ -66,7 +66,7 @@ namespace Sylves
             // so this bound always works.
             SquareBound bound = grid.GetBound() as SquareBound;
 
-            base.Setup(grid.StrideX, grid.StrideY, grid.AabbBottomLeft - grid.AabbSize * 0.5f, grid.AabbSize * 2, bound, cachePolicy: cachePolicy);
+            base.Setup(grid.StrideX, grid.StrideY, grid.AabbBottomLeft - grid.AabbSize * 0.5f, grid.AabbSize * 2, false, bound, cachePolicy: cachePolicy);
         }
 
         // Clone constructor. Clones share the same cache!
@@ -106,7 +106,7 @@ namespace Sylves
             var aabbSize = aabbTopRight - aabbBottomLeft;
 
 
-            base.Setup(strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, bound, cellTypes, cachePolicy);
+            base.Setup(strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, false, bound, cellTypes, cachePolicy);
         }
 
         private static T GetOrAdd<T>(IDictionary<Cell, T> cache, Vector2Int v, Func<T> func)
