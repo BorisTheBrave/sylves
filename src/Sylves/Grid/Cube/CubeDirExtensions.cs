@@ -40,6 +40,7 @@ namespace Sylves
         }
 
         /// <returns>Cross product of Up() and Forward().</returns>
+        /// I.e. what would be on your right if you where facing in this cell dir.
         public static Vector3Int Right(this CubeDir dir)
         {
             switch (dir)

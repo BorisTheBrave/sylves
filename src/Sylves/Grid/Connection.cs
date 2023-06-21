@@ -1,4 +1,7 @@
 ﻿using System;
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves
 {
@@ -42,7 +45,28 @@ namespace Sylves
                 Mirror = a.Mirror ^ b.Mirror,
                 Sides = n,
             };
+        }
 
+        /// <summary>
+        /// Give an equivalent rotation in the XY plane.
+        /// </summary>
+        public Matrix4x4 ToMatrix()
+        {
+            // Same logic as NGonCellType
+            var rot = Rotation;
+            var n = Sides;
+            var isReflection = Mirror;
+            var m = isReflection ? Matrix4x4.Scale(new Vector3(1, -1, 1)) : Matrix4x4.identity;
+            m = Matrix4x4.Rotate(Quaternion.Euler(0, 0, 360.0f / n * rot)) * m;
+            return m;
+            /*
+            var m3 = Matrix4x4.Rotate(Quaternion.Euler(0, 0, Rotation * 90));
+            if (Mirror)
+            {
+                m3 = m3 * Matrix4x4.Scale(new Vector3(1, -1, 1));
+            }
+            return m3;
+            */
         }
 
         public Connection GetInverse()

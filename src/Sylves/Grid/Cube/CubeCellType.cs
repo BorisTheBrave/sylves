@@ -130,11 +130,7 @@ namespace Sylves
             var m1 = VectorUtils.ToMatrix(cubeFromDir.Right(), cubeFromDir.Up(), cubeFromDir.Forward());
             var m2 = VectorUtils.ToMatrix(cubeToDir.Right(), cubeToDir.Up(), cubeToDir.Forward());
 
-            var m3 = Matrix4x4.Rotate(Quaternion.Euler(0, 0, connection.Rotation * 90));
-            if(connection.Mirror)
-            {
-                m3 = m3 * Matrix4x4.Scale(new Vector3(1, -1, 1));
-            }
+            var m3 = connection.ToMatrix();
 
             // Transpose is equivalent to inverse in this context.
             var cubeRotation = CubeRotation.FromMatrix(m2 * m3 * m1.transpose);
@@ -157,7 +153,7 @@ namespace Sylves
 
         public Vector3 GetCornerPosition(CellCorner corner) => ((CubeCorner)corner).GetPosition();
 
-        public string Format(CellRotation rotation) => rotation == CubeRotation.Identity ? "I" : rotation.ToString();
+        public string Format(CellRotation rotation) => ((CubeRotation)rotation).ToString();
         public string Format(CellDir dir) => ((CubeDir)dir).ToString();
         public string Format(CellCorner corner) => ((CubeCorner)corner).ToString();
     }

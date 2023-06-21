@@ -43,26 +43,43 @@ namespace Sylves.Test
         }
 
         [Test]
-        [Ignore("Which way actually should we define this?")]
         public void TestConnectionSense()
         {
-            // Rotates X -> Y
-            var r = CubeRotation.RotateXY;
-            CubeCellType.Instance.Rotate((CellDir)CubeDir.Up, r, out var dir, out var connection);
+            Matrix4x4 GetMatrix(CubeDir dir) => VectorUtils.ToMatrix(dir.Right(), dir.Up(), dir.Forward());
 
-            Assert.AreEqual((CellDir)CubeDir.Up, dir);
-            Assert.AreEqual(true, connection.Mirror);
-            Assert.AreEqual(4, connection.Sides);
-            Assert.AreEqual(1, connection.Rotation);
+            foreach(var dir in CubeCellType.Instance.GetCellDirs())
+            {
+                foreach(var rotation in CubeCellType.Instance.GetRotations(true))
+                {
+                    CubeCellType.Instance.Rotate(dir, rotation, out var dir2, out var connection);
 
-            // Swaps X and Z
-            r = (CellRotation)528;
-            CubeCellType.Instance.Rotate((CellDir)CubeDir.Up, r, out dir, out connection);
+                    var rotationMatrix = CubeCellType.Instance.GetMatrix(rotation);
 
-            Assert.AreEqual((CellDir)CubeDir.Up, dir);
-            Assert.AreEqual(true, connection.Mirror);
-            Assert.AreEqual(4, connection.Sides);
-            Assert.AreEqual(1, connection.Rotation);
+                    var connectionMatrix = connection.ToMatrix();
+
+                    var cubeDir1 = (CubeDir)dir;
+                    var cubeDir2 = (CubeDir)dir2;
+
+                    var m1 = GetMatrix(cubeDir1);
+                    var m2 = GetMatrix(cubeDir2);
+
+                    // Check that we get equivalent results for going via rotationMatrix or connection matrix
+
+                    TestUtils.AssertAreEqual((m2 * connectionMatrix).MultiplyVector(Vector3.right), (rotationMatrix * m1).MultiplyVector(Vector3.right), 1e-6, $"{(CubeDir)dir} {(CubeRotation)rotation}");
+                    TestUtils.AssertAreEqual((m2 * connectionMatrix).MultiplyVector(Vector3.right), (rotationMatrix * m1).MultiplyVector(Vector3.right), 1e-6, $"{(CubeDir)dir} {(CubeRotation)rotation}");
+                    TestUtils.AssertAreEqual((m2 * connectionMatrix).MultiplyVector(Vector3.right), (rotationMatrix * m1).MultiplyVector(Vector3.right), 1e-6, $"{(CubeDir)dir} {(CubeRotation)rotation}");
+                }
+            }
+        }
+
+        [Test]
+        public void TestUpRight()
+        {
+            Assert.AreEqual(Vector3.right, Vector3.Cross(Vector3.up, Vector3.forward));
+            foreach(CubeDir dir in CubeCellType.Instance.GetCellDirs())
+            {
+                TestUtils.AssertAreEqual(dir.Right(), Vector3.Cross(dir.Up(), dir.Forward()), 1e-6);
+            }
         }
     }
 }

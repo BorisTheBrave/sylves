@@ -299,7 +299,23 @@ namespace Sylves
             throw new Exception();
         }
 
-        public override string ToString() => value.ToString();
+        public override string ToString()
+        {
+            switch(value)
+            {
+                case 0x12: return "Identity";
+                case 0x812: return "ReflectX";
+                case 0x092: return "ReflectY";
+                case 0x01A: return "ReflectZ";
+                case 0xA10: return "RotateZX";
+                case 0x902: return "RotateYX";
+                case 0x0A1: return "RotateZY";
+                case 0x218: return "RotateXZ";
+                case 0x182: return "RotateXY";
+                case 0x029: return "RotateYZ";
+                default: return value.ToString();
+            }
+        }
 
         public static implicit operator CubeRotation(CellRotation r) => new CubeRotation((short)r);
 
