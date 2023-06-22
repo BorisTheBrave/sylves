@@ -22,6 +22,7 @@ namespace Sylves
         // we can save our selves some effort.
         // This is mostly for use with Townscaper.
         private readonly bool passThroughMesh;
+        public readonly bool translateUnrelaxed;
 
         // Description of the chunking used
         HexGrid chunkGrid;
@@ -94,6 +95,7 @@ namespace Sylves
                 var a = ((StrideX, StrideY, AabbBottomLeft, AabbSize));
                 var b = ((pg.StrideX, pg.StrideY, pg.AabbBottomLeft - margin * Vector2.one, pg.AabbSize + 2 * margin * Vector2.one));
                 passThroughMesh = a == b;
+                translateUnrelaxed = passThroughMesh && pg.TranslateMeshData;
             }
         }
 
@@ -157,6 +159,8 @@ namespace Sylves
 
         private static Vector3 ToVector3(Vector2 v) => new Vector3(v.x, v.y, 0);
 
+        private static Vector2Int HexToChunk(Cell hex) => new Vector2Int(hex.x, hex.y);
+
         // Unrelaxed chunks are just the raw mesh data taken from underlying
         MeshData GetUnrelaxedChunk(Cell hex)
         {
@@ -168,28 +172,25 @@ namespace Sylves
                 // Underlying chunks match relax chunks, so we can safely just
                 // pass the underlying chunk through here.
                 var planarLazyMeshGrid = underlying as PlanarLazyMeshGrid;
-                var chunk = new Vector2Int(hex.x, hex.y);
+                var chunk = HexToChunk(hex);
                 var meshData = (underlying as PlanarLazyMeshGrid).GetMeshDataCached(chunk).meshData;
-                // TODO: Support this better;
-                if(planarLazyMeshGrid.TranslateMeshData)
-                {
-                    meshData = Matrix4x4.Translate(ChunkOffset(chunk)) * meshData;
-                }
-                return unrelaxedChunks[hex] = meshData; 
+                return unrelaxedChunks[hex] = meshData;
             }
+            else
+            {
+                // Get cells near the chunk
+                var min = AabbBottomLeft + hex.x * StrideX + hex.y * StrideY;
+                var max = min + AabbSize;
+                var unfilteredCells = underlying.GetCellsIntersectsApprox(ToVector3(min), ToVector3(max));
 
-            // Get cells near the chunk
-            var min = AabbBottomLeft + hex.x * StrideX + hex.y * StrideY;
-            var max = min + AabbSize;
-            var unfilteredCells = underlying.GetCellsIntersectsApprox(ToVector3(min), ToVector3(max));
+                // Filter to precisely cells in this chunk
+                var cells = unfilteredCells
+                    .Where(c => chunkGrid.FindCell(underlying.GetCellCenter(c)) == hex)
+                    .ToList();
 
-            // Filter to precisely cells in this chunk
-            var cells = unfilteredCells
-                .Where(c => chunkGrid.FindCell(underlying.GetCellCenter(c)) == hex)
-                .ToList();
-
-            // To mesh data
-            return unrelaxedChunks[hex] = underlying.ToMeshData(cells);
+                // To mesh data
+                return unrelaxedChunks[hex] = underlying.ToMeshData(cells);
+            }
         }
 
         // Relaxed patches are the result of concatting several unrelaxed chunks together,
@@ -201,9 +202,25 @@ namespace Sylves
 
             var nearbyChunks = new[] { hex }.Concat(chunkGrid.GetNeighbours(hex));
 
-            var md = MeshDataOperations.Concat(nearbyChunks.Select(c => GetUnrelaxedChunk(c)), out var concatIndexMaps);
+            var meshes = nearbyChunks.Select(c => {
+                var mesh = GetUnrelaxedChunk(c);
+                if(translateUnrelaxed)
+                {
+                    mesh = Matrix4x4.Translate(ChunkOffset(HexToChunk(c) - HexToChunk(hex))) * mesh;
+                }
+                return mesh;
+                }).ToList();
+
+            var md = MeshDataOperations.Concat(meshes, out var concatIndexMaps);
 
             md = md.Weld(out var weldIndexMap, weldTolerance).Relax(relaxIterations);
+
+            // Move from hex local to absolte space
+            // Better to do this later, but more fiddly
+            if (translateUnrelaxed)
+            {
+                md = Matrix4x4.Translate(ChunkOffset(HexToChunk(hex))) * md;
+            }
 
             // For each nearby chunk, find the where each vertex corresponds to in the output md.
             var maps = nearbyChunks.Zip(concatIndexMaps, (a, b) => (a, b)).ToDictionary(x => x.a, x => x.b.Select(i => weldIndexMap[i]).ToArray());
@@ -223,6 +240,10 @@ namespace Sylves
             for (var i = 0; i < unrelaxed.vertices.Length; i++)
             {
                 var v = unrelaxed.vertices[i];
+                if(translateUnrelaxed)
+                {
+                    v += ChunkOffset(HexToChunk(hex));
+                }
                 var nearbyHexes = NearbyHexes.FindNearbyHexes(v / chunkSize);
                 var patch1 = GetRelaxedPatch(nearbyHexes.Hex1);
                 var patch2 = GetRelaxedPatch(nearbyHexes.Hex2);

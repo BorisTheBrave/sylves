@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -283,6 +284,18 @@ mix.inputs[0].default_value = 0.433333
             Export(new HexGrid(1, bound: HexBound.Hexagon(3)), "hex_dual.svg", new Options { textScale = null, includeDual = true,});
             Export(new TriangleGrid(1, bound: TriangleBound.Hexagon(3)), "tri_dual.svg", new Options { textScale = null, includeDual = true,});
             Export(new SquareGrid(1, new SquareBound(new Vector2Int(-0, -0), new Vector2Int(1, 1))), "bounded_square_dual.svg", new Options { textScale = null, includeDual = true, min=new Vector2(-1.1f, -1.1f), max = new Vector2(1.1f, 1.1f) });
+        }
+
+        [Test]
+        [Ignore("Needs inspection to tell if there's a problem")]
+        public void TestPrecision()
+        {
+            var n = 4;
+            var ug = new UnrelaxedTownscaperGrid(n, 1e-2f).BoundBy(new SquareBound(100, 100, 105, 105));
+            var g = new RelaxModifier(ug, 4, relaxIterations: 1, weldTolerance: 1e-6f);
+            var min = g.GetCells().Select(g.GetCellCenter).Aggregate(Vector3.Min);
+            var max = g.GetCells().Select(g.GetCellCenter).Aggregate(Vector3.Max);
+            Export(g, "precision.svg", new Options() { textScale = null, strokeWidth=0.05f, min = new Vector2(min.x, min.y), max = new Vector2(max.x, max.y) });
         }
     }
 }

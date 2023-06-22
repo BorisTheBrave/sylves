@@ -80,11 +80,11 @@ namespace Sylves
             {
                 foreach (var cell in cells)
                 {
-                    grid.GetPolygon(cell, out var cellVerticies, out var transform);
+                    grid.GetPolygon(cell, out var cellVerticies, out var polyTransform);
                     foreach (var v in cellVerticies)
                     {
                         indices.Add(vertices.Count);
-                        vertices.Add(transform.MultiplyPoint3x4(v));
+                        vertices.Add(polyTransform.MultiplyPoint3x4(v));
                     }
                     indices[indices.Count - 1] = ~indices[indices.Count - 1];
                     if (cellVerticies.Length != 3) allTris = false;
@@ -95,11 +95,11 @@ namespace Sylves
             {
                 foreach(var cell in cells)
                 {
-                    grid.GetMeshData(cell, out var md, out var transform);
+                    grid.GetMeshData(cell, out var md, out var polyTransform);
                     var b = vertices.Count;
                     foreach(var v in md.vertices)
                     {
-                        vertices.Add(transform.MultiplyPoint3x4(v));
+                        vertices.Add(polyTransform.MultiplyPoint3x4(v));
                     }
                     foreach(var face in MeshUtils.GetFaces(md))
                     {
