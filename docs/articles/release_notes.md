@@ -1,4 +1,11 @@
-# 0.3
+# Unreleased
+* Add Format methods to ICellType
+* Improve precision of some floating point calculations, particularly for Townscaper grid
+* Fix FromMatrix to ignore (uniform) scaling
+* Fix issues with 360 degree rotation
+
+
+# 0.3.0
 * Changed Quad/TriangleInterpolation to use same conventions as rest of Sylves
 * Introduce [CellCorner](xref:Sylves.CellCorner) and related operations.
 * Added [dual grids](concepts/dual.md).
