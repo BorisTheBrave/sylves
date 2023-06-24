@@ -26,16 +26,6 @@ RUNTIME_ASMDEF="""{
 }
 """
 
-# This is the one file that needs a consistent meta file
-RUNTIME_ASMDEF_META="""fileFormatVersion: 2
-guid: eeb0c2632dc942b4a851016966687b2f
-AssemblyDefinitionImporter:
-  externalObjects: {}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-"""
-
 PACKAGE_JSON="""{
   "name": "com.boristhebrave.sylves",
   "version": "VERSION",
@@ -49,13 +39,26 @@ PACKAGE_JSON="""{
   "keywords": [
     "grid"
   ],
+  "type": "library",
   "author": {
     "name": "BorisTheBrave",
     "email": "boris@boristhebrave.com",
     "url": "https://www.boristhebrave.com"
   }
 }
+"""
 
+CS_META="""fileFormatVersion: 2
+guid: GUID
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
 """
 
 def parse_if(line) -> Tuple[str, bool]:
@@ -116,6 +119,25 @@ def preprocess_dir(dir):
             # Copy file
             preprocess_file(infilename, ["UNITY"], [])
 
+def create_meta_files(dir):
+    for (dirpath, _, filenames) in os.walk(dir):
+        for filename in filenames:
+            infilename = os.path.join(dirpath, filename)
+
+            # Filter out files that aren't wanted
+            is_cs_file = filename.endswith(".cs")
+            if not is_cs_file: continue
+
+            metafilename = infilename+".meta"
+            if os.path.exists(metafilename):
+                continue
+
+            with open(metafilename, "x") as f:
+                import uuid
+                guid = str(uuid.uuid4()).replace("-", "")
+                print(f"Creating .meta file for new file {filename}")
+                f.write(CS_META.replace("GUID", guid))
+
 def get_version():
     is_preview = False
     for line in open("docs/articles/release_notes.md", "r").readlines():
@@ -132,24 +154,29 @@ def get_version():
 
 def build_upm_release():
     # Copy source data
-    shutil.rmtree(UPM_DIR + "Runtime/", ignore_errors=True)
     ignored = shutil.ignore_patterns("bin", "obj", "UnityShim", "AssemblyInfo.cs", "Sylves.csproj")
-    shutil.copytree("src/Sylves/", UPM_DIR + "Runtime/", ignore=ignored)
+    shutil.copytree("src/Sylves/", UPM_DIR + "Runtime/", ignore=ignored, dirs_exist_ok=True)
     preprocess_dir(UPM_DIR + "Runtime/")
 
     # Copy other files
     shutil.copy("LICENSE.txt", UPM_DIR + "LICENSE.md")
-    shutil.copy("README.md", UPM_DIR)
     shutil.copy("docs/articles/release_notes.md", UPM_DIR + "CHANGELOG.md")
-
     shutil.rmtree(UPM_DIR + "Documentation~/", ignore_errors=True)
     shutil.copytree("docs/_site/", UPM_DIR + "Documentation~/")
+
+    # Change readme references
+    readme = open("README.md", "r").read()
+    readme = readme.replace("docs/images/logo_cropped.png", "https://raw.githubusercontent.com/BorisTheBrave/sylves/main/docs/images/logo_cropped.png")
+    open(UPM_DIR + "README.md", "w").write(readme)
+
 
     # Copy files unique to UPM branch
     package_json = PACKAGE_JSON.replace("VERSION", get_version())
     open(UPM_DIR + "package.json", "w").write(package_json)
     open(UPM_DIR + "Runtime/Sylves.asmdef", "w").write(RUNTIME_ASMDEF)
-    open(UPM_DIR + "Runtime/Sylves.asmdef.meta", "w").write(RUNTIME_ASMDEF_META)
+
+    # Create meta files for any new cs files
+    create_meta_files(UPM_DIR + "Runtime/")
 
 
 if __name__ == "__main__":
