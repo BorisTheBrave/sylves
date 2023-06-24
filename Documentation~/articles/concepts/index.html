@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Key Concepts </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Key Concepts ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="key-concepts">Key Concepts</h1>
+
+<h2 id="grids-and-cells">Grids and cells</h2>
+<p>The central interface of Sylves is <a class="xref" href="../../api/Sylves.IGrid.html">IGrid</a>. Each grid type supported by Sylves has a different implementation of this class, such as <a class="xref" href="../../api/Sylves.CubeGrid.html"><code>CubeGrid</code></a> or <a class="xref" href="../../api/Sylves.HexGrid.html"><code>HexGrid</code></a>.</p>
+<p>Each grid is considered a collection of cells. Each cell is individual locations in a grid. In a square grid, each square is one cell. In a hexagon grid, each cell is one hexagon, etc.</p>
+<figure>
+<img src="../../images/square_grid.svg">
+</figure>
+<p>Cells are represented by the <a class="xref" href="../../api/Sylves.Cell.html"><code>Cell</code></a> struct. A <code>Cell</code> object is just (x,y,z) co-ordinate, it contains no other data. If you want to know something specific about a cell, you must call a method on <code>IGrid</code> to look it up.</p>
+<p>For example, <code>IGrid.GetCells()</code> returns an <code>IEnumerable&lt;Cell&gt;</code> listing all cells in the grid. And <code>IGrid.GetCellCenter(Cell cell)</code> returns the position of a given cell.  You could use them as follows:</p>
+<pre><code class="lang-csharp">// Create a 10x10 grid of squares of size 1.
+var grid = new SquareGrid(1, new SquareBound(0, 0, 10, 10));
+// List all 100 cells
+var cells = grid.GetCells();
+// Print the centers of each cell.
+foreach(var cell in cells)
+{
+    Console.Log($&quot;{cell}: {grid.GetCellCenter(cell)}&quot;);
+}
+</code></pre>
+<p>A summary of all methods is <a href="#grid-methods">below</a> and the full list in the <a class="xref" href="../../api/Sylves.IGrid.html">API reference</a>.</p>
+<p>Sylves supports an <a href="../grids/index.html">extremely wide set of grids</a>:</p>
+<ul>
+<li><strong>Planar grids</strong> (those confined to the XY plane), the most common grids seen in games.</li>
+<li><strong>2d non-planar grids</strong> use 2d cells, but arranged in 3d space, can be used for 3d games where height is important, or for spheres and other shapes.</li>
+<li><strong>3d grids</strong> (aka <a href="https://en.wikipedia.org/wiki/Honeycomb_(geometry)">honeycombs</a>) are useful for voxel style calculations.</li>
+<li><strong>Infinite grids</strong> allow you to not worry about the boundaries at all.</li>
+<li><strong>Irregular grids</strong> can have a different shape for every cell.</li>
+<li>You can even <a href="../creating.html"><strong>create your own grids</strong></a>.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Grids <a href="storage.html">do not store any data</a>, they are basically stateless. They just exist to as a way to interact with cells.</p>
+</div>
+<h2 id="what-is-a-cell">What is a cell?</h2>
+<p>It's helpful to think of cells as a polygon. This is not true for 3d grids like <code>CubeGrid</code>, and even for 2d grids the cells aren't required to actually have a polygonal shape, but this is the most common and simplest case.</p>
+<p>Just like <code>IGrid</code> exists to describe a <em>collection</em> of cells, another interface, <a class="xref" href="../../api/Sylves.ICellType.html"><code>ICellType</code></a> describes the properties of a single cell. Again, this does not involve storing data, it just covers the geometric properties of the cell. Cell types are generally singletons like <code>SquareCellType.Instance</code> and are shared between all square cells.</p>
+<p>The main thing <code>ICellType</code> is used for is working with cell directions, via the <code>CellDir</code> class. Cell directions are labels assigned to each edge of the cell (or to each face of a cell, for 3d cells).</p>
+<figure>
+<img src="../../images/cell_anatomy.svg">
+</figure>
+<p>Cell directions are a key component of exploring the <a href="topology.html">topology</a> of the grid.</p>
+<p>Most of the other methods of <code>ICellType</code> deal with <a href="rotation.html">rotations</a>.</p>
+<h2 id="grid-methods">Grid methods</h2>
+<p>The methods of <code>IGrid</code> can be rougly split into several categories. The most important being:</p>
+<ul>
+<li><a href="info.html">Info</a> - Factual info about the grid, such as if is 2d, infinite, etc</li>
+<li><a href="topology.html">Topology</a> - Information about moving about the grid. This generally treats the grid as a network of cells, with links between adjacent cells.</li>
+<li><a href="position.html">Position</a> - Describes how the cells are laid out in 3d space, and their shape.</li>
+</ul>
+<p>Other categories include:</p>
+<ul>
+<li><a href="relatives.html">Relatives</a> - Provides other grids related to the current grid.</li>
+<li><a href="indices.html">Indices</a> - Converts between <code>Cell</code> and <code>int</code>, if you want to use an array for storage</li>
+<li><a href="bounds.html">Bounds</a> - Methods of dealing with bounding boxes on the grid.</li>
+<li><a href="query.html">Query</a> - Methods for finding cells in 3d space, such as point queries, raycasts, etc.</li>
+<li><a href="shape.html">Shape</a> - Methods for finding the precise shape and border of a cell</li>
+<li><a href="pathfinding.html">Pathfinding</a> - Methods for finding a path between cells.</li>
+<li><a href="dual.html">Dual</a> - Methods for referring to the vertices of a grid.</li>
+</ul>
+<p>You can see all methods in the <a class="xref" href="../../api/Sylves.IGrid.html">API for IGrid</a> and <a class="xref" href="../../api/Sylves.GridExtensions.html">the grid extension methods</a>.</p>
+<h2 id="abstract-and-specific-types">Abstract and specific types</h2>
+<p><code>IGrid</code> itself is an interface. When working with a specific grid, you must construct an implementation of that interface. But the methods of the interface are necessarily abstract and cannot discuss your choice of grid.</p>
+<p>That means it some cases, you will need to <em>manually</em> cast to specific types, to get the most out of Sylves.</p>
+<ol>
+<li><p>When working with interfaces, such as <code>IGrid</code>, <code>ICellType</code>, <code>IBounds</code>, you need to know which implementation is relevant to you. The implementations often have <em>more</em> methods than the interface does. E.g. when using a <code>SquareGrid</code>, you'd also work with <code>SquareCellType</code> and <code>SquareBound</code>.</p>
+</li>
+<li><p>When working with enums like <code>CellDir</code> and <code>CellRotation</code>, you'll find that they are empty. These types are just a shorthand that <em>some</em> value is stored within. To be more specific, you'll need to cast them to specific types, like <code>SquareDir</code> and <code>SquareRotation</code>. The specific enums often come with methods and operator overloads.</p>
+</li>
+</ol>
+<p>This table gives a summary of some of the specific classes backing each grid. The docs for each grid class list the same details.</p>
+<table>
+<thead>
+<tr>
+<th>IGrid</th>
+<th>ICellType</th>
+<th>CellDir</th>
+<th>CellRotation</th>
+<th>IBound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SquareGrid</code></td>
+<td><code>SquareCellType</code></td>
+<td><code>SquareDir</code></td>
+<td><code>SquareRotation</code></td>
+<td><code>SquareBound</code></td>
+</tr>
+<tr>
+<td><code>HexGrid</code></td>
+<td><code>HexCellType</code></td>
+<td><code>PTHexDir</code> <em>or</em> <code>FTHexDir</code></td>
+<td><code>HexRotation</code></td>
+<td><code>HexBound</code></td>
+</tr>
+<tr>
+<td><code>TriangleGrid</code></td>
+<td><code>HexCellType</code></td>
+<td><code>PTHexDir</code> <em>or</em> <code>FTHexDir</code></td>
+<td><code>HexRotation</code></td>
+<td><code>HexBound</code></td>
+</tr>
+<tr>
+<td><code>HexPrismGrid</code></td>
+<td><code>HexPrismCellType</code></td>
+<td><code>HexPrismDir</code></td>
+<td><code>HexRotation</code></td>
+<td><code>HexPrismBound</code></td>
+</tr>
+<tr>
+<td><code>MeshGrid</code></td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>MeshPrismGrid</code></td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td><code>null</code></td>
+</tr>
+</tbody>
+</table>
+<p>* = Varies</p>
+<p>It's also worth noting that <code>SquareCellType</code> and <code>HexCellType</code> can be used interchangably with <code>NGonCellType</code>, allowing you to treat all polygon cells similarly.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

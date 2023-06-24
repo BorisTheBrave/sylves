@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Townscaper Grid </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Townscaper Grid ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="townscaper-grid">Townscaper Grid</h1>
+
+<p><a href="https://store.steampowered.com/app/1291340/Townscaper/">Townscaper</a> is a 2021 developed by Oskar Stålberg. It's a fun town design toy, that stands out because of its unusual flowing grid.</p>
+<p><img src="../../images/townscaper_screenshot.jpg" alt=""></p>
+<p>We'll look at creating a similar grid using the tools available in Sylves. The docs on <a href="../creating.html">creating a grid</a> give more detail on what other options Sylves has.</p>
+<p>You can find the <a class="xref" href="../../api/Sylves.TownscaperGrid.html">finished code</a> in the Extras folder.</p>
+<p>Fortunately, the developer has left detailed discussions for how to create such a grid on Twitter.</p>
+<h2 id="creating-a-hex">Creating a hex</h2>
+<p>The townscaper grid is infinite, but it's composed out of small collections of collects in a hexagon shape. First we'll look at creating a single hex.</p>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I present: <br>Fairly even irregular quads grid in a hex<br><br>Todo: <br>1. Heuristic to reduce (or eliminate) 6 quad verts<br>2. Tile these babies to infinity <a href="https://t.co/o0kU68uovZ">pic.twitter.com/o0kU68uovZ</a></p>&mdash; Oskar Stålberg (@OskSta) <a href="https://twitter.com/OskSta/status/1147881669350891521?ref_src=twsrc%5Etfw">July 7, 2019</a></blockquote> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>This breaks down as:</p>
+<ul>
+<li>Create a hexagon filled with equilateral triangles</li>
+<li>Randomly merge pairs of triangles</li>
+<li>Subdivide everything into quads</li>
+<li>Relax the mesh</li>
+</ul>
+<p>Creating a grid of triangles in Sylves is easy, this is a grid library after all.</p>
+<pre><code class="lang-csharp">var triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(4));
+</code></pre>
+<p>This creates a grid of triangles with side 0.5, and restricts it to a hexagon that has 4 triangles per side.</p>
+<p><img width="300px" src="../../images/townscaper_tutorial_1.svg"></p>
+<p>Then, we convert to a mesh. The next steps are then all mesh operations Sylves supplies.</p>
+<pre><code class="lang-csharp">var meshData = triangleGrid.ToMeshData();
+
+// Randomly pair the triangles of that grid
+meshData = meshData.RandomPairing();
+
+// Split into quads
+meshData = ConwayOperators.Ortho(meshData);
+
+// Weld duplicate vertices together (needed for Relax)
+meshData = meshData.Weld();
+
+// Smooth the resulting mesh
+meshData = meshData.Relax();
+</code></pre>
+<figure>
+<img width="200px" src="../../images/townscaper_tutorial_1.svg">
+<img width="200px" src="../../images/townscaper_tutorial_2.svg">
+<img width="200px" src="../../images/townscaper_tutorial_3.svg">
+<img width="200px" src="../../images/townscaper_tutorial_4.svg">
+<figcaption>The mesh after each stage of processing.</figcaption>
+</figure>
+<h2 id="making-an-infinite-grid">Making an infinite grid.</h2>
+<p>To go from a single hex to an infinite grid, we need to to create a hex grid, and fill each one of the hexes with a mesh generated in the above fashion. Let's turn the above into a function.</p>
+<pre><code class="lang-csharp">// The grid of our hexes that need filling with meshes.
+// Each hex is 4 from top to bottom, which perfectly matches the size of meshes generated.
+HexGrid hexGrid = new HexGrid(4, HexOrientation.PointyTopped);
+
+MeshData GetMeshData(Cell hex)
+{
+    var triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(4));
+    var meshData = triangleGrid.ToMeshData();
+    meshData = Matrix4x4.Translate(hexGrid.GetCellCenter(hex)) * meshData;
+    var seed = HashUtils.Hash(hex);
+    meshData = meshData.RandomPairing(new Random(seed).NextDouble);
+    meshData = ConwayOperators.Ortho(meshData);
+    meshData = meshData.Weld();
+}
+</code></pre>
+<p>The key differences are:</p>
+<ul>
+<li>The mesh is translated to the position of the hex we want it to fill.</li>
+<li>The random seed is now fixed based on what hex is being calculated. This ensures the grid is deterministic.</li>
+<li>The mesh is no longer being relaxed. <br>
+We need the mesh to exactly fill the hex so that we can detect which edges border another hex, and relaxation would get in the way. Relaxation will be handled later instead.</li>
+</ul>
+<p>With this function, we can use <a href="../grids/planarlazymeshgrid.html">PlanarLazyMeshGrid</a>, a powerful grid for customization. It takes a mesh function such as the above, and lazily evaluates it to fill the infinite plane as needed. It supports any periodic setup, but we'll use it with a HexGrid specifically.</p>
+<pre><code class="lang-csharp">var unrelaxedGrid = new PlanarLazyMeshGrid(GetMeshData, hexGrid);
+</code></pre>
+<p><img width="300px" src="../../images/grids/unrelaxedtownscaper.svg"></p>
+<h2 id="relaxation">Relaxation</h2>
+<p>Finally, we apply a <a href="../modifiers/relaxmodifier.html">relaxation modifier</a> to the grid. We couldn't relax each mesh separately as then they wouldn't join up with each other. But the relax modifier works with the entire infinite grid, ensuring a smooth final shape.</p>
+<pre><code class="lang-csharp">// While not strictly necessary, we use the same chunk size for relaxation as building the grid
+var townscaperGrid = new RelaxModifier(unrelaxedGrid, 4);
+</code></pre>
+<p><img width="300px" src="../../images/grids/townscaper.svg"></p>
+<h2 id="enhancements">Enhancements</h2>
+<p>The above is enough to give an infinite irregular grid of quads with a nice organic look. The actual Townscaper grid is actually a bit more sophisticated:</p>
+<ul>
+<li>Sometimes a hex will randomly decide to use a different mesh generator instead, adding variety to the map</li>
+<li><a href="https://twitter.com/osksta/status/1151770831619534848">It uses a slightly more efficient relaxation regime</a></li>
+<li><a href="https://twitter.com/OskSta/status/1169940644669861888">The relaxation rule encourages squarish cell shapes</a></li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

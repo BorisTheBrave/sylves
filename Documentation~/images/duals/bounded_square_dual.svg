@@ -1,0 +1,28 @@
+<svg viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg">
+<style>
+.cell-path {
+                stroke-linejoin: round;
+                fill: rgb(244, 244, 241);
+                stroke: rgb(51, 51, 51);
+                stroke-width: 0.1
+            }
+.dual .cell-path {
+                fill: none;
+                stroke: rgb(255, 0, 0);
+                stroke-opacity: 0.5;
+                stroke-width: 0.033333335
+            }
+</style>
+<!-- (0, 0, 0) -->
+<path class="cell-path" d="M1 0L1 -1L0 -1L0 0Z"/>
+<g class="dual">
+<!-- (0, 0, 0) -->
+<path class="cell-path" d="M0.5 0.5L0.5 -0.5L-0.5 -0.5L-0.5 0.5Z"/>
+<!-- (0, 1, 0) -->
+<path class="cell-path" d="M0.5 -0.5L0.5 -1.5L-0.5 -1.5L-0.5 -0.5Z"/>
+<!-- (1, 0, 0) -->
+<path class="cell-path" d="M1.5 0.5L1.5 -0.5L0.5 -0.5L0.5 0.5Z"/>
+<!-- (1, 1, 0) -->
+<path class="cell-path" d="M1.5 -0.5L1.5 -1.5L0.5 -1.5L0.5 -0.5Z"/>
+</g>
+</svg>

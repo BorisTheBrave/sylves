@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Paint Program Tutorial </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Paint Program Tutorial ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="paint-program-tutorial">Paint Program Tutorial</h1>
+
+<p>In this multi-part tutorial, we'll talk about how to make a simple MSPaint type program, but one that lets you paint on a tile grid instead of a standard pixel grid. We'll use Sylves to handle all the grid calculations.</p>
+<p>You can find a demo illustrating these techniques in action at <a href="https://boristhebrave.itch.io/mosaic-paint">https://boristhebrave.itch.io/mosaic-paint</a>.</p>
+<p>This tutorial will assume some functions only available in Unity, and skips over the parts of the program that don't use Sylves. But the general principles should be  applicable to any program, particularly as Sylves comes with <a href="../extras.html#unityshim">UnityShim</a> which provides pure C# substitutes for common maths features of Unity.</p>
+<h1 id="basic-setup">Basic setup</h1>
+<p>I'll list all the imports needed by subsequent parts of code.</p>
+<pre><code class="lang-csharp">using Sylves;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using UnityEngine;
+</code></pre>
+<p>First we need a variable to define the grid.</p>
+<pre><code class="lang-csharp">IGrid grid = new HexGrid(1);
+</code></pre>
+<p>We'll start with a hexagon grid of cell size 1. Because we are using the <code>IGrid</code> interface, the code will work just as well with any other 2d planar grid supported by Sylves. Note that this grid is infinite in size as we didn't specify any <a href="../concepts/bounds.html">bounds</a>. That won't be a problem for us.</p>
+<p>Next we need to define the canvas - i.e. what colors are stored in the grid. As explained in the <a href="../concepts/storage.html">concepts</a>, Sylves doesn't come with any storage classes, you can use your own. We'll just use standard Dictionary.</p>
+<pre><code class="lang-csharp">Dictionary&lt;Cell, Color&gt; canvas = new Dictionary&lt;Cell, Color&gt;();
+Color defaultColor = Color.white;
+Color paintColor = Color.black;
+</code></pre>
+<p>We define a default color that is used for cells of the grid that have no entry in canvas, and a paint color that we'll use later.</p>
+<p>Let's pre-fill it with some data, so we have something to look at.</p>
+<pre><code class="lang-csharp">canvas[new Cell(0, 0, 0)] = Color.red;
+canvas[new Cell(1, -1, 0)] = Color.green;
+canvas[new Cell(0, 1, -1)] = Color.blue;
+</code></pre>
+<h1 id="drawing-the-canvas">Drawing the canvas</h1>
+<p>To draw the canvas, we need to first determine which cells are visible by the camera, and then draw each of them.
+Because we'll only be drawing visible cells, it doesn't matter that the grid has infinite cells it.</p>
+<p>We can find the cells using <code>GetCellsIntersectsApprox</code>, which returns all cells intersecting a bounding box.</p>
+<pre><code class="lang-csharp">// Determine the visible range of the camera. This code is unity specific
+var corners = new[] { new Vector3(0, 0), new Vector3(0, 1), new Vector3(1, 0), new Vector3(1, 1) }
+    .Select(camera.ViewportToWorldPoint);
+var min = corners.Aggregate(Vector3.Min);
+var max = corners.Aggregate(Vector3.Max);
+// Flatten the box into the Z=0 plane, which is where the grid is defined.
+min.z = max.z = 0;
+// Get the cells
+var cells = grid.GetCellsIntersectsApprox(min, max).ToList();
+</code></pre>
+<p>Next, we can use <code>GetPolygon</code> to get the vertices of the cell. The fiddliness of drawing in Unity is omitted here.</p>
+<pre><code class="lang-csharp">// Set up an appropriate drawing context. See https://docs.unity3d.com/ScriptReference/GL.html
+&lt;omitted&gt;
+// Iterate over the cells
+foreach (var cell in cells)
+{
+    // Read the color from the canvas.
+    var color = canvas.TryGetValue(cell, out var c) ? c : defaultColor;
+    // Read the vertices of the cell. 
+    var vertices = grid.GetPolygon(cell);
+    // Split up the polygon into triangles, and draw each one of them.
+    // (NB: only works for convex polygons)
+    GL.Begin(GL.TRIANGLES);
+    GL.Color(color.linear);
+    for (var i = 2; i &lt; vertices.Length; i++)
+    {
+        GL.Vertex(vertices[0]);
+        GL.Vertex(vertices[i]);
+        GL.Vertex(vertices[i - 1]);
+    }
+    GL.End();
+}
+</code></pre>
+<p>If successful, you should get an image like:</p>
+<p><img src="../../images/paint_hex.png" alt=""></p>
+<h1 id="making-a-pencil-tool">Making a pencil tool</h1>
+<p>A pencil tool simply draws a given color at the mouse cursor. We can use <code>FindCell</code> to determine which cell is under the cursor:</p>
+<pre><code class="lang-csharp">if (Input.GetMouseButton(0))
+{
+    // Determines the world position of the cursor.
+    // This assumes an orthographic camera that is facing along the Z-axis.
+    var p = camera.ScreenToWorldPoint(Input.mousePosition);
+    p.z = 0;
+    // Find the cell that contains this point
+    if (grid.FindCell(p, out var cell))
+    {
+        // Update canvas
+        canvas[cell] = paintColor;
+    }
+}
+</code></pre>
+<p><img src="../../images/paint_hex_animated.gif" alt=""></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pencil tools in real paint programs actually draw short lines. This deals with problems of a mouse cursor moving so fast it skips over cells.</p>
+</div>
+<h1 id="making-a-line-tool">Making a line tool</h1>
+<p>To draw a line, you need to determine all the cells that intersect a line-segment. Sylves can tell you this with <code>Raycast</code>. Raycast can also tell you useful information about the collision, but we won't need that feature.</p>
+<p>I'll assume we've already determined the start and end points using some UI code.</p>
+<pre><code class="lang-csharp">Vector3 start = new Vector3(-10, -10, 0);
+Vector3 end = new Vector3(10, 10, 0);
+// Run a raycast between start and end
+var raycastHits = grid.Raycast(start, end - start, 1);
+// Update canvas
+foreach(var raycastHit in raycastHits)
+{
+    canvas[raycastHit.cell] = paintColor;
+}
+</code></pre>
+<p><img src="../../images/paint_line.png" alt=""></p>
+<h1 id="making-a-fill-tool">Making a fill tool</h1>
+<p>To do a fill tool, we need to do an operation called <em>flood fill</em>. This starts at the point the user clicks, and repeatedly searches for neighbours of a similar color. This is easiest done using the <code>GetNeighbours</code> function, which returns all cells adjacent to the passed in cell.</p>
+<pre><code class="lang-csharp">if (Input.GetMouseButtonDown(0))
+{
+    // As before with the pencil tool, determine the world position of the cursor.
+    var p = camera.ScreenToWorldPoint(Input.mousePosition);
+    p.z = 0;
+    // Find the cell that contains this point
+    if (grid.FindCell(p, out var cell))
+    {
+        // Do the flood fill algorithm
+        // Record the original color, we must match against this.
+        var originalColor = canvas[cell];
+
+        // Set up the queue of cells to visit.
+        var enqueued = new HashSet&lt;Cell&gt;();
+        var toVisit = new Queue&lt;Cell&gt;();
+        toVisit.Enqueue(cell);
+        enqueued.Add(cell);
+
+        // Visit every cell
+        while (toVisit.Count &gt; 0)
+        {
+            cell = toVisit.Dequeue();
+            canvas[cell] = paintColor;
+            // For each neighbour
+            foreach(var neighbour in grid.GetNeighbours(cell))
+            {
+                // Does this neighbour also need visiting?
+                if (canvas.TryGetValue(cell, out var c) &amp;&amp; 
+                    c == originalColor &amp;&amp;
+                    !enqueued.Contains(neighbour))
+                {
+                    toVisit.Enqueue(neighbour);
+                    enqueued.Add(neighbour);
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Flood fills can cause problems on infinite grids. So the above algorithm will ignore any cells that haven't been painted at least once, i.e. cells not in <code>canvas</code>.</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Sylves comes with <a href="../concepts/pathfinding.html">pathfinding</a> methods like <a class="xref" href="../../api/Sylves.Pathfinding.html#Sylves_Pathfinding_FindDistances_Sylves_IGrid_Sylves_Cell_System_Func_Sylves_Cell_System_Boolean__System_Func_Sylves_Step_System_Nullable_System_Single___">Pathfinding.FindDistances</a> which we could have used here.</p>
+</div>
+<h1 id="summary">Summary</h1>
+<p>More tools can be added to the program using other methods of IGrid. For example, <code>GetCellsIntersectsApprox</code> and <code>GetCellCenter</code> can be used together to find all cells within a given distance of the cursor, making a paint brush tool.</p>
+<p>At no point did we write a single line of maths relating to hexagons. That means that the same code would work just as well for a square grid, or the <a href="../grids/index.html">many other grids</a> that Sylves comes with.</p>
+<p>The full program <a href="https://boristhebrave.itch.io/mosaic-paint">Mosaic Paint</a> includes a number of features not shown in this tutorial. Take a look, and think about how you could achieve them with the <a class="xref" href="../../api/Sylves.IGrid.html"><code>IGrid</code></a> api.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

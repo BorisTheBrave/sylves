@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>MeshGrid </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="MeshGrid ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="meshgrid">MeshGrid</h1>
+
+<table>
+<tr><th colspan="2">Quick facts</th></tr>
+<tr><td>Grid</td><td><a class="xref" href="../../api/Sylves.MeshGrid.html">MeshGrid</a></td></tr>
+<tr><td>CellType</td><td><a class="xref" href="../../api/Sylves.NGonCellType.html">NGonCellType</a>*</td></tr>
+<tr><td>CellDir</td><td><a class="xref" href="../../api/Sylves.CellDir.html">CellDir</a>*</td></tr>
+<tr><td>CellRotation</td><td><a class="xref" href="../../api/Sylves.CellRotation.html">CellRotation</a>*</td></tr>
+<tr><td>Bound</td><td>None</td></tr>
+<tr><td>Properties</td><td>2d, Finite</td></tr>
+<tr><td colspan="2"><small>*NGonCellType represents any polygon. But for 4 and 6 sided faces, the values overlap with SquareCellType and HexCellType, and the corresponding SquareDir, SquareRotation, PTHexDir, HexRotation.</small></td></tr>
+</table>
+<p>MeshGrid represents any finite grid constructed out of polygons. Each polygon (or &quot;face&quot;) becomes a cell, with two cells being adjacent if they share an edge in common.
+MeshGrid is one of the most flexible grid offered by Sylves</p>
+<p><img width="200px" src="../../images/grids/meshgrid.svg"></p>
+<p>MeshGrid is a 2d grid as each cell is flat, but they don't have to be confined to a flat plane. It can just as easily represent a surface curving through 3d space, such as a polyhedron.</p>
+<p><img width="200px" src="../../images/icosahedron.png"></p>
+<p>MeshGrids are constructed from a <a class="xref" href="../../api/Sylves.MeshData.html"><code>MeshData</code></a> and a <a class="xref" href="../../api/Sylves.MeshGridOptions.html"><code>MeshGridOptions</code></a> object.</p>
+<h2 id="meshdata">MeshData</h2>
+<p><code>MeshData</code> describes a mesh in a fashion nearly identical to <a href="https://docs.unity3d.com/ScriptReference/Mesh.html">Unity's Mesh object</a>: You supply an array of Vector3 that gives the vertices of the mesh, and then an array of &quot;indices&quot; that indicate which vertices belong to which faces. The exact format of the indices array is given by a values from <a class="xref" href="../../api/Sylves.MeshTopology.html"><code>MeshTopology</code></a>:</p>
+<ul>
+<li><a class="xref" href="../../api/Sylves.MeshTopology.html#Sylves_MeshTopology_Triangles"><code>MeshTopology.Triangles</code></a> - Each set of three consecutive elements in the index array specifies one triangle.</li>
+<li><a class="xref" href="../../api/Sylves.MeshTopology.html#Sylves_MeshTopology_Quads"><code>MeshTopology.Quads</code></a> - Each set of four consecutive elements in the index array specifies one quad.</li>
+<li><a class="xref" href="../../api/Sylves.MeshTopology.html#Sylves_MeshTopology_NGon"><code>MeshTopology.NGon</code></a> - Each &quot;run&quot; of elements in the index array specifies one polygon. A run is a series of non-negative integers followed by a negative integer. The negative integer will be bitwise negated (the <code>~</code> operator) to convert it to an index.</li>
+</ul>
+<!--
+You can use [MeshUtils.GetFaces](xref:Sylves.MeshUtils.GetFaces) to work with idicies in a consistent fashion regardless of the MeshTopology type.
+-->
+<p>Optionally, you can also supply uvs, normals and tangents in a <code>MeshData</code>, for use cases that use those. You can also supply more than one index array and MeshTopology value, to breakdown the mesh into multiple submeshes, usally when each submesh uses a different material when rendering.</p>
+<p>Internally, <code>MeshGrid</code> stores cells in a <a href="https://en.wikipedia.org/wiki/Glossary_of_computer_graphics#Spatial_hashing">spatial hash</a> to efficiently find cells when queried. This may lead to performance issues if the cells are wildy different sizes to each other.</p>
+<h2 id="meshgridoptions">MeshGridOptions</h2>
+<p><strong>UseXZPlane</strong></p>
+<p>If set, assumes the 2d plane that a face maps from is in the XZ axis.</p>
+<p><strong>InvertWinding</strong></p>
+<p>If false, vertices and edges of the mesh are assumed to be consistent with Sylves conventions,
+counter clockwise winding.</p>
+<p>E.g. for a quad</p>
+<ul>
+<li>edges 0 =&gt; SquareDir.Right, 1 =&gt; SquareDir.Up, 2 =&gt; SquareDir.Left, 3 =&gt; SquareDir.Down</li>
+<li>verts 0 =&gt; DownRight, 1 =&gt; UpRight, 2 =&gt; UpLeft, 3=&gt; DownLeft</li>
+</ul>
+<p>If true, the order of vertices is swapped</p>
+<p>E.g. for a quad</p>
+<ul>
+<li>edges 0 =&gt; Square.Left, 1 =&gt; SquareDir.Up, 2 =&gt; SquareDir.Right, 3 =&gt; SquareDir.Down</li>
+<li>verts 0 =&gt; DownLeft, 1 =&gt; UpLeft, 2=&gt; UpRight, 3 = DownRight</li>
+</ul>
+<p><strong>DoubleOddFaces</strong></p>
+<p>If set, odd faces become cells with twice as many edges.
+It's often more convenient to work with even polygons as an about face is possible.</p>
+<h2 id="cell-co-ordinates">Cell co-ordinates</h2>
+<p>The x value is used to index the face in the submesh, the y value indicates the submesh, if any, and the z value is unused.</p>
+<h2 id="deformation">Deformation</h2>
+<p>Even though each cell in the grid can have a unique shape, all cells with the same number of sides share the same cell type, <code>NGonCellType.Get(sides)</code>.</p>
+<p>Working with uniquely shaped cells can be tricky. It can be useful to use <code>MeshGrid.GetDeformation</code>, which provides a function that maps from a regular polygon to the specially shaped one of that cell. Using that you can warp a pre-made mesh to fit the cell exactly. There are some more details in the <a href="../concepts/shape.html#deformation">concepts documentation</a>.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

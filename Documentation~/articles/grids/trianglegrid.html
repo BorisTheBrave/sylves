@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>TriangleGrid </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="TriangleGrid ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="trianglegrid">TriangleGrid</h1>
+
+<table>
+<tr><th colspan="2">Quick facts</th></tr>
+<tr><td>Grid</td><td><a class="xref" href="../../api/Sylves.TriangleGrid.html">TriangleGrid</a></td></tr>
+<tr><td>CellType</td><td><a class="xref" href="../../api/Sylves.HexCellType.html">HexCellType</a></td></tr>
+<tr><td>CellDir</td><td><a class="xref" href="../../api/Sylves.PTHexDir.html">PTHexDir</a> (for <a class="xref" href="../../api/Sylves.TriangleOrientation.html#Sylves_TriangleOrientation_FlatSides">flat-sides grids</a>) <br> <a class="xref" href="../../api/Sylves.PTHexDir.html">FTHexDir</a> (for <a class="xref" href="../../api/Sylves.TriangleOrientation.html#Sylves_TriangleOrientation_FlatTopped">flat-topped grids</a>)</td></tr>
+<tr><td>CellRotation</td><td><a class="xref" href="../../api/Sylves.HexRotation.html">HexRotation</a></td></tr>
+<tr><td>Bound</td><td><a class="xref" href="../../api/Sylves.TriangleBound.html">TriangleBound</a></td></tr>
+<tr><td>Properties</td><td>2d, Planar, Repeating, Infinite</td></tr>
+</table>
+<p>TriangleGrid is a tiling of the plane with triangles. It supports both <a class="xref" href="../../api/Sylves.TriangleOrientation.html#Sylves_TriangleOrientation_FlatTopped">flat-topped</a> and <a class="xref" href="../../api/Sylves.TriangleOrientation.html#Sylves_TriangleOrientation_FlatSides">flat-sides</a> varieties.</p>
+<p><img width="200px" src="../../images/grids/tri_ft.svg">
+<img width="200px" src="../../images/grids/tri_fs.svg"></p>
+<h2 id="cell-co-ordinates">Cell co-ordinates</h2>
+<p>The co-ordinate systems used are shown above - it uses three co-ordinates that always sum to 1 (for left and down pointing triangles) or 2 (for right or up pointing triangles). This scheme is explained more on <a href="https://www.boristhebrave.com/2021/05/23/triangle-grids/">my blog</a>.</p>
+<p>TriangleGrid comes with methods <a class="xref" href="../../api/Sylves.TriangleGrid.html#Sylves_TriangleGrid_IsUp_Sylves_Cell_">IsUp</a>/<a class="xref" href="../../api/Sylves.TriangleGrid.html#Sylves_TriangleGrid_IsDown_Sylves_Cell_">IsDown</a>/<a class="xref" href="../../api/Sylves.TriangleGrid.html#Sylves_TriangleGrid_IsLeft_Sylves_Cell_">IsLeft</a>/<a class="xref" href="../../api/Sylves.TriangleGrid.html#Sylves_TriangleGrid_IsRight_Sylves_Cell_">IsRight</a> to determine which direction a given cell is pointing.</p>
+<h2 id="hexagonal-basis">Hexagonal basis</h2>
+<p>Note that Triangle grid shares several classes in common with hexagons. E.g. A flat-topped triangle grid uses <code>FTHexDir</code> to get the list of directions, and flat-sides triangle grid uses <code>PTHexDir</code>.</p>
+<p>That means, for an up-pointing triangle, it has adjacent triangles <code>FTHexDir.Down</code>, <code>FTHexDir.UpLeft</code> and <code>FTHexDir.UpRight</code>. The other three directions, <code>FTHexDir.Up</code>, <code>FTHexDir.DownRight</code> and <code>FTHexDir.DownLeft</code> are not used for an up-pointing triangle. It's the other way around for a downward pointing triangle, and similar for left/right.</p>
+<p>Hexes are used in these cases so that triangles pointing in opposite directions do not re-use the same <code>CellDir</code> values to mean different things. Sylves supports that, but it would effectively mean you'd have to deal with some triangles being rotated 180 degress compared to others. <a href="../concepts/rotation.html">Rotation</a> is a concept best avoided where possible.</p>
+<p>If you <em>do</em> want a triangle grid with only 3 directions, using <code>NGonCellType.Get(3)</code>, and so on, then you can construct one using PeriodicPlanarMeshGrid.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,832 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class RelaxModifier
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class RelaxModifier
+   ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/custom.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Sylves.RelaxModifier">
+  
+  
+  <h1 id="Sylves_RelaxModifier" data-uid="Sylves.RelaxModifier" class="text-break">Class RelaxModifier
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="Sylves.PlanarLazyGrid.html">PlanarLazyGrid</a></div>
+    <div class="level2"><span class="xref">RelaxModifier</span></div>
+      <div class="level3"><a class="xref" href="Sylves.TownscaperGrid.html">TownscaperGrid</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Sylves.IGrid.html">IGrid</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_Setup_Sylves_Vector2_Sylves_Vector2_Sylves_Vector2_Sylves_Vector2_Sylves_SquareBound_System_Collections_Generic_IEnumerable_Sylves_ICellType__Sylves_ICachePolicy_">PlanarLazyGrid.Setup(Vector2, Vector2, Vector2, Vector2, SquareBound, IEnumerable&lt;ICellType&gt;, ICachePolicy)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_ChunkOffset_Sylves_Vector2Int_">PlanarLazyGrid.ChunkOffset(Vector2Int)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_Split_Sylves_Cell_">PlanarLazyGrid.Split(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_Combine_Sylves_Cell_Sylves_Vector2Int_">PlanarLazyGrid.Combine(Cell, Vector2Int)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_Promote_Sylves_Vector2Int_">PlanarLazyGrid.Promote(Vector2Int)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_StrideX">PlanarLazyGrid.StrideX</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_StrideY">PlanarLazyGrid.StrideY</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_AabbBottomLeft">PlanarLazyGrid.AabbBottomLeft</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_AabbSize">PlanarLazyGrid.AabbSize</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_Unwrapped">PlanarLazyGrid.Unwrapped</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetDual">PlanarLazyGrid.GetDual()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetCells">PlanarLazyGrid.GetCells()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetCellType_Sylves_Cell_">PlanarLazyGrid.GetCellType(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_IsCellInGrid_Sylves_Cell_">PlanarLazyGrid.IsCellInGrid(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_TryMoveByOffset_Sylves_Cell_Sylves_Vector3Int_Sylves_Vector3Int_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">PlanarLazyGrid.TryMoveByOffset(Cell, Vector3Int, Vector3Int, CellRotation, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">PlanarLazyGrid.ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetCellDirs_Sylves_Cell_">PlanarLazyGrid.GetCellDirs(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetCellCorners_Sylves_Cell_">PlanarLazyGrid.GetCellCorners(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_FindBasicPath_Sylves_Cell_Sylves_Cell_">PlanarLazyGrid.FindBasicPath(Cell, Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_IndexCount">PlanarLazyGrid.IndexCount</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetIndex_Sylves_Cell_">PlanarLazyGrid.GetIndex(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetCellByIndex_System_Int32_">PlanarLazyGrid.GetCellByIndex(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetBound">PlanarLazyGrid.GetBound()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetBound_System_Collections_Generic_IEnumerable_Sylves_Cell__">PlanarLazyGrid.GetBound(IEnumerable&lt;Cell&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_IntersectBounds_Sylves_IBound_Sylves_IBound_">PlanarLazyGrid.IntersectBounds(IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_UnionBounds_Sylves_IBound_Sylves_IBound_">PlanarLazyGrid.UnionBounds(IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetCellsInBounds_Sylves_IBound_">PlanarLazyGrid.GetCellsInBounds(IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_IsCellInBound_Sylves_Cell_Sylves_IBound_">PlanarLazyGrid.IsCellInBound(Cell, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetCellCenter_Sylves_Cell_">PlanarLazyGrid.GetCellCenter(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetCellCorner_Sylves_Cell_Sylves_CellCorner_">PlanarLazyGrid.GetCellCorner(Cell, CellCorner)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetTRS_Sylves_Cell_">PlanarLazyGrid.GetTRS(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetDeformation_Sylves_Cell_">PlanarLazyGrid.GetDeformation(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__">PlanarLazyGrid.GetPolygon(Cell, Vector3[], Matrix4x4)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetTriangleMesh_Sylves_Cell_">PlanarLazyGrid.GetTriangleMesh(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__">PlanarLazyGrid.GetMeshData(Cell, MeshData, Matrix4x4)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_FindCell_Sylves_Vector3_Sylves_Cell__">PlanarLazyGrid.FindCell(Vector3, Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__">PlanarLazyGrid.FindCell(Matrix4x4, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetCellsIntersectsApprox_Sylves_Vector3_Sylves_Vector3_">PlanarLazyGrid.GetCellsIntersectsApprox(Vector3, Vector3)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">PlanarLazyGrid.Raycast(Vector3, Vector3, Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_FindGridSymmetry_System_Collections_Generic_ISet_Sylves_Cell__System_Collections_Generic_ISet_Sylves_Cell__Sylves_Cell_Sylves_CellRotation_">PlanarLazyGrid.FindGridSymmetry(ISet&lt;Cell&gt;, ISet&lt;Cell&gt;, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">PlanarLazyGrid.TryApplySymmetry(GridSymmetry, IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__">PlanarLazyGrid.TryApplySymmetry(GridSymmetry, Cell, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
+  <h6><strong>Assembly</strong>: Sylves.dll</h6>
+  <h5 id="Sylves_RelaxModifier_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class RelaxModifier : PlanarLazyGrid, IGrid</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="Sylves_RelaxModifier__ctor_" data-uid="Sylves.RelaxModifier.#ctor*"></a>
+  <h4 id="Sylves_RelaxModifier__ctor_Sylves_IGrid_System_Single_System_Single_System_Int32_Sylves_ICachePolicy_" data-uid="Sylves.RelaxModifier.#ctor(Sylves.IGrid,System.Single,System.Single,System.Int32,Sylves.ICachePolicy)">RelaxModifier(IGrid, Single, Single, Int32, ICachePolicy)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RelaxModifier(IGrid underlying, float chunkSize = 10F, float weldTolerance = 1E-07F, int relaxIterations = 3, ICachePolicy cachePolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td><span class="parametername">underlying</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">chunkSize</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">weldTolerance</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">relaxIterations</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.ICachePolicy.html">ICachePolicy</a></td>
+        <td><span class="parametername">cachePolicy</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Sylves_RelaxModifier_CoordinateDimension_" data-uid="Sylves.RelaxModifier.CoordinateDimension*"></a>
+  <h4 id="Sylves_RelaxModifier_CoordinateDimension" data-uid="Sylves.RelaxModifier.CoordinateDimension">CoordinateDimension</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int CoordinateDimension { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_CoordinateDimension">PlanarLazyGrid.CoordinateDimension</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_Is2d_" data-uid="Sylves.RelaxModifier.Is2d*"></a>
+  <h4 id="Sylves_RelaxModifier_Is2d" data-uid="Sylves.RelaxModifier.Is2d">Is2d</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Is2d { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_Is2d">PlanarLazyGrid.Is2d</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_Is3d_" data-uid="Sylves.RelaxModifier.Is3d*"></a>
+  <h4 id="Sylves_RelaxModifier_Is3d" data-uid="Sylves.RelaxModifier.Is3d">Is3d</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Is3d { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_Is3d">PlanarLazyGrid.Is3d</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_IsFinite_" data-uid="Sylves.RelaxModifier.IsFinite*"></a>
+  <h4 id="Sylves_RelaxModifier_IsFinite" data-uid="Sylves.RelaxModifier.IsFinite">IsFinite</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsFinite { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_IsFinite">PlanarLazyGrid.IsFinite</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_IsOrientable_" data-uid="Sylves.RelaxModifier.IsOrientable*"></a>
+  <h4 id="Sylves_RelaxModifier_IsOrientable" data-uid="Sylves.RelaxModifier.IsOrientable">IsOrientable</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsOrientable { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_IsOrientable">PlanarLazyGrid.IsOrientable</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_IsPlanar_" data-uid="Sylves.RelaxModifier.IsPlanar*"></a>
+  <h4 id="Sylves_RelaxModifier_IsPlanar" data-uid="Sylves.RelaxModifier.IsPlanar">IsPlanar</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsPlanar { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_IsPlanar">PlanarLazyGrid.IsPlanar</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_IsRepeating_" data-uid="Sylves.RelaxModifier.IsRepeating*"></a>
+  <h4 id="Sylves_RelaxModifier_IsRepeating" data-uid="Sylves.RelaxModifier.IsRepeating">IsRepeating</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsRepeating { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_IsRepeating">PlanarLazyGrid.IsRepeating</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_IsSingleCellType_" data-uid="Sylves.RelaxModifier.IsSingleCellType*"></a>
+  <h4 id="Sylves_RelaxModifier_IsSingleCellType" data-uid="Sylves.RelaxModifier.IsSingleCellType">IsSingleCellType</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsSingleCellType { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_IsSingleCellType">PlanarLazyGrid.IsSingleCellType</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_Unbounded_" data-uid="Sylves.RelaxModifier.Unbounded*"></a>
+  <h4 id="Sylves_RelaxModifier_Unbounded" data-uid="Sylves.RelaxModifier.Unbounded">Unbounded</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IGrid Unbounded { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_Unbounded">PlanarLazyGrid.Unbounded</a></div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Sylves_RelaxModifier_BoundBy_" data-uid="Sylves.RelaxModifier.BoundBy*"></a>
+  <h4 id="Sylves_RelaxModifier_BoundBy_Sylves_IBound_" data-uid="Sylves.RelaxModifier.BoundBy(Sylves.IBound)">BoundBy(IBound)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IGrid BoundBy(IBound bound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_BoundBy_Sylves_IBound_">PlanarLazyGrid.BoundBy(IBound)</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_GetAdjacentChunks_" data-uid="Sylves.RelaxModifier.GetAdjacentChunks*"></a>
+  <h4 id="Sylves_RelaxModifier_GetAdjacentChunks_Sylves_Vector2Int_" data-uid="Sylves.RelaxModifier.GetAdjacentChunks(Sylves.Vector2Int)">GetAdjacentChunks(Vector2Int)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override IEnumerable&lt;Vector2Int&gt; GetAdjacentChunks(Vector2Int chunk)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector2Int.html">Vector2Int</a></td>
+        <td><span class="parametername">chunk</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.Vector2Int.html">Vector2Int</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetAdjacentChunks_Sylves_Vector2Int_">PlanarLazyGrid.GetAdjacentChunks(Vector2Int)</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_GetCellTypes_" data-uid="Sylves.RelaxModifier.GetCellTypes*"></a>
+  <h4 id="Sylves_RelaxModifier_GetCellTypes" data-uid="Sylves.RelaxModifier.GetCellTypes">GetCellTypes()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;ICellType&gt; GetCellTypes()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.ICellType.html">ICellType</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetCellTypes">PlanarLazyGrid.GetCellTypes()</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_GetMeshGrid_" data-uid="Sylves.RelaxModifier.GetMeshGrid*"></a>
+  <h4 id="Sylves_RelaxModifier_GetMeshGrid_Sylves_Vector2Int_" data-uid="Sylves.RelaxModifier.GetMeshGrid(Sylves.Vector2Int)">GetMeshGrid(Vector2Int)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override MeshGrid GetMeshGrid(Vector2Int v)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector2Int.html">Vector2Int</a></td>
+        <td><span class="parametername">v</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.MeshGrid.html">MeshGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_GetMeshGrid_Sylves_Vector2Int_">PlanarLazyGrid.GetMeshGrid(Vector2Int)</a></div>
+  
+  
+  <a id="Sylves_RelaxModifier_TryMove_" data-uid="Sylves.RelaxModifier.TryMove*"></a>
+  <h4 id="Sylves_RelaxModifier_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__" data-uid="Sylves.RelaxModifier.TryMove(Sylves.Cell,Sylves.CellDir,Sylves.Cell@,Sylves.CellDir@,Sylves.Connection@)">TryMove(Cell, CellDir, out Cell, out CellDir, out Connection)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.CellDir.html">CellDir</a></td>
+        <td><span class="parametername">dir</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">dest</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.CellDir.html">CellDir</a></td>
+        <td><span class="parametername">inverseDir</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Connection.html">Connection</a></td>
+        <td><span class="parametername">connection</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.PlanarLazyGrid.html#Sylves_PlanarLazyGrid_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__">PlanarLazyGrid.TryMove(Cell, CellDir, out Cell, out CellDir, out Connection)</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Sylves.IGrid.html">IGrid</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Move_Sylves_IGrid_Sylves_Cell_Sylves_CellDir_">GridExtensions.Move(IGrid, Cell, CellDir)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetNeighbours_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetNeighbours(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_FindCell_Sylves_IGrid_Sylves_Vector3_">GridExtensions.FindCell(IGrid, Vector3)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Transformed_Sylves_IGrid_Sylves_Matrix4x4_">GridExtensions.Transformed(IGrid, Matrix4x4)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Masked_Sylves_IGrid_System_Collections_Generic_ISet_Sylves_Cell__">GridExtensions.Masked(IGrid, ISet&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Masked_Sylves_IGrid_System_Func_Sylves_Cell_System_Boolean__System_Collections_Generic_IEnumerable_Sylves_Cell__">GridExtensions.Masked(IGrid, Func&lt;Cell, Boolean&gt;, IEnumerable&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_ToMeshData_Sylves_IGrid_System_Collections_Generic_IEnumerable_Sylves_Cell__">GridExtensions.ToMeshData(IGrid, IEnumerable&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetPolygon_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetPolygon(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetMeshData_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetMeshData(IGrid, Cell)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

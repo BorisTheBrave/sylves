@@ -1,0 +1,3125 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/Adam/Documents/Programming/Programming 2022/Sylves/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.AStarPathfinding.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.AStarPathfinding.html",
+          "hash": "zjn4uUY9oRHSLRBbdM0eNV9DR69fGtE4Q+p5Dx7di5E="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.BaseModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.BaseModifier.html",
+          "hash": "vXb99wR0kndyROr9zLMtW37cC/j93sM2M/vWbhP2rUs="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.BiMap-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.BiMap-2.html",
+          "hash": "qeerGZaa0lRLtXz3ZrvgdQWH4Wy+Wrb4DeMkBJm0HNw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.BijectModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.BijectModifier.html",
+          "hash": "t0AujKXS9pmOPeZ7FR9fp53X50zAzdO2ZytSG1E3Q2c="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CachePolicy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CachePolicy.html",
+          "hash": "YBnuavVK+xQZ2NWmyQn4IrXxFPP5D/1Ez/uoj507ls8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CairoGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CairoGrid.html",
+          "hash": "88VrxKMZAbAHUUxjsHuNdnv9JirthkpFf/EVf5gM3z0="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Cell.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Cell.html",
+          "hash": "MrRTlT0UYTRBTUwV76xLk9LVlpogTXrj+aT98E6rNZk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CellCorner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CellCorner.html",
+          "hash": "MAD3ptB74VRZiJu9rttv4VdB01BguxnW+30R6G6xyzA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CellDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CellDir.html",
+          "hash": "wFTG/n/CjmEGKKE2QO3Ml3AWPRRXxcTSLl1DfpYA440="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CellPath.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CellPath.html",
+          "hash": "W4Sw4SIwg2jGLhdaCxLHa9uMXp0fLNlawAXaz2LGTt8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CellRotation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CellRotation.html",
+          "hash": "n8LQMKSnbVPvefTYcgjxjCxecJnUN0aa/DfwkmhRn7g="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CellSwizzle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CellSwizzle.html",
+          "hash": "NnkwPKuhr1g1q2AP/qK/Z8yjTmCeu8IwzOT6fJgvotk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CellSwizzleExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CellSwizzleExtensions.html",
+          "hash": "mp3e3AIK1++tuffj560Grv2/b74hXIP5OnKAzKmtz7U="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.ChisledPathfinding.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.ChisledPathfinding.html",
+          "hash": "aVwHx2IBAuMrA3DUgUVMSiRc8/lgCmz3Q0oGgjxtIU4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Connection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Connection.html",
+          "hash": "G7icexHIYBKBoLezjJzo9Dyic6DU229aCv2DTVFaZXo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.ConwayOperators.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.ConwayOperators.html",
+          "hash": "12YQk9QR0nmDKu1fyLkbVqPacn0vK0IkbtXJE/niNAk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CubeBound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CubeBound.html",
+          "hash": "b37zZ/rOFjLUJ04bZ1zHJ9pL9mPEqjdflwPatzfZ5mQ="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CubeCellType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CubeCellType.html",
+          "hash": "4hH9LsgvjmY3OyK25LtdXWccU5Y/UONy4JeYY7+Av7o="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CubeCorner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CubeCorner.html",
+          "hash": "N79u1DLUebqOE4C782qnBh+8yX6CSyKC8Lj6ANtk0T8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CubeDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CubeDir.html",
+          "hash": "PuWncPfg29IEA/zQtB2saEaANAnWKJQzbbc+SRdypvQ="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CubeDirExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CubeDirExtensions.html",
+          "hash": "J1nl5AnK2u4g+dRn6p4DUT4Rb+vQ9BEGDqRnXllpztY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CubeGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CubeGrid.html",
+          "hash": "Tw8LBJcB/9PckL31KfAooJQYnXexsnBnW6pqQmoFwIw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CubeRotation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CubeRotation.html",
+          "hash": "+XZ9Ob5TfDDqFVNGcOccPRNln7CAVmpb3JHZzNx2/98="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CubiusGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CubiusGrid.html",
+          "hash": "JIGmplQ7ci+VvzsN/1pnOK9Fx4Ina/8qgYl/EEBTXKA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.DataDrivenCellData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.DataDrivenCellData.html",
+          "hash": "PN26M4lvrLjKPb38au/sdkrWP4V5AxRq/xveSLm1iIg="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.DataDrivenData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.DataDrivenData.html",
+          "hash": "hkeED51ieFdcU3Nek6bHfIaAEltJuqZUioIuqg4AFnU="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.DataDrivenGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.DataDrivenGrid.html",
+          "hash": "vafmjlvDAn5maPQpmsXbX3MtGQmspp9jivjOLjVLXbc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Deformation.GetJacobiFunc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Deformation.GetJacobiFunc.html",
+          "hash": "WUxMZJBzP4WzdO3MjprSRTfRx2BketO/F/Duz40xTMQ="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Deformation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Deformation.html",
+          "hash": "LyWqYiNLhhV34Xc19XxVVck23G4epc5w1Tf4xrafhLc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.DeformationUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.DeformationUtils.html",
+          "hash": "zNfOA3V+C+VJmUCcpYtbjPXXDHHuy8NUZrYY6I8to04="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.DijkstraPathfinding.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.DijkstraPathfinding.html",
+          "hash": "Cb9E2Go0y17SBEXzU3LMva0mT6MgMLy7Jqtrdxoe3Yw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.DualMappingExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.DualMappingExtensions.html",
+          "hash": "zlsbe7ZMWcU//j0Mc8yS1WAHl7Tnmcm/E4pORT3riks="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.DualMeshBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.DualMeshBuilder.html",
+          "hash": "rvPt0/PYGKbvRNkdc1lCesAY490YtIS6qyVV3KKcLL8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.FSTriangleCorner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.FSTriangleCorner.html",
+          "hash": "LdLrcuwrqklTh+7tNSbadzJ5w/p/Cf0bfaKOe75xYpY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.FSTriangleDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.FSTriangleDir.html",
+          "hash": "MyQpNf8TW5KA0nMkuJDKWMxfMeJpIWhWitIFqmxA7Bk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.FSTrianglePrismDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.FSTrianglePrismDir.html",
+          "hash": "a4doWs4oOOUyPxnsSbWjBcZDOexiswNJgRY/ZbQkArI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.FTHexCorner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.FTHexCorner.html",
+          "hash": "SjOk8ebw4hwoWVJEjhu4F16Ep3O6ycYKfP5ioDefHc4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.FTHexDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.FTHexDir.html",
+          "hash": "gdEFh1XtOkhKhibGdaoEBehrp/awO4was7tmZFSb96E="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.FTHexPrismDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.FTHexPrismDir.html",
+          "hash": "TDI3wWKiVK0uKzLYfejR8iUNXb1uoIy5yoEynn/WEKo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.FTTriangleCorner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.FTTriangleCorner.html",
+          "hash": "VIlBodVFL3Q2skzgBA9nhM5VajVzxSg1rbbWvkDSz1w="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.FTTriangleDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.FTTriangleDir.html",
+          "hash": "ZSy9rH3jCJoIeb59aca+f6V2tVwKtu943Q+vU3Pi3PI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.FTTrianglePrismDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.FTTrianglePrismDir.html",
+          "hash": "+G5CRhgCPiPewU1bA+AbknTfG+AZkTI4sXSfAXTBlOk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Grid2dException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Grid2dException.html",
+          "hash": "kYqhCMxzxVacE+3cyPD+L1UbCMtoLtoB6cOh1E6vK8o="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Grid3dException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Grid3dException.html",
+          "hash": "slBh14hMm6o4cJvQok1AN4UYZgn9CtRUykGPbQqdwrk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.GridExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.GridExtensions.html",
+          "hash": "NCWq3BQ480Fgt1y8CpaG2qhHJflQbQfhYrA/Rpz0wLw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.GridInfiniteException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.GridInfiniteException.html",
+          "hash": "vglC38slQrEdjisEYtDAD0TbGD2G8iWduKIWSVOcyiY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.GridSymmetry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.GridSymmetry.html",
+          "hash": "d5Ezc8LUSXRW9cFy4G2PaCsk6J4Hlv71QrObw5nQjtk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HashUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HashUtils.html",
+          "hash": "SnjcH2cuYqSxPR19yGlvkpx5DPsWjQqj8ZoBHHfkhGY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HexBound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HexBound.html",
+          "hash": "0SdxMWufLIyN6as5smz28vBeFLJQeQ8w0FyTFWO2988="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HexCellType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HexCellType.html",
+          "hash": "CA+JIWubx9TUWPlkQwPTqyFPbs2kHkWGfA6Cqs8jm+o="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HexDirExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HexDirExtensions.html",
+          "hash": "E7jFwy5qsM62RPkXi8lnfcfGIS7SVzVgO2NVjiT3w5Q="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HexGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HexGrid.html",
+          "hash": "Ci82tjptKyiZjQKkFJ146yRZXssSPXYG5xMMUx3kG0c="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HexOrientation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HexOrientation.html",
+          "hash": "iggHY4cfv6RJfl1G48F9gHQJpVaDp6AgCdExLG1fTxI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HexPrismBound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HexPrismBound.html",
+          "hash": "BGub/RX5HORzdxreGlxbvMwZ9gT6p4KKYOPz/f/5d+E="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HexPrismCellDirExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HexPrismCellDirExtensions.html",
+          "hash": "yKGaYRYHEiyiXeJB/yWzWx98+m0D7INahicNsQ6KIMw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HexPrismCellType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HexPrismCellType.html",
+          "hash": "fXYx7Cj/ADja5cSkGe7UFUKtilP9xwnYy+Wnty0afbE="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HexPrismGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HexPrismGrid.html",
+          "hash": "hMVxIFToNVbCdIFDTJ9F823gWeHbExvwiGwkWS4u0lU="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HexRotation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HexRotation.html",
+          "hash": "JqWiKLlQFLKBh8rFTYM3yuY2vtYUS/LjWzQAifrro9A="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.IBound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.IBound.html",
+          "hash": "U9KVv2Irl0LSWenqdO59x3HPpiubE0aqGLrt+5RHKMw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.ICachePolicy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.ICachePolicy.html",
+          "hash": "k/zJo4FK2XStEmS5TFRCY1ELDVzRtdwC9ZjPL1K+oy8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.ICellType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.ICellType.html",
+          "hash": "cFHOlvususBdiFqJoZ5jrTSkf9Thrqf+cn8k8CWNVho="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.IDualMapping.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.IDualMapping.html",
+          "hash": "PGO/A/G/eCOCZKfzI9Z4KQiuPiwRUc63S62hSytGEZA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.IGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.IGrid.html",
+          "hash": "msYNcrgd0ykFU3G4SISEOLom641v6wUpcYc652zKqHc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.IntUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.IntUtils.html",
+          "hash": "ti01dP7oazo1o4bFKcoJPcp3/ZV11uQg7tM1OAiPKpM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MaskModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MaskModifier.html",
+          "hash": "anh5Wk23X6cENuNHbAg0a+QMa21qyjoCYs9GJq48JJs="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Mathf.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Mathf.html",
+          "hash": "hcAjmRPxVGMeczxXV7+EFoMRG43Ag9EIoqAn5pC75k8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Matrix4x4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Matrix4x4.html",
+          "hash": "cQWCGClxQFdxSjLGWJusYlPiv4X1BupZE20k7HOgyd4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshCellData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshCellData.html",
+          "hash": "xY0BSmUpDdxsPZrKBkGccRB5NP3kOVSfdjAoGlElvJI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshData.html",
+          "hash": "mKwhwmIVc5GMdI3q6R6WOQilvNd6S/pliSTvx8rHiJ8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshDataOperations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshDataOperations.html",
+          "hash": "QefacykH8MMpWZqwxKAcurD756U5h5QDNOeVVbL+gUo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshEmitter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshEmitter.html",
+          "hash": "o6ZmbHeGg9z1iuqTksdF4QR1B40uLKOd4L4d7sJ5z7k="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshGrid.html",
+          "hash": "kr3o7q+AaIFsP5loYBII9uPH/0iIRyKJ7+zvB+SA0KM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshGridOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshGridOptions.html",
+          "hash": "eYK1r/i5144RWaAQigcTyUzZtUEikOYjmtOUAbTMs+s="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshPrimitives.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshPrimitives.html",
+          "hash": "YVSfmYsssLq+oMZSqBEf6Og0MLnBNPGNUyQ5MISZ4WA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshPrismGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshPrismGrid.html",
+          "hash": "RinsMKO85eHDOmMstITNLhU/Bf8GE1q9Taw8IZ2zWNo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshPrismGridOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshPrismGridOptions.html",
+          "hash": "hpzaOMthfDw4TCvlikwnPEZEjkDggvqA53NWhm7Tyuc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshRaycast.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshRaycast.html",
+          "hash": "D5i42V9igwCkSuroBca8j/IKVt3YZrU2+IawSImAqnI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshTopology.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshTopology.html",
+          "hash": "U6K41sKYODw1bbFYTt/LbVjTAFKQ2Lu7m+Lt6RyPfXM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshUtils.Face.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshUtils.Face.html",
+          "hash": "IgTC4DiJ9YLxrfW/SWz2/lG8KzrAoCLZNWR0zDHiIog="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MeshUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MeshUtils.html",
+          "hash": "bX3xEpNySh0VtfkRQmPdjjeZ14rt9uYAC59j8lJwh7s="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MetaHexagonGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MetaHexagonGrid.html",
+          "hash": "+9UL1BFfqSuUnM/fmR6QIornHXhtezrQKyyT/C4QOG4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.MobiusSquareGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.MobiusSquareGrid.html",
+          "hash": "hb79L0rzo2M8u58JTPdYRpHiigumbD4PGW+Ny+KjiBQ="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.NGonCellType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.NGonCellType.html",
+          "hash": "yB8BMfOH79xgq565frNZRwgXP9/L7I7ndBkCo1VslCU="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.NGonPrismCellType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.NGonPrismCellType.html",
+          "hash": "8fjDALhArJMphm5Nlc2SdgR+cuNi5Y/s/aUeNv49I+U="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PTHexCorner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PTHexCorner.html",
+          "hash": "3CItBua5aXcTYxZHXfLVC42AEEibTGuYnYjJhu4GKNo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PTHexDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PTHexDir.html",
+          "hash": "PYmu3j5QtscXygyTOwj5HEYeUK7Br5FJDAzyU/MmaaY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PTHexPrismDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PTHexPrismDir.html",
+          "hash": "2GNqgpGP45DCcqU9kqz7/nCXcd5hNgF0vCTv3SEEu58="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Pathfinding.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Pathfinding.html",
+          "hash": "YqBj8qdKJkfIFElRQQvlSfqqks4gIKOMcN6cNPUk0/4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PeriodicPlanarMeshGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PeriodicPlanarMeshGrid.html",
+          "hash": "fE67xvNeabc2pnEzXr3CCLOh2CLMEJhNnBJM282/xS8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PlanarLazyGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PlanarLazyGrid.html",
+          "hash": "KatcCovPg9ty1mEhrnFIyTFaaIRM/dP4Jw56h37od3A="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PlanarLazyMeshGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PlanarLazyMeshGrid.html",
+          "hash": "yXQzrrWyCsyRfOLTnh8Tkjfxp8U9akMH4D2p6CTBBIc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PlanarPrismBound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PlanarPrismBound.html",
+          "hash": "r6PfiWngybabfsqF1juvyJWxTaxKfOSIJ8CIRdd4b2I="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PlanarPrismModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PlanarPrismModifier.html",
+          "hash": "X7M2q5GWPr2MZ0OR76IxQWef9ejG4qZiphvKPID4FZs="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PlanarPrismOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PlanarPrismOptions.html",
+          "hash": "dHZAnNbjrFmN3bTEkKRGrV8v8eX+A7Ps/XVXqQFHWwU="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PrismInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PrismInfo.html",
+          "hash": "fFcNTA4wq6OXKeAR0VVJ36PxMOfv2EQWVyqBQ6nM9b0="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.QuadInterpolation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.QuadInterpolation.html",
+          "hash": "l2bi1RKo4LXmY1h4G/qRWl79y783HnW4HVk0K1xz0Js="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Quaternion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Quaternion.html",
+          "hash": "LMlZZn1B0Kx5XjGeUwMY9bdqblCDbQdnDHs+EOJriRU="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.RavelModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.RavelModifier.html",
+          "hash": "Mric+8csxqFhL6wpzlS5RYKt8WZoAAhmD6l/8GZlIqg="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.RaycastInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.RaycastInfo.html",
+          "hash": "vdepu8+iYRvJA70Ozp6Mlq52Udzb3pRiwet+Sz1AeyA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.RelaxModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.RelaxModifier.html",
+          "hash": "QoOKIhH4iPemTMKVkcLOASHt00eikL3CG9coBA4P4Cg="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.RhombilleGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.RhombilleGrid.html",
+          "hash": "r52IEd7uPE5cnBd64I1hCptt9Pqvm2yMfLCqd8F3H/s="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SquareBound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SquareBound.html",
+          "hash": "bw7ULZe0KI0GuUfKmHHykqa7LepdXvxubAwgCamZ4pc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SquareCellType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SquareCellType.html",
+          "hash": "Tc9JaxTrXQsbJBC9gUjUvTkmKFgLSN62ilmuIVK4wjk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SquareCorner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SquareCorner.html",
+          "hash": "usFCA4UFzkiKkFbHaSSYodeAHJciGgsB5wCvwe6IMXA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SquareDir.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SquareDir.html",
+          "hash": "0w9dvDvcb5hF+0/KX0s/eaEG/zrtN38bIroHJ9V/53c="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SquareDirExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SquareDirExtensions.html",
+          "hash": "UlWjy1Db3Nph/nvCxGG0yELRIcnJZQWKcW+CyhGpb8I="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SquareGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SquareGrid.html",
+          "hash": "AiU5LdDnQ/MAnKf+Ikv17bY7xyW5nMdc5nZjXnkAbIU="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SquareRotation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SquareRotation.html",
+          "hash": "FYSA2IYMdzKpG9EatrymnHplodzhiGNqp5+wLEv9jsM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SquareSnubGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SquareSnubGrid.html",
+          "hash": "VpeHncORXKvO38dea85iRX5SvYPH+QyqRKVSpzQVam8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Step.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Step.html",
+          "hash": "PN6Gyt+L25jmAd3mxh02en9OBUswGIpD19Wy8DTheDs="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.StepLengths.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.StepLengths.html",
+          "hash": "EyhAJszriNJntGQu6l12JRz4MbN9/peEmokrzP+H6HU="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SvgBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SvgBuilder.html",
+          "hash": "6RXUXrtbfBl3BVMeEkfvRCAgh7/an7e2LultX0T8pgY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SvgExport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SvgExport.html",
+          "hash": "NMd0rGG3zBvBh0GO5t+aBnEMXOlD03efHGkYmEsK0Oc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TRS.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TRS.html",
+          "hash": "AI8usAGKqnT6cWF8iQ65S9+DCj5X4LshtbH/yEIoIOM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TetrakisSquareGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TetrakisSquareGrid.html",
+          "hash": "Bh+M8HDp9aJmNsmqNPyK1DOawE3qjjqjtw0q/1WaTwY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TownscaperGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TownscaperGrid.html",
+          "hash": "oXP9WSvCu2AJ85nSmGLktf8FiUvJAFr8jO2i8pz7c/I="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TransformModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TransformModifier.html",
+          "hash": "QSp3lOuNH1ac3+0WGTMVm42J3jFkwIpYwLGI6LvTcDk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TriHexGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TriHexGrid.html",
+          "hash": "qUDgoKWN1oZz7Mh3fUxnGKrrkyiD8jMaFNUbm4bhxu4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TriangleBound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TriangleBound.html",
+          "hash": "IZYhofQpB7llggVCARxKPofQCaYqSIXpQYmmCMdgw+M="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TriangleCellType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TriangleCellType.html",
+          "hash": "8pRrFHxBqvW8I/IVLBYTa+ezjCW/5vJsX30za3N9UK8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TriangleGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TriangleGrid.html",
+          "hash": "vhPsCFbvx0NmfvVnxpPm2HUMBu6Elm/8EhBTv9R8Vcc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TriangleInterpolation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TriangleInterpolation.html",
+          "hash": "J1Km/55xM6dfjEa8nOMd3CmAXr/rAbmaYFjW1r9uT5k="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TriangleOrientation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TriangleOrientation.html",
+          "hash": "hNtPEpQPMhxo9DRhUK8ORBvA/ukPyXUTOSSmNEKA91M="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TrianglePrismBound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TrianglePrismBound.html",
+          "hash": "2rtRW4PWUqNf6SzVSpcFXALjsb+d01zef/PcQm4RE4k="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TrianglePrismCellDirExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TrianglePrismCellDirExtensions.html",
+          "hash": "UAf5o28xP8IrYnDMAJfmllMwTJBROZFQ+u3f59my2MQ="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TrianglePrismCellType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TrianglePrismCellType.html",
+          "hash": "ecCgmwYYa2MdqN0gzP4nFvlOM492pL+ZGUNxIzAbqbM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.TrianglePrismGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.TrianglePrismGrid.html",
+          "hash": "MBWCE3FA13Th458L/nPZnigWWgkOBVhEMk0elI8vRRw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Vector2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Vector2.html",
+          "hash": "+ETD54yqUf8GzuuQTLp6tEtLQCBrZ1b3gl/Cn+7ba/E="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Vector2Int.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Vector2Int.html",
+          "hash": "BHv2g2F2SbYMxKwq8W7bKBrZQySB8sHKhvIIAy8T3a4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Vector3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Vector3.html",
+          "hash": "+VGO5Mg36aev1+QArsMLhAJ8VeTwDh2bSImBeuNjatw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Vector3Int.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Vector3Int.html",
+          "hash": "Ms22ehsHjvHNtwbauM3O8f08CeDE3ji6IqXPoxfJ5n0="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Vector4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Vector4.html",
+          "hash": "XqvEsadxSEnp4nFbTurG4A/OiRVVdfsGjVTNjI6dmN4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.VectorUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.VectorUtils.html",
+          "hash": "XKtl7OftXOS0DrartBEcIyzkJ4PSjr3MUwFL2PkP/sE="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Walker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Walker.html",
+          "hash": "oc2PG8k+Yf08N7bptW/OFMCrQHIgitZNkAiiYLbGP4U="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.WrapModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.WrapModifier.html",
+          "hash": "iu1wZNvZFeEVhNSKBQtOiXaywnw7oP9hBkGn3MCXtTo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.WrappingSquareGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.WrappingSquareGrid.html",
+          "hash": "b401vgjuhwW14YoPbrrIYgPrdmk5Mw2BONwvRWzii4o="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.XZCellTypeModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.XZCellTypeModifier.html",
+          "hash": "Sh6Z7DYXXfVCCUPZ+ujEUlrUJTEFh2ecfDhHZ8U0NwY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.XZHexPrismGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.XZHexPrismGrid.html",
+          "hash": "THF7n+QLCCDlKximMaKYjRH6353mEhwOCscelGMR/v4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.XZModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.XZModifier.html",
+          "hash": "BOPXYDPVyYd1wbBr9Of6cd0sHx/2ExCFNTD1d/joQHM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.XZTrianglePrismGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.XZTrianglePrismGrid.html",
+          "hash": "nEx3/FTmuK8grr9guysm3wW1tvbTyTwSskp5Qv2ivxs="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.html",
+          "hash": "PR3nB35W2i4O1+r6WTsTeLw+lT0xRKBbYBhwXOCnboo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "VjnU7GlGMwjhrUwH9ehzhUPyv6qvGCHfMD304SqybqQ="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "2W7d4FHvW/JbuuSIPPHvQmDokE66Z7BT0yzwJSbnEtE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/bounds.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/bounds.html",
+          "hash": "aZah8TGZt3TQw83DGX6PLMF3zyBgjGmKUoiqPDBUPYI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/caching.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/caching.html",
+          "hash": "Juu4geAG7ZlJbDE5ti3PYsxdPgKFIhJDMKQxdOAW2D4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/canonical.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/canonical.html",
+          "hash": "78zbI0F7AiHoZIzWEmMWn3E3LNVqOl4mRhapXmtJcYA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/dual.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/dual.html",
+          "hash": "9ngvSvs5mYYkXTXmO7j9PXkM9tgp4H01uUfA9XwOVBQ="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/grid_symmetry.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/grid_symmetry.html",
+          "hash": "NHwbbC9Ex3on3tiMtkZAQtx53r3kKnOHB+GHIl3s6Jw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/index.html",
+          "hash": "ogiz0y0PBbX8/wqA40h6UBY0968haGXvkNLkBNgopo4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/indices.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/indices.html",
+          "hash": "5HGhIB5EkHZneTHovy2kPcuPaUhAEl3thSZaTi6i8Ys="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/info.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/info.html",
+          "hash": "o+dzgHTE+9QSsRCSrywLkrEbmQJ6y68AV82Qx6/l7P4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/mesh.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/mesh.html",
+          "hash": "LL7kE+9cratU0OSXwHP4EAMVtu5q71Ql12qcspjwoPM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/pathfinding.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/pathfinding.html",
+          "hash": "jMY8gy/UpEvkBCH3wvALB4dTEgHT6xdYs2Hio9c/jFQ="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/position.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/position.html",
+          "hash": "Y+nQW4ocaN/8bFwZpE1cl5pG3QJvlUFvIlsDf6cHq94="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/query.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/query.html",
+          "hash": "5vcn+DImRZCk9xOteOWZmEsTWZF+3bVe58h1m95C8Nk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/relatives.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/relatives.html",
+          "hash": "Cv2rdbI42mmr6RxRUcwuIhpUdmAYWMD9Q8QR/cG7RQg="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/rotation.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/rotation.html",
+          "hash": "v21f87NubEcAFyB3+HTTBUWg7Rx8VIFZaRS4a49rons="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/shape.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/shape.html",
+          "hash": "EKrvdml6/mVWj3G0lwm0EdtThBlNg4rHnCquInR/pds="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/storage.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/storage.html",
+          "hash": "wxxaVhqO3FRtNP72/lfyXtULVeZ9suR5Wzb7Z+7ZlX0="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/topology.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/topology.html",
+          "hash": "banX7XBchyI4txmcih1AThwowgU9/gLhTLxjnfAWthA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/creating.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/creating.html",
+          "hash": "1eQeHCc5HXbj5vp+8Q5Eqpqx0qXhbYmKI4UNOJXRop8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/extras.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/extras.html",
+          "hash": "HdZJgeYjQ1bTQ5QxYecmI94dp8P82HviJ2e4Qjk1GT0="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grids/cubegrid.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grids/cubegrid.html",
+          "hash": "NVhN3TINwuLfsDJ1qWToOr86U1nV5HVOoAVps8hRs34="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grids/hexgrid.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grids/hexgrid.html",
+          "hash": "iIahGmh656AOSy1e68ZZYze346PyeegDL+Bq0IQVZVw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grids/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grids/index.html",
+          "hash": "3vAX7CVK5+gblSTA6xYyPlCJEiwmrbwHAubvk4M/Z1E="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grids/meshgrid.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grids/meshgrid.html",
+          "hash": "k4rn95w2pWWXNVlAOnfUFxb0XnANVnybJec/cHo/Q9s="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grids/meshprismgrid.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grids/meshprismgrid.html",
+          "hash": "IpkwBTJbJCTdB2HbtzvbcZS+70Lc/aZOMMly/TOIWYE="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grids/periodicplanarmeshgrid.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grids/periodicplanarmeshgrid.html",
+          "hash": "KnNO0MCfIQJhmni/3n9eb/ufBSr7jugwUsElUrSNzak="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grids/planarlazymeshgrid.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grids/planarlazymeshgrid.html",
+          "hash": "OjVNjo250gLYBgv6Lt6lco3JIhWZJC8Y/aQqCjYhqc4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grids/squaregrid.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grids/squaregrid.html",
+          "hash": "jwQKxgcAbCMXGt4yVliRLqZW75D5tBRxrtgrJcPw4TA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grids/trianglegrid.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grids/trianglegrid.html",
+          "hash": "vI1LzxYrdFmr/5MEET86rmzePcHyJZp6sgrpkTNDdYk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/index.html",
+          "hash": "71bsn/MLXLh+ESRK02Xx8Zr5PZTDcYOgzXGTA+zwjBY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/modifiers/_modifiers_table.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/modifiers/_modifiers_table.html",
+          "hash": "E+3hTNIa6gv2/hEybcZEapZ9DHclp/loMxukCFkEwSY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/modifiers/bijectmodifier.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/modifiers/bijectmodifier.html",
+          "hash": "xO1UJRWIjhxAUH0o+2D5HjkZZBYXZTDAvW4qrTJWhSo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/modifiers/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/modifiers/index.html",
+          "hash": "54ZhlWi5YmDKOA9rK4YkMWwdj19o6fohWjeb7JZsXkc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/modifiers/maskmodifier.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/modifiers/maskmodifier.html",
+          "hash": "k1z/d//prgIJBDkGefm00RpNk9EsJh+yedvVZsbQW2U="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/modifiers/planarprismmodifier.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/modifiers/planarprismmodifier.html",
+          "hash": "eCX5yGu8s10eTvDtBJonzMg/wHBSO2ewqF6QYgQsjKc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/modifiers/ravelmodifier.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/modifiers/ravelmodifier.html",
+          "hash": "mOSl0CWwBROSyLc6UOZTCA09f/u1cf8uBMfvX+g9mxg="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/modifiers/relaxmodifier.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/modifiers/relaxmodifier.html",
+          "hash": "hx7Z5d0BiAl4dNvXF/gSLceCXlfRVUS0kkycbJ+uLfM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/modifiers/transformmodifier.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/modifiers/transformmodifier.html",
+          "hash": "VaGEdVU1VFKjzvtBt7E0Owk+hX5u4yTQDTLWgya3xVI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/modifiers/wrapmodifier.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/modifiers/wrapmodifier.html",
+          "hash": "HF1DYi0To86lFGPC1ceCHlkcvJaR0FHOUbH1WVE856Y="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/release_notes.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/release_notes.html",
+          "hash": "JR/50gisjRGs0UJPyhrekFItvA+2F/TRTlafcHfPKgg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "qGwek5SwBaiixGkZAmMuvADqVZajxbt17A1daUucfDM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/tutorials/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/tutorials/index.html",
+          "hash": "l7s+TtjtjmgaorzpR8ZncF7TM8NqjjzAQNJlWhWgoS8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/tutorials/langton.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/tutorials/langton.html",
+          "hash": "C9Ka+bfirpadt+Y5YvV7WTjCNzyhdKmUcN48/1tVayA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/tutorials/marching_squares.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/tutorials/marching_squares.html",
+          "hash": "C7UyPr/KAUIjKPtGeojdGHYXuhCJEMWaWiCnDOl5m1g="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/tutorials/paint.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/tutorials/paint.html",
+          "hash": "x/YA0P5ZGEz2K8BgUjV61gcHwIUTi4IMEhEH7ddtTHo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/tutorials/townscaper.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/tutorials/townscaper.html",
+          "hash": "/vPtDtu5n7mjaiRUQxoGjPIyXQH392ayJaqJ4DFJxyg="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/all_grids.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/all_grids.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/all_grids.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/all_grids.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/cell_anatomy.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/cell_anatomy.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/cube_directions.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/cube_directions.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/deformation.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/deformation.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/demo/cellpicker.gif",
+      "output": {
+        "resource": {
+          "relative_path": "images/demo/cellpicker.gif"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/demo/langton.gif",
+      "output": {
+        "resource": {
+          "relative_path": "images/demo/langton.gif"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/demo/pathfinding.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/demo/pathfinding.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/demo/polyominoes.gif",
+      "output": {
+        "resource": {
+          "relative_path": "images/demo/polyominoes.gif"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/documentation.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "images/documentation.jpg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/duals/bounded_square_dual.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/duals/bounded_square_dual.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/duals/hex_dual.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/duals/hex_dual.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/duals/square_dual.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/duals/square_dual.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/duals/tri_dual.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/duals/tri_dual.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/biject_square.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/biject_square.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/cairo.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/cairo.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/center_square.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/center_square.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/cube.blend",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/cube.blend"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/cube.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/cube.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/cubius.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/cubius.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/hex_ft.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/hex_ft.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/hex_pt.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/hex_pt.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/hexprism.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/hexprism.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/mask_square.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/mask_square.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/meshgrid.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/meshgrid.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/meshprism.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/meshprism.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/metahexagon.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/metahexagon.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/mobius.blend",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/mobius.blend"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/mobiussquare.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/mobiussquare.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/planarprismmodifier.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/planarprismmodifier.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/ravel_square.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/ravel_square.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/relax_square.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/relax_square.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/rhombille.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/rhombille.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/square.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/square.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/squaresnub.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/squaresnub.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/tetrakissquare.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/tetrakissquare.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/townscaper.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/townscaper.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/transform_square.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/transform_square.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/tri_fs.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/tri_fs.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/tri_ft.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/tri_ft.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/triangleprism.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/triangleprism.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/trihex.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/trihex.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/unrelaxedtownscaper.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/unrelaxedtownscaper.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/wrap_square.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/wrap_square.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/wrap_square_fake.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/wrap_square_fake.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/icosahedron.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/icosahedron.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo_cropped.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo_cropped.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/marching_squares_map.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/marching_squares_map.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/marching_squares_tiles.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/marching_squares_tiles.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/paint_hex.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/paint_hex.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/paint_hex_animated.gif",
+      "output": {
+        "resource": {
+          "relative_path": "images/paint_hex_animated.gif"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/paint_hex_animated.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/paint_hex_animated.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/paint_line.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/paint_line.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rhombille_example.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/rhombille_example.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rotations_and_reflections.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/rotations_and_reflections.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/seeds/cairo.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/seeds/cairo.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/seeds/metahexagon.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/seeds/metahexagon.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/seeds/rhombille.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/seeds/rhombille.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/seeds/squaresnub.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/seeds/squaresnub.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/seeds/tetrakissquare.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/seeds/tetrakissquare.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/seeds/trihex.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/seeds/trihex.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/sphere.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/sphere.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/square_grid.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/square_grid.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/townscaper_pan.webm",
+      "output": {
+        "resource": {
+          "relative_path": "images/townscaper_pan.webm"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/townscaper_screenshot.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "images/townscaper_screenshot.jpg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/townscaper_tutorial_1.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/townscaper_tutorial_1.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/townscaper_tutorial_2.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/townscaper_tutorial_2.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/townscaper_tutorial_3.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/townscaper_tutorial_3.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/townscaper_tutorial_4.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/townscaper_tutorial_4.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/walk_cube.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/walk_cube.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/walk_sphere.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/walk_sphere.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "index",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "50hwLGpUtY6Pz704IvpTq1qUEuNP5XQiPLkj1U2c0xg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "oTURDwgwfWcgGnkMfPIFGUWw9jF6WwZuYd0QxVje1KU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 46,
+          "skipped_file_count": 45
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 141,
+          "skipped_file_count": 140
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

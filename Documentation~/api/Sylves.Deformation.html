@@ -1,0 +1,881 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Deformation
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Deformation
+   ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/custom.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Sylves.Deformation">
+  
+  
+  <h1 id="Sylves_Deformation" data-uid="Sylves.Deformation" class="text-break">Class Deformation
+  </h1>
+  <div class="markdown level0 summary"><p>A deformation is a continuous, differentable mapping from one space to another.
+It is used to warp meshes in arbitrary ways, by mapping the vertices, normals and tangents of the mesh.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Deformation</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
+  <h6><strong>Assembly</strong>: Sylves.dll</h6>
+  <h5 id="Sylves_Deformation_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class Deformation</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="Sylves_Deformation__ctor_" data-uid="Sylves.Deformation.#ctor*"></a>
+  <h4 id="Sylves_Deformation__ctor_System_Func_Sylves_Vector3_Sylves_Vector3__Sylves_Deformation_GetJacobiFunc_System_Boolean_" data-uid="Sylves.Deformation.#ctor(System.Func{Sylves.Vector3,Sylves.Vector3},Sylves.Deformation.GetJacobiFunc,System.Boolean)">Deformation(Func&lt;Vector3, Vector3&gt;, Deformation.GetJacobiFunc, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Deformation(Func&lt;Vector3, Vector3&gt; deformPoint, Deformation.GetJacobiFunc getJacobi, bool invertWinding)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>&gt;</td>
+        <td><span class="parametername">deformPoint</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Deformation.GetJacobiFunc.html">Deformation.GetJacobiFunc</a></td>
+        <td><span class="parametername">getJacobi</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">invertWinding</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation__ctor_" data-uid="Sylves.Deformation.#ctor*"></a>
+  <h4 id="Sylves_Deformation__ctor_System_Func_Sylves_Vector3_Sylves_Vector3__System_Func_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3__System_Func_Sylves_Vector3_Sylves_Vector4_Sylves_Vector4__Sylves_Deformation_GetJacobiFunc_System_Boolean_" data-uid="Sylves.Deformation.#ctor(System.Func{Sylves.Vector3,Sylves.Vector3},System.Func{Sylves.Vector3,Sylves.Vector3,Sylves.Vector3},System.Func{Sylves.Vector3,Sylves.Vector4,Sylves.Vector4},Sylves.Deformation.GetJacobiFunc,System.Boolean)">Deformation(Func&lt;Vector3, Vector3&gt;, Func&lt;Vector3, Vector3, Vector3&gt;, Func&lt;Vector3, Vector4, Vector4&gt;, Deformation.GetJacobiFunc, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Deformation(Func&lt;Vector3, Vector3&gt; deformPoint, Func&lt;Vector3, Vector3, Vector3&gt; deformNormal, Func&lt;Vector3, Vector4, Vector4&gt; deformTangent, Deformation.GetJacobiFunc getJacobi, bool invertWinding)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>&gt;</td>
+        <td><span class="parametername">deformPoint</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>&gt;</td>
+        <td><span class="parametername">deformNormal</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector4.html">Vector4</a>, <a class="xref" href="Sylves.Vector4.html">Vector4</a>&gt;</td>
+        <td><span class="parametername">deformTangent</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Deformation.GetJacobiFunc.html">Deformation.GetJacobiFunc</a></td>
+        <td><span class="parametername">getJacobi</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">invertWinding</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation__ctor_" data-uid="Sylves.Deformation.#ctor*"></a>
+  <h4 id="Sylves_Deformation__ctor_System_Func_Sylves_Vector3_Sylves_Vector3__System_Single_System_Boolean_" data-uid="Sylves.Deformation.#ctor(System.Func{Sylves.Vector3,Sylves.Vector3},System.Single,System.Boolean)">Deformation(Func&lt;Vector3, Vector3&gt;, Single, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Deformation(Func&lt;Vector3, Vector3&gt; deformPoint, float step = 0.001F, bool invertWinding = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>&gt;</td>
+        <td><span class="parametername">deformPoint</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">step</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">invertWinding</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  
+  
+  <h4 id="Sylves_Deformation_Identity" data-uid="Sylves.Deformation.Identity">Identity</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Deformation Identity</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Deformation.html">Deformation</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Sylves_Deformation_PostDeform" data-uid="Sylves.Deformation.PostDeform">PostDeform</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix4x4 PostDeform</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Sylves_Deformation_PostDeformIT" data-uid="Sylves.Deformation.PostDeformIT">PostDeformIT</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix4x4 PostDeformIT</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Sylves_Deformation_PreDeform" data-uid="Sylves.Deformation.PreDeform">PreDeform</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix4x4 PreDeform</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Sylves_Deformation_PreDeformIT" data-uid="Sylves.Deformation.PreDeformIT">PreDeformIT</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix4x4 PreDeformIT</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Sylves_Deformation_InnerDeformNormal_" data-uid="Sylves.Deformation.InnerDeformNormal*"></a>
+  <h4 id="Sylves_Deformation_InnerDeformNormal" data-uid="Sylves.Deformation.InnerDeformNormal">InnerDeformNormal</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Func&lt;Vector3, Vector3, Vector3&gt; InnerDeformNormal { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_InnerDeformPoint_" data-uid="Sylves.Deformation.InnerDeformPoint*"></a>
+  <h4 id="Sylves_Deformation_InnerDeformPoint" data-uid="Sylves.Deformation.InnerDeformPoint">InnerDeformPoint</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Func&lt;Vector3, Vector3&gt; InnerDeformPoint { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_InnerDeformTangent_" data-uid="Sylves.Deformation.InnerDeformTangent*"></a>
+  <h4 id="Sylves_Deformation_InnerDeformTangent" data-uid="Sylves.Deformation.InnerDeformTangent">InnerDeformTangent</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Func&lt;Vector3, Vector4, Vector4&gt; InnerDeformTangent { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector4.html">Vector4</a>, <a class="xref" href="Sylves.Vector4.html">Vector4</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_InnerGetJacobi_" data-uid="Sylves.Deformation.InnerGetJacobi*"></a>
+  <h4 id="Sylves_Deformation_InnerGetJacobi" data-uid="Sylves.Deformation.InnerGetJacobi">InnerGetJacobi</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Deformation.GetJacobiFunc InnerGetJacobi { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Deformation.GetJacobiFunc.html">Deformation.GetJacobiFunc</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_InnerInvertWinding_" data-uid="Sylves.Deformation.InnerInvertWinding*"></a>
+  <h4 id="Sylves_Deformation_InnerInvertWinding" data-uid="Sylves.Deformation.InnerInvertWinding">InnerInvertWinding</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool InnerInvertWinding { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_InvertWinding_" data-uid="Sylves.Deformation.InvertWinding*"></a>
+  <h4 id="Sylves_Deformation_InvertWinding" data-uid="Sylves.Deformation.InvertWinding">InvertWinding</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool InvertWinding { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Sylves_Deformation_Clone_" data-uid="Sylves.Deformation.Clone*"></a>
+  <h4 id="Sylves_Deformation_Clone" data-uid="Sylves.Deformation.Clone">Clone()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Deformation Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Deformation.html">Deformation</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_DeformNormal_" data-uid="Sylves.Deformation.DeformNormal*"></a>
+  <h4 id="Sylves_Deformation_DeformNormal_Sylves_Vector3_Sylves_Vector3_" data-uid="Sylves.Deformation.DeformNormal(Sylves.Vector3,Sylves.Vector3)">DeformNormal(Vector3, Vector3)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector3 DeformNormal(Vector3 p, Vector3 v)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">p</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">v</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_DeformPoint_" data-uid="Sylves.Deformation.DeformPoint*"></a>
+  <h4 id="Sylves_Deformation_DeformPoint_Sylves_Vector3_" data-uid="Sylves.Deformation.DeformPoint(Sylves.Vector3)">DeformPoint(Vector3)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector3 DeformPoint(Vector3 p)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">p</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_DeformTangent_" data-uid="Sylves.Deformation.DeformTangent*"></a>
+  <h4 id="Sylves_Deformation_DeformTangent_Sylves_Vector3_Sylves_Vector4_" data-uid="Sylves.Deformation.DeformTangent(Sylves.Vector3,Sylves.Vector4)">DeformTangent(Vector3, Vector4)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector4 DeformTangent(Vector3 p, Vector4 t)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">p</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector4.html">Vector4</a></td>
+        <td><span class="parametername">t</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector4.html">Vector4</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_GetJacobi_" data-uid="Sylves.Deformation.GetJacobi*"></a>
+  <h4 id="Sylves_Deformation_GetJacobi_Sylves_Vector3_" data-uid="Sylves.Deformation.GetJacobi(Sylves.Vector3)">GetJacobi(Vector3)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix4x4 GetJacobi(Vector3 p)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">p</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_GetJacobi_" data-uid="Sylves.Deformation.GetJacobi*"></a>
+  <h4 id="Sylves_Deformation_GetJacobi_Sylves_Vector3_Sylves_Matrix4x4__" data-uid="Sylves.Deformation.GetJacobi(Sylves.Vector3,Sylves.Matrix4x4@)">GetJacobi(Vector3, out Matrix4x4)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetJacobi(Vector3 p, out Matrix4x4 j)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">p</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td><span class="parametername">j</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  
+  
+  <a id="Sylves_Deformation_op_Multiply_" data-uid="Sylves.Deformation.op_Multiply*"></a>
+  <h4 id="Sylves_Deformation_op_Multiply_Sylves_Deformation_Sylves_Matrix4x4_" data-uid="Sylves.Deformation.op_Multiply(Sylves.Deformation,Sylves.Matrix4x4)">Multiply(Deformation, Matrix4x4)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Deformation operator *(Deformation meshDeformation, Matrix4x4 m)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Deformation.html">Deformation</a></td>
+        <td><span class="parametername">meshDeformation</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td><span class="parametername">m</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Deformation.html">Deformation</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Deformation_op_Multiply_" data-uid="Sylves.Deformation.op_Multiply*"></a>
+  <h4 id="Sylves_Deformation_op_Multiply_Sylves_Matrix4x4_Sylves_Deformation_" data-uid="Sylves.Deformation.op_Multiply(Sylves.Matrix4x4,Sylves.Deformation)">Multiply(Matrix4x4, Deformation)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Deformation operator *(Matrix4x4 m, Deformation meshDeformation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td><span class="parametername">m</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Deformation.html">Deformation</a></td>
+        <td><span class="parametername">meshDeformation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Deformation.html">Deformation</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

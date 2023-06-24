@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Rotation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Rotation ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="rotation">Rotation</h1>
+
+<p>For many games and other usages of grids, you never need to worry about rotating things. In chess, for example, the units move in fixed patterns. Or for a height map, you just need a single number per cell.</p>
+<p>But in other usages, the facing direction of objects matters, or you wish to re-use the same tile image in a different orientation. For these, sooner or later, you'll need to worry about rotations.</p>
+<p>Rotations are complicated to understand fully, and you are recommended to avoid them until you are comfortable with cells, cell types and grids, as described in the <a href="index.html">key concepts</a>.</p>
+<h2 id="what-is-a-rotation">What is a rotation?</h2>
+<p>In Sylves, a <code>CellRotation</code> describes any rotation of a single cell that maps the cell onto itself.</p>
+<p>For example, for a square cell, there are 4 rotations, corresponding to rotating by 0, 90, 180 or 270 degrees.
+Rotating by, say, 45 degrees is not a rotation, as that would transform a square to a diamond, not back to the original square.</p>
+<p>There's also 4 reflections that map a square onto itself. Reflections are treated the same as rotations in Sylves, and usually we'll use rotation to refer to both of them.</p>
+<p><img src="../../images/rotations_and_reflections.svg" alt=""></p>
+<p>Transformations that map something back onto itself are known as symmetries in mathematics.</p>
+<p><code>CellRotation</code> is actually an empty enumeration - the actual values are specific to the cell type in question. For example, <code>SquareRotation</code> supplies values like <code>SquareRotation.RotateCW</code> and <code>SquareRotation.ReflectX</code> as values.</p>
+<p>If you want to work with rotations without using a specific type, you can use use the appropriate <code>ICellType</code> implementation, such as <code>SquareCellType.Instance</code>, which is detailed more in the <a href="index.html#abstract-and-specific-types">key concepts</a>.</p>
+<p>Rotations only consider a single cell at a time. For rotating an entire grid, see <a href="grid_symmetry.html">Grid Symmetry</a> or <a href="../modifiers/transformmodifier.html">TransformModifier</a>.</p>
+<h3 id="2d3d-rotations">2d/3d rotations</h3>
+<p>2d rotations are the easiest to consider. If a polygon has <code>n</code> sides, then there are <code>n</code> rotations, each a multiple of <code>360 / n</code> degrees, which are stored as positive integers in counterclockwise order.
+There's also <code>n</code> possible reflections, which are stored as negative numbers.</p>
+<p>So a 2d rotation will have <code>-n &lt;= (int)rotation &lt; n</code>.</p>
+<p><code>SquareCellType</code>, <code>HexCellType</code> and <code>NGonCellType</code> <a href="https://en.wikipedia.org/wiki/Dihedral_group">all work this way</a>.</p>
+<p>Sylves also supports <code>CubeCellType</code>, which uses <code>CubeRotation</code> that supports all 48 rotations / reflections of a cube.</p>
+<h2 id="basic-usage">Basic usage</h2>
+<p>Most of the key methods of rotations are on ICellType, as rotations only consider a single cell.</p>
+<h3 id="getidentity"><a class="xref" href="../../api/Sylves.ICellType.html#Sylves_ICellType_GetIdentity"><code>GetIdentity</code></a></h3>
+<p>Gets the rotation that does nothing.</p>
+<h3 id="getrotations"><a class="xref" href="../../api/Sylves.ICellType.html#Sylves_ICellType_GetRotations_System_Boolean_"><code>GetRotations</code></a></h3>
+<p>Gets all rotations (and optionally reflections) of a cell.</p>
+<h3 id="invert"><a class="xref" href="../../api/Sylves.ICellType.html#Sylves_ICellType_Invert_Sylves_CellRotation_"><code>Invert</code></a></h3>
+<p>Finds the rotation that undoes the given rotation.</p>
+<h3 id="rotateccwrotatecw"><a class="xref" href="../../api/Sylves.ICellType.html#Sylves_ICellType_RotateCCW"><code>RotateCCW</code></a>/<a class="xref" href="../../api/Sylves.ICellType.html#Sylves_ICellType_RotateCW"><code>RotateCW</code></a></h3>
+<p>Rotate left/right (2d cell types only)</p>
+<p>Then there are methods for applying the rotation:</p>
+<h3 id="rotate"><a class="xref" href="../../api/Sylves.ICellType.html#Sylves_ICellType_Rotate_Sylves_CellDir_Sylves_CellRotation_"><code>Rotate</code></a></h3>
+<p>Rotate a <code>CellDir</code> by a given <code>CellRotation</code>.</p>
+<h3 id="multiply"><a class="xref" href="../../api/Sylves.ICellType.html#Sylves_ICellType_Multiply_Sylves_CellRotation_Sylves_CellRotation_"><code>Multiply</code></a></h3>
+<p>Compose two rotations together into a single one.</p>
+<h3 id="getmatrix"><a class="xref" href="../../api/Sylves.ICellType.html#Sylves_ICellType_GetMatrix_Sylves_CellRotation_"><code>GetMatrix</code></a></h3>
+<p>Get a rotation as a matrix, so you can transform vectors.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If you use specific classes like <code>SquareRotation</code>, they usually have the <code>*</code> operator overloaded as a shorthand for applying rotations, and many other convenience methods.</p>
+</div>
+<h2 id="trymove-and-rotation">TryMove and Rotation</h2>
+<p>A classic riddle goes: <em>&quot;A bear travels one mile south, one mile east, then one mile north and finds itself back at home. What color is the bear?&quot;</em>.</p>
+<p>The answer of course, is white - the only place on earth where this is possible is near the north pole. But it does illustrate an important about motion - when you travel on curved or distored surfaces, things work differently. Our bear took two 90 degree turns, but somehow ended up returning home at an angle.</p>
+<p><img src="../../images/walk_sphere.svg" alt=""></p>
+<p>The same issue comes up in some of the more complicated grids of Sylves. Let's consider a grid that uses the faces of a cube - it has 6 faces, each a square. The exact same problem shows up:</p>
+<p><img src="../../images/walk_cube.svg" alt=""></p>
+<p>If you follow this path, you end up rotated 90 degrees from where you started! This is the link between motion on a grid, and rotation.</p>
+<hr>
+<p>In order to deal with this sort of situation, when you call <a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__"><code>IGrid.TryMove</code></a>, in addition to returning the tile you move to, you get <code>inverseDir</code> and <code>connection</code>, which explain if any rotation is happening.</p>
+<p>Let's ignore connection for now, as it is irrelevant to the majority of grids. <code>inverseDir</code> returns the <code>CellDir</code> needed to move <em>back</em> to the original cell. Why is <code>inverseDir</code> so important?</p>
+<p>Well, for the basic grids, like SquareGrid, HexGrid, CubeGrid, <code>inverseDir</code> is always the obvious choice. If you move left, then inverseDir will be right. Same for up/down, etc.</p>
+<p>On our 3d cube example however, it's simply not possible for the directions to all the consistent like that. Here's one way we <em>could</em> label the cube.</p>
+<p><img src="../../images/cube_directions.svg" alt="">.</p>
+<p>When we <code>TryMove</code> from the top face, in direction <code>SquareDir.Down</code>, we end up on the left face. And inverseDir will be <code>SquareDir.Up</code>.</p>
+<p>Then, we can <code>TryMove</code> from the left face to the right one, via <code>SquareDir.Right</code>. The inverseDir would be <code>SquareDir.Left</code>.</p>
+<p>But moving from the right face to the top one, via <code>SquareDir.Up</code>, we'd find that the inverseDir would be <code>SquareDir.Right</code>! That is telling us that the frame of reference has rotated as we moved. And we could even measure that rotation:</p>
+<pre><code class="lang-csharp">var actualDirection = (CellDir)SquareDir.Right;
+var expectedDirection = SquareCellType.Instance.Invert((CellDir)SquareDir.Up).Value;
+SquareCellType.Instance.TryGetRotation(actualDirection, expectedDirection, new Connection(), out var rotation);
+// Now rotation == SquareRotation.RotateCW
+</code></pre>
+<p>This general concept is called rotation maps and is covered in <a href="https://www.boristhebrave.com/2022/07/31/rotation-graphs/">more details on my blog</a>.</p>
+<h2 id="connection">Connection</h2>
+<p>In addition to <code>inverseDir</code>, <code>TryMove</code> also supplies a <a class="xref" href="../../api/Sylves.Connection.html"><code>Connection</code></a> object. This is used for describing relationships between tiles even more complex than the above example.</p>
+<p>It's only used in very rare circumstances. For example imagine a grid on a <a href="https://en.wikipedia.org/wiki/M%C3%B6bius_strip">Möbius strip</a>.</p>
+<img width="400px" src="../../images/grids/mobiussquare.png">
+<p>If you travel all the way around such a grid, you'll find yourself on the same cell, facing the same direction, but left and right have been flipped. <a class="xref" href="../../api/Sylves.Connection.html#Sylves_Connection_Mirror">Connection.Mirror</a> records whether to flip everything when you travel from one cell to another. To make the Möbius grid work, you must insert a dividing line that causes to mirror when you travel through it.</p>
+<p>Similarly <a class="xref" href="../../api/Sylves.Connection.html#Sylves_Connection_Rotation">Connection.Rotation</a> is used for 3d grids, and notes if you need to change your <a href="https://en.wikipedia.org/wiki/Degrees_of_freedom_(mechanics)">roll angle</a> when moving cells.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

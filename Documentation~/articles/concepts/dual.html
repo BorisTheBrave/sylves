@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Dual Grids </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Dual Grids ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="dual-grids">Dual Grids</h1>
+
+<p>Each grid in Sylves can be converted into a dual grid. The dual grid of a base grid has one cell for every unique vertex in the base grid, and one vertex for every cell.</p>
+<p>Dual grids are based on a concept from maths of <a href="https://en.wikipedia.org/wiki/Dual_graph">dual graphs</a>/<a href="https://en./.wikipedia.org/wiki/Dual_polyhedron">dual polyhedra</a>/<a href="https://mathworld.wolfram.com/DualTessellation.html">dual tilings</a>.</p>
+<p>Some grids (black) with the dual grid overlaid in red.</p>
+<figure>
+<img src="../../images/duals/square_dual.svg" width="200"><br>
+<img src="../../images/duals/hex_dual.svg" width="200"><br>
+<img src="../../images/duals/tri_dual.svg" width="200">
+</figure>
+<p>The dual of the square grid is another square grid, while the dual of a hex grid is a triangle grid, and visa versa.</p>
+<h2 id="working-with-dual-grids">Working with Dual Grids</h2>
+<p>Dual grids are useful when you need to talk about the corners of a base grid. Sylves already has an API for working with corners,i.e. using CellCorner wth ICellType, but it's not unique. For example, in a square grid, the corner <code>SquareCorner.TopRight</code> of cell <code>(0,0)</code> refers to the same position as <code>SquareCorner.BottomLeft</code> of cell <code>(1, 1)</code>, and there are two other cells that have corners in that position.</p>
+<pre><code class="lang-csharp">IGrid squareGrid = new SquareGrid(1);
+Vector3 p1 = squareGrid.GetCellCorner(new Cell(0, 0), (CellCorner)SquareCorner.TopRight);
+Vector3 p2 = squareGrid.GetCellCorner(new Cell(1, 1), (CellCorner)SquareCorner.BottomLeft);
+// Both p1, and p2 will have value: new Vector3(0.5, 0.5, 0)
+
+</code></pre>
+<p>In Sylves terminology, we say each cell has its own set of corners, but these corners all correspond to a single vertex. Because vertices correspond to cells in the dual grid, they're more commonly called dual cells.</p>
+<p>The dual grid api lets you find a unique cell value each vertex. You'll get the same value regardless of which corner you queried it about.</p>
+<pre><code class="lang-csharp">IDualMapping dualMapping = squareGrid.GetDual();
+Cell? dualCell = dualMapping.ToDualCell(new Cell(0, 0), (CellCorner)SquareCorner.TopRight);
+Cell? dualCell2 = dualMapping.ToDualCell(new Cell(1, 1), (CellCorner)SquareCorner.BottomLeft);
+// Both dualCell and dualCell2 will have the same value: new Cell(1, 1)
+</code></pre>
+<p>You can also get a fresh grid for querying specifics about that dual cell.</p>
+<pre><code class="lang-csharp">IGrid dualGrid = dualMapping.DualGrid;
+Vector3 vertexCenter = dualGrid.GetCellCenter(dualCell);
+// Returns new Vector3(0.5, 0.5, 0)
+</code></pre>
+<p>DualGrid is a fully functional grid, where the cener of each dual cell will the corner of some cell in the base grid, and the corner of each cell in the dual grid corresponds to the center of some cell in the base grid.</p>
+<p>There are many operations in <code>IDualMapping</code> for converting between the base grid and dual grid.</p>
+<h3 id="dualgrid"><a class="xref" href="../../api/Sylves.IDualMapping.html#Sylves_IDualMapping_DualGrid"><code>DualGrid</code></a></h3>
+<p>The dual grid to map to.</p>
+<h3 id="basegrid"><a class="xref" href="../../api/Sylves.IDualMapping.html#Sylves_IDualMapping_BaseGrid"><code>BaseGrid</code></a></h3>
+<p>The grid this mapping was constructed from.</p>
+<h3 id="todualpair"><a class="xref" href="../../api/Sylves.IDualMapping.html#Sylves_IDualMapping_ToBasePair_Sylves_Cell_Sylves_CellCorner_"><code>ToDualPair</code></a></h3>
+<p>Finds the corresponding dual cell to a corner of a base cell, and the corner of the dual cell that returns back.</p>
+<h3 id="tobasepair"><a class="xref" href="../../api/Sylves.IDualMapping.html#Sylves_IDualMapping_ToBasePair_Sylves_Cell_Sylves_CellCorner_"><code>ToBasePair</code></a></h3>
+<p>Finds the corresponding base cell to a corner of a dual cell, and the corner of the base cell that returns back.</p>
+<h3 id="todualcell"><a class="xref" href="../../api/Sylves.DualMappingExtensions.html#Sylves_DualMappingExtensions_ToDualCell_Sylves_IDualMapping_Sylves_Cell_Sylves_CellCorner_"><code>ToDualCell</code></a></h3>
+<p>Finds the corresponding dual cell to a corner of a base cell.</p>
+<h3 id="tobasecell"><a class="xref" href="../../api/Sylves.DualMappingExtensions.html#Sylves_DualMappingExtensions_ToBaseCell_Sylves_IDualMapping_Sylves_Cell_Sylves_CellCorner_"><code>ToBaseCell</code></a></h3>
+<p>Finds the corresponding base cell to a corner of a dual cell.</p>
+<h3 id="dualneighbours"><a class="xref" href="../../api/Sylves.DualMappingExtensions.html#Sylves_DualMappingExtensions_DualNeighbours_Sylves_IDualMapping_Sylves_Cell_"><code>DualNeighbours</code></a></h3>
+<p>Finds all dual cells that correspond to some corner of the base cell, and returns the corners and pairs.</p>
+<h3 id="baseneighbours"><a class="xref" href="../../api/Sylves.DualMappingExtensions.html#Sylves_DualMappingExtensions_BaseNeighbours_Sylves_IDualMapping_Sylves_Cell_"><code>BaseNeighbours</code></a></h3>
+<p>Finds all base cells that correspond to some corner of the dual cell, and returns the corners and pairs.</p>
+<hr>
+<p>There's also a number of methods on <code>ICellType</code> and <code>IGrid</code> for working with <code>CellCorner</code>.</p>
+<h3 id="icelltypegetcellcorners"><a class="xref" href="../../api/Sylves.ICellType.html#Sylves_ICellType_GetCellCorners"><code>ICellType.GetCellCorners</code></a></h3>
+<h3 id="icelltyperotate"><a class="xref" href="../../api/Sylves.ICellType.html#Sylves_ICellType_Rotate_Sylves_CellCorner_Sylves_CellRotation_"><code>ICellType.Rotate</code></a></h3>
+<h3 id="igridgetdual"><a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_GetDual"><code>IGrid.GetDual</code></a></h3>
+<h3 id="igridgetcellcorners"><a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_GetCellCorners_Sylves_Cell_"><code>IGrid.GetCellCorners</code></a></h3>
+<h3 id="igridgetcellcorner"><a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_GetCellCorner_Sylves_Cell_Sylves_CellCorner_"><code>IGrid.GetCellCorner</code></a></h3>
+<h2 id="inverse-corners">Inverse Corners</h2>
+<p>A few of the methods return an &quot;<code>inverseCorner</code>&quot;. This is similar to inverseDir in <code>IGrid.TryMove</code>, it gives the details required
+to go back to the original cell you started with. It has a number of technical uses, but is rarely needed for normal usage.</p>
+<h2 id="boundaries">Boundaries</h2>
+<p>Dual grids become a bit more fiddly on grids with boundaries. The idea is that vertices and cells are swapped when going base &lt;-&gt; dual, but that idea starts to break down at borders. In these cases, Sylves typically makes the dual grid <em>larger</em> than the base grid. That means there is a cell in the dual grid for every vertex in the base grid. But there may be some vertices in the dual grid that don't have a cell in the base grid. Some of the methods return nullable types for this reason.</p>
+<figure>
+<img src="../../images/duals/bounded_square_dual.svg" width="200">
+</figure>
+<h2 id="marching-squares-example">Marching squares example</h2>
+<p>A tutorial showing the use of dual grids can be found in the <a href="../tutorials/marching_squares.html">Marching Squares Tutorial</a>.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

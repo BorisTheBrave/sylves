@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Bounds </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Bounds ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="bounds">Bounds</h1>
+
+<p><a class="xref" href="../../api/Sylves.IBound.html"><code>IBound</code></a> is a generalization of the idea of a <a href="https://en.wikipedia.org/wiki/Minimum_bounding_box">bounding box</a> to different sorts of grids.</p>
+<p>A bound represents a collection of cells using a small class, which typically stores the min and max extents of the cells.
+Bounds cannot represent an exact arbitrary collection of cells, for that, you should use a <code>HashSet&lt;Cell&gt;</code>.
+So bounds are best used in cases where it doesn't matter if a few too many cells are included, such as in many chunking and culling algorithms.</p>
+<p>Not all grids support bounds. The ones that don't will simply return <code>null</code>, which represents bounds that cover the entire grid. When grids do support bounds,
+the specific class that grid uses is documented with the grid. The classes are usually named similarly: <code>SquareGrid</code> uses <code>SquareBound</code>, <code>HexGrid</code> uses <code>HexBound</code> and so on.</p>
+<h2 id="working-with-bounds">Working with bounds</h2>
+<p><code>IGrid</code> has many methods for working with bounds. Probably the most important are</p>
+<h3 id="getbound"><a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_GetBound_System_Collections_Generic_IEnumerable_Sylves_Cell__"><code>GetBound</code></a></h3>
+<p>Finds the smallest bound that contains all the given cells</p>
+<h3 id="getcellsinbounds"><a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_GetCellsInBounds_Sylves_IBound_"><code>GetCellsInBounds</code></a></h3>
+<p>Finds all the cells inside a bound</p>
+<h3 id="iscellinbound"><a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_IsCellInBound_Sylves_Cell_Sylves_IBound_"><code>IsCellInBound</code></a></h3>
+<p>Tests if a given cell is inside a bound.</p>
+<h3 id="intersectboundsunionbounds"><a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_IntersectBounds_Sylves_IBound_Sylves_IBound_"><code>IntersectBounds</code></a>/<a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_UnionBounds_Sylves_IBound_Sylves_IBound_"><code>UnionBounds</code></a></h3>
+<p>Combines two bounds into one.</p>
+<p>Most of these methods will also accept a <code>null</code> bound, meaning the entire grid.</p>
+<p>If you know the specific class of a bound, you can use that type instead of <code>IBound</code>. Most bounds have useful methods and constructors on them, and implement <code>IEnumerable&lt;Cell&gt;</code> to easily get the cells within.</p>
+<h2 id="bounded-grids">Bounded grids</h2>
+<p>Grids themselves often are associated with a specific bound. For example, <code>new SquareGrid(1)</code> gives an <em>infinite</em> grid of squares. But you can restrict the grid:</p>
+<pre><code class="lang-csharp">var infiniteGrid = new SquareGrid(1);
+var bound = new SquareBound(new Vector2Int(0,0), new Vector2Int(8,8));
+var grid = infiniteGrid.BoundBy(bound);
+</code></pre>
+<p>The new grid returned only contains cells in the range <code>0 &lt;= x &lt; 8</code> and <code>0 &lt;= y &lt; 8</code>, like the 64 cells of a chess board. All grid methods, like <code>TryMove</code> or <code>GetCells</code> will respect this bound
+and not return cells outside the bound.</p>
+<p>To remove the bound from a grid, you can access <a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_Unbounded"><code>grid.Unbounded</code></a>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To restrict a grid to a set of cells not representable by a bound, use  <a class="xref" href="../../api/Sylves.MaskModifier.html"><code>MaskModifier</code></a>.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
