@@ -74,7 +74,8 @@ namespace Sylves
             else
             {
                 resultDir = (CellDir)((HexRotation)rotation * (PTHexDir)dir);
-                connection = new Connection { Mirror = (int)rotation < 0 };
+                var isMirror = (int)rotation < 0;
+                connection = new Connection { Mirror = isMirror, Rotation = isMirror ? 2 : 0, Sides = 4 };
             }
         }
 
@@ -108,17 +109,20 @@ namespace Sylves
                     rotation = default;
                     return false;
                 }
-                if (connection.Mirror)
+                if (connection.Mirror && connection.Rotation == 2)
                 {
                     var delta = ((int)toDir + (int)fromDir) % 6 + 6;
                     rotation = (CellRotation)~(delta % 6);
+                    return true;
                 }
-                else
+                if (!connection.Mirror && connection.Rotation == 0)
                 {
                     var delta = ((int)toDir - (int)fromDir) % 6 + 6;
                     rotation = (CellRotation)(delta % 6);
+                    return true;
                 }
-                return true;
+                rotation = default;
+                return false;
             }
         }
 
@@ -142,7 +146,7 @@ namespace Sylves
         public string Format(CellCorner corner)
         {
             var flatCorner = (int)corner % 6;
-            return (flatCorner >= 6 ? "Forward" : "Back") +
+            return ((int)corner >= 6 ? "Forward" : "Back") +
                 (orientation == HexOrientation.FlatTopped ? ((FTHexCorner)flatCorner).ToString() : ((PTHexCorner)flatCorner).ToString());
         }
 

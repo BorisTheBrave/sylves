@@ -138,7 +138,8 @@ namespace Sylves
             }
             else
             {
-                connection = new Connection { Mirror = (int)rotation < 0 };
+                var isMirror = (int)rotation < 0;
+                connection = new Connection { Mirror = isMirror, Rotation = isMirror ? 2 : 0, Sides = 4 };
                 resultDir = Rotate(dir, rotation);
             }
         }
@@ -173,17 +174,20 @@ namespace Sylves
                     rotation = default;
                     return false;
                 }
-                if (connection.Mirror)
+                if (connection.Mirror && connection.Rotation == 2)
                 {
                     var delta = ((int)toDir + (int)fromDir) % n + n;
                     rotation = (CellRotation)~(delta % n);
+                    return true;
                 }
-                else
+                if (!connection.Mirror && connection.Rotation == 0)
                 {
                     var delta = ((int)toDir - (int)fromDir) % n + n;
                     rotation = (CellRotation)(delta % n);
+                    return true;
                 }
-                return true;
+                rotation = default;
+                return false;
             }
         }
 
@@ -212,7 +216,7 @@ namespace Sylves
         public string Format(CellCorner corner)
         {
             var flatCorner = (int)corner % N;
-            return (flatCorner >= 6 ? "Forward" : "Back") + NGonCellType.Format(corner, N);
+            return ((int)corner >= 6 ? "Forward" : "Back") + NGonCellType.Format(corner, N);
                 
         }
     }
