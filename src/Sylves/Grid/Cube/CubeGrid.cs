@@ -498,17 +498,17 @@ namespace Sylves
                     if (tx1 == mint)
                     {
                         startOnBorder = 0;
-                        x1 = 0;
+                        x1 = dx == 0 ? (bound.min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? bound.min.x : bound.max.x;
                     }
                     else if (ty1 == mint)
                     {
                         startOnBorder = 1;
-                        y1 = 0;
+                        y1 = dy == 0 ? (bound.min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? bound.min.y : bound.max.y;
                     }
                     else
                     {
                         startOnBorder = 2;
-                        z1 = 0;
+                        z1 = dz == 0 ? (bound.min.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? bound.min.z : bound.max.z;
                     }
                 }
                 else
@@ -567,7 +567,7 @@ namespace Sylves
                     y += stepy;
                     ty += idy;
                     cellDir = cellDirY;
-                    if (bound != null && (y >= bound.max.y || x < bound.min.y)) yield break;
+                    if (bound != null && (y >= bound.max.y || y < bound.min.y)) yield break;
                 }
                 else
                 {

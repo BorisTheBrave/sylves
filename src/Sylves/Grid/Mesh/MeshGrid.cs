@@ -74,7 +74,10 @@ namespace Sylves
 
         internal void BuildMeshDetails()
         {
+            // Absolute min thickness. Start getting issues with planes at origin if smaller  this
             var hashCellSize = new Vector3(PlanarThickness, PlanarThickness, PlanarThickness);
+
+            // Now compute hashCellSize based on largest cell
             Vector3? min = null;
             Vector3? max = null;
             foreach (var cell in GetCells())
@@ -85,9 +88,17 @@ namespace Sylves
                 min = min == null ? cellMin : Vector3.Min(min.Value, cellMin);
                 max = max == null ? cellMax : Vector3.Max(max.Value, cellMax);
             }
+            min = min ?? new Vector3();
+            max = max ?? new Vector3();
+
+            // Also, hashCellSize must be larger than floating point precision
+            // This avoids issues with non-origin planes
+            hashCellSize = Vector3.Max(hashCellSize, Vector3.Max(Abs(min.Value), Abs(max.Value)) * 1e-8f);
+
             var meshDetails = new MeshDetails
             {
                 hashCellSize = hashCellSize,
+                hashCellBase = min.Value,
                 hashedCells = new Dictionary<Vector3Int, List<Cell>>(),
                 isPlanar = min.HasValue && min.Value.z == max.Value.z,
             };
@@ -126,12 +137,13 @@ namespace Sylves
         private class MeshDetails
         {
             public Vector3 hashCellSize;
+            public Vector3 hashCellBase;
             public CubeBound hashCellBounds;
             public CubeBound expandedHashCellBounds;
             public Dictionary<Vector3Int, List<Cell>> hashedCells;
             public bool isPlanar;
 
-            public Vector3Int GetHashCell(Vector3 v) => Vector3Int.FloorToInt(Divide(v, hashCellSize));
+            public Vector3Int GetHashCell(Vector3 v) => Vector3Int.FloorToInt(Divide(v - hashCellBase, hashCellSize));
         }
 
         ICellType UnwrapXZCellModifier(ICellType cellType)

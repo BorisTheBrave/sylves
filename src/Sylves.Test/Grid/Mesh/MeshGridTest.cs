@@ -229,6 +229,19 @@ namespace Sylves.Test
             Assert.AreEqual(1.1f, raycastInfo.distance, 1e-6);
         }
 
+
+        [Test]
+        public void TestRaycast_Flat()
+        {
+            // XZ plane has 0 height, but it's not considered planar (XY only)
+            var g = new MeshGrid(Matrix4x4.Translate(Vector3.up) * TestMeshes.PlaneXZ);
+            var results = g.Raycast(new Vector3(0.1f, 2f, 0.1f), Vector3.down);
+            var raycastInfo = results.First();
+            Assert.AreEqual(new Cell(0, 0, 0), raycastInfo.cell);
+            Assert.AreEqual(null, raycastInfo.cellDir);
+            Assert.AreEqual(1.0f, raycastInfo.distance, 1e-6);
+        }
+
         [Test]
         public void TestHex()
         {

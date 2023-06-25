@@ -69,6 +69,16 @@ namespace Sylves.Test
         }
 
         [Test]
+        public void TestRaycast_Bounds()
+        {
+            var hits = CubeGrid.Raycast(new Vector3(0, 10, 0), new Vector3(0, -1, 0), float.PositiveInfinity, new Vector3(1, 1, 1), new CubeBound(new Vector3Int(-1, -1, -1), new Vector3Int(2, 2, 2))).ToList();
+            CollectionAssert.AreEqual(new[] { new Cell(0, 1, 0), new Cell(0, 0, 0), new Cell(0, -1, 0) }, hits.Select(x => x.cell));
+
+            hits = CubeGrid.Raycast(new Vector3(0, -10, 0), new Vector3(0, 1, 0), float.PositiveInfinity, new Vector3(1, 1, 1), new CubeBound(new Vector3Int(-1, -1, -1), new Vector3Int(2, 2, 2))).ToList();
+            CollectionAssert.AreEqual(new[] { new Cell(0, -1, 0), new Cell(0, 0, 0), new Cell(0, 1, 0) }, hits.Select(x => x.cell));
+        }
+
+        [Test]
         public void TestGridSymmetry()
         {
             var g = new CubeGrid(1);
