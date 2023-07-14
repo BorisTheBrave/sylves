@@ -553,7 +553,7 @@ namespace Sylves
 
             var (uCell, layer) = Split(cell);
             var trs = underlying.GetTRS(uCell);
-            return new TRS(trs.Position + GetOffset(layer), trs.Rotation, trs.Scale);
+            return new TRS(trs.Position + GetOffset(layer), trs.Rotation, Vector3.Scale(trs.Scale, new Vector3(1, 1, planarPrismOptions.LayerHeight)));
         }
         #endregion
 
