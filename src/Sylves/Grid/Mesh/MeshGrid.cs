@@ -309,7 +309,7 @@ namespace Sylves
             }
 
             // Broadphase - walk through the hashCells looking for cells to check.
-            var bfRaycastInfos = CubeGrid.Raycast(origin, direction, maxDistance, meshDetails.hashCellSize, meshDetails.expandedHashCellBounds);
+            var bfRaycastInfos = CubeGrid.Raycast(origin - meshDetails.hashCellBase, direction, maxDistance, meshDetails.hashCellSize, meshDetails.expandedHashCellBounds);
             Vector3Int? prevHashCell = null;
             var queuedRaycastInfos = new List<RaycastInfo>();
             foreach (var bfRaycastInfo in bfRaycastInfos)
