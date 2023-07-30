@@ -267,8 +267,8 @@ namespace Sylves
             var cellData = (MeshCellData)CellData[cell];
             var face = cellData.Face;
             var v0 = meshData.vertices[face[0]];
-            var prev = meshData.vertices[face[face.Count - 1]];
-            for (var i = 1; i < face.Count; i++)
+            var prev = meshData.vertices[face[1]];
+            for (var i = 2; i < face.Count; i++)
             {
                 var v = meshData.vertices[face[i]];
                 if (IsPointInTriangle(position, v0, prev, v))
