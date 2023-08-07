@@ -37,8 +37,10 @@ namespace Sylves
                 throw new Exception($"Expected subMeshCount of 1");
 
             // Analyse the original mesh
-            var meshMin = meshData.vertices.Aggregate(Vector3.Min);
-            var meshMax = meshData.vertices.Aggregate(Vector3.Max);
+            // var vertices = meshData.vertices;
+            var vertices = meshData.indices.SelectMany(x => x).Select(i => meshData.vertices[i >= 0 ? i : ~i]);
+            var meshMin = vertices.Aggregate(Vector3.Min);
+            var meshMax = vertices.Aggregate(Vector3.Max);
             var meshMin2 = new Vector2(meshMin.x, meshMin.y);
             var meshMax2 = new Vector2(meshMax.x, meshMax.y);
             var meshSize = meshMax2 - meshMin2;
