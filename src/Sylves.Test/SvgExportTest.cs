@@ -108,6 +108,18 @@ namespace Sylves.Test
             }
         }
 
+        [Test]
+        public void ExportSubstitutionGrids()
+        {
+
+            // Aperiodic grids
+            var asdf = new MaskModifier(new DominoGrid(), Enumerable.Range(0, 64).Select(x=>new Cell(x, 0)).ToHashSet());
+            Export(
+                asdf,
+                "asdf.svg",
+                new Options { textScale = 0.5, min=new Vector2(-10, -10), max=new Vector2(10, 10) });
+        }
+
 
         [Test]
         public void ExportSvgGrids()
