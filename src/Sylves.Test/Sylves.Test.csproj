@@ -35,4 +35,10 @@
     </Reference>
   </ItemGroup>
 
+ <ItemGroup>
+   <None Remove="Grid\Substitution\" />
+ </ItemGroup>
+ <ItemGroup>
+   <Folder Include="Grid\Substitution\" />
+ </ItemGroup>
 </Project>

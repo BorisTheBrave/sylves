@@ -165,9 +165,9 @@ namespace Sylves
             cellTypes = prototiles.SelectMany(x => x.ChildTiles.Select(y => y.Length)).Distinct().Select(NGonCellType.Get).ToList();
         }
 
-        private (int childTile, List<int> path) Parse(Cell cell)
+        internal (int childTile, List<int> path) Parse(Cell cell)
         {
-            ulong current = (ulong)cell.x;
+            ulong current = (uint)cell.x;
             var childTile = (int)(current & ((1UL << tileBits) - 1));
 
 
@@ -184,21 +184,21 @@ namespace Sylves
             {
                 if (bits < prototileBits)
                 {
+                    if (pos == 3)
+                        break;
                     switch (pos)
                     {
                         case 1:
-                            current = current | ((ulong)cell.y << bits);
+                            current = current | ((uint)cell.y << bits);
                             bits += 32;
                             pos += 1;
                             break;
                         case 2:
-                            current = current | ((ulong)cell.z << bits);
+                            current = current | ((uint)cell.z << bits);
                             bits += 32;
                             pos += 1;
                             break;
                     }
-                    if (pos == 3)
-                        break;
                 }
                 path.Add((int)(current & (((ulong)1 << prototileBits) - 1)));
                 current = current >> prototileBits;
@@ -209,10 +209,57 @@ namespace Sylves
             return (childTile, path);
         }
 
-        private Cell Format(int childTile, List<int> path)
+        internal Cell Format(int childTile, List<int> path)
         {
-            // TODO
-            return new Cell();
+            var cell = new Cell();
+            ulong current = 0;
+            var bits = 0;
+            var pos = 1;
+
+            current = (ulong)childTile;
+            bits += tileBits;
+
+            foreach(var p in path)
+            {
+                current = current | ((ulong)p << bits);
+                bits += prototileBits;
+                if(bits >= 32)
+                {
+                    switch(pos)
+                    {
+                        case 1:
+                            cell.x = (int)(current & 0xFFFFFFFF);
+                            current = current >> 32;
+                            bits -= 32;
+                            pos++;
+                            break;
+                        case 2:
+                            cell.y = (int)(current & 0xFFFFFFFF);
+                            current = current >> 32;
+                            bits -= 32;
+                            pos++;
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+                }
+            }
+
+            switch (pos)
+            {
+                case 1:
+                    cell.x = (int)(current & 0xFFFFFFFF);
+                    break;
+                case 2:
+                    cell.y = (int)(current & 0xFFFFFFFF);
+                    break;
+                default:
+                    cell.z = (int)(current & 0xFFFFFFFF);
+                    break;
+            }
+
+            return cell;
+
         }
 
 
