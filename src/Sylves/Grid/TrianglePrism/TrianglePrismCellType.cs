@@ -113,11 +113,13 @@ namespace Sylves
                 {
                     var delta = ((int)toDir + (int)fromDir) % 6 + 6;
                     rotation = (CellRotation)~(delta % 6);
+                    return true;
                 }
                 if (!connection.Mirror && connection.Rotation == 0)
                 {
                     var delta = ((int)toDir - (int)fromDir) % 6 + 6;
                     rotation = (CellRotation)(delta % 6);
+                    return true;
                 }
                 rotation = default;
                 return false;
