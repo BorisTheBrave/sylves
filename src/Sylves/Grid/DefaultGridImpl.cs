@@ -45,6 +45,10 @@ namespace Sylves
             {
                 return false;
             }
+            if (!aGrid.IsCellInGrid(aSrcCell) || !bGrid.IsCellInGrid(bSrcCell))
+            {
+                return false;
+            }
             // For each step of the path, recreate the same step in the right grid.
             foreach (var (aCell, aDir) in path)
             {
