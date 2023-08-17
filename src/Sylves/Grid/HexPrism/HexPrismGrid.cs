@@ -463,6 +463,12 @@ namespace Sylves
         {
             var minZ = Mathf.RoundToInt(min.z / cellSize.z);
             var maxZ = Mathf.RoundToInt(max.z / cellSize.z);
+            if (bound != null)
+            {
+                minZ = Math.Max(minZ, bound.layerMin);
+                maxZ = Math.Min(maxZ, bound.layerMax - 1);
+            }
+
             foreach (var hex in hexGrid.GetCellsIntersectsApprox(min, max))
             {
                 for (var z = minZ; z <= maxZ; z++)
