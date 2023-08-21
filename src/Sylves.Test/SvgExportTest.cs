@@ -108,16 +108,64 @@ namespace Sylves.Test
             }
         }
 
+        private static void ExportPrototiles(string filename, Prototile[] prototiles)
+        {
+
+            Matrix4x4 globalTransform = Matrix4x4.Scale(new Vector3(1, -1, 1));
+
+            var byName = prototiles.ToDictionary(x => x.Name);
+
+            var fullPath = Path.GetFullPath(filename);
+            using (var file = File.Open(fullPath, FileMode.Create))
+            using (var tw = new StreamWriter(file))
+            {
+                var svg = new SvgBuilder(tw);
+
+                void DrawPoly(Vector3[] vertices, Matrix4x4 transform, bool isParent)
+                {
+                    tw.Write($@"<path class=""cell-path"" style=""{(isParent ? "stroke: grey; stroke-width:  0.2" : "fill: none")}"" d=""");
+                    SvgExport.WritePathCommands(vertices, globalTransform * transform, tw);
+                    tw.WriteLine("\"/>");
+                }
+
+
+                svg.BeginSvg();
+                var y = 0;
+                foreach (var prototile in prototiles)
+                {
+                    var transform = Matrix4x4.Translate(new Vector3(0, y, 0));
+                    tw.WriteLine($"<!-- {prototile.Name} -->");
+                    foreach (var tile in prototile.ChildTiles)
+                        DrawPoly(tile, transform, true);
+                    foreach (var child in prototile.ChildPrototiles)
+                    {
+                        var childPrototile = byName[child.childName];
+                        foreach (var tile in childPrototile.ChildTiles)
+                        {
+                            DrawPoly(tile, transform * child.transform, false);
+                        }
+                    }
+                    y += 3;
+                }
+                svg.EndSvg();
+            }
+        }
+
         [Test]
         public void ExportSubstitutionGrids()
         {
 
             // Aperiodic grids
-            var asdf = new MaskModifier(new DominoGrid(), Enumerable.Range(0, 64).Select(x=>new Cell(x, 0)).ToHashSet());
+            //Export(
+            //    new MaskModifier(new DominoGrid(), Enumerable.Range(0, 64).Select(x => new Cell(x, 0)).ToHashSet()),
+            //    "domino.svg",
+            //    new Options { textScale = 0.5, min = new Vector2(-10, -10), max = new Vector2(10, 10) });
+            var g = new PenroseRhombGrid();
             Export(
-                asdf,
-                "asdf.svg",
-                new Options { textScale = 0.5, min=new Vector2(-10, -10), max=new Vector2(10, 10) });
+                new MaskModifier(g, Enumerable.Range(0, 4000).Select(x => new Cell(x, 0)).Where(g.IsCellInGrid).ToHashSet()),
+                "penrose_rhomb.svg",
+                new Options { textScale = 0.5, min = new Vector2(-10, -10), max = new Vector2(10, 10) });
+            ExportPrototiles("penrose_rhomb_prototiles.svg", PenroseRhombGrid.Prototiles);
         }
 
 

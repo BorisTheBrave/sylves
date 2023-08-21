@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves
 {
@@ -145,11 +148,67 @@ namespace Sylves
         private int prototileBits;
         private List<ICellType> cellTypes;
         Func<int, string> hierarchy;
+        private Dictionary<string, Aabb> prototileBounds;
 
         public SubstitutionTilingGrid(Prototile[] prototiles, string[] hierarchy):
             this(prototiles, i => hierarchy[i % hierarchy.Length])
         {
 
+        }
+
+        public struct Aabb
+        {
+            public Vector3 min;
+            public Vector3 max;
+
+            public Aabb(IEnumerable<Vector3> v)
+            {
+                min = v.Aggregate(Vector3.Min);
+                max = v.Aggregate(Vector3.Max);
+            }
+
+            public static Aabb operator*(Matrix4x4 m, Aabb aabb)
+            {
+                var c = (aabb.min + aabb.max) / 2;
+                var h = (aabb.max - aabb.min) / 2;
+                c = m.MultiplyPoint3x4(c);
+                h = m.MultiplyVector(h);
+                h.x = Mathf.Abs(h.x);
+                h.y = Mathf.Abs(h.y);
+                return new Aabb
+                {
+                    min = c - h,
+                    max = c + h,
+                };
+            }
+
+            public static Aabb Union(IEnumerable<Aabb> aabbs)
+            {
+                var i = aabbs.GetEnumerator();
+                i.MoveNext();
+                var first = i.Current;
+                while(i.MoveNext())
+                {
+                    var current = i.Current;
+                    first.min = Vector3.Min(first.min, current.min);
+                    first.max = Vector3.Max(first.max, current.max);
+                }
+                return first;
+            }
+
+            public bool Intersects(Aabb other)
+            {
+                if (this.max.x < other.min.x ||
+                    this.min.x > other.max.x ||
+                    this.max.y < other.min.y ||
+                    this.min.y > other.max.y ||
+                    this.max.z < other.min.z ||
+                    this.min.z > other.max.z)
+                {
+                    return false;
+                }
+                return true;
+            }
         }
 
         public SubstitutionTilingGrid(Prototile[] prototiles, Func<int, string> hierarchy)
@@ -162,9 +221,43 @@ namespace Sylves
             prototileBits = (int)Math.Ceiling(Math.Log(maxPrototileCount) / Math.Log(2));
             this.hierarchy = hierarchy;
 
+            // Pre-compute cell types
             cellTypes = prototiles.SelectMany(x => x.ChildTiles.Select(y => y.Length)).Distinct().Select(NGonCellType.Get).ToList();
+
+            // Precompute bounds
+            // Bounds can extend beyond the tile bound if a child prototile is transformed in certain ways.
+            // And children's children could protude even further, ad-infinitum.
+            // But it must be a geometric growth to a limit, so we measure the worst case growth,
+            // then jump straight to the bound.
+            // TODO: I'm not entirely certain this procedur is valid
+            var tileBounds = prototiles.ToDictionary(x => x.Name, x =>
+            {
+                return new Aabb(x.ChildTiles.SelectMany(t => t));
+            });
+            var deflation = prototiles.SelectMany(x => x.ChildPrototiles).Select(x => x.transform.lossyScale).Select(v => Mathf.Max(Mathf.Abs(v.x), Mathf.Max(Mathf.Abs(v.y), Mathf.Abs(v.z))));
+            var prevBounds = tileBounds;
+            // Do enough iterations to encounter every possible combination.
+            for(var i=0;i<prototiles.Count();i++)
+            {
+                prevBounds = prototiles.ToDictionary(x => x.Name, x =>
+                {
+                    return Aabb.Union(x.ChildPrototiles.Select(c => c.transform * prevBounds[c.childName]));
+                });
+            }
+            // Deflation is also affected by iterations
+            var deflationPow = Math.Pow(default, prototiles.Count());
+            var alpha = (float)(1 / (1 - deflationPow));
+            prototileBounds = prototiles.ToDictionary(x => x.Name, x =>
+            {
+                var tileBound = tileBounds[x.Name];
+                var prevBound = prevBounds[x.Name];
+                var max = alpha * (prevBound.max - tileBound.max) + tileBound.max;
+                var min = alpha * (prevBound.min - tileBound.min) + tileBound.min;
+                return new Aabb { min = min, max = max };
+            });
         }
 
+        // Convert a cell into a prototile path and a specific child
         internal (int childTile, List<int> path) Parse(Cell cell)
         {
             ulong current = (uint)cell.x;
@@ -209,6 +302,7 @@ namespace Sylves
             return (childTile, path);
         }
 
+        // Inverse of Parse
         internal Cell Format(int childTile, List<int> path)
         {
             var cell = new Cell();
@@ -262,25 +356,38 @@ namespace Sylves
 
         }
 
+        // Utility for working with prototile transforms
+        private Matrix4x4 Up(Matrix4x4 transform, string parentName)
+        {
+            return transform* prototilesByName[parentName].ChildPrototiles[0].transform.inverse;
+        }
 
+        private (Matrix4x4, string) Down(Matrix4x4 transform, string prototileName, int child)
+        {
+            return Down(transform, prototilesByName[prototileName], child);
+        }
+
+        private (Matrix4x4, string) Down(Matrix4x4 transform, Prototile prototile, int child)
+        {
+            var t = prototile.ChildPrototiles[child];
+            return (transform * t.transform, t.childName);
+        }
 
         private (string prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
         {
             var (childTile, path) = Parse(cell);
             var transform = Matrix4x4.identity;
-            string parent = hierarchy(0);
+            string parentName = hierarchy(0);
             for (var i = 0; i < path.Count; i++)
             {
-                parent = hierarchy(i + 1);
-                transform = transform * prototilesByName[parent].ChildPrototiles[0].transform.inverse;
+                parentName = hierarchy(i + 1);
+                transform = Up(transform, parentName);
             }
             for (var i = path.Count - 1; i >= 0; i--)
             {
-                var t = prototilesByName[parent].ChildPrototiles[path[i]];
-                parent = t.childName;
-                transform = transform * t.transform;
+                (transform, parentName) = Down(transform, parentName, path[i]);
             }
-            return (parent, transform, childTile);
+            return (parentName, transform, childTile);
         }
 
         /// <summary>
@@ -340,7 +447,20 @@ namespace Sylves
 
         public ICellType GetCellType(Cell cell) => throw new NotImplementedException();
 
-        public bool IsCellInGrid(Cell cell) => throw new NotImplementedException();
+        public bool IsCellInGrid(Cell cell)
+        {
+            // TODO: Don't use try-catch
+            try
+            {
+                LocateCell(cell);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
         #endregion
 
         #region Topology
@@ -498,7 +618,36 @@ namespace Sylves
             out Cell cell,
             out CellRotation rotation) => throw new NotImplementedException();
 
-        public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max) => throw new NotImplementedException();
+        public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
+        {
+            return GetCellsIntersectsApproxInternal(min, max)
+                .Select(t => Format(t.childTile, t.path));
+        }
+
+        public IEnumerable<(int childTile, List<int> path)> GetCellsIntersectsApproxInternal(Vector3 min, Vector3 max)
+        {
+            var inputAabb = new Aabb { min=min, max=max };
+            var height = 0;
+            var transform = Matrix4x4.identity;
+            while(true)
+            {
+                var parentName = hierarchy(height + 1);
+                transform = Up(transform, parentName);
+                var parentPrototile = prototilesByName[parentName];
+
+                // Skips 0, we just came from there!
+                for (var i=1;i<parentPrototile.ChildPrototiles.Length;i++)
+                {
+                    var (t2, childName) = Down(transform, parentPrototile, i);
+                    var childBound = prototileBounds[childName];
+
+                    var child = prototilesByName[childName];
+                }
+
+                height = height + 1;
+            }
+        }
+
 
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity) => throw new NotImplementedException();
         #endregion

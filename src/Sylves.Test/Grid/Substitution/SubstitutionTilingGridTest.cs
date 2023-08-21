@@ -1,5 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves.Test
 {
