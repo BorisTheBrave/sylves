@@ -241,7 +241,7 @@ namespace Sylves
         /// <summary>
         /// Returns true if p is in the triangle po, p1, p2
         /// </summary>
-        private static bool IsPointInTriangle(Vector3 p, Vector3 p0, Vector3 p1, Vector3 p2)
+        internal static bool IsPointInTriangle(Vector3 p, Vector3 p0, Vector3 p1, Vector3 p2)
         {
             var n = Vector3.Cross(p1 - p0, p2 - p0);
 

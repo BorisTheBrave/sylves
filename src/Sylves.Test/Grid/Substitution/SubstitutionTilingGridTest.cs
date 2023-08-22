@@ -55,7 +55,25 @@ namespace Sylves.Test
             Assert.IsTrue(r);
             Assert.AreEqual(new Cell(20, 0, 0), dest);
             Assert.AreEqual((CellDir)4, inverseDir);
+        }
 
+		[Test]
+		public void FindCell()
+		{
+            // TODO: Replace with GridTest.FindCell once more operations are supported
+            void FindCell(IGrid grid, Cell cell)
+			{
+				// Check basic find cell
+				var success = grid.FindCell(grid.GetCellCenter(cell), out var cell2);
+				Assert.IsTrue(success);
+				Assert.AreEqual(cell, cell2);
+			}
+            var g = new DominoGrid();
+			//FindCell(g, new Cell(0, 0));
+			FindCell(g, new Cell(1, 0));
+			FindCell(g, new Cell(4, 0));
+			FindCell(g, new Cell(20, 0));
+			FindCell(g, new Cell(100, 0));
         }
     }
 }

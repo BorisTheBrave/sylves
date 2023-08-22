@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 #if UNITY
 using UnityEngine;
 #endif
@@ -149,6 +150,7 @@ namespace Sylves
         private List<ICellType> cellTypes;
         Func<int, string> hierarchy;
         private Dictionary<string, Aabb> prototileBounds;
+        private List<Crumb> crumbHierarchy = new List<Crumb>();
 
         public SubstitutionTilingGrid(Prototile[] prototiles, string[] hierarchy):
             this(prototiles, i => hierarchy[i % hierarchy.Length])
@@ -156,7 +158,7 @@ namespace Sylves
 
         }
 
-        public struct Aabb
+        private struct Aabb
         {
             public Vector3 min;
             public Vector3 max;
@@ -255,6 +257,55 @@ namespace Sylves
                 var min = alpha * (prevBound.min - tileBound.min) + tileBound.min;
                 return new Aabb { min = min, max = max };
             });
+        }
+
+        #region Utils
+
+        internal int GetPathAt(Cell cell, int height)
+        {
+            var bits = tileBits + prototileBits * height;
+            var mask1 = (1U << prototileBits) - 1;
+            if (bits >= 32)
+            {
+                var l = (uint)cell.y |  (((ulong)(uint)cell.z) << 32);
+                l = l >> (bits - 32);
+                return (int)(l & mask1);
+            }
+            else
+            {
+
+                var l = (uint)cell.x | (((ulong)(uint)cell.y) << 32);
+                l = l >> bits;
+                return (int)(l & mask1);
+            }
+        }
+
+        internal Cell SetPathAt(Cell cell, int height, int value)
+        {
+            var bits = tileBits + prototileBits * height;
+            var mask1 = (1U << prototileBits) - 1;
+            if (bits >= 32)
+            {
+                cell.y = cell.x & ~(int)(mask1 << (bits - 32)) | (int)(value << (bits - 32));
+                cell.z = cell.z & ~(int)(mask1 << (bits - 64)) | (int)(value << (bits - 64));
+            }
+            else
+            {
+                cell.x = cell.x & ~(int)(mask1 << bits) | (int)(value << bits);
+                cell.y = cell.y & ~(int)(mask1 << (bits - 32)) | (int)(value << (bits - 32));
+            }
+            return cell;
+        }
+
+        internal int GetChildTileAt(Cell cell)
+        {
+            return cell.x & ((1 << tileBits) - 1);
+        }
+
+        internal Cell SetChildTileAt(Cell cell, int value)
+        {
+            cell.x = cell.x & ~((1 << tileBits) - 1) | (value << tileBits);
+            return cell;
         }
 
         // Convert a cell into a prototile path and a specific child
@@ -359,7 +410,11 @@ namespace Sylves
         // Utility for working with prototile transforms
         private Matrix4x4 Up(Matrix4x4 transform, string parentName)
         {
-            return transform* prototilesByName[parentName].ChildPrototiles[0].transform.inverse;
+            return Up(transform, prototilesByName[parentName]);
+        }
+        private Matrix4x4 Up(Matrix4x4 transform, Prototile parentPrototile)
+        {
+            return transform * parentPrototile.ChildPrototiles[0].transform.inverse;
         }
 
         private (Matrix4x4, string) Down(Matrix4x4 transform, string prototileName, int child)
@@ -372,6 +427,131 @@ namespace Sylves
             var t = prototile.ChildPrototiles[child];
             return (transform * t.transform, t.childName);
         }
+
+        #endregion
+
+        #region Crumb utils
+
+        public class Crumb
+        {
+            // Null means not yet evaluated, use GetParent to force.
+            public Crumb Parent;
+            public int Height;
+            // The child of this prototile in the parent
+            public int ChildIndex;
+            public Matrix4x4 Transform;
+            public Prototile Prototile;
+        }
+
+        Crumb GetParent(Crumb c)
+        {
+            var parent = c.Parent;
+            if (parent != null)
+                return parent;
+
+            var parentName = hierarchy(c.Height + 1);
+            var parentPrototile = prototilesByName[parentName];
+
+            parent = new Crumb
+            {
+                Parent = null,
+                Height = c.Height + 1,
+                ChildIndex = 0,
+                Transform = Up(c.Transform, parentPrototile),
+                Prototile = parentPrototile,
+            };
+
+            return c.Parent = parent;
+        }
+
+        Crumb CreateChild(Crumb c, int childIndex)
+        {
+            var (transform, childName) = Down(c.Transform, c.Prototile, childIndex);
+            return new Crumb
+            {
+                Parent = c,
+                ChildIndex = childIndex,
+                Height = c.Height - 1,
+                Transform = transform,
+                Prototile = prototilesByName[childName],
+            };
+        }
+
+        /*
+        Crumb CrumbHierarchy(int height)
+        {
+            if (crumbHierarchy.Count == 0)
+            {
+                crumbHierarchy[0] = new Crumb
+                {
+                    Parent = null,
+                    ChildIndex = 0,
+                    Height = 0,
+                    Transform = Matrix4x4.identity,
+                    Prototile = prototilesByName[hierarchy(0)],
+                };
+            }
+            for (var i = crumbHierarchy.Count; i < height; i++)
+            {
+                crumbHierarchy[i] = GetParent(crumbHierarchy)
+            }
+        }
+        */
+
+        /*
+        (int childTile, Crumb) ToCrumb(Cell cell)
+        {
+
+            ulong current = (uint)cell.x;
+            var childTile = (int)(current & ((1UL << tileBits) - 1));
+
+
+
+            if (prototileBits == 0)
+                return (childTile, ZeroCrumb());
+
+            var crumb = ZeroCrumb();
+            int pos = 1;
+            int bits = 32;
+            current = current >> tileBits;
+            bits -= tileBits;
+            while (true)
+            {
+                if (bits < prototileBits)
+                {
+                    if (pos == 3)
+                        break;
+                    switch (pos)
+                    {
+                        case 1:
+                            current = current | ((uint)cell.y << bits);
+                            bits += 32;
+                            pos += 1;
+                            break;
+                        case 2:
+                            current = current | ((uint)cell.z << bits);
+                            bits += 32;
+                            pos += 1;
+                            break;
+                    }
+                }
+                crumb
+                path.Add((int)(current & (((ulong)1 << prototileBits) - 1)));
+                current = current >> prototileBits;
+                bits -= prototileBits;
+            }
+            while (path.Count > 0 && path[path.Count - 1] == 0)
+                path.RemoveAt(path.Count - 1);
+            return (childTile, path);
+        }
+
+        Cell FromCrumb(int childTile, Crumb crumb)
+        {
+
+        }
+        */
+
+        #endregion
 
         private (string prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
         {
@@ -445,7 +625,12 @@ namespace Sylves
 
         public IEnumerable<Cell> GetCells() => throw new GridInfiniteException();
 
-        public ICellType GetCellType(Cell cell) => throw new NotImplementedException();
+        public ICellType GetCellType(Cell cell)
+        {
+            if (cellTypes.Count == 1)
+                return cellTypes[0];
+            throw new NotImplementedException();
+        }
 
         public bool IsCellInGrid(Cell cell)
         {
@@ -611,7 +796,35 @@ namespace Sylves
         #endregion
 
         #region Query
-        public bool FindCell(Vector3 position, out Cell cell) => throw new NotImplementedException();
+        public bool FindCell(Vector3 position, out Cell cell)
+        {
+            var inputAabb = new Aabb { min = position, max = position };
+            foreach (var (prototile, transform, partialPath) in GetPrototilesIntersectsApproxInternal(inputAabb))
+            {
+                for (var childIndex = 0; childIndex < prototile.ChildTiles.Length; childIndex++)
+                {
+                    // Currently does fan detection
+                    // Doesn't work for convex faces
+                    var transformedPosition = transform.inverse.MultiplyPoint3x4(position);
+                    var vertices = prototile.ChildTiles[childIndex];
+                    var v0 = vertices[0];
+                    var prev = vertices[1];
+                    for (var i = 2; i < vertices.Length; i++)
+                    {
+                        var v = vertices[i];
+                        if (MeshGrid.IsPointInTriangle(transformedPosition, v0, prev, v))
+                        {
+                            cell =  SetChildTileAt(partialPath, childIndex);
+                            return true;
+                        }
+                        prev = v;
+                    }
+                    continue;
+                }
+            }
+            cell = default;
+            return false;
+        }
 
         public bool FindCell(
             Matrix4x4 matrix,
@@ -620,31 +833,80 @@ namespace Sylves
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-            return GetCellsIntersectsApproxInternal(min, max)
-                .Select(t => Format(t.childTile, t.path));
+            var inputAabb = new Aabb { min = min, max = max };
+            foreach (var (prototile, transform, partialPath) in GetPrototilesIntersectsApproxInternal(inputAabb))
+            {
+                for (var i = 0; i < prototile.ChildTiles.Length; i++)
+                {
+                    yield return SetChildTileAt(partialPath, i);
+                }
+            }
         }
 
-        public IEnumerable<(int childTile, List<int> path)> GetCellsIntersectsApproxInternal(Vector3 min, Vector3 max)
+        // Returns the set of height 0 prototiles intersect inputAabb
+        private IEnumerable<(Prototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternal(Aabb inputAabb)
         {
-            var inputAabb = new Aabb { min=min, max=max };
+            var stack = new Stack<(int height, Prototile prototile, Matrix4x4 transform, Cell partialPath)>();
+            foreach (var t in GetPrototilesIntersectsApproxInternalPartition(inputAabb))
+            {
+                // For each of these prototiles, walk the entire tree under it
+                stack.Push(t);
+                while(stack.Count > 0)
+                {
+                    var (height, prototile, transform, partialPath) = stack.Pop();
+                    var bound = transform * prototileBounds[prototile.Name];
+                    if(bound.Intersects(inputAabb))
+                    {
+                        if(height == 0)
+                        {
+                            yield return (prototile, transform, partialPath);
+                        }
+                        else
+                        {
+                            // Recurse
+                            for(var i=0;i<prototile.ChildPrototiles.Length;i++)
+                            {
+                                var (childTransform, childName) = Down(transform, prototile, i);
+                                var child = prototilesByName[childName];
+                                stack.Push((height - 1, child, childTransform, SetPathAt(partialPath, height - 1, i)));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Returns a set of non-overlapping prototiles at different hieghts that collectively contain all prototiles that intersect inputAabb
+        private IEnumerable<(int height, Prototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternalPartition(Aabb inputAabb)
+        {
             var height = 0;
             var transform = Matrix4x4.identity;
-            while(true)
+            var path = new Cell();
+            var found = false;
+            while (true)
             {
                 var parentName = hierarchy(height + 1);
                 transform = Up(transform, parentName);
                 var parentPrototile = prototilesByName[parentName];
+                var foundAtThisHeight = false;
 
                 // Skips 0, we just came from there!
-                for (var i=1;i<parentPrototile.ChildPrototiles.Length;i++)
+                for (var i = height == 0 ? 0 : 1; i < parentPrototile.ChildPrototiles.Length; i++)
                 {
-                    var (t2, childName) = Down(transform, parentPrototile, i);
-                    var childBound = prototileBounds[childName];
-
-                    var child = prototilesByName[childName];
+                    var (childTransform, childName) = Down(transform, parentPrototile, i);
+                    var childBound = childTransform * prototileBounds[childName];
+                    if(childBound.Intersects(inputAabb))
+                    {
+                        yield return (height, prototilesByName[childName], childTransform, SetPathAt(path, height, i));
+                        foundAtThisHeight = true;
+                        found = true;
+                    }
                 }
 
                 height = height + 1;
+
+                if (found && !foundAtThisHeight)
+                    break;
             }
         }
 
