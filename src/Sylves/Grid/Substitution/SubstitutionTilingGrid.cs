@@ -143,14 +143,11 @@ namespace Sylves
 
     public class SubstitutionTilingGrid : IGrid
 	{
-        private readonly Prototile[] prototiles;
-        private readonly Dictionary<string, Prototile> prototilesByName;
+        private readonly InternalPrototile[] prototiles;
         private int tileBits;
         private int prototileBits;
         private List<ICellType> cellTypes;
-        Func<int, string> hierarchy;
-        private Dictionary<string, Aabb> prototileBounds;
-        private List<Crumb> crumbHierarchy = new List<Crumb>();
+        Func<int, InternalPrototile> hierarchy;
 
         public SubstitutionTilingGrid(Prototile[] prototiles, string[] hierarchy):
             this(prototiles, i => hierarchy[i % hierarchy.Length])
@@ -158,70 +155,32 @@ namespace Sylves
 
         }
 
-        private struct Aabb
-        {
-            public Vector3 min;
-            public Vector3 max;
-
-            public Aabb(IEnumerable<Vector3> v)
-            {
-                min = v.Aggregate(Vector3.Min);
-                max = v.Aggregate(Vector3.Max);
-            }
-
-            public static Aabb operator*(Matrix4x4 m, Aabb aabb)
-            {
-                var c = (aabb.min + aabb.max) / 2;
-                var h = (aabb.max - aabb.min) / 2;
-                c = m.MultiplyPoint3x4(c);
-                h = m.MultiplyVector(h);
-                h.x = Mathf.Abs(h.x);
-                h.y = Mathf.Abs(h.y);
-                return new Aabb
-                {
-                    min = c - h,
-                    max = c + h,
-                };
-            }
-
-            public static Aabb Union(IEnumerable<Aabb> aabbs)
-            {
-                var i = aabbs.GetEnumerator();
-                i.MoveNext();
-                var first = i.Current;
-                while(i.MoveNext())
-                {
-                    var current = i.Current;
-                    first.min = Vector3.Min(first.min, current.min);
-                    first.max = Vector3.Max(first.max, current.max);
-                }
-                return first;
-            }
-
-            public bool Intersects(Aabb other)
-            {
-                if (this.max.x < other.min.x ||
-                    this.min.x > other.max.x ||
-                    this.max.y < other.min.y ||
-                    this.min.y > other.max.y ||
-                    this.max.z < other.min.z ||
-                    this.min.z > other.max.z)
-                {
-                    return false;
-                }
-                return true;
-            }
-        }
-
         public SubstitutionTilingGrid(Prototile[] prototiles, Func<int, string> hierarchy)
 		{
-            this.prototiles = prototiles;
-            prototilesByName = prototiles.ToDictionary(x => x.Name);
+            // Build internal prototiles
+            this.prototiles = prototiles.Select(x => new InternalPrototile
+            {
+                ChildTiles = x.ChildTiles,
+                ExteriorPrototileAdjacencies = x.ExteriorPrototileAdjacencies,
+                InteriorPrototileAdjacencies = x.InteriorPrototileAdjacencies,
+                InteriorTileAdjacencies = x.InteriorTileAdjacencies,
+                Name = x.Name,
+                ExteriorTileAdjacencies = x.ExteriorTileAdjacencies,
+            }).ToArray();
+            var prototilesByName = this.prototiles.ToDictionary(x => x.Name);
+            for(var i=0;i<prototiles.Length;i++)
+            {
+                this.prototiles[i].ChildPrototiles = prototiles[i].ChildPrototiles
+                    .Select(t => (t.transform, prototilesByName[t.childName]))
+                    .ToArray();
+            }
+            this.hierarchy = h => prototilesByName[hierarchy(h)];
+
+            // Prep bit arithmetic
             var maxTileCount = prototiles.Max(x => x.ChildTiles?.Length ?? 0);
             tileBits = (int)Math.Ceiling(Math.Log(maxTileCount) / Math.Log(2));
             var maxPrototileCount = prototiles.Max(x => x.ChildPrototiles?.Length ?? 0);
             prototileBits = (int)Math.Ceiling(Math.Log(maxPrototileCount) / Math.Log(2));
-            this.hierarchy = hierarchy;
 
             // Pre-compute cell types
             cellTypes = prototiles.SelectMany(x => x.ChildTiles.Select(y => y.Length)).Distinct().Select(NGonCellType.Get).ToList();
@@ -232,31 +191,31 @@ namespace Sylves
             // But it must be a geometric growth to a limit, so we measure the worst case growth,
             // then jump straight to the bound.
             // TODO: I'm not entirely certain this procedur is valid
-            var tileBounds = prototiles.ToDictionary(x => x.Name, x =>
+            var tileBounds = this.prototiles.ToDictionary(x => x, x =>
             {
                 return new Aabb(x.ChildTiles.SelectMany(t => t));
             });
-            var deflation = prototiles.SelectMany(x => x.ChildPrototiles).Select(x => x.transform.lossyScale).Select(v => Mathf.Max(Mathf.Abs(v.x), Mathf.Max(Mathf.Abs(v.y), Mathf.Abs(v.z))));
+            var deflation = this.prototiles.SelectMany(x => x.ChildPrototiles).Select(x => x.transform.lossyScale).Select(v => Mathf.Max(Mathf.Abs(v.x), Mathf.Max(Mathf.Abs(v.y), Mathf.Abs(v.z))));
             var prevBounds = tileBounds;
             // Do enough iterations to encounter every possible combination.
-            for(var i=0;i<prototiles.Count();i++)
+            for (var i = 0; i < this.prototiles.Count(); i++)
             {
-                prevBounds = prototiles.ToDictionary(x => x.Name, x =>
+                prevBounds = this.prototiles.ToDictionary(x => x, x =>
                 {
-                    return Aabb.Union(x.ChildPrototiles.Select(c => c.transform * prevBounds[c.childName]));
+                    return Aabb.Union(x.ChildPrototiles.Select(c => c.transform * prevBounds[c.child]));
                 });
             }
             // Deflation is also affected by iterations
             var deflationPow = Math.Pow(default, prototiles.Count());
             var alpha = (float)(1 / (1 - deflationPow));
-            prototileBounds = prototiles.ToDictionary(x => x.Name, x =>
+            foreach(var prototile in this.prototiles)
             {
-                var tileBound = tileBounds[x.Name];
-                var prevBound = prevBounds[x.Name];
+                var tileBound = tileBounds[prototile];
+                var prevBound = prevBounds[prototile];
                 var max = alpha * (prevBound.max - tileBound.max) + tileBound.max;
                 var min = alpha * (prevBound.min - tileBound.min) + tileBound.min;
-                return new Aabb { min = min, max = max };
-            });
+                prototile.bound = new Aabb { min = min, max = max };
+            };
         }
 
         #region Utils
@@ -408,185 +367,53 @@ namespace Sylves
         }
 
         // Utility for working with prototile transforms
-        private Matrix4x4 Up(Matrix4x4 transform, string parentName)
+        private Matrix4x4 Up(Matrix4x4 transform, InternalPrototile parent)
         {
-            return Up(transform, prototilesByName[parentName]);
-        }
-        private Matrix4x4 Up(Matrix4x4 transform, Prototile parentPrototile)
-        {
-            return transform * parentPrototile.ChildPrototiles[0].transform.inverse;
+            return transform * parent.ChildPrototiles[0].transform.inverse;
         }
 
-        private (Matrix4x4, string) Down(Matrix4x4 transform, string prototileName, int child)
-        {
-            return Down(transform, prototilesByName[prototileName], child);
-        }
-
-        private (Matrix4x4, string) Down(Matrix4x4 transform, Prototile prototile, int child)
+        private (Matrix4x4, InternalPrototile) Down(Matrix4x4 transform, InternalPrototile prototile, int child)
         {
             var t = prototile.ChildPrototiles[child];
-            return (transform * t.transform, t.childName);
+            return (transform * t.transform, t.child);
         }
 
         #endregion
 
-        #region Crumb utils
-
-        public class Crumb
-        {
-            // Null means not yet evaluated, use GetParent to force.
-            public Crumb Parent;
-            public int Height;
-            // The child of this prototile in the parent
-            public int ChildIndex;
-            public Matrix4x4 Transform;
-            public Prototile Prototile;
-        }
-
-        Crumb GetParent(Crumb c)
-        {
-            var parent = c.Parent;
-            if (parent != null)
-                return parent;
-
-            var parentName = hierarchy(c.Height + 1);
-            var parentPrototile = prototilesByName[parentName];
-
-            parent = new Crumb
-            {
-                Parent = null,
-                Height = c.Height + 1,
-                ChildIndex = 0,
-                Transform = Up(c.Transform, parentPrototile),
-                Prototile = parentPrototile,
-            };
-
-            return c.Parent = parent;
-        }
-
-        Crumb CreateChild(Crumb c, int childIndex)
-        {
-            var (transform, childName) = Down(c.Transform, c.Prototile, childIndex);
-            return new Crumb
-            {
-                Parent = c,
-                ChildIndex = childIndex,
-                Height = c.Height - 1,
-                Transform = transform,
-                Prototile = prototilesByName[childName],
-            };
-        }
-
-        /*
-        Crumb CrumbHierarchy(int height)
-        {
-            if (crumbHierarchy.Count == 0)
-            {
-                crumbHierarchy[0] = new Crumb
-                {
-                    Parent = null,
-                    ChildIndex = 0,
-                    Height = 0,
-                    Transform = Matrix4x4.identity,
-                    Prototile = prototilesByName[hierarchy(0)],
-                };
-            }
-            for (var i = crumbHierarchy.Count; i < height; i++)
-            {
-                crumbHierarchy[i] = GetParent(crumbHierarchy)
-            }
-        }
-        */
-
-        /*
-        (int childTile, Crumb) ToCrumb(Cell cell)
-        {
-
-            ulong current = (uint)cell.x;
-            var childTile = (int)(current & ((1UL << tileBits) - 1));
-
-
-
-            if (prototileBits == 0)
-                return (childTile, ZeroCrumb());
-
-            var crumb = ZeroCrumb();
-            int pos = 1;
-            int bits = 32;
-            current = current >> tileBits;
-            bits -= tileBits;
-            while (true)
-            {
-                if (bits < prototileBits)
-                {
-                    if (pos == 3)
-                        break;
-                    switch (pos)
-                    {
-                        case 1:
-                            current = current | ((uint)cell.y << bits);
-                            bits += 32;
-                            pos += 1;
-                            break;
-                        case 2:
-                            current = current | ((uint)cell.z << bits);
-                            bits += 32;
-                            pos += 1;
-                            break;
-                    }
-                }
-                crumb
-                path.Add((int)(current & (((ulong)1 << prototileBits) - 1)));
-                current = current >> prototileBits;
-                bits -= prototileBits;
-            }
-            while (path.Count > 0 && path[path.Count - 1] == 0)
-                path.RemoveAt(path.Count - 1);
-            return (childTile, path);
-        }
-
-        Cell FromCrumb(int childTile, Crumb crumb)
-        {
-
-        }
-        */
-
-        #endregion
-
-        private (string prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
+        private (InternalPrototile prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
         {
             var (childTile, path) = Parse(cell);
             var transform = Matrix4x4.identity;
-            string parentName = hierarchy(0);
+            var parent = hierarchy(0);
             for (var i = 0; i < path.Count; i++)
             {
-                parentName = hierarchy(i + 1);
-                transform = Up(transform, parentName);
+                parent = hierarchy(i + 1);
+                transform = Up(transform, parent);
             }
             for (var i = path.Count - 1; i >= 0; i--)
             {
-                (transform, parentName) = Down(transform, parentName, path[i]);
+                (transform, parent) = Down(transform, parent, path[i]);
             }
-            return (parentName, transform, childTile);
+            return (parent, transform, childTile);
         }
 
         /// <summary>
         /// Returns n+1 parent elements for a path of length n
         /// </summary>
-        private IList<Prototile> Parents(List<int> path)
+        private IList<InternalPrototile> Parents(List<int> path)
         {
-            var parents = new List<Prototile>();
-            string parent = hierarchy(0);
+            var parents = new List<InternalPrototile>();
+            var parent = hierarchy(0);
             for (var i = 0; i < path.Count; i++)
             {
                 parent = hierarchy(i + 1);
             }
-            parents.Add(prototilesByName[parent]);
+            parents.Add(parent);
             for (var i = path.Count - 1; i >= 0; i--)
             {
-                var t = prototilesByName[parent].ChildPrototiles[path[i]];
-                parent = t.childName;
-                parents.Insert(0, prototilesByName[parent]);
+                var t = parent.ChildPrototiles[path[i]];
+                parent = t.child;
+                parents.Insert(0, parent);
             }
             return parents;
         }
@@ -655,7 +482,7 @@ namespace Sylves
             var (childTile, path) = Parse(cell);
             int GetPathItem(int height) => height < path.Count ? path[height] : 0;
             var parents = Parents(path);
-            Prototile GetParent(int height) => height < parents.Count ? parents[height] : prototilesByName[hierarchy(height)];
+            InternalPrototile GetParent(int height) => height < parents.Count ? parents[height] : hierarchy(height);
             var prototile = GetParent(0);
             var tileInterior = prototile.InteriorTileAdjacencies
                 .Where(x => x.fromChild == childTile && x.fromChildSide == (int)dir)
@@ -674,7 +501,7 @@ namespace Sylves
                     .Single();
 
 
-                (List<int> partialPath, int side, Prototile otherParent) TryMovePrototile(int height, int childPrototile, int prototileSide)
+                (List<int> partialPath, int side, InternalPrototile otherParent) TryMovePrototile(int height, int childPrototile, int prototileSide)
                 {
                     var parent = GetParent(height + 1);
                     var interior = parent.InteriorPrototileAdjacencies
@@ -685,7 +512,7 @@ namespace Sylves
                         var partialPath = path.Take(height + 1).ToList();
                         var toChild = interior[0].toChild;
                         partialPath.Insert(0, toChild);
-                        return (partialPath, interior[0].toChildSide, prototilesByName[parent.ChildPrototiles[toChild].childName]);
+                        return (partialPath, interior[0].toChildSide, parent.ChildPrototiles[toChild].child);
                     }
                     else
                     {
@@ -702,7 +529,7 @@ namespace Sylves
                         if (otherExterior.parentSubSideCount != exterior.parentSubSideCount)
                             throw new Exception();
                         partialPath.Insert(0, otherExterior.child);
-                        return (partialPath, otherExterior.childSide, prototilesByName[otherParent.ChildPrototiles[otherExterior.child].childName]);
+                        return (partialPath, otherExterior.childSide, otherParent.ChildPrototiles[otherExterior.child].child);
                     }
                 }
 
@@ -785,7 +612,7 @@ namespace Sylves
         public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
         {
             var (prototile, prototileTransform, childTile) = LocateCell(cell);
-            vertices = prototilesByName[prototile].ChildTiles[childTile];
+            vertices = prototile.ChildTiles[childTile];
             transform = prototileTransform;
         }
 
@@ -844,9 +671,9 @@ namespace Sylves
         }
 
         // Returns the set of height 0 prototiles intersect inputAabb
-        private IEnumerable<(Prototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternal(Aabb inputAabb)
+        private IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternal(Aabb inputAabb)
         {
-            var stack = new Stack<(int height, Prototile prototile, Matrix4x4 transform, Cell partialPath)>();
+            var stack = new Stack<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)>();
             foreach (var t in GetPrototilesIntersectsApproxInternalPartition(inputAabb))
             {
                 // For each of these prototiles, walk the entire tree under it
@@ -854,7 +681,7 @@ namespace Sylves
                 while(stack.Count > 0)
                 {
                     var (height, prototile, transform, partialPath) = stack.Pop();
-                    var bound = transform * prototileBounds[prototile.Name];
+                    var bound = transform * prototile.bound;
                     if(bound.Intersects(inputAabb))
                     {
                         if(height == 0)
@@ -866,8 +693,7 @@ namespace Sylves
                             // Recurse
                             for(var i=0;i<prototile.ChildPrototiles.Length;i++)
                             {
-                                var (childTransform, childName) = Down(transform, prototile, i);
-                                var child = prototilesByName[childName];
+                                var (childTransform, child) = Down(transform, prototile, i);
                                 stack.Push((height - 1, child, childTransform, SetPathAt(partialPath, height - 1, i)));
                             }
                         }
@@ -877,7 +703,7 @@ namespace Sylves
         }
 
         // Returns a set of non-overlapping prototiles at different hieghts that collectively contain all prototiles that intersect inputAabb
-        private IEnumerable<(int height, Prototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternalPartition(Aabb inputAabb)
+        private IEnumerable<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternalPartition(Aabb inputAabb)
         {
             var height = 0;
             var transform = Matrix4x4.identity;
@@ -885,19 +711,18 @@ namespace Sylves
             var found = false;
             while (true)
             {
-                var parentName = hierarchy(height + 1);
-                transform = Up(transform, parentName);
-                var parentPrototile = prototilesByName[parentName];
+                var parent = hierarchy(height + 1);
+                transform = Up(transform, parent);
                 var foundAtThisHeight = false;
 
                 // Skips 0, we just came from there!
-                for (var i = height == 0 ? 0 : 1; i < parentPrototile.ChildPrototiles.Length; i++)
+                for (var i = height == 0 ? 0 : 1; i < parent.ChildPrototiles.Length; i++)
                 {
-                    var (childTransform, childName) = Down(transform, parentPrototile, i);
-                    var childBound = childTransform * prototileBounds[childName];
+                    var (childTransform, child) = Down(transform, parent, i);
+                    var childBound = childTransform * parent.bound;
                     if(childBound.Intersects(inputAabb))
                     {
-                        yield return (height, prototilesByName[childName], childTransform, SetPathAt(path, height, i));
+                        yield return (height, child, childTransform, SetPathAt(path, height, i));
                         foundAtThisHeight = true;
                         found = true;
                     }
@@ -921,6 +746,83 @@ namespace Sylves
 
         public bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r) => throw new NotImplementedException();
         #endregion
+
+
+
+        private struct Aabb
+        {
+            public Vector3 min;
+            public Vector3 max;
+
+            public Aabb(IEnumerable<Vector3> v)
+            {
+                min = v.Aggregate(Vector3.Min);
+                max = v.Aggregate(Vector3.Max);
+            }
+
+            public static Aabb operator *(Matrix4x4 m, Aabb aabb)
+            {
+                var c = (aabb.min + aabb.max) / 2;
+                var h = (aabb.max - aabb.min) / 2;
+                c = m.MultiplyPoint3x4(c);
+                h = m.MultiplyVector(h);
+                h.x = Mathf.Abs(h.x);
+                h.y = Mathf.Abs(h.y);
+                return new Aabb
+                {
+                    min = c - h,
+                    max = c + h,
+                };
+            }
+
+            public static Aabb Union(IEnumerable<Aabb> aabbs)
+            {
+                var i = aabbs.GetEnumerator();
+                i.MoveNext();
+                var first = i.Current;
+                while (i.MoveNext())
+                {
+                    var current = i.Current;
+                    first.min = Vector3.Min(first.min, current.min);
+                    first.max = Vector3.Max(first.max, current.max);
+                }
+                return first;
+            }
+
+            public bool Intersects(Aabb other)
+            {
+                if (this.max.x < other.min.x ||
+                    this.min.x > other.max.x ||
+                    this.max.y < other.min.y ||
+                    this.min.y > other.max.y ||
+                    this.max.z < other.min.z ||
+                    this.min.z > other.max.z)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        private class InternalPrototile
+        {
+            public string Name { get; set; }
+
+            public (Matrix4x4 transform, InternalPrototile child)[] ChildPrototiles { get; set; }
+
+            public (int fromChild, int fromChildSide, int toChild, int toChildSide)[] InteriorPrototileAdjacencies { get; set; }
+
+            public (int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)[] ExteriorPrototileAdjacencies { get; set; }
+
+
+            public Vector3[][] ChildTiles { get; set; }
+
+            public (int fromChild, int fromChildSide, int toChild, int toChildSide)[] InteriorTileAdjacencies { get; set; }
+
+            public (int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)[] ExteriorTileAdjacencies { get; set; }
+
+            public Aabb bound;
+        }
     }
 }
 
