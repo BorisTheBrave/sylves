@@ -237,28 +237,6 @@ namespace Sylves
         #region Query
 
 
-
-        /// <summary>
-        /// Returns true if p is in the triangle po, p1, p2
-        /// </summary>
-        internal static bool IsPointInTriangle(Vector3 p, Vector3 p0, Vector3 p1, Vector3 p2)
-        {
-            var n = Vector3.Cross(p1 - p0, p2 - p0);
-
-            var o = Vector3.Dot(p - p2, n);
-            if (o < -PlanarThickness || o > PlanarThickness)
-                return false;
-
-            var s = Vector3.Dot(n, Vector3.Cross(p0 - p2, p - p2));
-            var t = Vector3.Dot(n, Vector3.Cross(p1 - p0, p - p0));
-
-            if ((s < 0) != (t < 0) && s != 0 && t != 0)
-                return false;
-
-            var d = Vector3.Dot(n, Vector3.Cross(p2 - p1, p - p1));
-            return d == 0 || (d < 0) == (s + t <= 0);
-        }
-
         // FindCell, applied to a single cell
         protected virtual bool IsPointInCell(Vector3 position, Cell cell)
         {
@@ -271,7 +249,7 @@ namespace Sylves
             for (var i = 2; i < face.Count; i++)
             {
                 var v = meshData.vertices[face[i]];
-                if (IsPointInTriangle(position, v0, prev, v))
+                if (GeometryUtils.IsPointInTriangle(position, v0, prev, v, PlanarThickness))
                     return true;
                 prev = v;
             }

@@ -243,15 +243,20 @@ namespace Sylves
         {
             var bits = tileBits + prototileBits * height;
             var mask1 = (1U << prototileBits) - 1;
-            if (bits >= 32)
+            if (bits >= 64)
             {
-                cell.y = cell.x & ~(int)(mask1 << (bits - 32)) | (int)(value << (bits - 32));
                 cell.z = cell.z & ~(int)(mask1 << (bits - 64)) | (int)(value << (bits - 64));
+
+            }
+            else if (bits >= 32)
+            {
+                cell.y = cell.y & ~(int)(mask1 << (bits - 32)) | (int)(value << (bits - 32));
+                cell.z = cell.z & ~(int)(mask1 << (bits - 64)) | (int)(value >>- (bits - 64));
             }
             else
             {
                 cell.x = cell.x & ~(int)(mask1 << bits) | (int)(value << bits);
-                cell.y = cell.y & ~(int)(mask1 << (bits - 32)) | (int)(value << (bits - 32));
+                cell.y = cell.y & ~(int)(mask1 << (bits - 32)) | (int)(value >>- (bits - 32));
             }
             return cell;
         }
@@ -263,7 +268,7 @@ namespace Sylves
 
         internal Cell SetChildTileAt(Cell cell, int value)
         {
-            cell.x = cell.x & ~((1 << tileBits) - 1) | (value << tileBits);
+            cell.x = cell.x & ~((1 << tileBits) - 1) | value;
             return cell;
         }
 
@@ -639,7 +644,7 @@ namespace Sylves
                     for (var i = 2; i < vertices.Length; i++)
                     {
                         var v = vertices[i];
-                        if (MeshGrid.IsPointInTriangle(transformedPosition, v0, prev, v))
+                        if (GeometryUtils.IsPointInTrianglePlanar(transformedPosition, v0, prev, v))
                         {
                             cell =  SetChildTileAt(partialPath, childIndex);
                             return true;
@@ -719,7 +724,7 @@ namespace Sylves
                 for (var i = height == 0 ? 0 : 1; i < parent.ChildPrototiles.Length; i++)
                 {
                     var (childTransform, child) = Down(transform, parent, i);
-                    var childBound = childTransform * parent.bound;
+                    var childBound = childTransform * child.bound;
                     if(childBound.Intersects(inputAabb))
                     {
                         yield return (height, child, childTransform, SetPathAt(path, height, i));
