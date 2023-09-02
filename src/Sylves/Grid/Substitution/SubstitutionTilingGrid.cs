@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 #if UNITY
 using UnityEngine;
@@ -144,13 +145,32 @@ namespace Sylves
         }
     }*/
 
+    public class SubstitutionTilingBound : IBound
+    {
+        public int Height { get; set; }
+        public Cell Path { get; set; }
+    }
+
     public class SubstitutionTilingGrid : IGrid
 	{
         private readonly InternalPrototile[] prototiles;
         private int tileBits;
         private int prototileBits;
         private List<ICellType> cellTypes;
-        Func<int, InternalPrototile> hierarchy;
+        private Func<int, InternalPrototile> hierarchy;
+        private SubstitutionTilingBound bound;
+
+        // Copy constructor
+        private SubstitutionTilingGrid(SubstitutionTilingGrid other, SubstitutionTilingBound bound)
+        {
+            prototiles = other.prototiles;
+            tileBits = other.tileBits;
+            prototileBits = other.prototileBits;
+            cellTypes = other.cellTypes;
+            hierarchy = other.hierarchy;
+            this.bound = bound;
+        }
+
 
         public SubstitutionTilingGrid(Prototile[] prototiles, string[] hierarchy):
             this(prototiles, i => hierarchy[i % hierarchy.Length])
@@ -248,6 +268,26 @@ namespace Sylves
             return Math.Max(0, (bits + prototileBits - 1) / prototileBits);
         }
 
+        internal int GetPathDiffLength(Cell a, Cell b)
+        {
+            int leadingBits;
+            if (a.z != b.z)
+            {
+                leadingBits = BitUtils.LeadingZeroCount((uint)(a.z ^ b.z));
+            }
+            else if (a.y != b.y)
+            {
+                leadingBits = 32 + BitUtils.LeadingZeroCount((uint)(a.y ^ b.y));
+            }
+            else
+            {
+                leadingBits = 64 + BitUtils.LeadingZeroCount((uint)(a.x ^ b.x));
+            }
+            var bits = 96 - leadingBits;
+            bits -= tileBits;
+            return Math.Max(0, (bits + prototileBits - 1) / prototileBits);
+        }
+
         internal int GetPathAt(Cell cell, int height)
         {
             var bits = tileBits + prototileBits * height;
@@ -310,6 +350,30 @@ namespace Sylves
         {
             cell.x = cell.x & ~((1 << tileBits) - 1) | value;
             return cell;
+        }
+
+        internal Cell ClearChildTileAndPathBelow(Cell cell, int height)
+        {
+            var bits = tileBits + prototileBits * height;
+            if(bits >= 96)
+            {
+                return new Cell();
+            }
+            else if (bits >= 64)
+            {
+                var mask = (1 << (bits - 64)) - 1;
+                return new Cell(0, 0, (int)((uint)cell.z & ~mask));
+            }
+            else if (bits >= 32)
+            {
+                var mask = (1 << (bits - 32)) - 1;
+                return new Cell(0, (int)((uint)cell.y & ~mask), cell.z);
+            }
+            else
+            {
+                var mask = (1 << (bits - 0)) - 1;
+                return new Cell((int)((uint)cell.x & ~mask), cell.y, cell.z);
+            }
         }
 
         #endregion
@@ -389,7 +453,6 @@ namespace Sylves
             return (transform * t.transform, t.child);
         }
 
-
         private (InternalPrototile prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
         {
             var childTile = GetChildTileAt(cell);
@@ -406,6 +469,28 @@ namespace Sylves
                 (transform, parent) = Down(transform, parent, GetPathAt(cell, i));
             }
             return (parent, transform, childTile);
+        }
+
+        private (InternalPrototile prototile, int childTile) GetPrototileAndChildTile(Cell cell)
+        {
+            var pathLength = GetPathLength(cell);
+            var parent = hierarchy(pathLength);
+            for (var i = pathLength - 1; i >= 0; i--)
+            {
+                parent = parent.ChildPrototiles[GetPathAt(cell, i)].child;
+            }
+            return (GetPrototile(cell, 0), GetChildTileAt(cell));
+        }
+
+        private InternalPrototile GetPrototile(Cell cell, int height)
+        {
+            var pathLength = GetPathLength(cell);
+            var parent = hierarchy(pathLength);
+            for (var i = pathLength - 1; i >= height; i--)
+            {
+                parent = parent.ChildPrototiles[GetPathAt(cell, i)].child;
+            }
+            return parent;
         }
 
         /// <summary>
@@ -450,17 +535,31 @@ namespace Sylves
         #endregion
 
         #region Relatives
-        public IGrid Unbounded => throw new NotImplementedException();
+        public IGrid Unbounded => new SubstitutionTilingGrid(this, null);
 
-        public IGrid Unwrapped => throw new NotImplementedException();
+        public IGrid Unwrapped => this;
 
-        public virtual IDualMapping GetDual() => throw new NotImplementedException();
+        public virtual IDualMapping GetDual()
+        {
+            var maxPrototileSize = prototiles.Max(x => (x.bound.max.x - x.bound.min.x + x.bound.max.y - x.bound.min.y));
+            var maxInflation = prototiles.SelectMany(x => x.ChildPrototiles).Select(x => x.transform.lossyScale).Max(x => 1/Mathf.Min(x.x, Mathf.Min(x.y, x.z)));
+            var height = 2;
+            var chunkSize = maxPrototileSize * (float)Math.Pow(maxInflation, height);
+
+            return new DefaultDualMapping(this, chunkSize, CachePolicy.Always);
+        }
 
         #endregion
 
         #region Cell info
 
-        public IEnumerable<Cell> GetCells() => throw new GridInfiniteException();
+        public IEnumerable<Cell> GetCells()
+        {
+            if (bound == null)
+                throw new GridInfiniteException();
+
+            return GetCellsInBounds(bound);
+        }
 
         public ICellType GetCellType(Cell cell)
         {
@@ -471,14 +570,19 @@ namespace Sylves
 
         public bool IsCellInGrid(Cell cell)
         {
-            // TODO: Don't use try-catch
+            // TODO: Don't use try-catch to validate
             try
             {
-                LocateCell(cell);
+                GetPrototileAndChildTile(cell);
             }
             catch
             {
                 return false;
+            }
+
+            if(bound != null)
+            {
+                return ClearChildTileAndPathBelow(cell, bound.Height) == bound.Path;
             }
             return true;
         }
@@ -491,8 +595,7 @@ namespace Sylves
         {
             var childTile = GetChildTileAt(cell);
             var parents = Parents(cell);
-            InternalPrototile GetParent(int height) => height < parents.Count ? parents[height] : hierarchy(height);
-            var prototile = GetParent(0);
+            var prototile = 0 < parents.Count ? parents[0] : hierarchy(0);
             var tileInterior = prototile.InteriorTileAdjacencies
                 .Where(x => x.fromChild == childTile && x.fromChildSide == (int)dir)
                 .ToList();
@@ -608,19 +711,110 @@ namespace Sylves
         #endregion
 
         #region Bounds
-        public IBound GetBound() => throw new NotImplementedException();
+        public IBound GetBound() => bound;
 
-        public IBound GetBound(IEnumerable<Cell> cells) => throw new NotImplementedException();
+        public IBound GetBound(IEnumerable<Cell> cells)
+        {
+            int height = -1;
+            Cell path = new Cell();
+            foreach(var cell in cells)
+            {
+                if(height == -1)
+                {
+                    height = 0;
+                    path = SetChildTileAt(cell, 0);
+                }
+                else
+                {
+                    var diffLength = GetPathDiffLength(path, cell);
+                    if(diffLength > height)
+                    {
+                        height = diffLength;
+                        path = ClearChildTileAndPathBelow(path, height);
+                    }
+                }
+            }
+            return new SubstitutionTilingBound
+            {
+                Height = height,
+                Path = path,
+            };
+        }
 
-        public IGrid BoundBy(IBound bound) => throw new NotImplementedException();
+        public IGrid BoundBy(IBound bound) => new SubstitutionTilingGrid(this, (SubstitutionTilingBound)(IntersectBounds(bound, this.bound)));
 
-        public IBound IntersectBounds(IBound bound, IBound other) => throw new NotImplementedException();
+        public IBound IntersectBounds(IBound bound, IBound other)
+        {
+            if (bound == null) return other;
+            if (other == null) return bound;
+            // One bound must be a subset of the other, or the intersection is empty.
+            var stBound = (SubstitutionTilingBound)bound;
+            var stOther = (SubstitutionTilingBound)other;
+            if (stBound.Height <= stOther.Height && ClearChildTileAndPathBelow(stBound.Path, stOther.Height) == stOther.Path)
+                return stBound;
+            if (stOther.Height < stBound.Height && ClearChildTileAndPathBelow(stOther.Path, stBound.Height) == stBound.Path)
+                return stOther;
 
-        public IBound UnionBounds(IBound bound, IBound other) => throw new NotImplementedException();
+            return new SubstitutionTilingBound
+            {
+                Height = -1,
+            };
+        }
 
-        public IEnumerable<Cell> GetCellsInBounds(IBound bound) => throw new NotImplementedException();
+        public IBound UnionBounds(IBound bound, IBound other)
+        {
+            if (bound == null) return null;
+            if (other == null) return null;
+            var stBound = (SubstitutionTilingBound)bound;
+            var stOther = (SubstitutionTilingBound)other;
+            var newHeight = Math.Max(Math.Max(stBound.Height, stOther.Height), GetPathDiffLength(stBound.Path, stOther.Path));
+            return new SubstitutionTilingBound
+            {
+                Height = newHeight,
+                Path = ClearChildTileAndPathBelow(stBound.Path, newHeight),
+            };
+        }
 
-        public bool IsCellInBound(Cell cell, IBound bound) => throw new NotImplementedException();
+        public IEnumerable<Cell> GetCellsInBounds(IBound bound)
+        {
+            var stBound = (SubstitutionTilingBound)bound;
+            var stack = new Stack<(int height, InternalPrototile prototile, Cell partialPath)>();
+            stack.Push((stBound.Height, GetPrototile(stBound.Path, stBound.Height), stBound.Path));
+            while (stack.Count > 0)
+            {
+                var (height, prototile, partialPath) = stack.Pop();
+                if (height == 0)
+                {
+                    for (var i = 0; i < prototile.ChildTiles.Length; i++)
+                    {
+                        yield return SetChildTileAt(partialPath, i);
+                    }
+                }
+                else if(height < 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    // Recurse
+                    for (var i = 0; i < prototile.ChildPrototiles.Length; i++)
+                    {
+                        var child = prototile.ChildPrototiles[i].child;
+                        stack.Push((height - 1, child, SetPathAt(partialPath, height - 1, i)));
+                    }
+                }
+            }
+        }
+
+        public bool IsCellInBound(Cell cell, IBound bound)
+        {
+            var stBound = (SubstitutionTilingBound)bound;
+            if (stBound != null)
+            {
+                return ClearChildTileAndPathBelow(cell, stBound.Height) == stBound.Path;
+            }
+            return true;
+        }
         #endregion
 
         #region Position

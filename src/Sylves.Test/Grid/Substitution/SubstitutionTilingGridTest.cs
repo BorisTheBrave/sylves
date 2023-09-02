@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NUnit.Framework;
 #if UNITY
 using UnityEngine;
@@ -106,6 +107,34 @@ namespace Sylves.Test
 			FindCell(g, new Cell(10, 0));
 			FindCell(g, new Cell(100, 0));
 			FindCell(g, new Cell(1000, 0));
+        }
+
+		[Test]
+		public void TestBounds()
+		{
+			var g = new DominoGrid();
+
+			var b1 = (SubstitutionTilingBound)g.GetBound(new[] { new Cell(0, 0, 0), new Cell(1, 0, 0) });
+			Assert.AreEqual(0, b1.Height);
+			Assert.AreEqual(new Cell(), b1.Path);
+			Assert.AreEqual(4, g.GetCellsInBounds(b1).Count());
+
+            var b2 = (SubstitutionTilingBound)g.GetBound(new[] { new Cell(0, 0, 0), new Cell(4, 0, 0) });
+            Assert.AreEqual(1, b2.Height);
+            Assert.AreEqual(new Cell(), b2.Path);
+
+            var b3 = (SubstitutionTilingBound)g.GetBound(new[] { new Cell(103, 0, 0)});
+            Assert.AreEqual(0, b3.Height);
+            Assert.AreEqual(new Cell(100, 0, 0), b3.Path);
+
+			Assert.AreEqual(b1, g.IntersectBounds(b1, b2));
+			Assert.AreEqual(0, g.GetCellsInBounds(g.IntersectBounds(b1, b3)).Count());
+
+			{
+				var b = (SubstitutionTilingBound)g.UnionBounds(b1, b2);
+				Assert.AreEqual(b2.Height, b.Height);
+				Assert.AreEqual(b2.Path, b.Path);
+            }
         }
     }
 }
