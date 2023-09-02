@@ -222,7 +222,10 @@ namespace Sylves
             };
         }
 
-        #region Utils
+        #region Path Utils
+        // Various functions for interpreting a Cell as a set of 12 bytes
+        // that encodes a series of small integers, a "path".
+
 
         // Returns the largest value that GetPathAt(cell, i - 1) is non-zero
         internal int GetPathLength(Cell cell)
@@ -297,104 +300,10 @@ namespace Sylves
             return cell;
         }
 
-        // Convert a cell into a prototile path and a specific child
-        internal (int childTile, List<int> path) Parse(Cell cell)
-        {
-            ulong current = (uint)cell.x;
-            var childTile = (int)(current & ((1UL << tileBits) - 1));
+        #endregion
 
+        #region Other Utils
 
-
-            if (prototileBits == 0)
-                return (childTile, new List<int>());
-
-            var path = new List<int>();
-            int pos = 1;
-            int bits = 32;
-            current = current >> tileBits;
-            bits -= tileBits;
-            while (true)
-            {
-                if (bits < prototileBits)
-                {
-                    if (pos == 3)
-                        break;
-                    switch (pos)
-                    {
-                        case 1:
-                            current = current | ((uint)cell.y << bits);
-                            bits += 32;
-                            pos += 1;
-                            break;
-                        case 2:
-                            current = current | ((uint)cell.z << bits);
-                            bits += 32;
-                            pos += 1;
-                            break;
-                    }
-                }
-                path.Add((int)(current & (((ulong)1 << prototileBits) - 1)));
-                current = current >> prototileBits;
-                bits -= prototileBits;
-            }
-            while (path.Count > 0 && path[path.Count - 1] == 0)
-                path.RemoveAt(path.Count - 1);
-            return (childTile, path);
-        }
-
-        // Inverse of Parse
-        internal Cell Format(int childTile, List<int> path)
-        {
-            var cell = new Cell();
-            ulong current = 0;
-            var bits = 0;
-            var pos = 1;
-
-            current = (ulong)childTile;
-            bits += tileBits;
-
-            foreach(var p in path)
-            {
-                current = current | ((ulong)p << bits);
-                bits += prototileBits;
-                if(bits >= 32)
-                {
-                    switch(pos)
-                    {
-                        case 1:
-                            cell.x = (int)(current & 0xFFFFFFFF);
-                            current = current >> 32;
-                            bits -= 32;
-                            pos++;
-                            break;
-                        case 2:
-                            cell.y = (int)(current & 0xFFFFFFFF);
-                            current = current >> 32;
-                            bits -= 32;
-                            pos++;
-                            break;
-                        default:
-                            throw new Exception();
-                    }
-                }
-            }
-
-            switch (pos)
-            {
-                case 1:
-                    cell.x = (int)(current & 0xFFFFFFFF);
-                    break;
-                case 2:
-                    cell.y = (int)(current & 0xFFFFFFFF);
-                    break;
-                default:
-                    cell.z = (int)(current & 0xFFFFFFFF);
-                    break;
-            }
-
-            return cell;
-
-        }
 
         // Utility for working with prototile transforms
         private Matrix4x4 Up(Matrix4x4 transform, InternalPrototile parent)
@@ -408,46 +317,24 @@ namespace Sylves
             return (transform * t.transform, t.child);
         }
 
-        #endregion
 
         private (InternalPrototile prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
         {
-            var (childTile, path) = Parse(cell);
+            var childTile = GetChildTileAt(cell);
+            var pathLength = GetPathLength(cell);
             var transform = Matrix4x4.identity;
             var parent = hierarchy(0);
-            for (var i = 0; i < path.Count; i++)
+            for (var i = 0; i < pathLength; i++)
             {
                 parent = hierarchy(i + 1);
                 transform = Up(transform, parent);
             }
-            for (var i = path.Count - 1; i >= 0; i--)
+            for (var i = pathLength - 1; i >= 0; i--)
             {
-                (transform, parent) = Down(transform, parent, path[i]);
+                (transform, parent) = Down(transform, parent, GetPathAt(cell, i));
             }
             return (parent, transform, childTile);
         }
-
-        /// <summary>
-        /// Returns n+1 parent elements for a path of length n
-        /// </summary>
-        private IList<InternalPrototile> Parents(List<int> path)
-        {
-            var parents = new List<InternalPrototile>();
-            var parent = hierarchy(0);
-            for (var i = 0; i < path.Count; i++)
-            {
-                parent = hierarchy(i + 1);
-            }
-            parents.Add(parent);
-            for (var i = path.Count - 1; i >= 0; i--)
-            {
-                var t = parent.ChildPrototiles[path[i]];
-                parent = t.child;
-                parents.Insert(0, parent);
-            }
-            return parents;
-        }
-
 
         /// <summary>
         /// Returns n+1 parent elements for a path of length n
@@ -470,6 +357,9 @@ namespace Sylves
             }
             return parents;
         }
+
+        #endregion
+
 
 
         #region Basics

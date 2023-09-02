@@ -25,9 +25,17 @@ namespace Sylves.Test
 		public void TestRoundTripParse(Cell cell)
 		{
 			var g = new DominoGrid();
-			var (childTile, path) = g.Parse(cell);
+			var l = (96 - 2) / 2;
+			var cell2 = new Cell();
 
-			Assert.AreEqual(cell, g.Format(childTile, path));
+			cell2 = g.SetChildTileAt(cell2, g.GetChildTileAt(cell));
+			for(var i= 0;i < l;i++)
+			{
+                cell2 = g.SetPathAt(cell2, i, g.GetPathAt(cell, i));
+
+            }
+
+			Assert.AreEqual(cell, cell2);
 		}
 
 		[Test]
