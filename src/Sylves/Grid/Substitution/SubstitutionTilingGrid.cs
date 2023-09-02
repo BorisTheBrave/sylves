@@ -271,20 +271,32 @@ namespace Sylves
         {
             var bits = tileBits + prototileBits * height;
             var mask1 = (1U << prototileBits) - 1;
+            if(bits >= 96)
+            {
+                throw new Exception($"Cannot set bits at height {height}");
+            }
             if (bits >= 64)
             {
                 cell.z = cell.z & ~(int)(mask1 << (bits - 64)) | (int)(value << (bits - 64));
 
             }
-            else if (bits >= 32)
+            else if (bits > 32)
             {
                 cell.y = cell.y & ~(int)(mask1 << (bits - 32)) | (int)(value << (bits - 32));
                 cell.z = cell.z & ~(int)(mask1 << (bits - 64)) | (int)(value >>- (bits - 64));
             }
-            else
+            else if(bits == 32)
+            {
+                cell.y = cell.y & ~(int)(mask1 << (bits - 32)) | (int)(value << (bits - 32));
+            }
+            else if(bits > 0)
             {
                 cell.x = cell.x & ~(int)(mask1 << bits) | (int)(value << bits);
                 cell.y = cell.y & ~(int)(mask1 << (bits - 32)) | (int)(value >>- (bits - 32));
+            }
+            else
+            {
+                cell.x = cell.x & ~(int)(mask1 << bits) | (int)(value << bits);
             }
             return cell;
         }
@@ -300,6 +312,66 @@ namespace Sylves
             return cell;
         }
 
+        #endregion
+
+        #region Crumb Utils
+        private class Crumb
+        {
+            public Crumb parent;
+            public int height;
+            public Cell partialPath;
+
+            // For now, don't need this?
+            //public Matrix4x4 transform;
+            public InternalPrototile prototile;
+        }
+
+        private Crumb GetCrumb(Cell cell, int height = 0)
+        {
+            var pathLength = Math.Max(GetPathLength(cell), height);
+            var crumb = new Crumb
+            {
+                parent = null,
+                height = pathLength,
+                partialPath = new Cell(),
+                // transform = ...,
+                prototile = hierarchy(pathLength),
+            };
+            while(crumb.height > height)
+                crumb = CreateChild(crumb, GetPathAt(cell, crumb.height - 1));
+
+            return crumb;
+        }
+
+        private Crumb GetParent(Crumb crumb)
+        {
+            if(crumb.parent != null)
+                return crumb.parent;
+
+            //var transform = Up(crumb.transform, crumb.prototile);
+            return crumb.parent = new Crumb
+            {
+                parent = null,
+                height = crumb.height + 1,
+                partialPath = crumb.partialPath,
+                //transform = transform,
+                prototile = hierarchy(crumb.height + 1),
+            };
+        }
+
+        private Crumb CreateChild(Crumb crumb, int child)
+        {
+            //var (transform, prototile) = Down(crumb.transform, crumb.prototile, child);
+            return new Crumb
+            {
+                parent = crumb,
+                height = crumb.height - 1,
+                partialPath = SetPathAt(crumb.partialPath, crumb.height - 1, child),
+                //transform = transform,
+                //prototile = prototile,
+                prototile = crumb.prototile.ChildPrototiles[child].child,
+            };
+        }
         #endregion
 
         #region Other Utils
@@ -339,21 +411,16 @@ namespace Sylves
         /// <summary>
         /// Returns n+1 parent elements for a path of length n
         /// </summary>
-        private IList<InternalPrototile> Parents(Cell cell)
+        private IList<InternalPrototile> Parents(Cell cell, int minHeight = 0)
         {
-            var parents = new List<InternalPrototile>();
-            var parent = hierarchy(0);
             var pathLength = GetPathLength(cell);
-            for (var i = 0; i < pathLength; i++)
-            {
-                parent = hierarchy(i + 1);
-            }
-            parents.Add(parent);
-            for (var i = pathLength - 1; i >= 0; i--)
+            var parents = new InternalPrototile[pathLength + 1];
+            var parent = parents[pathLength] = hierarchy(pathLength);
+            for (var i = pathLength - 1; i >= minHeight; i--)
             {
                 var t = parent.ChildPrototiles[GetPathAt(cell, i)];
                 parent = t.child;
-                parents.Insert(0, parent);
+                parents[i] = parent;
             }
             return parents;
         }
@@ -440,40 +507,12 @@ namespace Sylves
                 .Where(x => x.child == childTile && x.childSide == (int)dir)
                 .Single();
 
-            (Cell partialPath, int side, InternalPrototile otherParent) TryMovePrototile(int height, Cell partialPath, int childPrototile, int prototileSide)
             {
-                var parent = GetParent(height + 1);
-                var interior = parent.InteriorPrototileAdjacencies
-                    .Where(x => x.fromChild == childPrototile && x.fromChildSide == prototileSide)
-                    .ToList();
-                if (interior.Count == 1)
-                {
-                    var toChild = interior[0].toChild;
-                    return (SetPathAt(partialPath, height, toChild), interior[0].toChildSide, parent.ChildPrototiles[toChild].child);
-                }
-
-                var exterior = parent.ExteriorPrototileAdjacencies
-                    .Where(x => x.child == childPrototile && x.childSide == prototileSide)
-                    .Single();
-                {
-                    var (otherPartialPath, otherSide, otherParent) = TryMovePrototile(height + 1, cell, GetPathAt(cell, height + 1), exterior.parentSide);
-
-                    var otherSubside = exterior.parentSubSideCount - 1 - exterior.parentSubSide;
-                    var otherExterior = otherParent.ExteriorPrototileAdjacencies
-                        .Where(x => x.parentSide == otherSide && x.parentSubSide == otherSubside)
-                        .Single();
-                    if (otherExterior.parentSubSideCount != exterior.parentSubSideCount)
-                        throw new Exception();
-                    return (SetPathAt(otherPartialPath, height, otherExterior.child), otherExterior.childSide, otherParent.ChildPrototiles[otherExterior.child].child);
-                }
-            }
-
-            {
-                var (otherPartialPath, otherSide, otherParent) = TryMovePrototile(0, cell, GetPathAt(cell, 0), tileExterior.parentSide);
+                var (otherPartialPath, otherSide, otherPrototile) = TryMovePrototile(0, cell, tileExterior.parentSide, parents);
 
 
                 var otherSubside = tileExterior.parentSubSideCount - 1 - tileExterior.parentSubSide;
-                var otherExterior = otherParent.ExteriorTileAdjacencies
+                var otherExterior = otherPrototile.ExteriorTileAdjacencies
                     .Where(x => x.parentSide == otherSide && x.parentSubSide == otherSubside)
                     .Single();
                 if (otherExterior.parentSubSideCount != tileExterior.parentSubSideCount)
@@ -485,6 +524,64 @@ namespace Sylves
                 inverseDir = (CellDir)otherExterior.childSide;
                 connection = default;
                 return true;
+            }
+        }
+
+
+
+        // Given a prototile (height, partialPath), and a side of that prototile,
+        // Moves to the adjacent prototile at the same height, returning which side we entered from.
+        // Parents must the list of parent prototiles for partial path. It's indexed from height 0, but it'll only be inspected at height+1 and above.
+        private  (Cell partialPath, int side, InternalPrototile prototile) TryMovePrototile(int height, Cell partialPath, int prototileSide, IList<InternalPrototile> parents)
+        {
+            var childPrototile = GetPathAt(partialPath, height);
+            var parent = height + 1 < parents.Count ? parents[height + 1] : hierarchy(height + 1);
+
+            // Can does the parent directly tell us what is adjacent?
+            var interior = parent.InteriorPrototileAdjacencies
+                .Where(x => x.fromChild == childPrototile && x.fromChildSide == prototileSide)
+                .ToList();
+            if (interior.Count == 1)
+            {
+                var toChild = interior[0].toChild;
+                return (SetPathAt(partialPath, height, toChild), interior[0].toChildSide, parent.ChildPrototiles[toChild].child);
+            }
+
+            // Nope. We'll have to do a move at height one up, then align subsides
+            var exterior = parent.ExteriorPrototileAdjacencies
+                .Where(x => x.child == childPrototile && x.childSide == prototileSide)
+                .Single();
+            {
+                var (otherPartialPath, otherSide, otherParent) = TryMovePrototile(height + 1, partialPath, exterior.parentSide, parents);
+
+                var otherSubside = exterior.parentSubSideCount - 1 - exterior.parentSubSide;
+
+                while (true)
+                {
+                    if (otherParent.PassthroughPrototileAdjacencies != null)
+                    {
+                        var passThrough = otherParent.PassthroughPrototileAdjacencies
+                            .Where(x => x.fromParentSide == otherSide && x.fromParentSubSide == otherSubside)
+                            .ToList();
+
+                        if (passThrough.Count == 1)
+                        {
+                            // TODO: We can probably optimize this better
+                            parents = Parents(otherPartialPath, height + 1);
+                            (otherPartialPath, otherSide, otherParent) = TryMovePrototile(height + 1, otherPartialPath, passThrough[0].toParentSide, parents);
+                            otherSubside = passThrough[0].toParentSubSide;
+                            continue;
+                        }
+                    }
+                    break;
+                }
+
+                var otherExterior = otherParent.ExteriorPrototileAdjacencies
+                    .Where(x => x.parentSide == otherSide && x.parentSubSide == otherSubside)
+                    .Single();
+                //if (otherExterior.parentSubSideCount != exterior.parentSubSideCount)
+                //    throw new Exception($"At height {height+1}, moving from {otherSide}, {otherSubside}, expected {exterior.parentSubSideCount} subSide count, but got ");
+                return (SetPathAt(otherPartialPath, height, otherExterior.child), otherExterior.childSide, otherParent.ChildPrototiles[otherExterior.child].child);
             }
         }
 

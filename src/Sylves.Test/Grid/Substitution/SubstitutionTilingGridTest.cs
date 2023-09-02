@@ -36,9 +36,16 @@ namespace Sylves.Test
             }
 
 			Assert.AreEqual(cell, cell2);
+
 		}
 
 		[Test]
+		public void TestSetPathWithNoChildBits()
+		{
+			Assert.AreEqual(new Cell(2, 0, 0), new PenroseRhombGrid().SetPathAt(new Cell(), 0, 2));
+        }
+
+        [Test]
 		public void TestTryMove_Domino()
 		{
 			var g = new DominoGrid();
@@ -47,16 +54,16 @@ namespace Sylves.Test
 			CellDir inverseDir;
 			Connection connection;
 			// tile interior
-			//r = g.TryMove(new Cell(0, 0, 0), (CellDir)0, out dest, out inverseDir, out connection);
-			//Assert.IsTrue(r);
-			//Assert.AreEqual(new Cell(1, 0, 0), dest);
-			//Assert.AreEqual((CellDir)4, inverseDir);
-			//
-			//// tile exterior, but no prototile heirarch
-			//r = g.TryMove(new Cell(0, 0, 0), (CellDir)4, out dest, out inverseDir, out connection);
-            //Assert.IsTrue(r);
-            //Assert.AreEqual(new Cell(5, 0, 0), dest);
-            //Assert.AreEqual((CellDir)0, inverseDir);
+			r = g.TryMove(new Cell(0, 0, 0), (CellDir)0, out dest, out inverseDir, out connection);
+			Assert.IsTrue(r);
+			Assert.AreEqual(new Cell(1, 0, 0), dest);
+			Assert.AreEqual((CellDir)4, inverseDir);
+			
+			// tile exterior, but no prototile heirarch
+			r = g.TryMove(new Cell(0, 0, 0), (CellDir)4, out dest, out inverseDir, out connection);
+            Assert.IsTrue(r);
+            Assert.AreEqual(new Cell(5, 0, 0), dest);
+            Assert.AreEqual((CellDir)0, inverseDir);
 
             // tile exterior, also prototile exterior
             r = g.TryMove(new Cell(1, 0, 0), (CellDir)0, out dest, out inverseDir, out connection);

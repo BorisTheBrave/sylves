@@ -76,6 +76,14 @@ namespace Sylves
                 (3, 1, 3, 1, 3),
                 (3, 2, 3, 0, 1),
                 },
+            InteriorTileAdjacencies = new (int, int, int, int)[0],
+            ExteriorTileAdjacencies = new[]
+            {
+                (0, 0, 1, 0, 0),
+                (1, 0, 1, 0, 1),
+                (2, 0, 1, 0, 2),
+                (3, 0, 1, 0, 3),
+            },
             ChildTiles = new[]
                 {
                     Polygon(0, 0, 1, 0, 1 + Cos72, Sin72, Cos72, Sin72),
@@ -84,7 +92,8 @@ namespace Sylves
 
         // Thin Rhomb has angles 36 and 144
         // The distinguished corner is 0
-        private static Prototile Thin = new Prototile {
+        private static Prototile Thin = new Prototile
+        {
             Name = "Thin",
             ChildPrototiles = new[]
                 {
@@ -110,9 +119,17 @@ namespace Sylves
             PassthroughPrototileAdjacencies = new[]
             {
                 (2, 0, 3, 1),
-                (2, 1, 3, 0),
-                (3, 0, 2, 1),
-                (3, 1, 2, 0),
+                (2, 1, 3, 2),
+                (3, 0, 2, 0),
+                (3, 1, 2, 1),
+            },
+            InteriorTileAdjacencies = new (int, int, int, int)[0],
+            ExteriorTileAdjacencies = new[]
+            {
+                (0, 0, 1, 0, 0),
+                (1, 0, 1, 0, 1),
+                (2, 0, 1, 0, 2),
+                (3, 0, 1, 0, 3),
             },
             ChildTiles = new[]
                 {
