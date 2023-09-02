@@ -69,6 +69,8 @@ namespace Sylves
 			return (Prototile)MemberwiseClone();
 		}
 
+        public override string ToString() => Name;
+
     }
     /*
     internal struct Path
@@ -221,6 +223,27 @@ namespace Sylves
         }
 
         #region Utils
+
+        // Returns the largest value that GetPathAt(cell, i - 1) is non-zero
+        internal int GetPathLength(Cell cell)
+        {
+            int leadingBits;
+            if (cell.z != 0)
+            {
+                leadingBits = BitUtils.LeadingZeroCount((uint)cell.z);
+            }
+            else if (cell.y != 0)
+            {
+                leadingBits = 32 + BitUtils.LeadingZeroCount((uint)cell.y);
+            }
+            else
+            {
+                leadingBits = 64 + BitUtils.LeadingZeroCount((uint)cell.x);
+            }
+            var bits = 96 - leadingBits;
+            bits -= tileBits;
+            return Math.Max(0, (bits + prototileBits - 1) / prototileBits);
+        }
 
         internal int GetPathAt(Cell cell, int height)
         {
@@ -426,6 +449,29 @@ namespace Sylves
         }
 
 
+        /// <summary>
+        /// Returns n+1 parent elements for a path of length n
+        /// </summary>
+        private IList<InternalPrototile> Parents(Cell cell)
+        {
+            var parents = new List<InternalPrototile>();
+            var parent = hierarchy(0);
+            var pathLength = GetPathLength(cell);
+            for (var i = 0; i < pathLength; i++)
+            {
+                parent = hierarchy(i + 1);
+            }
+            parents.Add(parent);
+            for (var i = pathLength - 1; i >= 0; i--)
+            {
+                var t = parent.ChildPrototiles[GetPathAt(cell, i)];
+                parent = t.child;
+                parents.Insert(0, parent);
+            }
+            return parents;
+        }
+
+
         #region Basics
         public bool Is2d => true;
 
@@ -486,9 +532,8 @@ namespace Sylves
 
         public bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
-            var (childTile, path) = Parse(cell);
-            int GetPathItem(int height) => height < path.Count ? path[height] : 0;
-            var parents = Parents(path);
+            var childTile = GetChildTileAt(cell);
+            var parents = Parents(cell);
             InternalPrototile GetParent(int height) => height < parents.Count ? parents[height] : hierarchy(height);
             var prototile = GetParent(0);
             var tileInterior = prototile.InteriorTileAdjacencies
@@ -496,7 +541,7 @@ namespace Sylves
                 .ToList();
             if (tileInterior.Count == 1)
             {
-                dest = Format(tileInterior[0].toChild, path);
+                dest = SetChildTileAt(cell, tileInterior[0].toChild);
                 inverseDir = (CellDir)tileInterior[0].toChildSide;
                 connection = new Connection();
                 return true;
@@ -505,7 +550,7 @@ namespace Sylves
                 .Where(x => x.child == childTile && x.childSide == (int)dir)
                 .Single();
 
-            (List<int> partialPath, int side, InternalPrototile otherParent) TryMovePrototile(int height, int childPrototile, int prototileSide)
+            (Cell partialPath, int side, InternalPrototile otherParent) TryMovePrototile(int height, Cell partialPath, int childPrototile, int prototileSide)
             {
                 var parent = GetParent(height + 1);
                 var interior = parent.InteriorPrototileAdjacencies
@@ -513,17 +558,15 @@ namespace Sylves
                     .ToList();
                 if (interior.Count == 1)
                 {
-                    var partialPath = path.Take(height + 1).ToList();
                     var toChild = interior[0].toChild;
-                    partialPath.Insert(0, toChild);
-                    return (partialPath, interior[0].toChildSide, parent.ChildPrototiles[toChild].child);
+                    return (SetPathAt(partialPath, height, toChild), interior[0].toChildSide, parent.ChildPrototiles[toChild].child);
                 }
 
                 var exterior = parent.ExteriorPrototileAdjacencies
                     .Where(x => x.child == childPrototile && x.childSide == prototileSide)
                     .Single();
                 {
-                    var (partialPath, otherSide, otherParent) = TryMovePrototile(height + 1, GetPathItem(height + 1), exterior.parentSide);
+                    var (otherPartialPath, otherSide, otherParent) = TryMovePrototile(height + 1, cell, GetPathAt(cell, height + 1), exterior.parentSide);
 
                     var otherSubside = exterior.parentSubSideCount - 1 - exterior.parentSubSide;
                     var otherExterior = otherParent.ExteriorPrototileAdjacencies
@@ -531,13 +574,12 @@ namespace Sylves
                         .Single();
                     if (otherExterior.parentSubSideCount != exterior.parentSubSideCount)
                         throw new Exception();
-                    partialPath.Insert(0, otherExterior.child);
-                    return (partialPath, otherExterior.childSide, otherParent.ChildPrototiles[otherExterior.child].child);
+                    return (SetPathAt(otherPartialPath, height, otherExterior.child), otherExterior.childSide, otherParent.ChildPrototiles[otherExterior.child].child);
                 }
             }
 
             {
-                var (partialPath, otherSide, otherParent) = TryMovePrototile(0, GetPathItem(0), tileExterior.parentSide);
+                var (otherPartialPath, otherSide, otherParent) = TryMovePrototile(0, cell, GetPathAt(cell, 0), tileExterior.parentSide);
 
 
                 var otherSubside = tileExterior.parentSubSideCount - 1 - tileExterior.parentSubSide;
@@ -549,7 +591,7 @@ namespace Sylves
                 //partialPath.Insert(0, otherExterior.child);
                 //return (partialPath, otherExterior.childSide, prototilesByName[otherParent.ChildPrototiles[otherExterior.child].childName]);
 
-                dest = Format(otherExterior.child, partialPath);
+                dest = SetChildTileAt(otherPartialPath, otherExterior.child);
                 inverseDir = (CellDir)otherExterior.childSide;
                 connection = default;
                 return true;
@@ -825,6 +867,8 @@ namespace Sylves
             public (int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)[] ExteriorTileAdjacencies { get; set; }
 
             public Aabb bound;
+
+            public override string ToString() => Name;
         }
     }
 }
