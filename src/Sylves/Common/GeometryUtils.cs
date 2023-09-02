@@ -13,8 +13,8 @@ namespace Sylves
         {
             var n = Vector3.Cross(p1 - p0, p2 - p0);
 
-            var o = Vector3.Dot(p - p2, n);
-            if (o < -planarThickness || o > planarThickness)
+            var o = Vector3.Dot(p - p2, n) / n.magnitude;
+            if (!(-planarThickness <= 0 && o <= planarThickness))
                 return false;
 
             var s = Vector3.Dot(n, Vector3.Cross(p0 - p2, p - p2));
@@ -34,6 +34,11 @@ namespace Sylves
         /// </summary>
         public static bool IsPointInTrianglePlanar(Vector3 p, Vector3 p0, Vector3 p1, Vector3 p2)
         {
+            var n = Vector3.Cross(p1 - p0, p2 - p0);
+
+            if (n.sqrMagnitude == 0)
+                return false;
+
             // s = cross(p0-p2, p-p2)
             // t = cross(p1-p0, p-p0)
             var s = (p0.x - p2.x) * (p.y - p2.y) - (p0.y - p2.y) * (p.x - p2.x);
