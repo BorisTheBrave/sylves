@@ -17,6 +17,7 @@ namespace Sylves
 		public (int fromChild, int fromChildSide, int toChild, int toChildSide)[] InteriorPrototileAdjacencies { get; set; }
 
 		public (int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)[] ExteriorPrototileAdjacencies { get; set; }
+		public (int fromParentSide, int fromParentSubSide, int toParentSide, int toParentSubSide)[] PassthroughPrototileAdjacencies { get; set; }
 
 
 		public Vector3[][] ChildTiles { get; set; }
@@ -163,6 +164,7 @@ namespace Sylves
                 ChildTiles = x.ChildTiles,
                 ExteriorPrototileAdjacencies = x.ExteriorPrototileAdjacencies,
                 InteriorPrototileAdjacencies = x.InteriorPrototileAdjacencies,
+                PassthroughPrototileAdjacencies = x.PassthroughPrototileAdjacencies,
                 InteriorTileAdjacencies = x.InteriorTileAdjacencies,
                 Name = x.Name,
                 ExteriorTileAdjacencies = x.ExteriorTileAdjacencies,
@@ -499,63 +501,58 @@ namespace Sylves
                 connection = new Connection();
                 return true;
             }
-            else
+            var tileExterior = prototile.ExteriorTileAdjacencies
+                .Where(x => x.child == childTile && x.childSide == (int)dir)
+                .Single();
+
+            (List<int> partialPath, int side, InternalPrototile otherParent) TryMovePrototile(int height, int childPrototile, int prototileSide)
             {
-                var tileExterior = prototile.ExteriorTileAdjacencies
-                    .Where(x => x.child == childTile && x.childSide == (int)dir)
-                    .Single();
-
-
-                (List<int> partialPath, int side, InternalPrototile otherParent) TryMovePrototile(int height, int childPrototile, int prototileSide)
+                var parent = GetParent(height + 1);
+                var interior = parent.InteriorPrototileAdjacencies
+                    .Where(x => x.fromChild == childPrototile && x.fromChildSide == prototileSide)
+                    .ToList();
+                if (interior.Count == 1)
                 {
-                    var parent = GetParent(height + 1);
-                    var interior = parent.InteriorPrototileAdjacencies
-                        .Where(x => x.fromChild == childPrototile && x.fromChildSide == prototileSide)
-                        .ToList();
-                    if (interior.Count == 1)
-                    {
-                        var partialPath = path.Take(height + 1).ToList();
-                        var toChild = interior[0].toChild;
-                        partialPath.Insert(0, toChild);
-                        return (partialPath, interior[0].toChildSide, parent.ChildPrototiles[toChild].child);
-                    }
-                    else
-                    {
-                        var exterior = parent.ExteriorPrototileAdjacencies
-                            .Where(x => x.child == childPrototile && x.childSide == prototileSide)
-                            .Single();
-
-                        var (partialPath, otherSide, otherParent) = TryMovePrototile(height + 1, GetPathItem(height + 1), exterior.parentSide);
-
-                        var otherSubside = exterior.parentSubSideCount - 1 - exterior.parentSubSide;
-                        var otherExterior = otherParent.ExteriorPrototileAdjacencies
-                            .Where(x => x.parentSide == otherSide && x.parentSubSide == otherSubside)
-                            .Single();
-                        if (otherExterior.parentSubSideCount != exterior.parentSubSideCount)
-                            throw new Exception();
-                        partialPath.Insert(0, otherExterior.child);
-                        return (partialPath, otherExterior.childSide, otherParent.ChildPrototiles[otherExterior.child].child);
-                    }
+                    var partialPath = path.Take(height + 1).ToList();
+                    var toChild = interior[0].toChild;
+                    partialPath.Insert(0, toChild);
+                    return (partialPath, interior[0].toChildSide, parent.ChildPrototiles[toChild].child);
                 }
 
+                var exterior = parent.ExteriorPrototileAdjacencies
+                    .Where(x => x.child == childPrototile && x.childSide == prototileSide)
+                    .Single();
                 {
-                    var (partialPath, otherSide, otherParent) = TryMovePrototile(0, GetPathItem(0), tileExterior.parentSide);
+                    var (partialPath, otherSide, otherParent) = TryMovePrototile(height + 1, GetPathItem(height + 1), exterior.parentSide);
 
-
-                    var otherSubside = tileExterior.parentSubSideCount - 1 - tileExterior.parentSubSide;
-                    var otherExterior = otherParent.ExteriorTileAdjacencies
+                    var otherSubside = exterior.parentSubSideCount - 1 - exterior.parentSubSide;
+                    var otherExterior = otherParent.ExteriorPrototileAdjacencies
                         .Where(x => x.parentSide == otherSide && x.parentSubSide == otherSubside)
                         .Single();
-                    if (otherExterior.parentSubSideCount != tileExterior.parentSubSideCount)
+                    if (otherExterior.parentSubSideCount != exterior.parentSubSideCount)
                         throw new Exception();
-                    //partialPath.Insert(0, otherExterior.child);
-                    //return (partialPath, otherExterior.childSide, prototilesByName[otherParent.ChildPrototiles[otherExterior.child].childName]);
-
-                    dest = Format(otherExterior.child, partialPath);
-                    inverseDir = (CellDir)otherExterior.childSide;
-                    connection = default;
-                    return true;
+                    partialPath.Insert(0, otherExterior.child);
+                    return (partialPath, otherExterior.childSide, otherParent.ChildPrototiles[otherExterior.child].child);
                 }
+            }
+
+            {
+                var (partialPath, otherSide, otherParent) = TryMovePrototile(0, GetPathItem(0), tileExterior.parentSide);
+
+
+                var otherSubside = tileExterior.parentSubSideCount - 1 - tileExterior.parentSubSide;
+                var otherExterior = otherParent.ExteriorTileAdjacencies
+                    .Where(x => x.parentSide == otherSide && x.parentSubSide == otherSubside)
+                    .Single();
+                if (otherExterior.parentSubSideCount != tileExterior.parentSubSideCount)
+                    throw new Exception();
+                //partialPath.Insert(0, otherExterior.child);
+                //return (partialPath, otherExterior.childSide, prototilesByName[otherParent.ChildPrototiles[otherExterior.child].childName]);
+
+                dest = Format(otherExterior.child, partialPath);
+                inverseDir = (CellDir)otherExterior.childSide;
+                connection = default;
+                return true;
             }
         }
 
@@ -565,9 +562,9 @@ namespace Sylves
         public bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation) => throw new NotImplementedException();
 
 
-        public IEnumerable<CellDir> GetCellDirs(Cell cell) => throw new NotImplementedException();
+        public IEnumerable<CellDir> GetCellDirs(Cell cell) => DefaultGridImpl.GetCellDirs(this, cell);
 
-        public IEnumerable<CellCorner> GetCellCorners(Cell cell) => throw new NotImplementedException();
+        public IEnumerable<CellCorner> GetCellCorners(Cell cell) => DefaultGridImpl.GetCellCorners(this, cell);
 
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => throw new NotImplementedException();
 
@@ -818,7 +815,8 @@ namespace Sylves
             public (int fromChild, int fromChildSide, int toChild, int toChildSide)[] InteriorPrototileAdjacencies { get; set; }
 
             public (int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)[] ExteriorPrototileAdjacencies { get; set; }
-
+            
+            public (int fromParentSide, int fromParentSubSide, int toParentSide, int toParentSubSide)[] PassthroughPrototileAdjacencies { get; set; }
 
             public Vector3[][] ChildTiles { get; set; }
 

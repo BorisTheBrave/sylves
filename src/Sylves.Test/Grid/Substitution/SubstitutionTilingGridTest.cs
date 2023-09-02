@@ -31,7 +31,7 @@ namespace Sylves.Test
 		}
 
 		[Test]
-		public void TestTryMove()
+		public void TestTryMove_Domino()
 		{
 			var g = new DominoGrid();
 			bool r;
@@ -57,8 +57,24 @@ namespace Sylves.Test
             Assert.AreEqual((CellDir)4, inverseDir);
         }
 
-		[Test]
-		public void FindCell()
+
+
+        [Test]
+        public void TestTryMove_PenroseRhomb()
+        {
+            var g = new PenroseRhombGrid();
+			CollectionAssert.AreEquivalent(new[]{
+				new Cell(1, 0), new Cell(10, 0), new Cell(5, 0), new Cell(4, 0)
+			}, g.GetNeighbours(new Cell(0, 0, 0)));
+
+
+            CollectionAssert.AreEquivalent(new[]{
+                new Cell(40, 0), new Cell(84, 0), new Cell(5, 0), new Cell(2, 0)
+            }, g.GetNeighbours(new Cell(41, 0, 0)));
+        }
+
+        [Test]
+		public void FindCell_Domino()
 		{
             // TODO: Replace with GridTest.FindCell once more operations are supported
             void FindCell(IGrid grid, Cell cell)

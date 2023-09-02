@@ -156,10 +156,10 @@ namespace Sylves.Test
         {
 
             // Aperiodic grids
-            //Export(
-            //    new MaskModifier(new DominoGrid(), Enumerable.Range(0, 64).Select(x => new Cell(x, 0)).ToHashSet()),
-            //    "domino.svg",
-            //    new Options { textScale = 0.5, min = new Vector2(-10, -10), max = new Vector2(10, 10) });
+            Export(
+                new MaskModifier(new DominoGrid(), Enumerable.Range(0, 64).Select(x => new Cell(x, 0)).ToHashSet()),
+                "domino.svg",
+                new Options { textScale = 0.5, min = new Vector2(-10, -10), max = new Vector2(10, 10) });
             var g = new PenroseRhombGrid();
             Export(
                 new MaskModifier(g, Enumerable.Range(0, 4000).Select(x => new Cell(x, 0)).Where(g.IsCellInGrid).ToHashSet()),

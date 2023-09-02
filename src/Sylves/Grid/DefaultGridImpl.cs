@@ -20,6 +20,10 @@ namespace Sylves
         {
             return grid.GetCellType(cell).GetCellDirs();
         }
+        public static IEnumerable<CellCorner> GetCellCorners(IGrid grid, Cell cell)
+        {
+            return grid.GetCellType(cell).GetCellCorners();
+        }
 
         #region Topology
         public static bool TryMoveByOffset(IGrid grid, Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)

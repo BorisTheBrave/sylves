@@ -58,14 +58,24 @@ namespace Sylves
                 //(ScaleRotateAndTranslate(Deflation, -72, Deflation, 0), "Thin"),
                 //(ScaleRotateAndTranslate(Deflation, 180 - 36, 1 + Cos72, Sin72), "Fat"),
                 },
-            /*
             InteriorPrototileAdjacencies = new[]
                 {
+                (0, 0, 1, 0),
+                (1, 0, 0, 0),
                 },
             ExteriorPrototileAdjacencies = new[]
                 {
+                (0, 0, 3, 0, 2),
+                (0, 1, 3, 0, 3),
+                (0, 2, 3, 2, 1),
+                (1, 0, 2, 2, 2),
+                (1, 1, 2, 2, 3),
+                (2, 0, 2, 2, 0),
+                (2, 1, 2, 1, 1),
+                (3, 0, 3, 1, 2),
+                (3, 1, 3, 1, 3),
+                (3, 2, 3, 0, 1),
                 },
-            */
             ChildTiles = new[]
                 {
                     Polygon(0, 0, 1, 0, 1 + Cos72, Sin72, Cos72, Sin72),
@@ -83,6 +93,27 @@ namespace Sylves
                 //(ScaleRotateAndTranslate(Deflation, 180-36,  1 + Cos144, Sin144), "Fat"),
                 //(ScaleRotateAndTranslate(Deflation, -36*3,  Cos144 * (1 - Deflation), Sin144 * (1 - Deflation)), "Thin"),
                 },
+            InteriorPrototileAdjacencies = new[]
+                {
+                (0, 0, 1, 0),
+                (1, 0, 0, 0),
+                },
+            ExteriorPrototileAdjacencies = new[]
+                {
+                (0, 0, 3, 1, 2),
+                (0, 1, 3, 1, 3),
+                (0, 2, 3, 0, 1),
+                (1, 0, 2, 0, 2),
+                (1, 1, 2, 0, 3),
+                (3, 2, 3, 1, 1),
+                },
+            PassthroughPrototileAdjacencies = new[]
+            {
+                (2, 0, 3, 1),
+                (2, 1, 3, 0),
+                (3, 0, 2, 1),
+                (3, 1, 2, 0),
+            },
             ChildTiles = new[]
                 {
                     Polygon(0, 0, 1, 0, 1 + Cos144, Sin144, Cos144, Sin144),
