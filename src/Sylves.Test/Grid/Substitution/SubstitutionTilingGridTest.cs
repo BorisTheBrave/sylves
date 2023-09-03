@@ -136,6 +136,17 @@ namespace Sylves.Test
 				Assert.AreEqual(b2.Path, b.Path);
             }
         }
+
+		[Test]
+        public void TestIndex()
+		{
+			var g = new PenroseRhombGrid().BoundBy(new SubstitutionTilingBound { Height = 3, Path = new Cell(0b0101010101, 0)});
+			Assert.AreEqual(g.GetCells().Count(), g.IndexCount);
+			foreach(var cell in g.GetCells())
+			{
+				Assert.AreEqual(cell, g.GetCellByIndex(g.GetIndex(cell)));
+            }
+        }
     }
 }
 

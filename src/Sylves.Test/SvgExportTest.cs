@@ -174,7 +174,7 @@ namespace Sylves.Test
                 new Options { textScale = 0.5, min = new Vector2(-3, -3), max = new Vector2(3, 3), trim = true });
             var g = new PenroseRhombGrid();
             Export(
-                new PenroseRhombGrid().BoundBy(new SubstitutionTilingBound { Height = 7 }),
+                new RavelModifier(new PenroseRhombGrid().BoundBy(new SubstitutionTilingBound { Height = 7 })),
                 "penrose_rhomb.svg",
                 new Options { textScale = 0.5, min = new Vector2(-3, -3), max = new Vector2(3, 3), trim = true });
             ExportPrototiles("penrose_rhomb_prototiles.svg", PenroseRhombGrid.Prototiles);

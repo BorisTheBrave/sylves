@@ -159,6 +159,8 @@ namespace Sylves
         private List<ICellType> cellTypes;
         private Func<int, InternalPrototile> hierarchy;
         private SubstitutionTilingBound bound;
+        // By height
+        private List<Dictionary<InternalPrototile, int>> indexCounts;
 
         // Copy constructor
         private SubstitutionTilingGrid(SubstitutionTilingGrid other, SubstitutionTilingBound bound)
@@ -189,8 +191,6 @@ namespace Sylves
             var (internalPrototiles, prototilesByName) = BuildPrototiles(prototiles);
             this.prototiles = internalPrototiles;
             this.hierarchy = h => prototilesByName[hierarchy(h)];
-
-
 
             // Pre-compute cell types
             cellTypes = prototiles.SelectMany(x => x.ChildTiles.Select(y => y.Length)).Distinct().Select(NGonCellType.Get).ToList();
@@ -589,7 +589,8 @@ namespace Sylves
         {
             if (cellTypes.Count == 1)
                 return cellTypes[0];
-            throw new NotImplementedException();
+            var (prototile, childTile) = GetPrototileAndChildTile(cell);
+            return NGonCellType.Get(prototile.ChildTiles[childTile].Length);
         }
 
         public bool IsCellInGrid(Cell cell)
@@ -712,10 +713,10 @@ namespace Sylves
             }
         }
 
-        public bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation) => throw new NotImplementedException();
+        public bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation) => DefaultGridImpl.TryMoveByOffset(this, startCell, startOffset, destOffset, startRotation, out destCell, out destRotation);
 
 
-        public bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation) => throw new NotImplementedException();
+        public bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation) => DefaultGridImpl.ParallelTransport(aGrid, aSrcCell, aDestCell, this, srcCell, startRotation, out destCell, out destRotation);
 
 
         public IEnumerable<CellDir> GetCellDirs(Cell cell) => DefaultGridImpl.GetCellDirs(this, cell);
@@ -727,11 +728,95 @@ namespace Sylves
         #endregion
 
         #region Index
-        public int IndexCount => throw new NotImplementedException();
 
-        public int GetIndex(Cell cell) => throw new NotImplementedException();
+        private void FillIndexCounts(int height)
+        {
+            if(indexCounts == null)
+            {
+                indexCounts = new List<Dictionary<InternalPrototile, int>>();
+                indexCounts.Add(prototiles.ToDictionary(x => x, x => x.ChildTiles.Length));
+            }
 
-        public Cell GetCellByIndex(int index) => throw new NotImplementedException();
+            for(var i=indexCounts.Count; i<=height; i++)
+            {
+                var prevIndexCounts = indexCounts[i - 1];
+                indexCounts.Add(prototiles.ToDictionary(x => x, x => x.ChildPrototiles.Sum(y => prevIndexCounts[y.child])));
+            }
+        }
+
+        public int IndexCount
+        {
+            get
+            {
+                if (bound == null)
+                    throw new GridInfiniteException();
+                FillIndexCounts(bound.Height);
+                return indexCounts[bound.Height][GetPrototile(bound.Path, bound.Height)];
+            }
+        }
+
+        public int GetIndex(Cell cell)
+        {
+            if (bound == null)
+                throw new GridInfiniteException();
+            var pathLength = GetPathLength(cell);
+            FillIndexCounts(pathLength - 1);
+            var parent = GetPrototile(bound.Path, pathLength);
+            var index = 0;
+            for (var height = pathLength - 1; height >= 0; height--)
+            {
+                var p = GetPathAt(cell, height);
+                for (var i = 0; i < p; i++)
+                {
+                    index += indexCounts[height][parent.ChildPrototiles[i].child];
+                }
+                parent = parent.ChildPrototiles[p].child;
+            }
+            return index + GetChildTileAt(cell);
+        }
+
+        public Cell GetCellByIndex(int index)
+        {
+            if (bound == null)
+                throw new GridInfiniteException();
+            var cell = new Cell();
+            /*
+            var height = 0;
+            InternalPrototile parent;
+            while(true)
+            {
+                FillIndexCounts(height);
+                if (indexCounts[height][parent = hierarchy(height)] > index)
+                    break;
+                height++;
+            }
+            */
+            var height = bound.Height;
+            var parent = GetPrototile(bound.Path, bound.Height);
+            height--;
+            for(;height >= 0; height--)
+            {
+                var p = 0;
+                while(true)
+                {
+                    var i = indexCounts[height][parent.ChildPrototiles[p].child];
+                    if(i <= index)
+                    {
+                        index -= i;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    p++;
+                }
+
+                cell = SetPathAt(cell, height, p);
+                parent = parent.ChildPrototiles[p].child;
+            }
+            cell = SetChildTileAt(cell, index);
+            return cell;
+        }
         #endregion
 
         #region Bounds
