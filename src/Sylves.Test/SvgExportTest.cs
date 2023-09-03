@@ -21,6 +21,7 @@ namespace Sylves.Test
             public Vector2 min = new Vector2(-2, -2);
             public Vector2 max = new Vector2(2, 2);
             public bool includeDual = false;
+            public bool trim = false;
         }
 
         private const bool IsSeed = false;
@@ -65,7 +66,19 @@ namespace Sylves.Test
             var min = options.min;
             var max = options.max;
             b.BeginSvg($"{min.x} {-max.y} {max.x - min.x} {max.y-min.y}", options.strokeWidth);
-            WriteCells(grid, grid.GetCells(), tw, b, options);
+            var cells = grid.GetCells();
+            if(options.trim)
+            {
+                cells = cells.Where(c =>
+                {
+                    var polygon = grid.GetPolygon(c);
+                    return !(polygon.All(v => v.x < min.x) ||
+                        polygon.All(v => v.y < min.y) ||
+                        polygon.All(v => v.x > max.x) ||
+                        polygon.All(v => v.y > max.y));
+                });
+            }
+            WriteCells(grid, cells, tw, b, options);
 
             if(options.includeDual)
             {
@@ -154,17 +167,16 @@ namespace Sylves.Test
         [Test]
         public void ExportSubstitutionGrids()
         {
-
             // Aperiodic grids
             Export(
-                new MaskModifier(new DominoGrid(), Enumerable.Range(0, 64).Select(x => new Cell(x, 0)).ToHashSet()),
+                new DominoGrid().Transformed(Matrix4x4.Translate(new Vector3(0, 3, 0))).BoundBy(new SubstitutionTilingBound { Height = 4 }),
                 "domino.svg",
-                new Options { textScale = 0.5, min = new Vector2(-10, -10), max = new Vector2(10, 10) });
+                new Options { textScale = 0.5, min = new Vector2(-3, -3), max = new Vector2(3, 3), trim = true });
             var g = new PenroseRhombGrid();
             Export(
-                new MaskModifier(g, Enumerable.Range(0, 4000).Select(x => new Cell(x, 0)).Where(g.IsCellInGrid).ToHashSet()),
+                new PenroseRhombGrid().BoundBy(new SubstitutionTilingBound { Height = 7 }),
                 "penrose_rhomb.svg",
-                new Options { textScale = 0.5, min = new Vector2(-10, -10), max = new Vector2(10, 10) });
+                new Options { textScale = 0.5, min = new Vector2(-3, -3), max = new Vector2(3, 3), trim = true });
             ExportPrototiles("penrose_rhomb_prototiles.svg", PenroseRhombGrid.Prototiles);
         }
 

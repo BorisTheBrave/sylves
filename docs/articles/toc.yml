@@ -60,6 +60,8 @@
        href: grids/periodicplanarmeshgrid.md
     -  name: PlanarLazyMeshGrid
        href: grids/planarlazymeshgrid.md
+    -  name: SubstitutionTilingGrid
+       href: grids/substitutiontilinggrid.md
 - name: Modifiers
   href: modifiers/index.md
   items:
