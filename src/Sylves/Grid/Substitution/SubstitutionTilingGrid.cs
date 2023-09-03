@@ -180,8 +180,29 @@ namespace Sylves
 
         public SubstitutionTilingGrid(Prototile[] prototiles, Func<int, string> hierarchy)
 		{
+            // Prep bit arithmetic
+            var maxTileCount = prototiles.Max(x => x.ChildTiles?.Length ?? 0);
+            tileBits = (int)Math.Ceiling(Math.Log(maxTileCount) / Math.Log(2));
+            var maxPrototileCount = prototiles.Max(x => x.ChildPrototiles?.Length ?? 0);
+            prototileBits = (int)Math.Ceiling(Math.Log(maxPrototileCount) / Math.Log(2));
+
+            var (internalPrototiles, prototilesByName) = BuildPrototiles(prototiles);
+            this.prototiles = internalPrototiles;
+            this.hierarchy = h => prototilesByName[hierarchy(h)];
+
+
+
+            // Pre-compute cell types
+            cellTypes = prototiles.SelectMany(x => x.ChildTiles.Select(y => y.Length)).Distinct().Select(NGonCellType.Get).ToList();
+
+            BuildPrototileBounds();
+        }
+
+        #region Construction
+        private (InternalPrototile[], Dictionary<string, InternalPrototile>) BuildPrototiles(Prototile[] prototiles)
+        {
             // Build internal prototiles
-            this.prototiles = prototiles.Select(x => new InternalPrototile
+            var internalPrototiles = prototiles.Select(x => new InternalPrototile
             {
                 ChildTiles = x.ChildTiles,
                 ExteriorPrototileAdjacencies = x.ExteriorPrototileAdjacencies,
@@ -191,24 +212,25 @@ namespace Sylves
                 Name = x.Name,
                 ExteriorTileAdjacencies = x.ExteriorTileAdjacencies,
             }).ToArray();
-            var prototilesByName = this.prototiles.ToDictionary(x => x.Name);
-            for(var i=0;i<prototiles.Length;i++)
+            var prototilesByName = internalPrototiles.ToDictionary(x => x.Name);
+            for (var i = 0; i < prototiles.Length; i++)
             {
-                this.prototiles[i].ChildPrototiles = prototiles[i].ChildPrototiles
+                internalPrototiles[i].ChildPrototiles = prototiles[i].ChildPrototiles
                     .Select(t => (t.transform, prototilesByName[t.childName]))
                     .ToArray();
             }
-            this.hierarchy = h => prototilesByName[hierarchy(h)];
 
-            // Prep bit arithmetic
-            var maxTileCount = prototiles.Max(x => x.ChildTiles?.Length ?? 0);
-            tileBits = (int)Math.Ceiling(Math.Log(maxTileCount) / Math.Log(2));
-            var maxPrototileCount = prototiles.Max(x => x.ChildPrototiles?.Length ?? 0);
-            prototileBits = (int)Math.Ceiling(Math.Log(maxPrototileCount) / Math.Log(2));
+            // Precompute centers
+            foreach(var prototile in internalPrototiles)
+            {
+                prototile.Centers = prototile.ChildTiles.Select(vs => vs.Aggregate((x, y) => x + y) / vs.Length).ToArray();
+            }
 
-            // Pre-compute cell types
-            cellTypes = prototiles.SelectMany(x => x.ChildTiles.Select(y => y.Length)).Distinct().Select(NGonCellType.Get).ToList();
+            return (internalPrototiles, prototilesByName);
+        }
 
+        private void BuildPrototileBounds()
+        {
             // Precompute bounds
             // Bounds can extend beyond the tile bound if a child prototile is transformed in certain ways.
             // And children's children could protude even further, ad-infinitum.
@@ -229,10 +251,11 @@ namespace Sylves
                     return Aabb.Union(x.ChildPrototiles.Select(c => c.transform * prevBounds[c.child]));
                 });
             }
+
             // Deflation is also affected by iterations
             var deflationPow = Math.Pow(default, prototiles.Count());
             var alpha = (float)(1 / (1 - deflationPow));
-            foreach(var prototile in this.prototiles)
+            foreach (var prototile in this.prototiles)
             {
                 var tileBound = tileBounds[prototile];
                 var prevBound = prevBounds[prototile];
@@ -241,6 +264,7 @@ namespace Sylves
                 prototile.bound = new Aabb { min = min, max = max };
             };
         }
+        #endregion
 
         #region Path Utils
         // Various functions for interpreting a Cell as a set of 12 bytes
@@ -820,14 +844,21 @@ namespace Sylves
         #region Position
         public Vector3 GetCellCenter(Cell cell)
         {
-            // TODO: More efficient
-            GetPolygon(cell, out var vertices, out var transform);
-            return vertices.Select(transform.MultiplyPoint3x4).Aggregate((x, y) => x + y) / vertices.Length;
+            var (prototile, transform, childTile) = LocateCell(cell);
+            return transform.MultiplyPoint3x4(prototile.Centers[childTile]);
         }
 
-        public Vector3 GetCellCorner(Cell cell, CellCorner cellCorner) => throw new NotImplementedException();
+        public Vector3 GetCellCorner(Cell cell, CellCorner cellCorner)
+        {
+            GetPolygon(cell, out var vertices, out var transform);
+            return transform.MultiplyPoint3x4(vertices[(int)cellCorner]);
+        }
 
-        public TRS GetTRS(Cell cell) => throw new NotImplementedException();
+        public TRS GetTRS(Cell cell)
+        {
+            var (prototile, transform, childTile) = LocateCell(cell);
+            return new TRS(transform);
+        }
 
         #endregion
 
@@ -1042,6 +1073,8 @@ namespace Sylves
             public (int fromParentSide, int fromParentSubSide, int toParentSide, int toParentSubSide)[] PassthroughPrototileAdjacencies { get; set; }
 
             public Vector3[][] ChildTiles { get; set; }
+
+            public Vector3[] Centers { get; set; }
 
             public (int fromChild, int fromChildSide, int toChild, int toChildSide)[] InteriorTileAdjacencies { get; set; }
 
