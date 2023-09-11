@@ -553,7 +553,19 @@ namespace Sylves
 
         public bool IsSingleCellType => cellTypes.Count == 1;
 
-        public int CoordinateDimension => 3;
+        public int CoordinateDimension
+        {
+            get
+            {
+                if (bound == null)
+                    return 3;
+                if (bound.Path.y == 0 && bound.Path.z == 0)
+                    return 1;
+                if (bound.Path.z == 0)
+                    return 2;
+                return 3;
+            }
+        }
 
         public IEnumerable<ICellType> GetCellTypes() => cellTypes;
         #endregion
@@ -939,10 +951,16 @@ namespace Sylves
             return transform.MultiplyPoint3x4(vertices[(int)cellCorner]);
         }
 
+        private Matrix4x4 GetTRS(InternalPrototile prototile, Matrix4x4 transform, int childTile)
+        {
+            // TODO: Translate this so the child is centered appropriately
+            return transform;
+        }
+
         public TRS GetTRS(Cell cell)
         {
             var (prototile, transform, childTile) = LocateCell(cell);
-            return new TRS(transform);
+            return new TRS(GetTRS(prototile, transform, childTile));
         }
 
         #endregion
@@ -957,9 +975,15 @@ namespace Sylves
             transform = prototileTransform;
         }
 
-        public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => throw new NotImplementedException();
+        public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
+        {
+            throw new Grid2dException();
+        }
 
-        public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => throw new NotImplementedException();
+        public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
+        {
+            throw new Grid2dException();
+        }
 
         #endregion
 
@@ -982,7 +1006,7 @@ namespace Sylves
                         var v = vertices[i];
                         if (GeometryUtils.IsPointInTrianglePlanar(transformedPosition, v0, prev, v))
                         {
-                            cell =  SetChildTileAt(partialPath, childIndex);
+                            cell = SetChildTileAt(partialPath, childIndex);
                             return true;
                         }
                         prev = v;
@@ -997,7 +1021,41 @@ namespace Sylves
         public bool FindCell(
             Matrix4x4 matrix,
             out Cell cell,
-            out CellRotation rotation) => throw new NotImplementedException();
+            out CellRotation rotation)
+        {
+            var position = matrix.MultiplyPoint3x4(new Vector3());
+            var inputAabb = new Aabb { min = position, max = position };
+            foreach (var (prototile, transform, partialPath) in GetPrototilesIntersectsApproxInternal(inputAabb))
+            {
+                for (var childIndex = 0; childIndex < prototile.ChildTiles.Length; childIndex++)
+                {
+                    // Currently does fan detection
+                    // Doesn't work for convex faces
+                    var transformedPosition = transform.inverse.MultiplyPoint3x4(position);
+                    var vertices = prototile.ChildTiles[childIndex];
+                    var v0 = vertices[0];
+                    var prev = vertices[1];
+                    for (var i = 2; i < vertices.Length; i++)
+                    {
+                        var v = vertices[i];
+                        if (GeometryUtils.IsPointInTrianglePlanar(transformedPosition, v0, prev, v))
+                        {
+                            // Get the cell
+                            cell = SetChildTileAt(partialPath, childIndex);
+                            // Get the rotation
+                            var cellType = NGonCellType.Get(prototile.ChildTiles[childIndex].Length);
+                            var cellTransform = GetTRS(prototile, transform, childIndex);
+                            return MeshGrid.GetRotationFromMatrix(cellType, cellTransform, matrix, out rotation);
+                        }
+                        prev = v;
+                    }
+                    continue;
+                }
+            }
+            cell = default;
+            rotation = default;
+            return false;
+        }
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
@@ -1011,6 +1069,8 @@ namespace Sylves
             }
         }
 
+
+
         // Returns the set of height 0 prototiles intersect inputAabb
         private IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternal(Aabb inputAabb)
         {
@@ -1019,20 +1079,21 @@ namespace Sylves
             {
                 // For each of these prototiles, walk the entire tree under it
                 stack.Push(t);
-                while(stack.Count > 0)
+                while (stack.Count > 0)
                 {
                     var (height, prototile, transform, partialPath) = stack.Pop();
                     var bound = transform * prototile.bound;
-                    if(bound.Intersects(inputAabb))
+
+                    if (bound.Intersects(inputAabb))
                     {
-                        if(height == 0)
+                        if (height == 0)
                         {
                             yield return (prototile, transform, partialPath);
                         }
                         else
                         {
                             // Recurse
-                            for(var i=0;i<prototile.ChildPrototiles.Length;i++)
+                            for (var i = 0; i < prototile.ChildPrototiles.Length; i++)
                             {
                                 var (childTransform, child) = Down(transform, prototile, i);
                                 stack.Push((height - 1, child, childTransform, SetPathAt(partialPath, height - 1, i)));
@@ -1049,35 +1110,167 @@ namespace Sylves
             var height = 0;
             var transform = Matrix4x4.identity;
             var path = new Cell();
-            var found = false;
+            var lastFoundHeight = -1;
             while (true)
             {
                 var parent = hierarchy(height + 1);
                 transform = Up(transform, parent);
-                var foundAtThisHeight = false;
 
                 // Skips 0, we just came from there!
                 for (var i = height == 0 ? 0 : 1; i < parent.ChildPrototiles.Length; i++)
                 {
                     var (childTransform, child) = Down(transform, parent, i);
                     var childBound = childTransform * child.bound;
-                    if(childBound.Intersects(inputAabb))
+                    if (childBound.Intersects(inputAabb))
                     {
                         yield return (height, child, childTransform, SetPathAt(path, height, i));
-                        foundAtThisHeight = true;
-                        found = true;
+                        lastFoundHeight = height;
                     }
                 }
 
                 height = height + 1;
 
-                if (found && !foundAtThisHeight)
+                if (lastFoundHeight <= height - 3 && lastFoundHeight != -1)
+                {
+                    // Haven't found anything in a while, give up.
+                    // TODO: Figure out an actually reliably way of doing this.
                     break;
+                }
             }
         }
 
 
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity) => throw new NotImplementedException();
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        {
+            // Computes distance to interection of aabb, or null if it misses the truncated array.
+            Func<Matrix4x4, InternalPrototile, float?> getDist = (transform, prototile) =>
+            {
+                var iTransform = transform.inverse;
+                var localOrigin = iTransform.MultiplyPoint3x4(origin);
+                var localDirection = iTransform.MultiplyVector(direction);
+                return prototile.bound.Raycast(localOrigin, localDirection, maxDistance);
+            };
+            var queuedRaycastInfos = new PriorityQueue<RaycastInfo>(x => x.distance, (x, y) => -x.distance.CompareTo(y.distance));
+            foreach (var (prototile, transform, partialPath, dist) in RaycastPrototiles(getDist))
+            {
+                // Raycast against the actual children of this prototile
+                for (var i = 0; i < prototile.ChildTiles.Length; i++)
+                {
+                    if(MeshRaycast.RaycastPolygonPlanar(origin, direction, prototile.ChildTiles[i], transform, out var point, out var childDist, out var side) 
+                       && childDist < maxDistance)
+                    {
+                        var ri = new RaycastInfo
+                        {
+                            cell = SetChildTileAt(partialPath, i),
+                            cellDir = (CellDir?)side,
+                            distance = childDist,
+                            point = point,
+                        };
+                        queuedRaycastInfos.Add(ri);
+                    }
+                }
+
+                // Drain the queue. As the prototiles are in order, and their child tiles are inside their bounds and thus always have a larger dist
+                // we know we've seen everything up to dist
+                foreach(var ri in queuedRaycastInfos.Drain(dist))
+                {
+                    yield return ri;
+                }
+            }
+            foreach (var ri in queuedRaycastInfos.Drain())
+            {
+                yield return ri;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns all the height 0 prototiles that intersect the ray, in the correct order.
+        /// </summary>
+        private IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float minDist)> RaycastPrototiles(Func<Matrix4x4, InternalPrototile, float?> getDist)
+        {
+            var queue = new PriorityQueue<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float dist)>(x=>x.dist, (x, y) => -x.dist.CompareTo(y.dist));
+            float prevBestAtHeight = 0.0f;
+            foreach (var (height, prototilesAtHeight) in RaycastPrototilesPartition(getDist))
+            {
+                float bestAtHeight = float.PositiveInfinity;
+                foreach(var (prototile, transform, partialPath, dist) in prototilesAtHeight)
+                {
+                    queue.Add((height, prototile, transform, partialPath, dist));
+                    bestAtHeight = Mathf.Min(bestAtHeight, height);
+                }
+
+                // Best at height falls, then rises indefinitely.
+                // Once it's in the rising phase, we can be sure we've seen everything at that dist or less, and we can start draining the queue
+                if(bestAtHeight > prevBestAtHeight)
+                {
+                    // Drain queue of everything less than bestAtHeight
+                    while(queue.Count > 0)
+                    {
+                        var dist = queue.Peek().dist;
+
+                        if (dist > bestAtHeight)
+                            break;
+
+                        var (itemHeight, prototile, transform, partialPath, _) = queue.Pop();
+
+                        if (itemHeight != 0)
+                        {
+                            // Recurse
+                            for (var i = 0; i < prototile.ChildPrototiles.Length; i++)
+                            {
+                                var (childTransform, child) = Down(transform, prototile, i);
+                                var childDist = getDist(childTransform, child);
+                                if (childDist != null)
+                                {
+                                    queue.Add((itemHeight - 1, child, childTransform, SetPathAt(partialPath, itemHeight - 1, i), childDist.Value));
+                                }
+                            }
+                            continue;
+                        }
+
+                        yield return (prototile, transform, partialPath, dist);
+                    }
+                    // No prototiles found at this height, nor will we at any later one
+                    if (bestAtHeight == float.PositiveInfinity)
+                    {
+                        break;
+                    }
+                }
+                prevBestAtHeight = bestAtHeight;
+            }
+        }
+
+        // Returns a set of non-overlapping prototiles at each height starting from 0 that collectively contain all prototiles that intersect the ray.
+        // This enum never terminates, but it's basically done once there's nothing at a height
+        private IEnumerable<(int height, IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float dist)>)> RaycastPrototilesPartition(Func<Matrix4x4, InternalPrototile, float?> getDist)
+        {
+            var height = 0;
+            var transform = Matrix4x4.identity;
+            var path = new Cell();
+            while (true)
+            {
+                var parent = hierarchy(height + 1);
+                transform = Up(transform, parent);
+
+                // Skips 0, we just came from there!
+                var childIndices = height == 0
+                    ? Enumerable.Range(0, parent.ChildPrototiles.Length)
+                    : Enumerable.Range(1, parent.ChildPrototiles.Length - 1);
+
+                var a = childIndices.Select(i =>
+                {
+                    var (childTransform, child) = Down(transform, parent, i);
+                    var dist = getDist(childTransform, child) ?? float.NaN;
+                    return (child, childTransform, SetPathAt(path, height, i), dist);
+                })
+                    .Where(x => !float.IsNaN(x.dist));
+
+                yield return (height, a);
+
+                height += 1;
+            }
+        }
         #endregion
 
         #region Symmetry
@@ -1105,10 +1298,11 @@ namespace Sylves
             {
                 var c = (aabb.min + aabb.max) / 2;
                 var h = (aabb.max - aabb.min) / 2;
+
                 c = m.MultiplyPoint3x4(c);
-                h = m.MultiplyVector(h);
-                h.x = Mathf.Abs(h.x);
-                h.y = Mathf.Abs(h.y);
+                var hx = m.MultiplyVector(new Vector3(h.x, 0, 0));
+                var hy = m.MultiplyVector(new Vector3(0, h.y, 0));
+                h = VectorUtils.Abs(hx) + VectorUtils.Abs(hy);
                 return new Aabb
                 {
                     min = c - h,
@@ -1142,6 +1336,18 @@ namespace Sylves
                     return false;
                 }
                 return true;
+            }
+
+            public float? Raycast(Vector3 origin, Vector3 direction, float maxDistance)
+            {
+                if(MeshRaycast.RaycastAabbPlanar(origin, direction, min, max, out var distance) && distance <= maxDistance)
+                {
+                    return distance;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 

@@ -81,6 +81,40 @@ namespace Sylves.Test
             }
         }
 
+        public static void Raycast(IGrid grid, Vector3 origin, Vector3 direction, float maxDistance, float cellSize = 1.0f, float delta = 0.001f)
+        {
+            var i = 0;
+            var actualRis = grid.Raycast(origin, direction, maxDistance).GetEnumerator();
+            var expectedRis = DefaultGridImpl.Raycast(grid, origin, direction, maxDistance, cellSize).GetEnumerator();
+
+            while(expectedRis.MoveNext())
+            {
+                if(!actualRis.MoveNext())
+                {
+                    Assert.Fail($"Actual raycast terminated after {i} elements, expected more, e.g. {expectedRis.Current.cell}");
+                }
+
+                var expected = expectedRis.Current;
+                var actual = actualRis.Current;
+                var msg = $"{i}";
+                if(expected.cell != actual.cell)
+                {
+                    var ri = DefaultGridImpl.RaycastCell(grid, actual.cell, origin, direction);
+                    Assert.AreEqual(null, ri);
+                }
+                Assert.AreEqual(expected.cell, actual.cell, msg);
+                Assert.AreEqual(expected.cellDir, actual.cellDir, msg);
+                TestUtils.AssertAreEqual(expected.point, actual.point, delta, msg);
+                Assert.AreEqual(expected.distance, actual.distance, delta, msg);
+                i++;
+            }
+
+            if (actualRis.MoveNext())
+            {
+                Assert.Fail($"Actual raycast has more than {i} elements, e.g. {actualRis.Current.cell}");
+            }
+        }
+
         // expectedSrcDest: atm, FindGridSymmetry doesn't guarantee that src of the output
         // matches srcCell of the input. Perhaps it should?
         public static void FindGridSymmetry(IGrid grid, Cell cell, Cell? expectedSrcDest = null)

@@ -347,7 +347,7 @@ namespace Sylves
         public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
         {
             vertices = polygon;
-            transform = Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(new Vector3(cellSize.x, cellSize.y, 0));
+            transform = Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(new Vector3(cellSize.x, cellSize.y, 1));
         }
 
         public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)

@@ -73,6 +73,16 @@ namespace Sylves.Test
             Assert.AreEqual(4, infos.Count);
         }
 
+
+        [Test]
+        public void TestRaycast3()
+        {
+            var g = new SquareGrid(1000);
+            var start = g.GetCellCenter(new Cell(0, 0, 0));
+            var end = g.GetCellCenter(new Cell(2, 1, 0));
+            GridTest.Raycast(g, start, end - start, 1);
+        }
+
         [Test]
         public void TestGridSymmetry()
         {

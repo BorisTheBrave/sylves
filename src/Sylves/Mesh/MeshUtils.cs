@@ -50,6 +50,38 @@ namespace Sylves
             return mesh;
         }
 
+        internal static bool IsPointInPolygonPlanar(Vector3 p, Vector3[] vs)
+        {
+            // Currently does fan detection
+            // Doesn't work for convex faces
+            var v0 = vs[0];
+            var prev = vs[1];
+            for (var i = 2; i < vs.Length; i++)
+            {
+                var v = vs[i];
+                if (GeometryUtils.IsPointInTrianglePlanar(p, v0, prev, v))
+                    return true;
+                prev = v;
+            }
+            return false;
+        }
+
+        internal static bool IsPointInPolygon(Vector3 p, Vector3[] vs, float planarThickness=1e-35f)
+        {
+            // Currently does fan detection
+            // Doesn't work for convex faces
+            var v0 = vs[0];
+            var prev = vs[1];
+            for (var i = 2; i < vs.Length; i++)
+            {
+                var v = vs[i];
+                if (GeometryUtils.IsPointInTriangle(p, v0, prev, v, planarThickness))
+                    return true;
+                prev = v;
+            }
+            return false;
+        }
+
         internal static bool IsPointInCube(Vector3 p, Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 v5, Vector3 v6, Vector3 v7, Vector3 v8)
         {
             // Assumes the "cube" at least is convex and has planar edges. Otherwise, a more robost routing is needed
