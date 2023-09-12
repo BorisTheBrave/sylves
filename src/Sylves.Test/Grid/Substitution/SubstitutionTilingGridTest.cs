@@ -101,9 +101,9 @@ namespace Sylves.Test
 				Assert.AreEqual(cell, cell2);
 			}
             var g = new DominoGrid();
-			//FindCell(g, new Cell(0, 0));
-			//FindCell(g, new Cell(1, 0));
-			//FindCell(g, new Cell(4, 0));
+			FindCell(g, new Cell(0, 0));
+			FindCell(g, new Cell(1, 0));
+			FindCell(g, new Cell(4, 0));
 			FindCell(g, new Cell(10, 0));
 			FindCell(g, new Cell(100, 0));
 			FindCell(g, new Cell(1000, 0));
@@ -113,7 +113,6 @@ namespace Sylves.Test
 		public void TestGetCellsIntersectsApprox()
 		{
             var g = new PenroseRhombGrid();
-			/*
 			{
 				var min = new Vector3(0.001f, 0.001f, 0);
 				var max = new Vector3(5, 0.001f, 0);
@@ -123,7 +122,6 @@ namespace Sylves.Test
 				Assert.Contains(new Cell(164, 0, 0), cells);
 				Assert.Contains(new Cell(160, 0, 0), cells);
 			}
-			*/
 			{
 				var min = new Vector3(0.001f, 0.001f, 0);
 				var max = new Vector3(5.001f, 0.001f, 0);
@@ -140,7 +138,7 @@ namespace Sylves.Test
 
 			var s = new Vector3(0.001f, 0.001f, 0);
 
-            //GridTest.Raycast(g, s, new Vector3(0.001f, 0, 0), 1);
+            GridTest.Raycast(g, s, new Vector3(0.001f, 0, 0), 1);
 
             GridTest.Raycast(g, s, new Vector3(10, 0, 0), 1);
 		}

@@ -97,11 +97,6 @@ namespace Sylves.Test
                 var expected = expectedRis.Current;
                 var actual = actualRis.Current;
                 var msg = $"{i}";
-                if(expected.cell != actual.cell)
-                {
-                    var ri = DefaultGridImpl.RaycastCell(grid, actual.cell, origin, direction);
-                    Assert.AreEqual(null, ri);
-                }
                 Assert.AreEqual(expected.cell, actual.cell, msg);
                 Assert.AreEqual(expected.cellDir, actual.cellDir, msg);
                 TestUtils.AssertAreEqual(expected.point, actual.point, delta, msg);

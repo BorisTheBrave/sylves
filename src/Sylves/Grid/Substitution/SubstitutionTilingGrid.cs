@@ -71,79 +71,7 @@ namespace Sylves
 		}
 
         public override string ToString() => Name;
-
     }
-    /*
-    internal struct Path
-    {
-        public uint X;
-        public uint Y;
-        public uint Z;
-        public int TileBits;
-        public int ProtoTileBits;
-
-        public Path(Cell cell, int tileBits, int protoTileBits)
-        {
-            X = (uint)cell.x;
-            Y = (uint)cell.y;
-            Z = (uint)cell.z;
-            TileBits = tileBits;
-            ProtoTileBits = protoTileBits;
-        }
-
-        public int Tile => (int)(X & ((1 << TileBits) - 1));
-
-        public int MaxHeight
-        {
-            get
-            {
-                var pathBitsAvailable = (Z != 0 ? 3 : Y != 0 ? 2 : 1) * 32 - TileBits;
-                return pathBitsAvailable / ProtoTileBits;
-            }
-        }
-
-        public List<int> GetPath()
-        {
-            var l = GetPathInternal().ToList();
-            while(l.Count > 0 && l[l.Count-1] == 0)
-            {
-                l.RemoveAt(l.Count - 1);
-            }
-        }
-
-        private IEnumerable<int> GetPathInternal()
-        {
-            if (ProtoTileBits == 0)
-                yield break;
-            int pos = 1;
-            ulong current = X;
-            int bits = 32;
-            current = current >> TileBits;
-            bits -= TileBits;
-            while(true)
-            {
-                if(bits < ProtoTileBits)
-                {
-                    switch(pos)
-                    {
-                        case 1:
-                            current = current | (Y << bits);
-                            bits += 32;
-                            pos += 1;
-                            break;
-                        case 2:
-                            current = current | (Z << bits);
-                            bits += 32;
-                            pos += 1;
-                            break;
-                        case 3:
-                            yield break;
-                    }
-                }
-                yield return (int)(current & (((ulong)1 << ProtoTileBits) - 1));
-            }
-        }
-    }*/
 
     public class SubstitutionTilingBound : IBound
     {
@@ -153,6 +81,10 @@ namespace Sylves
 
     public class SubstitutionTilingGrid : IGrid
 	{
+        // Raycast and IntersectsAabb have a hard time knowing when to stop searching.
+        // They give up when they haven't found anything interesting in this many heights.
+        private const int DeadZone = 2;
+
         private readonly InternalPrototile[] prototiles;
         private int tileBits;
         private int prototileBits;
@@ -1070,13 +1002,45 @@ namespace Sylves
         }
 
 
+        // Returns a set of non-overlapping prototiles at different heights that collectively contain all prototiles
+        private IEnumerable<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> Spigot()
+        {
+            var height = 0;
+            var transform = Matrix4x4.identity;
+            var path = new Cell();
+            while (true)
+            {
+                var parent = hierarchy(height + 1);
+                transform = Up(transform, parent);
+
+                // Skips 0, we just came from there!
+                for (var i = height == 0 ? 0 : 1; i < parent.ChildPrototiles.Length; i++)
+                {
+                    var (childTransform, child) = Down(transform, parent, i);
+                    yield return (height, child, childTransform, SetPathAt(path, height, i));
+                }
+
+                height = height + 1;
+            }
+        }
+
 
         // Returns the set of height 0 prototiles intersect inputAabb
+        // This is done by iterating over spigot (an infinite stream of prototiles)
+        // and recursively subdividing ones that look promising.
+        // We stop when we haven't found anything in a while.
         private IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternal(Aabb inputAabb)
         {
             var stack = new Stack<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)>();
-            foreach (var t in GetPrototilesIntersectsApproxInternalPartition(inputAabb))
+            var highestFoundHeight = -1;
+            foreach (var t in Spigot())
             {
+                if (highestFoundHeight <= t.height - DeadZone && highestFoundHeight != -1)
+                {
+                    // Haven't found anything in a while, give up.
+                    break;
+                }
+
                 // For each of these prototiles, walk the entire tree under it
                 stack.Push(t);
                 while (stack.Count > 0)
@@ -1088,6 +1052,7 @@ namespace Sylves
                     {
                         if (height == 0)
                         {
+                            highestFoundHeight = Math.Max(highestFoundHeight, t.height);
                             yield return (prototile, transform, partialPath);
                         }
                         else
@@ -1103,42 +1068,6 @@ namespace Sylves
                 }
             }
         }
-
-        // Returns a set of non-overlapping prototiles at different hieghts that collectively contain all prototiles that intersect inputAabb
-        private IEnumerable<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternalPartition(Aabb inputAabb)
-        {
-            var height = 0;
-            var transform = Matrix4x4.identity;
-            var path = new Cell();
-            var lastFoundHeight = -1;
-            while (true)
-            {
-                var parent = hierarchy(height + 1);
-                transform = Up(transform, parent);
-
-                // Skips 0, we just came from there!
-                for (var i = height == 0 ? 0 : 1; i < parent.ChildPrototiles.Length; i++)
-                {
-                    var (childTransform, child) = Down(transform, parent, i);
-                    var childBound = childTransform * child.bound;
-                    if (childBound.Intersects(inputAabb))
-                    {
-                        yield return (height, child, childTransform, SetPathAt(path, height, i));
-                        lastFoundHeight = height;
-                    }
-                }
-
-                height = height + 1;
-
-                if (lastFoundHeight <= height - 3 && lastFoundHeight != -1)
-                {
-                    // Haven't found anything in a while, give up.
-                    // TODO: Figure out an actually reliably way of doing this.
-                    break;
-                }
-            }
-        }
-
 
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
@@ -1186,89 +1115,89 @@ namespace Sylves
 
         /// <summary>
         /// Returns all the height 0 prototiles that intersect the ray, in the correct order.
+        /// Much like GetPrototilesIntersectsApproxInternal, this walks over all the prototiles in Spigot,
+        /// and recursively subdivides them if their bounds indiate they may contain a tile that intersects the ray.
+        /// 
+        /// As with that method, we stop if we haven't found anything worth outputting in a while.
+        /// 
+        /// But it's complicated by the fact we must output items in order. To do so, items are kept in a queue, and with similar logic to the stopping logic, we only output 
+        /// something when we haven't found anything smaller in a while.
         /// </summary>
         private IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float minDist)> RaycastPrototiles(Func<Matrix4x4, InternalPrototile, float?> getDist)
         {
-            var queue = new PriorityQueue<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float dist)>(x=>x.dist, (x, y) => -x.dist.CompareTo(y.dist));
-            float prevBestAtHeight = 0.0f;
-            foreach (var (height, prototilesAtHeight) in RaycastPrototilesPartition(getDist))
+            var queue = new PriorityQueue<(int initialHeight, int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float dist)>(x => x.dist, (x, y) => -x.dist.CompareTo(y.dist));
+            
+            var highestFoundHeight = -1;
+            foreach (var t in Spigot())
             {
-                float bestAtHeight = float.PositiveInfinity;
-                foreach(var (prototile, transform, partialPath, dist) in prototilesAtHeight)
+                if (queue.Count == 0 && highestFoundHeight <= t.height - DeadZone && highestFoundHeight != -1)
                 {
-                    queue.Add((height, prototile, transform, partialPath, dist));
-                    bestAtHeight = Mathf.Min(bestAtHeight, height);
+                    // Haven't found anything in a while, give up.
+                    break;
                 }
 
-                // Best at height falls, then rises indefinitely.
-                // Once it's in the rising phase, we can be sure we've seen everything at that dist or less, and we can start draining the queue
-                if(bestAtHeight > prevBestAtHeight)
+                var dist = getDist(t.transform, t.prototile);
+                if (dist != null)
                 {
-                    // Drain queue of everything less than bestAtHeight
-                    while(queue.Count > 0)
+                    queue.Add((t.height, t.height, t.prototile, t.transform, t.partialPath, dist.Value));
+                }
+
+                while(queue.Count > 0)
+                {
+                    var t2 = queue.Peek();
+                    if(t2.height > 0)
                     {
-                        var dist = queue.Peek().dist;
-
-                        if (dist > bestAtHeight)
-                            break;
-
-                        var (itemHeight, prototile, transform, partialPath, _) = queue.Pop();
-
-                        if (itemHeight != 0)
+                        var (initialHeight, itemHeight, prototile, transform, partialPath, _) = queue.Pop();
+                        // Recurse
+                        for (var i = 0; i < prototile.ChildPrototiles.Length; i++)
                         {
-                            // Recurse
-                            for (var i = 0; i < prototile.ChildPrototiles.Length; i++)
+                            var (childTransform, child) = Down(transform, prototile, i);
+                            var childDist = getDist(childTransform, child);
+                            if (childDist != null)
                             {
-                                var (childTransform, child) = Down(transform, prototile, i);
-                                var childDist = getDist(childTransform, child);
-                                if (childDist != null)
-                                {
-                                    queue.Add((itemHeight - 1, child, childTransform, SetPathAt(partialPath, itemHeight - 1, i), childDist.Value));
-                                }
+                                queue.Add((initialHeight, itemHeight - 1, child, childTransform, SetPathAt(partialPath, itemHeight - 1, i), childDist.Value));
                             }
-                            continue;
                         }
-
-                        yield return (prototile, transform, partialPath, dist);
                     }
-                    // No prototiles found at this height, nor will we at any later one
-                    if (bestAtHeight == float.PositiveInfinity)
+                    else
                     {
-                        break;
+                        // We've found a height 0 prototile that is ahead of everythign else in the queue.
+                        // But is it also ahead of future items we'll find from Spigot?
+                        if (t2.initialHeight <= t.height - DeadZone)
+                        {
+                            var (initialHeight, itemHeight, prototile, transform, partialPath, dist2) = queue.Pop();
+                            highestFoundHeight = Math.Max(highestFoundHeight, initialHeight);
+                            yield return (prototile, transform, partialPath, dist2);
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
-                prevBestAtHeight = bestAtHeight;
             }
-        }
 
-        // Returns a set of non-overlapping prototiles at each height starting from 0 that collectively contain all prototiles that intersect the ray.
-        // This enum never terminates, but it's basically done once there's nothing at a height
-        private IEnumerable<(int height, IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float dist)>)> RaycastPrototilesPartition(Func<Matrix4x4, InternalPrototile, float?> getDist)
-        {
-            var height = 0;
-            var transform = Matrix4x4.identity;
-            var path = new Cell();
-            while (true)
+            // Drain queue
+            while (queue.Count > 0)
             {
-                var parent = hierarchy(height + 1);
-                transform = Up(transform, parent);
-
-                // Skips 0, we just came from there!
-                var childIndices = height == 0
-                    ? Enumerable.Range(0, parent.ChildPrototiles.Length)
-                    : Enumerable.Range(1, parent.ChildPrototiles.Length - 1);
-
-                var a = childIndices.Select(i =>
+                var (initialHeight, itemHeight, prototile, transform, partialPath, dist2) = queue.Pop();
+                if (itemHeight > 0)
                 {
-                    var (childTransform, child) = Down(transform, parent, i);
-                    var dist = getDist(childTransform, child) ?? float.NaN;
-                    return (child, childTransform, SetPathAt(path, height, i), dist);
-                })
-                    .Where(x => !float.IsNaN(x.dist));
-
-                yield return (height, a);
-
-                height += 1;
+                    // Recurse
+                    for (var i = 0; i < prototile.ChildPrototiles.Length; i++)
+                    {
+                        var (childTransform, child) = Down(transform, prototile, i);
+                        var childDist = getDist(childTransform, child);
+                        if (childDist != null)
+                        {
+                            queue.Add((initialHeight, itemHeight - 1, child, childTransform, SetPathAt(partialPath, itemHeight - 1, i), childDist.Value));
+                        }
+                    }
+                }
+                else
+                {
+                    yield return (prototile, transform, partialPath, dist2);
+                }
             }
         }
         #endregion
