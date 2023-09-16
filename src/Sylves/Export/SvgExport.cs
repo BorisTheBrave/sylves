@@ -10,7 +10,7 @@ namespace Sylves
 {
     public static class SvgExport
     {
-        public static void WritePathCommands(Vector3[] vertices, Matrix4x4 transform, TextWriter tw)
+        public static void WritePathCommands(Vector3[] vertices, Matrix4x4 transform, TextWriter tw, bool close = true)
         {
             var first = true;
             foreach(var v in vertices)
@@ -22,7 +22,10 @@ namespace Sylves
                 tw.Write(' ');
                 tw.Write(v2.y);
             }
-            tw.Write('Z');
+            if (close)
+            {
+                tw.Write('Z');
+            }
         }
     }
 

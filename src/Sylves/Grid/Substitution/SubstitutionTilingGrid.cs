@@ -91,6 +91,7 @@ namespace Sylves
         private List<ICellType> cellTypes;
         private Func<int, InternalPrototile> hierarchy;
         private SubstitutionTilingBound bound;
+        private Matrix4x4 baseTransform;
         // By height
         private List<Dictionary<InternalPrototile, int>> indexCounts;
 
@@ -103,16 +104,29 @@ namespace Sylves
             cellTypes = other.cellTypes;
             hierarchy = other.hierarchy;
             this.bound = bound;
+            baseTransform = other.baseTransform;
+        }
+
+        // Copy constructor
+        private SubstitutionTilingGrid(SubstitutionTilingGrid other, Func<int, InternalPrototile> hierarchy, Matrix4x4 baseTransform)
+        {
+            prototiles = other.prototiles;
+            tileBits = other.tileBits;
+            prototileBits = other.prototileBits;
+            cellTypes = other.cellTypes;
+            this.hierarchy = hierarchy;
+            bound = other.bound;
+            this.baseTransform = baseTransform;
         }
 
 
-        public SubstitutionTilingGrid(Prototile[] prototiles, string[] hierarchy):
-            this(prototiles, i => hierarchy[i % hierarchy.Length])
+        public SubstitutionTilingGrid(Prototile[] prototiles, string[] hierarchy, SubstitutionTilingBound bound = null):
+            this(prototiles, i => hierarchy[i % hierarchy.Length], bound)
         {
 
         }
 
-        public SubstitutionTilingGrid(Prototile[] prototiles, Func<int, string> hierarchy)
+        public SubstitutionTilingGrid(Prototile[] prototiles, Func<int, string> hierarchy, SubstitutionTilingBound bound = null)
 		{
             // Prep bit arithmetic
             var maxTileCount = prototiles.Max(x => x.ChildTiles?.Length ?? 0);
@@ -126,6 +140,9 @@ namespace Sylves
 
             // Pre-compute cell types
             cellTypes = prototiles.SelectMany(x => x.ChildTiles.Select(y => y.Length)).Distinct().Select(NGonCellType.Get).ToList();
+
+            this.bound = bound;
+            baseTransform = Matrix4x4.identity;
 
             BuildPrototileBounds();
         }
@@ -413,7 +430,7 @@ namespace Sylves
         {
             var childTile = GetChildTileAt(cell);
             var pathLength = GetPathLength(cell);
-            var transform = Matrix4x4.identity;
+            var transform = baseTransform;
             var parent = hierarchy(0);
             for (var i = 0; i < pathLength; i++)
             {
@@ -503,7 +520,7 @@ namespace Sylves
         #endregion
 
         #region Relatives
-        public IGrid Unbounded => new SubstitutionTilingGrid(this, null);
+        public IGrid Unbounded => new SubstitutionTilingGrid(this, (SubstitutionTilingBound) null);
 
         public IGrid Unwrapped => this;
 
@@ -516,6 +533,37 @@ namespace Sylves
 
             return new DefaultDualMapping(this, chunkSize, CachePolicy.Always);
         }
+
+
+        public SubstitutionTilingGrid ParentGrid(int n = 1)
+        {
+            // Check subdividable
+            if (tileBits != 0)
+                throw new Exception("Parent/subdivision only works on substitution tiling grids with a single tile per prototile");
+
+            var t = baseTransform;
+            for (var i = 0; i < n; i++)
+            {
+                t = Up(t, hierarchy(i + 1));
+            }
+
+            return new SubstitutionTilingGrid(this, (h) => hierarchy(h + n), t);
+        }
+
+        public Cell CellToParentGrid(Cell cell, int n = 1)
+        {
+            // TODO: This can be done with bit shifting
+            var l = GetPathLength(cell);
+            var r = new Cell();
+            for (var i = n; i < l; i++)
+            {
+                r = SetPathAt(r, i - n, GetPathAt(cell, i));
+            }
+            return r;
+        }
+
+
+
 
         #endregion
 
@@ -1006,7 +1054,7 @@ namespace Sylves
         private IEnumerable<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> Spigot()
         {
             var height = 0;
-            var transform = Matrix4x4.identity;
+            var transform = baseTransform;
             var path = new Cell();
             while (true)
             {

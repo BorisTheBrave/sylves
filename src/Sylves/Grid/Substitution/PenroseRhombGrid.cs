@@ -8,15 +8,11 @@ namespace Sylves
     // https://tilings.math.uni-bielefeld.de/substitution/domino/
     public class PenroseRhombGrid : SubstitutionTilingGrid
 	{
-        public PenroseRhombGrid():base(Prototiles, new[] { "Fat" })
+        public PenroseRhombGrid(SubstitutionTilingBound bound = null):base(Prototiles, new[] { "Fat" }, bound)
         {
 
         }
 
-		private static Matrix4x4 ScaleAndTranslate(float scale, float x, float y)
-		{
-			return Matrix4x4.Translate(new Vector3(x, y, 0)) * Matrix4x4.Scale(new Vector3(scale, scale, scale));
-		}
         private static Matrix4x4 ScaleRotateAndTranslate(float scale, float angle, float x, float y)
         {
             return Matrix4x4.Translate(new Vector3(x, y, 0)) * Matrix4x4.Rotate(Quaternion.AngleAxis(angle, Vector3.forward)) * Matrix4x4.Scale(new Vector3(scale, scale, scale));

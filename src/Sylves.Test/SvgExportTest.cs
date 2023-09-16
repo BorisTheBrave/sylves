@@ -41,6 +41,14 @@ namespace Sylves.Test
             }
         }
 
+        public static void BeginSvg(SvgBuilder b, Options options)
+        {
+
+            var min = options.min;
+            var max = options.max;
+            b.BeginSvg($"{min.x} {-max.y} {max.x - min.x} {max.y - min.y}", options.strokeWidth);
+        }
+
         public static void WriteGrid(IGrid grid, TextWriter tw, Options options)
         {
 #pragma warning disable CS0162 // Unreachable code detected
@@ -65,7 +73,7 @@ namespace Sylves.Test
             }*/
             var min = options.min;
             var max = options.max;
-            b.BeginSvg($"{min.x} {-max.y} {max.x - min.x} {max.y-min.y}", options.strokeWidth);
+            BeginSvg(b, options);
             var cells = grid.GetCells();
             if(options.trim)
             {
@@ -164,6 +172,91 @@ namespace Sylves.Test
             }
         }
 
+        private static void ExportTreeView(string filename, SubstitutionTilingGrid grid, Options options)
+        {
+            var h = (grid.GetBound() as SubstitutionTilingBound).Height;
+            Matrix4x4 globalTransform = Matrix4x4.Scale(new Vector3(1, -1, 1));
+
+
+            var fullPath = Path.GetFullPath(filename);
+            using (var file = File.Open(fullPath, FileMode.Create))
+            using (var tw = new StreamWriter(file))
+            {
+                var svg = new SvgBuilder(tw);
+
+                BeginSvg(svg, options);
+                var y = 0;
+                foreach (var cell in grid.GetCells())
+                {
+                    svg.DrawCell(grid, cell);
+                }
+
+                var currentCells = grid.GetCells().ToHashSet();
+                var currentGrid = grid;
+                for (var i = 1; i <= h; i++)
+                {
+                    var parentGrid = grid.ParentGrid(i);
+                    var parentCells = new HashSet<Cell>();
+                    foreach (var cell in currentCells)
+                    {
+                        var parentCell = currentGrid.CellToParentGrid(cell);
+                        parentCells.Add(parentCell);
+                        var fromP = currentGrid.GetCellCenter(cell);
+                        var toP = parentGrid.GetCellCenter(parentCell);
+                        tw.WriteLine($"<!-- From {cell} at height {i - 1} to {parentCell} at height {i} -->");
+                        tw.Write($@"<path style=""stroke: rgb(255, 255, 255); stroke-width: 0.11"" d=""");
+                        SvgExport.WritePathCommands(new[] { fromP, toP }, globalTransform, tw, close: false);
+                        tw.WriteLine("\"/>");
+                        tw.Write($@"<path style=""stroke: rgb(51, 51, 51); stroke-width: 0.1"" d=""");
+                        SvgExport.WritePathCommands(new[] { fromP, toP }, globalTransform, tw, close: false);
+                        tw.WriteLine("\"/>");
+                    }
+                    foreach (var parentCell in parentCells)
+                    {
+                        var toP = parentGrid.GetCellCenter(parentCell);
+                        tw.WriteLine($@"<circle cx=""{toP.x}"" cy=""{-toP.y}"" r=""0.2""/>");
+                    }
+
+                    currentGrid = parentGrid;
+                    currentCells = parentCells;
+                }
+
+                svg.EndSvg();
+            }
+        }
+
+        private static void ExportSpigotView(string filename, SubstitutionTilingGrid grid, Options options)
+        {
+
+            var h = (grid.GetBound() as SubstitutionTilingBound).Height;
+            Matrix4x4 globalTransform = Matrix4x4.Scale(new Vector3(1, -1, 1));
+
+
+            var fullPath = Path.GetFullPath(filename);
+            using (var file = File.Open(fullPath, FileMode.Create))
+            using (var tw = new StreamWriter(file))
+            {
+                var svg = new SvgBuilder(tw);
+
+                BeginSvg(svg, options);
+
+                for (var i = 0; i < h; i++)
+                {
+                    var parentGrid = grid.ParentGrid(i);
+
+                    var cells = parentGrid.GetCellsInBounds(new SubstitutionTilingBound { Height = 1 })
+                        .Where(x => i == 0 || x != new Cell());
+                    foreach(var cell in cells)
+                    {
+                        svg.DrawCell(parentGrid, cell);
+                    }
+                }
+
+                svg.EndSvg();
+            }
+        }
+
+
         [Test]
         public void ExportSubstitutionGrids()
         {
@@ -172,12 +265,31 @@ namespace Sylves.Test
                 new DominoGrid().Transformed(Matrix4x4.Translate(new Vector3(0, 3, 0))).BoundBy(new SubstitutionTilingBound { Height = 4 }),
                 "domino.svg",
                 new Options { textScale = 0.5, min = new Vector2(-3, -3), max = new Vector2(3, 3), trim = true });
-            var g = new PenroseRhombGrid();
+            var chairOptions = new Options { textScale = null, min = new Vector2(-20, -20), max = new Vector2(20, 20), trim = true };
+            var chairGrid = new ChairGrid(new SubstitutionTilingBound { Height = 6 });
             Export(
-                new PenroseRhombGrid().BoundBy(new SubstitutionTilingBound { Height = 8 }),
+                chairGrid,
+                "chair.svg",
+                chairOptions);
+            var penroseOptions = new Options { textScale = 0.5, min = new Vector2(-1, -1), max = new Vector2(10, 10), trim = true };
+            var penroseGrid = new PenroseRhombGrid(new SubstitutionTilingBound { Height = 8 });
+            Export(
+                penroseGrid,
                 "penrose_rhomb.svg",
-                new Options { textScale = 0.5, min = new Vector2(-1, -1), max = new Vector2(10, 10), trim = true });
+                penroseOptions
+                );
+
+            // Export prototiles (i.e. substitution rules)
+            ExportPrototiles("chair_prototiles.svg", ChairGrid.Prototiles);
             ExportPrototiles("penrose_rhomb_prototiles.svg", PenroseRhombGrid.Prototiles);
+
+            // Tree view
+            ExportTreeView("chair_tree.svg", chairGrid, chairOptions);
+            ExportTreeView("penrose_rhomb_tree.svg", penroseGrid, penroseOptions);
+
+            // Spigot view
+            ExportSpigotView("chair_spigot.svg", chairGrid, chairOptions);
+            ExportSpigotView("penrose_rhomb_spigot.svg", penroseGrid, penroseOptions);
         }
 
 

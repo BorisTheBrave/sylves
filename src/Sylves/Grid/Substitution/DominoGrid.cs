@@ -8,7 +8,7 @@ namespace Sylves
     // https://tilings.math.uni-bielefeld.de/substitution/domino/
     public class DominoGrid : SubstitutionTilingGrid
 	{
-        public DominoGrid():base(Prototiles, new[] { "L", "R" })
+        public DominoGrid(SubstitutionTilingBound bound = null):base(Prototiles, new[] { "L", "R" }, bound)
         {
 
         }
