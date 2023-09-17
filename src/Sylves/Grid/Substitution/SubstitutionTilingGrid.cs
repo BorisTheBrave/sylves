@@ -79,6 +79,13 @@ namespace Sylves
         public Cell Path { get; set; }
     }
 
+    // Creates a tiling of the 2d plane from a set of substitution rules.
+    // It is quite flexible:
+    // * imperfect substitution rules where the replacement outline doesn't follow the original outline
+    // * tiles can freely transformed
+    //   * tile equivalence under translation, euclidian motion, isometry, similarity all supported
+    //   * "statistically round" substitutions like the pinwheel substitution supported
+
     public class SubstitutionTilingGrid : IGrid
 	{
         // Raycast and IntersectsAabb have a hard time knowing when to stop searching.

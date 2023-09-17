@@ -15,13 +15,14 @@ namespace Sylves.Test
     {
         public class Options
         {
-            public int dim = 3;
+            public int? dim = null;
             public double? textScale = 1;
             public float strokeWidth = 0.1f;
             public Vector2 min = new Vector2(-2, -2);
             public Vector2 max = new Vector2(2, 2);
             public bool includeDual = false;
             public bool trim = false;
+            public Func<Cell, string> fillFunc = null;
         }
 
         private const bool IsSeed = false;
@@ -30,13 +31,13 @@ namespace Sylves.Test
         {
             foreach (var cell in cells)
             {
-                b.DrawCell(grid, cell);
+                b.DrawCell(grid, cell, options.fillFunc?.Invoke(cell));
             }
             if (options.textScale != null)
             {
                 foreach (var cell in cells)
                 {
-                    b.DrawCoordinateLabel(grid, cell, options.dim, options.textScale.Value);
+                    b.DrawCoordinateLabel(grid, cell, options.dim ?? grid.CoordinateDimension, options.textScale.Value);
                 }
             }
         }
@@ -265,14 +266,19 @@ namespace Sylves.Test
                 new DominoGrid().Transformed(Matrix4x4.Translate(new Vector3(0, 3, 0))).BoundBy(new SubstitutionTilingBound { Height = 4 }),
                 "domino.svg",
                 new Options { textScale = 0.5, min = new Vector2(-3, -3), max = new Vector2(3, 3), trim = true });
-            var chairOptions = new Options { textScale = null, min = new Vector2(-20, -20), max = new Vector2(20, 20), trim = true };
+
+            var chairOptions = new Options { textScale = null, min = new Vector2(-10, -10), max = new Vector2(10, 10), trim = true,
+            fillFunc = c => (c.x % 4) switch { 2 => "#e6ed69", 1 or 3 => "#9def94", 0 => "#f0905e" }
+            };
             var chairGrid = new ChairGrid(new SubstitutionTilingBound { Height = 6 });
             Export(
                 chairGrid,
                 "chair.svg",
                 chairOptions);
-            var penroseOptions = new Options { textScale = 0.5, min = new Vector2(-1, -1), max = new Vector2(10, 10), trim = true };
-            var penroseGrid = new PenroseRhombGrid(new SubstitutionTilingBound { Height = 8 });
+
+            var penroseOptions = new Options { textScale = null, min = new Vector2(-15, -15), max = new Vector2(15, 15), trim = true,
+                fillFunc = (c) => c.x % 2 == 0 ? "mediumpurple" : "greenyellow" };
+            var penroseGrid = new PenroseRhombGrid(new SubstitutionTilingBound { Height = 10 });
             Export(
                 penroseGrid,
                 "penrose_rhomb.svg",

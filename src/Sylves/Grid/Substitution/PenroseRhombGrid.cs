@@ -17,7 +17,6 @@ namespace Sylves
         {
             return Matrix4x4.Translate(new Vector3(x, y, 0)) * Matrix4x4.Rotate(Quaternion.AngleAxis(angle, Vector3.forward)) * Matrix4x4.Scale(new Vector3(scale, scale, scale));
         }
-        private static float R90 = 90;
 		private static Vector3[] Polygon(params float[] v)
 		{
 			var r = new Vector3[v.Length / 2];
