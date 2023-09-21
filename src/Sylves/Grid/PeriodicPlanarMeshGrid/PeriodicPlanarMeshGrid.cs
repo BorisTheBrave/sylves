@@ -450,7 +450,7 @@ namespace Sylves
                 if(centerGrid.FindCell(p, out cell))
                 {
                     cell += Promote(chunk);
-                    return true;
+                    return bound == null || bound.Contains(chunk);
                 }
             }
             cell = default;
