@@ -37,14 +37,21 @@ namespace Sylves.Test
             }
 
 			Assert.AreEqual(cell, cell2);
-
 		}
+
 
 		[Test]
 		public void TestSetPathWithNoChildBits()
 		{
 			Assert.AreEqual(new Cell(2, 0, 0), new PenroseRhombGrid().SetPathAt(new Cell(), 0, 2));
         }
+
+        [Test]
+		public void TestDiff()
+		{
+			var g = new PenroseRhombGrid();
+			Assert.AreEqual(2, g.GetPathDiffLength(new Cell(0b00111111, 0), new Cell(0b00110101, 0)));
+		}
 
         [Test]
 		public void TestTryMove_Domino()
@@ -174,11 +181,11 @@ namespace Sylves.Test
 		[Test]
         public void TestIndex()
 		{
-			var g = new PenroseRhombGrid().BoundBy(new SubstitutionTilingBound { Height = 3, Path = new Cell(0b0101010101, 0)});
+			var g = new PenroseRhombGrid().BoundBy(new SubstitutionTilingBound { Height = 3, Path = new Cell(0b0101000000, 0)});
 			Assert.AreEqual(g.GetCells().Count(), g.IndexCount);
 			foreach(var cell in g.GetCells())
 			{
-				Assert.AreEqual(cell, g.GetCellByIndex(g.GetIndex(cell)));
+				Assert.AreEqual(cell, g.GetCellByIndex(g.GetIndex(cell)), $"Round trip failed for {cell}");
             }
         }
     }

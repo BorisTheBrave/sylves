@@ -112,6 +112,7 @@ namespace Sylves
             hierarchy = other.hierarchy;
             this.bound = bound;
             baseTransform = other.baseTransform;
+            ValidateBound();
         }
 
         // Copy constructor
@@ -149,12 +150,28 @@ namespace Sylves
             cellTypes = prototiles.SelectMany(x => x.ChildTiles.Select(y => y.Length)).Distinct().Select(NGonCellType.Get).ToList();
 
             this.bound = bound;
+            ValidateBound();
             baseTransform = Matrix4x4.identity;
 
             BuildPrototileBounds();
         }
 
         #region Construction
+        private void ValidateBound()
+        {
+            if (bound == null) return;
+            if (GetChildTileAt(bound.Path) != 0)
+            {
+                throw new Exception($"Cell {bound.Path} is not valid for a path of height {bound.Height}. Its bitstring should start with {bound.Height * prototileBits + tileBits} zeros");
+
+            }
+            for (var i = 0; i < bound.Height; i++)
+            {
+                if (GetPathAt(bound.Path, i) != 0)
+                    throw new Exception($"Cell {bound.Path} is not valid for a path of height {bound.Height}. Its bitstring should start with {bound.Height * prototileBits + tileBits} zeros");
+            }
+        }
+
         private (InternalPrototile[], Dictionary<string, InternalPrototile>) BuildPrototiles(Prototile[] prototiles)
         {
             // Build internal prototiles
@@ -433,6 +450,8 @@ namespace Sylves
             return (transform * t.transform, t.child);
         }
 
+
+        // Some of the most common things we want to look up
         private (InternalPrototile prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
         {
             var childTile = GetChildTileAt(cell);
@@ -459,7 +478,7 @@ namespace Sylves
             {
                 parent = parent.ChildPrototiles[GetPathAt(cell, i)].child;
             }
-            return (GetPrototile(cell, 0), GetChildTileAt(cell));
+            return (parent, GetChildTileAt(cell));
         }
 
         private InternalPrototile GetPrototile(Cell cell, int height)
@@ -758,7 +777,7 @@ namespace Sylves
         {
             if (bound == null)
                 throw new GridInfiniteException();
-            var pathLength = GetPathLength(cell);
+            var pathLength = GetPathDiffLength(cell, bound.Path);
             FillIndexCounts(pathLength - 1);
             var parent = GetPrototile(bound.Path, pathLength);
             var index = 0;
@@ -778,7 +797,7 @@ namespace Sylves
         {
             if (bound == null)
                 throw new GridInfiniteException();
-            var cell = new Cell();
+            var cell = bound.Path;
             /*
             var height = 0;
             InternalPrototile parent;
