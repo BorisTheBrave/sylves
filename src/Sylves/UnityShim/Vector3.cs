@@ -19,6 +19,15 @@ namespace Sylves
             this.z = z;
         }
 
+#if GODOT
+        public static implicit operator Godot.Vector3(Vector3 v) => new Godot.Vector3(v.x, v.y, v.z);
+        public static implicit operator Vector3(Godot.Vector3 v) => new Vector3(v.X, v.Y, v.Z);
+
+        // Also do Vector2 conversions for convenience
+        public static implicit operator Godot.Vector2(Vector3 v) => new Godot.Vector2(v.x, v.y);
+        public static implicit operator Vector3(Godot.Vector2 v) => new Vector3(v.X, v.Y, 0);
+#endif
+
         public float x { get; set; }
         public float y { get; set; }
         public float z { get; set; }
@@ -167,4 +176,4 @@ namespace Sylves
         public static bool operator !=(Vector3 lhs, Vector3 rhs) => !(lhs == rhs);
     }
 #endif
-}
+    }

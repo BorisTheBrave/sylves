@@ -17,6 +17,12 @@ namespace Sylves
             this.x = x;
             this.y = y;
         }
+
+#if GODOT
+        public static implicit operator Godot.Vector2I(Vector2Int v) => new Godot.Vector2I(v.x, v.y);
+        public static implicit operator Vector2Int(Godot.Vector2I v) => new Vector2Int(v.X, v.Y);
+#endif
+
         public int x { get; set; }
         public int y { get; set; }
 

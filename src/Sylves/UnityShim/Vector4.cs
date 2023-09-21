@@ -20,6 +20,11 @@ namespace Sylves
             this.w = w;
         }
 
+#if GODOT
+        public static implicit operator Godot.Vector4(Vector4 v) => new Godot.Vector4(v.x, v.y, v.z, v.w);
+        public static implicit operator Vector4(Godot.Vector4 v) => new Vector4(v.X, v.Y, v.Z, v.W);
+#endif
+
 
         public float x { get; set; }
         public float y { get; set; }

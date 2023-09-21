@@ -37,6 +37,21 @@ namespace Sylves
             this.column3 = column3;
         }
 
+#if GODOT
+        public static implicit operator Godot.Basis(Matrix4x4 m) => new Godot.Basis(new Godot.Vector3(m.m00, m.m10, m.m20), new Godot.Vector3(m.m01, m.m11, m.m21), new Godot.Vector3(m.m02, m.m12, m.m22));
+        public static implicit operator Matrix4x4(Godot.Basis t) => VectorUtils.ToMatrix(t.Column0, t.Column1, t.Column2);
+
+        public static implicit operator Godot.Transform3D(Matrix4x4 m) => new Godot.Transform3D((Godot.Basis)m, new Godot.Vector3(m.m03, m.m13, m.m23));
+        public static implicit operator Matrix4x4(Godot.Transform3D t) {
+            var m = (Matrix4x4)t.Basis;
+            m.column3 = new Vector4(t.Origin.X, t.Origin.Y, t.Origin.Z, 1);
+            return m;
+        }
+
+        public static implicit operator Godot.Transform2D(Matrix4x4 m) => new Godot.Transform2D(new Godot.Vector2(m.m00, m.m10), new Godot.Vector2(m.m01, m.m11), new Godot.Vector2(m.m03, m.m13));
+        public static implicit operator Matrix4x4(Godot.Transform2D t) => new Matrix4x4(new Vector4(t.X.X, t.X.Y, 0, 0), new Vector4(t.Y.X, t.Y.Y, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+#endif
+
         //public float this[int index] { get; set; }
         //public float this[int row, int column] { get; set; }
 

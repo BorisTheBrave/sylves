@@ -1,10 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' != 'GodotRelease' ">
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Configurations>Debug;Release;UnityRelease</Configurations>
-	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <Configurations>Debug;Release;UnityRelease;GodotRelease</Configurations>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+	
+  <ItemGroup>
+    <None Remove="Grid\Substitution\" />
+  </ItemGroup>
+
+  <!-- Unity specific configuration-->
   <PropertyGroup Condition=" '$(Configuration)' == 'UnityRelease' ">
 	<DefineConstants>UNITY</DefineConstants>
   </PropertyGroup>
@@ -17,7 +25,12 @@
     </Reference>
    </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Grid\Substitution\" />
+  <!-- Godot specific configuration-->
+  <PropertyGroup Condition=" '$(Configuration)' == 'GodotRelease' ">
+    <TargetFramework>net6.0</TargetFramework>
+    <DefineConstants>GODOT</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'GodotRelease' ">
+    <PackageReference Include="GodotSharp" Version="4.1.1" />
   </ItemGroup>
 </Project>

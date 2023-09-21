@@ -24,6 +24,10 @@ namespace Sylves
             this.z = z;
             this.w = w;
         }
+#if GODOT
+        public static implicit operator Godot.Quaternion(Quaternion q) => new Godot.Quaternion(q.x, q.y, q.z, q.w);
+        public static implicit operator Quaternion(Godot.Quaternion q) => new Quaternion(q.X, q.Y, q.Z, q.W);
+#endif
 
         // TODO
         //public float this[int index] { get; set; }

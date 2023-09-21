@@ -29,6 +29,11 @@ namespace Sylves
             this.z = z;
         }
 
+#if GODOT
+        public static implicit operator Godot.Vector3I(Cell v) => new Godot.Vector3I(v.x, v.y, v.z);
+        public static implicit operator Cell(Godot.Vector3I v) => new Cell(v.X, v.Y, v.Z);
+#endif
+
         public int x;
         public int y;
         public int z;

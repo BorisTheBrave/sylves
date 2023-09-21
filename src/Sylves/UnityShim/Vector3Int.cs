@@ -19,6 +19,15 @@ namespace Sylves
             this.z = z;
         }
 
+#if GODOT
+        public static implicit operator Godot.Vector3I(Vector3Int v) => new Godot.Vector3I(v.x, v.y, v.z);
+        public static implicit operator Vector3Int(Godot.Vector3I v) => new Vector3Int(v.X, v.Y, v.Z);
+
+        // Also do Vector2 conversions for convenience
+        public static implicit operator Godot.Vector2I(Vector3Int v) => new Godot.Vector2I(v.x, v.y);
+        public static implicit operator Vector3Int(Godot.Vector2I v) => new Vector3Int(v.X, v.Y, 0);
+#endif
+
         public static Vector3Int down => new Vector3Int(0, -1, 0);
         public static Vector3Int up => new Vector3Int(0, 1, 0);
         public static Vector3Int one => new Vector3Int(1, 1, 1);
