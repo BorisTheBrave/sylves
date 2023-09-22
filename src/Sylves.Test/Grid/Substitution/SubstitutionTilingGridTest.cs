@@ -21,6 +21,8 @@ namespace Sylves.Test
 			new Cell(0, 0, 1),
 		};
 
+		public static bool[] Bools = new[] { false, true };
+
 		[Test]
 		[TestCaseSource(nameof(Cells))]
 		public void TestRoundTripParse(Cell cell)
@@ -80,12 +82,13 @@ namespace Sylves.Test
             Assert.AreEqual((CellDir)4, inverseDir);
         }
 
-
+		private IGrid MakeRaw(SubstitutionTilingGrid g, bool isRaw) => isRaw ? g.Raw : g;
 
         [Test]
-        public void TestTryMove_PenroseRhomb()
+        [TestCaseSource(nameof(Bools))]
+        public void TestTryMove_PenroseRhomb(bool isRaw)
         {
-            var g = new PenroseRhombGrid();
+            var g = MakeRaw(new PenroseRhombGrid(), isRaw);
 			CollectionAssert.AreEquivalent(new[]{
 				new Cell(1, 0), new Cell(10, 0), new Cell(5, 0), new Cell(4, 0)
 			}, g.GetNeighbours(new Cell(0, 0, 0)));
