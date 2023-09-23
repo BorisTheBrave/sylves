@@ -50,6 +50,28 @@ namespace Sylves
             return (parent, transform, childTile);
         }
 
+        private (InternalPrototile prototile, int childTile) GetPrototileAndChildTile(Cell cell)
+        {
+            var pathLength = GetPathLength(cell);
+            var parent = hierarchy(pathLength);
+            for (var i = pathLength - 1; i >= 0; i--)
+            {
+                parent = parent.ChildPrototiles[GetPathAt(cell, i)].child;
+            }
+            return (parent, GetChildTileAt(cell));
+        }
+
+        protected override InternalPrototile GetPrototile(Cell cell, int height)
+        {
+            var pathLength = GetPathLength(cell);
+            var parent = hierarchy(pathLength);
+            for (var i = pathLength - 1; i >= height; i--)
+            {
+                parent = parent.ChildPrototiles[GetPathAt(cell, i)].child;
+            }
+            return parent;
+        }
+
         /// <summary>
         /// Returns n+1 parent elements for a path of length n
         /// </summary>
@@ -98,6 +120,37 @@ namespace Sylves
                 r = SetPathAt(r, i - n, GetPathAt(cell, i));
             }
             return r;
+        }
+
+        #endregion
+
+        #region CellInfo
+
+        public override ICellType GetCellType(Cell cell)
+        {
+            if (cellTypes.Count == 1)
+                return cellTypes[0];
+            var (prototile, childTile) = GetPrototileAndChildTile(cell);
+            return NGonCellType.Get(prototile.ChildTiles[childTile].Length);
+        }
+
+        public override bool IsCellInGrid(Cell cell)
+        {
+            // TODO: Don't use try-catch to validate
+            try
+            {
+                GetPrototileAndChildTile(cell);
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (bound != null)
+            {
+                return ClearChildTileAndPathBelow(cell, bound.Height) == bound.Path;
+            }
+            return true;
         }
 
         #endregion

@@ -9,16 +9,14 @@ using UnityEngine;
 
 namespace Sylves
 {
-    // The cache plan:
-
-    // * Add a method to find lowest ancestor in cache, and fill down crumbs (LoadCell).
-    // * Amend functions as following
-    //   * Anything with Parents()  (TryMove) - Just force get crumb
-    //   * Anything with Up() - Force get crumb
-    //   * Anything with Down() - Pass through crumb, if caching on
-    //   * Anything with .childTile[index] 
-
-
+    /// <summary>
+    /// Creates a tiling of the 2d plane from a set of substitution rules.
+    /// It is quite flexible:
+    /// * imperfect substitution rules where the replacement outline doesn't follow the original outline
+    /// * tiles can freely transformed
+    ///   * tile equivalence under translation, euclidian motion, isometry, similarity all supported
+    ///   * "statistically round" substitutions like the pinwheel substitution supported
+    /// </summary>
     public class SubstitutionTilingGrid : BaseSubstitutionTilingGrid
     {
         private ICachePolicy cachePolicy;
@@ -71,6 +69,8 @@ namespace Sylves
                 }
             };
         }
+
+        protected override InternalPrototile GetPrototile(Cell cell, int height) => GetCrumb(cell, height).prototile;
 
 
         #region Crumb Utils
@@ -225,6 +225,41 @@ namespace Sylves
                 r = SetPathAt(r, i - n, GetPathAt(cell, i));
             }
             return r;
+        }
+
+        #endregion
+
+
+        #region CellInfo
+
+        public override ICellType GetCellType(Cell cell)
+        {
+            if (cellTypes.Count == 1)
+                return cellTypes[0];
+            var crumb = GetCrumb(cell);
+            return NGonCellType.Get(crumb.prototile.ChildTiles[GetChildTileAt(cell)].Length);
+        }
+
+        public override bool IsCellInGrid(Cell cell)
+        {
+            // TODO: Don't use try-catch to validate
+            try
+            {
+                var crumb = GetCrumb(cell);
+                var childIndex = GetChildTileAt(cell);
+                if (childIndex < 0 || childIndex >= crumb.prototile.ChildTiles.Length)
+                    return false;
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (bound != null)
+            {
+                return ClearChildTileAndPathBelow(cell, bound.Height) == bound.Path;
+            }
+            return true;
         }
 
         #endregion

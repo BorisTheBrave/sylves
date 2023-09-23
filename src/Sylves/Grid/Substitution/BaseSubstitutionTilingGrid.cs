@@ -8,12 +8,8 @@ using UnityEngine;
 namespace Sylves
 {
     /// <summary>
-    /// Creates a tiling of the 2d plane from a set of substitution rules.
-    /// It is quite flexible:
-    /// * imperfect substitution rules where the replacement outline doesn't follow the original outline
-    /// * tiles can freely transformed
-    ///   * tile equivalence under translation, euclidian motion, isometry, similarity all supported
-    ///   * "statistically round" substitutions like the pinwheel substitution supported
+    /// Base class for <see cref="SubstitutionTilingGrid"/>
+    /// This contains common utilities and calculations that do no rely on caching.
     /// </summary>
     public abstract class BaseSubstitutionTilingGrid : IGrid
 	{
@@ -319,27 +315,7 @@ namespace Sylves
             return (transform * t.transform, t.child);
         }
 
-        private (InternalPrototile prototile, int childTile) GetPrototileAndChildTile(Cell cell)
-        {
-            var pathLength = GetPathLength(cell);
-            var parent = hierarchy(pathLength);
-            for (var i = pathLength - 1; i >= 0; i--)
-            {
-                parent = parent.ChildPrototiles[GetPathAt(cell, i)].child;
-            }
-            return (parent, GetChildTileAt(cell));
-        }
-
-        private InternalPrototile GetPrototile(Cell cell, int height)
-        {
-            var pathLength = GetPathLength(cell);
-            var parent = hierarchy(pathLength);
-            for (var i = pathLength - 1; i >= height; i--)
-            {
-                parent = parent.ChildPrototiles[GetPathAt(cell, i)].child;
-            }
-            return parent;
-        }
+        protected abstract InternalPrototile GetPrototile(Cell cell, int height);
 
         #endregion
 
@@ -408,32 +384,9 @@ namespace Sylves
             return GetCellsInBounds(bound);
         }
 
-        public ICellType GetCellType(Cell cell)
-        {
-            if (cellTypes.Count == 1)
-                return cellTypes[0];
-            var (prototile, childTile) = GetPrototileAndChildTile(cell);
-            return NGonCellType.Get(prototile.ChildTiles[childTile].Length);
-        }
+        public abstract ICellType GetCellType(Cell cell);
 
-        public bool IsCellInGrid(Cell cell)
-        {
-            // TODO: Don't use try-catch to validate
-            try
-            {
-                GetPrototileAndChildTile(cell);
-            }
-            catch
-            {
-                return false;
-            }
-
-            if(bound != null)
-            {
-                return ClearChildTileAndPathBelow(cell, bound.Height) == bound.Path;
-            }
-            return true;
-        }
+        public abstract bool IsCellInGrid(Cell cell);
 
         #endregion
 
