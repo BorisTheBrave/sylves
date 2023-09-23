@@ -11,11 +11,10 @@ Notes on cutting a release of Sylves.
 
 Sylves
 * Update release_notes.md
+* run `release.py`
 * Push to github
-* Build docs
 * Publish docs to website
-* Create zips for Release and Unity release
-* Create github release of zips, tag main branch
+* Create github release of zips in release/, tag main branch
 * Run upm_release.py
 * Commit, push and tag upm branch
 

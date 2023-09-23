@@ -5,10 +5,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.MSBuild;
 
-Console.WriteLine(Directory.GetCurrentDirectory());
-
-return;
-
 MSBuildLocator.RegisterDefaults();
 
 using var workspace = MSBuildWorkspace.Create();
