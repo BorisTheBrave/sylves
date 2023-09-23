@@ -396,6 +396,285 @@ namespace Sylves
             transform = crumb.transform;
         }
         #endregion
+
+        #region Query
+
+        public override bool FindCell(Vector3 position, out Cell cell)
+        {
+            var inputAabb = new Aabb { min = position, max = position };
+            foreach (var crumb in GetCrumbsIntersectsApproxInternal(inputAabb))
+            {
+                for (var childIndex = 0; childIndex < crumb.prototile.ChildTiles.Length; childIndex++)
+                {
+                    // Currently does fan detection
+                    // Doesn't work for convex faces
+                    var transformedPosition = crumb.transform.inverse.MultiplyPoint3x4(position);
+                    var vertices = crumb.prototile.ChildTiles[childIndex];
+                    var v0 = vertices[0];
+                    var prev = vertices[1];
+                    for (var i = 2; i < vertices.Length; i++)
+                    {
+                        var v = vertices[i];
+                        if (GeometryUtils.IsPointInTrianglePlanar(transformedPosition, v0, prev, v))
+                        {
+                            cell = SetChildTileAt(crumb.partialPath, childIndex);
+                            return true;
+                        }
+                        prev = v;
+                    }
+                    continue;
+                }
+            }
+            cell = default;
+            return false;
+        }
+
+        public override bool FindCell(
+            Matrix4x4 matrix,
+            out Cell cell,
+            out CellRotation rotation)
+        {
+            var position = matrix.MultiplyPoint3x4(new Vector3());
+            var inputAabb = new Aabb { min = position, max = position };
+            foreach (var crumb in GetCrumbsIntersectsApproxInternal(inputAabb))
+            {
+                for (var childIndex = 0; childIndex < crumb.prototile.ChildTiles.Length; childIndex++)
+                {
+                    // Currently does fan detection
+                    // Doesn't work for convex faces
+                    var transformedPosition = crumb.transform.inverse.MultiplyPoint3x4(position);
+                    var vertices = crumb.prototile.ChildTiles[childIndex];
+                    var v0 = vertices[0];
+                    var prev = vertices[1];
+                    for (var i = 2; i < vertices.Length; i++)
+                    {
+                        var v = vertices[i];
+                        if (GeometryUtils.IsPointInTrianglePlanar(transformedPosition, v0, prev, v))
+                        {
+                            // Get the cell
+                            cell = SetChildTileAt(crumb.partialPath, childIndex);
+                            // Get the rotation
+                            var cellType = NGonCellType.Get(crumb.prototile.ChildTiles[childIndex].Length);
+                            var cellTransform = GetTRS(crumb.prototile, crumb.transform, childIndex);
+                            return MeshGrid.GetRotationFromMatrix(cellType, cellTransform, matrix, out rotation);
+                        }
+                        prev = v;
+                    }
+                    continue;
+                }
+            }
+            cell = default;
+            rotation = default;
+            return false;
+        }
+
+        public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
+        {
+            var inputAabb = new Aabb { min = min, max = max };
+            foreach (var crumb in GetCrumbsIntersectsApproxInternal(inputAabb))
+            {
+                for (var i = 0; i < crumb.prototile.ChildTiles.Length; i++)
+                {
+                    yield return SetChildTileAt(crumb.partialPath, i);
+                }
+            }
+        }
+
+
+        // Returns a set of non-overlapping prototiles at different heights that collectively contain all prototiles
+        private IEnumerable<Crumb> Spigot()
+        {
+            var crumb = hierarchyCrumbs[0];
+            yield return crumb;
+            while (true)
+            {
+                crumb = GetParent(crumb);
+                // Skips 0, we just came from there!
+                for (var i = 1; i < crumb.prototile.ChildPrototiles.Length; i++)
+                {
+                    yield return GetChild(crumb, i);
+                }
+            }
+        }
+
+
+        // Returns the set of height 0 prototiles intersect inputAabb
+        // This is done by iterating over spigot (an infinite stream of prototiles)
+        // and recursively subdividing ones that look promising.
+        // We stop when we haven't found anything in a while.
+        private IEnumerable<Crumb> GetCrumbsIntersectsApproxInternal(Aabb inputAabb)
+        {
+            var stack = new Stack<Crumb>();
+            var highestFoundHeight = -1;
+            foreach (var t in Spigot())
+            {
+                if (highestFoundHeight <= t.height - DeadZone && highestFoundHeight != -1)
+                {
+                    // Haven't found anything in a while, give up.
+                    break;
+                }
+
+                // For each of these prototiles, walk the entire tree under it
+                stack.Push(t);
+                while (stack.Count > 0)
+                {
+                    var crumb = stack.Pop();
+                    var bound = crumb.transform * crumb.prototile.bound;
+
+                    if (bound.Intersects(inputAabb))
+                    {
+                        if (crumb.height == 0)
+                        {
+                            highestFoundHeight = Math.Max(highestFoundHeight, t.height);
+                            yield return crumb;
+                        }
+                        else
+                        {
+                            // Recurse
+                            for (var i = 0; i < crumb.prototile.ChildPrototiles.Length; i++)
+                            {
+                                stack.Push(GetChild(crumb, i));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        {
+            // Computes distance to interection of aabb, or null if it misses the truncated array.
+            Func<Crumb, float?> getDist = (crumb) =>
+            {
+                var iTransform = crumb.transform.inverse;
+                var localOrigin = iTransform.MultiplyPoint3x4(origin);
+                var localDirection = iTransform.MultiplyVector(direction);
+                return crumb.prototile.bound.Raycast(localOrigin, localDirection, maxDistance);
+            };
+            var queuedRaycastInfos = new PriorityQueue<RaycastInfo>(x => x.distance, (x, y) => -x.distance.CompareTo(y.distance));
+            foreach (var (crumb, dist) in RaycastCrumbs(getDist))
+            {
+                // Raycast against the actual children of this prototile
+                for (var i = 0; i < crumb.prototile.ChildTiles.Length; i++)
+                {
+                    if (MeshRaycast.RaycastPolygonPlanar(origin, direction, crumb.prototile.ChildTiles[i], crumb.transform, out var point, out var childDist, out var side)
+                       && childDist < maxDistance)
+                    {
+                        var ri = new RaycastInfo
+                        {
+                            cell = SetChildTileAt(crumb.partialPath, i),
+                            cellDir = (CellDir?)side,
+                            distance = childDist,
+                            point = point,
+                        };
+                        queuedRaycastInfos.Add(ri);
+                    }
+                }
+
+                // Drain the queue. As the prototiles are in order, and their child tiles are inside their bounds and thus always have a larger dist
+                // we know we've seen everything up to dist
+                foreach (var ri in queuedRaycastInfos.Drain(dist))
+                {
+                    yield return ri;
+                }
+            }
+            foreach (var ri in queuedRaycastInfos.Drain())
+            {
+                yield return ri;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns all the height 0 prototiles that intersect the ray, in the correct order.
+        /// Much like GetPrototilesIntersectsApproxInternal, this walks over all the prototiles in Spigot,
+        /// and recursively subdivides them if their bounds indiate they may contain a tile that intersects the ray.
+        /// 
+        /// As with that method, we stop if we haven't found anything worth outputting in a while.
+        /// 
+        /// But it's complicated by the fact we must output items in order. To do so, items are kept in a queue, and with similar logic to the stopping logic, we only output 
+        /// something when we haven't found anything smaller in a while.
+        /// </summary>
+        private IEnumerable<(Crumb, float minDist)> RaycastCrumbs(Func<Crumb, float?> getDist)
+        {
+            var queue = new PriorityQueue<(int initialHeight, Crumb crumb, float dist)>(x => x.dist, (x, y) => -x.dist.CompareTo(y.dist));
+
+            var highestFoundHeight = -1;
+            foreach (var t in Spigot())
+            {
+                if (queue.Count == 0 && highestFoundHeight <= t.height - DeadZone && highestFoundHeight != -1)
+                {
+                    // Haven't found anything in a while, give up.
+                    break;
+                }
+
+                var dist = getDist(t);
+                if (dist != null)
+                {
+                    queue.Add((t.height, t, dist.Value));
+                }
+
+                while (queue.Count > 0)
+                {
+                    var t2 = queue.Peek();
+                    if (t2.crumb.height > 0)
+                    {
+                        var (initialHeight, crumb, _) = queue.Pop();
+                        // Recurse
+                        for (var i = 0; i < crumb.prototile.ChildPrototiles.Length; i++)
+                        {
+                            var child = GetChild(crumb, i);
+                            var childDist = getDist(child);
+                            if (childDist != null)
+                            {
+                                queue.Add((initialHeight, child, childDist.Value));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // We've found a height 0 prototile that is ahead of everythign else in the queue.
+                        // But is it also ahead of future items we'll find from Spigot?
+                        if (t2.initialHeight <= t.height - DeadZone)
+                        {
+                            var (initialHeight, crumb, dist2) = queue.Pop();
+                            highestFoundHeight = Math.Max(highestFoundHeight, initialHeight);
+                            yield return (crumb, dist2);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Drain queue
+            while (queue.Count > 0)
+            {
+                var (initialHeight, crumb, dist2) = queue.Pop();
+                if (crumb.height > 0)
+                {
+                    // Recurse
+                    for (var i = 0; i < crumb.prototile.ChildPrototiles.Length; i++)
+                    {
+                        var child = GetChild(crumb, i);
+                        var childDist = getDist(child);
+                        if (childDist != null)
+                        {
+                            queue.Add((initialHeight, child, childDist.Value));
+                        }
+                    }
+                }
+                else
+                {
+                    yield return (crumb, dist2);
+                }
+            }
+        }
+        #endregion
     }
 }
 
