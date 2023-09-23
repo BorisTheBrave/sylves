@@ -62,8 +62,15 @@ namespace Sylves
             return new Cell(cell.x - offset.x, cell.y - offset.y, cell.z - offset.z);
         }
 
+#if GODOT
+        // Make these implicit in Godot, because you're going to be converting a lot!
+
+        public static implicit operator Vector3Int(Cell c) => new Vector3Int(c.x, c.y, c.z);
+        public static implicit operator Cell(Vector3Int c) => new Cell(c.x, c.y, c.z);
+#else
         public static explicit operator Vector3Int(Cell c) => new Vector3Int(c.x, c.y, c.z);
         public static explicit operator Cell(Vector3Int c) => new Cell(c.x, c.y, c.z);
+#endif
 
         public static bool operator ==(Cell lhs, Cell rhs) => lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
         public static bool operator !=(Cell lhs, Cell rhs) => !(lhs == rhs);
