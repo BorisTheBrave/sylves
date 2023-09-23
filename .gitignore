@@ -2,3 +2,4 @@
 bin
 obj
 upm
+src/Sylves.Godot/**/*.cs

@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sylves", "Sylves\Sylves.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sylves.Test", "Sylves.Test\Sylves.Test.csproj", "{8D831D12-71B6-418A-9979-F24B337B0ABF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sylves.GodotRewriter", "Sylves.GodotRewriter\Sylves.GodotRewriter.csproj", "{96309685-F4AC-4FFD-BEDF-013D7CDC8D17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sylves.Godot", "Sylves.Godot\Sylves.Godot.csproj", "{AD48C985-1247-4A53-ADEE-1489A5122D71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,22 @@ Global
 		{8D831D12-71B6-418A-9979-F24B337B0ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D831D12-71B6-418A-9979-F24B337B0ABF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D831D12-71B6-418A-9979-F24B337B0ABF}.UnityRelease|Any CPU.ActiveCfg = UnityRelease|Any CPU
+		{96309685-F4AC-4FFD-BEDF-013D7CDC8D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96309685-F4AC-4FFD-BEDF-013D7CDC8D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96309685-F4AC-4FFD-BEDF-013D7CDC8D17}.GodotRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{96309685-F4AC-4FFD-BEDF-013D7CDC8D17}.GodotRelease|Any CPU.Build.0 = Release|Any CPU
+		{96309685-F4AC-4FFD-BEDF-013D7CDC8D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96309685-F4AC-4FFD-BEDF-013D7CDC8D17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96309685-F4AC-4FFD-BEDF-013D7CDC8D17}.UnityRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{96309685-F4AC-4FFD-BEDF-013D7CDC8D17}.UnityRelease|Any CPU.Build.0 = Release|Any CPU
+		{AD48C985-1247-4A53-ADEE-1489A5122D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD48C985-1247-4A53-ADEE-1489A5122D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD48C985-1247-4A53-ADEE-1489A5122D71}.GodotRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{AD48C985-1247-4A53-ADEE-1489A5122D71}.GodotRelease|Any CPU.Build.0 = Release|Any CPU
+		{AD48C985-1247-4A53-ADEE-1489A5122D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD48C985-1247-4A53-ADEE-1489A5122D71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD48C985-1247-4A53-ADEE-1489A5122D71}.UnityRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{AD48C985-1247-4A53-ADEE-1489A5122D71}.UnityRelease|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
