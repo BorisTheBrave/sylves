@@ -1,9 +1,10 @@
 # Unreleased
+* Added [Substitution tiling grid](grids/substitutiontilinggrid.md)
+* Added [experimental Godot support](tutorials/getting_started_godot.md)
 * Add Format methods to ICellType
 * Improve precision of some floating point calculations, particularly for Townscaper grid
 * Fix FromMatrix to ignore (uniform) scaling
 * Fix issues with 360 degree rotation
-
 
 # 0.3.0
 * Changed Quad/TriangleInterpolation to use same conventions as rest of Sylves

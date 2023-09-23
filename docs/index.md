@@ -69,7 +69,7 @@ _disableDocFxScripts: true
             <div class="col-md-12 mx-auto my-auto text-center">
                 <h1>Sylves - Handle the maths and algorithms for the geometry of grids</h1>
                 <p class="lead mt-4 mb-5">
-                    An open-source C# Library usable from Unity or .NET suitable for games and procedural generation.
+                    An open-source C# Library usable from Unity, .NET and Godot suitable for games and procedural generation.
                 </p>
                 <p>
                     <a class="btn btn-primary btl-lg" href="articles/index.md" role="button">Getting Started</a>

@@ -35,6 +35,10 @@
        href: concepts/caching.md
 - name: Tutorials
   items:
+    -  name: Getting Started in Unity
+       href: tutorials/getting_started_unity.md
+    -  name: Getting Started in Godot
+       href: tutorials/getting_started_godot.md
     -  name: Langton's Ant
        href: tutorials/langton.md
     -  name: Paint Program

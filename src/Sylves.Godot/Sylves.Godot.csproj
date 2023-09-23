@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<DefineConstants>GODOT</DefineConstants>
+	  <Title>Sylves is a library for handling maths relating to grids, for games and procedural generation (Godot version).</Title>
   </PropertyGroup>
 	<ItemGroup>
 	<PackageReference Include="GodotSharp" Version="4.1.1" />
