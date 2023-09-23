@@ -72,7 +72,10 @@ namespace Sylves
 
         internal void BuildMeshDetails()
         {
+            // Absolute min thickness. Start getting issues with planes at origin if smaller  this
             var hashCellSize = new Vector3(PlanarThickness, PlanarThickness, PlanarThickness);
+
+            // Now compute hashCellSize based on largest cell
             Vector3? min = null;
             Vector3? max = null;
             foreach (var cell in GetCells())
@@ -83,9 +86,17 @@ namespace Sylves
                 min = min == null ? cellMin : Vector3.Min(min.Value, cellMin);
                 max = max == null ? cellMax : Vector3.Max(max.Value, cellMax);
             }
+            min = min ?? new Vector3();
+            max = max ?? new Vector3();
+
+            // Also, hashCellSize must be larger than floating point precision
+            // This avoids issues with non-origin planes
+            hashCellSize = Vector3.Max(hashCellSize, Vector3.Max(Abs(min.Value), Abs(max.Value)) * 1e-8f);
+
             var meshDetails = new MeshDetails
             {
                 hashCellSize = hashCellSize,
+                hashCellBase = min.Value,
                 hashedCells = new Dictionary<Vector3Int, List<Cell>>(),
                 isPlanar = min.HasValue && min.Value.z == max.Value.z,
             };
@@ -124,15 +135,16 @@ namespace Sylves
         private class MeshDetails
         {
             public Vector3 hashCellSize;
+            public Vector3 hashCellBase;
             public CubeBound hashCellBounds;
             public CubeBound expandedHashCellBounds;
             public Dictionary<Vector3Int, List<Cell>> hashedCells;
             public bool isPlanar;
 
-            public Vector3Int GetHashCell(Vector3 v) => Vector3Int.FloorToInt(Divide(v, hashCellSize));
+            public Vector3Int GetHashCell(Vector3 v) => Vector3Int.FloorToInt(Divide(v - hashCellBase, hashCellSize));
         }
 
-        ICellType UnwrapXZCellModifier(ICellType cellType)
+        private static ICellType UnwrapXZCellModifier(ICellType cellType)
         {
             if(cellType is XZCellTypeModifier modifier)
             {
@@ -223,28 +235,6 @@ namespace Sylves
         #region Query
 
 
-
-        /// <summary>
-        /// Returns true if p is in the triangle po, p1, p2
-        /// </summary>
-        private static bool IsPointInTriangle(Vector3 p, Vector3 p0, Vector3 p1, Vector3 p2)
-        {
-            var n = Vector3.Cross(p1 - p0, p2 - p0);
-
-            var o = Vector3.Dot(p - p2, n);
-            if (o < -PlanarThickness || o > PlanarThickness)
-                return false;
-
-            var s = Vector3.Dot(n, Vector3.Cross(p0 - p2, p - p2));
-            var t = Vector3.Dot(n, Vector3.Cross(p1 - p0, p - p0));
-
-            if ((s < 0) != (t < 0) && s != 0 && t != 0)
-                return false;
-
-            var d = Vector3.Dot(n, Vector3.Cross(p2 - p1, p - p1));
-            return d == 0 || (d < 0) == (s + t <= 0);
-        }
-
         // FindCell, applied to a single cell
         protected virtual bool IsPointInCell(Vector3 position, Cell cell)
         {
@@ -253,11 +243,11 @@ namespace Sylves
             var cellData = (MeshCellData)CellData[cell];
             var face = cellData.Face;
             var v0 = meshData.vertices[face[0]];
-            var prev = meshData.vertices[face[face.Count - 1]];
-            for (var i = 1; i < face.Count; i++)
+            var prev = meshData.vertices[face[1]];
+            for (var i = 2; i < face.Count; i++)
             {
                 var v = meshData.vertices[face[i]];
-                if (IsPointInTriangle(position, v0, prev, v))
+                if (GeometryUtils.IsPointInTriangle(position, v0, prev, v, PlanarThickness))
                     return true;
                 prev = v;
             }
@@ -295,9 +285,9 @@ namespace Sylves
             }
 
             // Broadphase - walk through the hashCells looking for cells to check.
-            var bfRaycastInfos = CubeGrid.Raycast(origin, direction, maxDistance, meshDetails.hashCellSize, meshDetails.expandedHashCellBounds);
+            var bfRaycastInfos = CubeGrid.Raycast(origin - meshDetails.hashCellBase, direction, maxDistance, meshDetails.hashCellSize, meshDetails.expandedHashCellBounds);
             Vector3Int? prevHashCell = null;
-            var queuedRaycastInfos = new List<RaycastInfo>();
+            var queuedRaycastInfos = new PriorityQueue<RaycastInfo>(x=>x.distance, (x, y) => -x.distance.CompareTo(y.distance));
             foreach (var bfRaycastInfo in bfRaycastInfos)
             {
                 // Find check every hashCell within one of the cast to cell
@@ -327,9 +317,6 @@ namespace Sylves
                     }
                 }
 
-                // Re-sort queue
-                queuedRaycastInfos.Sort((x, y) => -x.distance.CompareTo(y.distance));
-
                 // Find the distance such that all raycastInfos smaller than this distance have already found,
                 // meaning it is safe to stream them out of the queue without getting anything out of order
                 var minDistance = bfRaycastInfo.distance - Mathf.Min(
@@ -339,10 +326,8 @@ namespace Sylves
                     );
 
                 // Actually stream all the safe raycastInfos
-                while (queuedRaycastInfos.Count > 0 && queuedRaycastInfos[queuedRaycastInfos.Count - 1].distance < minDistance)
+                foreach(var ri in  queuedRaycastInfos.Drain(minDistance))
                 {
-                    var ri = queuedRaycastInfos[queuedRaycastInfos.Count - 1];
-                    queuedRaycastInfos.RemoveAt(queuedRaycastInfos.Count - 1);
                     if (hasOriginCell && originCell == ri.cell)
                         continue;
                     yield return ri;
@@ -352,9 +337,8 @@ namespace Sylves
             }
 
             // We've found all raycast infos, stream out any that haven't already been sent
-            for (var i = queuedRaycastInfos.Count - 1; i >= 0; i--)
+            foreach (var ri in queuedRaycastInfos.Drain())
             {
-                var ri = queuedRaycastInfos[i];
                 if (hasOriginCell && originCell == ri.cell)
                     continue;
                 yield return ri;
@@ -422,7 +406,7 @@ namespace Sylves
             for (var i = 0; i < face.Count; i++)
             {
                 var curr = meshData.vertices[face[i]];
-                if (MeshRaycast.RaycastSegment(rayOrigin, direction, prev, curr, out var p, out var d))
+                if (MeshRaycast.RaycastSegmentPlanar(rayOrigin, direction, prev, curr, out var p, out var d, out var _))
                 {
                     if (d < bestD)
                     {
@@ -450,6 +434,60 @@ namespace Sylves
             }
         }
 
+        internal static bool GetRotationFromMatrix(ICellType cellType, Matrix4x4 cellTransform, Matrix4x4 matrix, out CellRotation rotation)
+        {
+            cellType = UnwrapXZCellModifier(cellType);
+            var m = cellTransform.inverse * matrix;
+            // TODO: Dispatch to celltype method?
+            if (cellType == CubeCellType.Instance)
+            {
+                var cubeRotation = CubeRotation.FromMatrix(m);
+                if (cubeRotation != null)
+                {
+                    rotation = cubeRotation.Value;
+                    return true;
+                }
+            }
+            else if (cellType == SquareCellType.Instance)
+            {
+                var squareRotation = SquareRotation.FromMatrix(m);
+                if (squareRotation != null)
+                {
+                    rotation = squareRotation.Value;
+                    return true;
+                }
+            }
+            else if (cellType is HexCellType hexCellType)
+            {
+                var hexRotation = HexRotation.FromMatrix(m, hexCellType.Orientation);
+                if (hexRotation != null)
+                {
+                    rotation = hexRotation.Value;
+                    return true;
+                }
+            }
+            else if (cellType is NGonCellType ngonCellType)
+            {
+                var cellRotation = ngonCellType.FromMatrix(m);
+                if (cellRotation != null)
+                {
+                    rotation = cellRotation.Value;
+                    return true;
+                }
+            }
+            else if (cellType is NGonPrismCellType ngonPrismCellType)
+            {
+                var cellRotation = ngonPrismCellType.FromMatrix(m);
+                if (cellRotation != null)
+                {
+                    rotation = cellRotation.Value;
+                    return true;
+                }
+            }
+            rotation = default;
+            return false;
+        }
+
         public override bool FindCell(
             Matrix4x4 matrix,
             out Cell cell,
@@ -460,54 +498,7 @@ namespace Sylves
             if (FindCell(p, out cell))
             {
                 var cellData = CellData[cell];
-                var m = cellData.TRS.ToMatrix().inverse * matrix;
-                var cellType = UnwrapXZCellModifier(cellData.CellType);
-                // TODO: Dispatch to celltype method?
-                if (cellType == CubeCellType.Instance)
-                {
-                    var cubeRotation = CubeRotation.FromMatrix(m);
-                    if (cubeRotation != null)
-                    {
-                        rotation = cubeRotation.Value;
-                        return true;
-                    }
-                }
-                else if (cellType == SquareCellType.Instance)
-                {
-                    var squareRotation = SquareRotation.FromMatrix(m);
-                    if (squareRotation != null)
-                    {
-                        rotation = squareRotation.Value;
-                        return true;
-                    }
-                }
-                else if (cellType is HexCellType hexCellType)
-                {
-                    var hexRotation = HexRotation.FromMatrix(m, hexCellType.Orientation);
-                    if (hexRotation != null)
-                    {
-                        rotation = hexRotation.Value;
-                        return true;
-                    }
-                }
-                else if(cellType is NGonCellType ngonCellType)
-                {
-                    var cellRotation = ngonCellType.FromMatrix(m);
-                    if (cellRotation != null)
-                    {
-                        rotation = cellRotation.Value;
-                        return true;
-                    }
-                }
-                else if(cellType is NGonPrismCellType ngonPrismCellType)
-                {
-                    var cellRotation = ngonPrismCellType.FromMatrix(m);
-                    if (cellRotation != null)
-                    {
-                        rotation = cellRotation.Value;
-                        return true;
-                    }
-                }
+                return GetRotationFromMatrix(cellData.CellType, cellData.TRS.ToMatrix(), matrix, out rotation);
             }
 
             rotation = default;

@@ -10,27 +10,133 @@ namespace Sylves
         /// Performs a raycast in the XY plane of a ray vs a finite segment of a line.
         /// z-coordinates are completely ignored.
         /// </summary>
-        public static bool RaycastSegment(Vector3 rayOrigin, Vector3 direction, Vector3 v0, Vector3 v1, out Vector3 point, out float distance)
+        public static bool RaycastSegmentPlanar(Vector3 rayOrigin, Vector3 direction, Vector3 v0, Vector3 v1, out Vector3 point, out float distance, out bool side)
         {
-            v1 -= v0;
+            var v = v1 - v0;
             var o = rayOrigin - v0;
-            var denom = (-direction.x * v1.y + direction.y * v1.x);
+            var denom = (-direction.x * v.y + direction.y * v.x);
 
-            var t = (o.x * v1.y - o.y * v1.x) / denom;
+            var t = (o.x * v.y - o.y * v.x) / denom;
             var u = (o.x * direction.y - o.y * direction.x) / denom;
 
             if(u < 0 || u > 1 || t < 0)
             {
                 point = default;
-                distance = 0;
+                distance = default;
+                side = default;
                 return false;
             }
             else
             {
                 point = rayOrigin + direction * t;
                 distance = t;
+                side = denom > 0;
                 return true;
             }
+        }
+
+        public static bool RaycastPolygonPlanar(Vector3 rayOrigin, Vector3 direction, Vector3[] v, Matrix4x4 transform, out Vector3 point, out float distance, out int? side)
+        {
+            var i = transform.inverse;
+            var success = RaycastPolygonPlanar(i.MultiplyPoint3x4(rayOrigin), i.MultiplyVector(direction), v, out var p, out distance, out side);
+            point = transform.MultiplyPoint(p);
+            return success;
+        }
+
+        public static bool RaycastPolygonPlanar(Vector3 rayOrigin, Vector3 direction, Vector3[] vs, out Vector3 point, out float distance, out int? side)
+        {
+            var bestDistance = float.PositiveInfinity;
+            Vector3 bestPoint = default;
+            int bestSide = default;
+            bool bestS = default;
+            for (var i = 0; i < vs.Length; i++)
+            {
+                var v0 = vs[i];
+                var v1 = vs[(i + 1) % vs.Length];
+
+                if(RaycastSegmentPlanar(rayOrigin, direction, v0, v1, out var p, out var d, out var s) && d < bestDistance)
+                {
+                    bestDistance = d;
+                    bestPoint = p;
+                    bestSide = i;
+                    bestS = s;
+                }
+            }
+
+            // TODO: Worry about interior
+            if(bestDistance < float.PositiveInfinity)
+            {
+                if(bestS)
+                {
+                    distance = bestDistance;
+                    point = bestPoint;
+                    side = bestSide;
+
+                }
+                else
+                {
+                    // Starts inside
+                    distance = 0;
+                    point = rayOrigin;
+                    side = null;
+                }
+                return true;
+            }
+            else
+            {
+                distance = default;
+                point = default;
+                side = default;
+                return false;
+            }
+        }
+
+        public static bool RaycastAabbPlanar(Vector3 rayOrigin, Vector3 direction, Vector3 min, Vector3 max, out float distance)
+        {
+
+            var t1x = (min.x - rayOrigin.x) / direction.x;
+            var t1y = (min.y - rayOrigin.y) / direction.y;
+            var t2x = (max.x - rayOrigin.x) / direction.x;
+            var t2y = (max.y - rayOrigin.y) / direction.y;
+            if (direction.x < 0) (t1x, t2x) = (t2x, t1x);
+            if (direction.y < 0) (t1y, t2y) = (t2y, t1y);
+
+            var t1 = Mathf.Max(Mathf.Max(0, t1x), t1y);
+            var t2 = Mathf.Min(t2x, t2y);
+
+            if (t1 > t2)
+            {
+                distance = default;
+                return false;
+            }
+
+            distance = t1;
+            return true;
+        }
+
+        public static bool RaycastAabb(Vector3 rayOrigin, Vector3 direction, Vector3 min, Vector3 max, out float distance)
+        {
+            var t1x = (min.x - rayOrigin.x) / direction.x;
+            var t1y = (min.y - rayOrigin.y) / direction.y;
+            var t1z = (min.z - rayOrigin.z) / direction.z;
+            var t2x = (max.x - rayOrigin.x) / direction.x;
+            var t2y = (max.y - rayOrigin.y) / direction.y;
+            var t2z = (max.z - rayOrigin.z) / direction.z;
+            if (direction.x < 0) (t1x, t2x) = (t2x, t1x);
+            if (direction.y < 0) (t1y, t2y) = (t2y, t1y);
+            if (direction.z < 0) (t1z, t2z) = (t2z, t1z);
+
+            var t1 = Mathf.Max(Mathf.Max(0, t1x), Mathf.Max(t1y, t1z));
+            var t2 = Mathf.Min(t2x, Mathf.Min(t2y, t2z));
+
+            if (t1 > t2)
+            {
+                distance = default;
+                return false;
+            }
+
+            distance = t1;
+            return true;
         }
 
         /// <summary>
@@ -40,6 +146,9 @@ namespace Sylves
         {
             return RaycastTri(rayOrigin, direction, v0, v1, v2, out point, out distance, out var _);
         }
+
+        /// <summary>
+        /// Raycasts a ray vs a single triagnle.
 
         public static bool RaycastTri(Vector3 rayOrigin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, out Vector3 point, out float distance, out bool side)
         {

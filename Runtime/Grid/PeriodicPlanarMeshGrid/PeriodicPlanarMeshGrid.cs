@@ -35,8 +35,10 @@ namespace Sylves
                 throw new Exception($"Expected subMeshCount of 1");
 
             // Analyse the original mesh
-            var meshMin = meshData.vertices.Aggregate(Vector3.Min);
-            var meshMax = meshData.vertices.Aggregate(Vector3.Max);
+            // var vertices = meshData.vertices;
+            var vertices = meshData.indices.SelectMany(x => x).Select(i => meshData.vertices[i >= 0 ? i : ~i]);
+            var meshMin = vertices.Aggregate(Vector3.Min);
+            var meshMax = vertices.Aggregate(Vector3.Max);
             var meshMin2 = new Vector2(meshMin.x, meshMin.y);
             var meshMax2 = new Vector2(meshMax.x, meshMax.y);
             var meshSize = meshMax2 - meshMin2;
@@ -446,7 +448,7 @@ namespace Sylves
                 if(centerGrid.FindCell(p, out cell))
                 {
                     cell += Promote(chunk);
-                    return true;
+                    return bound == null || bound.Contains(chunk);
                 }
             }
             cell = default;
@@ -490,15 +492,11 @@ namespace Sylves
         {
             var origin2 = new Vector2(origin.x, origin.y);
             var direction2 = new Vector2(direction.x, direction.y);
-            var queuedRaycastInfos = new List<RaycastInfo>();
+            var queuedRaycastInfos = new PriorityQueue<RaycastInfo>(x => x.distance, (x, y) => -x.distance.CompareTo(y.distance));
             foreach (var chunkRaycastInfo in aabbChunks.Raycast(origin2, direction2, maxDistance))
             {
-                // Resort and drain queue
-                queuedRaycastInfos.Sort((x, y) => -x.distance.CompareTo(y.distance));
-                while (queuedRaycastInfos.Count > 0 && queuedRaycastInfos[queuedRaycastInfos.Count - 1].distance < chunkRaycastInfo.distance)
+                foreach (var ri in queuedRaycastInfos.Drain(chunkRaycastInfo.distance))
                 {
-                    var ri = queuedRaycastInfos[queuedRaycastInfos.Count - 1];
-                    queuedRaycastInfos.RemoveAt(queuedRaycastInfos.Count - 1);
                     yield return ri;
                 }
 
@@ -517,10 +515,8 @@ namespace Sylves
             }
 
             // Final drain
-            queuedRaycastInfos.Sort((x, y) => -x.distance.CompareTo(y.distance));
-            for (var i = queuedRaycastInfos.Count - 1; i >= 0; i--)
+            foreach (var ri in queuedRaycastInfos.Drain())
             {
-                var ri = queuedRaycastInfos[i];
                 yield return ri;
             }
         }

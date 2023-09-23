@@ -73,7 +73,7 @@ namespace Sylves
         public override bool FindCell(
             Matrix4x4 matrix,
             out Cell cell,
-            out CellRotation rotation) => Underlying.FindCell(matrix * iTransform, out cell, out rotation);
+            out CellRotation rotation) => Underlying.FindCell(iTransform * matrix, out cell, out rotation);
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {

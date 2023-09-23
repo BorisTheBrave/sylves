@@ -1440,7 +1440,7 @@
           "hash": "8pRrFHxBqvW8I/IVLBYTa+ezjCW/5vJsX30za3N9UK8="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1692,7 +1692,7 @@
           "hash": "PR3nB35W2i4O1+r6WTsTeLw+lT0xRKBbYBhwXOCnboo="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1972,12 +1972,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "UidNotFound"
+      ],
       "type": "Conceptual",
       "source_relative_path": "articles/grids/index.md",
       "output": {
         ".html": {
           "relative_path": "articles/grids/index.html",
-          "hash": "3vAX7CVK5+gblSTA6xYyPlCJEiwmrbwHAubvk4M/Z1E="
+          "hash": "+ePNPcNIXQry9GkacHDZ9165aeUwdf5qhbQdNvR5qVo="
         }
       },
       "is_incremental": true,
@@ -2038,6 +2041,21 @@
         ".html": {
           "relative_path": "articles/grids/squaregrid.html",
           "hash": "jwQKxgcAbCMXGt4yVliRLqZW75D5tBRxrtgrJcPw4TA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "UidNotFound"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/grids/substitutiontilinggrid.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grids/substitutiontilinggrid.html",
+          "hash": "BLoywXMbBnkmFkVZLCTWG9MAG4/WeV/MOIvabohkTL4="
         }
       },
       "is_incremental": true,
@@ -2181,7 +2199,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/release_notes.html",
-          "hash": "JR/50gisjRGs0UJPyhrekFItvA+2F/TRTlafcHfPKgg="
+          "hash": "8K1MdxnWzOWa05XuUSQ5Fw/ZMC1xlAnBg0E1K/MJLoQ="
         }
       },
       "is_incremental": false,
@@ -2193,10 +2211,34 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "qGwek5SwBaiixGkZAmMuvADqVZajxbt17A1daUucfDM="
+          "hash": "jKlgqaLWQIaCHQ7XO8Nxy2SLq8ZyTDu7zq+immI0Gec="
         }
       },
       "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/tutorials/getting_started_godot.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/tutorials/getting_started_godot.html",
+          "hash": "oWN6rD5Br0TgELZI+VWfqwDi0X5weTWxefVe606MLCU="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/tutorials/getting_started_unity.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/tutorials/getting_started_unity.html",
+          "hash": "zhhVXM9LW/pyTSzmtesTKnbrgxLuYQmTVxwNVgs8ahQ="
+        }
+      },
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -2229,7 +2271,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/tutorials/marching_squares.html",
-          "hash": "C7UyPr/KAUIjKPtGeojdGHYXuhCJEMWaWiCnDOl5m1g="
+          "hash": "X6sFnXDOHy9HTWTa8wzCYgIr1pn0RNDORE526x/9H18="
         }
       },
       "is_incremental": true,
@@ -2481,6 +2523,17 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/grids/domino.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/domino.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/grids/hex_ft.svg",
       "output": {
         "resource": {
@@ -2573,6 +2626,17 @@
       "output": {
         "resource": {
           "relative_path": "images/grids/mobiussquare.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/penrose_rhomb.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/penrose_rhomb.svg"
         }
       },
       "is_incremental": false,
@@ -3049,7 +3113,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "50hwLGpUtY6Pz704IvpTq1qUEuNP5XQiPLkj1U2c0xg="
+          "hash": "QLkRBnqpUBUAhOqE1g1npvkNgDFmAm2SeuqYVxb/GUc="
         }
       },
       "is_incremental": false,
@@ -3080,14 +3144,14 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 46,
-          "skipped_file_count": 45
+          "total_file_count": 49,
+          "skipped_file_count": 48
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 141,
-          "skipped_file_count": 140
+          "skipped_file_count": 141
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,

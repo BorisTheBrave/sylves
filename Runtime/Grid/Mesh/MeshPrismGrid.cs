@@ -143,12 +143,10 @@ namespace Sylves
         protected override bool IsPointInCell(Vector3 position, Cell cell)
         {
             var c = 0;
-            foreach(var (v0, v1, v2, dir) in GetTriangleMesh(cell))
+            foreach(var (v0, v1, v2, _) in GetTriangleMesh(cell))
             {
-                System.Console.WriteLine($"{cell} {v0} {v1} {v2} {dir}");
                 if(MeshRaycast.RaycastTri(position, Vector3.right, v0, v1, v2, out var _, out var _, out var side))
                 {
-                    System.Console.WriteLine($"hit {side}");
                     c += side ? 1 : -1;
                 }
             }
@@ -212,9 +210,9 @@ namespace Sylves
             {
                 var v0 = vertices[face[0]];
                 var n0 = normals[face[0]];
-                var v1 = vertices[face[face.Count - 1]];
-                var n1 = normals[face[face.Count - 1]];
-                for (var i = 1; i < face.Count; i++)
+                var v1 = vertices[face[1]];
+                var n1 = normals[face[1]];
+                for (var i = 2; i < face.Count; i++)
                 {
                     var v2 = vertices[face[i]];
                     var n2 = normals[face[i]];

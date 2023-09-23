@@ -8,7 +8,7 @@ namespace Sylves
 {
     public static class SvgExport
     {
-        public static void WritePathCommands(Vector3[] vertices, Matrix4x4 transform, TextWriter tw)
+        public static void WritePathCommands(Vector3[] vertices, Matrix4x4 transform, TextWriter tw, bool close = true)
         {
             var first = true;
             foreach(var v in vertices)
@@ -20,7 +20,10 @@ namespace Sylves
                 tw.Write(' ');
                 tw.Write(v2.y);
             }
-            tw.Write('Z');
+            if (close)
+            {
+                tw.Write('Z');
+            }
         }
     }
 
@@ -62,11 +65,16 @@ namespace Sylves
             tw.WriteLine("</svg>");
         }
 
-        public void DrawCell(IGrid grid, Cell cell)
+        public void DrawCell(IGrid grid, Cell cell, string fill = null)
         {
+            var styleString = "";
+            if(fill != null)
+            {
+                styleString = $@" style=""fill: {fill}""";
+            }
             grid.GetPolygon(cell, out var vertices, out var transform);
             tw.WriteLine($"<!-- {cell} -->");
-            tw.Write($@"<path class=""cell-path"" d=""");
+            tw.Write($@"<path class=""cell-path""{styleString} d=""");
             SvgExport.WritePathCommands(vertices, globalTransform * transform, tw);
             tw.WriteLine("\"/>");
         }
@@ -85,7 +93,11 @@ namespace Sylves
             foreach (var textStyle in new[] { stroke_text_style, text_style })
             {
                 tw.Write($@"<text text-anchor=""middle"" alignment-baseline=""middle"" style=""{ textStyle}"">");
-                tw.Write($@"<tspan {xs}>{cell.x}</tspan>, <tspan {ys}>{cell.y}</tspan>");
+                tw.Write($@"<tspan {xs}>{cell.x}</tspan>");
+                if (dim >= 2)
+                {
+                    tw.Write($@", <tspan {ys}>{cell.y}</tspan>");
+                }
                 if (dim >= 3) {
                     tw.Write($@", <tspan {zs}>{cell.z}</tspan>");
                 }

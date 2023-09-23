@@ -397,15 +397,11 @@ namespace Sylves
         {
             var origin2 = new Vector2(origin.x, origin.y);
             var direction2 = new Vector2(direction.x, direction.y);
-            var queuedRaycastInfos = new List<RaycastInfo>();
+            var queuedRaycastInfos = new PriorityQueue<RaycastInfo>(x => x.distance, (x, y) => -x.distance.CompareTo(y.distance));
             foreach (var chunkRaycastInfo in aabbChunks.Raycast(origin2, direction2, maxDistance))
             {
-                // Resort and drain queue
-                queuedRaycastInfos.Sort((x, y) => -x.distance.CompareTo(y.distance));
-                while (queuedRaycastInfos.Count > 0 && queuedRaycastInfos[queuedRaycastInfos.Count - 1].distance < chunkRaycastInfo.distance)
+                foreach(var ri in queuedRaycastInfos.Drain(chunkRaycastInfo.distance))
                 {
-                    var ri = queuedRaycastInfos[queuedRaycastInfos.Count - 1];
-                    queuedRaycastInfos.RemoveAt(queuedRaycastInfos.Count - 1);
                     yield return ri;
                 }
 
@@ -424,10 +420,8 @@ namespace Sylves
             }
 
             // Final drain
-            queuedRaycastInfos.Sort((x, y) => -x.distance.CompareTo(y.distance));
-            for (var i = queuedRaycastInfos.Count - 1; i >= 0; i--)
+            foreach (var ri in queuedRaycastInfos.Drain())
             {
-                var ri = queuedRaycastInfos[i];
                 yield return ri;
             }
         }

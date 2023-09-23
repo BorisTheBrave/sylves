@@ -18,6 +18,10 @@ namespace Sylves
         {
             return grid.GetCellType(cell).GetCellDirs();
         }
+        public static IEnumerable<CellCorner> GetCellCorners(IGrid grid, Cell cell)
+        {
+            return grid.GetCellType(cell).GetCellCorners();
+        }
 
         #region Topology
         public static bool TryMoveByOffset(IGrid grid, Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
@@ -40,6 +44,10 @@ namespace Sylves
             var checkCellTypes = !aGrid.IsSingleCellType || !bGrid.IsSingleCellType;
             ICellType cellType = null;
             if(!checkCellTypes && (cellType = aGrid.GetCellTypes().First()) != bGrid.GetCellTypes().First())
+            {
+                return false;
+            }
+            if (!aGrid.IsCellInGrid(aSrcCell) || !bGrid.IsCellInGrid(bSrcCell))
             {
                 return false;
             }
@@ -146,6 +154,104 @@ namespace Sylves
             };
         }
 
+        #endregion
+
+        #region Query
+        /*
+        public static bool FindCell(IGrid grid, Vector3 position, out Cell cell)
+        {
+            if (grid.IsPlanar)
+            {
+                var cells = grid.GetCellsIntersectsApprox(position, position)
+                    .Where(x =>
+                    {
+                        grid.GetPolygon()
+                    });
+            }
+        }
+        */
+
+        /// <summary>
+        /// Returns the cells intersecting a ray starting at origin, of length direction.magnitude * maxDistance, in order.
+        /// </summary>
+        public static IEnumerable<RaycastInfo> Raycast(IGrid grid, Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, float cellSize = 1.0f)
+        {
+            var stepSize = cellSize / direction.magnitude * 5;
+            if (float.IsNaN(stepSize))
+            {
+                // TODO: All raycast methods should have similar handling.
+                throw new ArgumentException("Attempted raycast with zero direction", nameof(direction));
+            }
+
+            var queuedRaycastInfos = new PriorityQueue<RaycastInfo>(x => x.distance, (x, y) => -x.distance.CompareTo(y.distance));
+
+            var t2 = 0f;
+            var v2 = origin;
+            while (t2 < maxDistance)
+            {
+                var t1 = t2;
+                var v1 = v2;
+                t2 = Math.Min(maxDistance, t1 + stepSize);
+                v2 = origin + direction * t2;
+
+                var min = Vector3.Min(v1, v2);
+                var max = Vector3.Max(v1, v2);
+
+                foreach(var cell in grid.GetCellsIntersectsApprox(min, max))
+                {
+                    if (RaycastCell(grid, cell, origin, direction) is RaycastInfo ri)
+                    {
+                        if (t1 <= ri.distance && ri.distance < t2)
+                        {
+                            queuedRaycastInfos.Add(ri);
+                        }
+                    }
+                }
+
+                if(queuedRaycastInfos.Count == 0)
+                {
+                    // Increase stepSize
+                    stepSize = cellSize * 2;
+                }
+
+                foreach(var ri in queuedRaycastInfos.Drain(t2))
+                {
+                    yield return ri;
+                }
+            }
+
+            foreach (var ri in queuedRaycastInfos.Drain())
+            {
+                yield return ri;
+            }
+        }
+
+        public static RaycastInfo? RaycastCell(IGrid grid, Cell cell, Vector3 origin, Vector3 direction)
+        {
+            if(grid.IsPlanar)
+            {
+                grid.GetPolygon(cell, out var vertices, out var transform);
+                if (MeshRaycast.RaycastPolygonPlanar(origin, direction, vertices, transform, out var point, out var distance, out var side))
+                {
+                    return new RaycastInfo
+                    {
+                        cell = cell,
+                        cellDir = (CellDir?)side,
+                        distance = distance,
+                        point = point,
+                    };
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+        }
         #endregion
 
         #region Symmetry

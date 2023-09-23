@@ -20,7 +20,7 @@ namespace Sylves
         // we can save our selves some effort.
         // This is mostly for use with Townscaper.
         private readonly bool passThroughMesh;
-        public readonly bool translateUnrelaxed;
+        private readonly bool translateUnrelaxed;
 
         // Description of the chunking used
         HexGrid chunkGrid;

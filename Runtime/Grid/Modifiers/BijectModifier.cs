@@ -129,7 +129,7 @@ namespace Sylves
 
         public override bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
         {
-            if (Underlying.TryMoveByOffset(startCell, startOffset, destOffset, startRotation, out var uDestCell, out destRotation))
+            if (Underlying.TryMoveByOffset(toUnderlying(startCell), startOffset, destOffset, startRotation, out var uDestCell, out destRotation))
             {
                 destCell = fromUnderlying(uDestCell);
                 return true;
