@@ -313,30 +313,10 @@ namespace Sylves
             return transform * parent.ChildPrototiles[0].transform.inverse;
         }
 
-        private (Matrix4x4, InternalPrototile) Down(Matrix4x4 transform, InternalPrototile prototile, int child)
+        protected (Matrix4x4, InternalPrototile) Down(Matrix4x4 transform, InternalPrototile prototile, int child)
         {
             var t = prototile.ChildPrototiles[child];
             return (transform * t.transform, t.child);
-        }
-
-
-        // Some of the most common things we want to look up
-        private (InternalPrototile prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
-        {
-            var childTile = GetChildTileAt(cell);
-            var pathLength = GetPathLength(cell);
-            var transform = baseTransform;
-            var parent = hierarchy(0);
-            for (var i = 0; i < pathLength; i++)
-            {
-                parent = hierarchy(i + 1);
-                transform = Up(transform, parent);
-            }
-            for (var i = pathLength - 1; i >= 0; i--)
-            {
-                (transform, parent) = Down(transform, parent, GetPathAt(cell, i));
-            }
-            return (parent, transform, childTile);
         }
 
         private (InternalPrototile prototile, int childTile) GetPrototileAndChildTile(Cell cell)
@@ -676,11 +656,7 @@ namespace Sylves
         #endregion
 
         #region Position
-        public Vector3 GetCellCenter(Cell cell)
-        {
-            var (prototile, transform, childTile) = LocateCell(cell);
-            return transform.MultiplyPoint3x4(prototile.Centers[childTile]);
-        }
+        public abstract Vector3 GetCellCenter(Cell cell);
 
         public Vector3 GetCellCorner(Cell cell, CellCorner cellCorner)
         {
@@ -688,29 +664,20 @@ namespace Sylves
             return transform.MultiplyPoint3x4(vertices[(int)cellCorner]);
         }
 
-        private Matrix4x4 GetTRS(InternalPrototile prototile, Matrix4x4 transform, int childTile)
+        protected Matrix4x4 GetTRS(InternalPrototile prototile, Matrix4x4 transform, int childTile)
         {
             // TODO: Translate this so the child is centered appropriately
             return transform;
         }
 
-        public TRS GetTRS(Cell cell)
-        {
-            var (prototile, transform, childTile) = LocateCell(cell);
-            return new TRS(GetTRS(prototile, transform, childTile));
-        }
+        public abstract TRS GetTRS(Cell cell);
 
         #endregion
 
         #region Shape
         public Deformation GetDeformation(Cell cell) => throw new NotImplementedException();
 
-        public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
-        {
-            var (prototile, prototileTransform, childTile) = LocateCell(cell);
-            vertices = prototile.ChildTiles[childTile];
-            transform = prototileTransform;
-        }
+        public abstract void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform);
 
         public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
         {

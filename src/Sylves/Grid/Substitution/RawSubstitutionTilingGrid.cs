@@ -31,6 +31,24 @@ namespace Sylves
 
         #region Utils
 
+        // Some of the most common things we want to look up
+        private (InternalPrototile prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
+        {
+            var childTile = GetChildTileAt(cell);
+            var pathLength = GetPathLength(cell);
+            var transform = baseTransform;
+            var parent = hierarchy(0);
+            for (var i = 0; i < pathLength; i++)
+            {
+                parent = hierarchy(i + 1);
+                transform = Up(transform, parent);
+            }
+            for (var i = pathLength - 1; i >= 0; i--)
+            {
+                (transform, parent) = Down(transform, parent, GetPathAt(cell, i));
+            }
+            return (parent, transform, childTile);
+        }
 
         /// <summary>
         /// Returns n+1 parent elements for a path of length n
@@ -186,6 +204,31 @@ namespace Sylves
 
         #region Bounds
         public override IGrid BoundBy(IBound bound) => new RawSubstitutionTilingGrid(this, (SubstitutionTilingBound)(IntersectBounds(bound, this.bound)));
+        #endregion
+
+        #region Position
+        public override Vector3 GetCellCenter(Cell cell)
+        {
+            var(prototile, transform, childTile) = LocateCell(cell);
+            return transform.MultiplyPoint3x4(prototile.Centers[childTile]);
+        }
+
+        public override TRS GetTRS(Cell cell)
+        {
+            var (prototile, transform, childTile) = LocateCell(cell);
+            return new TRS(GetTRS(prototile, transform, childTile));
+        }
+
+        #endregion
+
+
+        #region Shape
+        public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
+        {
+            var (prototile, prototileTransform, childTile) = LocateCell(cell);
+            vertices = prototile.ChildTiles[childTile];
+            transform = prototileTransform;
+        }
         #endregion
     }
 }

@@ -23,6 +23,7 @@ namespace Sylves
     {
         private ICachePolicy cachePolicy;
         private Dictionary<(int Height, Cell Path), Crumb> crumbCache;
+        private List<Crumb> hierarchyCrumbs;
 
 
         private SubstitutionTilingGrid(SubstitutionTilingGrid other, SubstitutionTilingBound bound) : base(other, bound)
@@ -30,12 +31,24 @@ namespace Sylves
             // Can share cache - bounds do not change anything fundamental
             cachePolicy = other.cachePolicy;
             crumbCache = other.crumbCache;
+            hierarchyCrumbs = other.hierarchyCrumbs;
         }
 
         private SubstitutionTilingGrid(SubstitutionTilingGrid other, Func<int, InternalPrototile> hierarchy, Matrix4x4 baseTransform) : base(other, hierarchy, baseTransform)
         {
             cachePolicy = other.cachePolicy;
             crumbCache = new Dictionary<(int Height, Cell Path), Crumb>();
+            hierarchyCrumbs = new List<Crumb>
+            {
+                new Crumb
+                {
+                    parent = null,
+                    height = 0,
+                    partialPath = new Cell(),
+                    transform = baseTransform,
+                    prototile = this.hierarchy(0),
+                }
+            };
         }
 
         public SubstitutionTilingGrid(Prototile[] prototiles, string[] hierarchy, SubstitutionTilingBound bound = null, ICachePolicy cachePolicy = null) : this(prototiles, i => hierarchy[i % hierarchy.Length], bound, cachePolicy)
@@ -46,6 +59,17 @@ namespace Sylves
         {
             this.cachePolicy = cachePolicy ?? CachePolicy.Always;
             crumbCache = new Dictionary<(int Height, Cell Path), Crumb>();
+            hierarchyCrumbs = new List<Crumb>
+            {
+                new Crumb
+                {
+                    parent = null,
+                    height = 0,
+                    partialPath = new Cell(),
+                    transform = baseTransform,
+                    prototile = this.hierarchy(0),
+                }
+            };
         }
 
 
@@ -67,8 +91,7 @@ namespace Sylves
             public int height;
             public Cell partialPath;
 
-            // For now, don't need this?
-            //public Matrix4x4 transform;
+            public Matrix4x4 transform;
             public InternalPrototile prototile;
 
             public override string ToString() => $"{height}/{partialPath}";
@@ -101,18 +124,14 @@ namespace Sylves
                 h++;
             }
 
-            // Nothing found, isntead create a crumb we can walk down from
+            // Nothing found, instead create a crumb we can walk down from
             if (crumb == null)
             {
-                crumb = new Crumb
+                while(hierarchyCrumbs.Count <= pathLength)
                 {
-                    parent = null,
-                    height = pathLength,
-                    partialPath = new Cell(),
-                    // transform = ...,
-                    prototile = hierarchy(pathLength),
-                };
-                EnsureCached(crumb);
+                    hierarchyCrumbs.Add(GetParent(hierarchyCrumbs[hierarchyCrumbs.Count-1]));
+                }
+                crumb = hierarchyCrumbs[pathLength];
             }
 
             // Walk down from crumb to desired height
@@ -130,15 +149,15 @@ namespace Sylves
                 return crumb.parent;
 
             // If we're here, parent is on the hierarchy.
-
-            //var transform = Up(crumb.transform, crumb.prototile);
+            var parentPrototile = hierarchy(crumb.height + 1);
+            var transform = Up(crumb.transform, parentPrototile);
             var parentCrumb = crumb.parent = new Crumb
             {
                 parent = null,
                 height = crumb.height + 1,
                 partialPath = crumb.partialPath,
-                //transform = transform,
-                prototile = hierarchy(crumb.height + 1),
+                transform = transform,
+                prototile = parentPrototile,
             };
 
             EnsureCached(parentCrumb);
@@ -159,15 +178,14 @@ namespace Sylves
                 }
             }
 
-            //var (transform, prototile) = Down(crumb.transform, crumb.prototile, childIndex);
+            var (transform, prototile) = Down(crumb.transform, crumb.prototile, childIndex);
             child = new Crumb
             {
                 parent = crumb,
                 height = height,
                 partialPath = partialPath,
-                //transform = transform,
-                //prototile = prototile,
-                prototile = crumb.prototile.ChildPrototiles[childIndex].child,
+                transform = transform,
+                prototile = prototile,
             };
 
             EnsureCached(child);
@@ -317,6 +335,31 @@ namespace Sylves
 
         #region Bounds
         public override IGrid BoundBy(IBound bound) => new SubstitutionTilingGrid(this, (SubstitutionTilingBound)(IntersectBounds(bound, this.bound)));
+        #endregion
+
+        #region Position
+        public override Vector3 GetCellCenter(Cell cell)
+        {
+            var crumb = GetCrumb(cell);
+            return crumb.transform.MultiplyPoint3x4(crumb.prototile.Centers[GetChildTileAt(cell)]);
+        }
+
+        public override TRS GetTRS(Cell cell)
+        {
+            var crumb = GetCrumb(cell);
+            return new TRS(GetTRS(crumb.prototile, crumb.transform, GetChildTileAt(cell)));
+        }
+
+        #endregion
+
+
+        #region Shape
+        public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
+        {
+            var crumb = GetCrumb(cell);
+            vertices = crumb.prototile.ChildTiles[GetChildTileAt(cell)];
+            transform = crumb.transform;
+        }
         #endregion
     }
 }

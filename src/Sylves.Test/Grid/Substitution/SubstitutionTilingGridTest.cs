@@ -100,7 +100,8 @@ namespace Sylves.Test
         }
 
         [Test]
-		public void FindCell_Domino()
+		[TestCaseSource (nameof(Bools))]
+		public void FindCell_Domino(bool isRaw)
 		{
             // TODO: Replace with GridTest.FindCell once more operations are supported
             void FindCell(IGrid grid, Cell cell)
@@ -110,7 +111,7 @@ namespace Sylves.Test
 				Assert.IsTrue(success);
 				Assert.AreEqual(cell, cell2);
 			}
-            var g = new DominoGrid();
+			var g = MakeRaw(new DominoGrid(), isRaw);
 			FindCell(g, new Cell(0, 0));
 			FindCell(g, new Cell(1, 0));
 			FindCell(g, new Cell(4, 0));
@@ -142,9 +143,10 @@ namespace Sylves.Test
         }
 
         [Test]
-		public void TestRaycast()
+		[TestCaseSource(nameof(Bools))]
+		public void TestRaycast(bool isRaw)
 		{
-			var g = new PenroseRhombGrid();
+			var g = MakeRaw(new PenroseRhombGrid(), isRaw);
 
 			var s = new Vector3(0.001f, 0.001f, 0);
 
