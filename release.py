@@ -9,15 +9,15 @@ import zipfile
 
 
 # Pre-process Unity.Godot
-#subprocess.check_call(["dotnet","run","--project", "Sylves.GodotRewriter.csproj"], cwd="src/Sylves.GodotRewriter")
+subprocess.check_call(["dotnet","run","--project", "Sylves.GodotRewriter.csproj"], cwd="src/Sylves.GodotRewriter")
 
 # Build docs
-#subprocess.check_call(["docfx","docs/docfx.json"])
+subprocess.check_call(["docfx","docs/docfx.json"])
 
 # Build solution
-#subprocess.check_call(["dotnet","build","src/Sylves.sln","-c","Release"])
-#subprocess.check_call(["dotnet","build","src/Sylves.sln","-c","UnityRelease"])
-#subprocess.check_call(["dotnet","build","src/Sylves.sln","-c","GodotRelease"])
+subprocess.check_call(["dotnet","build","src/Sylves.sln","-c","Release"])
+subprocess.check_call(["dotnet","build","src/Sylves.sln","-c","UnityRelease"])
+subprocess.check_call(["dotnet","build","src/Sylves.sln","-c","GodotRelease"])
 
 # Build zips
 with zipfile.ZipFile('release/netstandard2.0.zip', 'w') as z:

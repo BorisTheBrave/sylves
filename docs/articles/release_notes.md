@@ -1,7 +1,15 @@
-# Unreleased
+# 0.4.0
 * Added [Substitution tiling grid](grids/substitutiontilinggrid.md)
 * Added [experimental Godot support](tutorials/getting_started_godot.md)
+* Added [UPM Published package](tutorials/getting_started_unity.md#install-from-upm)
 * Add Format methods to ICellType
+* Fix hang in PeriodicPlanarMeshGrid
+* Fix planar prism modifier layer scaling.
+* Fix vertex fanning.
+* Fix TransformModifier.FindCell.
+* Fixed BijectModifier.TryMoveByOffset
+* Fixed raycast on some bounded grids
+* Fixed orientation of Connections
 * Improve precision of some floating point calculations, particularly for Townscaper grid
 * Fix FromMatrix to ignore (uniform) scaling
 * Fix issues with 360 degree rotation

@@ -35,9 +35,6 @@ The substitution tilings are configured via a set of [prototiles](xref:Sylves.Pr
 </table>
 
 
-> [!Note]
-> Unlike other Sylves grids, SubstitutionTilingGrid is not constant time. Tiles further from the origin take logarithmic time to evaluate. If this is a serious problem, consider fronting the grid with a PlanarLazyMeshGrid, which can cache the output in chunks.
-
 ## Cell co-ordinates
 
 The x, y, z values are concatenated to form a 24 byte string that encodes the path to a specific cell. The cells nearest the origin will have y=z=0, which is usually sufficient.
