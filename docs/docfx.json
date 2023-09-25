@@ -3,9 +3,10 @@
     {
       "src": [
         {
-          "files": [ "**.csproj" ],
-          "exclude": [ "**/bin/**", "**/obj/**" ],
-          "src": "../src/Sylves"
+          // https://github.com/dotnet/docfx/issues/8097
+          // Docfx doesn't work point to csproj files anymore
+          "files": [ "**.dll" ],
+          "src": "../src/Sylves/bin/Release"
         }
       ],
       "dest": "api",
