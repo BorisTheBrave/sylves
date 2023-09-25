@@ -144,9 +144,9 @@ namespace Sylves
             yield return new Vector2Int(chunk.x + 1, chunk.y);
         }
 
-        protected override MeshGrid GetMeshGrid(Vector2Int v)
+        protected override IGrid GetChunkGrid(Vector2Int v)
         {
-            // Unlikc PlanarLazyMeshGrid, there's no need to do edge detection here,
+            // Unlike PlanarLazyMeshGrid, there's no need to do edge detection here,
             // as Trymove just forwards to underlying
             var meshData = GetRelaxedChunk(new Cell(v.x, v.y, -v.x - v.y));
             return new MeshGrid(meshData, new MeshGridOptions { Tolerance = weldTolerance });

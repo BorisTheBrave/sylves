@@ -303,7 +303,7 @@ namespace Sylves
 
         // Converts the meshData to a meshGrid.
         // Unlike PlanarLazyMeshGrid, there's no need for edge matching.
-        protected override MeshGrid GetMeshGrid(Vector2Int v)
+        protected override IGrid GetChunkGrid(Vector2Int v)
         {
             var meshData = GetMeshDataCached(v).meshData;
             // Builds MeshGrid, but skips edge matching as we don't need it.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 #if UNITY
 using UnityEngine;
 #endif
@@ -11,10 +12,12 @@ namespace Sylves
         private readonly int n;
         private readonly float tolerance;
         private readonly HexGrid chunkGrid;
+        private readonly int seed;
 
-        public UnrelaxedTownscaperGrid(int n, float tolerance) : base()
+        public UnrelaxedTownscaperGrid(int n, int seed, float tolerance) : base()
         {
             this.n = n;
+            this.seed = seed;
             this.tolerance = tolerance;
             chunkGrid = new HexGrid(n);
 
@@ -28,8 +31,8 @@ namespace Sylves
             var meshData = triangleGrid.ToMeshData();
 
             // Randomly pair the triangles of that grid
-            var seed = HashUtils.Hash(hex);
-            var random = new System.Random(seed);
+            var hexSeed = HashUtils.Hash(hex.x, hex.y, hex.z, seed);
+            var random = new System.Random(hexSeed);
             meshData = meshData.RandomPairing(random.NextDouble);
 
             // Split into quads
@@ -50,7 +53,7 @@ namespace Sylves
     {
         const float tolerance = 1e-2f;
 
-        public TownscaperGrid(int n, int relaxIterations = 10) : base(new UnrelaxedTownscaperGrid(n, tolerance), n, relaxIterations: relaxIterations, weldTolerance: tolerance)
+        public TownscaperGrid(int n, int? seed = null, int relaxIterations = 10) : base(new UnrelaxedTownscaperGrid(n, seed ?? new System.Random().Next(), tolerance), n, relaxIterations: relaxIterations, weldTolerance: tolerance)
         {
 
         }

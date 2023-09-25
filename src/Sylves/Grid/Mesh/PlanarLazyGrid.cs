@@ -26,7 +26,7 @@ namespace Sylves
         private ICachePolicy cachePolicy;
         // Stores a grid per chunk. The cells are all (x, 0, 0), and moves are relative so, you must offset co-ordinates to work with it.
         // The positions of cells on the other hand, do not need offsetting
-        private IDictionary<Cell, MeshGrid> meshGrids;
+        private IDictionary<Cell, IGrid> chunkGrids;
         private AabbChunks aabbChunks;
 
         // Clone constructor. Clones share the same cache!
@@ -39,7 +39,7 @@ namespace Sylves
             translateMeshData = original.translateMeshData;
             cellTypes = original.cellTypes;
             cachePolicy = original.cachePolicy;
-            meshGrids = original.meshGrids;
+            chunkGrids = original.chunkGrids;
             aabbChunks = original.aabbChunks;
 
             this.bound = bound;
@@ -76,7 +76,7 @@ namespace Sylves
             this.bound = bound;
             this.cellTypes = cellTypes;
             this.cachePolicy = cachePolicy ?? CachePolicy.Always;
-            meshGrids = this.cachePolicy.GetDictionary<MeshGrid>(this);
+            chunkGrids = this.cachePolicy.GetDictionary<IGrid>(this);
             aabbChunks = new AabbChunks(strideX, strideY, aabbBottomLeft, aabbSize);
         }
 
@@ -90,19 +90,24 @@ namespace Sylves
                 .Where(x => bound == null || bound.Contains(x));
         }
 
-        // Returns a mesh grid for the given chunk.
-        // The mesh grid has additional moves for moving to other chunks.
-        // Note that the mesh moves should be relative to the current chunk.
-        protected abstract MeshGrid GetMeshGrid(Vector2Int v);
+        /// <summary>
+        /// The grid associated with each chunk. This grid has extra requirements:
+        /// * It should only use the x-coordinate of the cell. The other two should be zero, (to be offset by the chunk position)
+        /// * The dest of moves is also offset by the chunk position. Moves may be off grid (illegal in a normal grid)
+        /// * The grid may be translated, if <see cref="TranslateMeshData"/> is set.
+        /// 
+        /// As building a grid with off-grid moves is difficult, you can also just override PlanarLazyGrid.TryMove to whatever.
+        /// </summary>
+        protected abstract IGrid GetChunkGrid(Vector2Int v);
 
-        private MeshGrid GetMeshGridCached(Vector2Int v)
+        private IGrid GetChunkGridCached(Vector2Int v)
         {
             var cell = new Cell(v.x, v.y);
-            if (meshGrids.TryGetValue(cell, out MeshGrid meshGrid))
+            if (chunkGrids.TryGetValue(cell, out IGrid meshGrid))
             {
                 return meshGrid;
             }
-            return meshGrids[cell] = GetMeshGrid(v);
+            return chunkGrids[cell] = GetChunkGrid(v);
         }
 
         protected Vector3 ChunkOffset(Vector2Int chunk)
@@ -186,7 +191,7 @@ namespace Sylves
         public ICellType GetCellType(Cell cell)
         {
             var (meshCell, chunk) = Split(cell);
-            return GetMeshGridCached(chunk).GetCellType(meshCell);
+            return GetChunkGridCached(chunk).GetCellType(meshCell);
         }
 
         public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
@@ -197,7 +202,7 @@ namespace Sylves
         public virtual bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
             var (meshCell, chunk) = Split(cell);
-            if (GetMeshGridCached(chunk).TryMove(meshCell, dir, out dest, out inverseDir, out connection))
+            if (GetChunkGridCached(chunk).TryMove(meshCell, dir, out dest, out inverseDir, out connection))
             {
                 dest += Promote(chunk);
                 return true;
@@ -218,12 +223,12 @@ namespace Sylves
         public IEnumerable<CellDir> GetCellDirs(Cell cell)
         {
             var (meshCell, chunk) = Split(cell);
-            return GetMeshGridCached(chunk).GetCellDirs(meshCell);
+            return GetChunkGridCached(chunk).GetCellDirs(meshCell);
         }
         public IEnumerable<CellCorner> GetCellCorners(Cell cell)
         {
             var (meshCell, chunk) = Split(cell);
-            return GetMeshGridCached(chunk).GetCellCorners(meshCell);
+            return GetChunkGridCached(chunk).GetCellCorners(meshCell);
         }
 
         public IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell) => throw new NotImplementedException();
@@ -280,7 +285,7 @@ namespace Sylves
         {
             foreach (var chunk in (SquareBound)bound)
             {
-                foreach (var meshCell in GetMeshGridCached(new Vector2Int(chunk.x, chunk.y)).GetCells())
+                foreach (var meshCell in GetChunkGridCached(new Vector2Int(chunk.x, chunk.y)).GetCells())
                 {
                     yield return Combine(meshCell, new Vector2Int(chunk.x, chunk.y));
                 }
@@ -291,7 +296,7 @@ namespace Sylves
         {
             var (meshCell, chunk) = Split(cell);
             return (bound == null || ((SquareBound)bound).Contains(new Cell(chunk.x, chunk.y)))
-                && GetMeshGridCached(chunk).IsCellInGrid(meshCell);
+                && GetChunkGridCached(chunk).IsCellInGrid(meshCell);
         }
         #endregion
 
@@ -300,20 +305,20 @@ namespace Sylves
         public Vector3 GetCellCenter(Cell cell)
         {
             var (meshCell, chunk) = Split(cell);
-            return GetMeshGridCached(chunk).GetCellCenter(meshCell) + MeshTranslation(chunk);
+            return GetChunkGridCached(chunk).GetCellCenter(meshCell) + MeshTranslation(chunk);
         }
 
         public Vector3 GetCellCorner(Cell cell, CellCorner cellCorner)
         {
 
             var (centerCell, chunk) = Split(cell);
-            return GetMeshGridCached(chunk).GetCellCorner(centerCell, cellCorner) + MeshTranslation(chunk);
+            return GetChunkGridCached(chunk).GetCellCorner(centerCell, cellCorner) + MeshTranslation(chunk);
         }
 
         public TRS GetTRS(Cell cell)
         {
             var (meshCell, chunk) = Split(cell);
-            var trs = GetMeshGridCached(chunk).GetTRS(meshCell);
+            var trs = GetChunkGridCached(chunk).GetTRS(meshCell);
             if(translateMeshData)
             {
                 trs = new TRS(trs.Position + MeshTranslation(chunk), trs.Rotation, trs.Scale);
@@ -327,13 +332,13 @@ namespace Sylves
         public Deformation GetDeformation(Cell cell)
         {
             var (meshCell, chunk) = Split(cell);
-            return Matrix4x4.Translate(MeshTranslation(chunk)) * GetMeshGridCached(chunk).GetDeformation(meshCell);
+            return Matrix4x4.Translate(MeshTranslation(chunk)) * GetChunkGridCached(chunk).GetDeformation(meshCell);
         }
 
         public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
         {
             var (meshCell, chunk) = Split(cell);
-            GetMeshGridCached(chunk).GetPolygon(meshCell, out vertices, out transform);
+            GetChunkGridCached(chunk).GetPolygon(meshCell, out vertices, out transform);
             transform = Matrix4x4.Translate(MeshTranslation(chunk)) * transform;
         }
 
@@ -354,7 +359,7 @@ namespace Sylves
             var pos2 = new Vector2(position.x, position.y);
             foreach (var chunk in aabbChunks.GetChunkIntersects(pos2, pos2))
             {
-                var meshGrid = GetMeshGridCached(chunk);
+                var meshGrid = GetChunkGridCached(chunk);
                 if (meshGrid.FindCell(position - MeshTranslation(chunk), out cell))
                 {
                     cell += Promote(chunk);
@@ -377,7 +382,7 @@ namespace Sylves
                 return false;
             }
             var (_, chunk) = Split(cell);
-            var meshGrid = GetMeshGridCached(chunk);
+            var meshGrid = GetChunkGridCached(chunk);
             return meshGrid.FindCell(matrix * Matrix4x4.Translate(-MeshTranslation(chunk)), out var _, out rotation);
         }
 
@@ -388,7 +393,7 @@ namespace Sylves
             foreach (var chunk in aabbChunks.GetChunkIntersects(min2, max2))
             {
                 var t = MeshTranslation(chunk);
-                foreach (var meshCell in GetMeshGridCached(chunk).GetCellsIntersectsApprox(min - t, max - t))
+                foreach (var meshCell in GetChunkGridCached(chunk).GetCellsIntersectsApprox(min - t, max - t))
                 {
                     yield return Combine(meshCell, chunk);
                 }
@@ -409,7 +414,7 @@ namespace Sylves
 
                 var chunk = new Vector2Int(chunkRaycastInfo.cell.x, chunkRaycastInfo.cell.y);
                 var t = MeshTranslation(chunk);
-                foreach (var raycastInfo in GetMeshGridCached(chunk).Raycast(origin - t, direction, maxDistance))
+                foreach (var raycastInfo in GetChunkGridCached(chunk).Raycast(origin - t, direction, maxDistance))
                 {
                     queuedRaycastInfos.Add(new RaycastInfo
                     {

@@ -156,7 +156,7 @@ namespace Sylves
         // Returns a mesh grid for the given chunk.
         // This is simply the meshData provided, plus additional 
         // moves based on matching edges from the meshes of other chunks.
-        protected override MeshGrid GetMeshGrid(Vector2Int v)
+        protected override IGrid GetChunkGrid(Vector2Int v)
         {
             var (meshData, dataDrivenData, edgeStore) = GetMeshDataCached(v);
 
