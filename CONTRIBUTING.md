@@ -16,7 +16,7 @@ Sylves
 * Publish docs to website
 * Create github release of zips in release/, tag main branch
 * Run upm_release.py
-* Commit, push and tag upm branch
+* Commit, push and tag upm branch `upm/vx.x.x`
 
 Sylves demos
 * Update sylves-demos
