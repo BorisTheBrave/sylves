@@ -15,24 +15,14 @@ SubstitutionTilingGrid implements configurable [subtitution tilings](https://en.
 
 The substitution tilings are configured via a set of [prototiles](xref:Sylves.Prototile), which at present are not documented further.
 
+
+Sylves comes with several built-in substitution tilings.
+
 <style>
 .grid-thumb {width: 200px; min-width: 200px; height: 200px; }
 </style>
 
-<table>
-<tr>
-    <th>Result</th>
-    <th>Class</th>
-</tr>
-<tr>
-    <td><a href="../../images/grids/domino.svg"><img class="grid-thumb" src="../../images/grids/domino.svg" /></img></td>
-    <td><a href="xref:Sylves.DominoGrid">Domino Grid</a><br/>A grid of dominos (6 sided cells the shape of a rectangle) tiled in an aperiodic pattern.</td>
-</tr>
-<tr>
-    <td><a href="../../images/grids/penrose_rhomb.svg"><img class="grid-thumb" src="../../images/grids/penrose_rhomb.svg" /></img></td>
-    <td><a href="xref:Sylves.PenroseRhombGrid">Penrose Rhomb Grid</a><br/>Also known as the <a href="https://en.wikipedia.org/wiki/Penrose_tiling#Rhombus_tiling_(P3)">penrose P3 tiling.</a></td>
-</tr>
-</table>
+[!include[](_substitution_table.md)]
 
 
 ## Cell co-ordinates

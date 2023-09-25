@@ -267,8 +267,13 @@ namespace Sylves.Test
                 "domino.svg",
                 new Options { textScale = 0.5, min = new Vector2(-3, -3), max = new Vector2(3, 3), trim = true });
 
-            var chairOptions = new Options { textScale = null, min = new Vector2(-10, -10), max = new Vector2(10, 10), trim = true,
-            fillFunc = c => (c.x % 4) switch { 2 => "#e6ed69", 1 or 3 => "#9def94", 0 => "#f0905e" }
+            var chairOptions = new Options
+            {
+                //textScale = null,
+                min = new Vector2(-5, -5),
+                max = new Vector2(5, 5),
+                trim = true,
+                //fillFunc = c => (c.x % 4) switch { 2 => "#e6ed69", 1 or 3 => "#9def94", 0 => "#f0905e" },
             };
             var chairGrid = new ChairGrid(new SubstitutionTilingBound { Height = 6 });
             Export(

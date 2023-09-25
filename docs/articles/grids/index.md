@@ -118,16 +118,7 @@ This can convert 2d grids into 3d ones, usually with the z-cordinate being the "
 
 [Substitution tiling grids](substitutiontilinggrid.md) use recursive subdivision to fill the space with tiles. They are well known as a way of creating aperiod grids
 
-<table>
-<tr>
-    <td><a href="../../images/grids/domino.svg"><img class="grid-thumb" src="../../images/grids/domino.svg" /></img></td>
-    <td><a href="xref:Sylves.DominoGrid">Domino Grid</a><br/>A grid of dominos (6 sided cells the shape of a rectangle) tiled in an aperiodic pattern.</td>
-</tr>
-<tr>
-    <td><a href="../../images/grids/penrose_rhomb.svg"><img class="grid-thumb" src="../../images/grids/penrose_rhomb.svg" /></img></td>
-    <td><a href="xref:Sylves.PenroseRhombGrid">Penrose Rhomb Grid</a><br/>Also known as the <a href="https://en.wikipedia.org/wiki/Penrose_tiling#Rhombus_tiling_(P3)">penrose P3 tiling.</a></td>
-</tr>
-</table>
+[!include[](_substitution_table.md)]
 
 
 ## Modifier Grids
