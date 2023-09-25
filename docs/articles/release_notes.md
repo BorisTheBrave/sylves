@@ -1,3 +1,6 @@
+# Unreleased
+* Added [OffGrid](grids/offgrid.md)
+
 # 0.4.0
 * Added [Substitution tiling grid](grids/substitutiontilinggrid.md)
 * Added [experimental Godot support](tutorials/getting_started_godot.md)

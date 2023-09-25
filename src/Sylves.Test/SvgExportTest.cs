@@ -356,6 +356,7 @@ namespace Sylves.Test
             // Extras grids
             Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "townscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
             Export(new TownscaperGrid(4, 0).BoundBy(new SquareBound(new Vector2Int(-2, -2), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "unrelaxedtownscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
+            Export(new OffGrid(0.2f, new SquareBound(-4, -4, 5, 5)), "off.svg", new Options { textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3)});
 
             // Modifier grids
             var centerSquare = new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))).Transformed(Matrix4x4.Translate(new Vector3(-0.5f, -0.5f, 0)));
@@ -481,7 +482,7 @@ mix.inputs[0].default_value = 0.433333
         public void TestPrecision()
         {
             var n = 4;
-            var ug = new UnrelaxedTownscaperGrid(n, 1e-2f).BoundBy(new SquareBound(100, 100, 105, 105));
+            var ug = new UnrelaxedTownscaperGrid(n, 0, 1e-2f).BoundBy(new SquareBound(100, 100, 105, 105));
             var g = new RelaxModifier(ug, 4, relaxIterations: 1, weldTolerance: 1e-6f);
             var min = g.GetCells().Select(g.GetCellCenter).Aggregate(Vector3.Min);
             var max = g.GetCells().Select(g.GetCellCenter).Aggregate(Vector3.Max);
