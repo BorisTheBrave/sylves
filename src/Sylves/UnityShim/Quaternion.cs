@@ -33,6 +33,8 @@ namespace Sylves
         //public float this[int index] { get; set; }
 
         public static Quaternion identity => new Quaternion(0, 0, 0, 1);
+
+        // In degrees
         public Vector3 eulerAngles
         {
             get
@@ -95,6 +97,8 @@ namespace Sylves
         /*
         public static float Dot(Quaternion a, Quaternion b);
         */
+
+        // In degrees
         public static Quaternion Euler(Vector3 euler)
         {
             var q = new Quaternion();
