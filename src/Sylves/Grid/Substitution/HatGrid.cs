@@ -19,13 +19,11 @@ namespace Sylves
         public static float Len(string step)
         {
 
-            return step[0] == 'A' || step[0] == 'B' ? 12
-                : 4;
-            /*
-            return step[0] == 'A' || step[0] == 'B' ? 12 * Phi 
-                : step[0] == 'L' ?  8 * Phi :
-                : 4;
-            */
+            return step[0] == 'A' || step[0] == 'B' ? 3 * Phi 
+                : step[0] == 'L' ?  2 * Phi
+                : step[0] == 'X' ? 1
+                : step[0] == 'F' ? 2.28824935959322f // algebraic value?
+                : throw new Exception();
         }
 
         public static List<Vector3> ToPoints(string s, bool skipLast = false)
@@ -38,7 +36,12 @@ namespace Sylves
                 var step = match.Groups[1].Value;
                 var turn = int.Parse(match.Groups[2].Value);
                 var stepLen = Len(step);
-                var dir = new Vector3(Mathf.Cos(Mathf.PI / 3 * turn), Mathf.Sin(Mathf.PI / 3 * turn), 0);
+                var angle = Mathf.PI / 3 * turn;
+                if(step == "F+" || step == "F-")
+                {
+                    angle += 0.388140787472124f;
+                }
+                var dir = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
                 current += dir * stepLen;
                 result.Add(current);
             }
@@ -54,7 +57,7 @@ namespace Sylves
         public static (Matrix4x4 transform, string childName) MakeChild(string tile, int turn, string offset)
         {
             var translate = ToPoint(offset);
-            var transform = Matrix4x4.Translate(translate) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 60 * turn)) * Matrix4x4.Scale(Vector3.one);
+            var transform = Matrix4x4.Scale(Vector3.one / Phi / Phi) * Matrix4x4.Translate(translate) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 60 * turn));
             return (transform, tile);
         }
             
@@ -73,7 +76,7 @@ namespace Sylves
         };
 
         public static (Matrix4x4 transform, string childName)[] TChildren = new[] {
-            MakeChild("H", -1, "(X- 2)"),
+            MakeChild("H", -1, "(X+ 3) (F+ 2) (X+ 0) (L 0) (X+ 0) (X+ 5) (X+ 1) (X+ 2)" /*"(X- 2)"*/),
         };
 
         public static (Matrix4x4 transform, string childName)[] PChildren = new[] {
