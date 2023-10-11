@@ -193,6 +193,14 @@ namespace Sylves.Test
 				Assert.AreEqual(cell, g.GetCellByIndex(g.GetIndex(cell)), $"Round trip failed for {cell}");
             }
         }
+
+		[Test]
+		public void TestDual()
+		{
+			var g = new PenroseRhombGrid();
+			var dm = g.GetDual();
+			GridTest.DualMapping(dm, new Cell(), false);
+		}
     }
 }
 

@@ -38,6 +38,7 @@ namespace Sylves
             {
                 throw new ArgumentException("Grid should be 2d");
             }
+            baseGrid = planarGrid;
             var squareGrid = new SquareGrid(chunkSize);
             IEnumerable<Cell> GetCellsByChunk(Vector2Int chunk)
             {
