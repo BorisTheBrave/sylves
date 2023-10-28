@@ -296,7 +296,7 @@ namespace Sylves
             if (v.z == -1)
                 return CubeDir.Back;
 
-            throw new Exception();
+            throw new InvalidOperationException($"Cannot convert {v} to CubeDir");
         }
 
         public override string ToString()

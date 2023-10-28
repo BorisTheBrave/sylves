@@ -129,7 +129,7 @@ namespace Sylves
                 case ~3:
                     return new Matrix4x4(new Vector4(0, -1, 0, 0), new Vector4(-1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
                 default:
-                    throw new Exception();
+                    throw new InvalidOperationException($"Cannot convert {value} from SquareRotation to Matrix4x4");
             }
         }
 

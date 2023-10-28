@@ -430,7 +430,7 @@ namespace Sylves.Test
 
             protected override IGrid GetChildGrid(Cell chunkCell)
             {
-                var r = (float)new Random(HashUtils.Hash(chunkCell.x, chunkCell.y)).NextDouble();
+                var r = (float)new System.Random(HashUtils.Hash(chunkCell.x, chunkCell.y)).NextDouble();
                 var i = Mathf.FloorToInt(r * 6);
 
                 var tg = new TriangleGrid(0.3f, bound: TriangleBound.Hexagon(1));
