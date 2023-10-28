@@ -15,7 +15,7 @@ namespace Sylves
 	{
         // Raycast and IntersectsAabb have a hard time knowing when to stop searching.
         // They give up when they haven't found anything interesting in this many heights.
-        protected const int DeadZone = 2;
+        protected const int DeadZone = 3;
 
         protected readonly InternalPrototile[] prototiles;
         protected int tileBits;
