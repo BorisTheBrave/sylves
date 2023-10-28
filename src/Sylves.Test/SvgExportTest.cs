@@ -407,6 +407,38 @@ namespace Sylves.Test
                 new RelaxModifier(centerSquare, relaxIterations: 10),
                 "relax_square.svg",
                 new Options { dim = 2, textScale = null });
+            Export(
+                new TestNestedModifier(centerSquare),
+                "nested_square.svg",
+                new Options { dim = 2, textScale = null });
+        }
+
+        private class TestNestedModifier : NestedModifier
+        {
+            public TestNestedModifier(IGrid grid):
+                base(grid)
+            {
+
+            }
+
+            public override IGrid Unbounded => throw new NotImplementedException();
+
+            public override IGrid BoundBy(IBound bound)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override IGrid GetChildGrid(Cell chunkCell)
+            {
+                var r = (float)new Random(HashUtils.Hash(chunkCell.x, chunkCell.y)).NextDouble();
+                var i = Mathf.FloorToInt(r * 6);
+
+                var tg = new TriangleGrid(0.3f, bound: TriangleBound.Hexagon(1));
+                var mg = new MeshGrid(tg.ToMeshData());
+                return mg
+                    .Masked(x=>x.x != i)
+                    .Transformed(Matrix4x4.Translate(new Vector3(chunkCell.x, chunkCell.y, 0)));
+            }
         }
 
         [Test]

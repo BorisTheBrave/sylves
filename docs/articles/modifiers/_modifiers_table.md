@@ -27,4 +27,8 @@
     <td><a href="../../images/grids/relax_square.svg"><img class="grid-thumb" src="../../images/grids/relax_square.svg" /></img></td>
     <td><a href="../modifiers/relaxmodifier.md">RelaxModifier</a><br/>Applies mesh relaxation to any grid, smoothing out sharp edges.</td>
 </tr>
+<tr>
+    <td><a href="../../images/grids/nested_square.svg"><img class="grid-thumb" src="../../images/grids/nested_square.svg" /></img></td>
+    <td><a href="../modifiers/nestedmodifier.md">NestedModifier</a><br/>Replaces every cell with another grid.</td>
+</tr>
 </table>

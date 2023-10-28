@@ -85,6 +85,8 @@
        href: modifiers/wrapmodifier.md
     -  name: RelaxModifier
        href: modifiers/relaxmodifier.md
+    -  name: NestedModifier
+       href: modifiers/nestedmodifier.md
 - name: Creating Grids
   href: creating.md
 - name: Extras

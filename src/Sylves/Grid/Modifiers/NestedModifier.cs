@@ -7,8 +7,6 @@ namespace Sylves
 {
     /// <summary>
     /// Replaces every cell in one grid (the chunk grid) with a collection of cells from lazily computed child grids.
-    /// This is a complicated class to use, consider using some of the convenience subclasses such as TODO
-    /// TODO: More docs from PlanarLazyGrid
     /// </summary>
     public abstract class NestedModifier : IGrid
     {
@@ -19,13 +17,9 @@ namespace Sylves
 
 
         /// <summary>
-        /// Constructs a planar lazy grid that calls getMeshData to fill a chunked plane with a mesh per chunk.
+        /// Applies NestedModifier to chunkGrid.
         /// </summary>
-        /// <param name="strideX">The step from one chunk to the next.</param>
-        /// <param name="strideY">The step from one chunk to the next.</param>
-        /// <param name="aabbBottomLeft">The bottom left point of the central chunk. This should bound getMeshData(new Vector2(0, 0))</param>
-        /// <param name="aabbSize">The size of each chunk. This should bound getMeshData(new Vector2(0, 0))</param>
-        /// <param name="bound">Bounds which chunks are generated.</param>
+        /// <param name="chunkGrid">The base grid</param>
         /// <param name="cellTypes">What should the response of GetCellType </param>
         /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
         public NestedModifier(IGrid chunkGrid, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
