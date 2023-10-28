@@ -311,7 +311,7 @@ namespace Sylves
         }
         public IEnumerable<Cell> GetCellsInBounds(IBound bound)
         {
-            if (bound == null) throw new Exception("Cannot get cells in null bound as it is infinite");
+            if (bound == null) throw new GridInfiniteException();
             return (SquareBound)bound;
         }
         

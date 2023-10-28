@@ -139,6 +139,13 @@ namespace Sylves.Test
 				var cells = g.GetCellsIntersectsApprox(min, max).ToList();
 				Assert.Contains(new Cell(170, 0, 0), cells);
 			}
+			{
+				var min = new Vector3(-7, -7, 0);
+				var max = new Vector3(0, 0, 0);
+                var cells = g.GetCellsIntersectsApprox(min, max).ToList();
+                Assert.Contains(new Cell(18, 0, 0), cells);
+                Assert.Contains(new Cell(34, 0, 0), cells);
+            }
 
         }
 
@@ -200,7 +207,9 @@ namespace Sylves.Test
 			var g = new PenroseRhombGrid();
 			var dm = g.GetDual();
 			GridTest.DualMapping(dm, new Cell(), false);
-		}
+
+			Assert.IsNotNull(dm.ToDualCell(new Cell(34, 0, 0), (CellCorner)0));
+        }
     }
 }
 

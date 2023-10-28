@@ -10,14 +10,14 @@ namespace Sylves
 {
 
     /// <summary>
-    /// An infinite planar grid. The plane is split into overlapping chunks,
-    /// and each chunk defines a mesh which are converted to cells like a MeshGrid,
-    /// then stitched together.
+    /// An infinite planar grid. It is evaluated lazily by splitting the plane into overlapping period rectangles
+    /// which then each has a mesh associated.
+    /// The meshes are converted to cells like a MeshGrid, then stitched together.
     /// </summary>
     // Implementation very heavily based on PeriodPlanarMeshGrid
     public class PlanarLazyMeshGrid : PlanarLazyGrid
     {
-        private Func<Vector2Int, MeshData> getMeshData;
+        private Func<Cell, MeshData> getMeshData;
         private MeshGridOptions meshGridOptions;
 
         // Stores the mesh data, and also the parsed edges and cells of that mesh
@@ -120,9 +120,9 @@ namespace Sylves
 
         protected void Setup(Func<Vector2Int, MeshData> getMeshData, Vector2 strideX, Vector2 strideY, Vector2 aabbBottomLeft, Vector2 aabbSize, bool translateMeshData = false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-            this.getMeshData = getMeshData;
+            this.getMeshData = chunkCell => getMeshData(new Vector2Int(chunkCell.x, chunkCell.y));
             this.meshGridOptions = meshGridOptions ?? new MeshGridOptions();
-            meshDatas = (cachePolicy ?? CachePolicy.Always).GetDictionary<(MeshData, DataDrivenData, EdgeStore)>(this);
+            meshDatas = (cachePolicy ?? Sylves.CachePolicy.Always).GetDictionary<(MeshData, DataDrivenData, EdgeStore)>(this);
 
             base.Setup(strideX, strideY, aabbBottomLeft, aabbSize, translateMeshData, bound, cellTypes, cachePolicy);
         }
@@ -132,14 +132,13 @@ namespace Sylves
         /// Note that dataDrivenData/edgeStore is relative to the current chunk, so you need to add Promote(chunk) to
         /// the cells to the absolute values.
         /// </summary>
-        internal (MeshData meshData, DataDrivenData dataDrivenData, EdgeStore edgeStore) GetMeshDataCached(Vector2Int v)
+        internal (MeshData meshData, DataDrivenData dataDrivenData, EdgeStore edgeStore) GetMeshDataCached(Cell chunkCell)
         {
-            var cell = new Cell(v.x, v.y);
-            if (meshDatas.TryGetValue(cell, out var x))
+            if (meshDatas.TryGetValue(chunkCell, out var x))
             {
                 return x;
             }
-            var meshData = getMeshData(v);
+            var meshData = getMeshData(chunkCell);
 
             if(meshData.subMeshCount > 1)
             {
@@ -150,34 +149,38 @@ namespace Sylves
 
             var dataDrivenData = MeshGridBuilder.Build(meshData, meshGridOptions, out var edgeStore);
 
-            return meshDatas[cell] = (meshData, dataDrivenData, edgeStore);
+            return meshDatas[chunkCell] = (meshData, dataDrivenData, edgeStore);
         }
 
         // Returns a mesh grid for the given chunk.
         // This is simply the meshData provided, plus additional 
         // moves based on matching edges from the meshes of other chunks.
-        protected override IGrid GetChunkGrid(Vector2Int v)
+        protected override IGrid GetChildGrid(Cell chunkCell)
         {
-            var (meshData, dataDrivenData, edgeStore) = GetMeshDataCached(v);
+            var (meshData, dataDrivenData, edgeStore) = GetMeshDataCached(chunkCell);
 
-            foreach (var chunk in GetAdjacentChunks(v))
+            foreach (var otherChunkCell in GetAdjacentChunks(chunkCell))
             {
                 // Skip this chunk as it's already in edgeStore
-                if (chunk == v)
+                if (otherChunkCell == chunkCell)
                     continue;
 
-                var otherEdges = GetMeshDataCached(chunk).edgeStore.UnmatchedEdges;
+                var otherEdges = GetMeshDataCached(otherChunkCell).edgeStore.UnmatchedEdges;
 
                 foreach (var edgeTuple in otherEdges)
                 {
                     var (v1, v2, c, dir) = edgeTuple;
-                    if(TranslateMeshData)
+                    // In this case, it's ok to subtract cells from each other, as we know what grid we're using (AabbGrid)
+                    // which supports this.
+                    var chunkDiff = new Cell(otherChunkCell.x - chunkCell.x, otherChunkCell.y - chunkCell.y, otherChunkCell.z - chunkCell.z);
+                    if (TranslateMeshData)
                     {
-                        var t = ChunkOffset(chunk - v);
+                        var t = ChunkOffset(chunkDiff);
                         v1 += t;
                         v2 += t;
                     }
-                    c += Promote(chunk) - Promote(v);
+                    // This also relies on the specific Combine used.
+                    c = Combine(c, chunkDiff);
                     // This is nasty, it is *mutating* cached data.
                     edgeStore.MatchEdge(v1, v2, c, dir, dataDrivenData.Moves, clearEdge: false);
                 }

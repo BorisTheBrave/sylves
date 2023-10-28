@@ -134,6 +134,8 @@ namespace Sylves.Test
         {
 
             Matrix4x4 globalTransform = Matrix4x4.Scale(new Vector3(1, -1, 1));
+            const float strideY = 10;
+            const string viewBox = "0 -50 25 50";
 
             var byName = prototiles.ToDictionary(x => x.Name);
 
@@ -151,8 +153,8 @@ namespace Sylves.Test
                 }
 
 
-                svg.BeginSvg();
-                var y = 0;
+                svg.BeginSvg(viewBox);
+                var y = 0f;
                 foreach (var prototile in prototiles)
                 {
                     var transform = Matrix4x4.Translate(new Vector3(0, y, 0));
@@ -167,7 +169,7 @@ namespace Sylves.Test
                             DrawPoly(tile, transform * child.transform, false);
                         }
                     }
-                    y += 3;
+                    y += strideY;
                 }
                 svg.EndSvg();
             }
@@ -281,7 +283,7 @@ namespace Sylves.Test
                 "chair.svg",
                 chairOptions);
 
-            var penroseOptions = new Options { textScale = null, min = new Vector2(-15, -15), max = new Vector2(15, 15), trim = true,
+            var penroseOptions = new Options { textScale = 1, min = new Vector2(-15, -15), max = new Vector2(15, 15), trim = true,
                 fillFunc = (c) => c.x % 2 == 0 ? "mediumpurple" : "greenyellow" };
             var penroseGrid = new PenroseRhombGrid(new SubstitutionTilingBound { Height = 10 });
             Export(
@@ -301,6 +303,17 @@ namespace Sylves.Test
             // Spigot view
             ExportSpigotView("chair_spigot.svg", chairGrid, chairOptions);
             ExportSpigotView("penrose_rhomb_spigot.svg", penroseGrid, penroseOptions);
+            var hat = new HatGrid(bound: new SubstitutionTilingBound { Height = 3 });
+            var positions = hat.GetCells().Select(hat.GetCellCenter).ToList();
+            Export(
+                hat,
+                "hat.svg",
+                new Options { textScale=3f, min=new Vector2(-50, -50), max = new Vector2(50, 50)}
+                );
+
+            ExportPrototiles("hat_prototiles.svg", HatGrid.Prototiles);
+            //ExportPrototiles("hat_metaprototiles.svg", HatGrid.MetaPrototiles);
+
         }
 
 

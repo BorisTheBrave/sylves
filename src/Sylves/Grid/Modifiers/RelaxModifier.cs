@@ -49,7 +49,7 @@ namespace Sylves
                 throw new NotImplementedException("RelaxModifier only supports planar grids");
             }
 
-            cachePolicy = cachePolicy ?? CachePolicy.Always;
+            cachePolicy = cachePolicy ?? Sylves.CachePolicy.Always;
 
             chunkGrid = new HexGrid(chunkSize);
 
@@ -132,23 +132,23 @@ namespace Sylves
 
         // We can give tighter bounds here as we know that we're hex based,
         // and also that the margin added to the bounds is irrelevant.
-        protected override IEnumerable<Vector2Int> GetAdjacentChunks(Vector2Int chunk)
+        protected override IEnumerable<Cell> GetAdjacentChunks(Cell chunkCell)
         {
             // Just hard code the hex adjacencies
-            yield return new Vector2Int(chunk.x - 1, chunk.y);
-            yield return new Vector2Int(chunk.x - 1, chunk.y + 1);
-            yield return new Vector2Int(chunk.x, chunk.y - 1);
-            yield return new Vector2Int(chunk.x, chunk.y); // Self
-            yield return new Vector2Int(chunk.x, chunk.y + 1);
-            yield return new Vector2Int(chunk.x + 1, chunk.y - 1);
-            yield return new Vector2Int(chunk.x + 1, chunk.y);
+            yield return new Cell(chunkCell.x - 1, chunkCell.y);
+            yield return new Cell(chunkCell.x - 1, chunkCell.y + 1);
+            yield return new Cell(chunkCell.x, chunkCell.y - 1);
+            yield return new Cell(chunkCell.x, chunkCell.y); // Self
+            yield return new Cell(chunkCell.x, chunkCell.y + 1);
+            yield return new Cell(chunkCell.x + 1, chunkCell.y - 1);
+            yield return new Cell(chunkCell.x + 1, chunkCell.y);
         }
 
-        protected override IGrid GetChunkGrid(Vector2Int v)
+        protected override IGrid GetChildGrid(Cell chunkCell)
         {
             // Unlike PlanarLazyMeshGrid, there's no need to do edge detection here,
-            // as Trymove just forwards to underlying
-            var meshData = GetRelaxedChunk(new Cell(v.x, v.y, -v.x - v.y));
+            // as TryMove just forwards to underlying
+            var meshData = GetRelaxedChunk(new Cell(chunkCell.x, chunkCell.y, -chunkCell.x - chunkCell.y));
             return new MeshGrid(meshData, new MeshGridOptions { Tolerance = weldTolerance });
         }
 
@@ -159,7 +159,7 @@ namespace Sylves
 
         private static Vector3 ToVector3(Vector2 v) => new Vector3(v.x, v.y, 0);
 
-        private static Vector2Int HexToChunk(Cell hex) => new Vector2Int(hex.x, hex.y);
+        private static Cell HexToChunk(Cell hex) => new Cell(hex.x, hex.y);
 
         // Unrelaxed chunks are just the raw mesh data taken from underlying
         MeshData GetUnrelaxedChunk(Cell hex)
@@ -202,14 +202,16 @@ namespace Sylves
 
             var nearbyChunks = new[] { hex }.Concat(chunkGrid.GetNeighbours(hex));
 
-            var meshes = nearbyChunks.Select(c => {
+            var meshes = nearbyChunks.Select(c =>
+            {
                 var mesh = GetUnrelaxedChunk(c);
-                if(translateUnrelaxed)
+                var chunkDiff = HexToChunk(new Cell(c.x - hex.x, c.y - hex.y, c.z - hex.z));
+                if (translateUnrelaxed)
                 {
-                    mesh = Matrix4x4.Translate(ChunkOffset(HexToChunk(c) - HexToChunk(hex))) * mesh;
+                    mesh = Matrix4x4.Translate(ChunkOffset(chunkDiff)) * mesh;
                 }
                 return mesh;
-                }).ToList();
+            }).ToList();
 
             var md = MeshDataOperations.Concat(meshes, out var concatIndexMaps);
 

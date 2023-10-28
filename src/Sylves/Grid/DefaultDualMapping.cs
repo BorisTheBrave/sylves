@@ -14,7 +14,12 @@ namespace Sylves
     {
         private IGrid baseGrid;
 
-        private Func<Vector2Int, IEnumerable<Cell>> getCellsByChunk;
+        // Query methods on baseGrid
+
+        // Get all the base cells in a given chunk
+        private Func<Cell, IEnumerable<Cell>> getCellsByChunk;
+        // Get the chunk from a base cell. Inverse of getCellsByChunk
+        private Func<Cell, Cell> getChunkByCell;
 
         // Various caches
 
@@ -40,18 +45,26 @@ namespace Sylves
             }
             baseGrid = planarGrid;
             var squareGrid = new SquareGrid(chunkSize);
-            IEnumerable<Cell> GetCellsByChunk(Vector2Int chunk)
+            IEnumerable<Cell> GetCellsByChunk(Cell chunk)
             {
-                var min = new Vector3((chunk.x - 0.5f) * chunkSize, (chunk.y - 0.5f) * chunkSize, 0);
+                var min = new Vector3(chunk.x * chunkSize, chunk.y * chunkSize, 0);
                 var max = min + new Vector3(chunkSize, chunkSize, 0);
                 return planarGrid.GetCellsIntersectsApprox(min, max)
                     .Where(cell =>
                     {
                         var center = planarGrid.GetCellCenter(cell);
-                        return min.x <= cell.x && cell.x < max.x && min.y <= cell.y && cell.y < max.y;
-                    } );
+                        return
+                          min.x <= center.x && center.x < max.x &&
+                          min.y <= center.y && center.y < max.y;
+                    });
             }
             getCellsByChunk = GetCellsByChunk;
+            Cell GetChunkByCell(Cell cell)
+            {
+                var p = planarGrid.GetCellCenter(cell);
+                return squareGrid.FindCell(p).Value;
+            }
+            getChunkByCell = GetChunkByCell;
             MakeCaches(cachePolicy);
 
             Setup(squareGrid, chunkSize / 2, cachePolicy: cachePolicy);
@@ -60,7 +73,8 @@ namespace Sylves
         public DefaultDualMapping(PlanarLazyGrid grid, ICachePolicy cachePolicy)
         {
             baseGrid = grid;
-            getCellsByChunk = chunk => grid.GetCellsInBounds(new SquareBound(chunk, chunk + Vector2Int.one));
+            getCellsByChunk = chunk => grid.GetCellsInBounds(new SquareBound(chunk.x, chunk.y, chunk.x + 1, chunk.y + 1));
+            getChunkByCell = cell => Split(cell).chunkCell;
             MakeCaches(cachePolicy);
 
             // Dual cells are put in a chunk based off a primal cell's chunk,
@@ -87,7 +101,7 @@ namespace Sylves
         private void MakeCaches(ICachePolicy cachePolicy)
         {
             if (cachePolicy == null)
-                cachePolicy = CachePolicy.Always;
+                cachePolicy = Sylves.CachePolicy.Always;
             meshDatas = cachePolicy.GetDictionary<(MeshData meshData, List<(Cell primalCell, CellCorner primalCorner, Cell dualCell, CellCorner dualCorner)> mapping)>(this);
             toDual = cachePolicy.GetDictionary<Dictionary<(Cell, CellCorner), (Cell, CellCorner)>>(this);
             toBase = cachePolicy.GetDictionary<Dictionary<(Cell, CellCorner), (Cell, CellCorner)>>(this);
@@ -110,14 +124,13 @@ namespace Sylves
             base.Setup(strideX, strideY, aabbBottomLeft - margin * Vector2.one, aabbSize + 2 * margin * Vector2.one, false, bound, cellTypes, cachePolicy);
         }
 
-        private static T GetOrAdd<T>(IDictionary<Cell, T> cache, Vector2Int v, Func<T> func)
+        private static T GetOrAdd<T>(IDictionary<Cell, T> cache, Cell v, Func<T> func)
         {
-            var cell = new Cell(v.x, v.y);
-            if (cache.TryGetValue(cell, out var x))
+            if (cache.TryGetValue(v, out var x))
             {
                 return x;
             }
-            return cache[cell] = func();
+            return cache[v] = func();
 
         }
 
@@ -132,7 +145,7 @@ namespace Sylves
 
         // Compute the dual grid for a given chunk, and also the mapping between the base (primal) grid and the dual.
         // The mapping may refer to primal cells from several chunks, but it's exhaustive for the dual cells of the requested chunk.
-        private (MeshData meshData, List<(Cell primalCell, CellCorner primalCorner, Cell dualCell, CellCorner dualCorner)> mapping) GetMeshData(Vector2Int v)
+        private (MeshData meshData, List<(Cell primalCell, CellCorner primalCorner, Cell dualCell, CellCorner dualCorner)> mapping) GetMeshData(Cell chunkCell)
         {
             var visited = new HashSet<(Cell cell, CellDir dir)>();
             var mapping = new List<(Cell primalCell, CellCorner primalCorner, Cell dualCell, CellCorner dualCorner)>();
@@ -141,13 +154,13 @@ namespace Sylves
 
 
             // Visit every corner of every cell in the primal chunk.
-            var primalCells = getCellsByChunk(v);
+            var primalCells = getCellsByChunk(chunkCell);
             foreach(var primalCell in primalCells)
             {
                 foreach(var primalCorner in baseGrid.GetCellCorners(primalCell))
                 {
                     // Find the dual cell on corner by walking around the corner
-                    var dualCell = Combine(new Cell(dualCellCount, 0), v);
+                    var dualCell = Combine(new Cell(dualCellCount, 0), chunkCell);
 
                     var startHe = (cell: primalCell, dir: CornerToDir(primalCorner));
                     // Skip if we've already explored this arc/loop
@@ -160,14 +173,14 @@ namespace Sylves
                     (Cell cell, CellDir dir) endHe = default;
                     var dualCorner = 0;
                     var dualCorner2 = 0;
-                    var minChunk = Split(currentHe.cell).chunk;
+                    var minChunk = getChunkByCell(currentHe.cell);
                     var oldMappingCount = mapping.Count;
                     bool isArc = false;
                     while(true)
                     {
                         visited.Add(currentHe);
                         mapping.Add((currentHe.cell, DirToCorner(currentHe.dir), dualCell, (CellCorner)dualCorner));
-                        minChunk = LexMin(minChunk, Split(currentHe.cell).chunk);
+                        minChunk = LexMin(minChunk, getChunkByCell(currentHe.cell));
                         dualCorner++;
 
                         currentHe = PrevHalfEdge(currentHe);
@@ -198,8 +211,8 @@ namespace Sylves
                             currentHe = NextHalfEdge(currentHe);
 
                             visited.Add(currentHe);
-                            mapping.Add((currentHe.cell, DirToCorner(currentHe.dir), Combine(new Cell(dualCellCount, 0), v), (CellCorner)dualCorner2));
-                            minChunk = LexMin(minChunk, Split(currentHe.cell).chunk);
+                            mapping.Add((currentHe.cell, DirToCorner(currentHe.dir), Combine(new Cell(dualCellCount, 0), chunkCell), (CellCorner)dualCorner2));
+                            minChunk = LexMin(minChunk, getChunkByCell(currentHe.cell));
                             dualCorner2--;
                         }
                     }
@@ -207,7 +220,7 @@ namespace Sylves
                     // If a dual cell borders several chunks, 
                     // It'll be visited in several calls to GetMeshData.
                     // This ensures we keep only a unique one
-                    var keepDualCell = minChunk == v;
+                    var keepDualCell = minChunk == chunkCell;
                     if (keepDualCell)
                     {
                         dualCellCount++;
@@ -292,21 +305,20 @@ namespace Sylves
             return (meshData, mapping);
         }
 
-        private (MeshData meshData, List<(Cell primalCell, CellCorner primalCorner, Cell dualCell, CellCorner dualCorner)> mapping) GetMeshDataCached(Vector2Int v)
+        private (MeshData meshData, List<(Cell primalCell, CellCorner primalCorner, Cell dualCell, CellCorner dualCorner)> mapping) GetMeshDataCached(Cell chunkCell)
         {
-            var cell = new Cell(v.x, v.y);
-            if(meshDatas.TryGetValue(cell, out var x))
+            if(meshDatas.TryGetValue(chunkCell, out var x))
             {
                 return x;
             }
-            return meshDatas[cell] = GetMeshData(v);
+            return meshDatas[chunkCell] = GetMeshData(chunkCell);
         }
 
         // Converts the meshData to a meshGrid.
         // Unlike PlanarLazyMeshGrid, there's no need for edge matching.
-        protected override IGrid GetChunkGrid(Vector2Int v)
+        protected override IGrid GetChildGrid(Cell chunkCell)
         {
-            var meshData = GetMeshDataCached(v).meshData;
+            var meshData = GetMeshDataCached(chunkCell).meshData;
             // Builds MeshGrid, but skips edge matching as we don't need it.
             var meshGridOptions = new MeshGridOptions();
             var data = new DataDrivenData
@@ -361,11 +373,13 @@ namespace Sylves
             return cellType.Rotate(corner, cellType.RotateCW);
         }
 
-        private static Vector2Int LexMin(Vector2Int a, Vector2Int b)
+        private static Cell LexMin(Cell a, Cell b)
         {
             if (a.x < b.x) return a;
             if (a.x > b.x) return b;
             if (a.y < b.y) return a;
+            if (a.y > b.y) return b;
+            if (a.z < b.z) return a;
             return b;
         }
 
@@ -445,7 +459,7 @@ namespace Sylves
 
         public (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner)
         {
-            var chunk = Split(dualCell).chunk;
+            var chunk = Split(dualCell).chunkCell;
             var dict = GetOrAdd(toBase, chunk, () => GetMeshDataCached(chunk)
                 .mapping
                 .ToDictionary(x => (x.dualCell, x.dualCorner), x => (x.primalCell, x.primalCorner)));
@@ -459,8 +473,7 @@ namespace Sylves
 
         public (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner)
         {
-
-            var chunk = Split(baseCell).chunk;
+            var chunk = getChunkByCell(baseCell);
             // Because we only have mappings per-*dual*-chunk, we need to aggregate several mappings
             var dict = GetOrAdd(toDual, chunk, () => GetAdjacentChunks(chunk)
                 .SelectMany(c=> GetMeshDataCached(c).mapping)
