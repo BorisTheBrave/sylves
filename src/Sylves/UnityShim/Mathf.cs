@@ -44,6 +44,10 @@ namespace Sylves
         {
             return (float)Math.Acos(x);
         }
+        public static float Atan(float x)
+        {
+            return (float)Math.Atan(x);
+        }
         public static float Atan2(float y, float x)
         {
             return (float)Math.Atan2(y, x);
