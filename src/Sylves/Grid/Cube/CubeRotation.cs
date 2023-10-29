@@ -161,19 +161,22 @@ namespace Sylves
             var rotatedUp = Rotate(Vector3Int.up);
             var rotatedForward = Rotate(new Vector3Int(0, 0, 1));
 
+            // All three are unity vectors
             if (Ok(rotatedRight) && Ok(rotatedUp) && Ok(rotatedForward))
             {
-                return FromMatrixSimple(new Matrix4x4(
-                    rotatedRight,
-                    rotatedUp,
-                    rotatedForward,
-                    new Vector4(0, 0, 0, 1)
-                ));
+                var sum = rotatedRight + rotatedForward + rotatedUp;
+                // All three are orthogonal
+                if (Math.Abs(sum.x) == 1 && Math.Abs(sum.y) == 1 && Math.Abs(sum.z) == 1)
+                {
+                    return FromMatrixSimple(new Matrix4x4(
+                        rotatedRight,
+                        rotatedUp,
+                        rotatedForward,
+                        new Vector4(0, 0, 0, 1)
+                    ));
+                }
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public bool IsReflection
