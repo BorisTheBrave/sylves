@@ -367,6 +367,16 @@ namespace Sylves.Test
                 new RhombilleGrid().BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))).Transformed(Matrix4x4.Scale(2f * Vector3.one)),
                 "rhombille.svg",
                 new Options { textScale = 0.5 });
+            var r = new System.Random(0);
+            var points = Enumerable.Range(0, 100).Select(x => new Vector2((float)r.NextDouble(), (float)r.NextDouble()) * 10).ToList();
+            Export(
+                new VoronoiGrid(points),
+                "voronoi.svg",
+                new Options { min = new Vector2(0, 0), max = new Vector2(10, 10), textScale = 0.5 });
+            Export(
+                new JitteredSquareGrid().BoundBy(new SquareBound(-1, -1, 2, 2)),
+                "jitteredsquare.svg",
+                new Options { min = new Vector2(5, 5), max = new Vector2(15, 15), textScale = 0.5 });
 
             // Mesh grids
             Export(new MeshGrid(TestMeshes.Lion).Transformed(Matrix4x4.Scale(4f * Vector3.one)), "meshgrid.svg", new Options { textScale = null});
