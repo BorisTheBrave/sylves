@@ -149,8 +149,20 @@ namespace Sylves
 
             var dataDrivenData = MeshGridBuilder.Build(meshData, meshGridOptions, out var edgeStore);
 
+            Cell Map(Cell childCell) => Combine(childCell, chunkCell);
+
+            // Convert edge data and moves to use the global cell identifiers
+            edgeStore.MapCells(Map);
+            dataDrivenData.Moves = MapMoves(dataDrivenData.Moves, Map);
+
             return meshDatas[chunkCell] = (meshData, dataDrivenData, edgeStore);
         }
+
+        private static IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> MapMoves(IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves, Func<Cell, Cell> f)
+        {
+            return moves.ToDictionary(kv => (f(kv.Key.Item1), kv.Key.Item2), kv => (f(kv.Value.Item1), kv.Value.Item2, kv.Value.Item3)); ;
+        }
+
 
         // Returns a mesh grid for the given chunk.
         // This is simply the meshData provided, plus additional 
@@ -179,8 +191,6 @@ namespace Sylves
                         v1 += t;
                         v2 += t;
                     }
-                    // This also relies on the specific Combine used.
-                    c = Combine(c, chunkDiff);
                     // This is nasty, it is *mutating* cached data.
                     edgeStore.MatchEdge(v1, v2, c, dir, dataDrivenData.Moves, clearEdge: false);
                 }
@@ -199,6 +209,17 @@ namespace Sylves
 
         #region Bounds
         public override IGrid BoundBy(IBound bound) => new PlanarLazyMeshGrid(this, (SquareBound)bound);
+        #endregion
+
+
+
+        #region Topology
+
+        public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
+        {
+            var (_, chunkCell) = Split(cell);
+            return GetChildGridCached(chunkCell).TryMove(cell, dir, out dest, out inverseDir, out connection);
+        }
         #endregion
     }
 }

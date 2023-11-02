@@ -72,7 +72,7 @@ namespace Sylves
         /// </summary>
         protected abstract IGrid GetChildGrid(Cell chunkCell);
 
-        private IGrid GetChildGridCached(Cell chunkCell)
+        protected IGrid GetChildGridCached(Cell chunkCell)
         {
             if (childGrids.TryGetValue(chunkCell, out IGrid meshGrid))
             {
