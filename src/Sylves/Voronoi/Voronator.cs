@@ -4,6 +4,7 @@ using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
+#if !PURE_SYLVES
 using static Sylves.Delaunator;
 
 
@@ -820,4 +821,5 @@ namespace Sylves
 
 
     }
+#endif
 }

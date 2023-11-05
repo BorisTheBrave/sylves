@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace Sylves
 {
+#if !PURE_SYLVES
+
     public class Delaunator
     {
         private readonly double EPSILON = Math.Pow(2, -52);
@@ -692,4 +694,5 @@ namespace Sylves
         public static int EdgeIndexToTriangleIndex(int e) { return e / 3; }
         #endregion Methods based on index
     }
+#endif
 }

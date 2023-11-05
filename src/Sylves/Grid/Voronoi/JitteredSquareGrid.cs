@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Sylves
 {
+#if !PURE_SYLVES
     public class JitteredSquareGrid : PlanarLazyMeshGrid
     {
         // Extra border to add to each chunk to ensure they see every relevant point
@@ -96,4 +97,5 @@ namespace Sylves
 
         public override int CoordinateDimension => 2;
     }
+#endif
 }

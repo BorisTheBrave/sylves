@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Sylves
 {
+#if !PURE_SYLVES
     public struct DelaunayTriangle : IEnumerable<Vector2>
     {
         public int TriangleIndex;
@@ -39,4 +40,5 @@ namespace Sylves
             yield return Point3;
         }
     }
+#endif
 }

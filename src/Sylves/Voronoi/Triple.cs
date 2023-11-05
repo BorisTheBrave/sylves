@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Sylves
 {
+#if !PURE_SYLVES
     public struct Triple<T> : IEnumerable<T>
     {
         public T Item1;
@@ -35,4 +36,5 @@ namespace Sylves
         public static implicit operator (T, T, T)(Triple<T> t) => (t.Item1, t.Item2, t.Item3);
         public static implicit operator Triple<T>((T, T, T) t) => Create(t.Item1, t.Item2, t.Item3);
     }
+#endif
 }

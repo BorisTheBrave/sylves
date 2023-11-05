@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Sylves
 {
+#if !PURE_SYLVES
     public class VoronoiGridOptions
     {
         public Vector2? ClipMin { get; set; }
@@ -49,4 +50,5 @@ namespace Sylves
             };
         }
     }
+#endif
 }
