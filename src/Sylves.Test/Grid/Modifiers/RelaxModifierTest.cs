@@ -34,5 +34,16 @@ namespace Sylves.Test
 
             Assert.AreEqual(1, nearby.Weight1 + nearby.Weight2 + nearby.Weight3, 1e-2);
         }
+
+        [Test]
+        public void TestTryMove()
+        {
+            var g1 = new SquareGrid(1);
+            var g2 = new RelaxModifier(g1).WithUnderlyingCoordinates();
+
+            Assert.AreEqual(
+                g1.Move(new Cell(10, 10, 0), (CellDir)SquareDir.Right),
+                g2.Move(new Cell(10, 10, 0), (CellDir)SquareDir.Right));
+        }
     }
 }

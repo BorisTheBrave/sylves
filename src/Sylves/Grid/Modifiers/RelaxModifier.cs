@@ -24,17 +24,21 @@ namespace Sylves
         private readonly bool passThroughMesh;
         private readonly bool translateUnrelaxed;
 
-        // Description of the chunking used
-        HexGrid chunkGrid;
+        // Description of the chunking used.
+        // It matches the chunk grid, but uses 3 co-ordinates, not two.
+        // This means we have to convert to/from hexes in a few places - ew
+        HexGrid hexGrid;
 
         // Caches
 
         // Unrelaxed chunks are just the raw mesh data taken from underlying
-        IDictionary<Cell, MeshData> unrelaxedChunks;
+        // We also store the mapping from mesh faces back to underlying cells
+        IDictionary<Cell, (MeshData, BiMap<int, Cell>)> unrelaxedChunksByHex;
 
         // Relaxed patches are the result of concatting several unrelaxed chunks together,
         // then relaxing them
-        IDictionary<Cell, (MeshData, Dictionary<Cell, int[]>)> relaxedPatches;
+        // Also stored is for each neighbour chunk, where the vertices of the unrelated mesh data can be found in relaxed patch.
+        IDictionary<Cell, (MeshData, Dictionary<Cell, int[]>)> relaxedPatchesByHex;
 
         public RelaxModifier(
             IGrid underlying,
@@ -51,10 +55,10 @@ namespace Sylves
 
             cachePolicy = cachePolicy ?? Sylves.CachePolicy.Always;
 
-            chunkGrid = new HexGrid(chunkSize);
+            hexGrid = new HexGrid(chunkSize);
 
-            unrelaxedChunks = cachePolicy.GetDictionary<MeshData>(chunkGrid);
-            relaxedPatches = cachePolicy.GetDictionary<(MeshData, Dictionary<Cell, int[]>)>(chunkGrid);
+            unrelaxedChunksByHex = cachePolicy.GetDictionary<(MeshData, BiMap<int, Cell>)>(hexGrid);
+            relaxedPatchesByHex = cachePolicy.GetDictionary<(MeshData, Dictionary<Cell, int[]>)>(hexGrid);
             this.underlying = underlying;
             this.chunkSize = chunkSize;
             this.weldTolerance = weldTolerance;
@@ -77,29 +81,27 @@ namespace Sylves
             {
                 var chunkCells = underlying.GetCells()
                     .Select(underlying.GetCellCenter)
-                    .Select(chunkGrid.FindCell)
+                    .Select(hexGrid.FindCell)
                     .OfType<Cell>();
-                var chunkBound = (HexBound)chunkGrid.GetBound(chunkCells);
+                var chunkBound = (HexBound)hexGrid.GetBound(chunkCells);
                 bound = new SquareBound(new Vector2Int(chunkBound.min.x, chunkBound.min.y), new Vector2Int(chunkBound.max.x, chunkBound.max.y));
 
             }
 
             var margin = chunkSize / 2;
 
-            Setup(chunkGrid, margin, bound: bound, cellTypes: cellTypes);
+            Setup(hexGrid, margin, bound: bound, cellTypes: cellTypes);
 
             if (underlying is PlanarLazyMeshGrid pg)
             {
                 // Compare dimensions.
                 // This isn't strictly accurate (pg could have same aabb dimensions but not fit in a hex), but meh.
-                var a = ((StrideX, StrideY, AabbBottomLeft, AabbSize));
-                var b = ((pg.StrideX, pg.StrideY, pg.AabbBottomLeft - margin * Vector2.one, pg.AabbSize + 2 * margin * Vector2.one));
+                var a = (StrideX, StrideY, AabbBottomLeft, AabbSize);
+                var b = (pg.StrideX, pg.StrideY, pg.AabbBottomLeft - margin * Vector2.one, pg.AabbSize + 2 * margin * Vector2.one);
                 passThroughMesh = a == b;
                 translateUnrelaxed = passThroughMesh && pg.TranslateMeshData;
             }
         }
-
-        private static Vector2 ToVector2(Vector3 v) => new Vector2(v.x, v.y);
 
         private void Setup(HexGrid chunkGrid, float margin = 0.0f, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
@@ -123,12 +125,21 @@ namespace Sylves
             chunkSize = original.chunkSize;
             weldTolerance = original.weldTolerance;
             relaxIterations = original.relaxIterations;
-            chunkGrid = original.chunkGrid;
-            unrelaxedChunks = original.unrelaxedChunks;
-            relaxedPatches = original.relaxedPatches;
+            hexGrid = original.hexGrid;
+            unrelaxedChunksByHex = original.unrelaxedChunksByHex;
+            relaxedPatchesByHex = original.relaxedPatchesByHex;
         }
 
         #region Calculations
+
+
+        private static Vector2 ToVector2(Vector3 v) => new Vector2(v.x, v.y);
+
+        private static Vector3 ToVector3(Vector2 v) => new Vector3(v.x, v.y, 0);
+
+        private static Cell HexToChunk(Cell hex) => new Cell(hex.x, hex.y);
+        private static Cell ChunkToHex(Cell chunkCell) => new Cell(chunkCell.x, chunkCell.y, -chunkCell.x - chunkCell.y);
+
 
         // We can give tighter bounds here as we know that we're hex based,
         // and also that the margin added to the bounds is irrelevant.
@@ -148,24 +159,15 @@ namespace Sylves
         {
             // Unlike PlanarLazyMeshGrid, there's no need to do edge detection here,
             // as TryMove just forwards to underlying
-            var meshData = GetRelaxedChunk(new Cell(chunkCell.x, chunkCell.y, -chunkCell.x - chunkCell.y));
+            var meshData = GetRelaxedChunk(ChunkToHex(chunkCell));
             return new MeshGrid(meshData, new MeshGridOptions { Tolerance = weldTolerance });
         }
 
-        public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
-        {
-            return underlying.TryMove(cell, dir, out dest, out inverseDir, out connection);
-        }
-
-        private static Vector3 ToVector3(Vector2 v) => new Vector3(v.x, v.y, 0);
-
-        private static Cell HexToChunk(Cell hex) => new Cell(hex.x, hex.y);
-
         // Unrelaxed chunks are just the raw mesh data taken from underlying
-        MeshData GetUnrelaxedChunk(Cell hex)
+        (MeshData meshData, BiMap<int, Cell> cells) GetUnrelaxedChunk(Cell hex)
         {
-            if (unrelaxedChunks.ContainsKey(hex))
-                return unrelaxedChunks[hex];
+            if (unrelaxedChunksByHex.ContainsKey(hex))
+                return unrelaxedChunksByHex[hex];
 
             if (passThroughMesh)
             {
@@ -174,7 +176,7 @@ namespace Sylves
                 var planarLazyMeshGrid = underlying as PlanarLazyMeshGrid;
                 var chunk = HexToChunk(hex);
                 var meshData = (underlying as PlanarLazyMeshGrid).GetMeshDataCached(chunk).meshData;
-                return unrelaxedChunks[hex] = meshData;
+                return unrelaxedChunksByHex[hex] = (meshData, null /*TODO*/);
             }
             else
             {
@@ -185,11 +187,13 @@ namespace Sylves
 
                 // Filter to precisely cells in this chunk
                 var cells = unfilteredCells
-                    .Where(c => chunkGrid.FindCell(underlying.GetCellCenter(c)) == hex)
-                    .ToList();
+                    .Where(c => hexGrid.FindCell(underlying.GetCellCenter(c)) == hex)
+                    .ToArray();
 
                 // To mesh data
-                return unrelaxedChunks[hex] = underlying.ToMeshData(cells);
+                var meshData = underlying.ToMeshData(cells);
+                var map = new BiMap<int, Cell>(cells.Select((x, i) => (i, x)));
+                return unrelaxedChunksByHex[hex] = (meshData, map);
             }
         }
 
@@ -197,14 +201,14 @@ namespace Sylves
         // then relaxing them
         (MeshData meshData, Dictionary<Cell, int[]> indexMaps) GetRelaxedPatch(Cell hex)
         {
-            if (relaxedPatches.ContainsKey(hex))
-                return relaxedPatches[hex];
+            if (relaxedPatchesByHex.ContainsKey(hex))
+                return relaxedPatchesByHex[hex];
 
-            var nearbyChunks = new[] { hex }.Concat(chunkGrid.GetNeighbours(hex));
+            var nearbyChunks = new[] { hex }.Concat(hexGrid.GetNeighbours(hex));
 
             var meshes = nearbyChunks.Select(c =>
             {
-                var mesh = GetUnrelaxedChunk(c);
+                var mesh = GetUnrelaxedChunk(c).meshData;
                 var chunkDiff = HexToChunk(new Cell(c.x - hex.x, c.y - hex.y, c.z - hex.z));
                 if (translateUnrelaxed)
                 {
@@ -227,14 +231,14 @@ namespace Sylves
             // For each nearby chunk, find the where each vertex corresponds to in the output md.
             var maps = nearbyChunks.Zip(concatIndexMaps, (a, b) => (a, b)).ToDictionary(x => x.a, x => x.b.Select(i => weldIndexMap[i]).ToArray());
 
-            return relaxedPatches[hex] = (md, maps);
+            return relaxedPatchesByHex[hex] = (md, maps);
         }
 
         // The actual mesh data matches the unrelaxed chunk
         // but with position data interpolated from several relaxed patches.
         MeshData GetRelaxedChunk(Cell hex)
         {
-            var unrelaxed = GetUnrelaxedChunk(hex);
+            var unrelaxed = GetUnrelaxedChunk(hex).meshData;
 
             var result = unrelaxed.Clone();
             result.vertices = new Vector3[unrelaxed.vertices.Length];
@@ -288,6 +292,44 @@ namespace Sylves
 
         #region Relatives
         public override IGrid Unbounded => new RelaxModifier(this, null);
+
+
+        private Cell ThisToUnderlying(Cell thisCell)
+        {
+            var (childCell, chunkCell) = Split(thisCell);
+            return GetUnrelaxedChunk(ChunkToHex(chunkCell)).cells[childCell.x];
+        }
+
+        private Cell UnderlyingToThis(Cell cell)
+        {
+            if (passThroughMesh)
+            {
+                throw new NotImplementedException($"{nameof(WithUnderlyingCoordinates)} not implemented for pass through setups.");
+            }
+            else
+            {
+                // Find the chunk this cell is in
+                var hex = hexGrid.FindCell(underlying.GetCellCenter(cell)).Value;
+                // Find the face index in that chunk
+                var child = GetUnrelaxedChunk(hex).cells[cell];
+                return Combine(new Cell(child, 0), HexToChunk(hex));
+            }
+        }
+
+        /// <summary>
+        /// Returns a grid identical to the current one, but it uses the same cell co-ordinates
+        /// as the underlying grid.
+        /// This is somewhat slower.
+        /// </summary>
+        public IGrid WithUnderlyingCoordinates()
+        {
+            // Careful with naming. For the BijectModifier, it's underlying will be the RelaxModifier
+            // thus the names are reversed from what you'd expect.
+            // TODO: This does a crazy amount of pointless work for methods unaffected by relax.
+            // Could we make a custom modifier that sometimes does Biject, and sometimes forwards straight to Underlying.
+            return new BijectModifier(this, UnderlyingToThis, ThisToUnderlying, underlying.CoordinateDimension);
+
+        }
         #endregion
 
         public override IGrid BoundBy(IBound bound) => new RelaxModifier(this, (SquareBound)bound);
