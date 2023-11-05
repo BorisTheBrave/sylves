@@ -26,6 +26,10 @@ foreach (var st in compilation.SyntaxTrees)
     var rw = new UnityToGodotRewriter(model);
     var s2 = rw.Visit(s);
     Directory.CreateDirectory(Path.GetDirectoryName(dest));
-    using var file = File.Create(dest);
-    await file.WriteAsync(st.Encoding.GetBytes(s2.ToFullString()));
+    using (var file = File.Create(dest))
+    {
+        await file.WriteAsync(st.Encoding.GetBytes(s2.ToFullString()));
+    }
+    var fileInfo = new FileInfo(dest);
+    fileInfo.IsReadOnly = true;
 }
