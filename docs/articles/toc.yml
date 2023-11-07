@@ -66,6 +66,8 @@
        href: grids/planarlazymeshgrid.md
     -  name: SubstitutionTilingGrid
        href: grids/substitutiontilinggrid.md
+    -  name: VoronoiGrid
+       href: grids/voronoi.md
     -  name: OffGrid
        href: grids/offgrid.md
 - name: Modifiers

@@ -114,11 +114,28 @@ This can convert 2d grids into 3d ones, usually with the z-cordinate being the "
 </tr>
 </table>
 
-# Substitution Tiling Grids
+## Substitution Tiling Grids
 
 [Substitution tiling grids](substitutiontilinggrid.md) use recursive subdivision to fill the space with tiles. They are well known as a way of creating aperiod grids
 
 [!include[](_substitution_table.md)]
+
+## Voronoi Grids
+
+Voronoi
+
+
+<table>
+<tr>
+    <td><a href="../../images/grids/voronoi.svg"><img class="grid-thumb" src="../../images/grids/voronoi.svg" /></img></td>
+    <td><a href="voronoigrid.md">VoronoiGrid</a><br/>Creates a grid from a <a href="https://en.wikipedia.org/wiki/Voronoi_diagram">Voronoi diagram</a> based on a set of input points.</td>
+</tr>
+<tr>
+    <td><a href="../../images/grids/jitteredsquare.svg"><img class="grid-thumb" src="../../images/grids/jitteredsquare.svg" /></img></td>
+    <td><a href="jitteredsquaregrid.md">JitteredSquareGrid</a><br/>An infinite version of <a href="voronoigrid.md">VoronoiGrid</a> where the points are taken from random positions in the cells of a square grid.</td>
+</tr>
+</table>
+
 
 
 ## Modifier Grids
