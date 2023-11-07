@@ -302,7 +302,7 @@ namespace Sylves
         {
             foreach (var chunkCell in chunkGrid.GetCellsIntersectsApprox(position, position))
             {
-                var childGrid = GetChildGrid(chunkCell);
+                var childGrid = GetChildGridCached(chunkCell);
                 if (childGrid.FindCell(position - MeshTranslation(chunkCell), out var childCell))
                 {
                     cell = Combine(childCell, chunkCell);
@@ -352,7 +352,7 @@ namespace Sylves
 
                 var chunkCell = chunkRaycastInfo.cell;
                 var t = MeshTranslation(chunkCell);
-                foreach (var raycastInfo in GetChildGrid(chunkCell).Raycast(origin - t, direction, maxDistance))
+                foreach (var raycastInfo in GetChildGridCached(chunkCell).Raycast(origin - t, direction, maxDistance))
                 {
                     queuedRaycastInfos.Add(new RaycastInfo
                     {
