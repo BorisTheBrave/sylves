@@ -156,6 +156,27 @@ namespace Sylves
             };
         }
 
+        public static void GetMeshDataFromPolygon(IGrid grid, Cell cell, out MeshData meshData, out Matrix4x4 transform)
+        {
+            grid.GetPolygon(cell, out var vertices, out transform);
+            var indices = Enumerable.Range(0, vertices.Length).ToArray();
+            MeshTopology meshTopology;
+            switch(indices.Length)
+            {
+                case 3: meshTopology = MeshTopology.Triangles; break;
+                case 4: meshTopology = MeshTopology.Quads; break;
+                default:
+                    meshTopology = MeshTopology.NGon;
+                    indices[indices.Length- 1] = ~indices[indices.Length- 1];
+                    break;
+            }
+            meshData = new MeshData
+            {
+                vertices = vertices,
+                indices = new[] { indices },
+                topologies = new[] { meshTopology },
+            };
+        }
         #endregion
 
         #region Query
