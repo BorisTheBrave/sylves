@@ -175,8 +175,11 @@ namespace Sylves
                 // pass the underlying chunk through here.
                 var planarLazyMeshGrid = underlying as PlanarLazyMeshGrid;
                 var chunk = HexToChunk(hex);
-                var meshData = (underlying as PlanarLazyMeshGrid).GetMeshDataCached(chunk).meshData;
-                return unrelaxedChunksByHex[hex] = (meshData, null /*TODO*/);
+                var meshData = planarLazyMeshGrid.GetMeshDataCached(chunk).meshData;
+                var cells = planarLazyMeshGrid.GetCellsInBounds(new SquareBound(chunk.x, chunk.y, chunk.x + 1, chunk.y + 1)).ToArray();
+                //var cells = MeshUtils.GetFaces(meshData).Select((f, i) => planarLazyMeshGrid.Combine(chunk, new Cell(i, 0))).ToArray();
+                var map = new BiMap<int, Cell>(cells.Select((x, i) => (i, x)));
+                return unrelaxedChunksByHex[hex] = (meshData, map);
             }
             else
             {
@@ -302,18 +305,11 @@ namespace Sylves
 
         private Cell UnderlyingToThis(Cell cell)
         {
-            if (passThroughMesh)
-            {
-                throw new NotImplementedException($"{nameof(WithUnderlyingCoordinates)} not implemented for pass through setups.");
-            }
-            else
-            {
-                // Find the chunk this cell is in
-                var hex = hexGrid.FindCell(underlying.GetCellCenter(cell)).Value;
-                // Find the face index in that chunk
-                var child = GetUnrelaxedChunk(hex).cells[cell];
-                return Combine(new Cell(child, 0), HexToChunk(hex));
-            }
+            // Find the chunk this cell is in
+            var hex = hexGrid.FindCell(underlying.GetCellCenter(cell)).Value;
+            // Find the face index in that chunk
+            var child = GetUnrelaxedChunk(hex).cells[cell];
+            return Combine(new Cell(child, 0), HexToChunk(hex));
         }
 
         /// <summary>
@@ -332,7 +328,22 @@ namespace Sylves
         }
         #endregion
 
+        #region Topology
+        public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
+        {
+            // TODO: We can surely do better than this when building the child grid?
+            if(underlying.TryMove(ThisToUnderlying(cell), dir, out dest, out inverseDir, out connection))
+            {
+                dest = UnderlyingToThis(dest);
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region Bounds
         public override IGrid BoundBy(IBound bound) => new RelaxModifier(this, (SquareBound)bound);
+        #endregion
 
     }
 
