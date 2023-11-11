@@ -10,6 +10,9 @@ namespace Sylves
     // Works by splitting up the plane into hexes
     // Each hex is joined with its 6 neighbours and relaxed to make overlapping patches
     // Each point is a blend of the three nearest patches
+    /// <summary>
+    /// Applies relaxation to an infinite 2d plane, similar to MeshDataOperations.Relax.
+    /// </summary>
     public class RelaxModifier : PlanarLazyGrid
     {
         private readonly IGrid underlying;
@@ -21,6 +24,7 @@ namespace Sylves
         // If the underlying mesh shares the same structure as the relax modifier,
         // we can save our selves some effort.
         // This is mostly for use with Townscaper.
+        // Should this be factored into a separate class?
         private readonly bool passThroughMesh;
         private readonly bool translateUnrelaxed;
 
@@ -39,6 +43,12 @@ namespace Sylves
         // then relaxing them
         // Also stored is for each neighbour chunk, where the vertices of the unrelated mesh data can be found in relaxed patch.
         IDictionary<Cell, (MeshData, Dictionary<Cell, int[]>)> relaxedPatchesByHex;
+
+        /// <summary>
+        /// Cache for the Split operation.
+        /// This can be slow depending on the underlying grid.
+        /// </summary>
+        IDictionary<Cell, (Cell, Cell)> splitCache;
 
         public RelaxModifier(
             IGrid underlying,
@@ -101,6 +111,10 @@ namespace Sylves
                 passThroughMesh = a == b;
                 translateUnrelaxed = passThroughMesh && pg.TranslateMeshData;
             }
+            else
+            {
+                splitCache = cachePolicy.GetDictionary<(Cell, Cell)>(underlying);
+            }
         }
 
         private void Setup(HexGrid chunkGrid, float margin = 0.0f, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
@@ -128,6 +142,41 @@ namespace Sylves
             hexGrid = original.hexGrid;
             unrelaxedChunksByHex = original.unrelaxedChunksByHex;
             relaxedPatchesByHex = original.relaxedPatchesByHex;
+        }
+
+        protected override (Cell childCell, Cell chunkCell) Split(Cell cell)
+        {
+            if (passThroughMesh)
+            {
+                var planarLazyMeshGrid = underlying as PlanarLazyMeshGrid;
+                return planarLazyMeshGrid.InternalSplit(cell);
+            }
+            else
+            {
+                if(splitCache.TryGetValue(cell, out var split))
+                {
+                    return split;
+                }
+
+                // Find the chunk this cell is in
+                var hex = hexGrid.FindCell(underlying.GetCellCenter(cell)).Value;
+                // Find the face index in that chunk
+                var child = GetUnrelaxedChunk(hex).cells[cell];
+                return splitCache[cell] = (new Cell(child, 0), HexToChunk(hex));
+            }
+        }
+
+        protected override Cell Combine(Cell childCell, Cell chunkCell)
+        {
+            if (passThroughMesh)
+            {
+                var planarLazyMeshGrid = underlying as PlanarLazyMeshGrid;
+                return planarLazyMeshGrid.InternalCombine(childCell, chunkCell);
+            }
+            else
+            {
+                return GetUnrelaxedChunk(ChunkToHex(chunkCell)).cells[childCell.x];
+            }
         }
 
         #region Calculations
@@ -176,10 +225,7 @@ namespace Sylves
                 var planarLazyMeshGrid = underlying as PlanarLazyMeshGrid;
                 var chunk = HexToChunk(hex);
                 var meshData = planarLazyMeshGrid.GetMeshDataCached(chunk).meshData;
-                var cells = planarLazyMeshGrid.GetCellsInBounds(new SquareBound(chunk.x, chunk.y, chunk.x + 1, chunk.y + 1)).ToArray();
-                //var cells = MeshUtils.GetFaces(meshData).Select((f, i) => planarLazyMeshGrid.Combine(chunk, new Cell(i, 0))).ToArray();
-                var map = new BiMap<int, Cell>(cells.Select((x, i) => (i, x)));
-                return unrelaxedChunksByHex[hex] = (meshData, map);
+                return unrelaxedChunksByHex[hex] = (meshData, null);
             }
             else
             {
@@ -296,48 +342,12 @@ namespace Sylves
         #region Relatives
         public override IGrid Unbounded => new RelaxModifier(this, null);
 
-
-        private Cell ThisToUnderlying(Cell thisCell)
-        {
-            var (childCell, chunkCell) = Split(thisCell);
-            return GetUnrelaxedChunk(ChunkToHex(chunkCell)).cells[childCell.x];
-        }
-
-        private Cell UnderlyingToThis(Cell cell)
-        {
-            // Find the chunk this cell is in
-            var hex = hexGrid.FindCell(underlying.GetCellCenter(cell)).Value;
-            // Find the face index in that chunk
-            var child = GetUnrelaxedChunk(hex).cells[cell];
-            return Combine(new Cell(child, 0), HexToChunk(hex));
-        }
-
-        /// <summary>
-        /// Returns a grid identical to the current one, but it uses the same cell co-ordinates
-        /// as the underlying grid.
-        /// This is somewhat slower.
-        /// </summary>
-        public IGrid WithUnderlyingCoordinates()
-        {
-            // Careful with naming. For the BijectModifier, it's underlying will be the RelaxModifier
-            // thus the names are reversed from what you'd expect.
-            // TODO: This does a crazy amount of pointless work for methods unaffected by relax.
-            // Could we make a custom modifier that sometimes does Biject, and sometimes forwards straight to Underlying.
-            return new BijectModifier(this, UnderlyingToThis, ThisToUnderlying, underlying.CoordinateDimension);
-
-        }
         #endregion
 
         #region Topology
         public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
-            // TODO: We can surely do better than this when building the child grid?
-            if(underlying.TryMove(ThisToUnderlying(cell), dir, out dest, out inverseDir, out connection))
-            {
-                dest = UnderlyingToThis(dest);
-                return true;
-            }
-            return false;
+            return underlying.TryMove(cell, dir, out dest, out inverseDir, out connection);
         }
         #endregion
 

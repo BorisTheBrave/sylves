@@ -39,7 +39,7 @@ namespace Sylves.Test
         public void TestTryMove()
         {
             var g1 = new SquareGrid(1);
-            var g2 = new RelaxModifier(g1).WithUnderlyingCoordinates();
+            var g2 = new RelaxModifier(g1);
 
             Assert.AreEqual(
                 g1.Move(new Cell(10, 10, 0), (CellDir)SquareDir.Right),

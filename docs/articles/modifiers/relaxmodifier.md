@@ -27,4 +27,4 @@ There's several configuration settings documented on [the constructor](xref:Sylv
 
 ## Cell co-ordinates
 
-Currently, cell co-ordinates are completely replaced by a new set of co-ordinates based on chunking.
+Uses the same co-ordinates as underlying.

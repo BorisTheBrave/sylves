@@ -127,6 +127,11 @@ namespace Sylves
             base.Setup(strideX, strideY, aabbBottomLeft, aabbSize, translateMeshData, bound, cellTypes, cachePolicy);
         }
 
+        // Expose some methods for use with relax modifier
+        internal (Cell childCell, Cell chunkCell) InternalSplit(Cell cell) => Split(cell);
+        internal Cell InternalCombine(Cell childCell, Cell chunkCell) => Combine(childCell, chunkCell);
+
+
         /// <summary>
         /// Returns the mesh data for a chunk, plus also some processed details.
         /// Note that dataDrivenData/edgeStore is relative to the current chunk, so you need to add Promote(chunk) to
