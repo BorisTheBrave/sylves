@@ -315,8 +315,6 @@ namespace Sylves
         #endregion
 
 
-        // Maybe more should be override to pass through stuff from underlying?
-
         #region Basics
 
         public override bool Is2d => underlying.Is2d;

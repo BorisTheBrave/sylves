@@ -87,5 +87,26 @@ namespace Sylves.Test
                 }
             }
         }
+
+        [Test]
+        public void TestGetMeshData()
+        {
+            var hexGrid = new HexGrid(4);
+            var unrelaxedGrid = new PlanarLazyMeshGrid(GetMeshData, hexGrid);
+
+            unrelaxedGrid.FindCell(Vector3.zero, out var cell);
+            unrelaxedGrid.GetMeshData(cell, out var meshData, out var transform);
+
+            MeshData GetMeshData(Cell hex)
+            {
+                var triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(4));
+                var meshData = triangleGrid.ToMeshData();
+                meshData = Matrix4x4.Translate(hexGrid.GetCellCenter(hex)) * meshData;
+                var seed = HashUtils.Hash(hex);
+                meshData = meshData.RandomPairing(new Random(seed).NextDouble);
+                meshData = ConwayOperators.Ortho(meshData);
+                return meshData.Weld();
+            }
+        }
     }
 }
