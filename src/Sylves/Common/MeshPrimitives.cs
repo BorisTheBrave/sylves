@@ -74,8 +74,8 @@ namespace Sylves
                 // Faces in same order as CubeDir
                 // They are arranged so that 2nd edge points Up ( or Forward), matching CubeDir.Up().
                 int[] quads = {
-                    7, 6, 2, 3, // Left
                     0, 1, 5, 4, // Right
+                    7, 6, 2, 3, // Left
                     2, 6, 5, 1, // Up
                     0, 4, 7, 3, // Down
                     4, 5, 6, 7, // Forward
