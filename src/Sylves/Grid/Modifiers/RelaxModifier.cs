@@ -31,24 +31,24 @@ namespace Sylves
         // Description of the chunking used.
         // It matches the chunk grid, but uses 3 co-ordinates, not two.
         // This means we have to convert to/from hexes in a few places - ew
-        HexGrid hexGrid;
+        private readonly HexGrid hexGrid;
 
         // Caches
 
         // Unrelaxed chunks are just the raw mesh data taken from underlying
         // We also store the mapping from mesh faces back to underlying cells
-        IDictionary<Cell, (MeshData, BiMap<int, Cell>)> unrelaxedChunksByHex;
+        private readonly IDictionary<Cell, (MeshData, BiMap<int, Cell>)> unrelaxedChunksByHex;
 
         // Relaxed patches are the result of concatting several unrelaxed chunks together,
         // then relaxing them
         // Also stored is for each neighbour chunk, where the vertices of the unrelated mesh data can be found in relaxed patch.
-        IDictionary<Cell, (MeshData, Dictionary<Cell, int[]>)> relaxedPatchesByHex;
+        private readonly IDictionary<Cell, (MeshData, Dictionary<Cell, int[]>)> relaxedPatchesByHex;
 
         /// <summary>
         /// Cache for the Split operation.
         /// This can be slow depending on the underlying grid.
         /// </summary>
-        IDictionary<Cell, (Cell, Cell)> splitCache;
+        private readonly IDictionary<Cell, (Cell, Cell)> splitCache;
 
         public RelaxModifier(
             IGrid underlying,
@@ -139,9 +139,12 @@ namespace Sylves
             chunkSize = original.chunkSize;
             weldTolerance = original.weldTolerance;
             relaxIterations = original.relaxIterations;
+            passThroughMesh = original.passThroughMesh;
+            translateUnrelaxed = original.translateUnrelaxed;
             hexGrid = original.hexGrid;
             unrelaxedChunksByHex = original.unrelaxedChunksByHex;
             relaxedPatchesByHex = original.relaxedPatchesByHex;
+            splitCache = original.splitCache;
         }
 
         protected override (Cell childCell, Cell chunkCell) Split(Cell cell)
