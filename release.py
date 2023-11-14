@@ -23,12 +23,15 @@ subprocess.check_call(["dotnet","build","src/Sylves.sln","-c","GodotRelease"])
 with zipfile.ZipFile('release/netstandard2.0.zip', 'w') as z:
     z.write("src/Sylves/bin/Release/netstandard2.0/Sylves.dll", "Sylves.dll")
     z.write("src/Sylves/bin/Release/netstandard2.0/Sylves.xml", "Sylves.xml")
+    z.write("LICENSE.txt", "LICENSE.txt")
 
 with zipfile.ZipFile('release/Unity.zip', 'w') as z:
     z.write("src/Sylves/bin/UnityRelease/netstandard2.0/Sylves.dll", "Sylves.dll")
     z.write("src/Sylves/bin/UnityRelease/netstandard2.0/Sylves.xml", "Sylves.xml")
+    z.write("LICENSE.txt", "LICENSE.txt")
 
 with zipfile.ZipFile('release/Godot.zip', 'w') as z:
     z.write("src/Sylves.Godot/bin/Release/net6.0/Sylves.Godot.dll", "Sylves.Godot.dll")
     z.write("src/Sylves.Godot/bin/Release/net6.0/Sylves.Godot.xml", "Sylves.Godot.xml")
+    z.write("LICENSE.txt", "LICENSE.txt")
 
