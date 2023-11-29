@@ -455,8 +455,6 @@ namespace Sylves
             var dy = direction.y / cellSize.y;
             var dz = direction.z / cellSize.z;
 
-
-
             var stepx = Math.Sign(dx);
             var stepy = Math.Sign(dy);
             var stepz = Math.Sign(dz);

@@ -202,12 +202,12 @@ namespace Sylves
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-            return chunks.GetChunkIntersects(VectorUtils.ToVector2(min), VectorUtils.ToVector2(max)).Select(FromVector2Int);
+            return chunks.GetChunkIntersects(VectorUtils.ToVector2(min), VectorUtils.ToVector2(max), bound).Select(FromVector2Int);
         }
 
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
-            return chunks.Raycast(VectorUtils.ToVector2(origin), VectorUtils.ToVector2(direction), maxDistance);
+            return chunks.Raycast(VectorUtils.ToVector2(origin), VectorUtils.ToVector2(direction), maxDistance, bound);
         }
         #endregion
 

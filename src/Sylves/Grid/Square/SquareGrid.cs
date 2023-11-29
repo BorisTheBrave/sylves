@@ -418,14 +418,18 @@ namespace Sylves
         }
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
+            return Raycast(origin, direction, maxDistance, cellSize, bound);
+        }
+
+        // TOOD: Move somewhere more appropriate?
+        public static IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance, Vector2 cellSize, SquareBound bound)
+        {
             // Normalize things into a space where each cell
             // occupies a unit cube.
             var x1 = origin.x / cellSize.x;
             var y1 = origin.y / cellSize.y;
             var dx = direction.x / cellSize.x;
             var dy = direction.y / cellSize.y;
-
-
 
             var stepx = Math.Sign(dx);
             var stepy = Math.Sign(dy);
