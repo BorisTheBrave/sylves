@@ -384,7 +384,7 @@ namespace Sylves
         public bool FindCell(Vector3 position, out Cell cell)
         {
             cell = (Cell)Vector3Int.FloorToInt(Divide(position, cellSize));
-            return true;
+            return IsCellInGrid(cell);
         }
 
         public bool FindCell(

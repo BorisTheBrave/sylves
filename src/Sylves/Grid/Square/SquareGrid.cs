@@ -368,7 +368,7 @@ namespace Sylves
             var y = Mathf.FloorToInt(position.y / cellSize.y);
             var z = 0;
             cell = new Cell(x, y, z);
-            return true;
+            return IsCellInGrid(cell);
         }
 
         public bool FindCell(
@@ -376,7 +376,7 @@ namespace Sylves
             out Cell cell,
             out CellRotation rotation)
         {
-            var squareRotation= SquareRotation.FromMatrix(matrix);
+            var squareRotation = SquareRotation.FromMatrix(matrix);
 
             if (squareRotation != null)
             {

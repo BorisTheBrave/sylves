@@ -438,7 +438,7 @@ namespace Sylves
 
             var z = Mathf.RoundToInt(position.z / cellSize.z);
             cell = GetHexPrismCell(hex, z);
-            return true;
+            return IsCellInGrid(cell);
         }
 
 
