@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves.Test
 {
@@ -72,6 +71,24 @@ namespace Sylves.Test
             var g = GetGrid(gridType);
             var dual = g.GetDual();
             GridTest.DualMapping(dual, new Cell(0, 0, 0));
+        }
+
+        [Test]
+        public void TestDeform3d()
+        {
+            // Even if the mesh has no normals,
+            // we want to do something sensible with the third dimension when extending to PlanarPrismModifier
+            var normalessData = new MeshData
+            {
+                indices = TestMeshes.PlaneXY.indices,
+                vertices = TestMeshes.PlaneXY.vertices,
+                topologies = TestMeshes.PlaneXY.topologies,
+            };
+            var g = new PlanarPrismModifier(new RavelModifier(new MeshGrid(normalessData)), new PlanarPrismOptions { });
+            var d = g.GetDeformation(new Cell());
+            var j = d.GetJacobi(new Vector3());
+
+            Assert.AreEqual(new Vector4(0, 0, 1, 0), j.column3);
         }
     }
 }

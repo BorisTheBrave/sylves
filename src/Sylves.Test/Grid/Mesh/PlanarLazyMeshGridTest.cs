@@ -103,7 +103,7 @@ namespace Sylves.Test
                 var meshData = triangleGrid.ToMeshData();
                 meshData = Matrix4x4.Translate(hexGrid.GetCellCenter(hex)) * meshData;
                 var seed = HashUtils.Hash(hex);
-                meshData = meshData.RandomPairing(new Random(seed).NextDouble);
+                meshData = meshData.RandomPairing(new System.Random(seed).NextDouble);
                 meshData = ConwayOperators.Ortho(meshData);
                 return meshData.Weld();
             }
