@@ -236,9 +236,9 @@ namespace Sylves
 
         public virtual IDualMapping GetDual()
         {
-            // TODO
+            // TODO: This seems right, but I haven't really validated
             var dualBound = bound == null ? null :
-                new HexBound(bound.min, bound.max + Vector3Int.one);
+                new HexBound(bound.min - Vector3Int.one, bound.max);
 
             // Note hex orientation is flipped vs triangle orientation
             if (orientation == TriangleOrientation.FlatTopped)
@@ -749,7 +749,7 @@ namespace Sylves
                     Mathf.CeilToInt(y - 0.5f * x),
                     Mathf.CeilToInt(-y - 0.5f * x)
                 );
-                return true;
+                return IsCellInGrid(cell);
             }
             else
             {
@@ -764,7 +764,7 @@ namespace Sylves
                     Mathf.FloorToInt(y) + 1,
                     Mathf.CeilToInt(-x - 0.5f * y)
                 );
-                return true;
+                return IsCellInGrid(cell);
             }
         }
 
