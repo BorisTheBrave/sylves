@@ -37,6 +37,36 @@ namespace Sylves
             return new TransformModifier(underlying, transform, iTransform);
         }
 
+        #region Relatives
+
+        public IDualMapping GetDual()
+        {
+            var underlyingDualMapping = Underlying.GetDual();
+            return new DualMapping(this, new TransformModifier(underlyingDualMapping.DualGrid, transform), underlyingDualMapping);
+        }
+        private class DualMapping : BasicDualMapping
+        {
+            private readonly IDualMapping underlyingDualMapping;
+
+            public DualMapping(TransformModifier baseGrid, TransformModifier dualGrid, IDualMapping underlyingDualMapping) : base(baseGrid, dualGrid)
+            {
+                this.underlyingDualMapping = underlyingDualMapping;
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner)
+            {
+                return underlyingDualMapping.ToBasePair(dualCell, corner);
+            }
+
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner)
+            {
+                return underlyingDualMapping.ToDualPair(baseCell, corner);
+            }
+        }
+
+
+        #endregion
+
         #region Position
         public override Vector3 GetCellCenter(Cell cell) => transform.MultiplyPoint3x4(Underlying.GetCellCenter(cell));
         public override Vector3 GetCellCorner(Cell cell, CellCorner corner) => transform.MultiplyPoint3x4(Underlying.GetCellCorner(cell, corner));
