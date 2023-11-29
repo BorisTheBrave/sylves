@@ -39,7 +39,7 @@ namespace Sylves
 
         #region Relatives
 
-        public IDualMapping GetDual()
+        public override IDualMapping GetDual()
         {
             var underlyingDualMapping = Underlying.GetDual();
             return new DualMapping(this, new TransformModifier(underlyingDualMapping.DualGrid, transform), underlyingDualMapping);
