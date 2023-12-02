@@ -173,7 +173,7 @@ public class UnityToGodotRewriter : CSharpSyntaxRewriter
         {
             if (typeReplacements.TryGetValue((type.ContainingNamespace?.Name, type.Name), out var t))
             {
-                return QualifiedName(IdentifierName(t.Namespace), IdentifierName(t.Type))
+                return QualifiedName(IdentifierName(t.Namespace!), IdentifierName(t.Type))
                     .WithTriviaFrom(node);
             }
         }

@@ -13,7 +13,7 @@
 
 This modifier replaces every cell in the grid with a subgrid of cells. The original set of cells are called "chunk cell", and the grids replaceing them are "child grids". The cells of the child grid are "child cell".
 
-This modifier is `abstract` - to use it, you must to inherit from it, and implement [`GetChildGrid`](xref:Sylves.NestedModifier.GetChildGrid). 
+This modifier is `abstract` - to use it, you must to inherit from it, and implement [`GetChildGrid`](xref:Sylves.NestedModifier.GetChildGrid(Sylves.Cell)). 
 
 Using nested grid is quite tricky, consider using [`PlanarLazyMeshGrid`](../grids/planarlazymeshgrid.md) instead, which is a specialized case designed to be easier to work with.
 

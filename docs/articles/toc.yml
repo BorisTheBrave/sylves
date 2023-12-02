@@ -67,7 +67,7 @@
     -  name: SubstitutionTilingGrid
        href: grids/substitutiontilinggrid.md
     -  name: VoronoiGrid
-       href: grids/voronoi.md
+       href: grids/voronoigrid.md
     -  name: OffGrid
        href: grids/offgrid.md
 - name: Modifiers
