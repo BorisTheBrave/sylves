@@ -1,5 +1,20 @@
-# Unreleased
+# 1.0.0
+* **Breaking**: Swapped CubeDir.Left and CubeDir.Right
 * Added [OffGrid](grids/offgrid.md)
+* Added [ChairGrid](grids/substitutiontilinggrid.md)
+* Added [VoronoiGrid](grids/voronoigrid.md)
+* Added [JitteredSquareGrid](grids/jitteredsquaregrid.md)
+* Added [Voronator](xref:Sylves.Voronator) utiliyt class
+* Added [NestedModifier](xref:Sylves.NestedModifier) (for internal use)
+* Added [AabbGrid](xref:Sylves.AabbGrid) (for internal use)
+* 2d grids now support GetMeshData.
+* Fixes for RelaxModifier. It now uses the same coordinates as underlying.
+* Fix IsPointInTriangle.
+* Fix MeshPrism.IsPointInTri to be more robust.
+* Fix issue in substitution tiling.
+* Fix various grid operations to respect grid bounds
+* Fix transform of dual of transformed grid
+
 
 # 0.4.0
 * Added [Substitution tiling grid](grids/substitutiontilinggrid.md)
