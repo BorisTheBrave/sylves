@@ -14,7 +14,7 @@ namespace Sylves
             var n = Vector3.Cross(p1 - p0, p2 - p0);
 
             var o = Vector3.Dot(p - p2, n) / n.magnitude;
-            if (!(-planarThickness <= 0 && o <= planarThickness))
+            if (!(-planarThickness <= o && o <= planarThickness))
                 return false;
 
             var s = Vector3.Dot(n, Vector3.Cross(p0 - p2, p - p2));

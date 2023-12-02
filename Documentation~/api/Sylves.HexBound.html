@@ -89,35 +89,11 @@ This can represent rhombuses and hex shapes drawn on the hex grid.</p>
     <div><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</div>
     <div><span class="xref">System.Collections.IEnumerable</span></div>
   </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
-  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_HexBound_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class HexBound : IBound, IEnumerable&lt;Cell&gt;, IEnumerable</code></pre>
+    <pre><code class="lang-csharp hljs">public class HexBound : Object, IBound</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -284,7 +260,7 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static HexBound Hexagon(int radius, Cell center = default(Cell))</code></pre>
+    <pre><code class="lang-csharp hljs">public static HexBound Hexagon(int radius, Cell center = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -465,39 +441,12 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
       </tr>
     </tbody>
   </table>
-  <h3 id="eii">Explicit Interface Implementations
-  </h3>
-  
-  
-  <a id="Sylves_HexBound_System_Collections_IEnumerable_GetEnumerator_" data-uid="Sylves.HexBound.System#Collections#IEnumerable#GetEnumerator*"></a>
-  <h4 id="Sylves_HexBound_System_Collections_IEnumerable_GetEnumerator" data-uid="Sylves.HexBound.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IEnumerator IEnumerable.GetEnumerator()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Collections.IEnumerator</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Sylves.IBound.html">IBound</a>
   </div>
   <div>
-      <span class="xref">System.Collections.Generic.IEnumerable&lt;T&gt;</span>
+      <span class="xref">System.Collections.Generic.IEnumerable&lt;&gt;</span>
   </div>
   <div>
       <span class="xref">System.Collections.IEnumerable</span>

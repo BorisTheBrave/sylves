@@ -309,7 +309,7 @@ namespace Sylves
         }
         public IEnumerable<Cell> GetCellsInBounds(IBound bound)
         {
-            if (bound == null) throw new Exception("Cannot get cells in null bound as it is infinite");
+            if (bound == null) throw new GridInfiniteException();
             return (SquareBound)bound;
         }
         
@@ -355,7 +355,7 @@ namespace Sylves
 
         public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
         {
-            throw new Grid2dException();
+            DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
         #endregion
 
@@ -366,7 +366,7 @@ namespace Sylves
             var y = Mathf.FloorToInt(position.y / cellSize.y);
             var z = 0;
             cell = new Cell(x, y, z);
-            return true;
+            return IsCellInGrid(cell);
         }
 
         public bool FindCell(
@@ -374,7 +374,7 @@ namespace Sylves
             out Cell cell,
             out CellRotation rotation)
         {
-            var squareRotation= SquareRotation.FromMatrix(matrix);
+            var squareRotation = SquareRotation.FromMatrix(matrix);
 
             if (squareRotation != null)
             {
@@ -416,14 +416,18 @@ namespace Sylves
         }
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
         {
+            return Raycast(origin, direction, maxDistance, cellSize, bound);
+        }
+
+        // TOOD: Move somewhere more appropriate?
+        public static IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance, Vector2 cellSize, SquareBound bound)
+        {
             // Normalize things into a space where each cell
             // occupies a unit cube.
             var x1 = origin.x / cellSize.x;
             var y1 = origin.y / cellSize.y;
             var dx = direction.x / cellSize.x;
             var dy = direction.y / cellSize.y;
-
-
 
             var stepx = Math.Sign(dx);
             var stepy = Math.Sign(dy);

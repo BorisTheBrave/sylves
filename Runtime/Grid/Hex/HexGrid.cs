@@ -161,7 +161,7 @@ namespace Sylves
 
         public virtual IDualMapping GetDual()
         {
-            // TODO
+            // TODO: This seems right, but I haven't really validated
             var dualBound = bound == null ? null :
                 new TriangleBound(bound.min, bound.max + Vector3Int.one);
 
@@ -471,7 +471,7 @@ namespace Sylves
 
         public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
         {
-            throw new Grid2dException();
+            DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
 
         #endregion
@@ -481,7 +481,7 @@ namespace Sylves
         {
             var success = childTriangles.FindCell(position, out var triangleCell);
             cell = GetTriangleParent(triangleCell);
-            return success;
+            return success && IsCellInGrid(cell);
         }
 
 

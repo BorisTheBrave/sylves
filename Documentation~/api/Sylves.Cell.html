@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Struct Cell
+    <title>Class Cell
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Struct Cell
+    <meta name="title" content="Class Cell
    ">
     <meta name="generator" content="docfx 2.59.0.0">
     
@@ -72,34 +72,27 @@
             <article class="content wrap" id="_content" data-uid="Sylves.Cell">
   
   
-  <h1 id="Sylves_Cell" data-uid="Sylves.Cell" class="text-break">Struct Cell
+  <h1 id="Sylves_Cell" data-uid="Sylves.Cell" class="text-break">Class Cell
   </h1>
   <div class="markdown level0 summary"><p>Represents a single cell in the grid.
 Cell is just a set of co-ordinates, the grid itself must be called to get any details about the cell.
 For more details see the basic concepts in the docs.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Cell</span></div>
+  </div>
   <div classs="implements">
     <h5>Implements</h5>
     <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</div>
-  </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_Cell_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct Cell : IEquatable&lt;Cell&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class Cell : ValueType</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -332,8 +325,6 @@ For more details see the basic concepts in the docs.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.Equals(System.Object)</span></div>
   
   
   <a id="Sylves_Cell_GetHashCode_" data-uid="Sylves.Cell.GetHashCode*"></a>
@@ -359,8 +350,6 @@ For more details see the basic concepts in the docs.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.GetHashCode()</span></div>
   
   
   <a id="Sylves_Cell_ToString_" data-uid="Sylves.Cell.ToString*"></a>
@@ -386,8 +375,6 @@ For more details see the basic concepts in the docs.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.ToString()</span></div>
   <h3 id="operators">Operators
   </h3>
   
@@ -758,7 +745,7 @@ For more details see the basic concepts in the docs.</p>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <span class="xref">System.IEquatable&lt;&gt;</span>
   </div>
 </article>
           </div>

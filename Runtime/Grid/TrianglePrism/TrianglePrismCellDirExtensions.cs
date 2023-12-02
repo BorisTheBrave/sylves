@@ -21,7 +21,7 @@ namespace Sylves
                 case FSTrianglePrismDir.Back: return new Vector3Int(0, 0, -1);
                 default: return ((FSTrianglePrismDir)dir).Forward();
             }
-            throw new Exception();
+            throw new InvalidOperationException($"Cannot convert {dir} from FSTrianglePrismDir to Vector3"); 
         }
 
         /// <returns>Returns the face dir with the opposite normal vector.</returns>

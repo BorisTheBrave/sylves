@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Struct Matrix4x4
+    <title>Class Matrix4x4
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Struct Matrix4x4
+    <meta name="title" content="Class Matrix4x4
    ">
     <meta name="generator" content="docfx 2.59.0.0">
     
@@ -72,31 +72,24 @@
             <article class="content wrap" id="_content" data-uid="Sylves.Matrix4x4">
   
   
-  <h1 id="Sylves_Matrix4x4" data-uid="Sylves.Matrix4x4" class="text-break">Struct Matrix4x4
+  <h1 id="Sylves_Matrix4x4" data-uid="Sylves.Matrix4x4" class="text-break">Class Matrix4x4
   </h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Matrix4x4</span></div>
+  </div>
   <div classs="implements">
     <h5>Implements</h5>
     <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a>&gt;</div>
-  </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_Matrix4x4_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct Matrix4x4 : IEquatable&lt;Matrix4x4&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class Matrix4x4 : ValueType</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -250,7 +243,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly float determinant { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public float determinant { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -275,7 +268,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Matrix4x4 identity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Matrix4x4 identity { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -300,7 +293,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly Matrix4x4 inverse { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Matrix4x4 inverse { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -325,7 +318,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly bool isIdentity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool isIdentity { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -350,7 +343,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly Vector3 lossyScale { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Vector3 lossyScale { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -775,7 +768,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly Quaternion rotation { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Quaternion rotation { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -800,7 +793,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly Matrix4x4 transpose { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Matrix4x4 transpose { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -825,7 +818,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Matrix4x4 zero { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Matrix4x4 zero { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -970,8 +963,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.Equals(System.Object)</span></div>
   
   
   <a id="Sylves_Matrix4x4_GetColumn_" data-uid="Sylves.Matrix4x4.GetColumn*"></a>
@@ -1039,8 +1030,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.GetHashCode()</span></div>
   
   
   <a id="Sylves_Matrix4x4_GetRow_" data-uid="Sylves.Matrix4x4.GetRow*"></a>
@@ -1461,8 +1450,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.ToString()</span></div>
   
   
   <a id="Sylves_Matrix4x4_ToString_" data-uid="Sylves.Matrix4x4.ToString*"></a>
@@ -1833,7 +1820,7 @@
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <span class="xref">System.IEquatable&lt;&gt;</span>
   </div>
 </article>
           </div>

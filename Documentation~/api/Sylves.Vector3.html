@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Struct Vector3
+    <title>Class Vector3
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Struct Vector3
+    <meta name="title" content="Class Vector3
    ">
     <meta name="generator" content="docfx 2.59.0.0">
     
@@ -72,29 +72,22 @@
             <article class="content wrap" id="_content" data-uid="Sylves.Vector3">
   
   
-  <h1 id="Sylves_Vector3" data-uid="Sylves.Vector3" class="text-break">Struct Vector3
+  <h1 id="Sylves_Vector3" data-uid="Sylves.Vector3" class="text-break">Class Vector3
   </h1>
   <div class="markdown level0 summary"><p>A pure .NET implemenation of Unity's Vector3.
 See Unity's docs for more details.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Vector3</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_Vector3_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct Vector3</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class Vector3 : ValueType</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -145,7 +138,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector3 back { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector3 back { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -170,7 +163,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector3 down { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector3 down { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -195,7 +188,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector3 forward { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector3 forward { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -262,7 +255,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector3 left { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector3 left { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -287,7 +280,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly float magnitude { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public float magnitude { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -312,7 +305,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector3 negativeInfinity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector3 negativeInfinity { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -337,7 +330,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly Vector3 normalized { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Vector3 normalized { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -362,7 +355,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector3 one { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector3 one { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -387,7 +380,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector3 positiveInfinity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector3 positiveInfinity { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -412,7 +405,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector3 right { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector3 right { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -437,7 +430,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly float sqrMagnitude { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public float sqrMagnitude { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -462,7 +455,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector3 up { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector3 up { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -562,7 +555,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector3 zero { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector3 zero { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -900,8 +893,6 @@ See Unity's docs for more details.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.Equals(System.Object)</span></div>
   
   
   <a id="Sylves_Vector3_GetHashCode_" data-uid="Sylves.Vector3.GetHashCode*"></a>
@@ -927,8 +918,6 @@ See Unity's docs for more details.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.GetHashCode()</span></div>
   
   
   <a id="Sylves_Vector3_Lerp_" data-uid="Sylves.Vector3.Lerp*"></a>
@@ -1842,8 +1831,6 @@ See Unity's docs for more details.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.ToString()</span></div>
   
   
   <a id="Sylves_Vector3_ToString_" data-uid="Sylves.Vector3.ToString*"></a>

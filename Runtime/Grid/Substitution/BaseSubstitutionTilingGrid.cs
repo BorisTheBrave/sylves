@@ -13,7 +13,7 @@ namespace Sylves
 	{
         // Raycast and IntersectsAabb have a hard time knowing when to stop searching.
         // They give up when they haven't found anything interesting in this many heights.
-        protected const int DeadZone = 2;
+        protected const int DeadZone = 3;
 
         protected readonly InternalPrototile[] prototiles;
         protected int tileBits;
@@ -634,7 +634,7 @@ namespace Sylves
 
         public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
         {
-            throw new Grid2dException();
+            DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
 
         #endregion

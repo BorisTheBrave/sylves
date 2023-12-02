@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>0.4.0 </title>
+    <title>1.0.0 </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="0.4.0 ">
+    <meta name="title" content="1.0.0 ">
     <meta name="generator" content="docfx 2.59.0.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -68,8 +68,26 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="040">0.4.0</h1>
+<h1 id="100">1.0.0</h1>
 
+<ul>
+<li><strong>Breaking</strong>: Swapped CubeDir.Left and CubeDir.Right</li>
+<li>Added <a href="grids/offgrid.html">OffGrid</a></li>
+<li>Added <a href="grids/substitutiontilinggrid.html">ChairGrid</a></li>
+<li>Added <a href="grids/voronoigrid.html">VoronoiGrid</a></li>
+<li>Added <a href="grids/jitteredsquaregrid.html">JitteredSquareGrid</a></li>
+<li>Added <a class="xref" href="../api/Sylves.Voronator.html">Voronator</a> utiliyt class</li>
+<li>Added <a class="xref" href="../api/Sylves.NestedModifier.html">NestedModifier</a> (for internal use)</li>
+<li>Added AabbGrid (for internal use)</li>
+<li>2d grids now support GetMeshData.</li>
+<li>Fixes for RelaxModifier. It now uses the same coordinates as underlying.</li>
+<li>Fix IsPointInTriangle.</li>
+<li>Fix MeshPrism.IsPointInTri to be more robust.</li>
+<li>Fix issue in substitution tiling.</li>
+<li>Fix various grid operations to respect grid bounds</li>
+<li>Fix transform of dual of transformed grid</li>
+</ul>
+<h1 id="040">0.4.0</h1>
 <ul>
 <li>Added <a href="grids/substitutiontilinggrid.html">Substitution tiling grid</a></li>
 <li>Added <a href="tutorials/getting_started_godot.html">experimental Godot support</a></li>

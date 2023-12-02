@@ -140,19 +140,57 @@ namespace Sylves
             }
         }
 
-        protected override bool IsPointInCell(Vector3 position, Cell cell)
+        /// <summary>
+        /// Returns generalized winding number as a fraction of the sphere area.
+        /// This should sum to an integer value when summed over all triangles in a closed mesh.
+        /// https://users.cs.utah.edu/~ladislav/jacobson13robust/jacobson13robust.html
+        /// </summary>
+        private float GeneralizedWinding(Vector3 p, Vector3 vi, Vector3 vj, Vector3 vk)
         {
-            var c = 0;
-            foreach(var (v0, v1, v2, _) in GetTriangleMesh(cell))
-            {
-                if(MeshRaycast.RaycastTri(position, Vector3.right, v0, v1, v2, out var _, out var _, out var side))
-                {
-                    c += side ? 1 : -1;
-                }
-            }
-            return c != 0;
+            p -= vi;
+            vj -= vi;
+            vk -= vi;
+            // vi := (0,0,0), a := vi - p
+            var a = -p;
+            // arbitrary position for vj, b := vj - p
+            var b = vj - p;
+            // arbitrary position for vk, c := vk - p
+            var c = vk - p;
+            // determinant of (a,b,c)
+            var detabc = a.x * b.y * c.z + b.x * c.y * a.z + c.x * a.y * b.z -
+                a.x * c.y * b.z - b.x * a.y * c.z - c.x * b.y * a.z;
+            var al = a.magnitude;
+            var bl = b.magnitude;
+            var cl = c.magnitude;
+            // divisor in atan
+            var divisor = al * bl * cl + Vector3.Dot(a, b) * cl + Vector3.Dot(b, c) * al + Vector3.Dot(c, a) * bl;
+            var sabc = 2 * Mathf.Atan(detabc / divisor);
+            return sabc / (4 * Mathf.PI);
         }
 
+        protected override bool IsPointInCell(Vector3 position, Cell cell)
+        {
+            // Uses raycasts. Not robust enough
+            if(false)
+            {
+                var c = 0;
+                foreach (var (v0, v1, v2, _) in GetTriangleMesh(cell))
+                {
+                    if (MeshRaycast.RaycastTri(position, Vector3.right, v0, v1, v2, out var _, out var _, out var side))
+                    {
+                        c += side ? 1 : -1;
+                    }
+                }
+                return c != 0;
+            }
+
+            var d = 0f;
+            foreach (var (v0, v1, v2, dir) in GetTriangleMesh(cell))
+            {
+                d += GeneralizedWinding(position, v0, v1, v2); ;
+            }
+            return Mathf.RoundToInt(d) != 0;
+        }
         #endregion
 
         #region Shape
@@ -216,8 +254,8 @@ namespace Sylves
                 {
                     var v2 = vertices[face[i]];
                     var n2 = normals[face[i]];
-                    yield return (v0 + n0 * meshOffset2, v1 + n1 * meshOffset2, v2 + n2 * meshOffset2, prismInfo.ForwardDir);
-                    yield return (v0 + n0 * meshOffset1, v2 + n2 * meshOffset1, v1 + n1 * meshOffset1, prismInfo.BackDir);
+                    yield return (v0 + n0 * meshOffset2, v2 + n2 * meshOffset2, v1 + n1 * meshOffset2, prismInfo.ForwardDir);
+                    yield return (v0 + n0 * meshOffset1, v1 + n1 * meshOffset1, v2 + n2 * meshOffset1, prismInfo.BackDir);
                     v1 = v2;
                     n1 = n2;
                 }

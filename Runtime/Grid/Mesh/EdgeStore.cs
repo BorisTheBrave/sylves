@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -33,6 +34,11 @@ namespace Sylves
             this.unmatchedEdges = unmatchedEdges;
             this.vertexCount = vertexCount;
             this.tolerance = tolerance;
+        }
+
+        public void MapCells(Func<Cell, Cell> f)
+        {
+            unmatchedEdges = unmatchedEdges.ToDictionary(kv => kv.Key, kv => (kv.Value.Item1, kv.Value.Item2, f(kv.Value.Item3), kv.Value.Item4));
         }
 
         public IEnumerable<(Vector3 v1, Vector3 v2, Cell cell, CellDir dir)> UnmatchedEdges

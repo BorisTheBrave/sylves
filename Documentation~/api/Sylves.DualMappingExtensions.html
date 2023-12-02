@@ -81,35 +81,11 @@
     <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><span class="xref">DualMappingExtensions</span></div>
   </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
-  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_DualMappingExtensions_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class DualMappingExtensions</code></pre>
+    <pre><code class="lang-csharp hljs">public static class DualMappingExtensions : Object</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -122,7 +98,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;(CellCorner corner, Cell baseCell, CellCorner inverseCorner)&gt; BaseNeighbours(this IDualMapping dm, Cell dualCell)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;(CellCorner, Cell, CellCorner)&gt; BaseNeighbours(this IDualMapping dm, Cell dualCell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -170,7 +146,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;(CellCorner corner, Cell dualCell, CellCorner inverseCorner)&gt; DualNeighbours(this IDualMapping dm, Cell baseCell)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;(CellCorner, Cell, CellCorner)&gt; DualNeighbours(this IDualMapping dm, Cell baseCell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -260,7 +236,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Cell? ToBaseCell(this IDualMapping dm, Cell dualCell, CellCorner corner)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Nullable&lt;Cell&gt; ToBaseCell(this IDualMapping dm, Cell dualCell, CellCorner corner)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -313,7 +289,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Cell? ToDualCell(this IDualMapping dm, Cell baseCell, CellCorner corner)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Nullable&lt;Cell&gt; ToDualCell(this IDualMapping dm, Cell baseCell, CellCorner corner)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

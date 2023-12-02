@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Sylves
 {
+    /// <summary>
+    /// Specialization of MeshGrid specifically for planar meshes.
+    /// </summary>
     internal class PlanarMeshGrid : MeshGrid
     {
         public PlanarMeshGrid(MeshData meshData, MeshGridOptions meshGridOptions = null) : base(meshData, meshGridOptions)

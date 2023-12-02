@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Struct Connection
+    <title>Class Connection
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Struct Connection
+    <meta name="title" content="Class Connection
    ">
     <meta name="generator" content="docfx 2.59.0.0">
     
@@ -72,7 +72,7 @@
             <article class="content wrap" id="_content" data-uid="Sylves.Connection">
   
   
-  <h1 id="Sylves_Connection" data-uid="Sylves.Connection" class="text-break">Struct Connection
+  <h1 id="Sylves_Connection" data-uid="Sylves.Connection" class="text-break">Class Connection
   </h1>
   <div class="markdown level0 summary"><p>Represents how the edges (2d) or faces (3d) of cells can connect to each other.
 In 2d, rotation/sides are unused, as two edges can only connect together normally or reflected.
@@ -80,27 +80,20 @@ In 3d, this represents both a rotation and reflection, similar to NGonCellType r
 As there, Mirror inverts the y-axis, and is applied before rotation, which is counter clockwise.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Connection</span></div>
+  </div>
   <div classs="implements">
     <h5>Implements</h5>
     <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Sylves.Connection.html">Connection</a>&gt;</div>
-  </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_Connection_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct Connection : IEquatable&lt;Connection&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class Connection : ValueType</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -265,8 +258,6 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.Equals(System.Object)</span></div>
   
   
   <a id="Sylves_Connection_GetHashCode_" data-uid="Sylves.Connection.GetHashCode*"></a>
@@ -292,8 +283,6 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.GetHashCode()</span></div>
   
   
   <a id="Sylves_Connection_GetInverse_" data-uid="Sylves.Connection.GetInverse*"></a>
@@ -315,6 +304,32 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     <tbody>
       <tr>
         <td><a class="xref" href="Sylves.Connection.html">Connection</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_Connection_ToMatrix_" data-uid="Sylves.Connection.ToMatrix*"></a>
+  <h4 id="Sylves_Connection_ToMatrix" data-uid="Sylves.Connection.ToMatrix">ToMatrix()</h4>
+  <div class="markdown level1 summary"><p>Give an equivalent rotation in the XY plane.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix4x4 ToMatrix()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -344,8 +359,6 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.ToString()</span></div>
   <h3 id="operators">Operators
   </h3>
   
@@ -491,7 +504,7 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <span class="xref">System.IEquatable&lt;&gt;</span>
   </div>
 </article>
           </div>

@@ -80,7 +80,7 @@ namespace Sylves
 
 
         // Returns all the chunks that overlap min/max
-        public IEnumerable<Vector2Int> GetChunkIntersects(Vector2 min, Vector2 max)
+        public IEnumerable<Vector2Int> GetChunkIntersects(Vector2 min, Vector2 max, SquareBound bound = null)
         {
             min -= aabbSize + aabbBottomLeft;
             max -= aabbBottomLeft;
@@ -108,6 +108,11 @@ namespace Sylves
             }
             var minX = Mathf.CeilToInt(left.x);
             var maxX = Mathf.FloorToInt(right.x);
+            if(bound != null)
+            {
+                minX = Math.Max(minX, bound.min.x);
+                maxX = Math.Min(maxX, bound.max.x - 1);
+            }
             for (var x = minX; x <= maxX; x++)
             {
                 var minY = Mathf.CeilToInt(Math.Max(
@@ -118,6 +123,11 @@ namespace Sylves
                     top.x - left.x == 0 ? float.PositiveInfinity : (x - left.x) / (top.x - left.x) * (top.y - left.y) + left.y,
                     top.x - right.x == 0 ? float.PositiveInfinity : (x - right.x) / (top.x - right.x) * (top.y - right.y) + right.y
                     ));
+                if (bound != null)
+                {
+                    minY = Math.Max(minY, bound.min.y);
+                    maxY = Math.Min(maxY, bound.max.y - 1);
+                }
                 for (var y = minY; y <= maxY; y++)
                 {
                     yield return new Vector2Int(x, y);
@@ -133,22 +143,32 @@ namespace Sylves
             }
         }
 
-        public IEnumerable<RaycastInfo> Raycast(Vector2 origin, Vector2 direction, float maxDistance)
+        public IEnumerable<RaycastInfo> Raycast(Vector2 origin, Vector2 direction, float maxDistance, SquareBound bound = null)
         {
             // Raycast through a tiling of the fundamental rhombus
             // which in inverse space, is just a square grid
             var invOrigin = Inv(origin);
             var invDirection = Inv(direction);
-            var fundRis = CubeGrid.Raycast(new Vector3(invOrigin.x, invOrigin.y, 0), new Vector3(invDirection.x, invDirection.y, 0), maxDistance, Vector3.one, null);
+            var fundRis = SquareGrid.Raycast(new Vector3(invOrigin.x, invOrigin.y, 0), new Vector3(invDirection.x, invDirection.y, 0), maxDistance, Vector2.one, bound);
             var comparer = new RaycastInfoComparer();
 
             var output = new List<RaycastInfo>(chunksInFundamentalRhombus.Length);
+            HashSet<Cell> prevOutput = null;
             void Process(RaycastInfo fundamentalRi, double fundamentalMinDistance, double fundamentalMaxDistance)
             {
                 output.Clear();
                 foreach (var chunk in chunksInFundamentalRhombus)
                 {
                     var actualChunk = new Vector2Int(fundamentalRi.cell.x + chunk.x, fundamentalRi.cell.y + chunk.y);
+                    if(bound != null)
+                    {
+                        var inBounds = bound.min.x <= actualChunk.x && actualChunk.x < bound.max.x &&
+                            bound.min.y <= actualChunk.y && actualChunk.y < bound.max.y;
+                        if (!inBounds)
+                        {
+                            continue;
+                        }
+                    }
 
                     // Raycast vs one chunk. This could be optimized better
                     var (chunkMin, chunkMax) = GetChunkBounds(actualChunk);
@@ -171,7 +191,7 @@ namespace Sylves
                         tmax < 0 ||
                         // Collision is not in current fundamental rhombus
                         // We ignore for now for ordering reasons, it'll be found in a later rhombus
-                        tmin > fundamentalMaxDistance ||
+                        tmin >= fundamentalMaxDistance ||
                         tmin < fundamentalMinDistance)
                         continue;
                     output.Add(new RaycastInfo

@@ -382,7 +382,7 @@ namespace Sylves
         public bool FindCell(Vector3 position, out Cell cell)
         {
             cell = (Cell)Vector3Int.FloorToInt(Divide(position, cellSize));
-            return true;
+            return IsCellInGrid(cell);
         }
 
         public bool FindCell(
@@ -452,8 +452,6 @@ namespace Sylves
             var dx = direction.x / cellSize.x;
             var dy = direction.y / cellSize.y;
             var dz = direction.z / cellSize.z;
-
-
 
             var stepx = Math.Sign(dx);
             var stepy = Math.Sign(dy);

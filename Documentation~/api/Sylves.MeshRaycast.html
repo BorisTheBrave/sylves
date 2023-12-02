@@ -81,38 +81,138 @@
     <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><span class="xref">MeshRaycast</span></div>
   </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
-  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_MeshRaycast_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class MeshRaycast</code></pre>
+    <pre><code class="lang-csharp hljs">public static class MeshRaycast : Object</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
+  
+  
+  <a id="Sylves_MeshRaycast_RaycastAabb_" data-uid="Sylves.MeshRaycast.RaycastAabb*"></a>
+  <h4 id="Sylves_MeshRaycast_RaycastAabb_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_System_Single__" data-uid="Sylves.MeshRaycast.RaycastAabb(Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,System.Single@)">RaycastAabb(Vector3, Vector3, Vector3, Vector3, out Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool RaycastAabb(Vector3 rayOrigin, Vector3 direction, Vector3 min, Vector3 max, out float distance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">rayOrigin</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">direction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">min</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">max</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">distance</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_MeshRaycast_RaycastAabbPlanar_" data-uid="Sylves.MeshRaycast.RaycastAabbPlanar*"></a>
+  <h4 id="Sylves_MeshRaycast_RaycastAabbPlanar_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_System_Single__" data-uid="Sylves.MeshRaycast.RaycastAabbPlanar(Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,System.Single@)">RaycastAabbPlanar(Vector3, Vector3, Vector3, Vector3, out Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool RaycastAabbPlanar(Vector3 rayOrigin, Vector3 direction, Vector3 min, Vector3 max, out float distance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">rayOrigin</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">direction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">min</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">max</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">distance</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   
   
   <a id="Sylves_MeshRaycast_RaycastCube_" data-uid="Sylves.MeshRaycast.RaycastCube*"></a>
@@ -121,7 +221,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static RaycastInfo? RaycastCube(Vector3 rayOrigin, Vector3 direction, Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 v5, Vector3 v6, Vector3 v7, Vector3 v8)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Nullable&lt;RaycastInfo&gt; RaycastCube(Vector3 rayOrigin, Vector3 direction, Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 v5, Vector3 v6, Vector3 v7, Vector3 v8)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -202,15 +302,154 @@
   </table>
   
   
-  <a id="Sylves_MeshRaycast_RaycastSegment_" data-uid="Sylves.MeshRaycast.RaycastSegment*"></a>
-  <h4 id="Sylves_MeshRaycast_RaycastSegment_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3__System_Single__" data-uid="Sylves.MeshRaycast.RaycastSegment(Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,Sylves.Vector3@,System.Single@)">RaycastSegment(Vector3, Vector3, Vector3, Vector3, out Vector3, out Single)</h4>
+  <a id="Sylves_MeshRaycast_RaycastPolygonPlanar_" data-uid="Sylves.MeshRaycast.RaycastPolygonPlanar*"></a>
+  <h4 id="Sylves_MeshRaycast_RaycastPolygonPlanar_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3___Sylves_Matrix4x4_Sylves_Vector3__System_Single__System_Nullable_System_Int32___" data-uid="Sylves.MeshRaycast.RaycastPolygonPlanar(Sylves.Vector3,Sylves.Vector3,Sylves.Vector3[],Sylves.Matrix4x4,Sylves.Vector3@,System.Single@,System.Nullable{System.Int32}@)">RaycastPolygonPlanar(Vector3, Vector3, Vector3[], Matrix4x4, out Vector3, out Single, out Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool RaycastPolygonPlanar(Vector3 rayOrigin, Vector3 direction, Vector3[] v, Matrix4x4 transform, out Vector3 point, out float distance, out Nullable&lt;int&gt; side)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">rayOrigin</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">direction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a>[]</td>
+        <td><span class="parametername">v</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td><span class="parametername">transform</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">point</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">distance</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">side</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_MeshRaycast_RaycastPolygonPlanar_" data-uid="Sylves.MeshRaycast.RaycastPolygonPlanar*"></a>
+  <h4 id="Sylves_MeshRaycast_RaycastPolygonPlanar_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3___Sylves_Vector3__System_Single__System_Nullable_System_Int32___" data-uid="Sylves.MeshRaycast.RaycastPolygonPlanar(Sylves.Vector3,Sylves.Vector3,Sylves.Vector3[],Sylves.Vector3@,System.Single@,System.Nullable{System.Int32}@)">RaycastPolygonPlanar(Vector3, Vector3, Vector3[], out Vector3, out Single, out Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool RaycastPolygonPlanar(Vector3 rayOrigin, Vector3 direction, Vector3[] vs, out Vector3 point, out float distance, out Nullable&lt;int&gt; side)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">rayOrigin</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">direction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a>[]</td>
+        <td><span class="parametername">vs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">point</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">distance</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">side</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_MeshRaycast_RaycastSegmentPlanar_" data-uid="Sylves.MeshRaycast.RaycastSegmentPlanar*"></a>
+  <h4 id="Sylves_MeshRaycast_RaycastSegmentPlanar_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3__System_Single__System_Boolean__" data-uid="Sylves.MeshRaycast.RaycastSegmentPlanar(Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,Sylves.Vector3@,System.Single@,System.Boolean@)">RaycastSegmentPlanar(Vector3, Vector3, Vector3, Vector3, out Vector3, out Single, out Boolean)</h4>
   <div class="markdown level1 summary"><p>Performs a raycast in the XY plane of a ray vs a finite segment of a line.
 z-coordinates are completely ignored.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool RaycastSegment(Vector3 rayOrigin, Vector3 direction, Vector3 v0, Vector3 v1, out Vector3 point, out float distance)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool RaycastSegmentPlanar(Vector3 rayOrigin, Vector3 direction, Vector3 v0, Vector3 v1, out Vector3 point, out float distance, out bool side)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -250,6 +489,11 @@ z-coordinates are completely ignored.</p>
       <tr>
         <td><span class="xref">System.Single</span></td>
         <td><span class="parametername">distance</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">side</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -346,7 +590,8 @@ z-coordinates are completely ignored.</p>
   
   <a id="Sylves_MeshRaycast_RaycastTri_" data-uid="Sylves.MeshRaycast.RaycastTri*"></a>
   <h4 id="Sylves_MeshRaycast_RaycastTri_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3_Sylves_Vector3__System_Single__System_Boolean__" data-uid="Sylves.MeshRaycast.RaycastTri(Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,Sylves.Vector3,Sylves.Vector3@,System.Single@,System.Boolean@)">RaycastTri(Vector3, Vector3, Vector3, Vector3, Vector3, out Vector3, out Single, out Boolean)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Raycasts a ray vs a single triagnle.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">

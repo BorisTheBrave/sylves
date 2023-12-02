@@ -86,6 +86,14 @@ This algorith takes an admissible heuristic, and uses it to find the shortest pa
       <section><p>Abstract class for creating wrapper grids.
 Wrappers defer most methods to an underlying grid.</p>
 </section>
+      <h4><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html">BaseSubstitutionTilingGrid</a></h4>
+      <section><p>Base class for <a class="xref" href="Sylves.SubstitutionTilingGrid.html">SubstitutionTilingGrid</a>
+This contains common utilities and calculations that do no rely on caching.</p>
+</section>
+      <h4><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.Aabb.html">BaseSubstitutionTilingGrid.Aabb</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.InternalPrototile.html">BaseSubstitutionTilingGrid.InternalPrototile</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.BijectModifier.html">BijectModifier</a></h4>
       <section><p>Remaps the cells of the grid by changing their co-ordinates,
 without touching the position, shape or topology.</p>
@@ -93,6 +101,8 @@ without touching the position, shape or topology.</p>
       <h4><a class="xref" href="Sylves.BiMap-2.html">BiMap&lt;U, V&gt;</a></h4>
       <section><p>Represents a 1:1 mapping between two types</p>
 </section>
+      <h4><a class="xref" href="Sylves.BorderRelaxation.html">BorderRelaxation</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.CachePolicy.html">CachePolicy</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.CairoGrid.html">CairoGrid</a></h4>
@@ -100,12 +110,54 @@ without touching the position, shape or topology.</p>
 <a href="https://en.wikipedia.org/wiki/Cairo_pentagonal_tiling">https://en.wikipedia.org/wiki/Cairo_pentagonal_tiling</a>
 This is an specialization of <a class="xref" href="Sylves.PeriodicPlanarMeshGrid.html">PeriodicPlanarMeshGrid</a>.</p>
 </section>
+      <h4><a class="xref" href="Sylves.Cell.html">Cell</a></h4>
+      <section><p>Represents a single cell in the grid.
+Cell is just a set of co-ordinates, the grid itself must be called to get any details about the cell.
+For more details see the basic concepts in the docs.</p>
+</section>
+      <h4><a class="xref" href="Sylves.CellCorner.html">CellCorner</a></h4>
+      <section><p>Represents a particular corner of a generic cell.
+The enum is empty - to work with corners, you need to either:</p>
+<ul>
+<li>Use the methods on <a class="xref" href="Sylves.ICellType.html">ICellType</a>.</li>
+<li>Cast to the enum specific to a given cell type, e.g. <a class="xref" href="Sylves.CellCorner.html">CellCorner</a>.</li>
+</ul>
+</section>
+      <h4><a class="xref" href="Sylves.CellDir.html">CellDir</a></h4>
+      <section><p>Represents a particular edge (2d) or face (3d) of a generic cell.
+The enum is empty - to work with directions, you need to either:</p>
+<ul>
+<li>Use the methods on <a class="xref" href="Sylves.ICellType.html">ICellType</a>.</li>
+<li>Cast to the enum specific to a given cell type, e.g. <a class="xref" href="Sylves.CubeDir.html">CubeDir</a>.</li>
+</ul>
+</section>
       <h4><a class="xref" href="Sylves.CellPath.html">CellPath</a></h4>
       <section></section>
+      <h4><a class="xref" href="Sylves.CellRotation.html">CellRotation</a></h4>
+      <section><p>Represents a particular rotation of a generic cell.
+Despite the name, this usually includes reflections too.
+The enum is empty - to work with directions, you need to either:</p>
+<ul>
+<li>Use the methods on <a class="xref" href="Sylves.ICellType.html">ICellType</a>.</li>
+<li>Cast to the enum specific to a given cell type, e.g. <a class="xref" href="Sylves.CubeRotation.html">CubeRotation</a>.</li>
+</ul>
+</section>
+      <h4><a class="xref" href="Sylves.CellSwizzle.html">CellSwizzle</a></h4>
+      <section><p>Identifies a permutation of the 3 axes
+Identical to Unity's CellSwizzle.</p>
+</section>
       <h4><a class="xref" href="Sylves.CellSwizzleExtensions.html">CellSwizzleExtensions</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.ChairGrid.html">ChairGrid</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.ChisledPathfinding.html">ChisledPathfinding</a></h4>
       <section></section>
+      <h4><a class="xref" href="Sylves.Connection.html">Connection</a></h4>
+      <section><p>Represents how the edges (2d) or faces (3d) of cells can connect to each other.
+In 2d, rotation/sides are unused, as two edges can only connect together normally or reflected.
+In 3d, this represents both a rotation and reflection, similar to NGonCellType rotations.
+As there, Mirror inverts the y-axis, and is applied before rotation, which is counter clockwise.</p>
+</section>
       <h4><a class="xref" href="Sylves.ConwayOperators.html">ConwayOperators</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.CubeBound.html">CubeBound</a></h4>
@@ -116,9 +168,17 @@ This is an specialization of <a class="xref" href="Sylves.PeriodicPlanarMeshGrid
 This is a 3d cell type, and it supports all 48 rotations / reflections of a cube.</p>
 <p>The canonical shape (for use with deformations) is a unit cube centered at the origin.</p>
 </section>
+      <h4><a class="xref" href="Sylves.CubeCorner.html">CubeCorner</a></h4>
+      <section><p>Enum of the 8 corners on a cube.</p>
+</section>
+      <h4><a class="xref" href="Sylves.CubeDir.html">CubeDir</a></h4>
+      <section><p>Enum of the 6 faces on a cube.</p>
+</section>
       <h4><a class="xref" href="Sylves.CubeDirExtensions.html">CubeDirExtensions</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.CubeGrid.html">CubeGrid</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.CubeRotation.html">CubeRotation</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.CubiusGrid.html">CubiusGrid</a></h4>
       <section><p>A torus with a quarter turn. Demonstrates how Sylves handles non-orientability on 3d surfaces.</p>
@@ -133,15 +193,51 @@ This is a 3d cell type, and it supports all 48 rotations / reflections of a cube
       <section><p>A deformation is a continuous, differentable mapping from one space to another.
 It is used to warp meshes in arbitrary ways, by mapping the vertices, normals and tangents of the mesh.</p>
 </section>
+      <h4><a class="xref" href="Sylves.Deformation.GetJacobiFunc.html">Deformation.GetJacobiFunc</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.DeformationUtils.html">DeformationUtils</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.Delaunator.html">Delaunator</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.DelaunayTriangle.html">DelaunayTriangle</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.DijkstraPathfinding.html">DijkstraPathfinding</a></h4>
       <section><p>Computes Dijkstra's Algorithm.</p>
 <p>This class to find paths starting at source, and terminating at a single point, or a range of points.</p>
 </section>
+      <h4><a class="xref" href="Sylves.DominoGrid.html">DominoGrid</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.DualMappingExtensions.html">DualMappingExtensions</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.DualMeshBuilder.html">DualMeshBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.FSTriangleCorner.html">FSTriangleCorner</a></h4>
+      <section><p>Values for CellCorner when working with FlatSides triangles
+Identical to FTHexCorner</p>
+</section>
+      <h4><a class="xref" href="Sylves.FSTriangleDir.html">FSTriangleDir</a></h4>
+      <section><p>Values for CellDir when working with FlatSides triangles.
+Identical to PTHexDir</p>
+</section>
+      <h4><a class="xref" href="Sylves.FSTrianglePrismDir.html">FSTrianglePrismDir</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.FTHexCorner.html">FTHexCorner</a></h4>
+      <section><p>Values for CellCorner when working with FlatTopped hexes</p>
+</section>
+      <h4><a class="xref" href="Sylves.FTHexDir.html">FTHexDir</a></h4>
+      <section><p>Values for CellDir when working with FlatTopped hexes</p>
+</section>
+      <h4><a class="xref" href="Sylves.FTHexPrismDir.html">FTHexPrismDir</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.FTTriangleCorner.html">FTTriangleCorner</a></h4>
+      <section><p>Values for CellCorner when working with FlatTopped triangles.
+Identical to PTHexCorner</p>
+</section>
+      <h4><a class="xref" href="Sylves.FTTriangleDir.html">FTTriangleDir</a></h4>
+      <section><p>Values for CellDir when working with FlatTopped triangles
+Identical to FTHexDir</p>
+</section>
+      <h4><a class="xref" href="Sylves.FTTrianglePrismDir.html">FTTrianglePrismDir</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.Grid2dException.html">Grid2dException</a></h4>
       <section><p>This exception is thrown when you call a grid method that is only appropriate for grids with 3d cells.</p>
@@ -201,6 +297,8 @@ Related classes:</p>
 <li><a class="xref" href="Sylves.HexBound.html">HexBound</a></li>
 </ul>
 </section>
+      <h4><a class="xref" href="Sylves.HexOrientation.html">HexOrientation</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.HexPrismBound.html">HexPrismBound</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.HexPrismCellDirExtensions.html">HexPrismCellDirExtensions</a></h4>
@@ -209,7 +307,12 @@ Related classes:</p>
       <section></section>
       <h4><a class="xref" href="Sylves.HexPrismGrid.html">HexPrismGrid</a></h4>
       <section></section>
+      <h4><a class="xref" href="Sylves.HexRotation.html">HexRotation</a></h4>
+      <section><p>Represents rotations / reflections of a hex</p>
+</section>
       <h4><a class="xref" href="Sylves.IntUtils.html">IntUtils</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.JitteredSquareGrid.html">JitteredSquareGrid</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.MaskModifier.html">MaskModifier</a></h4>
       <section><p>Filters the cells in the the grid to a customizable subset.</p>
@@ -217,6 +320,8 @@ Related classes:</p>
 is undefined.</p>
 </section>
       <h4><a class="xref" href="Sylves.Mathf.html">Mathf</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.MeshCellData.html">MeshCellData</a></h4>
       <section></section>
@@ -242,14 +347,22 @@ is undefined.</p>
       <section></section>
       <h4><a class="xref" href="Sylves.MeshRaycast.html">MeshRaycast</a></h4>
       <section></section>
+      <h4><a class="xref" href="Sylves.MeshTopology.html">MeshTopology</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.MeshUtils.html">MeshUtils</a></h4>
       <section><p>Utility for working with meshes.</p>
+</section>
+      <h4><a class="xref" href="Sylves.MeshUtils.Face.html">MeshUtils.Face</a></h4>
+      <section><p>References a slice of indices for a face.</p>
 </section>
       <h4><a class="xref" href="Sylves.MetaHexagonGrid.html">MetaHexagonGrid</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.MobiusSquareGrid.html">MobiusSquareGrid</a></h4>
       <section><p>A square grid on a Möbius strip.
 Demonstrates how Sylves handles non-orientability on 2d surfaces.</p>
+</section>
+      <h4><a class="xref" href="Sylves.NestedModifier.html">NestedModifier</a></h4>
+      <section><p>Replaces every cell in one grid (the chunk grid) with a collection of cells from lazily computed child grids.</p>
 </section>
       <h4><a class="xref" href="Sylves.NGonCellType.html">NGonCellType</a></h4>
       <section><p>Cell type for a regular polygon with n sides.
@@ -264,19 +377,23 @@ plus numbers ~0 to ~(n-1) for the reflections, where rotation ~0 has dir 0 as a 
 </section>
       <h4><a class="xref" href="Sylves.Pathfinding.html">Pathfinding</a></h4>
       <section></section>
+      <h4><a class="xref" href="Sylves.PenroseRhombGrid.html">PenroseRhombGrid</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.PeriodicPlanarMeshGrid.html">PeriodicPlanarMeshGrid</a></h4>
       <section><p>A grid made of a repeating pattern of a given mesh, that must be planar in the XY plane.
 The repeats are given by translation in two independent axes, strideX and strideY .</p>
 </section>
       <h4><a class="xref" href="Sylves.PlanarLazyGrid.html">PlanarLazyGrid</a></h4>
-      <section><p>An infinite planar grid. The plane is split into overlapping periodic chunks, which each has a MeshGrid associated.
-This class requires you to compute inter-chunk neighbours yourself, which is often tricky.
+      <section><p>An infinite planar grid. It is evaluated lazily by splitting the plane into overlapping period rectangles
+which then each has a grid associated.</p>
+<p>This class requires you to compute inter-chunk neighbours yourself, which is often tricky.
 You are recommended to use PlanarLazyMeshGrid instead, which handles this automatically.</p>
+<p>This class is simply a specialization of NestedModifier, applied to a grid of overlapping rectangles.</p>
 </section>
       <h4><a class="xref" href="Sylves.PlanarLazyMeshGrid.html">PlanarLazyMeshGrid</a></h4>
-      <section><p>An infinite planar grid. The plane is split into overlapping chunks,
-and each chunk defines a mesh which are converted to cells like a MeshGrid,
-then stitched together.</p>
+      <section><p>An infinite planar grid. It is evaluated lazily by splitting the plane into overlapping period rectangles
+which then each has a mesh associated.
+The meshes are converted to cells like a MeshGrid, then stitched together.</p>
 </section>
       <h4><a class="xref" href="Sylves.PlanarPrismBound.html">PlanarPrismBound</a></h4>
       <section></section>
@@ -289,16 +406,35 @@ then stitched together.</p>
       <section><p>Provides information about promoting a 2d cell type to a 3d cell type via extrusion.</p>
 <p>Usually this results in NGonPrismCellType, but squares go to CubeCellType, which has additional symmetry.</p>
 </section>
+      <h4><a class="xref" href="Sylves.Prototile.html">Prototile</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.PTHexCorner.html">PTHexCorner</a></h4>
+      <section><p>Values for CellCorner when working with PointyTopped hexes</p>
+</section>
+      <h4><a class="xref" href="Sylves.PTHexDir.html">PTHexDir</a></h4>
+      <section><p>Values for CellDir when working with PointyTopped hexes</p>
+</section>
+      <h4><a class="xref" href="Sylves.PTHexPrismDir.html">PTHexPrismDir</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.QuadInterpolation.html">QuadInterpolation</a></h4>
       <section><p>Supplies various bilinear and trilinear interpolation methods.
 The conventions are based on a XY plane
 using either a unit square or unit cube.</p>
 </section>
+      <h4><a class="xref" href="Sylves.Quaternion.html">Quaternion</a></h4>
+      <section><p>A pure .NET implemenation of Unity's Quaternion.
+See Unity's docs for more details.</p>
+</section>
       <h4><a class="xref" href="Sylves.RavelModifier.html">RavelModifier</a></h4>
       <section><p>Relabels all the cell co-ordinates to be 1d, i.e. cell.y and cell.z are always zero.</p>
 </section>
-      <h4><a class="xref" href="Sylves.RelaxModifier.html">RelaxModifier</a></h4>
+      <h4><a class="xref" href="Sylves.RawSubstitutionTilingGrid.html">RawSubstitutionTilingGrid</a></h4>
       <section></section>
+      <h4><a class="xref" href="Sylves.RaycastInfo.html">RaycastInfo</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.RelaxModifier.html">RelaxModifier</a></h4>
+      <section><p>Applies relaxation to an infinite 2d plane, similar to MeshDataOperations.Relax.</p>
+</section>
       <h4><a class="xref" href="Sylves.RhombilleGrid.html">RhombilleGrid</a></h4>
       <section><p>Periodic 2d grid of diamond shapes.
 <a href="https://en.wikipedia.org/wiki/Rhombille_tiling">https://en.wikipedia.org/wiki/Rhombille_tiling</a>
@@ -312,6 +448,10 @@ This is an specialization of <a class="xref" href="Sylves.PeriodicPlanarMeshGrid
 This is a a customized version of NGonCellType and behaves virtually identically.</p>
 <p>The canonical shape (for use with deformations) is a unit square in the XY centered at the origin, with normal pointing Z-forward.</p>
 </section>
+      <h4><a class="xref" href="Sylves.SquareCorner.html">SquareCorner</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.SquareDir.html">SquareDir</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.SquareDirExtensions.html">SquareDirExtensions</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.SquareGrid.html">SquareGrid</a></h4>
@@ -325,13 +465,30 @@ Related classes:</p>
 <li><a class="xref" href="Sylves.HexBound.html">HexBound</a></li>
 </ul>
 </section>
+      <h4><a class="xref" href="Sylves.SquareRotation.html">SquareRotation</a></h4>
+      <section><p>Represents rotations / reflections of a square</p>
+</section>
       <h4><a class="xref" href="Sylves.SquareSnubGrid.html">SquareSnubGrid</a></h4>
       <section><p>Periodic 2d grid of squares and triangles..
 <a href="https://en.wikipedia.org/wiki/Snub_square_tiling">https://en.wikipedia.org/wiki/Snub_square_tiling</a>
 This is an specialization of <a class="xref" href="Sylves.PeriodicPlanarMeshGrid.html">PeriodicPlanarMeshGrid</a>.</p>
 </section>
+      <h4><a class="xref" href="Sylves.Step.html">Step</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.StepLengths.html">StepLengths</a></h4>
       <section></section>
+      <h4><a class="xref" href="Sylves.SubstitutionTilingBound.html">SubstitutionTilingBound</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.SubstitutionTilingGrid.html">SubstitutionTilingGrid</a></h4>
+      <section><p>Creates a tiling of the 2d plane from a set of substitution rules.
+It is quite flexible:</p>
+<ul>
+<li>imperfect substitution rules where the replacement outline doesn't follow the original outline</li>
+<li>tiles can freely transformed</li>
+<li>tile equivalence under translation, euclidian motion, isometry, similarity all supported</li>
+<li>&quot;statistically round&quot; substitutions like the pinwheel substitution supported</li>
+</ul>
+</section>
       <h4><a class="xref" href="Sylves.SvgBuilder.html">SvgBuilder</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.SvgExport.html">SvgExport</a></h4>
@@ -379,6 +536,8 @@ with an equilateral triangle of side 1, vertices:
 (0, 1 / Sqrt3)
 (-0.5f, -0.5f / Sqrt3)</p>
 </section>
+      <h4><a class="xref" href="Sylves.TriangleOrientation.html">TriangleOrientation</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.TrianglePrismBound.html">TrianglePrismBound</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.TrianglePrismCellDirExtensions.html">TrianglePrismCellDirExtensions</a></h4>
@@ -392,11 +551,43 @@ with an equilateral triangle of side 1, vertices:
 <a href="https://en.wikipedia.org/wiki/Trihexagonal_tiling">https://en.wikipedia.org/wiki/Trihexagonal_tiling</a>
 This is an specialization of <a class="xref" href="Sylves.PeriodicPlanarMeshGrid.html">PeriodicPlanarMeshGrid</a>.</p>
 </section>
+      <h4><a class="xref" href="Sylves.Triple-1.html">Triple&lt;T&gt;</a></h4>
+      <section></section>
       <h4><a class="xref" href="Sylves.TRS.html">TRS</a></h4>
       <section><p>Represents a position / rotation and scale.
 Much like a Unity Transform, but without the association with a Unity object.</p>
 </section>
+      <h4><a class="xref" href="Sylves.Vector2.html">Vector2</a></h4>
+      <section><p>A pure .NET implemenation of Unity's Vector2.
+See Unity's docs for more details.</p>
+</section>
+      <h4><a class="xref" href="Sylves.Vector2Int.html">Vector2Int</a></h4>
+      <section><p>A pure .NET implemenation of Unity's Vector2Int.
+See Unity's docs for more details.</p>
+</section>
+      <h4><a class="xref" href="Sylves.Vector3.html">Vector3</a></h4>
+      <section><p>A pure .NET implemenation of Unity's Vector3.
+See Unity's docs for more details.</p>
+</section>
+      <h4><a class="xref" href="Sylves.Vector3Int.html">Vector3Int</a></h4>
+      <section><p>A pure .NET implemenation of Unity's Vector3Int.
+See Unity's docs for more details.</p>
+</section>
+      <h4><a class="xref" href="Sylves.Vector4.html">Vector4</a></h4>
+      <section><p>A pure .NET implemenation of Unity's Vector4.
+See Unity's docs for more details.</p>
+</section>
       <h4><a class="xref" href="Sylves.VectorUtils.html">VectorUtils</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.Voronator.html">Voronator</a></h4>
+      <section><p>Computes a voronoi diagram in a 2d plane,
+optionally clipped to a rectangle.</p>
+</section>
+      <h4><a class="xref" href="Sylves.Voronator.PolygonStatus.html">Voronator.PolygonStatus</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.VoronoiGrid.html">VoronoiGrid</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Sylves.VoronoiGridOptions.html">VoronoiGridOptions</a></h4>
       <section></section>
       <h4><a class="xref" href="Sylves.Walker.html">Walker</a></h4>
       <section></section>
@@ -422,60 +613,6 @@ This is different from a transform in that it doesn't rotate the cells, it appli
       <h4><a class="xref" href="Sylves.XZTrianglePrismGrid.html">XZTrianglePrismGrid</a></h4>
       <section><p>Variant of TrianglePrismGrid that places triangles in the XZ Plane</p>
 </section>
-    <h3 id="structs">Structs
-  </h3>
-      <h4><a class="xref" href="Sylves.Cell.html">Cell</a></h4>
-      <section><p>Represents a single cell in the grid.
-Cell is just a set of co-ordinates, the grid itself must be called to get any details about the cell.
-For more details see the basic concepts in the docs.</p>
-</section>
-      <h4><a class="xref" href="Sylves.Connection.html">Connection</a></h4>
-      <section><p>Represents how the edges (2d) or faces (3d) of cells can connect to each other.
-In 2d, rotation/sides are unused, as two edges can only connect together normally or reflected.
-In 3d, this represents both a rotation and reflection, similar to NGonCellType rotations.
-As there, Mirror inverts the y-axis, and is applied before rotation, which is counter clockwise.</p>
-</section>
-      <h4><a class="xref" href="Sylves.CubeRotation.html">CubeRotation</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.HexRotation.html">HexRotation</a></h4>
-      <section><p>Represents rotations / reflections of a hex</p>
-</section>
-      <h4><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.MeshUtils.Face.html">MeshUtils.Face</a></h4>
-      <section><p>References a slice of indices for a face.</p>
-</section>
-      <h4><a class="xref" href="Sylves.Quaternion.html">Quaternion</a></h4>
-      <section><p>A pure .NET implemenation of Unity's Quaternion.
-See Unity's docs for more details.</p>
-</section>
-      <h4><a class="xref" href="Sylves.RaycastInfo.html">RaycastInfo</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.SquareRotation.html">SquareRotation</a></h4>
-      <section><p>Represents rotations / reflections of a square</p>
-</section>
-      <h4><a class="xref" href="Sylves.Step.html">Step</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.Vector2.html">Vector2</a></h4>
-      <section><p>A pure .NET implemenation of Unity's Vector2.
-See Unity's docs for more details.</p>
-</section>
-      <h4><a class="xref" href="Sylves.Vector2Int.html">Vector2Int</a></h4>
-      <section><p>A pure .NET implemenation of Unity's Vector2Int.
-See Unity's docs for more details.</p>
-</section>
-      <h4><a class="xref" href="Sylves.Vector3.html">Vector3</a></h4>
-      <section><p>A pure .NET implemenation of Unity's Vector3.
-See Unity's docs for more details.</p>
-</section>
-      <h4><a class="xref" href="Sylves.Vector3Int.html">Vector3Int</a></h4>
-      <section><p>A pure .NET implemenation of Unity's Vector3Int.
-See Unity's docs for more details.</p>
-</section>
-      <h4><a class="xref" href="Sylves.Vector4.html">Vector4</a></h4>
-      <section><p>A pure .NET implemenation of Unity's Vector4.
-See Unity's docs for more details.</p>
-</section>
     <h3 id="interfaces">Interfaces
   </h3>
       <h4><a class="xref" href="Sylves.IBound.html">IBound</a></h4>
@@ -500,93 +637,6 @@ A grid is a collection of cells, with each cell having various data associated w
 such as neighbours, position in space.
 For more details see the basic concepts in the docs.</p>
 </section>
-    <h3 id="enums">Enums
-  </h3>
-      <h4><a class="xref" href="Sylves.CellCorner.html">CellCorner</a></h4>
-      <section><p>Represents a particular corner of a generic cell.
-The enum is empty - to work with corners, you need to either:</p>
-<ul>
-<li>Use the methods on <a class="xref" href="Sylves.ICellType.html">ICellType</a>.</li>
-<li>Cast to the enum specific to a given cell type, e.g. <a class="xref" href="Sylves.CellCorner.html">CellCorner</a>.</li>
-</ul>
-</section>
-      <h4><a class="xref" href="Sylves.CellDir.html">CellDir</a></h4>
-      <section><p>Represents a particular edge (2d) or face (3d) of a generic cell.
-The enum is empty - to work with directions, you need to either:</p>
-<ul>
-<li>Use the methods on <a class="xref" href="Sylves.ICellType.html">ICellType</a>.</li>
-<li>Cast to the enum specific to a given cell type, e.g. <a class="xref" href="Sylves.CubeDir.html">CubeDir</a>.</li>
-</ul>
-</section>
-      <h4><a class="xref" href="Sylves.CellRotation.html">CellRotation</a></h4>
-      <section><p>Represents a particular rotation of a generic cell.
-Despite the name, this usually includes reflections too.
-The enum is empty - to work with directions, you need to either:</p>
-<ul>
-<li>Use the methods on <a class="xref" href="Sylves.ICellType.html">ICellType</a>.</li>
-<li>Cast to the enum specific to a given cell type, e.g. <a class="xref" href="Sylves.CubeRotation.html">CubeRotation</a>.</li>
-</ul>
-</section>
-      <h4><a class="xref" href="Sylves.CellSwizzle.html">CellSwizzle</a></h4>
-      <section><p>Identifies a permutation of the 3 axes
-Identical to Unity's CellSwizzle.</p>
-</section>
-      <h4><a class="xref" href="Sylves.CubeCorner.html">CubeCorner</a></h4>
-      <section><p>Enum of the 8 corners on a cube.</p>
-</section>
-      <h4><a class="xref" href="Sylves.CubeDir.html">CubeDir</a></h4>
-      <section><p>Enum of the 6 faces on a cube.</p>
-</section>
-      <h4><a class="xref" href="Sylves.FSTriangleCorner.html">FSTriangleCorner</a></h4>
-      <section><p>Values for CellCorner when working with FlatSides triangles
-Identical to FTHexCorner</p>
-</section>
-      <h4><a class="xref" href="Sylves.FSTriangleDir.html">FSTriangleDir</a></h4>
-      <section><p>Values for CellDir when working with FlatSides triangles.
-Identical to PTHexDir</p>
-</section>
-      <h4><a class="xref" href="Sylves.FSTrianglePrismDir.html">FSTrianglePrismDir</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.FTHexCorner.html">FTHexCorner</a></h4>
-      <section><p>Values for CellCorner when working with FlatTopped hexes</p>
-</section>
-      <h4><a class="xref" href="Sylves.FTHexDir.html">FTHexDir</a></h4>
-      <section><p>Values for CellDir when working with FlatTopped hexes</p>
-</section>
-      <h4><a class="xref" href="Sylves.FTHexPrismDir.html">FTHexPrismDir</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.FTTriangleCorner.html">FTTriangleCorner</a></h4>
-      <section><p>Values for CellCorner when working with FlatTopped triangles.
-Identical to PTHexCorner</p>
-</section>
-      <h4><a class="xref" href="Sylves.FTTriangleDir.html">FTTriangleDir</a></h4>
-      <section><p>Values for CellDir when working with FlatTopped triangles
-Identical to FTHexDir</p>
-</section>
-      <h4><a class="xref" href="Sylves.FTTrianglePrismDir.html">FTTrianglePrismDir</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.HexOrientation.html">HexOrientation</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.MeshTopology.html">MeshTopology</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.PTHexCorner.html">PTHexCorner</a></h4>
-      <section><p>Values for CellCorner when working with PointyTopped hexes</p>
-</section>
-      <h4><a class="xref" href="Sylves.PTHexDir.html">PTHexDir</a></h4>
-      <section><p>Values for CellDir when working with PointyTopped hexes</p>
-</section>
-      <h4><a class="xref" href="Sylves.PTHexPrismDir.html">PTHexPrismDir</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.SquareCorner.html">SquareCorner</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.SquareDir.html">SquareDir</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Sylves.TriangleOrientation.html">TriangleOrientation</a></h4>
-      <section></section>
-    <h3 id="delegates">Delegates
-  </h3>
-      <h4><a class="xref" href="Sylves.Deformation.GetJacobiFunc.html">Deformation.GetJacobiFunc</a></h4>
-      <section></section>
 </article>
           </div>
           

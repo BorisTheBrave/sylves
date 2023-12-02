@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Struct CubeRotation
+    <title>Class CubeRotation
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Struct CubeRotation
+    <meta name="title" content="Class CubeRotation
    ">
     <meta name="generator" content="docfx 2.59.0.0">
     
@@ -72,27 +72,20 @@
             <article class="content wrap" id="_content" data-uid="Sylves.CubeRotation">
   
   
-  <h1 id="Sylves_CubeRotation" data-uid="Sylves.CubeRotation" class="text-break">Struct CubeRotation
+  <h1 id="Sylves_CubeRotation" data-uid="Sylves.CubeRotation" class="text-break">Class CubeRotation
   </h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">CubeRotation</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_CubeRotation_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct CubeRotation</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class CubeRotation : ValueType</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -104,7 +97,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly CubeRotation Identity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static CubeRotation Identity { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -129,7 +122,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly bool IsReflection { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsReflection { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -154,7 +147,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly CubeRotation ReflectX { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static CubeRotation ReflectX { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -179,7 +172,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly CubeRotation ReflectY { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static CubeRotation ReflectY { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -204,7 +197,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly CubeRotation ReflectZ { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static CubeRotation ReflectZ { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -229,7 +222,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly CubeRotation RotateXY { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static CubeRotation RotateXY { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -254,7 +247,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly CubeRotation RotateXZ { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static CubeRotation RotateXZ { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -279,7 +272,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly CubeRotation RotateYX { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static CubeRotation RotateYX { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -304,7 +297,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly CubeRotation RotateYZ { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static CubeRotation RotateYZ { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -329,7 +322,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly CubeRotation RotateZX { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static CubeRotation RotateZX { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -354,7 +347,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly CubeRotation RotateZY { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static CubeRotation RotateZY { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -415,8 +408,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.Equals(System.Object)</span></div>
   
   
   <a id="Sylves_CubeRotation_GetHashCode_" data-uid="Sylves.CubeRotation.GetHashCode*"></a>
@@ -442,8 +433,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.GetHashCode()</span></div>
   
   
   <a id="Sylves_CubeRotation_GetRotations_" data-uid="Sylves.CubeRotation.GetRotations*"></a>
@@ -536,8 +525,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.ToString()</span></div>
   <h3 id="operators">Operators
   </h3>
   

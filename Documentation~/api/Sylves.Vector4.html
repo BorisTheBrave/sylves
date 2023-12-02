@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Struct Vector4
+    <title>Class Vector4
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Struct Vector4
+    <meta name="title" content="Class Vector4
    ">
     <meta name="generator" content="docfx 2.59.0.0">
     
@@ -72,29 +72,22 @@
             <article class="content wrap" id="_content" data-uid="Sylves.Vector4">
   
   
-  <h1 id="Sylves_Vector4" data-uid="Sylves.Vector4" class="text-break">Struct Vector4
+  <h1 id="Sylves_Vector4" data-uid="Sylves.Vector4" class="text-break">Class Vector4
   </h1>
   <div class="markdown level0 summary"><p>A pure .NET implemenation of Unity's Vector4.
 See Unity's docs for more details.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Vector4</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_Vector4_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct Vector4</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class Vector4 : ValueType</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -192,7 +185,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly float magnitude { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public float magnitude { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -217,7 +210,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector4 negativeInfinity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector4 negativeInfinity { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -242,7 +235,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly Vector4 normalized { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Vector4 normalized { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -267,7 +260,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector4 one { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector4 one { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -292,7 +285,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector4 positiveInfinity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector4 positiveInfinity { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -317,7 +310,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly float sqrMagnitude { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public float sqrMagnitude { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -442,7 +435,7 @@ See Unity's docs for more details.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly Vector4 zero { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector4 zero { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -639,8 +632,6 @@ See Unity's docs for more details.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.Equals(System.Object)</span></div>
   
   
   <a id="Sylves_Vector4_GetHashCode_" data-uid="Sylves.Vector4.GetHashCode*"></a>
@@ -666,8 +657,6 @@ See Unity's docs for more details.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.GetHashCode()</span></div>
   
   
   <a id="Sylves_Vector4_Lerp_" data-uid="Sylves.Vector4.Lerp*"></a>
@@ -1267,8 +1256,6 @@ See Unity's docs for more details.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.ValueType.ToString()</span></div>
   
   
   <a id="Sylves_Vector4_ToString_" data-uid="Sylves.Vector4.ToString*"></a>

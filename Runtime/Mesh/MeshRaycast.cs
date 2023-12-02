@@ -149,7 +149,7 @@ namespace Sylves
 
         /// <summary>
         /// Raycasts a ray vs a single triagnle.
-
+        /// </summary>
         public static bool RaycastTri(Vector3 rayOrigin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, out Vector3 point, out float distance, out bool side)
         {
             //  Cribbed from a tutorial

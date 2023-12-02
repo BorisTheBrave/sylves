@@ -9,8 +9,8 @@ namespace Sylves
     /// </summary>
     public enum CubeDir
     {
-        Left,
         Right,
+        Left,
         Up,
         Down,
         Forward,
