@@ -208,4 +208,4 @@ Afterwards, rotation table will be filled like:
 |14|7|1|
 |15|
 
-i.e. indicating that tileIndex 14 is the same as tileIndex 6, but rotated by `(SquareRotation)2`, i.e. 180 degrees. You only need tile indices 0, 1, 3, 5, 7 and 15 to make a complete set.
+i.e. indicating that tileIndex 14 is the same as tileIndex 7, but rotated by `(SquareRotation)2`, i.e. 180 degrees. You only need tile indices 0, 1, 3, 5, 7 and 15 to make a complete set.
