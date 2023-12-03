@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Sylves.GodotRewriter": {
-      "commandName": "Project",
-      "workingDirectory": "$(MSBuildProjectDirectory)"
-    }
-  }
-}
