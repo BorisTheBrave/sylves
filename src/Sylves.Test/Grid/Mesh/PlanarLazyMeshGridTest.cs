@@ -108,5 +108,17 @@ namespace Sylves.Test
                 return meshData.Weld();
             }
         }
+
+        [Test]
+        public void TestSquare()
+        {
+            var squareGrid = new SquareGrid(3f);
+            MeshData GetMeshData(Cell square)
+            {
+                return Matrix4x4.Translate(squareGrid.GetCellCenter(square)) * TestMeshes.PlaneXY;
+            }
+
+            var g = new PlanarLazyMeshGrid(GetMeshData, squareGrid);
+        }
     }
 }

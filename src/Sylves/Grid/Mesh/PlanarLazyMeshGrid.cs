@@ -102,9 +102,8 @@ namespace Sylves
 
         protected void Setup(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, bool translateMeshData = false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-            // Work out the dimensions of the chunk grid
-            var strideX = ToVector2(chunkGrid.GetCellCenter(new Cell(1, 0)));
-            var strideY = ToVector2(chunkGrid.GetCellCenter(new Cell(0, 1)));
+            var strideX = new Vector2(chunkGrid.CellSize.x, 0);
+            var strideY = new Vector2(0, chunkGrid.CellSize.y);
 
             var polygon = chunkGrid.GetPolygon(new Cell()).Select(ToVector2);
             var aabbBottomLeft = polygon.Aggregate(Vector2.Min);

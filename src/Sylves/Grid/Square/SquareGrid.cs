@@ -65,6 +65,8 @@ namespace Sylves
             return new Cell(v.x, v.y);
         }
 
+        public Vector2 CellSize => cellSize;
+
         #region Basics
         public bool Is2d => true;
 
