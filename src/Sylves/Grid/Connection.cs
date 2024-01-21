@@ -8,8 +8,11 @@ namespace Sylves
     /// <summary>
     /// Represents how the edges (2d) or faces (3d) of cells can connect to each other.
     /// In 2d, rotation/sides are unused, as two edges can only connect together normally or reflected.
-    /// In 3d, this represents both a rotation and reflection, similar to NGonCellType rotations.
-    /// As there, Mirror inverts the y-axis, and is applied before rotation, which is counter clockwise.
+    /// In 3d, this represents both a rotation and reflection
+    /// The rotation and reflection are interpreted, similar to NGonCellType rotations.
+    /// I.e. Mirror represents is a reflection that keeps (CellDir)0 unchanged (i.e. inverts the y-axis), 
+    /// and Rotation represents a rotation counter clockwise of Rotation/Sides*360 degrees.
+    /// Mirror is applied first, then rotation.
     /// </summary>
     public struct Connection : IEquatable<Connection>
     {
