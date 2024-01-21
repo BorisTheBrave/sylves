@@ -692,7 +692,7 @@ namespace Sylves
 
             foreach (var uCell in underlying.GetCellsIntersectsApprox(GetPlanarPosition(min), GetPlanarPosition(max)))
             {
-                for (var layer = minLayer; layer < maxLayer; layer++)
+                for (var layer = minLayer; layer <= maxLayer; layer++)
                 {
                     yield return Combine(uCell, layer);
                 }

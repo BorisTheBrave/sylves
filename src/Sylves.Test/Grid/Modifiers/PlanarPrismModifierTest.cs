@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -90,5 +91,14 @@ namespace Sylves.Test
 
             Assert.AreEqual(new Vector4(0, 0, 1, 0), j.column3);
         }
+
+        [Test]
+        public void TestIntersects()
+        {
+            var g = new PlanarPrismModifier(new SquareGrid(1), new PlanarPrismOptions { });
+            CollectionAssert.AreEquivalent(new[] { new Cell() }, g.GetCellsIntersectsApprox(new Vector3(), new Vector3(.1f, .1f, .1f))); ;
+        }
+
+
     }
 }
