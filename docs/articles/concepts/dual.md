@@ -17,7 +17,7 @@ The dual of the square grid is another square grid, while the dual of a hex grid
 
 ## Working with Dual Grids
 
-Dual grids are useful when you need to talk about the corners of a base grid. Sylves already has an API for working with corners,i.e. using CellCorner wth ICellType, but it's not unique. For example, in a square grid, the corner `SquareCorner.TopRight` of cell `(0,0)` refers to the same position as `SquareCorner.BottomLeft` of cell `(1, 1)`, and there are two other cells that have corners in that position.
+Dual grids are useful when you need to talk about the vertices of a base grid. Sylves already has an API for working with corners, i.e. using CellCorner wth ICellType, but it's not unique. For example, in a square grid, the corner `SquareCorner.TopRight` of cell `(0, 0)` refers to the same position as `SquareCorner.BottomLeft` of cell `(1, 1)`, and there are two other cells that have corners in that position.
 
 ```csharp
 IGrid squareGrid = new SquareGrid(1);
@@ -46,7 +46,7 @@ Vector3 vertexCenter = dualGrid.GetCellCenter(dualCell);
 // Returns new Vector3(0.5, 0.5, 0)
 ```
 
-DualGrid is a fully functional grid, where the cener of each dual cell will the corner of some cell in the base grid, and the corner of each cell in the dual grid corresponds to the center of some cell in the base grid.
+DualGrid is a fully functional grid, where the center of each dual cell will the corner of some cell in the base grid, and the corner of each cell in the dual grid corresponds to the center of some cell in the base grid.
 
 There are many operations in `IDualMapping` for converting between the base grid and dual grid.
 
@@ -95,7 +95,7 @@ There's also a number of methods on `ICellType` and `IGrid` for working with `Ce
 
 ## Inverse Corners
 
-A few of the methods return an "`inverseCorner`". This is similar to inverseDir in `IGrid.TryMove`, it gives the details required
+A few of the methods return an "`inverseCorner`". This is similar to inverseDir in `IGrid.TryMove`. It gives the details required
 to go back to the original cell you started with. It has a number of technical uses, but is rarely needed for normal usage.
 
 ## Boundaries

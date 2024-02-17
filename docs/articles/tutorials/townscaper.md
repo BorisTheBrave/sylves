@@ -79,6 +79,7 @@ MeshData GetMeshData(Cell hex)
     meshData = meshData.RandomPairing(new Random(seed).NextDouble);
     meshData = ConwayOperators.Ortho(meshData);
     meshData = meshData.Weld();
+    return meshData;
 }
 ```
 
