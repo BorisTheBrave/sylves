@@ -6,7 +6,7 @@ This technique is often used to [describe making an isosurface](https://www.bori
 
 We're going to have a square grid. Then store a boolean value on each *vertex* of the grid. Then we will pick a tile for each cell of a grid, based on the 4 boolean values, found at the corners of the squares.
 
-// TODO: images
+// TODO: images 
 
 Because we want a single value per vertex, we need a key that uniquely identifies each vertex of the grid. This is where the [**dual grid**](../concepts/dual.md) comes in.
 

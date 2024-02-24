@@ -86,6 +86,8 @@ namespace Sylves
 
         protected void Setup(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, bool translateMeshData = false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
+            // TOOD: Check if chunkGrid has bound
+
             // Work out the dimensions of the chunk grid
             var strideX = ToVector2(chunkGrid.GetCellCenter(new Cell(1, 0, -1)));
             var strideY = ToVector2(chunkGrid.GetCellCenter(new Cell(0, 1, -1)));

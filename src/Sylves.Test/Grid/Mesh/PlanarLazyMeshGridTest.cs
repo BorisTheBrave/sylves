@@ -119,6 +119,11 @@ namespace Sylves.Test
             }
 
             var g = new PlanarLazyMeshGrid(GetMeshData, squareGrid);
+
+            Assert.AreEqual(3f, g.StrideX.x);
+            Assert.AreEqual(0f, g.StrideX.y);
+            Assert.AreEqual(0f, g.StrideY.x);
+            Assert.AreEqual(3f, g.StrideY.y);
         }
     }
 }
