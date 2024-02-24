@@ -366,11 +366,16 @@ namespace Sylves
         #region Query
         public bool FindCell(Vector3 position, out Cell cell)
         {
+            UnboundedFindCell(position, out cell);
+            return IsCellInGrid(cell);
+        }
+
+        private void UnboundedFindCell(Vector3 position, out Cell cell)
+        {
             var x = Mathf.FloorToInt(position.x / cellSize.x);
             var y = Mathf.FloorToInt(position.y / cellSize.y);
             var z = 0;
             cell = new Cell(x, y, z);
-            return IsCellInGrid(cell);
         }
 
         public bool FindCell(
@@ -395,9 +400,8 @@ namespace Sylves
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-
-            if (FindCell(min, out var minCell) &&
-                FindCell(max, out var maxCell))
+            UnboundedFindCell(min, out var minCell);
+            UnboundedFindCell(max, out var maxCell);
             {
                 // Filter to in bounds
                 if (bound != null)

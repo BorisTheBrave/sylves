@@ -383,8 +383,12 @@ namespace Sylves
         #region Query
         public bool FindCell(Vector3 position, out Cell cell)
         {
-            cell = (Cell)Vector3Int.FloorToInt(Divide(position, cellSize));
+            UnboundedFindCell(position, out cell);
             return IsCellInGrid(cell);
+        }
+        private void UnboundedFindCell(Vector3 position, out Cell cell)
+        {
+            cell = (Cell)Vector3Int.FloorToInt(Divide(position, cellSize));
         }
 
         public bool FindCell(
@@ -409,30 +413,27 @@ namespace Sylves
 
         public IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-
-            if (FindCell(min, out var minCell) &&
-                FindCell(max, out var maxCell))
+            UnboundedFindCell(min, out var minCell);
+            UnboundedFindCell(max, out var maxCell);
+            // Filter to in bounds
+            if (bound != null)
             {
-                // Filter to in bounds
-                if (bound != null)
-                {
-                    minCell.x = Math.Max(minCell.x, bound.min.x);
-                    minCell.y = Math.Max(minCell.y, bound.min.y);
-                    minCell.z = Math.Max(minCell.z, bound.min.z);
-                    maxCell.x = Math.Min(maxCell.x, bound.max.x - 1);
-                    maxCell.y = Math.Min(maxCell.y, bound.max.y - 1);
-                    maxCell.z = Math.Min(maxCell.z, bound.max.z - 1);
-                }
+                minCell.x = Math.Max(minCell.x, bound.min.x);
+                minCell.y = Math.Max(minCell.y, bound.min.y);
+                minCell.z = Math.Max(minCell.z, bound.min.z);
+                maxCell.x = Math.Min(maxCell.x, bound.max.x - 1);
+                maxCell.y = Math.Min(maxCell.y, bound.max.y - 1);
+                maxCell.z = Math.Min(maxCell.z, bound.max.z - 1);
+            }
 
-                // Loop over cels
-                for (var x = minCell.x; x <= maxCell.x; x++)
+            // Loop over cells
+            for (var x = minCell.x; x <= maxCell.x; x++)
+            {
+                for (var y = minCell.y; y <= maxCell.y; y++)
                 {
-                    for (var y = minCell.y; y <= maxCell.y; y++)
+                    for (var z = minCell.z; z <= maxCell.z; z++)
                     {
-                        for (var z = minCell.z; z <= maxCell.z; z++)
-                        {
-                            yield return new Cell(x, y, z);
-                        }
+                        yield return new Cell(x, y, z);
                     }
                 }
             }
