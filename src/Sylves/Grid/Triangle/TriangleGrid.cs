@@ -192,6 +192,7 @@ namespace Sylves
         public bool IsLeft(Cell cell) => orientation == TriangleOrientation.FlatSides && cell.x + cell.y + cell.z == 1;
         public bool IsRight(Cell cell) => orientation == TriangleOrientation.FlatSides && cell.x + cell.y + cell.z == 2;
         private bool IsUpOrLeft(Cell cell) => (orientation == TriangleOrientation.FlatSides) ^ (cell.x + cell.y + cell.z == 2);
+        private bool IsUpOrRight(Cell cell) => (cell.x + cell.y + cell.z == 2);
 
         #region Basics
         public bool Is2d => true;
@@ -449,13 +450,13 @@ namespace Sylves
 
         public IEnumerable<CellCorner> GetCellCorners(Cell cell)
         {
-            if (IsUpOrLeft(cell))
+            if (IsUpOrRight(cell))
             {
-                return cellCornersB;
+                return cellCornersA;
             }
             else
             {
-                return cellCornersA;
+                return cellCornersB;
             }
         }
 

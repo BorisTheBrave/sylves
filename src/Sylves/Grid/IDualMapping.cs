@@ -64,8 +64,7 @@ namespace Sylves
         public static IEnumerable<(CellCorner corner, Cell dualCell, CellCorner inverseCorner)> DualNeighbours(this IDualMapping dm, Cell baseCell)
         {
             // TODO: Perhaps have this overridable as many grids will have swifter methods
-            var cellType = dm.BaseGrid.GetCellType(baseCell);
-            foreach(var corner in cellType.GetCellCorners())
+            foreach(var corner in dm.BaseGrid.GetCellCorners(baseCell))
             {
                 var t = dm.ToDualPair(baseCell, corner);
                 if(t != null)
