@@ -55,6 +55,9 @@ namespace Sylves
         /// </summary>
         public Matrix4x4 ToMatrix()
         {
+            if (Sides == 0)
+                return Matrix4x4.identity;
+
             // Same logic as NGonCellType
             var rot = Rotation;
             var n = Sides;
