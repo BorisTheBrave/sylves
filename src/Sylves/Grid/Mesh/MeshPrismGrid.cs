@@ -166,7 +166,7 @@ namespace Sylves
             var cl = c.magnitude;
             // divisor in atan
             var divisor = al * bl * cl + Vector3.Dot(a, b) * cl + Vector3.Dot(b, c) * al + Vector3.Dot(c, a) * bl;
-            var sabc = 2 * Mathf.Atan(detabc / divisor);
+            var sabc = 2 * Mathf.Atan2(detabc, divisor);
             return sabc / (4 * Mathf.PI);
         }
 
