@@ -137,12 +137,11 @@ namespace Sylves
             return true;
         }
 
-        public static bool GetBoundExtent(IGrid grid, IBound bound, out Vector3 min, out Vector3 max)
+        public static Aabb? GetAabb(IGrid grid, IBound bound)
         {
             if (bound == null && !grid.IsFinite)
             {
-                min = max = default;
-                return false;
+                return null;
             }
             IEnumerable<Cell> cells;
             try
@@ -151,34 +150,11 @@ namespace Sylves
             }
             catch (GridInfiniteException)
             {
-
-                min = max = default;
-                return false;
+                return null;
             }
-            var first = true;
-            Vector3 localMin = default, localMax = default;
-            foreach(var cell in cells)
-            {
-                foreach(var corner in grid.GetCellCorners(cell))
-                {
-                    var p = grid.GetCellCorner(cell, corner);
-                    if(first)
-                    {
-                        localMin = localMin = p;
-                        first = false;
-                    }
-                    else
-                    {
-                        localMin = Vector3.Min(localMin, p);
-                        localMax = Vector3.Min(localMax, p);
-                    }
-                }
-            }
-            min = localMin;
-            max = localMax;
-
-            return true;
-
+            var corners = cells.SelectMany(cell => grid.GetCellCorners(cell)
+                .Select(corner => grid.GetCellCorner(cell, corner)));
+            return Aabb.FromVectors(corners);
         }
         #endregion
 

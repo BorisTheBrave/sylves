@@ -136,7 +136,7 @@ namespace Sylves
         public IEnumerable<Cell> GetCellsInBounds(IBound bound) => DefaultGridImpl.GetCellsInBounds(this, bound);
         public virtual bool IsCellInBound(Cell cell, IBound bound) => DefaultGridImpl.IsCellInBound(this, cell, bound);
 
-        public virtual bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max) => DefaultGridImpl.GetBoundExtent(this, bound, out min, out max);
+        public virtual Aabb? GetAabb(IBound bound) => DefaultGridImpl.GetAabb(this, bound);
 
         #endregion
 

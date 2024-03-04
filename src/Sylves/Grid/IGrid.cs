@@ -230,9 +230,9 @@ namespace Sylves
 
         /// <summary>
         /// Returns a cuboid that fully covers all the cells in bounds.
-        /// Returns false if the bound is not finite.
+        /// Returns null
         /// </summary>
-        bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max);
+        Aabb? GetAabb(IBound bound);
         #endregion
 
         #region Position
@@ -284,6 +284,9 @@ namespace Sylves
         /// For 3d cells, returns the mesh of a given cell.
         /// </summary>
         void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform);
+
+        //Aabb GetAabb(Cell cell);
+        //Aabb GetAabb(IEnumerable<Cell> cells);
 
         #endregion
 

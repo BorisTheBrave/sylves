@@ -224,11 +224,11 @@ namespace Sylves
         #endregion
 
         #region Bounds
-        public override bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        public Aabb? GetAabb(IBound bound)
         {
-            min = Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.min, meshDetails.hashCellSize) + meshDetails.hashCellBase;
-            max = Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.max, meshDetails.hashCellSize) + meshDetails.hashCellBase;
-            return true;
+            return Aabb.FromMinMax(
+                Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.min, meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.max, meshDetails.hashCellSize) + meshDetails.hashCellBase);
         }
         #endregion
 

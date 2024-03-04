@@ -320,17 +320,15 @@ namespace Sylves
         
         public bool IsCellInBound(Cell cell, IBound bound) => bound is SquareBound sb ? sb.Contains(cell) : true;
 
-
-        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        public Aabb? GetAabb(IBound bound)
         {
             if (bound is SquareBound sb)
             {
-                min = new Vector3(sb.min.x * cellSize.x, sb.min.y * cellSize.y, 0);
-                max = new Vector3(sb.max.x * cellSize.x, sb.max.y * cellSize.y, 0);
-                return true;
+                return Aabb.FromMinMax(
+                    new Vector3(sb.min.x * cellSize.x, sb.min.y * cellSize.y, 0),
+                    new Vector3(sb.max.x * cellSize.x, sb.max.y * cellSize.y, 0));
             }
-            min = max = default;
-            return false;
+            return null;
         }
         #endregion
 

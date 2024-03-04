@@ -69,17 +69,13 @@ namespace Sylves
 
         #region Bounds
 
-        public override bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        public override Aabb? GetAabb(IBound bound)
         {
-            if (!Underlying.GetBoundExtent(bound, out min, out max))
-                return false;
-            var center = (min + max) / 2;
-            var hsize = (max - min) / 2;
-            var center2 = transform.MultiplyPoint3x4(center);
-            var hsize2 = transform.MultiplyVector(hsize);
-            min = center2 - hsize2;
-            max = center2 + hsize2;
-            return true;
+            if (Underlying.GetAabb(bound) is Aabb aabb)
+            {
+                return transform * aabb;
+            }
+            return null;
         }
         #endregion
 
@@ -125,15 +121,8 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-            var center = (min + max) / 2;
-            var hsize = (max - min) / 2;
-            var center2 = iTransform.MultiplyPoint3x4(center);
-            var hsize2 = iTransform.MultiplyVector(hsize);
-            hsize2 = new Vector3(Mathf.Abs(hsize2.x), Mathf.Abs(hsize2.y), Mathf.Abs(hsize2.z));
-            return Underlying.GetCellsIntersectsApprox(
-                center2 - hsize2,
-                center2 + hsize2
-                );
+            Aabb.Transform(iTransform, ref min, ref max);
+            return Underlying.GetCellsIntersectsApprox(min, max);
         }
 
         public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)

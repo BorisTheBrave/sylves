@@ -98,7 +98,7 @@ namespace Sylves
         public virtual IBound UnionBounds(IBound bound, IBound other) => underlying.UnionBounds(bound, other);
         public virtual IEnumerable<Cell> GetCellsInBounds(IBound bound) => underlying.GetCellsInBounds(bound);
         public virtual bool IsCellInBound(Cell cell, IBound bound) => underlying.IsCellInBound(cell, bound);
-        public virtual bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max) => underlying.GetBoundExtent(bound, out min, out max);
+        public virtual Aabb? GetAabb(IBound bound) => underlying.GetAabb(bound);
         #endregion
 
         #region Position

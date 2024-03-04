@@ -88,7 +88,7 @@ namespace Sylves
 
         public bool IsCellInBound(Cell cell, IBound bound) => throw new NotImplementedException();
 
-        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max) => throw new NotImplementedException();
+        public Aabb? GetAabb(IBound bound) => throw new NotImplementedException();
 
         #endregion
 

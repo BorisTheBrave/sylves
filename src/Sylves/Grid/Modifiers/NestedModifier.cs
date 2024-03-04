@@ -245,9 +245,9 @@ namespace Sylves
             return chunkGrid.IsCellInBound(chunkCell, bound);
         }
 
-        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        public Aabb? GetAabb(IBound bound)
         {
-            return chunkGrid.GetBoundExtent(bound, out min, out max);
+            return chunkGrid.GetAabb(bound);
         }
         #endregion
 

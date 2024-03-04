@@ -55,7 +55,7 @@ namespace Sylves
             return (bl, tr);
         }
 
-        public (Vector2, Vector2) GetBoundExtent(SquareBound bound)
+        public (Vector2, Vector2) GetBoundAabb(SquareBound bound)
         {
             var bl = aabbBottomLeft + strideX * bound.min.x + strideY * bound.min.y;
             var tr = aabbBottomLeft + strideX * bound.max.x + strideY * bound.max.y + aabbSize;

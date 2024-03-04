@@ -164,16 +164,15 @@ namespace Sylves
 
         public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
 
-        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        public Aabb? GetAabb(IBound bound)
         {
             if (bound is CubeBound sb)
             {
-                min = new Vector3(sb.min.x * cellSize.x, sb.min.y * cellSize.y, sb.min.z * cellSize.z);
-                max = new Vector3(sb.max.x * cellSize.x, sb.max.y * cellSize.y, sb.max.z * cellSize.z);
-                return true;
+                return Aabb.FromMinMax(
+                    new Vector3(sb.min.x * cellSize.x, sb.min.y * cellSize.y, sb.min.z * cellSize.z),
+                    new Vector3(sb.max.x * cellSize.x, sb.max.y * cellSize.y, sb.max.z * cellSize.z));
             }
-            min = max = default;
-            return false;
+            return null;
         }
 
         #endregion

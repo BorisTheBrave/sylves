@@ -137,7 +137,7 @@ namespace Sylves
             // TODO: I'm not entirely certain this procedur is valid
             var tileBounds = this.prototiles.ToDictionary(x => x, x =>
             {
-                return new Aabb(x.ChildTiles.SelectMany(t => t));
+                return Aabb.FromVectors(x.ChildTiles.SelectMany(t => t)).Value;
             });
             var deflation = this.prototiles.SelectMany(x => x.ChildPrototiles).Select(x => x.transform.lossyScale).Select(v => Mathf.Max(Mathf.Abs(v.x), Mathf.Max(Mathf.Abs(v.y), Mathf.Abs(v.z))));
             var prevBounds = tileBounds;
@@ -157,9 +157,9 @@ namespace Sylves
             {
                 var tileBound = tileBounds[prototile];
                 var prevBound = prevBounds[prototile];
-                var max = alpha * (prevBound.max - tileBound.max) + tileBound.max;
-                var min = alpha * (prevBound.min - tileBound.min) + tileBound.min;
-                prototile.bound = new Aabb { min = min, max = max };
+                var max = alpha * (prevBound.Max - tileBound.Max) + tileBound.Max;
+                var min = alpha * (prevBound.Min - tileBound.Min) + tileBound.Min;
+                prototile.bound = Aabb.FromMinMax(min, max);
             };
         }
         #endregion
@@ -361,7 +361,7 @@ namespace Sylves
         public virtual IDualMapping GetDual()
         {
             // Guess at reasonable size for chunking
-            var maxPrototileSize = prototiles.Max(x => (x.bound.max.x - x.bound.min.x + x.bound.max.y - x.bound.min.y));
+            var maxPrototileSize = prototiles.Max(x => (x.bound.Max.x - x.bound.Min.x + x.bound.Max.y - x.bound.Min.y));
             var maxInflation = prototiles.SelectMany(x => x.ChildPrototiles).Select(x => x.transform.lossyScale).Max(x => 1/Mathf.Min(x.x, Mathf.Min(x.y, x.z)));
             var height = 2;
             var chunkSize = maxPrototileSize * (float)Math.Pow(maxInflation, height);
@@ -604,7 +604,7 @@ namespace Sylves
             return true;
         }
 
-        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max) => DefaultGridImpl.GetBoundExtent(this, bound, out min, out max);
+        public Sylves.Aabb? GetAabb(IBound bound) => DefaultGridImpl.GetAabb(this, bound);
 
         #endregion
 
@@ -662,76 +662,6 @@ namespace Sylves
 
         public bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r) => throw new NotImplementedException();
         #endregion
-
-
-
-        protected struct Aabb
-        {
-            public Vector3 min;
-            public Vector3 max;
-
-            public Aabb(IEnumerable<Vector3> v)
-            {
-                min = v.Aggregate(Vector3.Min);
-                max = v.Aggregate(Vector3.Max);
-            }
-
-            public static Aabb operator *(Matrix4x4 m, Aabb aabb)
-            {
-                var c = (aabb.min + aabb.max) / 2;
-                var h = (aabb.max - aabb.min) / 2;
-
-                c = m.MultiplyPoint3x4(c);
-                var hx = m.MultiplyVector(new Vector3(h.x, 0, 0));
-                var hy = m.MultiplyVector(new Vector3(0, h.y, 0));
-                h = VectorUtils.Abs(hx) + VectorUtils.Abs(hy);
-                return new Aabb
-                {
-                    min = c - h,
-                    max = c + h,
-                };
-            }
-
-            public static Aabb Union(IEnumerable<Aabb> aabbs)
-            {
-                var i = aabbs.GetEnumerator();
-                i.MoveNext();
-                var first = i.Current;
-                while (i.MoveNext())
-                {
-                    var current = i.Current;
-                    first.min = Vector3.Min(first.min, current.min);
-                    first.max = Vector3.Max(first.max, current.max);
-                }
-                return first;
-            }
-
-            public bool Intersects(Aabb other)
-            {
-                if (this.max.x < other.min.x ||
-                    this.min.x > other.max.x ||
-                    this.max.y < other.min.y ||
-                    this.min.y > other.max.y ||
-                    this.max.z < other.min.z ||
-                    this.min.z > other.max.z)
-                {
-                    return false;
-                }
-                return true;
-            }
-
-            public float? Raycast(Vector3 origin, Vector3 direction, float maxDistance)
-            {
-                if(MeshRaycast.RaycastAabbPlanar(origin, direction, min, max, out var distance) && distance <= maxDistance)
-                {
-                    return distance;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
 
         protected class InternalPrototile
         {

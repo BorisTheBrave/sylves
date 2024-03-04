@@ -364,9 +364,9 @@ namespace Sylves
         }
         public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
 
-        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        public Aabb? GetAabb(IBound bound)
         {
-            return DefaultGridImpl.GetBoundExtent(this, bound, out min, out max);
+            return DefaultGridImpl.GetAabb(this, bound);
         }
         #endregion
         #region Topology

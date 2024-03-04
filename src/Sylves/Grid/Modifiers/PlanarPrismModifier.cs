@@ -529,18 +529,18 @@ namespace Sylves
             }
         }
 
-        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        public Aabb? GetAabb(IBound bound)
         {
             if(bound is PlanarPrismBound ppb)
             {
-                if(!Underlying.GetBoundExtent(bound, out min, out max))
-                    return false;
-                min += GetOffset(ppb.MinLayer);
-                max += GetOffset(ppb.MaxLayer);
-                return true;
+                if(Underlying.GetAabb(bound) is Aabb aabb)
+                {
+                    return Aabb.FromMinMax(
+                        aabb.Min + GetOffset(ppb.MinLayer),
+                        aabb.Max + GetOffset(ppb.MaxLayer));
+                }
             }
-            min = max = default;
-            return false;
+            return null;
         }
         #endregion
 

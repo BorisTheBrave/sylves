@@ -384,18 +384,19 @@ namespace Sylves
         }
         public bool IsCellInBound(Cell cell, IBound bound) => bound is HexPrismBound hb ? hb.Contains(cell) : true;
 
-        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        public Aabb? GetAabb(IBound bound)
         {
             if (bound is HexPrismBound hpb)
             {
-                if (!hexGrid.GetBoundExtent(hpb.hexBound, out min, out max))
-                    return false;
-                min += cellSize.z * hpb.layerMin * Vector3.forward;
-                max += cellSize.z * hpb.layerMax * Vector3.forward;
-                return true;
+                if (hexGrid.GetAabb(hpb.hexBound) is Aabb aabb)
+                {
+                    return Aabb.FromMinMax(
+                            aabb.Min + cellSize.z * hpb.layerMin * Vector3.forward,
+                            aabb.Max + cellSize.z * hpb.layerMax * Vector3.forward
+                        );
+                }
             }
-            min = max = default;
-            return false;
+            return null;
         }
         #endregion
 

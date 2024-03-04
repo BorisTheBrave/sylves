@@ -401,7 +401,7 @@ namespace Sylves
 
         public override bool FindCell(Vector3 position, out Cell cell)
         {
-            var inputAabb = new Aabb { min = position, max = position };
+            var inputAabb = Aabb.FromMinMax(position, position);
             foreach (var crumb in GetCrumbsIntersectsApproxInternal(inputAabb))
             {
                 for (var childIndex = 0; childIndex < crumb.prototile.ChildTiles.Length; childIndex++)
@@ -435,7 +435,7 @@ namespace Sylves
             out CellRotation rotation)
         {
             var position = matrix.MultiplyPoint3x4(new Vector3());
-            var inputAabb = new Aabb { min = position, max = position };
+            var inputAabb = Aabb.FromMinMax(position, position);
             foreach (var crumb in GetCrumbsIntersectsApproxInternal(inputAabb))
             {
                 for (var childIndex = 0; childIndex < crumb.prototile.ChildTiles.Length; childIndex++)
@@ -470,7 +470,7 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-            var inputAabb = new Aabb { min = min, max = max };
+            var inputAabb = Aabb.FromMinMax(min, max);
             foreach (var crumb in GetCrumbsIntersectsApproxInternal(inputAabb))
             {
                 for (var i = 0; i < crumb.prototile.ChildTiles.Length; i++)

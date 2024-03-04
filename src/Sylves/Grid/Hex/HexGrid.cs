@@ -413,7 +413,7 @@ namespace Sylves
         
         public bool IsCellInBound(Cell cell, IBound bound) => bound is HexBound hb ? hb.Contains(cell) : true;
 
-        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        public Aabb? GetAabb(IBound bound)
         {
             if (bound is HexBound hb)
             {
@@ -438,12 +438,9 @@ namespace Sylves
                 localMin.y -= 0.5f * cellSize.y;
                 localMax.x += 0.5f * cellSize.x;
                 localMax.y += 0.5f * cellSize.y;
-                min = localMin;
-                max = localMax;
-                return true;
+                return Aabb.FromMinMax(localMin, localMax);
             }
-            min = max = default;
-            return false;
+            return null;
         }
         #endregion
 

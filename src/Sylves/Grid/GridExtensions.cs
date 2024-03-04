@@ -153,5 +153,7 @@ namespace Sylves
             return transform * meshData;
         }
 
+        public static IEnumerable<Cell> GetCellsIntersectsApprox(this IGrid grid, Aabb aabb) => grid.GetCellsIntersectsApprox(aabb.Min, aabb.Max);
+
     }
 }
