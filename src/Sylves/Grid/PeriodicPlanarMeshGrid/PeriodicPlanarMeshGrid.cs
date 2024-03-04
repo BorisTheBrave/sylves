@@ -383,7 +383,7 @@ namespace Sylves
             return (bound == null || ((SquareBound)bound).Contains(new Cell(chunk.x, chunk.y))) && 0 <= centerCell.x && centerCell.x < centerGrid.IndexCount;
         }
 
-        public Aabb? GetAabb(IBound bound)
+        public Aabb? GetBoundAabb(IBound bound)
         {
             if (bound is SquareBound sb)
             {
@@ -449,6 +449,18 @@ namespace Sylves
         public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)
         {
             throw new Grid2dException();
+        }
+
+        public Aabb GetAabb(Cell cell)
+        {
+            var (centerCell, chunk) = Split(cell);
+            var aabb = centerGrid.GetAabb(centerCell);
+            return aabb + ChunkOffset(chunk);
+        }
+
+        public Aabb GetAabb(IEnumerable<Cell> cells)
+        {
+            return Aabb.Union(cells.Select(GetAabb));
         }
         #endregion
 

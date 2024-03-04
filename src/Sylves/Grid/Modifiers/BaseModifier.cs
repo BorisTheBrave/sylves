@@ -98,7 +98,7 @@ namespace Sylves
         public virtual IBound UnionBounds(IBound bound, IBound other) => underlying.UnionBounds(bound, other);
         public virtual IEnumerable<Cell> GetCellsInBounds(IBound bound) => underlying.GetCellsInBounds(bound);
         public virtual bool IsCellInBound(Cell cell, IBound bound) => underlying.IsCellInBound(cell, bound);
-        public virtual Aabb? GetAabb(IBound bound) => underlying.GetAabb(bound);
+        public virtual Aabb? GetBoundAabb(IBound bound) => underlying.GetBoundAabb(bound);
         #endregion
 
         #region Position
@@ -115,6 +115,10 @@ namespace Sylves
         public virtual IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => underlying.GetTriangleMesh(cell);
 
         public virtual void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => underlying.GetMeshData(cell, out meshData, out transform);
+
+        public virtual Aabb GetAabb(Cell cell) => underlying.GetAabb(cell);
+
+        public virtual Aabb GetAabb(IEnumerable<Cell> cells) => underlying.GetAabb(cells);
 
         #endregion
 

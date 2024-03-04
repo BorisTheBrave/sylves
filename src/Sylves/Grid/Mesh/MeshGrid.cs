@@ -224,7 +224,7 @@ namespace Sylves
         #endregion
 
         #region Bounds
-        public Aabb? GetAabb(IBound bound)
+        public Aabb? GetBoundAabb(IBound bound)
         {
             return Aabb.FromMinMax(
                 Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.min, meshDetails.hashCellSize) + meshDetails.hashCellBase,
@@ -583,6 +583,30 @@ namespace Sylves
         {
             DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
+
+        public override Aabb GetAabb(Cell cell)
+        {
+            var center = GetCellCenter(cell);
+            var aabb = Aabb.FromMinMax(center, center);
+            return ExpandAabb(aabb);
+        }
+
+        public override Aabb GetAabb(IEnumerable<Cell> cells)
+        {
+            var aabb = Aabb.FromVectors(cells.Select(GetCellCenter));
+            return ExpandAabb(aabb);
+        }
+
+        private Aabb ExpandAabb(Aabb aabb)
+        {
+            var min = meshDetails.GetHashCell(aabb.Min);
+            var max = meshDetails.GetHashCell(aabb.Max);
+            return Aabb.FromMinMax(
+                Vector3.Scale(min - Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                Vector3.Scale(max + 2 * Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase
+                );
+        }
+
         #endregion
     }
 }

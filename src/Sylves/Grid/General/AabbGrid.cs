@@ -171,7 +171,7 @@ namespace Sylves
 
         public bool IsCellInBound(Cell cell, IBound bound) => bound is SquareBound sb ? sb.Contains(cell) : true;
 
-        public Aabb? GetAabb(IBound bound)
+        public Aabb? GetBoundAabb(IBound bound)
         {
             if (bound is SquareBound sb)
             {
@@ -201,6 +201,12 @@ namespace Sylves
         public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => throw new NotImplementedException();
 
         public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => throw new NotImplementedException();
+        public Aabb GetAabb(Cell cell)
+        {
+            var v = ToVector2Int(cell);
+            return GetBoundAabb(new SquareBound(v, v + Vector2Int.one)).Value;
+        }
+        public Aabb GetAabb(IEnumerable<Cell> cells) => GetBoundAabb(GetBound(cells)).Value;
 
         #endregion
 

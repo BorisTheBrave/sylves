@@ -364,9 +364,9 @@ namespace Sylves
         }
         public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
 
-        public Aabb? GetAabb(IBound bound)
+        public Aabb? GetBoundAabb(IBound bound)
         {
-            return DefaultGridImpl.GetAabb(this, bound);
+            return DefaultGridImpl.GetBoundAabb(this, bound);
         }
         #endregion
         #region Topology
@@ -741,6 +741,10 @@ namespace Sylves
         {
             DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
+
+        public Aabb GetAabb(Cell cell) => DefaultGridImpl.GetAabb(this, cell);
+
+        public Aabb GetAabb(IEnumerable<Cell> cells) => DefaultGridImpl.GetAabb(this, cells);
         #endregion
 
         #region Query

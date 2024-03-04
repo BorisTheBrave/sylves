@@ -18,7 +18,7 @@ namespace Sylves
         Vector3 cellSize;
 
         public CubeGrid(float cellSize, CubeBound bound = null)
-            :this(new Vector3(cellSize, cellSize, cellSize), bound)
+            : this(new Vector3(cellSize, cellSize, cellSize), bound)
         {
 
         }
@@ -164,7 +164,7 @@ namespace Sylves
 
         public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
 
-        public Aabb? GetAabb(IBound bound)
+        public Aabb? GetBoundAabb(IBound bound)
         {
             if (bound is CubeBound sb)
             {
@@ -389,6 +389,10 @@ namespace Sylves
             meshData = MeshPrimitives.Cube;
             transform = Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(cellSize);
         }
+
+        public Aabb GetAabb(Cell cell) => GetBoundAabb(new CubeBound((Vector3Int)cell, (Vector3Int)cell + Vector3Int.one)).Value;
+
+        public Aabb GetAabb(IEnumerable<Cell> cells) => GetBoundAabb(GetBound(cells)).Value;
         #endregion
 
         #region Query

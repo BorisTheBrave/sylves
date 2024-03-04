@@ -471,13 +471,30 @@ namespace Sylves
         public virtual IBound GetBound(IEnumerable<Cell> cells) 
         {
             var uBound = underlying.GetBound(cells.Select(c=>Split(c).cell));
-            var maxLayer = cells.Select(c => Split(c).layer).Max() + 1;
-            var minLayer = cells.Select(c => Split(c).layer).Min();
+            var first = true;
+            var minLayer = 0;
+            var maxLayer = 0;
+            foreach (var cell in cells)
+            {
+                var layer = Split(cell).layer;
+                if (first)
+                {
+                    minLayer = maxLayer = layer;
+                    first = false;
+                }
+                else
+                {
+                    minLayer = Math.Min(layer, minLayer);
+                    maxLayer = Math.Min(layer, maxLayer);
+                }
+            }
+            if (first)
+                throw new Exception("Enumerable empty");
             return new PlanarPrismBound
             {
                 PlanarBound = uBound,
                 MinLayer = minLayer,
-                MaxLayer = maxLayer,
+                MaxLayer = maxLayer + 1,
             };
         }
 
@@ -529,11 +546,11 @@ namespace Sylves
             }
         }
 
-        public Aabb? GetAabb(IBound bound)
+        public Aabb? GetBoundAabb(IBound bound)
         {
             if(bound is PlanarPrismBound ppb)
             {
-                if(Underlying.GetAabb(bound) is Aabb aabb)
+                if(Underlying.GetBoundAabb(bound) is Aabb aabb)
                 {
                     return Aabb.FromMinMax(
                         aabb.Min + GetOffset(ppb.MinLayer),
@@ -637,6 +654,37 @@ namespace Sylves
             };
         }
 
+        public Aabb GetAabb(Cell cell)
+        {
+            var (uCell, layer) = Split(cell);
+            var aabb = Underlying.GetAabb(uCell);
+            return Aabb.FromMinMax(aabb.Min + GetOffset(layer), aabb.Max + GetOffset(layer + 1));
+        }
+
+        public Aabb GetAabb(IEnumerable<Cell> cells)
+        {
+            var aabb = Underlying.GetAabb(cells.Select(c => Split(c).cell));
+            var first = true;
+            var minLayer = 0;
+            var maxLayer = 0;
+            foreach(var cell in cells)
+            {
+                var layer = Split(cell).layer;
+                if(first)
+                {
+                    minLayer = maxLayer = layer;
+                    first = false;
+                }
+                else
+                {
+                    minLayer = Math.Min(layer, minLayer);
+                    maxLayer = Math.Min(layer, maxLayer);
+                }
+            }
+            if (first)
+                throw new Exception("Enumerable empty");
+            return Aabb.FromMinMax(aabb.Min + GetOffset(minLayer), aabb.Max + GetOffset(maxLayer + 1));
+        }
 
         #endregion
 

@@ -136,7 +136,7 @@ namespace Sylves
         public IEnumerable<Cell> GetCellsInBounds(IBound bound) => DefaultGridImpl.GetCellsInBounds(this, bound);
         public virtual bool IsCellInBound(Cell cell, IBound bound) => DefaultGridImpl.IsCellInBound(this, cell, bound);
 
-        public virtual Aabb? GetAabb(IBound bound) => DefaultGridImpl.GetAabb(this, bound);
+        public virtual Aabb? GetBoundAabb(IBound bound) => DefaultGridImpl.GetBoundAabb(this, bound);
 
         #endregion
 
@@ -158,6 +158,9 @@ namespace Sylves
 
         public virtual void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => throw new System.NotImplementedException();
 
+        public virtual Aabb GetAabb(Cell cell) => DefaultGridImpl.GetAabb(this, cell);
+
+        public virtual Aabb GetAabb(IEnumerable<Cell> cells) => DefaultGridImpl.GetAabb(this, cells);
         #endregion
 
         #region Query

@@ -88,7 +88,7 @@ namespace Sylves
 
         public bool IsCellInBound(Cell cell, IBound bound) => throw new NotImplementedException();
 
-        public Aabb? GetAabb(IBound bound) => throw new NotImplementedException();
+        public Aabb? GetBoundAabb(IBound bound) => throw new NotImplementedException();
 
         #endregion
 
@@ -108,7 +108,11 @@ namespace Sylves
 
         public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => throw new NotImplementedException();
 
-        public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => throw new NotImplementedException();
+        public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => throw new NotImplementedException(); 
+        
+        public Aabb GetAabb(Cell cell) => throw new NotImplementedException();
+
+        public Aabb GetAabb(IEnumerable<Cell> cells) => throw new NotImplementedException();
 
         #endregion
 

@@ -229,10 +229,10 @@ namespace Sylves
         bool IsCellInBound(Cell cell, IBound bound);
 
         /// <summary>
-        /// Returns a cuboid that fully covers all the cells in bounds.
+        /// Returns a bounding box that fully covers all the cells in bounds.
         /// Returns null
         /// </summary>
-        Aabb? GetAabb(IBound bound);
+        Aabb? GetBoundAabb(IBound bound);
         #endregion
 
         #region Position
@@ -285,8 +285,16 @@ namespace Sylves
         /// </summary>
         void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform);
 
-        //Aabb GetAabb(Cell cell);
-        //Aabb GetAabb(IEnumerable<Cell> cells);
+        /// <summary>
+        /// Gets a bounding box for a single cell.
+        /// </summary>
+        Aabb GetAabb(Cell cell);
+
+        /// <summary>
+        /// Gets a bounding box for a collection of cells.
+        /// Throws if cells is empty.
+        /// </summary>
+        Aabb GetAabb(IEnumerable<Cell> cells);
 
         #endregion
 

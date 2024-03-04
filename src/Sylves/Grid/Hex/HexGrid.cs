@@ -413,7 +413,7 @@ namespace Sylves
         
         public bool IsCellInBound(Cell cell, IBound bound) => bound is HexBound hb ? hb.Contains(cell) : true;
 
-        public Aabb? GetAabb(IBound bound)
+        public Aabb? GetBoundAabb(IBound bound)
         {
             if (bound is HexBound hb)
             {
@@ -505,6 +505,10 @@ namespace Sylves
         {
             DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
+
+        public Aabb GetAabb(Cell cell) => GetBoundAabb(new HexBound((Vector3Int)cell, (Vector3Int)cell + Vector3Int.one)).Value;
+
+        public Aabb GetAabb(IEnumerable<Cell> cells) => GetBoundAabb(GetBound(cells)).Value;
 
         #endregion
 

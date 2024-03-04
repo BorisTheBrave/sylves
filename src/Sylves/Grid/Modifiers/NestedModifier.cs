@@ -245,9 +245,9 @@ namespace Sylves
             return chunkGrid.IsCellInBound(chunkCell, bound);
         }
 
-        public Aabb? GetAabb(IBound bound)
+        public Aabb? GetBoundAabb(IBound bound)
         {
-            return chunkGrid.GetAabb(bound);
+            return chunkGrid.GetBoundAabb(bound);
         }
         #endregion
 
@@ -300,6 +300,19 @@ namespace Sylves
             GetChildGridCached(chunkCell).GetMeshData(childCell, out meshData, out transform);
             transform = Matrix4x4.Translate(MeshTranslation(chunkCell)) * transform;
         }
+
+        public Aabb GetAabb(Cell cell)
+        {
+            var (childCell, chunkCell) = Split(cell);
+            var aabb = GetChildGridCached(chunkCell).GetAabb(childCell);
+            return aabb + MeshTranslation(chunkCell);
+        }
+
+        public Aabb GetAabb(IEnumerable<Cell> cells)
+        {
+            return Aabb.Union(cells.Select(GetAabb));
+        }
+
         #endregion
 
         #region Query

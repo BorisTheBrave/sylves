@@ -137,7 +137,7 @@ namespace Sylves
             // TODO: I'm not entirely certain this procedur is valid
             var tileBounds = this.prototiles.ToDictionary(x => x, x =>
             {
-                return Aabb.FromVectors(x.ChildTiles.SelectMany(t => t)).Value;
+                return Aabb.FromVectors(x.ChildTiles.SelectMany(t => t));
             });
             var deflation = this.prototiles.SelectMany(x => x.ChildPrototiles).Select(x => x.transform.lossyScale).Select(v => Mathf.Max(Mathf.Abs(v.x), Mathf.Max(Mathf.Abs(v.y), Mathf.Abs(v.z))));
             var prevBounds = tileBounds;
@@ -604,7 +604,7 @@ namespace Sylves
             return true;
         }
 
-        public Sylves.Aabb? GetAabb(IBound bound) => DefaultGridImpl.GetAabb(this, bound);
+        public Sylves.Aabb? GetBoundAabb(IBound bound) => DefaultGridImpl.GetBoundAabb(this, bound);
 
         #endregion
 
@@ -641,6 +641,10 @@ namespace Sylves
         {
             DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
+
+        public Aabb GetAabb(Cell cell) => DefaultGridImpl.GetAabb(this, cell);
+
+        public Aabb GetAabb(IEnumerable<Cell> cells) => DefaultGridImpl.GetAabb(this, cells);
 
         #endregion
 

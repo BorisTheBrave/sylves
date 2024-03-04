@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+#if UNITY
+using UnityEngine;
+#endif
+
 
 namespace Sylves
 {
@@ -14,7 +17,7 @@ namespace Sylves
         }
         public static Aabb FromMinMax(Vector3 min, Vector3 max) => new Aabb(min, max);
 
-        public static Aabb? FromVectors(IEnumerable<Vector3> vectors)
+        public static Aabb FromVectors(IEnumerable<Vector3> vectors)
         {
             var first = true;
             Vector3 localMin = default, localMax = default;
@@ -33,7 +36,7 @@ namespace Sylves
             }
             if(first)
             {
-                return null;
+                throw new Exception($"Enumerator empty");
             }
             else
             {
@@ -100,6 +103,9 @@ namespace Sylves
             Transform(m, ref min, ref max);
             return new Aabb(min, max);
         }
+
+        public static Aabb operator +(Vector3 v, Aabb aabb) => new Aabb(aabb.Min + v, aabb.Max + v);
+        public static Aabb operator +(Aabb aabb, Vector3 v) => new Aabb(aabb.Min + v, aabb.Max + v);
 
         internal static void Transform(Matrix4x4 m, ref Vector3 min, ref Vector3 max)
         {

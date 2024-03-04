@@ -320,7 +320,7 @@ namespace Sylves
         
         public bool IsCellInBound(Cell cell, IBound bound) => bound is SquareBound sb ? sb.Contains(cell) : true;
 
-        public Aabb? GetAabb(IBound bound)
+        public Aabb? GetBoundAabb(IBound bound)
         {
             if (bound is SquareBound sb)
             {
@@ -373,6 +373,10 @@ namespace Sylves
         {
             DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
+
+        public Aabb GetAabb(Cell cell) => GetBoundAabb(new SquareBound(cell.x, cell.y, cell.x + 1, cell.y + 1)).Value;
+
+        public Aabb GetAabb(IEnumerable<Cell> cells) => GetBoundAabb(GetBound(cells)).Value;
         #endregion
 
         #region Query

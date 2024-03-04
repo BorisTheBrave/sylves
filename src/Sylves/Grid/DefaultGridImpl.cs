@@ -137,7 +137,20 @@ namespace Sylves
             return true;
         }
 
-        public static Aabb? GetAabb(IGrid grid, IBound bound)
+        public static Aabb GetAabb(IGrid grid, Cell cell)
+        {
+            var corners = grid.GetCellCorners(cell).Select(corner => grid.GetCellCorner(cell, corner));
+            return Aabb.FromVectors(corners);
+        }
+
+        public static Aabb GetAabb(IGrid grid, IEnumerable<Cell> cells)
+        {
+            var corners = cells.SelectMany(cell => grid.GetCellCorners(cell)
+                .Select(corner => grid.GetCellCorner(cell, corner)));
+            return Aabb.FromVectors(corners);
+        }
+
+        public static Aabb? GetBoundAabb(IGrid grid, IBound bound)
         {
             if (bound == null && !grid.IsFinite)
             {
@@ -152,9 +165,7 @@ namespace Sylves
             {
                 return null;
             }
-            var corners = cells.SelectMany(cell => grid.GetCellCorners(cell)
-                .Select(corner => grid.GetCellCorner(cell, corner)));
-            return Aabb.FromVectors(corners);
+            return GetAabb(grid, cells);
         }
         #endregion
 

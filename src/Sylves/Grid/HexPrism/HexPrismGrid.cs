@@ -384,11 +384,11 @@ namespace Sylves
         }
         public bool IsCellInBound(Cell cell, IBound bound) => bound is HexPrismBound hb ? hb.Contains(cell) : true;
 
-        public Aabb? GetAabb(IBound bound)
+        public Aabb? GetBoundAabb(IBound bound)
         {
             if (bound is HexPrismBound hpb)
             {
-                if (hexGrid.GetAabb(hpb.hexBound) is Aabb aabb)
+                if (hexGrid.GetBoundAabb(hpb.hexBound) is Aabb aabb)
                 {
                     return Aabb.FromMinMax(
                             aabb.Min + cellSize.z * hpb.layerMin * Vector3.forward,
@@ -440,6 +440,15 @@ namespace Sylves
             meshData = orientation == HexOrientation.PointyTopped ? ptMeshData : ftMeshData;
             transform = Matrix4x4.Translate(GetCellCenter(cell)) * Matrix4x4.Scale(cellSize);
         }
+
+        public Aabb GetAabb(Cell cell)
+        {
+            var hex = new Vector3Int(cell.x, cell.y, -cell.x - cell.y);
+            var bound = new HexPrismBound(new HexBound(hex, hex + Vector3Int.one), cell.z, cell.z + 1);
+            return GetBoundAabb(bound).Value;
+        }
+
+        public Aabb GetAabb(IEnumerable<Cell> cells) => GetBoundAabb(GetBound(cells)).Value;
         #endregion
 
         #region Query

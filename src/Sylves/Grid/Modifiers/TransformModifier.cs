@@ -69,9 +69,9 @@ namespace Sylves
 
         #region Bounds
 
-        public override Aabb? GetAabb(IBound bound)
+        public override Aabb? GetBoundAabb(IBound bound)
         {
-            if (Underlying.GetAabb(bound) is Aabb aabb)
+            if (Underlying.GetBoundAabb(bound) is Aabb aabb)
             {
                 return transform * aabb;
             }
@@ -108,6 +108,10 @@ namespace Sylves
             Underlying.GetMeshData(cell, out meshData, out var uTransform);
             transform = this.transform * uTransform;
         }
+
+        public override Aabb GetAabb(Cell cell) => transform * Underlying.GetAabb(cell);
+
+        public override Aabb GetAabb(IEnumerable<Cell> cells) => transform * Underlying.GetAabb(cells);
 
         #endregion
 
