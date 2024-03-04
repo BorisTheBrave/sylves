@@ -109,8 +109,8 @@ namespace Sylves
 
         internal static void Transform(Matrix4x4 m, ref Vector3 min, ref Vector3 max)
         {
-            var center = (min + max) * 0.5f;
-            var extents = (max - min) * 0.5f;
+            var center = m.MultiplyPoint3x4((min + max) * 0.5f);
+            var extents = m.MultiplyVector((max - min) * 0.5f);
             extents = new Vector3(Mathf.Abs(extents.x), Mathf.Abs(extents.y), Mathf.Abs(extents.z));
             min = center - extents;
             max = center + extents;
