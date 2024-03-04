@@ -17,6 +17,10 @@ Cells are typically polygons, for 2d, or meshes, for 3d.
 
 Converts the whole grid to a mesh.
 
+### [`GetAabb`](xref:Sylves.IGrid.GetAabb(Sylves.Cell))
+
+Gets the bounding box for a cell of collection of cells. See also [`GetBoundAabb`](xref:Sylves.IGrid.GetBoundAabb(Sylves.IBound))
+
 ## Deformation
 
 For advanced grids, particularly [MeshGrid](../grids/meshgrid.md), each cell of the grid may be a different shape, even though they share the same cell type.

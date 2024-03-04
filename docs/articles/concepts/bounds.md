@@ -29,6 +29,13 @@ Tests if a given cell is inside a bound.
 
 Combines two bounds into one.
 
+### [`GetBoundAabb`](xref:Sylves.IGrid.GetBoundAabb(Sylves.IBound))
+
+Gets the bounding box in space for a bound. Usually equivalent to `grid.GetAabb(grid.GetCellsInBounds(bound))`;
+
+
+---
+
 Most of these methods will also accept a `null` bound, meaning the entire grid.
 
 If you know the specific class of a bound, you can use that type instead of `IBound`. Most bounds have useful methods and constructors on them, and implement `IEnumerable<Cell>` to easily get the cells within.
