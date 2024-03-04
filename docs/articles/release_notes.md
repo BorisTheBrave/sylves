@@ -1,3 +1,10 @@
+# Unreleased
+* Added [`GetAabb`](xref:Sylves.IGrid.GetAabb(Sylves.Cell)) methods
+* Fix PlanarLazyMeshGrid when passing in a SquareGrid
+* Fix GetCellsIntersectsApprox in some grids
+* Fix triangle grid GetCellCorners
+* Fix generalized winding.
+
 # 1.0.0
 * **Breaking**: Swapped CubeDir.Left and CubeDir.Right
 * Added [OffGrid](grids/offgrid.md)
