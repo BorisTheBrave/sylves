@@ -412,6 +412,39 @@ namespace Sylves
         }
         
         public bool IsCellInBound(Cell cell, IBound bound) => bound is HexBound hb ? hb.Contains(cell) : true;
+
+        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        {
+            if (bound is HexBound hb)
+            {
+                var first = true;
+                Vector3 localMin = default, localMax = default;
+                foreach (var c in hb.GetCorners())
+                {
+                    var p = GetCellCenter(c);
+                    if (first)
+                    {
+                        localMin = localMin = p;
+                        first = false;
+                    }
+                    else
+                    {
+                        localMin = Vector3.Min(localMin, p);
+                        localMax = Vector3.Min(localMax, p);
+                    }
+                }
+                // Increase bounds to cover corners
+                localMin.x -= 0.5f * cellSize.x;
+                localMin.y -= 0.5f * cellSize.y;
+                localMax.x += 0.5f * cellSize.x;
+                localMax.y += 0.5f * cellSize.y;
+                min = localMin;
+                max = localMax;
+                return true;
+            }
+            min = max = default;
+            return false;
+        }
         #endregion
 
         #region Position

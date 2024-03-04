@@ -382,6 +382,20 @@ namespace Sylves
             var (centerCell, chunk) = Split(cell);
             return (bound == null || ((SquareBound)bound).Contains(new Cell(chunk.x, chunk.y))) && 0 <= centerCell.x && centerCell.x < centerGrid.IndexCount;
         }
+
+        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        {
+            if (bound is SquareBound sb)
+            {
+                var (localMin, localMax) = aabbChunks.GetBoundExtent(sb);
+                min = new Vector3(localMin.x, localMin.y, 0);
+                max = new Vector3(localMax.x, localMax.y, 0);
+                return true;
+            }
+            min = max = default;
+            return false;
+        }
+
         #endregion
 
         #region Position

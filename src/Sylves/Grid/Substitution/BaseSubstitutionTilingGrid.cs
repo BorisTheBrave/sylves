@@ -603,6 +603,9 @@ namespace Sylves
             }
             return true;
         }
+
+        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max) => DefaultGridImpl.GetBoundExtent(this, bound, out min, out max);
+
         #endregion
 
         #region Position

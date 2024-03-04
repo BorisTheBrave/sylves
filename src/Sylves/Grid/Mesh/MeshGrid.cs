@@ -223,6 +223,15 @@ namespace Sylves
         //public override IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell);
         #endregion
 
+        #region Bounds
+        public override bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        {
+            min = Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.min, meshDetails.hashCellSize) + meshDetails.hashCellBase;
+            max = Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.max, meshDetails.hashCellSize) + meshDetails.hashCellBase;
+            return true;
+        }
+        #endregion
+
         #region Position
         public override Vector3 GetCellCorner(Cell cell, CellCorner corner)
         {

@@ -528,6 +528,20 @@ namespace Sylves
                 return true;
             }
         }
+
+        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        {
+            if(bound is PlanarPrismBound ppb)
+            {
+                if(!Underlying.GetBoundExtent(bound, out min, out max))
+                    return false;
+                min += GetOffset(ppb.MinLayer);
+                max += GetOffset(ppb.MaxLayer);
+                return true;
+            }
+            min = max = default;
+            return false;
+        }
         #endregion
 
         #region Position

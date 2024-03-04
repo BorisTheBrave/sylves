@@ -170,6 +170,19 @@ namespace Sylves
         }
 
         public bool IsCellInBound(Cell cell, IBound bound) => bound is SquareBound sb ? sb.Contains(cell) : true;
+
+        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        {
+            if(bound is SquareBound sb)
+            {
+                var (localMin, localMax) = chunks.GetBoundExtent(sb);
+                min = new Vector3(localMin.x, localMin.y, 0);
+                max = new Vector3(localMax.x, localMax.y, 0);
+                return true;
+            }
+            min = max = default;
+            return false;
+        }
         #endregion
 
         #region Position

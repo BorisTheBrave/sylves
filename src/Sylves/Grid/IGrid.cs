@@ -216,6 +216,7 @@ namespace Sylves
         IBound UnionBounds(IBound bound, IBound other);
 
         // TODO: Decide if this should return cells outside of grid.
+        // TOOD: Retname to GetCellsInBound
         /// <summary>
         /// Returns the cells inside a given bound.
         /// </summary>
@@ -226,6 +227,12 @@ namespace Sylves
         /// i.e. returns true if the cell is listed in GetCellsInBounds.
         /// </summary>
         bool IsCellInBound(Cell cell, IBound bound);
+
+        /// <summary>
+        /// Returns a cuboid that fully covers all the cells in bounds.
+        /// Returns false if the bound is not finite.
+        /// </summary>
+        bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max);
         #endregion
 
         #region Position

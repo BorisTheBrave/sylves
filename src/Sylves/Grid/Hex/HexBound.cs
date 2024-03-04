@@ -49,9 +49,6 @@ namespace Sylves
                 new Vector3Int(center.x + radius + 1, center.y + radius + 1, center.z + radius + 1)
                 );
         }
-
-
-
         public bool Contains(Cell v)
         {
             return v.x >= min.x && v.y >= min.y && v.z >= min.z && v.x < max.x && v.y < max.y && v.z < max.z;
@@ -64,6 +61,52 @@ namespace Sylves
         public HexBound Union(HexBound other)
         {
             return new HexBound(Vector3Int.Min(min, other.min), Vector3Int.Max(max, other.max));
+        }
+
+        internal IEnumerable<Cell> GetCorners()
+        {
+            {
+                var x = min.x;
+                var minY = Math.Max(min.y, -x - max.z + 1);
+                var maxY = Math.Min(max.y, -x - min.z + 1) - 1;
+                if (minY <= maxY)
+                {
+                    yield return new Cell(x, minY, -x - minY);
+                    yield return new Cell(x, maxY, -x - maxY);
+                }
+            }
+            {
+                var x = max.x - 1;
+                var minY = Math.Max(min.y, -x - max.z + 1);
+                var maxY = Math.Min(max.y, -x - min.z + 1) - 1;
+                if (minY <= maxY)
+                {
+                    yield return new Cell(x, minY, -x - minY);
+                    yield return new Cell(x, maxY, -x - maxY);
+                }
+            }
+            {
+                var y = min.y;
+                var minX = Math.Max(min.x, -y - max.z + 1);
+                var maxX = Math.Min(max.x, -y - min.z + 1) - 1;
+                if (minX <= maxX)
+                {
+                    yield return new Cell(minX, y, -y - minX);
+                    yield return new Cell(maxX, y, -y - maxX);
+                }
+            }
+            {
+                var y = max.y - 1;
+                var minX = Math.Max(min.x, -y - max.z + 1);
+                var maxX = Math.Min(max.x, -y - min.z + 1) - 1;
+                if (minX <= maxX)
+                {
+                    yield return new Cell(minX, y, -y - minX);
+                    yield return new Cell(maxX, y, -y - maxX);
+                }
+            }
+            // No need to do z, every corner must be min/max of 2 co-ords
+            // so one of x or y must be relevant
         }
 
         IEnumerator IEnumerable.GetEnumerator()

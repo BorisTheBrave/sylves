@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace Sylves
 {
-    // Experimentals
     internal class AabbChunks
     {
         const float eps = 1e-6f;
@@ -55,6 +54,14 @@ namespace Sylves
             var tr = bl + aabbSize;
             return (bl, tr);
         }
+
+        public (Vector2, Vector2) GetBoundExtent(SquareBound bound)
+        {
+            var bl = aabbBottomLeft + strideX * bound.min.x + strideY * bound.min.y;
+            var tr = aabbBottomLeft + strideX * bound.max.x + strideY * bound.max.y + aabbSize;
+            return (bl, tr);
+        }
+
 
         // Partitions the plane so that every point is associated with one chunk it belongs to
         public Vector2Int? GetUniqueChunk(Vector2 pos)

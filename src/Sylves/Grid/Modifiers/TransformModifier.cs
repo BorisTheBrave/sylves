@@ -67,6 +67,22 @@ namespace Sylves
 
         #endregion
 
+        #region Bounds
+
+        public override bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        {
+            if (!Underlying.GetBoundExtent(bound, out min, out max))
+                return false;
+            var center = (min + max) / 2;
+            var hsize = (max - min) / 2;
+            var center2 = transform.MultiplyPoint3x4(center);
+            var hsize2 = transform.MultiplyVector(hsize);
+            min = center2 - hsize2;
+            max = center2 + hsize2;
+            return true;
+        }
+        #endregion
+
         #region Position
         public override Vector3 GetCellCenter(Cell cell) => transform.MultiplyPoint3x4(Underlying.GetCellCenter(cell));
         public override Vector3 GetCellCorner(Cell cell, CellCorner corner) => transform.MultiplyPoint3x4(Underlying.GetCellCorner(cell, corner));

@@ -244,6 +244,11 @@ namespace Sylves
             // No need to check childCell, this method should only be called with cells in the grid
             return chunkGrid.IsCellInBound(chunkCell, bound);
         }
+
+        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        {
+            return chunkGrid.GetBoundExtent(bound, out min, out max);
+        }
         #endregion
 
 

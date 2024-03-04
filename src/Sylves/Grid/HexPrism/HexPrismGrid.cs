@@ -383,6 +383,20 @@ namespace Sylves
             return (HexPrismBound)bound;
         }
         public bool IsCellInBound(Cell cell, IBound bound) => bound is HexPrismBound hb ? hb.Contains(cell) : true;
+
+        public bool GetBoundExtent(IBound bound, out Vector3 min, out Vector3 max)
+        {
+            if (bound is HexPrismBound hpb)
+            {
+                if (!hexGrid.GetBoundExtent(hpb.hexBound, out min, out max))
+                    return false;
+                min += cellSize.z * hpb.layerMin * Vector3.forward;
+                max += cellSize.z * hpb.layerMax * Vector3.forward;
+                return true;
+            }
+            min = max = default;
+            return false;
+        }
         #endregion
 
         #region Position

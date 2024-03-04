@@ -207,5 +207,20 @@ namespace Sylves.Test
             GridTest.DualMapping(dual, new Cell(1, 1, 0));
             GridTest.DualMapping(dual, new Cell(8, -4, -2));
         }
+
+        /*
+        [Test]
+        public void TestTriangleBoundCorners()
+        {
+            //var bound = new TriangleBound(new Vector3Int(-1, -3, -4), new Vector3Int(3, 2, 1));
+            var bound = TriangleBound.Hexagon(4);
+
+            var corners = bound.GetCorners().ToList();
+            var cells = bound.ToHashSet();
+            Assert.AreEqual(bound.min, corners.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Min));
+            Assert.AreEqual(bound.max, corners.Select(x => (Vector3Int)x).Aggregate(Vector3Int.Max) + Vector3Int.one);
+            Assert.IsTrue(corners.All(cells.Contains));
+        }
+        */
     }
 }

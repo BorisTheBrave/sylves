@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 #if UNITY
 using UnityEngine;
 #endif
@@ -134,6 +135,50 @@ namespace Sylves
         public static bool IsCellInBound(IGrid grid, Cell cell, IBound bound)
         {
             return true;
+        }
+
+        public static bool GetBoundExtent(IGrid grid, IBound bound, out Vector3 min, out Vector3 max)
+        {
+            if (bound == null && !grid.IsFinite)
+            {
+                min = max = default;
+                return false;
+            }
+            IEnumerable<Cell> cells;
+            try
+            {
+                cells = grid.GetCellsInBounds(bound);
+            }
+            catch (GridInfiniteException)
+            {
+
+                min = max = default;
+                return false;
+            }
+            var first = true;
+            Vector3 localMin = default, localMax = default;
+            foreach(var cell in cells)
+            {
+                foreach(var corner in grid.GetCellCorners(cell))
+                {
+                    var p = grid.GetCellCorner(cell, corner);
+                    if(first)
+                    {
+                        localMin = localMin = p;
+                        first = false;
+                    }
+                    else
+                    {
+                        localMin = Vector3.Min(localMin, p);
+                        localMax = Vector3.Min(localMax, p);
+                    }
+                }
+            }
+            min = localMin;
+            max = localMax;
+
+            return true;
+
         }
         #endregion
 
