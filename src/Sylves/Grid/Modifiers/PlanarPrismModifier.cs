@@ -749,7 +749,7 @@ namespace Sylves
             if(bound != null)
             {
                 minLayer = Math.Max(minLayer, bound.MinLayer);
-                maxLayer = Math.Min(maxLayer, bound.MaxLayer);
+                maxLayer = Math.Min(maxLayer, bound.MaxLayer - 1);
             }
 
             foreach (var uCell in underlying.GetCellsIntersectsApprox(GetPlanarPosition(min), GetPlanarPosition(max)))
