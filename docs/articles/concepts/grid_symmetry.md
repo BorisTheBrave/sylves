@@ -21,4 +21,4 @@ Note that the symmetries of a grid are not related to the symmetry of the cells.
 
 ![](../../images/rhombille_example.svg)
 
-Here, each cell is a diamond, so has rotational symmetry 2 - i.e. you must rotate a tile by 180 degrees before it maps to itself. But the grid itself has rotational symmetry 6 as you can rotate the whole grid by 30 degrees and get the same grid again.
+Here, each cell is a diamond, so has rotational symmetry 2 - i.e. you must rotate a tile by 180 degrees before it maps to itself. But the grid itself has rotational symmetry 6 as you can rotate the whole grid by 60 degrees and get the same grid again.

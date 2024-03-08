@@ -6,7 +6,7 @@ Some grids can come with additional relatives such as [hex grid subdividing into
 
 ### [`Unbounded`](xref:Sylves.IGrid.Unbounded)
 
-Returns the same grid with [boubds](bounds.md) removed.
+Returns the same grid with [bounds](bounds.md) removed.
 
 ### [`Unwrapped`](xref:Sylves.IGrid.Unwrapped)
 

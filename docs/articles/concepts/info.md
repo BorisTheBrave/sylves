@@ -4,7 +4,7 @@ Every grid exports some basic details about what sort of grid it is.
 
 ### [`Is2d`](xref:Sylves.IGrid.Is2d)
 
-Are the cells flat surfaces. Note: the flat shapes can still rotate in all dimensions. The surface of a cube is 2d.
+Are the cells flat surfaces. Note: Each cell is flat, but they can still be arranged in 3d space. i.e. the surface of a cube makes 2d grid.
 
 ### [`Is3d`](xref:Sylves.IGrid.Is3d)
 
@@ -20,7 +20,7 @@ Does this grid use the same cell shapes over and over.
 
 ### [`IsOrientable`](xref:Sylves.IGrid.IsOrientable)
 
-A [non-orientable](https://en.wikipedia.org/wiki/Orientability) grid some paths on the grid end up mirroring your as you travel them.
+A [non-orientable](https://en.wikipedia.org/wiki/Orientability) grid some paths on the grid end up mirroring your as you travel them. See [Connections](rotation.html#connection)
 
 ### [`IsFinite`](xref:Sylves.IGrid.IsFinite)
 

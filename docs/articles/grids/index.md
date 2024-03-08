@@ -92,7 +92,7 @@ Mesh grids accept a [mesh](xref:Sylves.MeshData) as the input, and base cells of
 
 ## Prism Grids
 
-"Prism" are when you take a 2d polygon, and extrude it into a 3d shape. 
+"Prisms" are when you take a 2d polygon, and extrude it into a 3d shape. 
 This can convert 2d grids into 3d ones, usually with the z-cordinate being the "layer", i.e. offset from the original grid.
 
 <table>
@@ -116,7 +116,7 @@ This can convert 2d grids into 3d ones, usually with the z-cordinate being the "
 
 ## Substitution Tiling Grids
 
-[Substitution tiling grids](substitutiontilinggrid.md) use recursive subdivision to fill the space with tiles. They are well known as a way of creating aperiod grids
+[Substitution tiling grids](substitutiontilinggrid.md) use recursive subdivision to fill the space with tiles. They are well known as a way of creating [aperiodic tilings](https://en.wikipedia.org/wiki/Aperiodic_tiling).
 
 [!include[](_substitution_table.md)]
 

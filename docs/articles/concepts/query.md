@@ -9,7 +9,7 @@ Looks up the cell that contains a given point in space
 
 ### [`FindCell(Matrix4x4)`](xref:Sylves.IGrid.FindCell(Sylves.Matrix4x4,Sylves.Cell@,Sylves.CellRotation@))
 
-Finds the cell and rotation best repsented by a given transform matrix.
+Finds the cell and cell rotation that have a [transform/rotation/scale](xref:Sylves.IGrid.GetTRS(Sylves.Cell)) closest to the given transform matrix.
 
 ### [`GetCellsIntersectsApprox`](xref:Sylves.IGrid.GetCellsIntersectsApprox(Sylves.Vector3,Sylves.Vector3))
 
