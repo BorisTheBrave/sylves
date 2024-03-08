@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sylves
@@ -13,6 +14,21 @@ namespace Sylves
         public CellDir InverseDir;
         public Connection Connection;
         public float Length;
+
+        public static Step? Create(IGrid grid, Cell src, CellDir dir, Func<Step, float?> stepLengths)
+        {
+            if(Create(grid, src, dir, 0) is Step s)
+            {
+                var length = stepLengths(s);
+                if (length == null)
+                {
+                    return null;
+                }
+                s.Length = length.Value;
+                return s;
+            }
+            return null;
+        }
 
         public static Step? Create(IGrid grid, Cell src, CellDir dir, float length = 0.0f)
         {

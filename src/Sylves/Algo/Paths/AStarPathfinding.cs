@@ -56,14 +56,9 @@ namespace Sylves
 
                 foreach (var dir in grid.GetCellDirs(cell))
                 {
-                    if (Step.Create(grid, cell, dir, 0) is Step step)
+                    if (Step.Create(grid, cell, dir, stepLengths) is Step step)
                     {
-                        var length = stepLengths(step);
-                        if (length == null)
-                            continue;
-                        step.Length = length.Value;
-
-                        var d2 = d + length.Value;
+                        var d2 = d + step.Length;
                         var dest = step.Dest;
                         if (!distances.TryGetValue(dest, out var d3) || d2 < d3)
                         {
