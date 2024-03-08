@@ -76,6 +76,15 @@ namespace Sylves.Test
                 t.GetCellsIntersectsApprox(p, p + new Vector3(0.6f, 0.3f, 0)));
         }
 
+        [Test]
+        public void TestGetCellsIntersectsApprox2()
+        {
+            GridTest.GetCellsIntersectsApprox(new TriangleGrid(1, bound: new TriangleBound(new Vector3Int(-3, -3, -3), new Vector3Int(4, 4, 4))), new Vector3(-10.1f,-1.1f, 0), new Vector3(10.1f, 1.1f, 0));
+
+            GridTest.GetCellsIntersectsApprox(new TriangleGrid(1, bound: new TriangleBound(new Vector3Int(-3, -3, -3), new Vector3Int(4, 4, 4))), new Vector3(-1.1f,-10.1f, 0), new Vector3(1.1f, 10.1f, 0));
+        }
+
+
 
         [Test]
         [TestCase(TriangleOrientation.FlatTopped)]

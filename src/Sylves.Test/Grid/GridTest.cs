@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 #if UNITY
 using UnityEngine;
 #endif
@@ -140,6 +141,30 @@ namespace Sylves.Test
                 atLeastOne = true;
             }
             Assert.IsTrue(atLeastOne, $"Cell {cell} has no neighbours");
+        }
+
+        // Assumes that the grid is actually precise
+        public static void GetCellsIntersectsApprox(IGrid grid, Vector3 min, Vector3 max)
+        {
+            var cells = grid.GetCells().ToList();
+            var rect = grid.GetCellsIntersectsApprox(min, max).ToList();
+            foreach(var cell in rect)
+            {
+                Assert.Contains(cell, cells);
+            }
+            var aabb = Aabb.FromMinMax(min, max);
+            foreach(var cell in cells)
+            {
+                var cellAabb = Aabb.FromVectors(grid.GetPolygon(cell));
+                if (cellAabb.Intersects(aabb))
+                {
+                    Assert.IsTrue(rect.Contains(cell), $"{cell} should be in range");
+                }
+                else
+                {
+                    Assert.IsFalse(rect.Contains(cell), $"{cell} should be out of range");
+                }
+            }
         }
     }
 }

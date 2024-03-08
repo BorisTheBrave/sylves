@@ -814,8 +814,6 @@ namespace Sylves
             {
                 throw new ArgumentOutOfRangeException($"Rectangle should have non-negative area");
             }
-            //assert width >= 0, "Rectangle should have non-negative width"
-            //assert height >= 0, "Rectangle should have non-negative height"
             // For consistency, we treat the triangles as exclusive of their border, and the rect as inclusive
             x /= cellSize.x;
             y /= cellSize.y;
@@ -825,7 +823,14 @@ namespace Sylves
             var fl = y;
             var fu = (y + height);
             // Loop over all rows that the rectangle is in
-            for (var b = Mathf.FloorToInt(fl) + 1; b < Mathf.CeilToInt(fu) + 1; b++)
+            var fromb = Mathf.FloorToInt(fl) + 1;
+            var tob = Mathf.CeilToInt(fu) + 1;
+            if(bound != null)
+            {
+                fromb = Math.Max(fromb, bound.min.y);
+                tob = Math.Min(tob, bound.max.y);
+            }
+            for (var b = fromb; b < tob; b++)
             {
                 // Consider each row vs a trimmed rect
                 var minb = Math.Max(b - 1, fl);
@@ -836,17 +841,56 @@ namespace Sylves
                 var maxa = Mathf.CeilToInt(x + width - minb / 2);
                 var minc = Mathf.FloorToInt(-x - width - maxb / 2) + 1;
                 var maxc = Mathf.CeilToInt(-x - minb / 2);
+                int s;
+                if(bound != null)
+                {
+                    if (mina < bound.min.x)
+                    {
+                        var d = bound.min.x - mina;
+                        if(mina + b + maxc == 1)
+                        {
+                            mina += d;
+                            maxc -= d - 1;
+                        }
+                        else
+                        {
+                            mina += d;
+                            maxc -= d;
+                        }
+                    }
+                    if (maxc >= bound.max.z)
+                    {
+                        var d = maxc - bound.max.z + 1;
+                        if (mina + b + maxc == 1)
+                        {
+                            maxc -= d;
+                            mina += d;
+                        }
+                        else
+                        {
+                            maxc -= d;
+                            mina += d - 1;
+
+                        }
+                    }
+                    maxa = Math.Min(maxa, bound.max.x - 1);
+                    minc = Math.Max(minc, bound.min.z);
+                }
                 // Walk along the row left to right
                 var a = mina;
                 var c = maxc;
-                //assert a + b + c == 1 or a + b + c == 2
+                s = a + b + c;
+                if (s != 1 && s != 2)
+                    throw new Exception("Internal error in TriangleGrid.GetCellsIntersectsApprox");
                 while (a <= maxa && c >= minc)
                 {
                     yield return new Cell(a, b, c);
-                    if (a + b + c == 1) {
+                    if (a + b + c == 1)
+                    {
                         a += 1;
                     }
-                    else {
+                    else
+                    {
                         c -= 1;
                     }
                 }
