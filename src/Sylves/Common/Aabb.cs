@@ -25,13 +25,13 @@ namespace Sylves
             {
                 if (first)
                 {
-                    localMin = localMin = v;
+                    localMin = localMax = v;
                     first = false;
                 }
                 else
                 {
                     localMin = Vector3.Min(localMin, v);
-                    localMax = Vector3.Min(localMax, v);
+                    localMax = Vector3.Max(localMax, v);
                 }
             }
             if(first)
