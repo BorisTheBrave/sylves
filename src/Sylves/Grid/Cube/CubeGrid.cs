@@ -306,20 +306,7 @@ namespace Sylves
 
         public IBound GetBound(IEnumerable<Cell> cells)
         {
-            var enumerator = cells.GetEnumerator();
-            if (!enumerator.MoveNext())
-            {
-                throw new Exception($"Enumerator empty");
-            }
-            var min = (Vector3Int)(enumerator.Current);
-            var max = min;
-            while (enumerator.MoveNext())
-            {
-                var current = (Vector3Int)(enumerator.Current);
-                min = Vector3Int.Min(min, current);
-                max = Vector3Int.Max(max, current);
-            }
-            return new CubeBound(min, max + Vector3Int.one);
+            return CubeBound.FromVectors(cells.Select(x => (Vector3Int)x));
         }
 
         public IGrid BoundBy(IBound bound)

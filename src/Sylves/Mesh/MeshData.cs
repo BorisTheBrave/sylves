@@ -54,7 +54,7 @@ namespace Sylves
                         m.SetIndices(indices[i], (UnityEngine.MeshTopology)topologies[i], i);
                         break;
                     default:
-                        throw new System.Exception($"Topology {topologies[i]} not supported by unity");
+                        throw new System.Exception($"Topology {topologies[i]} not supported by Unity. Consider triangulating the mesh data first.");
                 }
             }
             return m;

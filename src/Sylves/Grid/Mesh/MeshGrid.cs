@@ -35,6 +35,9 @@ namespace Sylves
         private readonly MeshGridOptions meshGridOptions;
         protected bool is2d;
 
+        // If set, is always contained by meshDetails.hashCellBounds
+        protected CubeBound bound;
+
         public MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions = null) :
             base(MeshGridBuilder.Build(meshData, meshGridOptions ?? new MeshGridOptions()))
         {
@@ -46,12 +49,13 @@ namespace Sylves
 
         // Internals constructor used for other meshgrid like grids.
         // You need to call BuildMeshDetails() after calling this.
-        internal MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions, DataDrivenData data, bool is2d) :
+        internal MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions, DataDrivenData data, bool is2d, CubeBound bound = null) :
             base(data)
         {
             this.meshData = meshData;
             this.meshGridOptions = meshGridOptions;
             this.is2d = is2d;
+            this.bound = bound;
         }
 
         #region Impl
@@ -154,6 +158,21 @@ namespace Sylves
             }
             return cellType;
         }
+
+        private CubeBound ExpandBound(CubeBound bound)
+        {
+            return new CubeBound(bound.min - Vector3Int.one, bound.max + Vector3Int.one);
+        }
+
+        private Aabb ExpandAabb(Aabb aabb)
+        {
+            var min = meshDetails.GetHashCell(aabb.Min);
+            var max = meshDetails.GetHashCell(aabb.Max);
+            return Aabb.FromMinMax(
+                Vector3.Scale(min - Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                Vector3.Scale(max + 2 * Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase
+                );
+        }
         #endregion
 
 
@@ -169,6 +188,8 @@ namespace Sylves
         #endregion
 
         #region Relatives
+
+        public override IGrid Unbounded => new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = CellData, Moves = Moves }, is2d, null);
 
         public override IDualMapping GetDual()
         {
@@ -217,18 +238,72 @@ namespace Sylves
         }
         #endregion
 
+        #region Cell info
+
+        public virtual bool IsCellInGrid(Cell cell) => base.IsCellInGrid(cell) && IsCellInBound(cell, bound);
+        #endregion
+
         #region Topology
+
+        public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
+        {
+            return base.TryMove(cell, dir, out dest, out inverseDir, out connection) && IsCellInGrid(dest);
+        }
+
 
         // TODO: Pathfind on mesh, without involving layers
         //public override IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell);
         #endregion
 
         #region Bounds
-        public Aabb? GetBoundAabb(IBound bound)
+        public override IBound GetBound() => bound;
+        public override IBound GetBound(IEnumerable<Cell> cells)
         {
-            return Aabb.FromMinMax(
-                Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.min, meshDetails.hashCellSize) + meshDetails.hashCellBase,
-                Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.max, meshDetails.hashCellSize) + meshDetails.hashCellBase);
+            var hashCells = cells.Select(c => meshDetails.GetHashCell(GetCellCenter(c)));
+            return CubeBound.FromVectors(hashCells);
+        }
+        public override IGrid BoundBy(IBound bound)
+        {
+            return new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = CellData, Moves = Moves}, is2d,  (CubeBound)IntersectBounds(this.bound, bound));
+        }
+        public override IBound IntersectBounds(IBound bound, IBound other)
+        {
+            if (bound == null) return other;
+            if (other == null) return bound;
+            return ((CubeBound)bound).Intersect((CubeBound)other);
+        }
+        public override IBound UnionBounds(IBound bound, IBound other)
+        {
+            if (bound == null) return null;
+            if (other == null) return null;
+            return ((CubeBound)bound).Union((CubeBound)other);
+        }
+        public override IEnumerable<Cell> GetCellsInBounds(IBound bound)
+        {
+            if (bound == null) throw new Exception("Cannot get cells in null bound as it is infinite");
+            return (CubeBound)bound;
+        }
+        public override bool IsCellInBound(Cell cell, IBound bound)
+        {
+            if (bound == null) return true;
+            var cb = (CubeBound)bound;
+            return cb.Contains((Cell)meshDetails.GetHashCell(GetCellCenter(cell)));
+        }
+        public override Aabb? GetBoundAabb(IBound bound)
+        {
+            if (bound is CubeBound cb)
+            {
+                return Aabb.FromMinMax(
+                    Vector3.Scale((Vector3)(cb.min - Vector3Int.one), meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                    Vector3.Scale((Vector3)(cb.max + Vector3Int.one), meshDetails.hashCellSize) + meshDetails.hashCellBase);
+            }
+            else
+            {
+                return Aabb.FromMinMax(
+                    Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.min, meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                    Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.max, meshDetails.hashCellSize) + meshDetails.hashCellBase);
+
+            }
         }
         #endregion
 
@@ -296,7 +371,8 @@ namespace Sylves
             }
 
             // Broadphase - walk through the hashCells looking for cells to check.
-            var bfRaycastInfos = CubeGrid.Raycast(origin - meshDetails.hashCellBase, direction, maxDistance, meshDetails.hashCellSize, meshDetails.expandedHashCellBounds);
+            var bfByBound = bound == null ? meshDetails.expandedHashCellBounds : ExpandBound(bound);
+            var bfRaycastInfos = CubeGrid.Raycast(origin - meshDetails.hashCellBase, direction, maxDistance, meshDetails.hashCellSize, bfByBound);
             Vector3Int? prevHashCell = null;
             var queuedRaycastInfos = new PriorityQueue<RaycastInfo>(x=>x.distance, (x, y) => -x.distance.CompareTo(y.distance));
             foreach (var bfRaycastInfo in bfRaycastInfos)
@@ -504,7 +580,6 @@ namespace Sylves
             out Cell cell,
             out CellRotation rotation)
         {
-            // TODO: Only supporting cube cell type
             var p = matrix.MultiplyPoint(Vector3.zero);
             if (FindCell(p, out cell))
             {
@@ -518,8 +593,9 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-            var minHashCell = Vector3Int.Max(meshDetails.hashCellBounds.min, meshDetails.GetHashCell(min) - Vector3Int.one);
-            var maxHashCell = Vector3Int.Min(meshDetails.hashCellBounds.max - Vector3Int.one, meshDetails.GetHashCell(max) + Vector3Int.one);
+            var boundBy = bound ?? meshDetails.hashCellBounds;
+            var minHashCell = Vector3Int.Max(boundBy.min, meshDetails.GetHashCell(min) - Vector3Int.one);
+            var maxHashCell = Vector3Int.Min(boundBy.max - Vector3Int.one, meshDetails.GetHashCell(max) + Vector3Int.one);
 
             // Use a spatial hash to locate cells near the tile, and test each one.
             for (var x = minHashCell.x; x <= maxHashCell.x; x++)
@@ -595,16 +671,6 @@ namespace Sylves
         {
             var aabb = Aabb.FromVectors(cells.Select(GetCellCenter));
             return ExpandAabb(aabb);
-        }
-
-        private Aabb ExpandAabb(Aabb aabb)
-        {
-            var min = meshDetails.GetHashCell(aabb.Min);
-            var max = meshDetails.GetHashCell(aabb.Max);
-            return Aabb.FromMinMax(
-                Vector3.Scale(min - Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase,
-                Vector3.Scale(max + 2 * Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase
-                );
         }
 
         #endregion

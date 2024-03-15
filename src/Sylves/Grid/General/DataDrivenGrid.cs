@@ -64,7 +64,7 @@ namespace Sylves
 
         #region Relatives
 
-        public IGrid Unbounded => this;
+        public virtual IGrid Unbounded => this;
 
         public IGrid Unwrapped => this;
         public virtual IDualMapping GetDual() => throw new System.NotSupportedException();
@@ -77,12 +77,12 @@ namespace Sylves
 
         public ICellType GetCellType(Cell cell) => cellData[cell].CellType;
 
-        public bool IsCellInGrid(Cell cell) => cellData.ContainsKey(cell);
+        public virtual bool IsCellInGrid(Cell cell) => cellData.ContainsKey(cell);
         #endregion
 
         #region Topology
 
-        public bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
+        public virtual bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
             if(moves.TryGetValue((cell, dir), out var t))
             {
@@ -125,15 +125,15 @@ namespace Sylves
         #endregion
 
         #region Bounds
-        public IBound GetBound() => DefaultGridImpl.GetBound(this);
+        public virtual IBound GetBound() => DefaultGridImpl.GetBound(this);
 
-        public IBound GetBound(IEnumerable<Cell> cells) => DefaultGridImpl.GetBound(this, cells);
+        public virtual IBound GetBound(IEnumerable<Cell> cells) => DefaultGridImpl.GetBound(this, cells);
 
-        public IGrid BoundBy(IBound bound) => DefaultGridImpl.BoundBy(this, bound);
+        public virtual IGrid BoundBy(IBound bound) => DefaultGridImpl.BoundBy(this, bound);
 
-        public IBound IntersectBounds(IBound bound, IBound other) => DefaultGridImpl.IntersectBounds(this, bound, other);
-        public IBound UnionBounds(IBound bound, IBound other) => DefaultGridImpl.UnionBounds(this, bound, other);
-        public IEnumerable<Cell> GetCellsInBounds(IBound bound) => DefaultGridImpl.GetCellsInBounds(this, bound);
+        public virtual IBound IntersectBounds(IBound bound, IBound other) => DefaultGridImpl.IntersectBounds(this, bound, other);
+        public virtual IBound UnionBounds(IBound bound, IBound other) => DefaultGridImpl.UnionBounds(this, bound, other);
+        public virtual IEnumerable<Cell> GetCellsInBounds(IBound bound) => DefaultGridImpl.GetCellsInBounds(this, bound);
         public virtual bool IsCellInBound(Cell cell, IBound bound) => DefaultGridImpl.IsCellInBound(this, cell, bound);
 
         public virtual Aabb? GetBoundAabb(IBound bound) => DefaultGridImpl.GetBoundAabb(this, bound);

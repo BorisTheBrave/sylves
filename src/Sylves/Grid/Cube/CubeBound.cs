@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 #if UNITY
 using UnityEngine;
@@ -26,6 +27,24 @@ namespace Sylves
         {
             this.min = min;
             this.max = max;
+        }
+
+        public static CubeBound FromVectors(IEnumerable<Vector3Int> vs)
+        {
+            var enumerator = vs.GetEnumerator();
+            if (!enumerator.MoveNext())
+            {
+                throw new Exception($"Enumerator empty");
+            }
+            var min = enumerator.Current;
+            var max = min;
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                min = Vector3Int.Min(min, current);
+                max = Vector3Int.Max(max, current);
+            }
+            return new CubeBound(min, max + Vector3Int.one);
         }
 
         public Vector3Int size => max - min;
