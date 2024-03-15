@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>OffGrid </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="OffGrid ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="offgrid">OffGrid</h1>
+
+<table>
+<tr><th colspan="2">Quick facts</th></tr>
+<tr><td>Grid</td><td><a href="xref:Sylves.OffGrid">OffGrid</a></td></tr>
+<tr><td>CellType</td><td><a class="xref" href="../../api/Sylves.SquareCellType.html">SquareCellType</a></td></tr>
+<tr><td>CellDir</td><td><a class="xref" href="../../api/Sylves.SquareDir.html">SquareDir</a></td></tr>
+<tr><td>CellRotation</td><td><a class="xref" href="../../api/Sylves.SquareRotation.html">SquareRotation</a></td></tr>
+<tr><td>Bound</td><td><a class="xref" href="../../api/Sylves.SquareBound.html">SquareBound</a></td></tr>
+<tr><td>Properties</td><td>2d, Planar, Infinite</td></tr>
+</table>
+<p>OffGrid is a <a href="https://gitlab.com/chriscox/offgrid/-/wikis/home">packed grid of irregular rectangles invented by Chris Cox</a>. It resembles rough masony.</p>
+<p><img width="200px" src="../../images/grids/off.svg"></p>
+<p>Unlike most Sylves grids, this grid is not edge to edge. Every rectangle is considered a square with exactly 4 neighbours.</p>
+<p>The size of cells can be controlled with the <code>minSize</code> parameter, which limits the minimum width and height of each rectangle. It also limits the max width/height to <code>2-minSize</code>. To get rectangles with a different distribution of size and aspect ratio, use <a href="../modifiers/transformmodifier.html">TransformModifier</a>.</p>
+<h2 id="cell-co-ordinates">Cell co-ordinates</h2>
+<p>As with a square grid, increasing the x co-ordinate of a cell moves right, and the y co-ordinate up.</p>
+<p>The cell (0, 0) always includes the point (0, 0, 0), and and has maximum extents of ±(1-minSize/2).</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

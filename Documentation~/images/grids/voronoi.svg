@@ -1,0 +1,616 @@
+<svg viewBox="0 -10 10 10" xmlns="http://www.w3.org/2000/svg">
+<style>
+.cell-path {
+                stroke-linejoin: round;
+                fill: rgb(244, 244, 241);
+                stroke: rgb(51, 51, 51);
+                stroke-width: 0.1
+            }
+.dual .cell-path {
+                fill: none;
+                stroke: rgb(255, 0, 0);
+                stroke-opacity: 0.5;
+                stroke-width: 0.033333335
+            }
+</style>
+<!-- (0, 0, 0) -->
+<path class="cell-path" d="M6.9948106 -7.670753L7.42216 -7.6830745L7.779459 -8.138917L7.4233494 -9.189691L7.2618284 -9.140698L6.764286 -8.708389L6.695305 -8.131047Z"/>
+<!-- (1, 0, 0) -->
+<path class="cell-path" d="M7.259389 -5.5940137L7.7620754 -4.5204124L7.8601184 -4.4144807L7.8769875 -4.4147816L8.168674 -4.7618494L8.011362 -5.9433007L8.006379 -5.950404L7.358164 -6.3010206Z"/>
+<!-- (2, 0, 0) -->
+<path class="cell-path" d="M2.282508 -5.115281L2.699879 -5.708058L1.8281763 -5.992807L0.5781418 -5.4664207Z"/>
+<!-- (3, 0, 0) -->
+<path class="cell-path" d="M7.8769875 -4.4147816L8.6306305 -3.5601444L9.861237 -3.8236334L9.295725 -5.179348L9.13271 -5.2477946L8.168674 -4.7618494Z"/>
+<!-- (4, 0, 0) -->
+<path class="cell-path" d="M10.061378 -3.7565875L9.16421 -2.0707645L9.271267 -1.7747583L12.119195 -1.6669059L23.267488 -2.3306088Z"/>
+<!-- (5, 0, 0) -->
+<path class="cell-path" d="M3.2202868 -4.9582586L2.397089 -4.6333566L2.3946517 -4.6069756L2.5243435 -3.6354418L2.9460998 -3.7304523Z"/>
+<!-- (6, 0, 0) -->
+<path class="cell-path" d="M6.4453816 -4.914556L5.463926 -4.2323546L6.1380243 -3.8023515L6.4957056 -3.9051447L6.5243587 -4.8920856Z"/>
+<!-- (7, 0, 0) -->
+<path class="cell-path" d="M9.814914 -0.5539743L9.47696 -0.46814114L9.483489 0.098150015L9.886889 -0.24318573Z"/>
+<!-- (8, 0, 0) -->
+<path class="cell-path" d="M7.6327667 -19.799026L7.676448 -9.439202L8.204779 -9.2761345L9.126857 -10.246229L9.7757 -19.799026Z"/>
+<!-- (9, 0, 0) -->
+<path class="cell-path" d="M6.1380243 -3.8023515L6.0999107 -3.3258433L7.313402 -2.5339954L7.172508 -3.9321826L6.4957056 -3.9051447Z"/>
+<!-- (10, 0, 0) -->
+<path class="cell-path" d="M7.856602 -8.117423L8.709805 -8.481762L8.227682 -9.263459L8.204779 -9.2761345L7.676448 -9.439202L7.4233494 -9.189691L7.779459 -8.138917Z"/>
+<!-- (11, 0, 0) -->
+<path class="cell-path" d="M9.814914 -0.5539743L9.886889 -0.24318573L28.668436 -2.2334735L23.267488 -2.3306088L12.119195 -1.6669059Z"/>
+<!-- (12, 0, 0) -->
+<path class="cell-path" d="M6.76555 -5.0180225L7.7620754 -4.5204124L7.259389 -5.5940137L6.809605 -5.4406767L6.6983347 -5.3836584Z"/>
+<!-- (13, 0, 0) -->
+<path class="cell-path" d="M8.9092045 -7.3374624L9.008791 -6.3784547L9.119144 -6.2486258L10.387467 -6.6697884L13.06195 -8.088675L12.183995 -8.16027Z"/>
+<!-- (14, 0, 0) -->
+<path class="cell-path" d="M5.9166713 -1.464462L5.1558423 -1.1195089L4.9658046 -0.96000403L6.1942244 -0.18342906L6.0780106 -1.3727436Z"/>
+<!-- (15, 0, 0) -->
+<path class="cell-path" d="M2.3946517 -4.6069756L0.83081377 -4.7401147L0.858903 -4.6672554L1.2944877 -3.7233005L2.2222733 -3.3717008L2.5243435 -3.6354418Z"/>
+<!-- (16, 0, 0) -->
+<path class="cell-path" d="M-2.152307 -19.799026L0.6660703 -12.448694L1.1979033 -11.353707L2.8681643 -9.236999L3.6518633 -10.395834L4.6902323 -19.798885L4.69023 -19.799026Z"/>
+<!-- (17, 0, 0) -->
+<path class="cell-path" d="M5.7242165 -7.4383507L6.1211395 -7.335742L6.9117827 -7.509602L6.9948106 -7.670753L6.695305 -8.131047L5.633945 -7.7026234Z"/>
+<!-- (18, 0, 0) -->
+<path class="cell-path" d="M0.800925 -3.3168814L1.2944877 -3.7233005L0.858903 -4.6672554L0.16200483 -3.7291162L0.5457616 -3.245017Z"/>
+<!-- (19, 0, 0) -->
+<path class="cell-path" d="M3.2451062 -8.282645L3.8151135 -9.673978L3.6518633 -10.395834L2.8681643 -9.236999L3.0335453 -8.536297L3.1578143 -8.303906Z"/>
+<!-- (20, 0, 0) -->
+<path class="cell-path" d="M4.56238 -6.703007L5.65342 -7.0693746L5.7242165 -7.4383507L5.633945 -7.7026234L4.9122562 -8.39713L4.8536863 -8.398157L4.6081195 -8.281537Z"/>
+<!-- (21, 0, 0) -->
+<path class="cell-path" d="M2.2475476 -2.964845L2.2222733 -3.3717008L1.2944877 -3.7233005L0.800925 -3.3168814L0.98187506 -2.2883372Z"/>
+<!-- (22, 0, 0) -->
+<path class="cell-path" d="M8.9092045 -7.3374624L12.183995 -8.16027L10.44566 -8.621468L8.783356 -8.429601L8.637387 -7.6855087L8.881961 -7.34904Z"/>
+<!-- (23, 0, 0) -->
+<path class="cell-path" d="M3.9272878 -4.666529L3.3424633 -5.112538L3.2649426 -5.023291L3.2202868 -4.9582586L2.9460998 -3.7304523L3.8736145 -3.7055826Z"/>
+<!-- (24, 0, 0) -->
+<path class="cell-path" d="M2.2475476 -2.964845L0.98187506 -2.2883372L0.64475965 -1.6248448L1.0356193 -1.6326125L2.3822153 -2.5823755Z"/>
+<!-- (25, 0, 0) -->
+<path class="cell-path" d="M4.3009458 -6.1704826L4.56238 -6.703007L4.6081195 -8.281537L3.3392625 -8.233086L3.55071 -6.2582827Z"/>
+<!-- (26, 0, 0) -->
+<path class="cell-path" d="M5.4284945 -4.8291564L5.447186 -4.240498L5.463926 -4.2323546L6.4453816 -4.914556L6.0649657 -5.264989Z"/>
+<!-- (27, 0, 0) -->
+<path class="cell-path" d="M2.0363626 -7.7423644L3.1578143 -8.303906L3.0335453 -8.536297L1.7212203 -9.222867L1.439079 -8.497397L1.6119022 -8.024754L2.032646 -7.743701Z"/>
+<!-- (28, 0, 0) -->
+<path class="cell-path" d="M7.831258 -6.9357405L8.118833 -6.8992953L8.881961 -7.34904L8.637387 -7.6855087L8.299406 -7.7224813L7.7906137 -7.1667686Z"/>
+<!-- (29, 0, 0) -->
+<path class="cell-path" d="M8.474845 -6.473101L9.008791 -6.3784547L8.9092045 -7.3374624L8.881961 -7.34904L8.118833 -6.8992953Z"/>
+<!-- (30, 0, 0) -->
+<path class="cell-path" d="M7.183411 -1.8492653L7.203764 -2.095493L6.422732 -2.4689503L5.58328 -2.0600107L5.9166713 -1.464462L6.0780106 -1.3727436Z"/>
+<!-- (31, 0, 0) -->
+<path class="cell-path" d="M8.783356 -8.429601L10.44566 -8.621468L9.313314 -9.396421L8.227682 -9.263459L8.709805 -8.481762Z"/>
+<!-- (32, 0, 0) -->
+<path class="cell-path" d="M-4.5748186 -6.894833L1.6119022 -8.024754L1.439079 -8.497397L0.9827784 -8.764251L-4.696124 -6.912832Z"/>
+<!-- (33, 0, 0) -->
+<path class="cell-path" d="M0.5781418 -5.4664207L1.8281763 -5.992807L2.2172453 -6.821865L2.058574 -7.112571L0.05662656 -5.6907125L0.46030003 -5.4530516Z"/>
+<!-- (34, 0, 0) -->
+<path class="cell-path" d="M8.603086 -2.8903353L8.191592 -2.1237037L9.059392 -1.560135L9.271267 -1.7747583L9.16421 -2.0707645Z"/>
+<!-- (35, 0, 0) -->
+<path class="cell-path" d="M28.668495 -5.8617425L9.471231 -5.233446L9.295725 -5.179348L9.861237 -3.8236334L10.061378 -3.7565875L23.267488 -2.3306088L28.668436 -2.2334735L28.668495 -2.2334728Z"/>
+<!-- (36, 0, 0) -->
+<path class="cell-path" d="M6.1211395 -7.335742L6.895619 -6.5350943L6.9117827 -7.509602Z"/>
+<!-- (37, 0, 0) -->
+<path class="cell-path" d="M8.912411 -1.4668843L7.4085126 -1.5642486L7.493729 0.03977132Z"/>
+<!-- (38, 0, 0) -->
+<path class="cell-path" d="M6.9066877 -6.4895773L7.320708 -6.3671665L7.831258 -6.9357405L7.7906137 -7.1667686L7.42216 -7.6830745L6.9948106 -7.670753L6.9117827 -7.509602L6.895619 -6.5350943Z"/>
+<!-- (39, 0, 0) -->
+<path class="cell-path" d="M1.7212203 -9.222867L1.1979033 -11.353707L0.6660703 -12.448694L0.9827784 -8.764251L1.439079 -8.497397Z"/>
+<!-- (40, 0, 0) -->
+<path class="cell-path" d="M2.3192446 -5.002723L2.282508 -5.115281L0.5781418 -5.4664207L0.46030003 -5.4530516L0.83081377 -4.7401147L2.3946517 -4.6069756L2.397089 -4.6333566Z"/>
+<!-- (41, 0, 0) -->
+<path class="cell-path" d="M5.363224 -4.2004857L4.3024387 -3.4073339L4.4593086 -2.5650768L4.6784334 -2.5031223L5.2357926 -2.4117439L6.015624 -3.1244256L6.0999107 -3.3258433L6.1380243 -3.8023515L5.463926 -4.2323546L5.447186 -4.240498Z"/>
+<!-- (42, 0, 0) -->
+<path class="cell-path" d="M6.5243587 -4.8920856L6.4957056 -3.9051447L7.172508 -3.9321826L7.8601184 -4.4144807L7.7620754 -4.5204124L6.76555 -5.0180225Z"/>
+<!-- (43, 0, 0) -->
+<path class="cell-path" d="M7.856602 -8.117423L8.299406 -7.7224813L8.637387 -7.6855087L8.783356 -8.429601L8.709805 -8.481762Z"/>
+<!-- (44, 0, 0) -->
+<path class="cell-path" d="M7.42216 -7.6830745L7.7906137 -7.1667686L8.299406 -7.7224813L7.856602 -8.117423L7.779459 -8.138917Z"/>
+<!-- (45, 0, 0) -->
+<path class="cell-path" d="M8.603086 -2.8903353L9.16421 -2.0707645L10.061378 -3.7565875L9.861237 -3.8236334L8.6306305 -3.5601444L8.532538 -3.0041509Z"/>
+<!-- (46, 0, 0) -->
+<path class="cell-path" d="M4.6637945 -5.8205442L4.8315315 -5.7674446L5.886326 -6.2694826L5.65342 -7.0693746L4.56238 -6.703007L4.3009458 -6.1704826Z"/>
+<!-- (47, 0, 0) -->
+<path class="cell-path" d="M3.8736145 -3.7055826L2.9460998 -3.7304523L2.5243435 -3.6354418L2.2222733 -3.3717008L2.2475476 -2.964845L2.3822153 -2.5823755L2.4676626 -2.4487388L3.4366698 -1.71891L3.6863494 -1.684145L4.4593086 -2.5650768L4.3024387 -3.4073339Z"/>
+<!-- (48, 0, 0) -->
+<path class="cell-path" d="M8.603086 -2.8903353L8.532538 -3.0041509L7.349427 -2.4407187L7.3109713 -2.3255868L8.191592 -2.1237037Z"/>
+<!-- (49, 0, 0) -->
+<path class="cell-path" d="M-30.80921 120.81557L-1.8603315 120.81557L-1.8603227 120.81543L2.337947 2.2886612L1.9665457 -1.1590912L-30.80921 31.037518Z"/>
+<!-- (50, 0, 0) -->
+<path class="cell-path" d="M6.1726713 -6.1689243L6.8256254 -6.449801L6.9066877 -6.4895773L6.895619 -6.5350943L6.1211395 -7.335742L5.7242165 -7.4383507L5.65342 -7.0693746L5.886326 -6.2694826Z"/>
+<!-- (51, 0, 0) -->
+<path class="cell-path" d="M6.764286 -8.708389L7.2618284 -9.140698L6.4828105 -9.630805L5.5693674 -8.892865Z"/>
+<!-- (52, 0, 0) -->
+<path class="cell-path" d="M1.7212203 -9.222867L3.0335453 -8.536297L2.8681643 -9.236999L1.1979033 -11.353707Z"/>
+<!-- (53, 0, 0) -->
+<path class="cell-path" d="M-30.80921 -19.799026L-30.80921 -9.85681L-6.093901 -7.040431L-4.696124 -6.912832L0.9827784 -8.764251L0.6660703 -12.448694L-2.152307 -19.799026Z"/>
+<!-- (54, 0, 0) -->
+<path class="cell-path" d="M7.183411 -1.8492653L6.0780106 -1.3727436L6.1942244 -0.18342906L6.9683146 2.8929954L7.493729 0.03977132L7.4085126 -1.5642486Z"/>
+<!-- (55, 0, 0) -->
+<path class="cell-path" d="M-30.80921 31.037518L1.9665457 -1.1590912L1.9667319 -1.159446L1.8443873 -1.385789L1.0356193 -1.6326125L0.64475965 -1.6248448L-30.80915 15.568344L-30.80921 15.5683775Z"/>
+<!-- (56, 0, 0) -->
+<path class="cell-path" d="M5.5693674 -8.892865L6.4828105 -9.630805L5.715242 -10.7888775L5.5291276 -8.891046Z"/>
+<!-- (57, 0, 0) -->
+<path class="cell-path" d="M4.4593086 -2.5650768L3.6863494 -1.684145L4.1658688 -0.600188L4.9658046 -0.96000403L5.1558423 -1.1195089L4.6784334 -2.5031223Z"/>
+<!-- (58, 0, 0) -->
+<path class="cell-path" d="M6.2601976 -5.642642L6.6983347 -5.3836584L6.809605 -5.4406767L6.8256254 -6.449801L6.1726713 -6.1689243Z"/>
+<!-- (59, 0, 0) -->
+<path class="cell-path" d="M3.2140508 -5.9610863L3.305756 -6.1164875L2.2172453 -6.821865L1.8281763 -5.992807L2.699879 -5.708058Z"/>
+<!-- (60, 0, 0) -->
+<path class="cell-path" d="M-30.80921 15.5683775L-30.80915 15.568344L0.5457616 -3.245017L0.16200483 -3.7291162L-6.093901 -7.040431L-30.80921 -9.85681Z"/>
+<!-- (61, 0, 0) -->
+<path class="cell-path" d="M8.912411 -1.4668843L7.493729 0.03977132L6.9683146 2.8929954L6.971872 3.1070175L9.071682 -0.94386125L9.00154 -1.488764Z"/>
+<!-- (62, 0, 0) -->
+<path class="cell-path" d="M3.55071 -6.2582827L3.3392625 -8.233086L3.2451062 -8.282645L3.1578143 -8.303906L2.0363626 -7.7423644L2.058574 -7.112571L2.2172453 -6.821865L3.305756 -6.1164875Z"/>
+<!-- (63, 0, 0) -->
+<path class="cell-path" d="M28.668495 -19.799026L9.7757 -19.799026L9.126857 -10.246229L9.313314 -9.396421L10.44566 -8.621468L12.183995 -8.16027L13.06195 -8.088675L28.668495 -9.520132Z"/>
+<!-- (64, 0, 0) -->
+<path class="cell-path" d="M4.1930695 -4.888183L4.6637945 -5.8205442L4.3009458 -6.1704826L3.55071 -6.2582827L3.305756 -6.1164875L3.2140508 -5.9610863L3.3424633 -5.112538L3.9272878 -4.666529Z"/>
+<!-- (65, 0, 0) -->
+<path class="cell-path" d="M3.3424633 -5.112538L3.2140508 -5.9610863L2.699879 -5.708058L2.282508 -5.115281L2.3192446 -5.002723L3.2649426 -5.023291Z"/>
+<!-- (66, 0, 0) -->
+<path class="cell-path" d="M4.1658688 -0.600188L2.0984423 63.24976L5.2966967 26.43797L6.971872 3.1070175L6.9683146 2.8929954L6.1942244 -0.18342906L4.9658046 -0.96000403Z"/>
+<!-- (67, 0, 0) -->
+<path class="cell-path" d="M3.2202868 -4.9582586L3.2649426 -5.023291L2.3192446 -5.002723L2.397089 -4.6333566Z"/>
+<!-- (68, 0, 0) -->
+<path class="cell-path" d="M8.011362 -5.9433007L9.036586 -5.8556056L9.119144 -6.2486258L9.008791 -6.3784547L8.474845 -6.473101L8.006379 -5.950404Z"/>
+<!-- (69, 0, 0) -->
+<path class="cell-path" d="M-0.7856162 -5.991091L2.032646 -7.743701L1.6119022 -8.024754L-4.5748186 -6.894833Z"/>
+<!-- (70, 0, 0) -->
+<path class="cell-path" d="M4.6081195 -8.281537L4.8536863 -8.398157L4.59998 -9.32351L3.8151135 -9.673978L3.2451062 -8.282645L3.3392625 -8.233086Z"/>
+<!-- (71, 0, 0) -->
+<path class="cell-path" d="M0.05662656 -5.6907125L2.058574 -7.112571L2.0363626 -7.7423644L2.032646 -7.743701L-0.7856162 -5.991091Z"/>
+<!-- (72, 0, 0) -->
+<path class="cell-path" d="M5.633945 -7.7026234L6.695305 -8.131047L6.764286 -8.708389L5.5693674 -8.892865L5.5291276 -8.891046L4.9122562 -8.39713Z"/>
+<!-- (73, 0, 0) -->
+<path class="cell-path" d="M6.8256254 -6.449801L6.809605 -5.4406767L7.259389 -5.5940137L7.358164 -6.3010206L7.320708 -6.3671665L6.9066877 -6.4895773Z"/>
+<!-- (74, 0, 0) -->
+<path class="cell-path" d="M2.3822153 -2.5823755L1.0356193 -1.6326125L1.8443873 -1.385789L2.4676626 -2.4487388Z"/>
+<!-- (75, 0, 0) -->
+<path class="cell-path" d="M6.015624 -3.1244256L5.2357926 -2.4117439L5.58328 -2.0600107L6.422732 -2.4689503Z"/>
+<!-- (76, 0, 0) -->
+<path class="cell-path" d="M28.668495 -9.520132L13.06195 -8.088675L10.387467 -6.6697884L9.471231 -5.233446L28.668495 -5.8617425Z"/>
+<!-- (77, 0, 0) -->
+<path class="cell-path" d="M0.800925 -3.3168814L0.5457616 -3.245017L-30.80915 15.568344L0.64475965 -1.6248448L0.98187506 -2.2883372Z"/>
+<!-- (78, 0, 0) -->
+<path class="cell-path" d="M8.011362 -5.9433007L8.168674 -4.7618494L9.13271 -5.2477946L9.036586 -5.8556056Z"/>
+<!-- (79, 0, 0) -->
+<path class="cell-path" d="M6.0649657 -5.264989L6.4453816 -4.914556L6.5243587 -4.8920856L6.76555 -5.0180225L6.6983347 -5.3836584L6.2601976 -5.642642Z"/>
+<!-- (80, 0, 0) -->
+<path class="cell-path" d="M9.00154 -1.488764L9.071682 -0.94386125L9.47696 -0.46814114L9.814914 -0.5539743L12.119195 -1.6669059L9.271267 -1.7747583L9.059392 -1.560135Z"/>
+<!-- (81, 0, 0) -->
+<path class="cell-path" d="M5.2357926 -2.4117439L4.6784334 -2.5031223L5.1558423 -1.1195089L5.9166713 -1.464462L5.58328 -2.0600107Z"/>
+<!-- (82, 0, 0) -->
+<path class="cell-path" d="M7.358164 -6.3010206L8.006379 -5.950404L8.474845 -6.473101L8.118833 -6.8992953L7.831258 -6.9357405L7.320708 -6.3671665Z"/>
+<!-- (83, 0, 0) -->
+<path class="cell-path" d="M4.8315315 -5.7674446L5.4284945 -4.8291564L6.0649657 -5.264989L6.2601976 -5.642642L6.1726713 -6.1689243L5.886326 -6.2694826Z"/>
+<!-- (84, 0, 0) -->
+<path class="cell-path" d="M4.69023 -19.799026L4.6902323 -19.798885L5.174718 -13.572485L5.715242 -10.7888775L6.4828105 -9.630805L7.2618284 -9.140698L7.4233494 -9.189691L7.676448 -9.439202L7.6327667 -19.799026Z"/>
+<!-- (85, 0, 0) -->
+<path class="cell-path" d="M3.4366698 -1.71891L2.620566 -1.0443258L2.337947 2.2886612L-1.8603227 120.81543L2.0984423 63.24976L4.1658688 -0.600188L3.6863494 -1.684145Z"/>
+<!-- (86, 0, 0) -->
+<path class="cell-path" d="M4.1930695 -4.888183L5.363224 -4.2004857L5.447186 -4.240498L5.4284945 -4.8291564L4.8315315 -5.7674446L4.6637945 -5.8205442Z"/>
+<!-- (87, 0, 0) -->
+<path class="cell-path" d="M2.620566 -1.0443258L1.9667319 -1.159446L1.9665457 -1.1590912L2.337947 2.2886612Z"/>
+<!-- (88, 0, 0) -->
+<path class="cell-path" d="M3.4366698 -1.71891L2.4676626 -2.4487388L1.8443873 -1.385789L1.9667319 -1.159446L2.620566 -1.0443258Z"/>
+<!-- (89, 0, 0) -->
+<path class="cell-path" d="M4.1930695 -4.888183L3.9272878 -4.666529L3.8736145 -3.7055826L4.3024387 -3.4073339L5.363224 -4.2004857Z"/>
+<!-- (90, 0, 0) -->
+<path class="cell-path" d="M0.05662656 -5.6907125L-0.7856162 -5.991091L-4.5748186 -6.894833L-4.696124 -6.912832L-6.093901 -7.040431L0.16200483 -3.7291162L0.858903 -4.6672554L0.83081377 -4.7401147L0.46030003 -5.4530516Z"/>
+<!-- (91, 0, 0) -->
+<path class="cell-path" d="M7.183411 -1.8492653L7.4085126 -1.5642486L8.912411 -1.4668843L9.00154 -1.488764L9.059392 -1.560135L8.191592 -2.1237037L7.3109713 -2.3255868L7.203764 -2.095493Z"/>
+<!-- (92, 0, 0) -->
+<path class="cell-path" d="M9.071682 -0.94386125L6.971872 3.1070175L5.2966967 26.43797L9.483489 0.098150015L9.47696 -0.46814114Z"/>
+<!-- (93, 0, 0) -->
+<path class="cell-path" d="M4.9122562 -8.39713L5.5291276 -8.891046L5.715242 -10.7888775L5.174718 -13.572485L4.59998 -9.32351L4.8536863 -8.398157Z"/>
+<!-- (94, 0, 0) -->
+<path class="cell-path" d="M28.668495 120.81557L28.668495 -2.2334728L28.668436 -2.2334735L9.886889 -0.24318573L9.483489 0.098150015L5.2966967 26.43797L2.0984423 63.24976L-1.8603227 120.81543L-1.8603315 120.81557Z"/>
+<!-- (95, 0, 0) -->
+<path class="cell-path" d="M6.015624 -3.1244256L6.422732 -2.4689503L7.203764 -2.095493L7.3109713 -2.3255868L7.349427 -2.4407187L7.313402 -2.5339954L6.0999107 -3.3258433Z"/>
+<!-- (96, 0, 0) -->
+<path class="cell-path" d="M9.13271 -5.2477946L9.295725 -5.179348L9.471231 -5.233446L10.387467 -6.6697884L9.119144 -6.2486258L9.036586 -5.8556056Z"/>
+<!-- (97, 0, 0) -->
+<path class="cell-path" d="M7.172508 -3.9321826L7.313402 -2.5339954L7.349427 -2.4407187L8.532538 -3.0041509L8.6306305 -3.5601444L7.8769875 -4.4147816L7.8601184 -4.4144807Z"/>
+<!-- (98, 0, 0) -->
+<path class="cell-path" d="M4.59998 -9.32351L5.174718 -13.572485L4.6902323 -19.798885L3.6518633 -10.395834L3.8151135 -9.673978Z"/>
+<!-- (99, 0, 0) -->
+<path class="cell-path" d="M8.227682 -9.263459L9.313314 -9.396421L9.126857 -10.246229L8.204779 -9.2761345Z"/>
+<g transform="translate(7.1916,-8.300366325378418) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >0</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >0</tspan></text>
+</g>
+<g transform="translate(7.7878933,-5.157532615661621) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >1</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >1</tspan></text>
+</g>
+<g transform="translate(1.8471762,-5.490641994476318) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >2</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >2</tspan></text>
+</g>
+<g transform="translate(8.827661,-4.417925281524658) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >3</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >3</tspan></text>
+</g>
+<g transform="translate(12.776708,-2.239924831390381) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >4</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >4</tspan></text>
+</g>
+<g transform="translate(2.6964943,-4.232897205352783) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >5</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >5</tspan></text>
+</g>
+<g transform="translate(6.213479,-4.26929895401001) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >6</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >6</tspan></text>
+</g>
+<g transform="translate(9.665564,-0.21178780317306517) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >7</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >7</tspan></text>
+</g>
+<g transform="translate(8.48331,-13.631923599243164) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >8</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >8</tspan></text>
+</g>
+<g transform="translate(6.6439104,-3.419903440475464) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >9</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >9</tspan></text>
+</g>
+<g transform="translate(7.982589,-8.76379768371582) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >10</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >10</tspan></text>
+</g>
+<g transform="translate(16.751385,-1.3256296348571777) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >11</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >11</tspan></text>
+</g>
+<g transform="translate(7.0589905,-5.111356658935547) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >12</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >12</tspan></text>
+</g>
+<g transform="translate(10.445092,-7.067212982177734) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >13</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >13</tspan></text>
+</g>
+<g transform="translate(5.662111,-0.9400295448303223) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >14</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >14</tspan></text>
+</g>
+<g transform="translate(1.6875788,-4.044131679534912) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >15</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >15</tspan></text>
+</g>
+<g transform="translate(2.230308,-14.610309524536133) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >16</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >16</tspan></text>
+</g>
+<g transform="translate(6.3468666,-7.55135290145874) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >17</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >17</tspan></text>
+</g>
+<g transform="translate(0.73241645,-3.656314296722412) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >18</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >18</tspan></text>
+</g>
+<g transform="translate(3.2952678,-8.991609497070312) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >19</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >19</tspan></text>
+</g>
+<g transform="translate(5.1354322,-7.6328825187683105) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >20</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >20</tspan></text>
+</g>
+<g transform="translate(1.5094218,-3.0530132484436034) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >21</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >21</tspan></text>
+</g>
+<g transform="translate(9.640261,-7.850558681488037) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >22</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >22</tspan></text>
+</g>
+<g transform="translate(3.429116,-4.452775402069092) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >23</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >23</tspan></text>
+</g>
+<g transform="translate(1.4584033,-2.1386028957366943) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >24</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >24</tspan></text>
+</g>
+<g transform="translate(4.0722837,-7.049278659820557) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >25</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >25</tspan></text>
+</g>
+<g transform="translate(5.769991,-4.616310997009277) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >26</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >26</tspan></text>
+</g>
+<g transform="translate(2.14751,-8.2158984375) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >27</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >27</tspan></text>
+</g>
+<g transform="translate(8.25991,-7.21313850402832) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >28</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >28</tspan></text>
+</g>
+<g transform="translate(8.678726,-6.8074711990356445) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >29</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >29</tspan></text>
+</g>
+<g transform="translate(6.397978,-1.8051542472839355) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >30</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >30</tspan></text>
+</g>
+<g transform="translate(9.0959635,-8.758541984558105) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >31</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >31</tspan></text>
+</g>
+<g transform="translate(-1.0474366,-7.738813323974609) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >32</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >32</tspan></text>
+</g>
+<g transform="translate(1.199844,-6.009571475982666) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >33</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >33</tspan></text>
+</g>
+<g transform="translate(8.857909,-2.0039393138885497) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >34</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >34</tspan></text>
+</g>
+<g transform="translate(18.49531,-3.751538915634155) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >35</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >35</tspan></text>
+</g>
+<g transform="translate(6.642847,-7.04681245803833) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >36</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >36</tspan></text>
+</g>
+<g transform="translate(7.938217,-0.9171204400062561) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >37</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >37</tspan></text>
+</g>
+<g transform="translate(7.259205,-6.964722080230713) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >38</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >38</tspan></text>
+</g>
+<g transform="translate(1.2014103,-9.97738353729248) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >39</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >39</tspan></text>
+</g>
+<g transform="translate(1.6089641,-4.9225601387023925) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >40</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >40</tspan></text>
+</g>
+<g transform="translate(5.3203864,-3.3013235759735107) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >41</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >41</tspan></text>
+</g>
+<g transform="translate(7.0967193,-4.367054386138916) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >42</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >42</tspan></text>
+</g>
+<g transform="translate(8.457312,-8.00735466003418) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >43</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >43</tspan></text>
+</g>
+<g transform="translate(7.829648,-7.685732765197754) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >44</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >44</tspan></text>
+</g>
+<g transform="translate(9.14218,-3.1042691898345947) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >45</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >45</tspan></text>
+</g>
+<g transform="translate(4.983066,-6.220055980682373) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >46</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >46</tspan></text>
+</g>
+<g transform="translate(3.1407747,-2.8122364711761474) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >47</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >47</tspan></text>
+</g>
+<g transform="translate(7.997523,-2.476899070739746) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >48</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >48</tspan></text>
+</g>
+<g transform="translate(-10.172429,65.84894378662109) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >49</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >49</tspan></text>
+</g>
+<g transform="translate(6.273213,-6.63954345703125) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >50</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >50</tspan></text>
+</g>
+<g transform="translate(6.519573,-9.013189239501953) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >51</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >51</tspan></text>
+</g>
+<g transform="translate(2.2052083,-9.507467193603516) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >52</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >52</tspan></text>
+</g>
+<g transform="translate(-10.415985,-12.008724136352539) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >53</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >53</tspan></text>
+</g>
+<g transform="translate(6.8877006,-0.25948662877082823) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >54</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >54</tspan></text>
+</g>
+<g transform="translate(-10.621191,6.981556491851807) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >55</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >55</tspan></text>
+</g>
+<g transform="translate(5.8241367,-9.470898551940918) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >56</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >56</tspan></text>
+</g>
+<g transform="translate(4.518601,-1.4920075368881225) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >57</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >57</tspan></text>
+</g>
+<g transform="translate(6.5532866,-5.7371401023864745) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >58</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >58</tspan></text>
+</g>
+<g transform="translate(2.6530213,-6.040060920715332) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >59</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >59</tspan></text>
+</g>
+<g transform="translate(-16.302284,1.290891366004944) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >60</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >60</tspan></text>
+</g>
+<g transform="translate(8.069924,0.43671243071556093) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >61</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >61</tspan></text>
+</g>
+<g transform="translate(2.8638537,-7.278901023864746) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >62</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >62</tspan></text>
+</g>
+<g transform="translate(15.15556,-11.623907012939453) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >63</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >63</tspan></text>
+</g>
+<g transform="translate(3.8122597,-5.5442666244506835) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >64</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >64</tspan></text>
+</g>
+<g transform="translate(2.8538477,-5.240496082305908) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >65</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >65</tspan></text>
+</g>
+<g transform="translate(5.2373176,13.500588493347168) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >66</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >66</tspan></text>
+</g>
+<g transform="translate(2.8003907,-4.824407501220703) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >67</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >67</tspan></text>
+</g>
+<g transform="translate(8.609517,-6.061582012176514) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >68</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >68</tspan></text>
+</g>
+<g transform="translate(-0.42897165,-7.0835942459106445) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >69</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >69</tspan></text>
+</g>
+<g transform="translate(4.0768776,-8.618819160461426) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >70</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >70</tspan></text>
+</g>
+<g transform="translate(1.0797185,-6.776088161468506) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >71</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >71</tspan></text>
+</g>
+<g transform="translate(5.850714,-8.373849792480469) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >72</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >72</tspan></text>
+</g>
+<g transform="translate(7.08003,-6.02704231262207) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >73</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >73</tspan></text>
+</g>
+<g transform="translate(1.932471,-1.9323789310455322) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >74</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >74</tspan></text>
+</g>
+<g transform="translate(5.8143573,-2.436282558441162) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >75</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >75</tspan></text>
+</g>
+<g transform="translate(18.051527,-6.994756622314453) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >76</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >76</tspan></text>
+</g>
+<g transform="translate(-5.567166,1.0986527967453004) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >77</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >77</tspan></text>
+</g>
+<g transform="translate(8.587334,-5.3721379470825195) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >78</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >78</tspan></text>
+</g>
+<g transform="translate(6.4597983,-5.10599271774292) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >79</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >79</tspan></text>
+</g>
+<g transform="translate(9.68785,-1.1280771923065185) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >80</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >80</tspan></text>
+</g>
+<g transform="translate(5.314004,-1.8317696285247802) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >81</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >81</tspan></text>
+</g>
+<g transform="translate(7.851698,-6.40778772354126) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >82</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >82</tspan></text>
+</g>
+<g transform="translate(5.774031,-5.577106399536133) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >83</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >83</tspan></text>
+</g>
+<g transform="translate(6.3052917,-13.382078094482422) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >84</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >84</tspan></text>
+</g>
+<g transform="translate(2.3550742,25.980897979736326) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >85</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >85</tspan></text>
+</g>
+<g transform="translate(4.987883,-4.877718372344971) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >86</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >86</tspan></text>
+</g>
+<g transform="translate(2.2229476,-0.18855045557022093) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >87</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >87</tspan></text>
+</g>
+<g transform="translate(2.4672036,-1.4714419078826904) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >88</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >88</tspan></text>
+</g>
+<g transform="translate(4.331927,-4.093623085021973) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >89</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >89</tspan></text>
+</g>
+<g transform="translate(-1.5313125,-5.599937362670898) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >90</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >90</tspan></text>
+</g>
+<g transform="translate(8.033949,-1.7292601299285888) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >91</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >91</tspan></text>
+</g>
+<g transform="translate(8.060141,5.72622688293457) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >92</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >92</tspan></text>
+</g>
+<g transform="translate(5.130835,-9.8151997756958) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >93</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >93</tspan></text>
+</g>
+<g transform="translate(12.116699,49.80469711303711) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >94</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >94</tspan></text>
+</g>
+<g transform="translate(6.8165474,-2.5364305210113525) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >95</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >95</tspan></text>
+</g>
+<g transform="translate(9.407145,-5.659101409912109) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >96</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >96</tspan></text>
+</g>
+<g transform="translate(7.8193736,-3.3914932441711425) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >97</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >97</tspan></text>
+</g>
+<g transform="translate(4.3863816,-12.47293846130371) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >98</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >98</tspan></text>
+</g>
+<g transform="translate(8.718159,-9.465560836791992) scale(0.5)">
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >99</tspan></text>
+<text text-anchor="middle" alignment-baseline="middle" style="fill: rgb(51, 51, 51); font-size: 0.3px;"><tspan style="fill: hsl(90, 100%, 35%); font-weight: bold" >99</tspan></text>
+</g>
+</svg>

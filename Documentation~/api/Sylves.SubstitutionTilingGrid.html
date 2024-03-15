@@ -1,0 +1,1089 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SubstitutionTilingGrid
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SubstitutionTilingGrid
+   ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/custom.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Sylves.SubstitutionTilingGrid">
+  
+  
+  <h1 id="Sylves_SubstitutionTilingGrid" data-uid="Sylves.SubstitutionTilingGrid" class="text-break">Class SubstitutionTilingGrid
+  </h1>
+  <div class="markdown level0 summary"><p>Creates a tiling of the 2d plane from a set of substitution rules.
+It is quite flexible:</p>
+<ul>
+<li>imperfect substitution rules where the replacement outline doesn't follow the original outline</li>
+<li>tiles can freely transformed</li>
+<li>tile equivalence under translation, euclidian motion, isometry, similarity all supported</li>
+<li>&quot;statistically round&quot; substitutions like the pinwheel substitution supported</li>
+</ul>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html">BaseSubstitutionTilingGrid</a></div>
+    <div class="level2"><span class="xref">SubstitutionTilingGrid</span></div>
+      <div class="level3"><a class="xref" href="Sylves.ChairGrid.html">ChairGrid</a></div>
+      <div class="level3"><a class="xref" href="Sylves.DominoGrid.html">DominoGrid</a></div>
+      <div class="level3"><a class="xref" href="Sylves.PenroseRhombGrid.html">PenroseRhombGrid</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Sylves.IGrid.html">IGrid</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_DeadZone">BaseSubstitutionTilingGrid.DeadZone</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_prototiles">BaseSubstitutionTilingGrid.prototiles</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_tileBits">BaseSubstitutionTilingGrid.tileBits</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_prototileBits">BaseSubstitutionTilingGrid.prototileBits</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_cellTypes">BaseSubstitutionTilingGrid.cellTypes</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_hierarchy">BaseSubstitutionTilingGrid.hierarchy</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_bound">BaseSubstitutionTilingGrid.bound</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_baseTransform">BaseSubstitutionTilingGrid.baseTransform</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_Up_Sylves_Matrix4x4_Sylves_BaseSubstitutionTilingGrid_InternalPrototile_">BaseSubstitutionTilingGrid.Up(Matrix4x4, BaseSubstitutionTilingGrid.InternalPrototile)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_Down_Sylves_Matrix4x4_Sylves_BaseSubstitutionTilingGrid_InternalPrototile_System_Int32_">BaseSubstitutionTilingGrid.Down(Matrix4x4, BaseSubstitutionTilingGrid.InternalPrototile, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetCellTypes">BaseSubstitutionTilingGrid.GetCellTypes()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetDual">BaseSubstitutionTilingGrid.GetDual()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetCells">BaseSubstitutionTilingGrid.GetCells()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_TryMoveByOffset_Sylves_Cell_Sylves_Vector3Int_Sylves_Vector3Int_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">BaseSubstitutionTilingGrid.TryMoveByOffset(Cell, Vector3Int, Vector3Int, CellRotation, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">BaseSubstitutionTilingGrid.ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetCellDirs_Sylves_Cell_">BaseSubstitutionTilingGrid.GetCellDirs(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetCellCorners_Sylves_Cell_">BaseSubstitutionTilingGrid.GetCellCorners(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_FindBasicPath_Sylves_Cell_Sylves_Cell_">BaseSubstitutionTilingGrid.FindBasicPath(Cell, Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetIndex_Sylves_Cell_">BaseSubstitutionTilingGrid.GetIndex(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetCellByIndex_System_Int32_">BaseSubstitutionTilingGrid.GetCellByIndex(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetBound">BaseSubstitutionTilingGrid.GetBound()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetBound_System_Collections_Generic_IEnumerable_Sylves_Cell__">BaseSubstitutionTilingGrid.GetBound(IEnumerable&lt;Cell&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_IntersectBounds_Sylves_IBound_Sylves_IBound_">BaseSubstitutionTilingGrid.IntersectBounds(IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_UnionBounds_Sylves_IBound_Sylves_IBound_">BaseSubstitutionTilingGrid.UnionBounds(IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetCellsInBounds_Sylves_IBound_">BaseSubstitutionTilingGrid.GetCellsInBounds(IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_IsCellInBound_Sylves_Cell_Sylves_IBound_">BaseSubstitutionTilingGrid.IsCellInBound(Cell, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetCellCorner_Sylves_Cell_Sylves_CellCorner_">BaseSubstitutionTilingGrid.GetCellCorner(Cell, CellCorner)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetTRS_Sylves_BaseSubstitutionTilingGrid_InternalPrototile_Sylves_Matrix4x4_System_Int32_">BaseSubstitutionTilingGrid.GetTRS(BaseSubstitutionTilingGrid.InternalPrototile, Matrix4x4, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetDeformation_Sylves_Cell_">BaseSubstitutionTilingGrid.GetDeformation(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetTriangleMesh_Sylves_Cell_">BaseSubstitutionTilingGrid.GetTriangleMesh(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__">BaseSubstitutionTilingGrid.GetMeshData(Cell, MeshData, Matrix4x4)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_FindGridSymmetry_System_Collections_Generic_ISet_Sylves_Cell__System_Collections_Generic_ISet_Sylves_Cell__Sylves_Cell_Sylves_CellRotation_">BaseSubstitutionTilingGrid.FindGridSymmetry(ISet&lt;Cell&gt;, ISet&lt;Cell&gt;, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">BaseSubstitutionTilingGrid.TryApplySymmetry(GridSymmetry, IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__">BaseSubstitutionTilingGrid.TryApplySymmetry(GridSymmetry, Cell, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_Is2d">BaseSubstitutionTilingGrid.Is2d</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_Is3d">BaseSubstitutionTilingGrid.Is3d</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_IsPlanar">BaseSubstitutionTilingGrid.IsPlanar</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_IsRepeating">BaseSubstitutionTilingGrid.IsRepeating</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_IsOrientable">BaseSubstitutionTilingGrid.IsOrientable</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_IsFinite">BaseSubstitutionTilingGrid.IsFinite</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_IsSingleCellType">BaseSubstitutionTilingGrid.IsSingleCellType</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_CoordinateDimension">BaseSubstitutionTilingGrid.CoordinateDimension</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_Unwrapped">BaseSubstitutionTilingGrid.Unwrapped</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_IndexCount">BaseSubstitutionTilingGrid.IndexCount</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
+  <h6><strong>Assembly</strong>: Sylves.dll</h6>
+  <h5 id="Sylves_SubstitutionTilingGrid_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class SubstitutionTilingGrid : BaseSubstitutionTilingGrid, IGrid</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid__ctor_" data-uid="Sylves.SubstitutionTilingGrid.#ctor*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid__ctor_Sylves_Prototile___System_Func_System_Int32_System_String__Sylves_SubstitutionTilingBound_Sylves_ICachePolicy_" data-uid="Sylves.SubstitutionTilingGrid.#ctor(Sylves.Prototile[],System.Func{System.Int32,System.String},Sylves.SubstitutionTilingBound,Sylves.ICachePolicy)">SubstitutionTilingGrid(Prototile[], Func&lt;Int32, String&gt;, SubstitutionTilingBound, ICachePolicy)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SubstitutionTilingGrid(Prototile[] prototiles, Func&lt;int, string&gt; hierarchy, SubstitutionTilingBound bound = null, ICachePolicy cachePolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Prototile.html">Prototile</a>[]</td>
+        <td><span class="parametername">prototiles</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">hierarchy</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.SubstitutionTilingBound.html">SubstitutionTilingBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.ICachePolicy.html">ICachePolicy</a></td>
+        <td><span class="parametername">cachePolicy</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid__ctor_" data-uid="Sylves.SubstitutionTilingGrid.#ctor*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid__ctor_Sylves_Prototile___System_String___Sylves_SubstitutionTilingBound_Sylves_ICachePolicy_" data-uid="Sylves.SubstitutionTilingGrid.#ctor(Sylves.Prototile[],System.String[],Sylves.SubstitutionTilingBound,Sylves.ICachePolicy)">SubstitutionTilingGrid(Prototile[], String[], SubstitutionTilingBound, ICachePolicy)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SubstitutionTilingGrid(Prototile[] prototiles, string[] hierarchy, SubstitutionTilingBound bound = null, ICachePolicy cachePolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Prototile.html">Prototile</a>[]</td>
+        <td><span class="parametername">prototiles</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">hierarchy</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.SubstitutionTilingBound.html">SubstitutionTilingBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.ICachePolicy.html">ICachePolicy</a></td>
+        <td><span class="parametername">cachePolicy</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_Raw_" data-uid="Sylves.SubstitutionTilingGrid.Raw*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_Raw" data-uid="Sylves.SubstitutionTilingGrid.Raw">Raw</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RawSubstitutionTilingGrid Raw { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.RawSubstitutionTilingGrid.html">RawSubstitutionTilingGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_Unbounded_" data-uid="Sylves.SubstitutionTilingGrid.Unbounded*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_Unbounded" data-uid="Sylves.SubstitutionTilingGrid.Unbounded">Unbounded</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IGrid Unbounded { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_Unbounded">BaseSubstitutionTilingGrid.Unbounded</a></div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_BoundBy_" data-uid="Sylves.SubstitutionTilingGrid.BoundBy*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_BoundBy_Sylves_IBound_" data-uid="Sylves.SubstitutionTilingGrid.BoundBy(Sylves.IBound)">BoundBy(IBound)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IGrid BoundBy(IBound bound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_BoundBy_Sylves_IBound_">BaseSubstitutionTilingGrid.BoundBy(IBound)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_CellToParentGrid_" data-uid="Sylves.SubstitutionTilingGrid.CellToParentGrid*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_CellToParentGrid_Sylves_Cell_System_Int32_" data-uid="Sylves.SubstitutionTilingGrid.CellToParentGrid(Sylves.Cell,System.Int32)">CellToParentGrid(Cell, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Cell CellToParentGrid(Cell cell, int n = 1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">n</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_FindCell_" data-uid="Sylves.SubstitutionTilingGrid.FindCell*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__" data-uid="Sylves.SubstitutionTilingGrid.FindCell(Sylves.Matrix4x4,Sylves.Cell@,Sylves.CellRotation@)">FindCell(Matrix4x4, out Cell, out CellRotation)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool FindCell(Matrix4x4 matrix, out Cell cell, out CellRotation rotation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td><span class="parametername">matrix</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.CellRotation.html">CellRotation</a></td>
+        <td><span class="parametername">rotation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__">BaseSubstitutionTilingGrid.FindCell(Matrix4x4, out Cell, out CellRotation)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_FindCell_" data-uid="Sylves.SubstitutionTilingGrid.FindCell*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_FindCell_Sylves_Vector3_Sylves_Cell__" data-uid="Sylves.SubstitutionTilingGrid.FindCell(Sylves.Vector3,Sylves.Cell@)">FindCell(Vector3, out Cell)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool FindCell(Vector3 position, out Cell cell)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">position</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_FindCell_Sylves_Vector3_Sylves_Cell__">BaseSubstitutionTilingGrid.FindCell(Vector3, out Cell)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_GetCellCenter_" data-uid="Sylves.SubstitutionTilingGrid.GetCellCenter*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_GetCellCenter_Sylves_Cell_" data-uid="Sylves.SubstitutionTilingGrid.GetCellCenter(Sylves.Cell)">GetCellCenter(Cell)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Vector3 GetCellCenter(Cell cell)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetCellCenter_Sylves_Cell_">BaseSubstitutionTilingGrid.GetCellCenter(Cell)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_GetCellsIntersectsApprox_" data-uid="Sylves.SubstitutionTilingGrid.GetCellsIntersectsApprox*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_GetCellsIntersectsApprox_Sylves_Vector3_Sylves_Vector3_" data-uid="Sylves.SubstitutionTilingGrid.GetCellsIntersectsApprox(Sylves.Vector3,Sylves.Vector3)">GetCellsIntersectsApprox(Vector3, Vector3)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Cell&gt; GetCellsIntersectsApprox(Vector3 min, Vector3 max)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">min</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">max</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetCellsIntersectsApprox_Sylves_Vector3_Sylves_Vector3_">BaseSubstitutionTilingGrid.GetCellsIntersectsApprox(Vector3, Vector3)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_GetCellType_" data-uid="Sylves.SubstitutionTilingGrid.GetCellType*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_GetCellType_Sylves_Cell_" data-uid="Sylves.SubstitutionTilingGrid.GetCellType(Sylves.Cell)">GetCellType(Cell)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ICellType GetCellType(Cell cell)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.ICellType.html">ICellType</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetCellType_Sylves_Cell_">BaseSubstitutionTilingGrid.GetCellType(Cell)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_GetPolygon_" data-uid="Sylves.SubstitutionTilingGrid.GetPolygon*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__" data-uid="Sylves.SubstitutionTilingGrid.GetPolygon(Sylves.Cell,Sylves.Vector3[]@,Sylves.Matrix4x4@)">GetPolygon(Cell, out Vector3[], out Matrix4x4)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a>[]</td>
+        <td><span class="parametername">vertices</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
+        <td><span class="parametername">transform</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__">BaseSubstitutionTilingGrid.GetPolygon(Cell, out Vector3[], out Matrix4x4)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_GetPrototile_" data-uid="Sylves.SubstitutionTilingGrid.GetPrototile*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_GetPrototile_Sylves_Cell_System_Int32_" data-uid="Sylves.SubstitutionTilingGrid.GetPrototile(Sylves.Cell,System.Int32)">GetPrototile(Cell, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override BaseSubstitutionTilingGrid.InternalPrototile GetPrototile(Cell cell, int height)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">height</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.InternalPrototile.html">BaseSubstitutionTilingGrid.InternalPrototile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetPrototile_Sylves_Cell_System_Int32_">BaseSubstitutionTilingGrid.GetPrototile(Cell, Int32)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_GetTRS_" data-uid="Sylves.SubstitutionTilingGrid.GetTRS*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_GetTRS_Sylves_Cell_" data-uid="Sylves.SubstitutionTilingGrid.GetTRS(Sylves.Cell)">GetTRS(Cell)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override TRS GetTRS(Cell cell)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.TRS.html">TRS</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_GetTRS_Sylves_Cell_">BaseSubstitutionTilingGrid.GetTRS(Cell)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_IsCellInGrid_" data-uid="Sylves.SubstitutionTilingGrid.IsCellInGrid*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_IsCellInGrid_Sylves_Cell_" data-uid="Sylves.SubstitutionTilingGrid.IsCellInGrid(Sylves.Cell)">IsCellInGrid(Cell)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsCellInGrid(Cell cell)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_IsCellInGrid_Sylves_Cell_">BaseSubstitutionTilingGrid.IsCellInGrid(Cell)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_ParentGrid_" data-uid="Sylves.SubstitutionTilingGrid.ParentGrid*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_ParentGrid_System_Int32_" data-uid="Sylves.SubstitutionTilingGrid.ParentGrid(System.Int32)">ParentGrid(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SubstitutionTilingGrid ParentGrid(int n = 1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">n</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.SubstitutionTilingGrid.html">SubstitutionTilingGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_Raycast_" data-uid="Sylves.SubstitutionTilingGrid.Raycast*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_" data-uid="Sylves.SubstitutionTilingGrid.Raycast(Sylves.Vector3,Sylves.Vector3,System.Single)">Raycast(Vector3, Vector3, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;RaycastInfo&gt; Raycast(Vector3 origin, Vector3 direction, float maxDistance = InfinityF)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">origin</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td><span class="parametername">direction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxDistance</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.RaycastInfo.html">RaycastInfo</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">BaseSubstitutionTilingGrid.Raycast(Vector3, Vector3, Single)</a></div>
+  
+  
+  <a id="Sylves_SubstitutionTilingGrid_TryMove_" data-uid="Sylves.SubstitutionTilingGrid.TryMove*"></a>
+  <h4 id="Sylves_SubstitutionTilingGrid_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__" data-uid="Sylves.SubstitutionTilingGrid.TryMove(Sylves.Cell,Sylves.CellDir,Sylves.Cell@,Sylves.CellDir@,Sylves.Connection@)">TryMove(Cell, CellDir, out Cell, out CellDir, out Connection)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.CellDir.html">CellDir</a></td>
+        <td><span class="parametername">dir</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">dest</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.CellDir.html">CellDir</a></td>
+        <td><span class="parametername">inverseDir</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Connection.html">Connection</a></td>
+        <td><span class="parametername">connection</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseSubstitutionTilingGrid.html#Sylves_BaseSubstitutionTilingGrid_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__">BaseSubstitutionTilingGrid.TryMove(Cell, CellDir, out Cell, out CellDir, out Connection)</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Sylves.IGrid.html">IGrid</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

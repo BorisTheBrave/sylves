@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class OffGrid
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class OffGrid
+   ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/custom.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Sylves.OffGrid">
+  
+  
+  <h1 id="Sylves_OffGrid" data-uid="Sylves.OffGrid" class="text-break">Class OffGrid
+  </h1>
+  <div class="markdown level0 summary"><p>Variant of a Square grid with irregularly shaped rectangles.
+<a href="https://gitlab.com/chriscox/offgrid/-/wikis/home">https://gitlab.com/chriscox/offgrid/-/wikis/home</a></p>
+<p>For cellsSize (1, 1), then cell (0, 0, 0) is a random rectangle filling at most from (-1, -1, 0) to (1, 1, 0)</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="Sylves.BaseModifier.html">BaseModifier</a></div>
+    <div class="level2"><a class="xref" href="Sylves.BijectModifier.html">BijectModifier</a></div>
+    <div class="level3"><span class="xref">OffGrid</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Sylves.IGrid.html">IGrid</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_Rebind_Sylves_IGrid_">BijectModifier.Rebind(IGrid)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetDual">BijectModifier.GetDual()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetCells">BijectModifier.GetCells()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetCellType_Sylves_Cell_">BijectModifier.GetCellType(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_IsCellInGrid_Sylves_Cell_">BijectModifier.IsCellInGrid(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__">BijectModifier.TryMove(Cell, CellDir, Cell, CellDir, Connection)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_TryMoveByOffset_Sylves_Cell_Sylves_Vector3Int_Sylves_Vector3Int_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">BijectModifier.TryMoveByOffset(Cell, Vector3Int, Vector3Int, CellRotation, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">BijectModifier.ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetCellDirs_Sylves_Cell_">BijectModifier.GetCellDirs(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_FindBasicPath_Sylves_Cell_Sylves_Cell_">BijectModifier.FindBasicPath(Cell, Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetIndex_Sylves_Cell_">BijectModifier.GetIndex(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetCellByIndex_System_Int32_">BijectModifier.GetCellByIndex(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetBound_System_Collections_Generic_IEnumerable_Sylves_Cell__">BijectModifier.GetBound(IEnumerable&lt;Cell&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_IsCellInBound_Sylves_Cell_Sylves_IBound_">BijectModifier.IsCellInBound(Cell, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetCellCenter_Sylves_Cell_">BijectModifier.GetCellCenter(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetCellCorner_Sylves_Cell_Sylves_CellCorner_">BijectModifier.GetCellCorner(Cell, CellCorner)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetTRS_Sylves_Cell_">BijectModifier.GetTRS(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetDeformation_Sylves_Cell_">BijectModifier.GetDeformation(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__">BijectModifier.GetPolygon(Cell, Vector3[], Matrix4x4)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetTriangleMesh_Sylves_Cell_">BijectModifier.GetTriangleMesh(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__">BijectModifier.GetMeshData(Cell, MeshData, Matrix4x4)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_FindCell_Sylves_Vector3_Sylves_Cell__">BijectModifier.FindCell(Vector3, Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__">BijectModifier.FindCell(Matrix4x4, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_GetCellsIntersectsApprox_Sylves_Vector3_Sylves_Vector3_">BijectModifier.GetCellsIntersectsApprox(Vector3, Vector3)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">BijectModifier.Raycast(Vector3, Vector3, Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_FindGridSymmetry_System_Collections_Generic_ISet_Sylves_Cell__System_Collections_Generic_ISet_Sylves_Cell__Sylves_Cell_Sylves_CellRotation_">BijectModifier.FindGridSymmetry(ISet&lt;Cell&gt;, ISet&lt;Cell&gt;, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">BijectModifier.TryApplySymmetry(GridSymmetry, IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__">BijectModifier.TryApplySymmetry(GridSymmetry, Cell, Cell, CellRotation)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BijectModifier.html#Sylves_BijectModifier_CoordinateDimension">BijectModifier.CoordinateDimension</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellTypes">BaseModifier.GetCellTypes()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellCorners_Sylves_Cell_">BaseModifier.GetCellCorners(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetBound">BaseModifier.GetBound()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_BoundBy_Sylves_IBound_">BaseModifier.BoundBy(IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IntersectBounds_Sylves_IBound_Sylves_IBound_">BaseModifier.IntersectBounds(IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_UnionBounds_Sylves_IBound_Sylves_IBound_">BaseModifier.UnionBounds(IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellsInBounds_Sylves_IBound_">BaseModifier.GetCellsInBounds(IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Is2d">BaseModifier.Is2d</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Is3d">BaseModifier.Is3d</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IsPlanar">BaseModifier.IsPlanar</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IsRepeating">BaseModifier.IsRepeating</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IsOrientable">BaseModifier.IsOrientable</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IsFinite">BaseModifier.IsFinite</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IsSingleCellType">BaseModifier.IsSingleCellType</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Unbounded">BaseModifier.Unbounded</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Unwrapped">BaseModifier.Unwrapped</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Underlying">BaseModifier.Underlying</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IndexCount">BaseModifier.IndexCount</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
+  <h6><strong>Assembly</strong>: Sylves.dll</h6>
+  <h5 id="Sylves_OffGrid_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class OffGrid : BijectModifier, IGrid</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="Sylves_OffGrid__ctor_" data-uid="Sylves.OffGrid.#ctor*"></a>
+  <h4 id="Sylves_OffGrid__ctor_System_Single_Sylves_SquareBound_System_Nullable_System_Int32__Sylves_ICachePolicy_" data-uid="Sylves.OffGrid.#ctor(System.Single,Sylves.SquareBound,System.Nullable{System.Int32},Sylves.ICachePolicy)">OffGrid(Single, SquareBound, Nullable&lt;Int32&gt;, ICachePolicy)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public OffGrid(float minSize = 0.2F, SquareBound bound = null, Nullable&lt;int&gt; seed = null, ICachePolicy cachePolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">minSize</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.SquareBound.html">SquareBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">seed</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.ICachePolicy.html">ICachePolicy</a></td>
+        <td><span class="parametername">cachePolicy</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Sylves.IGrid.html">IGrid</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

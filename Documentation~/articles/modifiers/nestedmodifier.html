@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>NestedModifier </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="NestedModifier ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="nestedmodifier">NestedModifier</h1>
+
+<table>
+<tr><th colspan="2">Quick facts</th></tr>
+<tr><td>Class</td><td><a class="xref" href="../../api/Sylves.NestedModifier.html">NestedModifier</a></td></tr>
+<tr><td>CellType</td><td>*</td></tr>
+<tr><td>CellDir</td><td>*</td></tr>
+<tr><td>CellRotation</td><td>*</td></tr>
+<tr><td>Bound</td><td>Unchanged</td></tr>
+<tr><td>Properties</td><td>Unchanged</td></tr>
+<tr><td>Requirements</td><td>None</td></tr>
+</table>
+<p>This modifier replaces every cell in the grid with a subgrid of cells. The original set of cells are called &quot;chunk cell&quot;, and the grids replaceing them are &quot;child grids&quot;. The cells of the child grid are &quot;child cell&quot;.</p>
+<p>This modifier is <code>abstract</code> - to use it, you must to inherit from it, and implement <a class="xref" href="../../api/Sylves.NestedModifier.html#Sylves_NestedModifier_GetChildGrid_Sylves_Cell_"><code>GetChildGrid</code></a>.</p>
+<p>Using nested grid is quite tricky, consider using <a href="../grids/planarlazymeshgrid.html"><code>PlanarLazyMeshGrid</code></a> instead, which is a specialized case designed to be easier to work with.</p>
+<p><img width="200px" src="../../images/grids/center_square.svg"> ➡ <img width="200px" src="../../images/grids/nested_square.svg"></p>
+<h2 id="cell-co-ordinates">Cell co-ordinates</h2>
+<p>By default, each cell co-ordinate <code>(x, y, z)</code> is split in two:</p>
+<ul>
+<li><code>(y, z, 0)</code> gives the chunk cell</li>
+<li><code>(x, 0, 0)</code> gives the child cell</li>
+</ul>
+<p>This behaviour can be controlled by overriding the Split/Combine methods.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

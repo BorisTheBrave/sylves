@@ -6,7 +6,7 @@
 * Added [JitteredSquareGrid](grids/jitteredsquaregrid.md)
 * Added [Voronator](xref:Sylves.Voronator) utiliyt class
 * Added [NestedModifier](xref:Sylves.NestedModifier) (for internal use)
-* Added AabbGrid (for internal use)
+* Added [AabbGrid](xref:Sylves.AabbGrid) (for internal use)
 * 2d grids now support GetMeshData.
 * Fixes for RelaxModifier. It now uses the same coordinates as underlying.
 * Fix IsPointInTriangle.
