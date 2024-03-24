@@ -33,10 +33,10 @@ namespace Sylves
         private MeshDetails meshDetails;
         protected readonly MeshData meshData;
         private readonly MeshGridOptions meshGridOptions;
-        protected bool is2d;
+        protected readonly bool is2d;
 
         // If set, is always contained by meshDetails.hashCellBounds
-        protected CubeBound bound;
+        protected readonly CubeBound bound;
 
         public MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions = null) :
             base(MeshGridBuilder.Build(meshData, meshGridOptions ?? new MeshGridOptions()))
@@ -49,13 +49,23 @@ namespace Sylves
 
         // Internals constructor used for other meshgrid like grids.
         // You need to call BuildMeshDetails() after calling this.
-        internal MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions, DataDrivenData data, bool is2d, CubeBound bound = null) :
+        internal MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions, DataDrivenData data, bool is2d) :
+            base(data)
+        {
+            this.meshData = meshData;
+            this.meshGridOptions = meshGridOptions;
+            this.is2d = is2d;
+        }
+
+        // Copy constructor
+        private MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions, DataDrivenData data, bool is2d, MeshDetails meshDetails, CubeBound bound) :
             base(data)
         {
             this.meshData = meshData;
             this.meshGridOptions = meshGridOptions;
             this.is2d = is2d;
             this.bound = bound;
+            this.meshDetails = meshDetails;
         }
 
         #region Impl
@@ -121,7 +131,7 @@ namespace Sylves
                 hashCellMin = hashCellMin == null ? hashCell : Vector3Int.Min(hashCellMin.Value, hashCell);
                 hashCellMax = hashCellMax == null ? hashCell : Vector3Int.Max(hashCellMax.Value, hashCell);
             }
-            if(hashCellMin == null)
+            if (hashCellMin == null)
             {
                 hashCellMin = new Vector3Int();
                 hashCellMax = -Vector3Int.one;
@@ -152,7 +162,7 @@ namespace Sylves
 
         private static ICellType UnwrapXZCellModifier(ICellType cellType)
         {
-            if(cellType is XZCellTypeModifier modifier)
+            if (cellType is XZCellTypeModifier modifier)
             {
                 return modifier.Underlying;
             }
@@ -189,7 +199,7 @@ namespace Sylves
 
         #region Relatives
 
-        public override IGrid Unbounded => new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = CellData, Moves = Moves }, is2d, null);
+        public override IGrid Unbounded => new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = CellData, Moves = Moves }, is2d, meshDetails, null);
 
         public override IDualMapping GetDual()
         {
@@ -264,7 +274,7 @@ namespace Sylves
         }
         public override IGrid BoundBy(IBound bound)
         {
-            return new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = CellData, Moves = Moves}, is2d,  (CubeBound)IntersectBounds(this.bound, bound));
+            return new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = CellData, Moves = Moves}, is2d, meshDetails, (CubeBound)IntersectBounds(this.bound, bound));
         }
         public override IBound IntersectBounds(IBound bound, IBound other)
         {
