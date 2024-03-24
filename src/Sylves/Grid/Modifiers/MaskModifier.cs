@@ -44,7 +44,7 @@ namespace Sylves
         #endregion
 
         #region Relatives
-        public virtual IGrid Unbounded => Underlying.Unbounded;
+        public override IGrid Unbounded => Underlying.Unbounded;
         #endregion
 
         #region Cell info
