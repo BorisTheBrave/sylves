@@ -5,6 +5,7 @@
 * Fix GetCellsIntersectsApprox in some grids
 * Fix triangle grid GetCellCorners
 * Fix generalized winding.
+* MaskModifier is now removed when calling Unbounded.
 
 # 1.0.0
 * **Breaking**: Swapped CubeDir.Left and CubeDir.Right

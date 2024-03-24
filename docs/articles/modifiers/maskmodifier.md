@@ -11,7 +11,7 @@
 <tr><td>Requirements</td><td>None</td></tr>
 </table>
 
-This modifier restricts the set of cells in a grid. This operates much like [bounds](../concepts/bounds.md) do, but it supports an arbitrary set of cells, a bit less efficiently. That means that TryMove, FindCell etc will fail instead of returning cells that have not been included.
+This modifier restricts the set of cells in a grid. This operates much like [bounds](../concepts/bounds.md) do, but it supports an arbitrary set of cells, a bit less efficiently. That means that [TryMove](xref:Sylves.IGrid.TryMove(Sylves.Cell,Sylves.CellDir,Sylves.Cell@,Sylves.CellDir@,Sylves.Connection@)), [FindCell](xref:Sylves.IGrid.FindCell(Sylves.Vector3,Sylves.Cell@)) etc will fail instead of returning cells that have not been included.
 
 There are two modes of operations. Either you supply a finite set of cells, or you supply a function which returns true for cells that need to be included.
 
@@ -24,6 +24,10 @@ centerSquare.Masked(cell => cell.x == 0 || cell.y == 0)
 <img width="200px" src="../../images/grids/center_square.svg" /></img> ➡ <img width="200px" src="../../images/grids/mask_square.svg" /></img>
 
 This modifier can also be applied by extension methods [Masked](xref:Sylves.GridExtensions.Masked(Sylves.IGrid,System.Collections.Generic.ISet{Sylves.Cell})) or [Masked](xref:Sylves.GridExtensions.Masked(Sylves.IGrid,System.Func{Sylves.Cell,System.Boolean},System.Collections.Generic.IEnumerable{Sylves.Cell})).
+
+
+> [!Note]
+> Calling [IGrid.Unbounded](xref:Sylves.IGrid.Unbounded) will strip off this modifier (as well as any bounds)
 
 ## Cell co-ordinates
 

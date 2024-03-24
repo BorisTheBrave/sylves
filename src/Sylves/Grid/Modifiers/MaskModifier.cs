@@ -12,6 +12,8 @@ namespace Sylves
     /// 
     /// Filtered cells will not be returned by GetCells, TryMove, etc. Passing them as inputs
     /// is undefined.
+    /// 
+    /// Calling Unbounded will remove this modifier (as well as any bounds)
     /// </summary>
     public class MaskModifier : BaseModifier
     {
@@ -39,6 +41,10 @@ namespace Sylves
 
         public override bool IsFinite => allCells != null || Underlying.IsFinite;
 
+        #endregion
+
+        #region Relatives
+        public virtual IGrid Unbounded => Underlying.Unbounded;
         #endregion
 
         #region Cell info
