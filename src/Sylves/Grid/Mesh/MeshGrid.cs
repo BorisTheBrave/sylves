@@ -58,14 +58,14 @@ namespace Sylves
         }
 
         // Copy constructor
-        private MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions, DataDrivenData data, bool is2d, MeshDetails meshDetails, CubeBound bound) :
-            base(data)
+        protected MeshGrid(MeshGrid meshGrid, CubeBound bound) :
+            base(new DataDrivenData { Cells = meshGrid.CellData, Moves = meshGrid.Moves})
         {
-            this.meshData = meshData;
-            this.meshGridOptions = meshGridOptions;
-            this.is2d = is2d;
+            this.meshData = meshGrid.meshData;
+            this.meshGridOptions = meshGrid.meshGridOptions;
+            this.is2d = meshGrid.is2d;
+            this.meshDetails = meshGrid.meshDetails;
             this.bound = bound;
-            this.meshDetails = meshDetails;
         }
 
         #region Impl
@@ -199,7 +199,7 @@ namespace Sylves
 
         #region Relatives
 
-        public override IGrid Unbounded => new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = CellData, Moves = Moves }, is2d, meshDetails, null);
+        public override IGrid Unbounded => new MeshGrid(this, null);
 
         public override IDualMapping GetDual()
         {
@@ -274,7 +274,7 @@ namespace Sylves
         }
         public override IGrid BoundBy(IBound bound)
         {
-            return new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = CellData, Moves = Moves}, is2d, meshDetails, (CubeBound)IntersectBounds(this.bound, bound));
+            return new MeshGrid(this, (CubeBound)IntersectBounds(this.bound, bound));
         }
         public override IBound IntersectBounds(IBound bound, IBound other)
         {

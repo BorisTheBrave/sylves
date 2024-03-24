@@ -29,7 +29,23 @@ namespace Sylves
             this.meshPrismOptions = meshPrismOptions;
         }
 
+        // Copy constructor
+        private MeshPrismGrid(MeshPrismGrid meshPrismGrid, CubeBound bound) :
+            base(meshPrismGrid, bound)
+        {
+            this.meshPrismOptions = meshPrismGrid.meshPrismOptions;
+        }
+
+        #region Bounds
+        public override IGrid BoundBy(IBound bound)
+        {
+            return new MeshPrismGrid(this, (CubeBound)IntersectBounds(this.bound, bound));
+        }
+        #endregion
+
         #region Relatives
+
+        public override IGrid Unbounded => new MeshPrismGrid(this, null);
 
         public override IDualMapping GetDual()
         {
