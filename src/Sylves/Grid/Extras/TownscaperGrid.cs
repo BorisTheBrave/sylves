@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY
 using UnityEngine;
@@ -43,6 +44,10 @@ namespace Sylves
 
             return meshData;
         }
+
+        private static ICellType[] s_cellTypes = new[] { SquareCellType.Instance };
+
+        public override IEnumerable<ICellType> GetCellTypes() => s_cellTypes;
     }
 
     /// <summary>

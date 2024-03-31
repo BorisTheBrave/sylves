@@ -114,7 +114,7 @@ namespace Sylves
 
         public virtual int CoordinateDimension => 3;
 
-        public virtual IEnumerable<ICellType> GetCellTypes() => cellTypes ?? throw new Exception("Unknown cell types");
+        public virtual IEnumerable<ICellType> GetCellTypes() => cellTypes ?? throw new NotSupportedException($"Grid {GetType().Name} does not support GetCellTypes()");
 
         #endregion
 
