@@ -160,15 +160,6 @@ namespace Sylves
             public Vector3Int GetHashCell(Vector3 v) => Vector3Int.FloorToInt(Divide(v - hashCellBase, hashCellSize));
         }
 
-        private static ICellType UnwrapXZCellModifier(ICellType cellType)
-        {
-            if (cellType is XZCellTypeModifier modifier)
-            {
-                return modifier.Underlying;
-            }
-            return cellType;
-        }
-
         private CubeBound ExpandBound(CubeBound bound)
         {
             return new CubeBound(bound.min - Vector3Int.one, bound.max + Vector3Int.one);
@@ -531,11 +522,22 @@ namespace Sylves
             }
         }
 
+
+        private static readonly Matrix4x4 RotateYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 0, 1));
+        private static readonly Matrix4x4 RotateZY = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, -1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
+
         internal static bool GetRotationFromMatrix(ICellType cellType, Matrix4x4 cellTransform, Matrix4x4 matrix, out CellRotation rotation)
         {
-            cellType = UnwrapXZCellModifier(cellType);
             var m = cellTransform.inverse * matrix;
             // TODO: Dispatch to celltype method?
+            if (cellType is XZCellTypeModifier modifier)
+            {
+                cellType = modifier.Underlying;
+                if (cellType != CubeCellType.Instance)
+                {
+                    m = RotateYZ * m * RotateZY;
+                }
+            }
             if (cellType == CubeCellType.Instance)
             {
                 var cubeRotation = CubeRotation.FromMatrix(m);
@@ -557,6 +559,33 @@ namespace Sylves
             else if (cellType is HexCellType hexCellType)
             {
                 var hexRotation = HexRotation.FromMatrix(m, hexCellType.Orientation);
+                if (hexRotation != null)
+                {
+                    rotation = hexRotation.Value;
+                    return true;
+                }
+            }
+            else if (cellType is TriangleCellType triangleCellType)
+            {
+                var hexRotation = HexRotation.FromMatrix(m, triangleCellType.Orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
+                if (hexRotation != null)
+                {
+                    rotation = hexRotation.Value;
+                    return true;
+                }
+            }
+            else if (cellType is HexPrismCellType hexPrismCellType)
+            {
+                var hexRotation = HexRotation.FromMatrix(m, hexPrismCellType.Orientation);
+                if (hexRotation != null)
+                {
+                    rotation = hexRotation.Value;
+                    return true;
+                }
+            }
+            else if (cellType is TrianglePrismCellType trianglePrismCellType)
+            {
+                var hexRotation = HexRotation.FromMatrix(m, trianglePrismCellType.Orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
                 if (hexRotation != null)
                 {
                     rotation = hexRotation.Value;

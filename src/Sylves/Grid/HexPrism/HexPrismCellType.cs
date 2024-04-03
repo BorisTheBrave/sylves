@@ -28,6 +28,9 @@ namespace Sylves
 
         public static HexPrismCellType Get(HexOrientation orientation) => orientation == HexOrientation.FlatTopped ? ftInstance : ptInstance;
 
+        public HexOrientation Orientation => orientation;
+
+
         private bool IsAxial(CellDir dir) => ((PTHexPrismDir)dir).IsAxial();
 
         public IEnumerable<CellCorner> GetCellCorners() => corners;

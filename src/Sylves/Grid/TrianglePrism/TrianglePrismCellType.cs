@@ -27,6 +27,7 @@ namespace Sylves
         }
 
         public static TrianglePrismCellType Get(TriangleOrientation orientation) => orientation == TriangleOrientation.FlatTopped ? ftInstance : fsInstance;
+        public TriangleOrientation Orientation => orientation;
 
         private bool IsAxial(CellDir dir) => ((FSTrianglePrismDir)dir).IsAxial();
 
