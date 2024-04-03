@@ -23,8 +23,8 @@ namespace Sylves
         /// Applies NestedModifier to chunkGrid.
         /// </summary>
         /// <param name="chunkGrid">The base grid</param>
-        /// <param name="cellTypes">What should the response of GetCellType </param>
-        /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
+        /// <param name="cellTypes">What should the response of GetCellType be</param>
+        /// <param name="cachePolicy">Configures how to store the cached meshes.</param>
         public NestedModifier(IGrid chunkGrid, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             Setup(chunkGrid, cellTypes, cachePolicy);
