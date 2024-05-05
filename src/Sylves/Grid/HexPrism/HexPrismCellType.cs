@@ -71,8 +71,18 @@ namespace Sylves
             {
                 resultDir = dir;
                 var r = (int)rotation;
-                var rot = (6 - (r < 0 ? ~r : r)) % 6;
-                connection = new Connection { Mirror = r < 0, Rotation = rot, Sides = 6 };
+                // In this case the front and back faces do not share the same line of symmetry for what Connection.Mirror means.
+                // I.e. The x-mirror of (TriangleDir)(0) != the 180 rotation of (TriangleDir)(0), unlike 
+                // So some extra rotation is needed to keep back and front consistent
+                if (r < 0 && orientation == HexOrientation.FlatTopped)
+                {
+                    throw new System.NotImplementedException();
+                }
+                else
+                {
+                    var rot = (6 - (r < 0 ? ~r : r)) % 6;
+                    connection = new Connection { Mirror = r < 0, Rotation = rot, Sides = 6 };
+                }
             }
             else
             {
@@ -101,9 +111,17 @@ namespace Sylves
                     rotation = default;
                     return false;
                 }
-                var ir = (6 - connection.Rotation) % 6;
-                rotation = (CellRotation)(connection.Mirror ?  ~ir : ir);
-                return true;
+                // See comment in Rotate
+                if (connection.Mirror && orientation == HexOrientation.FlatTopped)
+                {
+                    throw new System.NotImplementedException();
+                }
+                else
+                {
+                    var ir = (6 - connection.Rotation) % 6;
+                    rotation = (CellRotation)(connection.Mirror ? ~ir : ir);
+                    return true;
+                }
             }
             else
             {

@@ -5,6 +5,7 @@
 * Fix GetCellsIntersectsApprox in some grids
 * Fix triangle grid GetCellCorners
 * Fix generalized winding.
+* Fix FlatTopped TrianglePrism Connections
 * MaskModifier is now removed when calling Unbounded.
 
 # 1.0.0

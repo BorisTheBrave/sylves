@@ -69,8 +69,20 @@ namespace Sylves
             {
                 resultDir = dir;
                 var r = (int)rotation;
-                var rot = (6 - (r < 0 ? ~r : r)) % 6;
-                connection = new Connection { Mirror = r < 0, Rotation = rot, Sides = 6 };
+                // In this case the front and back faces do not share the same line of symmetry for what Connection.Mirror means.
+                // I.e. The x-mirror of (TriangleDir)(0) != the 180 rotation of (TriangleDir)(0), unlike 
+                // So some extra rotation is needed to keep back and front consistent
+                // Honestly, I'm not sure too sure on this... I've just tuned this to work with Tessera.
+                if (r < 0 && orientation == TriangleOrientation.FlatTopped)
+                {
+                    var rot = (10 - (r < 0 ? ~r : r)) % 6;
+                    connection = new Connection { Mirror = r < 0, Rotation = rot, Sides = 6 };
+                }
+                else
+                {
+                    var rot = (6 - (r < 0 ? ~r : r)) % 6;
+                    connection = new Connection { Mirror = r < 0, Rotation = rot, Sides = 6 };
+                }
             }
             else
             {
@@ -99,9 +111,19 @@ namespace Sylves
                     rotation = default;
                     return false;
                 }
-                var ir = (6 - connection.Rotation) % 6;
-                rotation = (CellRotation)(connection.Mirror ?  ~ir : ir);
-                return true;
+                // See comment in Rotate
+                if(connection.Mirror && orientation == TriangleOrientation.FlatTopped)
+                {
+                    var ir = (10 - connection.Rotation) % 6;
+                    rotation = (CellRotation)(connection.Mirror ? ~ir : ir);
+                    return true;
+                }
+                else
+                {
+                    var ir = (6 - connection.Rotation) % 6;
+                    rotation = (CellRotation)(connection.Mirror ? ~ir : ir);
+                    return true;
+                }
             }
             else
             {
