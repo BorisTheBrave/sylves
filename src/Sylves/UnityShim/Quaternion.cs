@@ -141,8 +141,12 @@ namespace Sylves
         */
         public string ToString(string format) => ToString();
         public override string ToString() => $"({x}, {y}, {z}, {w})";
+        public static Vector3 operator *(Quaternion rotation, Vector3 point)
+        {
+            // TODO: Improve
+            return Matrix4x4.Rotate(rotation).MultiplyVector(point);
+        }
         /*
-        public static Vector3 operator *(Quaternion rotation, Vector3 point);
         public static Quaternion operator *(Quaternion lhs, Quaternion rhs);
         public static bool operator ==(Quaternion lhs, Quaternion rhs);
         public static bool operator !=(Quaternion lhs, Quaternion rhs);
