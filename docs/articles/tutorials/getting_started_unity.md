@@ -12,4 +12,8 @@ Download the latest Unity.zip from the [github releases](https://github.com/Bori
 
 ##  Source Installation
 
-You can copy the source code of `src/Sylves` into your Unity project. If you do this, you must add UNITY to the scripting symbols defined in Player Settings. Source installs allow you to debug into Sylves.
+Source installs allow you to debug into Sylves, but they compile a bit slower.
+
+* Copy the source code of `src/Sylves` into your Unity project.
+* Add UNITY to the scripting symbols defined in Player Settings.
+* Delete the UnityShim/ folder, AssemblyInfo.cs and Sylves.csproj files.
