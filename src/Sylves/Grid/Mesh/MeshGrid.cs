@@ -248,7 +248,9 @@ namespace Sylves
 
         public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
-            return base.TryMove(cell, dir, out dest, out inverseDir, out connection) && IsCellInGrid(dest);
+            // NB: We test IsCellInBound and not IsCellInGrid as this permits "improper" grids with moves outside
+            // the grid, a feature some other grid impls rely on.
+            return base.TryMove(cell, dir, out dest, out inverseDir, out connection) && IsCellInBound(dest, bound);
         }
 
 

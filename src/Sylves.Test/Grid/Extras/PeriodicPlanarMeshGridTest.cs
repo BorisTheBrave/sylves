@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Linq;
+using System.Net;
+
 #if UNITY
 using UnityEngine;
 #endif
@@ -117,7 +119,7 @@ namespace Sylves.Test
         public void TestRaycast()
         {
             var g = new PeriodicPlanarMeshGrid(TestMeshes.PlaneXY, Vector2.right, Vector2.up);
-            var start = new Vector3(3.088772f, - 0.9270384f, 0);
+            var start = new Vector3(3.088772f, -0.9270384f, 0);
             var end = new Vector3(2.384936f, 0.2460213f, 0);
             var results = g.Raycast(start, end - start, 1);
             Assert.AreEqual(3, results.Count());
@@ -132,6 +134,29 @@ namespace Sylves.Test
 
             Assert.AreEqual(4, dm.DualNeighbours(new Cell(0, 0, 0)).Count());
             Assert.AreEqual(4, dm.BaseNeighbours(new Cell(0, 0, 0)).Count());
+        }
+
+        [Test]
+        public void TestDual2()
+        {
+            var meshData = new MeshData
+            {
+                indices = new[] { new[] { 0, 1, 2, 1, 0, 3 } },
+                vertices = new Vector3[]
+                {
+                    new Vector3(0, -0.5f, 0),
+                    new Vector3(0, 0.5f, 0),
+                    new Vector3(-Mathf.Sqrt(3) / 2, 0, 0),
+                    new Vector3(Mathf.Sqrt(3) / 2, 0, 0),
+                },
+                topologies = new[] { MeshTopology.Triangles },
+            };
+
+            var g = new PeriodicPlanarMeshGrid(meshData, new Vector2(Mathf.Sqrt(3) / 2, 0.5f), new Vector2(0, 1));
+            var dm = g.GetDual();
+            var dg = (PeriodicPlanarMeshGrid)(dm.DualGrid);
+            Assert.AreEqual(1, dg.BoundBy(new SquareBound(0, 0, 1, 1)).GetCells().Count());
+            Assert.AreEqual(6, dg.GetCellCorners(new Cell(0, 0, 0)).Count());
         }
     }
 }
