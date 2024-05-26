@@ -84,7 +84,7 @@ namespace Sylves
             // Evaluate bounds on a central chunk
             // This cuts down on floating point issues as the chunks get further from the origin.
             var (min, max) = GetChunkBounds(new Vector2Int());
-            return GetChunkIntersects(min, max).Select(x => x + chunk);
+            return GetChunkIntersects(min - eps * Vector2.one, max + eps * Vector2.one).Select(x => x + chunk);
         }
 
 
