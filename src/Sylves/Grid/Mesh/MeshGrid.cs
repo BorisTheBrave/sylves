@@ -157,7 +157,23 @@ namespace Sylves
             public Dictionary<Vector3Int, List<Cell>> hashedCells;
             public bool isPlanar;
 
-            public Vector3Int GetHashCell(Vector3 v) => Vector3Int.FloorToInt(Divide(v - hashCellBase, hashCellSize));
+            public Vector3Int GetHashCell(Vector3 v)
+            {
+                // Planar meshes tend to produce overflow values here.
+                // Also, many other routines add/subtract one from these values.
+                // So we're careful to clip things in a way that avoids problems
+                int FloorToInt(float x)
+                {
+                    return x < int.MinValue + 1 ? int.MinValue + 1 :
+                        x> int.MaxValue - 1 ? int.MaxValue - 1 :
+                        (int)x;
+                }
+                return new Vector3Int(
+                    FloorToInt((v.x - hashCellBase.x) / hashCellSize.x),
+                    FloorToInt((v.y - hashCellBase.y) / hashCellSize.y),
+                    FloorToInt((v.z - hashCellBase.z) / hashCellSize.z)
+                    );
+            }
         }
 
         private CubeBound ExpandBound(CubeBound bound)
@@ -169,9 +185,10 @@ namespace Sylves
         {
             var min = meshDetails.GetHashCell(aabb.Min);
             var max = meshDetails.GetHashCell(aabb.Max);
+            // Note that max + 2 is not overflow safe, so we do the operation in floating point.
             return Aabb.FromMinMax(
-                Vector3.Scale(min - Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase,
-                Vector3.Scale(max + 2 * Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase
+                Vector3.Scale(min, meshDetails.hashCellSize) - Vector3.Scale(Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                Vector3.Scale(max, meshDetails.hashCellSize) + Vector3.Scale(2 * Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase
                 );
         }
         #endregion

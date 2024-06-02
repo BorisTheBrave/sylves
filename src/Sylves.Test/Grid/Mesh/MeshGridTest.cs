@@ -272,5 +272,13 @@ namespace Sylves.Test
             var dual = g.GetDual();
             GridTest.DualMapping(dual, new Cell(0, 0, 0), checkPositions: false);
         }
+
+        [Test]
+        public void TestFlat()
+        {
+            // Flat meshes sometimes give problems for the hashing algorithm
+            var g = new MeshGrid(TestMeshes.PlaneXY);
+            Assert.AreEqual(new Cell(), g.GetCellsIntersectsApprox(new Vector3(-1, -1, -1), new Vector3(1, 1, 1)).Single());
+        }
     }
 }
