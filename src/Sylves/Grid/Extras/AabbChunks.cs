@@ -9,6 +9,8 @@ namespace Sylves
 {
     internal class AabbChunks
     {
+        // Even though I've been careful with inclusive vs exclusive bounds
+        // it seems rounding errors for inclusive bounds still cause problems.
         const float eps = 1e-6f;
 
         private readonly Vector2 strideX;
@@ -44,7 +46,7 @@ namespace Sylves
             var minFR = fundamentalRhombusCorners.Aggregate(Vector2.Min);
             var maxFR = fundamentalRhombusCorners.Aggregate(Vector2.Max);
             // TODO: this could actually be a tighter bound
-            chunksInFundamentalRhombus = GetChunkIntersects(minFR, maxFR).ToArray();
+            chunksInFundamentalRhombus = GetChunkIntersects(minFR - eps * Vector2.one, maxFR + eps * Vector2.one).ToArray();
 
         }
 

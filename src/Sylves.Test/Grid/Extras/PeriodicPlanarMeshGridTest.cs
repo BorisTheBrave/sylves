@@ -1,6 +1,12 @@
 ﻿using NUnit.Framework;
+using System.IO;
+using System;
 using System.Linq;
 using System.Net;
+using static Sylves.Test.GridDocsExportTest;
+using static Sylves.Test.GridDocsExportTest;
+
+
 
 #if UNITY
 using UnityEngine;
@@ -123,6 +129,57 @@ namespace Sylves.Test
             var end = new Vector3(2.384936f, 0.2460213f, 0);
             var results = g.Raycast(start, end - start, 1);
             Assert.AreEqual(3, results.Count());
+        }
+
+
+        [Test]
+        public void TestRaycast2()
+        {
+            var meshData = new MeshData
+            {
+                indices = new[] { new[] { 0, 1, 2, 1, 0, 3 } },
+                vertices = new Vector3[]
+                {
+                        new Vector3(0, -0.5f, 0),
+                        new Vector3(0, 0.5f, 0),
+                        new Vector3(-Mathf.Sqrt(3) / 2, 0, 0),
+                        new Vector3(Mathf.Sqrt(3) / 2, 0, 0),
+                },
+                topologies = new[] { MeshTopology.Triangles },
+            };
+            var g = new PeriodicPlanarMeshGrid(meshData, new Vector2(Mathf.Sqrt(3) / 2, 0.5f), new Vector2(0, 1))
+            .Transformed(Matrix4x4.Scale(Vector3.one * Mathf.Sqrt(3)));
+
+
+            var start = new Vector3(2.78125f, -2.640625f, 0);
+            var dir = new Vector3(5, 0, 0);
+
+            /*
+            var fullPath = Path.GetFullPath("test_tri_grid.svg");
+            using (var file = File.Open(fullPath, FileMode.Create))
+            using (var writer = new StreamWriter(file))
+            {
+                var g2 = g.Masked(g.GetCellsIntersectsApprox(start - Vector3.one, start + dir + Vector3.one).ToHashSet());
+                WriteGrid(g2, writer, new Options());
+                Console.WriteLine($"Wrote file {fullPath}");
+            }
+            */
+
+
+            var results = g.Raycast(start, dir, 1);
+            var cells = results.Select(x => x.cell).ToList();
+            CollectionAssert.AreEqual(new[]
+            {
+                new Cell(1, 1, -2),
+                new Cell(0, 2, -3),
+                new Cell(1, 2, -3),
+                new Cell(0, 3, -3),
+                new Cell(1, 3, -3),
+                new Cell(0, 4, -4),
+                new Cell(1, 4, -4),
+                new Cell(0, 5, -4),
+                new Cell(1, 5, -4),
+            }, cells);
         }
 
         [Test]
