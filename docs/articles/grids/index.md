@@ -122,9 +122,6 @@ This can convert 2d grids into 3d ones, usually with the z-cordinate being the "
 
 ## Voronoi Grids
 
-Voronoi
-
-
 <table>
 <tr>
     <td><a href="../../images/grids/voronoi.svg"><img class="grid-thumb" src="../../images/grids/voronoi.svg" /></img></td>

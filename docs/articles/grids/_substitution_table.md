@@ -9,6 +9,6 @@
 </tr>
 <tr>
     <td><a href="../../images/grids/chair.svg"><img class="grid-thumb" src="../../images/grids/chair.svg" /></img></td>
-    <td><a href="xref:Sylves.ChairGrid">Chair Grid</a><br/>The <a href="https://en.wikipedia.org/wiki/Chair_tiling">Chair Tiling</a> is a simple L shaped aperiod <a href="https://en.wikipedia.org/wiki/Rep-tile">rep-tile</a>.</td>
+    <td><a href="xref:Sylves.ChairGrid">Chair Grid</a><br/>The <a href="https://en.wikipedia.org/wiki/Chair_tiling">Chair Tiling</a> is a simple L shaped aperiodic <a href="https://en.wikipedia.org/wiki/Rep-tile">rep-tile</a>.</td>
 </tr>
 </table>
