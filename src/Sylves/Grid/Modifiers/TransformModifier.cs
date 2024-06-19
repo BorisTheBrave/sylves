@@ -87,7 +87,7 @@ namespace Sylves
         #endregion
 
         #region Shape
-        public override Deformation GetDeformation(Cell cell) => throw new NotImplementedException();
+        public override Deformation GetDeformation(Cell cell) => transform * Underlying.GetDeformation(cell);
 
         public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
         {
