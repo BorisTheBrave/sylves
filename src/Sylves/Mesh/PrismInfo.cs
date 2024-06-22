@@ -174,7 +174,7 @@ namespace Sylves
                         BackDir = (CellDir)(n + 1),
                         BaseCellType = ngct,
                         PrismCellType = NGonPrismCellType.Get(n),
-                        BaseToPrismCorners = BaseToPrismCornersNGon(6),
+                        BaseToPrismCorners = BaseToPrismCornersNGon(n),
                     }.Setup();
                 }
                 return prismInfo;
