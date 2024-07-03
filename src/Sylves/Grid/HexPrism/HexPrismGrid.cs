@@ -164,6 +164,7 @@ namespace Sylves
             }
         }
 
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
         public HexGrid HexGrid => hexGrid;
 
         public static Cell GetHexCell(Cell hexPrismCell)

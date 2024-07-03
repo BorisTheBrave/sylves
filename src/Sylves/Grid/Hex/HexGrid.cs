@@ -181,6 +181,12 @@ namespace Sylves
             }
         }
 
+        public IGrid GetDiagonalGrid()
+        {
+            // Hexagons have no diagonal neighbours!
+            return this;
+        }
+
         public Cell[] GetChildTriangles(Cell cell)
         {
             var a = cell.x - cell.y;

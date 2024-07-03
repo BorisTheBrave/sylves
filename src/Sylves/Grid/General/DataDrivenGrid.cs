@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 #if UNITY
 using UnityEngine;
@@ -67,8 +68,9 @@ namespace Sylves
         public virtual IGrid Unbounded => this;
 
         public IGrid Unwrapped => this;
-        public virtual IDualMapping GetDual() => throw new System.NotSupportedException();
+        public virtual IDualMapping GetDual() => throw new NotSupportedException();
 
+        public virtual IGrid GetDiagonalGrid() => throw new NotSupportedException();
         #endregion
 
         #region Cell info

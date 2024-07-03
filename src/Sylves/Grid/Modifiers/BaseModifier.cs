@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 #if UNITY
 using UnityEngine;
 #endif
@@ -52,6 +53,7 @@ namespace Sylves
         public virtual IGrid Unwrapped => underlying.Unwrapped;
         public virtual IGrid Underlying => underlying;
         public virtual IDualMapping GetDual() => underlying.GetDual();
+        public virtual IGrid GetDiagonalGrid() => underlying.GetDiagonalGrid();
         #endregion
 
         #region Cell info

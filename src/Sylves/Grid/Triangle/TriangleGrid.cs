@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sylves.Grid;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -347,6 +348,37 @@ namespace Sylves
                 return (dest, destCorner);
             }
         }
+
+        public IGrid GetDiagonalGrid() => new DefaultDiagonalGrid(this, 3);
+
+        // TODO: This needs some thought...
+        /*
+        public IGrid GetDiagonalGrid()
+        {
+            return new DiagonalGrid(this);
+        }
+
+        private class DiagonalGrid : BaseOffsetDiagonalsModifier
+        {
+            private static OffsetCollection s_offsetsA = new OffsetCollection(new[]
+            {
+                new Vector3Int(1, 0, 0),
+            });
+            private static ICellType s_cellType = NGonDiagonalsCellType.Get(4, 12);
+            private static ICellType[] s_cellTypes = new[] { NGonDiagonalsCellType.Get(4, 12) };
+
+            public DiagonalGrid(IGrid underlying) : base(underlying)
+            {
+            }
+
+            public override ICellType GetCellType(Cell cell) => s_cellType;
+            public override IEnumerable<ICellType> GetCellTypes() => s_cellTypes;
+
+            public override OffsetCollection GetOffsetCollection(Cell cell) => s_offsets;
+
+            protected override IGrid Rebind(IGrid underlying) => new DiagonalGrid(underlying);
+        }
+        */
 
         #endregion
 

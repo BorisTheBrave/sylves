@@ -108,6 +108,8 @@ namespace Sylves
         {
             return new DefaultDualMapping(this, CachePolicy);
         }
+
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
         #endregion
     }
 }

@@ -166,5 +166,39 @@ namespace Sylves.Test
                 }
             }
         }
+
+        public static void GetDiagonals(IGrid grid, Cell cell)
+        {
+            GetDiagonals(grid, grid.GetDiagonalGrid(), cell);
+        }
+
+
+        public static void GetDiagonals(IGrid grid, IGrid diagonals, Cell cell)
+        {
+            var dualMapping = grid.GetDual();
+            var dualGrid = dualMapping.DualGrid;
+            var expectedDiagonals = new List<Cell>();
+            var n = NGonCellType.Extract(grid.GetCellType(cell));
+
+            // This is similar to DefaultDiagonalGrid
+            for(var i = 0; i < n; i++)
+            {
+                // Start from corner 1 as the second loop effectively steps back by one
+                var dualPair = dualMapping.ToDualPair(cell, (CellCorner)((i + 1) % n));
+                var (dualCell, inverseCorner) = dualPair.Value;
+                var m = NGonCellType.Extract(dualGrid.GetCellType(dualCell));
+                // Find all cells adjacent to this dual cell, starting from the original cell,
+                // and skipping first (the original cell) and last (will be covered by next iteration of i)
+                for(var j = 1; j < m - 1; j++)
+                {
+                    var basePair = dualMapping.ToBasePair(dualCell, (CellCorner)(((int)inverseCorner + j) % m));
+                    var (baseCell, _) = basePair.Value;
+                    expectedDiagonals.Add(baseCell);
+
+                }
+            }
+
+            CollectionAssert.AreEqual(expectedDiagonals, diagonals.GetNeighbours(cell).ToList());
+        }
     }
 }

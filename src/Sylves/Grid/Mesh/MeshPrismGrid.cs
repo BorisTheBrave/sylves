@@ -3,6 +3,7 @@ using UnityEngine;
 #endif
 
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -113,6 +114,8 @@ namespace Sylves
                 }
             }
         }
+
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
         #endregion
 
         #region Query

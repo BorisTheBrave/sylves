@@ -34,7 +34,9 @@ namespace Sylves
 
         public IGrid Unwrapped => throw new NotImplementedException();
 
-        public virtual IDualMapping GetDual() => throw new NotImplementedException();
+        public IDualMapping GetDual() => throw new NotImplementedException();
+
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
 
         #endregion
 

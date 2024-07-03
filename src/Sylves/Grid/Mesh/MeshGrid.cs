@@ -254,6 +254,52 @@ namespace Sylves
                 }
             }
         }
+
+        public IGrid GetDiagonalGrid()
+        {
+            if (!Is2d) throw new NotImplementedException();
+
+            var diagCellData = new Dictionary<Cell, DataDrivenCellData>();
+            var diagMovesByPair = new Dictionary<(Cell, Cell), CellDir>();
+            var dualMapping = GetDual();
+            foreach (var cell in GetCells())
+            {
+                // All diagonals
+                var diagonals = dualMapping.DualNeighbourCells(cell)
+                    .SelectMany(c => dualMapping.BaseNeighbourCells(c))
+                    .Where(c => c != cell)
+                    .Distinct()
+                    .ToList();
+                for (var i = 0; i < diagonals.Count; i++)
+                {
+                    // TODO: Support connections properly
+                    // inverseDir is filled in later
+                    diagMovesByPair[(cell, diagonals[i])] = (CellDir)i;
+                }
+                var cellData = (MeshCellData)CellData[cell];
+                diagCellData[cell] = new MeshCellData
+                {
+                    CellType = NoRotationCellType.Get(NGonCellType.Get(diagonals.Count)),
+                    Deformation = cellData.Deformation,
+                    Face = cellData.Face,
+                    TRS = cellData.TRS,
+                };
+            }
+
+            // Fill in inverse dirs
+            var diagMoves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>();
+            foreach (var kv in diagMovesByPair)
+            {
+                if(diagMovesByPair.TryGetValue((kv.Key.Item2, kv.Key.Item1), out var other))
+                {
+                    diagMoves[(kv.Key.Item1, kv.Value)] = (kv.Key.Item2, other, new Connection());
+                    diagMoves[(kv.Key.Item2, other)] = (kv.Key.Item1, kv.Value, new Connection());
+                }
+            }
+
+            return new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = diagCellData, Moves = diagMoves }, is2d);
+        }
+
         #endregion
 
         #region Cell info

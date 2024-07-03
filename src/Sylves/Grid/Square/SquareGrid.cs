@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 #if UNITY
 using UnityEngine;
 #endif
@@ -153,6 +154,39 @@ namespace Sylves
             public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner) => ToPair(baseCell, corner, DualGrid);
 
             public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner) => ToPair(dualCell - new Vector3Int(1, 1, 0), corner, BaseGrid);
+        }
+
+        public IGrid GetDiagonalGrid()
+        {
+            return new DiagonalGrid(this);
+        }
+
+        private class DiagonalGrid : BaseOffsetDiagonalsModifier
+        {
+            private static OffsetCollection s_offsets = new OffsetCollection(new[]
+            {
+                new Vector3Int(1, 0, 0),
+                new Vector3Int(1, 1, 0),
+                new Vector3Int(0, 1, 0),
+                new Vector3Int(-1, 1, 0),
+                new Vector3Int(-1, 0, 0),
+                new Vector3Int(-1, -1, 0),
+                new Vector3Int(0, -1, 0),
+                new Vector3Int(1, -1, 0),
+            });
+            private static ICellType s_cellType = NGonDiagonalsCellType.Get(4, 8);
+            private static ICellType[] s_cellTypes = new[] { NGonDiagonalsCellType.Get(4, 8) };
+
+            public DiagonalGrid(IGrid underlying) : base(underlying)
+            {
+            }
+
+            public override ICellType GetCellType(Cell cell) => s_cellType;
+            public override IEnumerable<ICellType> GetCellTypes() => s_cellTypes;
+
+            public override OffsetCollection GetOffsetCollection(Cell cell) => s_offsets;
+
+            protected override IGrid Rebind(IGrid underlying) => new DiagonalGrid(underlying);
         }
         #endregion
 

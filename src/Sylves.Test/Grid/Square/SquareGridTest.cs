@@ -130,5 +130,12 @@ namespace Sylves.Test
             GridTest.DualMapping(dual, new Cell(0, 0, 0));
             GridTest.DualMapping(dual, new Cell(8, -4, 0));
         }
+
+        [Test]
+        public void TestDiagonals()
+        {
+            var g = new SquareGrid(1);
+            GridTest.GetDiagonals(g, new Cell());
+        }
     }
 }

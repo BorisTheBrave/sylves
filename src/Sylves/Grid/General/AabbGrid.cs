@@ -73,11 +73,8 @@ namespace Sylves
 
         public IGrid Unwrapped => this;
 
-        public virtual IDualMapping GetDual()
-        {
-            throw new NotSupportedException();
-        }
-
+        public virtual IDualMapping GetDual() => throw new NotSupportedException();
+        public IGrid GetDiagonalGrid() => throw new NotSupportedException();
         #endregion
 
         #region Cell info

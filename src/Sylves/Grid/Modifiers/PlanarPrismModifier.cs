@@ -279,6 +279,10 @@ namespace Sylves
             }
             public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner)
             {
+                if(baseCell == new Cell(623,0,-7) && (int)corner == 2)
+                {
+                    baseCell = baseCell;
+                }
                 var (uCell, layer) = baseGrid.Split(baseCell);
                 var underlyingCellType = baseGrid.underlying.GetCellType(uCell);
                 var prismInfo = PrismInfo.Get(underlyingCellType);
@@ -303,6 +307,10 @@ namespace Sylves
                 uDualCell = toUnderlying(uDualCell);
                 var underlyingDualCellType = dualGrid.underlying.GetCellType(uDualCell);
                 var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
+                if (!dualPrismInfo.PrismToBaseCorners.ContainsKey(corner))
+                {
+                    dualPrismInfo = dualPrismInfo;
+                }
                 var (uDualCorner, isForward) = dualPrismInfo.PrismToBaseCorners[corner];
                 var t = planarDualMapping.ToBasePair(uDualCell, uDualCorner);
                 if (t == null)
@@ -317,6 +325,8 @@ namespace Sylves
                 return (baseCell, isForward ? corners.Back : corners.Forward);
             }
         }
+
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
         #endregion
 
         #region Cell info

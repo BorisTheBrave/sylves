@@ -257,6 +257,7 @@ namespace Sylves
             }
         }
 
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
         #endregion
 
         #region Cell info

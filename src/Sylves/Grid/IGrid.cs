@@ -84,6 +84,8 @@ namespace Sylves
 
         IDualMapping GetDual();
 
+        IGrid GetDiagonalGrid();
+
         #endregion
 
         #region Cell info

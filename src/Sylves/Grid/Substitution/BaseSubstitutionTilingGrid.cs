@@ -369,6 +369,8 @@ namespace Sylves
             return new DefaultDualMapping(this, chunkSize, CachePolicy.Always);
         }
 
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
+
         #endregion
 
         #region Cell info

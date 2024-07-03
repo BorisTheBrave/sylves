@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+
 #if UNITY
 using UnityEngine;
 #endif
@@ -147,6 +149,76 @@ namespace Sylves
 
             public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner) => ToPair(dualCell - Vector3Int.one, corner, BaseGrid);
         }
+
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
+
+        /*
+        private enum DiagonalCubeDir
+        {
+
+        }
+
+        private class DiagonalCellType : ICellType
+        {
+            Vector3Int Forward(DiagonalCubeDir dir)
+            {
+                var i = (int)dir;
+                return new Vector3Int(
+                    (i & (1 << 0)) != 0 ? 1 : (i & (1 << 1)) != 0 ? -1 : 0,
+                    (i & (1 << 2)) != 0 ? 1 : (i & (1 << 3)) != 0 ? -1 : 0,
+                    (i & (1 << 4)) != 0 ? 1 : (i & (1 << 5)) != 0 ? -1 : 0
+                    );
+            }
+
+            DiagonalCubeDir FromForward(Vector3Int v)
+            {
+                return (DiagonalCubeDir)(
+                    (v.x == 1 ? (1 << 0) : 0) +
+                    (v.x == -1 ? (1 << 1) : 0) +
+                    (v.y == 1 ? (1 << 2) : 0) +
+                    (v.y == -1 ? (1 << 3) : 0) +
+                    (v.z == 1 ? (1 << 4) : 0) +
+                    (v.z == -1 ? (1 << 5) : 0) +
+                    0);
+            }
+
+            void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
+            {
+                connection = default;
+                var cubeRotation = (CubeRotation)rotation;
+                resultDir = (CellDir)FromForward(cubeRotation * Forward((DiagonalCubeDir)dir));
+            }
+
+        }
+
+        private class DiagonalGrid : BaseOffsetDiagonalsModifier
+        {
+            private static OffsetCollection s_offsets = new OffsetCollection(new[]
+            {
+                new Vector3Int(1, 0, 0),
+                new Vector3Int(1, 1, 0),
+                new Vector3Int(0, 1, 0),
+                new Vector3Int(-1, 1, 0),
+                new Vector3Int(-1, 0, 0),
+                new Vector3Int(-1, -1, 0),
+                new Vector3Int(0, -1, 0),
+                new Vector3Int(1, -1, 0),
+            });
+            private static ICellType s_cellType = new DiagonalCellType();
+            private static ICellType[] s_cellTypes = new[] { s_cellType };
+
+            public DiagonalGrid(IGrid underlying) : base(underlying)
+            {
+            }
+
+            public override ICellType GetCellType(Cell cell) => s_cellType;
+            public override IEnumerable<ICellType> GetCellTypes() => s_cellTypes;
+
+            public override OffsetCollection GetOffsetCollection(Cell cell) => s_offsets;
+
+            protected override IGrid Rebind(IGrid underlying) => new DiagonalGrid(underlying);
+        }
+        */
         #endregion
 
         #region Cell info
