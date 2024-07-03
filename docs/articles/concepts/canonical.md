@@ -1,10 +1,10 @@
-# CellType Canonical shape
+# CellType Canonical Shape
 
-A lot of methods about a cell can be found in ICellType.
+A lot of methods about a cell can be found in [`ICellType`](xref:Sylves.ICellType).
 
-But crucially, an instance of ICellType (e.g. SquareCellType.Instance) is shared by many cells from many different grids. Those cells might not be the same size, or even the same shape - Sylves will allow any 4 sided polygon to have SquareCellType if the grid declares it that way.
+But crucially, an instance of `ICellType` (e.g. `SquareCellType.Instance`) is shared by many cells from many different grids. Those cells might not be the same size, or even the same shape - Sylves will allow any 4 sided polygon to have `SquareCellType` if the grid declares it that way.
 
-Most of the methods of ICellType work the same regardless of the shape of the cell, so are perfectly safe to be shared. But there's a small number of methods of that assume a specific shape, such as [`GetMatrix`](xref:Sylves.ICellType.GetMatrix(Sylves.CellRotation)) or [`GetCornerPosition`](xref:Sylves.ICellType.GetCornerPosition(Sylves.CellCorner)).
+Most of the methods of `ICellType` work the same regardless of the shape of the cell, so are perfectly safe to be shared. But there's a small number of methods of that assume a specific shape, such as [`GetMatrix`](xref:Sylves.ICellType.GetMatrix(Sylves.CellRotation)) or [`GetCornerPosition`](xref:Sylves.ICellType.GetCornerPosition(Sylves.CellCorner)).
 
 These methods assume a fixed size shape. These are documented on the specific implementation, but are listed here for convenience:
 
