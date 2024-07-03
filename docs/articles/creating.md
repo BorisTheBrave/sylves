@@ -21,6 +21,12 @@ If you just want to customize an existing grid, there are various modifiers you 
 * <xref:Sylves.PlanarPrismModifier> - converts a flat 2d grid into a 3d grid by making multiple layers
 * <xref:Sylves.WrapModifier> - causes a grid to wrap at the edges
 
+## Relatives
+
+There are some methods that will convert a grid into a related grid. All grids support creating a [dual grid](concepts/dual.md) and [diagonal grid](concepts/diagonal.md).
+
+Some grids have additional methods, such as [`HexGrid.GetChildTriangleGrid`](xref:Sylves.HexGrid.GetChildTriangleGrid) to relevant relatives.
+
 ## Write your own grid
 
 `IGrid` is of course an interface, and ultimately you can create your own implementations. Many of the more complex methods can be forwarded to methods in `DefaultGridImpl` which provides basic implementations.
