@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sylves.Grid;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -109,7 +110,7 @@ namespace Sylves
             return new DefaultDualMapping(this, CachePolicy);
         }
 
-        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
+        public IGrid GetDiagonalGrid() => new DefaultDiagonalGrid(this);
         #endregion
     }
 }

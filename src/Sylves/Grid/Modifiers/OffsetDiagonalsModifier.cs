@@ -261,7 +261,7 @@ namespace Sylves
 
         public CellRotation RotateCW => throw new InvalidOperationException($"No rotations supported");
 
-        public ICellType Underlying => Underlying;
+        public ICellType Underlying => underlying;
 
         public IEnumerable<CellCorner> GetCellCorners() => Underlying.GetCellCorners();
 

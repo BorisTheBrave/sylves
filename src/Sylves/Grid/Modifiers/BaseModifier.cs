@@ -52,8 +52,8 @@ namespace Sylves
         public virtual IGrid Unbounded => Rebind(underlying.Unbounded);
         public virtual IGrid Unwrapped => underlying.Unwrapped;
         public virtual IGrid Underlying => underlying;
-        public virtual IDualMapping GetDual() => underlying.GetDual();
-        public virtual IGrid GetDiagonalGrid() => underlying.GetDiagonalGrid();
+        public virtual IDualMapping GetDual() => throw new NotImplementedException();
+        public virtual IGrid GetDiagonalGrid() => Rebind(underlying.GetDiagonalGrid());
         #endregion
 
         #region Cell info

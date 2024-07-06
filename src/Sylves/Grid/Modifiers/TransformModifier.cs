@@ -64,8 +64,6 @@ namespace Sylves
             }
         }
 
-        public IGrid GetDiagonalGrid() => Rebind(Underlying.GetDiagonalGrid());
-
         #endregion
 
         #region Bounds

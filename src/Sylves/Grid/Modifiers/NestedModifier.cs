@@ -127,7 +127,7 @@ namespace Sylves
 
         public virtual IDualMapping GetDual() => throw new NotImplementedException();
 
-        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
+        public virtual IGrid GetDiagonalGrid() => throw new NotImplementedException();
         #endregion
 
         #region Cell info
