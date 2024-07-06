@@ -185,6 +185,8 @@ namespace Sylves.Test
             {
                 // Start from corner 1 as the second loop effectively steps back by one
                 var dualPair = dualMapping.ToDualPair(cell, (CellCorner)((i + 1) % n));
+                if (dualPair == null)
+                    continue;
                 var (dualCell, inverseCorner) = dualPair.Value;
                 var m = NGonCellType.Extract(dualGrid.GetCellType(dualCell));
                 // Find all cells adjacent to this dual cell, starting from the original cell,
@@ -192,13 +194,16 @@ namespace Sylves.Test
                 for(var j = 1; j < m - 1; j++)
                 {
                     var basePair = dualMapping.ToBasePair(dualCell, (CellCorner)(((int)inverseCorner + j) % m));
+                    if (basePair == null)
+                        continue;
                     var (baseCell, _) = basePair.Value;
                     expectedDiagonals.Add(baseCell);
 
                 }
             }
 
-            CollectionAssert.AreEqual(expectedDiagonals, diagonals.GetNeighbours(cell).ToList());
+            var actualDiagonal = diagonals.GetNeighbours(cell).ToList();
+            CollectionAssert.AreEqual(expectedDiagonals, actualDiagonal);
         }
     }
 }

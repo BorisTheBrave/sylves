@@ -255,31 +255,43 @@ namespace Sylves
             }
         }
 
-        public IGrid GetDiagonalGrid()
+        override public IGrid GetDiagonalGrid()
         {
             if (!Is2d) throw new NotImplementedException();
 
             var diagCellData = new Dictionary<Cell, DataDrivenCellData>();
             var diagMovesByPair = new Dictionary<(Cell, Cell), CellDir>();
             var dualMapping = GetDual();
+            var dualGrid = (MeshGrid)dualMapping.DualGrid;
             foreach (var cell in GetCells())
             {
-                // All diagonals
-                var diagonals = dualMapping.DualNeighbourCells(cell)
-                    .SelectMany(c => dualMapping.BaseNeighbourCells(c))
-                    .Where(c => c != cell)
-                    .Distinct()
-                    .ToList();
-                for (var i = 0; i < diagonals.Count; i++)
-                {
-                    // TODO: Support connections properly
-                    // inverseDir is filled in later
-                    diagMovesByPair[(cell, diagonals[i])] = (CellDir)i;
-                }
                 var cellData = (MeshCellData)CellData[cell];
+                var n = cellData.Face.Count;
+                var diagCount = 0;
+                for (var i = 0; i < n; i++)
+                {
+                    // Start from corner 1 as the second loop effectively steps back by one
+                    var dualPair = dualMapping.ToDualPair(cell, (CellCorner)((i + 1) % n));
+                    if (dualPair == null)
+                        continue;
+                    var (dualCell, inverseCorner) = dualPair.Value;
+                    var m = ((MeshCellData)dualGrid.CellData[dualCell]).Face.Count;
+                    // Find all cells adjacent to this dual cell, starting from the original cell,
+                    // and skipping first (the original cell) and last (will be covered by next iteration of i)
+                    for (var j = 1; j < m - 1; j++)
+                    {
+                        var basePair = dualMapping.ToBasePair(dualCell, (CellCorner)(((int)inverseCorner + j) % m));
+                        if (basePair == null)
+                            continue;
+                        var (baseCell, _) = basePair.Value;
+
+                        diagMovesByPair[(cell, baseCell)] = (CellDir)(diagCount++);
+
+                    }
+                }
                 diagCellData[cell] = new MeshCellData
                 {
-                    CellType = NoRotationCellType.Get(NGonCellType.Get(diagonals.Count)),
+                    CellType = NoRotationCellType.Get(NGonCellType.Get(diagCount)),
                     Deformation = cellData.Deformation,
                     Face = cellData.Face,
                     TRS = cellData.TRS,

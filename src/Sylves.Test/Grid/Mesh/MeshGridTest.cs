@@ -280,5 +280,15 @@ namespace Sylves.Test
             var g = new MeshGrid(TestMeshes.PlaneXY);
             Assert.AreEqual(new Cell(), g.GetCellsIntersectsApprox(new Vector3(-1, -1, -1), new Vector3(1, 1, 1)).Single());
         }
+
+        [Test]
+        public void TestDiagonal()
+        {
+            var h = new HexGrid(1, bound: HexBound.Hexagon(3));
+            var meshData = h.ToMeshData();
+            var g = new MeshGrid(meshData);
+
+            GridTest.GetDiagonals(g, new Cell(0, 0));
+        }
     }
 }
