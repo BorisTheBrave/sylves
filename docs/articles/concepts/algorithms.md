@@ -12,4 +12,4 @@ See [Pathfinding](pathfinding.md)
 
 ## OutlineCells
 
-['OutlineCells.Outline`](xref:Sylves.OutlineCells.TODO) TODO
+['OutlineCells.Outline`](xref:Sylves.OutlineCells.Outline(Sylves.IGrid,System.Collections.Generic.ISet{Sylves.Cell},System.Boolean)) traces the edges around a set of cells.
