@@ -7,9 +7,18 @@ namespace Sylves
 {
     public static class OutlineCells
     {
+        /// <summary>
+        /// Describes a collection of (Cell, CellDir) edges which are arranged in order.
+        /// </summary>
         public class OutlineLoop
         {
+            /// <summary>
+            /// If true, the first and last edges do not connect up.
+            /// </summary>
             public bool IsArc { get; set; }
+            /// <summary>
+            /// If true, the first and last edges do connect up.
+            /// </summary>
             public bool IsLoop
             {
                 get
@@ -25,9 +34,16 @@ namespace Sylves
             public List<(Cell, CellDir)> Edges { get; set; }
         }
 
-        public static IEnumerable<OutlineLoop> Outline(IGrid grid, ISet<Cell> cells)
+        /// <summary>
+        /// Finds all the (Cell, CellDir)'s that start inside the provided set of cells, and point outside,
+        /// and organizes them into connected arcs and loops that outline the provided set.
+        /// </summary>
+        /// <param name="grid">The grid to operate on</param>
+        /// <param name="cells">The set of cells to outline.</param>
+        /// <param name="includeGridBorder">If set, cell directions that don't connect to another cell are also part of the outline.</param>
+        public static IEnumerable<OutlineLoop> Outline(IGrid grid, ISet<Cell> cells, bool includeGridBorder = true)
         {
-            foreach(var outline in OutlineLowAlloc(grid, cells))
+            foreach(var outline in OutlineLowAlloc(grid, cells, includeGridBorder))
             {
                 // Copy all the data so the object re-use is removed.
                 yield return new OutlineLoop
@@ -38,8 +54,16 @@ namespace Sylves
             }
         }
 
-
-        public static IEnumerable<OutlineLoop> OutlineLowAlloc(IGrid grid, ISet<Cell> cells)
+        /// <summary>
+        /// Finds all the (Cell, CellDir)'s that start inside the provided set of cells, and point outside,
+        /// and organizes them into connected arcs and loops that outline the provided set.
+        /// This variant uses less allocations, but re-uses the same OutlineLoop object, so you must be careful
+        /// accessing the enumerator.
+        /// </summary>
+        /// <param name="grid">The grid to operate on</param>
+        /// <param name="cells">The set of cells to outline.</param>
+        /// <param name="includeGridBorder">If set, cell directions that don't connect to another cell are also part of the outline.</param>
+        public static IEnumerable<OutlineLoop> OutlineLowAlloc(IGrid grid, ISet<Cell> cells, bool includeGridBorder = true)
         {
             if (!grid.Is2d) throw new Grid3dException();
             var visited = new HashSet<(Cell, CellDir)>();
@@ -56,9 +80,8 @@ namespace Sylves
                 {
 
                     var other = grid.Move(cell, dir);
-                    if (other == null)
-                        continue;
-                    if (cells.Contains(other.Value))
+
+                    if (other == null ? !includeGridBorder : cells.Contains(other.Value))
                         continue;
 
                     if (visited.Contains((cell, dir)))
@@ -90,12 +113,12 @@ namespace Sylves
                         while (true)
                         {
                             var canMove = grid.TryMove(currentCell, currentDir, out var dest, out var inverseDir, out var _);
-                            if (!canMove)
+                            if (!canMove && !includeGridBorder)
                             {
                                 isArc = true;
                                 goto a;
                             }
-                            if (cells.Contains(dest))
+                            if (canMove && cells.Contains(dest))
                             {
                                 currentCell = dest;
                                 currentDir = inverseDir;
@@ -129,11 +152,11 @@ namespace Sylves
                             while(true)
                             {
                                 var canMove = grid.TryMove(currentCell, currentDir, out var dest, out var inverseDir, out var _);
-                                if (!canMove)
+                                if (!canMove && !includeGridBorder)
                                 {
                                     goto b;
                                 }
-                                if (cells.Contains(dest))
+                                if (canMove && cells.Contains(dest))
                                 {
                                     currentCell = dest;
                                     currentDir = inverseDir;
