@@ -231,5 +231,14 @@ namespace Sylves.Test
             Assert.IsTrue(corners.All(cells.Contains));
         }
         */
+
+        [Test]
+        public void TestDiagonal()
+        {
+            var g = new TriangleGrid(1, TriangleOrientation.FlatTopped);
+
+            GridTest.GetDiagonals(g, new Cell(1, 0, 0));
+
+        }
     }
 }
