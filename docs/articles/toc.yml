@@ -29,6 +29,8 @@
        href: concepts/grid_symmetry.md
     -  name: Pathfinding
        href: concepts/pathfinding.md
+    -  name: Algorithms
+       href: concepts/algorithms.md
     -  name: Diagonals
        href: concepts/diagonal.md
     -  name: Dual

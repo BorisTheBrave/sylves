@@ -175,7 +175,7 @@ namespace Sylves
                     var dualCorner2 = 0;
                     var minChunk = getChunkByCell(currentHe.cell);
                     var oldMappingCount = mapping.Count;
-                    bool isArc = false;
+                    var isArc = false;
                     while(true)
                     {
                         visited.Add(currentHe);
