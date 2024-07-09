@@ -78,7 +78,7 @@ namespace Sylves
 
         // Reduces a grid to only using the x-y co-ordinates, if necessary
         // TODO: Should this be a method on IGrid
-        private (Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) CompressXY(IGrid grid)
+        private static (Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) CompressXY(IGrid grid)
         {
             if (grid is TransformModifier tf)
             {
@@ -601,9 +601,30 @@ namespace Sylves
         #region Shape
         public virtual Deformation GetDeformation(Cell cell)
         {
+            // Build a deformation that is the underlying deformation plus a z mapping.
+
             var (uCell, layer) = Split(cell);
-            var deformation = underlying.GetDeformation(uCell);
-            return Matrix4x4.Translate(GetOffset(layer)) * deformation;
+            var uDeformation = underlying.GetDeformation(uCell);
+            (Vector3, float) SplitV(Vector3 p) => (new Vector3(p.x, p.y, 0), p.z);
+            var layerHeight = planarPrismOptions.LayerHeight;
+            var layerOffset = planarPrismOptions.LayerOffset;
+            Vector3 DeformPoint(Vector3 p)
+            {
+                var (w, z) = SplitV(p);
+                return uDeformation.DeformPoint(w) + GetOffset(z);
+            }
+            // Do these have simple forms?
+            //Vector3 DeformNormal(Vector3 p, Vector3 n)
+            //Vector4 DeformTangent(Vector3 p, Vector4 t)
+            void GetJacobi(Vector3 p, out Matrix4x4 jacobi)
+            {
+                var (w, z) = SplitV(p);
+                uDeformation.GetJacobi(w, out jacobi);
+                jacobi.column2 = new Vector4(0, 0, layerHeight, 0);
+                jacobi.m23 += z * layerHeight + layerOffset;
+            }
+
+            return new Deformation(DeformPoint, GetJacobi, uDeformation.InvertWinding);
         }
 
         public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new Grid3dException();

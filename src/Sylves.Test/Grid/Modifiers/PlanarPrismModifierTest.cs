@@ -89,7 +89,10 @@ namespace Sylves.Test
             var d = g.GetDeformation(new Cell());
             var j = d.GetJacobi(new Vector3());
 
-            Assert.AreEqual(new Vector4(0, 0, 1, 0), j.column3);
+            Assert.AreEqual(new Vector4(1, 0, 0, 0), j.column0);
+            Assert.AreEqual(new Vector4(0, 1, 0, 0), j.column1);
+            Assert.AreEqual(new Vector4(0, 0, 1, 0), j.column2);
+            Assert.AreEqual(new Vector4(0, 0, 0, 1), j.column3);
         }
 
         [Test]
