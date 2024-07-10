@@ -23,6 +23,7 @@ namespace Sylves.Test
             public bool includeDual = false;
             public bool trim = false;
             public Func<Cell, string> fillFunc = null;
+            public Action<SvgBuilder> postProcess = null;
         }
 
         private const bool IsSeed = false;
@@ -95,6 +96,10 @@ namespace Sylves.Test
                 tw.WriteLine("<g class=\"dual\">");
                 WriteCells(dualGrid, dualGrid.GetCells(), tw, b, options);
                 tw.WriteLine("</g>");
+            }
+            if(options.postProcess != null)
+            {
+                options.postProcess(b);
             }
 
             b.EndSvg();
@@ -547,6 +552,70 @@ mix.inputs[0].default_value = 0.433333
             var min = g.GetCells().Select(g.GetCellCenter).Aggregate(Vector3.Min);
             var max = g.GetCells().Select(g.GetCellCenter).Aggregate(Vector3.Max);
             Export(g, "precision.svg", new Options() { textScale = null, strokeWidth=0.05f, min = new Vector2(min.x, min.y), max = new Vector2(max.x, max.y) });
+        }
+
+        [Test]
+        public void ExportKruskal()
+        {
+            var g = new TownscaperGrid(4, 99).BoundBy(new SquareBound(0, 0, 1, 1));
+            //var g = new UnrelaxedTownscaperGrid(4, 99, 1e-6f).BoundBy(new SquareBound(0, 0, 1, 1));
+
+            var tree = KruskalMinimumSpanningTree.Calculate(g, StepLengths.Euclidian(g));
+
+            void PostProcess(SvgBuilder b)
+            {
+                var tw = b.TextWriter;
+                tw.Write($@"<path style=""stroke-width: 0.05;stroke: red; stroke-linecap: round; fill: none"" d=""");
+                foreach (var step in tree)
+                {
+                    var vertices = new[] { g.GetCellCenter(step.Src), g.GetCellCenter(step.Dest) };
+                    SvgExport.WritePathCommands(vertices, SvgBuilder.FlipY, tw, false);
+                }
+                tw.WriteLine("\"/>");
+            }
+
+            Export(g, "kruskal.svg", new Options
+            {
+                postProcess = PostProcess,
+                textScale = null,
+            });
+        }
+
+        [Test]
+        public void ExportOutline()
+        {
+            var g = new TownscaperGrid(4, 99).BoundBy(new SquareBound(-1,-1, 2, 2));
+            var cells = g
+                .GetCellsIntersectsApprox(new Vector3(-2, -2, -2), new Vector3(2, 2, 2))
+                .Where(c =>
+                {
+                    var v = g.GetCellCenter(c);
+                    return v.magnitude <= 1.8 &&
+                        Vector3.Angle(v, Vector3.right) > 30 &&
+                        (v - new Vector3(0.1f, 1, 0)).magnitude > 0.2;
+                })
+                .ToHashSet();
+
+            var outlines = OutlineCells.Outline(g, cells);
+
+            void PostProcess(SvgBuilder b)
+            {
+                var tw = b.TextWriter;
+                foreach (var outline in outlines) 
+                {
+                    var vertices = outline.Edges.Select(t => g.GetCellCorner(t.Cell, (CellCorner)t.CellDir)).ToArray();
+                    tw.Write($@"<path style=""stroke-width: 0.05;stroke: red; fill: none"" d=""");
+                    SvgExport.WritePathCommands(vertices, SvgBuilder.FlipY, tw, outline.IsLoop);
+                    tw.WriteLine("\"/>");
+
+                }
+            }
+
+            Export(g, "outline.svg", new Options
+            {
+                postProcess = PostProcess,
+                textScale = null,
+            });
         }
     }
 }

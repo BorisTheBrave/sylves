@@ -33,8 +33,7 @@ namespace Sylves
     {
         TextWriter tw;
 
-        // By Default, flip everything as Sylves uses y-up and svg uses y-down
-        Matrix4x4 globalTransform = Matrix4x4.Scale(new Vector3(1, -1, 1));
+        public static Matrix4x4 FlipY = Matrix4x4.Scale(new Vector3(1, -1, 1));
 
         public SvgBuilder(TextWriter tw)
         {
@@ -77,7 +76,7 @@ namespace Sylves
             grid.GetPolygon(cell, out var vertices, out var transform);
             tw.WriteLine($"<!-- {cell} -->");
             tw.Write($@"<path class=""cell-path""{styleString} d=""");
-            SvgExport.WritePathCommands(vertices, globalTransform * transform, tw);
+            SvgExport.WritePathCommands(vertices, FlipY * transform, tw);
             tw.WriteLine("\"/>");
         }
 
@@ -90,7 +89,7 @@ namespace Sylves
             var ys = @"style=""fill: hsl(300, 80%, 50%); font-weight: bold"" ";
             var zs = @"style=""fill: hsl(200, 100%, 45%); font-weight: bold"" ";
 
-            var cellCenter = globalTransform.MultiplyPoint3x4(grid.GetCellCenter(cell));
+            var cellCenter = FlipY.MultiplyPoint3x4(grid.GetCellCenter(cell));
             tw.WriteLine($@"<g transform=""translate({ cellCenter.x},{ cellCenter.y + 0.08}) scale({textScale})"">");
             foreach (var textStyle in new[] { stroke_text_style, text_style })
             {

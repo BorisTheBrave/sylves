@@ -31,7 +31,7 @@ namespace Sylves
                 }
             }
 
-            public List<(Cell, CellDir)> Edges { get; set; }
+            public List<(Cell Cell, CellDir CellDir)> Edges { get; set; }
         }
 
         /// <summary>
