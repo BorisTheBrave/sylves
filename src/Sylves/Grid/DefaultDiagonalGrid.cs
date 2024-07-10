@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sylves.Grid
+namespace Sylves
 {
     internal class DefaultDiagonalGrid : BaseModifier
     {
