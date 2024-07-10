@@ -224,7 +224,10 @@ namespace Sylves
         public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
             var (_, chunkCell) = Split(cell);
-            return GetChildGridCached(chunkCell).TryMove(cell, dir, out dest, out inverseDir, out connection);
+            if (!GetChildGridCached(chunkCell).TryMove(cell, dir, out dest, out inverseDir, out connection))
+                return false;
+            var bound = (SquareBound)GetBound();
+            return bound == null || bound.Contains(Split(dest).chunkCell);
         }
         #endregion
     }

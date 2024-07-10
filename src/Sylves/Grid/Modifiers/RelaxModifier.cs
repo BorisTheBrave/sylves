@@ -348,7 +348,13 @@ namespace Sylves
         #region Topology
         public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
-            return underlying.TryMove(cell, dir, out dest, out inverseDir, out connection);
+            // RelaxModifier doesn't alter topology, so we can just pass through to underlying
+            // Could be quicker than the base implementation
+            if (!underlying.TryMove(cell, dir, out dest, out inverseDir, out connection))
+                return false;
+            // But we do need to check bounds
+            var bound = (SquareBound)GetBound();
+            return bound == null || bound.Contains(Split(dest).chunkCell);
         }
         #endregion
 

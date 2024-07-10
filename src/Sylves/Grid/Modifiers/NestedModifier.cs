@@ -165,7 +165,7 @@ namespace Sylves
             if (GetChildGridCached(chunkCell).TryMove(childCell, dir, out dest, out inverseDir, out connection))
             {
                 dest = Combine(dest, chunkCell);
-                return true;
+                // TODO: Do we need to split and check this against chunkGrid founds?
             }
             return false;
         }
