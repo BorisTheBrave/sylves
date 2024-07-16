@@ -134,8 +134,8 @@ namespace Sylves
         public static HexBound operator *(HexRotation rotation, HexBound bound)
         {
             // Operates exactly the same as the cube case.
-            var a = rotation.Multiply(bound.min);
-            var b = rotation.Multiply(bound.max - Vector3Int.one);
+            var a = rotation.Multiply(bound.Min);
+            var b = rotation.Multiply(bound.Mex - Vector3Int.one);
             return new HexBound(Vector3Int.Min(a, b), Vector3Int.Max(a, b) + Vector3Int.one);
         }
 

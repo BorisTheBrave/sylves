@@ -88,7 +88,7 @@ namespace Sylves
         public IDualMapping GetDual()
         {
             var dualBound = bound == null ? null :
-                new CubeBound(bound.min, bound.max + Vector3Int.one);
+                new CubeBound(bound.Min, bound.Mex + Vector3Int.one);
 
             var translation = Matrix4x4.Translate(new Vector3(-cellSize.x / 2, -cellSize.y / 2, -cellSize.z / 2));
 
@@ -241,8 +241,8 @@ namespace Sylves
             if (bound is CubeBound sb)
             {
                 return Aabb.FromMinMax(
-                    new Vector3(sb.min.x * cellSize.x, sb.min.y * cellSize.y, sb.min.z * cellSize.z),
-                    new Vector3(sb.max.x * cellSize.x, sb.max.y * cellSize.y, sb.max.z * cellSize.z));
+                    new Vector3(sb.Min.x * cellSize.x, sb.Min.y * cellSize.y, sb.Min.z * cellSize.z),
+                    new Vector3(sb.Mex.x * cellSize.x, sb.Mex.y * cellSize.y, sb.Mex.z * cellSize.z));
             }
             return null;
         }
@@ -353,23 +353,23 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                return bound.size.x * bound.size.y * bound.size.z;
+                return bound.Size.x * bound.Size.y * bound.Size.z;
             }
         }
 
         public int GetIndex(Cell cell)
         {
             CheckBounded();
-            return (cell.x - bound.min.x) + (cell.y - bound.min.y) * bound.size.x + (cell.z - bound.min.z) * bound.size.x * bound.size.y;
+            return (cell.x - bound.Min.x) + (cell.y - bound.Min.y) * bound.Size.x + (cell.z - bound.Min.z) * bound.Size.x * bound.Size.y;
         }
 
         public Cell GetCellByIndex(int index)
         {
-            var x = index % bound.size.x;
-            var r = index / bound.size.x;
-            var y = r % bound.size.y;
-            var z = r / bound.size.y;
-            return new Cell(x + bound.min.x, y + bound.min.y, z + bound.min.z);
+            var x = index % bound.Size.x;
+            var r = index / bound.Size.x;
+            var y = r % bound.Size.y;
+            var z = r / bound.Size.y;
+            return new Cell(x + bound.Min.x, y + bound.Min.y, z + bound.Min.z);
         }
         #endregion
 
@@ -492,12 +492,12 @@ namespace Sylves
             // Filter to in bounds
             if (bound != null)
             {
-                minCell.x = Math.Max(minCell.x, bound.min.x);
-                minCell.y = Math.Max(minCell.y, bound.min.y);
-                minCell.z = Math.Max(minCell.z, bound.min.z);
-                maxCell.x = Math.Min(maxCell.x, bound.max.x - 1);
-                maxCell.y = Math.Min(maxCell.y, bound.max.y - 1);
-                maxCell.z = Math.Min(maxCell.z, bound.max.z - 1);
+                minCell.x = Math.Max(minCell.x, bound.Min.x);
+                minCell.y = Math.Max(minCell.y, bound.Min.y);
+                minCell.z = Math.Max(minCell.z, bound.Min.z);
+                maxCell.x = Math.Min(maxCell.x, bound.Mex.x - 1);
+                maxCell.y = Math.Min(maxCell.y, bound.Mex.y - 1);
+                maxCell.z = Math.Min(maxCell.z, bound.Mex.z - 1);
             }
 
             // Loop over cells
@@ -547,12 +547,12 @@ namespace Sylves
             if (bound != null )
             {
                 // Find the start and end values of t that the ray crosses each axis.
-                var tx1 = dx == 0 ? (bound.min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.min.x - x1) / dx : (bound.max.x - x1) / dx;
-                var tx2 = dx == 0 ? (bound.max.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.max.x - x1) / dx : (bound.min.x - x1) / dx;
-                var ty1 = dy == 0 ? (bound.min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.min.y - y1) / dy : (bound.max.y - y1) / dy;
-                var ty2 = dy == 0 ? (bound.max.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.max.y - y1) / dy : (bound.min.y - y1) / dy;
-                var tz1 = dz == 0 ? (bound.min.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (bound.min.z - z1) / dz : (bound.max.z - z1) / dz;
-                var tz2 = dz == 0 ? (bound.max.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (bound.max.z - z1) / dz : (bound.min.z - z1) / dz;
+                var tx1 = dx == 0 ? (bound.Min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.Min.x - x1) / dx : (bound.Mex.x - x1) / dx;
+                var tx2 = dx == 0 ? (bound.Mex.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.Mex.x - x1) / dx : (bound.Min.x - x1) / dx;
+                var ty1 = dy == 0 ? (bound.Min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.Min.y - y1) / dy : (bound.Mex.y - y1) / dy;
+                var ty2 = dy == 0 ? (bound.Mex.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.Mex.y - y1) / dy : (bound.Min.y - y1) / dy;
+                var tz1 = dz == 0 ? (bound.Min.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (bound.Min.z - z1) / dz : (bound.Mex.z - z1) / dz;
+                var tz2 = dz == 0 ? (bound.Mex.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (bound.Mex.z - z1) / dz : (bound.Min.z - z1) / dz;
 
                 var mint = Math.Max(tx1, Math.Max(ty1, tz1));
                 var maxt = Math.Min(tx2, Math.Min(ty2, tz2));
@@ -571,17 +571,17 @@ namespace Sylves
                     if (tx1 == mint)
                     {
                         startOnBorder = 0;
-                        x1 = dx == 0 ? (bound.min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? bound.min.x : bound.max.x;
+                        x1 = dx == 0 ? (bound.Min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? bound.Min.x : bound.Mex.x;
                     }
                     else if (ty1 == mint)
                     {
                         startOnBorder = 1;
-                        y1 = dy == 0 ? (bound.min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? bound.min.y : bound.max.y;
+                        y1 = dy == 0 ? (bound.Min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? bound.Min.y : bound.Mex.y;
                     }
                     else
                     {
                         startOnBorder = 2;
-                        z1 = dz == 0 ? (bound.min.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? bound.min.z : bound.max.z;
+                        z1 = dz == 0 ? (bound.Min.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? bound.Min.z : bound.Mex.z;
                     }
                 }
                 else
@@ -631,7 +631,7 @@ namespace Sylves
                     x += stepx;
                     tx += idx;
                     cellDir = cellDirX;
-                    if (bound != null && (x >= bound.max.x || x < bound.min.x)) yield break;
+                    if (bound != null && (x >= bound.Mex.x || x < bound.Min.x)) yield break;
                 }
                 else if (ty < tz)
                 {
@@ -640,7 +640,7 @@ namespace Sylves
                     y += stepy;
                     ty += idy;
                     cellDir = cellDirY;
-                    if (bound != null && (y >= bound.max.y || y < bound.min.y)) yield break;
+                    if (bound != null && (y >= bound.Mex.y || y < bound.Min.y)) yield break;
                 }
                 else
                 {
@@ -649,7 +649,7 @@ namespace Sylves
                     z += stepz;
                     tz += idz;
                     cellDir = cellDirZ;
-                    if (bound != null && (z >= bound.max.z || z < bound.min.z)) yield break;
+                    if (bound != null && (z >= bound.Mex.z || z < bound.Min.z)) yield break;
                 }
                 yield return new RaycastInfo
                 {
@@ -699,12 +699,12 @@ namespace Sylves
             }
             var cubeBound = (CubeBound)srcBound;
             // TODO: Use operator*
-            if (!TryApplySymmetry(s, FromVector3Int(cubeBound.min), out var a, out var _))
+            if (!TryApplySymmetry(s, FromVector3Int(cubeBound.Min), out var a, out var _))
             {
                 return false;
             }
             // This trick works best with *inclusive* bounds.
-            if (!TryApplySymmetry(s, FromVector3Int(cubeBound.max - Vector3Int.one), out var b, out var _))
+            if (!TryApplySymmetry(s, FromVector3Int(cubeBound.Mex - Vector3Int.one), out var b, out var _))
             {
                 return false;
             }

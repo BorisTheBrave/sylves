@@ -178,7 +178,7 @@ namespace Sylves
 
         private CubeBound ExpandBound(CubeBound bound)
         {
-            return new CubeBound(bound.min - Vector3Int.one, bound.max + Vector3Int.one);
+            return new CubeBound(bound.Min - Vector3Int.one, bound.Mex + Vector3Int.one);
         }
 
         private Aabb ExpandAabb(Aabb aabb)
@@ -372,14 +372,14 @@ namespace Sylves
             if (bound is CubeBound cb)
             {
                 return Aabb.FromMinMax(
-                    Vector3.Scale((Vector3)(cb.min - Vector3Int.one), meshDetails.hashCellSize) + meshDetails.hashCellBase,
-                    Vector3.Scale((Vector3)(cb.max + Vector3Int.one), meshDetails.hashCellSize) + meshDetails.hashCellBase);
+                    Vector3.Scale((Vector3)(cb.Min - Vector3Int.one), meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                    Vector3.Scale((Vector3)(cb.Mex + Vector3Int.one), meshDetails.hashCellSize) + meshDetails.hashCellBase);
             }
             else
             {
                 return Aabb.FromMinMax(
-                    Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.min, meshDetails.hashCellSize) + meshDetails.hashCellBase,
-                    Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.max, meshDetails.hashCellSize) + meshDetails.hashCellBase);
+                    Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.Min, meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                    Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.Mex, meshDetails.hashCellSize) + meshDetails.hashCellBase);
 
             }
         }
@@ -710,8 +710,8 @@ namespace Sylves
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
             var boundBy = bound ?? meshDetails.hashCellBounds;
-            var minHashCell = Vector3Int.Max(boundBy.min, meshDetails.GetHashCell(min) - Vector3Int.one);
-            var maxHashCell = Vector3Int.Min(boundBy.max - Vector3Int.one, meshDetails.GetHashCell(max) + Vector3Int.one);
+            var minHashCell = Vector3Int.Max(boundBy.Min, meshDetails.GetHashCell(min) - Vector3Int.one);
+            var maxHashCell = Vector3Int.Min(boundBy.Mex - Vector3Int.one, meshDetails.GetHashCell(max) + Vector3Int.one);
 
             // Use a spatial hash to locate cells near the tile, and test each one.
             for (var x = minHashCell.x; x <= maxHashCell.x; x++)

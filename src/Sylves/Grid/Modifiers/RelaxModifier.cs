@@ -94,7 +94,7 @@ namespace Sylves
                     .Select(hexGrid.FindCell)
                     .OfType<Cell>();
                 var chunkBound = (HexBound)hexGrid.GetBound(chunkCells);
-                bound = new SquareBound(new Vector2Int(chunkBound.min.x, chunkBound.min.y), new Vector2Int(chunkBound.max.x, chunkBound.max.y));
+                bound = new SquareBound(new Vector2Int(chunkBound.Min.x, chunkBound.Min.y), new Vector2Int(chunkBound.Mex.x, chunkBound.Mex.y));
 
             }
 

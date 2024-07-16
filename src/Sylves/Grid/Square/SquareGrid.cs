@@ -112,7 +112,7 @@ namespace Sylves
         public IDualMapping GetDual()
         {
             var dualBound = bound == null ? null :
-                new SquareBound(bound.min, bound.max + Vector2Int.one);
+                new SquareBound(bound.Min, bound.Mex + Vector2Int.one);
 
             var translation = Matrix4x4.Translate(new Vector3(-cellSize.x / 2, -cellSize.y / 2, 0));
 
@@ -290,21 +290,21 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                return bound.size.x * bound.size.y;
+                return bound.Size.x * bound.Size.y;
             }
         }
 
         public int GetIndex(Cell cell)
         {
             CheckBounded();
-            return (cell.x - bound.min.x) + (cell.y - bound.min.y) * bound.size.x;
+            return (cell.x - bound.Min.x) + (cell.y - bound.Min.y) * bound.Size.x;
         }
 
         public Cell GetCellByIndex(int index)
         {
-            var x = index % bound.size.x;
-            var y = index / bound.size.x;
-            return new Cell(x + bound.min.x, y + bound.min.y, 0);
+            var x = index % bound.Size.x;
+            var y = index / bound.Size.x;
+            return new Cell(x + bound.Min.x, y + bound.Min.y, 0);
         }
         #endregion
 
@@ -359,8 +359,8 @@ namespace Sylves
             if (bound is SquareBound sb)
             {
                 return Aabb.FromMinMax(
-                    new Vector3(sb.min.x * cellSize.x, sb.min.y * cellSize.y, 0),
-                    new Vector3(sb.max.x * cellSize.x, sb.max.y * cellSize.y, 0));
+                    new Vector3(sb.Min.x * cellSize.x, sb.Min.y * cellSize.y, 0),
+                    new Vector3(sb.Mex.x * cellSize.x, sb.Mex.y * cellSize.y, 0));
             }
             return null;
         }
@@ -456,10 +456,10 @@ namespace Sylves
                 // Filter to in bounds
                 if (bound != null)
                 {
-                    minCell.x = Math.Max(minCell.x, bound.min.x);
-                    minCell.y = Math.Max(minCell.y, bound.min.y);
-                    maxCell.x = Math.Min(maxCell.x, bound.max.x - 1);
-                    maxCell.y = Math.Min(maxCell.y, bound.max.y - 1);
+                    minCell.x = Math.Max(minCell.x, bound.Min.x);
+                    minCell.y = Math.Max(minCell.y, bound.Min.y);
+                    maxCell.x = Math.Min(maxCell.x, bound.Mex.x - 1);
+                    maxCell.y = Math.Min(maxCell.y, bound.Mex.y - 1);
                 }
 
                 // Loop over cells
@@ -501,10 +501,10 @@ namespace Sylves
             if (bound != null)
             {
                 // Find the start and end values of t that the ray crosses each axis.
-                var tx1 = dx == 0 ? (bound.min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.min.x - x1) / dx : (bound.max.x - x1) / dx;
-                var tx2 = dx == 0 ? (bound.max.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.max.x - x1) / dx : (bound.min.x - x1) / dx;
-                var ty1 = dy == 0 ? (bound.min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.min.y - y1) / dy : (bound.max.y - y1) / dy;
-                var ty2 = dy == 0 ? (bound.max.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.max.y - y1) / dy : (bound.min.y - y1) / dy;
+                var tx1 = dx == 0 ? (bound.Min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.Min.x - x1) / dx : (bound.Mex.x - x1) / dx;
+                var tx2 = dx == 0 ? (bound.Mex.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (bound.Mex.x - x1) / dx : (bound.Min.x - x1) / dx;
+                var ty1 = dy == 0 ? (bound.Min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.Min.y - y1) / dy : (bound.Mex.y - y1) / dy;
+                var ty2 = dy == 0 ? (bound.Mex.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (bound.Mex.y - y1) / dy : (bound.Min.y - y1) / dy;
 
                 var mint = Math.Max(tx1, ty1);
                 var maxt = Math.Min(tx2, ty2);
@@ -575,7 +575,7 @@ namespace Sylves
                     x += stepx;
                     tx += idx;
                     cellDir = cellDirX;
-                    if (bound != null && (x >= bound.max.x || x < bound.min.x)) yield break;
+                    if (bound != null && (x >= bound.Mex.x || x < bound.Min.x)) yield break;
                 }
                 else
                 {
@@ -584,7 +584,7 @@ namespace Sylves
                     y += stepy;
                     ty += idy;
                     cellDir = cellDirY;
-                    if (bound != null && (y >= bound.max.y || x < bound.min.y)) yield break;
+                    if (bound != null && (y >= bound.Mex.y || x < bound.Min.y)) yield break;
                 }
                 yield return new RaycastInfo
                 {
@@ -633,12 +633,12 @@ namespace Sylves
             }
             var squareBound = (SquareBound)srcBound;
             // TODO: Use operator*
-            if(!TryApplySymmetry(s, FromVector2Int(squareBound.min), out var a, out var _))
+            if(!TryApplySymmetry(s, FromVector2Int(squareBound.Min), out var a, out var _))
             {
                 return false;
             }
             // This trick works best with *inclusive* bounds.
-            if (!TryApplySymmetry(s, FromVector2Int(squareBound.max - Vector2Int.one), out var b, out var _))
+            if (!TryApplySymmetry(s, FromVector2Int(squareBound.Mex - Vector2Int.one), out var b, out var _))
             {
                 return false;
             }

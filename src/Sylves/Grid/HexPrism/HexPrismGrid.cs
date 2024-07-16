@@ -40,7 +40,7 @@ namespace Sylves
             this.orientation = orientation;
             this.bound = bound;
             cellType = HexPrismCellType.Get(orientation);
-            hexGrid = new HexGrid(new Vector2(cellSize.x, cellSize.y), orientation, bound?.hexBound);
+            hexGrid = new HexGrid(new Vector2(cellSize.x, cellSize.y), orientation, bound?.HexBound);
             hexGridIndexCount = bound != null ? hexGrid.IndexCount : 0;
         }
 
@@ -106,7 +106,7 @@ namespace Sylves
             var dualGrid = new PlanarPrismModifier(
                 new BijectModifier(triangleGrid, TrianglePrismGrid.ToTriangleGrid, TrianglePrismGrid.FromTriangleGrid, 2),
                 new PlanarPrismOptions { LayerHeight = cellSize.z, LayerOffset = -0.5f * cellSize.z },
-                bound == null ? null : new PlanarPrismBound { PlanarBound = triangleBound, MinLayer = bound.layerMin, MaxLayer = bound.layerMax + 1 }
+                bound == null ? null : new PlanarPrismBound { PlanarBound = triangleBound, MinLayer = bound.LayerMin, MaxLayer = bound.LayerMex + 1 }
             );
             return new DualMapping(this, dualGrid, dm);
         }
@@ -318,7 +318,7 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                return hexGridIndexCount * (bound.layerMax - bound.layerMin);
+                return hexGridIndexCount * (bound.LayerMex - bound.LayerMin);
             }
         }
 
@@ -389,11 +389,11 @@ namespace Sylves
         {
             if (bound is HexPrismBound hpb)
             {
-                if (hexGrid.GetBoundAabb(hpb.hexBound) is Aabb aabb)
+                if (hexGrid.GetBoundAabb(hpb.HexBound) is Aabb aabb)
                 {
                     return Aabb.FromMinMax(
-                            aabb.Min + cellSize.z * hpb.layerMin * Vector3.forward,
-                            aabb.Max + cellSize.z * hpb.layerMax * Vector3.forward
+                            aabb.Min + cellSize.z * hpb.LayerMin * Vector3.forward,
+                            aabb.Max + cellSize.z * hpb.LayerMex * Vector3.forward
                         );
                 }
             }
@@ -490,8 +490,8 @@ namespace Sylves
             var maxZ = Mathf.RoundToInt(max.z / cellSize.z);
             if (bound != null)
             {
-                minZ = Math.Max(minZ, bound.layerMin);
-                maxZ = Math.Min(maxZ, bound.layerMax - 1);
+                minZ = Math.Max(minZ, bound.LayerMin);
+                maxZ = Math.Min(maxZ, bound.LayerMex - 1);
             }
 
             foreach (var hex in hexGrid.GetCellsIntersectsApprox(min, max))
@@ -549,7 +549,7 @@ namespace Sylves
                 return true;
             }
             var hexPrismBound = (HexPrismBound)srcBound;
-            if (!hexGrid.TryApplySymmetry(ToPlanar(s), hexPrismBound.hexBound, out var destHexBound))
+            if (!hexGrid.TryApplySymmetry(ToPlanar(s), hexPrismBound.HexBound, out var destHexBound))
             {
                 destBound = default;
                 return false;
@@ -557,8 +557,8 @@ namespace Sylves
             var layerOffset = Split(s.Dest).layer - Split(s.Src).layer;
             destBound = new HexPrismBound(
                 (HexBound)destHexBound,
-                hexPrismBound.layerMin + layerOffset,
-                hexPrismBound.layerMax + layerOffset);
+                hexPrismBound.LayerMin + layerOffset,
+                hexPrismBound.LayerMex + layerOffset);
             return true;
         }
         public virtual bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r)

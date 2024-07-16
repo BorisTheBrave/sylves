@@ -152,8 +152,8 @@ namespace Sylves.Test
 
             var corners = bound.GetCorners().ToList();
             var cells = bound.ToHashSet();
-            Assert.AreEqual(bound.min, corners.Select(x=>(Vector3Int)x).Aggregate(Vector3Int.Min));
-            Assert.AreEqual(bound.max, corners.Select(x=>(Vector3Int)x).Aggregate(Vector3Int.Max) + Vector3Int.one);
+            Assert.AreEqual(bound.Min, corners.Select(x=>(Vector3Int)x).Aggregate(Vector3Int.Min));
+            Assert.AreEqual(bound.Mex, corners.Select(x=>(Vector3Int)x).Aggregate(Vector3Int.Max) + Vector3Int.one);
             Assert.IsTrue(corners.All(cells.Contains));
         }
     }

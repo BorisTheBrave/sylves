@@ -59,8 +59,8 @@ namespace Sylves
 
         public (Vector2, Vector2) GetBoundAabb(SquareBound bound)
         {
-            var bl = aabbBottomLeft + strideX * bound.min.x + strideY * bound.min.y;
-            var tr = aabbBottomLeft + strideX * bound.max.x + strideY * bound.max.y + aabbSize;
+            var bl = aabbBottomLeft + strideX * bound.Min.x + strideY * bound.Min.y;
+            var tr = aabbBottomLeft + strideX * bound.Mex.x + strideY * bound.Mex.y + aabbSize;
             return (bl, tr);
         }
 
@@ -121,8 +121,8 @@ namespace Sylves
             var maxX = Mathf.FloorToInt(right.x);
             if(bound != null)
             {
-                minX = Math.Max(minX, bound.min.x);
-                maxX = Math.Min(maxX, bound.max.x - 1);
+                minX = Math.Max(minX, bound.Min.x);
+                maxX = Math.Min(maxX, bound.Mex.x - 1);
             }
             for (var x = minX; x <= maxX; x++)
             {
@@ -136,8 +136,8 @@ namespace Sylves
                     ));
                 if (bound != null)
                 {
-                    minY = Math.Max(minY, bound.min.y);
-                    maxY = Math.Min(maxY, bound.max.y - 1);
+                    minY = Math.Max(minY, bound.Min.y);
+                    maxY = Math.Min(maxY, bound.Mex.y - 1);
                 }
                 for (var y = minY; y <= maxY; y++)
                 {
@@ -173,8 +173,8 @@ namespace Sylves
                     var actualChunk = new Vector2Int(fundamentalRi.cell.x + chunk.x, fundamentalRi.cell.y + chunk.y);
                     if(bound != null)
                     {
-                        var inBounds = bound.min.x <= actualChunk.x && actualChunk.x < bound.max.x &&
-                            bound.min.y <= actualChunk.y && actualChunk.y < bound.max.y;
+                        var inBounds = bound.Min.x <= actualChunk.x && actualChunk.x < bound.Mex.x &&
+                            bound.Min.y <= actualChunk.y && actualChunk.y < bound.Mex.y;
                         if (!inBounds)
                         {
                             continue;

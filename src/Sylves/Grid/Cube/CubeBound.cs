@@ -16,17 +16,32 @@ namespace Sylves
         /// <summary>
         /// Inclusive lower bound for each coordinate
         /// </summary>
-        public Vector3Int min;
+        public Vector3Int Min { get; set; }
 
         /// <summary>
         /// Exclusive upper bound for each coordinate
         /// </summary>
-        public Vector3Int max;
+        public Vector3Int Mex { get; set; }
 
-        public CubeBound(Vector3Int min, Vector3Int max)
+        /// <summary>
+        /// Inclusive upper bound for each coordinate
+        /// </summary>
+        public Vector3Int Max
         {
-            this.min = min;
-            this.max = max;
+            get
+            {
+                return Mex - Vector3Int.one;
+            }
+            set
+            {
+                Mex = value + Vector3Int.one;
+            }
+        }
+
+        public CubeBound(Vector3Int min, Vector3Int mex)
+        {
+            this.Min = min;
+            this.Mex = mex;
         }
 
         public static CubeBound FromVectors(IEnumerable<Vector3Int> vs)
@@ -47,20 +62,20 @@ namespace Sylves
             return new CubeBound(min, max + Vector3Int.one);
         }
 
-        public Vector3Int size => max - min;
+        public Vector3Int Size => Mex - Min;
 
         public bool Contains(Cell v)
         {
-            return v.x >= min.x && v.y >= min.y && v.z >= min.z && v.x < max.x && v.y < max.y && v.z < max.z;
+            return v.x >= Min.x && v.y >= Min.y && v.z >= Min.z && v.x < Mex.x && v.y < Mex.y && v.z < Mex.z;
         }
 
         public CubeBound Intersect(CubeBound other)
         {
-            return new CubeBound(Vector3Int.Max(min, other.min), Vector3Int.Min(max, other.max));
+            return new CubeBound(Vector3Int.Max(Min, other.Min), Vector3Int.Min(Mex, other.Mex));
         }
         public CubeBound Union(CubeBound other)
         {
-            return new CubeBound(Vector3Int.Min(min, other.min), Vector3Int.Max(max, other.max));
+            return new CubeBound(Vector3Int.Min(Min, other.Min), Vector3Int.Max(Mex, other.Mex));
         }
 
 
@@ -71,11 +86,11 @@ namespace Sylves
 
         public IEnumerator<Cell> GetEnumerator()
         {
-            for (var x = min.x; x < max.x; x++)
+            for (var x = Min.x; x < Mex.x; x++)
             {
-                for (var y = min.y; y < max.y; y++)
+                for (var y = Min.y; y < Mex.y; y++)
                 {
-                    for (var z = min.z; z < max.z; z++)
+                    for (var z = Min.z; z < Mex.z; z++)
                     {
                         yield return new Cell(x, y, z);
                     }

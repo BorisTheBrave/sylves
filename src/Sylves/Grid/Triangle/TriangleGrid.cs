@@ -239,7 +239,7 @@ namespace Sylves
         {
             // TODO: This seems right, but I haven't really validated
             var dualBound = bound == null ? null :
-                new HexBound(bound.min - Vector3Int.one, bound.max);
+                new HexBound(bound.Min - Vector3Int.one, bound.Mex);
 
             // Note hex orientation is flipped vs triangle orientation
             if (orientation == TriangleOrientation.FlatTopped)
@@ -621,7 +621,7 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                var size = bound.max - bound.min;
+                var size = bound.Mex - bound.Min;
                 return 2 * size.x * size.y;
             }
         }
@@ -629,20 +629,20 @@ namespace Sylves
         public int GetIndex(Cell cell)
         {
             CheckBounded();
-            var sizeX = bound.max.x - bound.min.x;
-            var dx = cell.x - bound.min.x;
-            var dy = cell.y - bound.min.y;
+            var sizeX = bound.Mex.x - bound.Min.x;
+            var dx = cell.x - bound.Min.x;
+            var dy = cell.y - bound.Min.y;
             var dz = cell.x + cell.y + cell.z - 1;
             return dz + (dx + dy * sizeX) * 2;
         }
 
         public Cell GetCellByIndex(int index)
         {
-            var sizeX = bound.max.x - bound.min.x;
+            var sizeX = bound.Mex.x - bound.Min.x;
             var dz = index % 2;
             index /= 2;
-            var x = bound.min.x + (index % sizeX);
-            var y = bound.min.y + (index / sizeX);
+            var x = bound.Min.x + (index % sizeX);
+            var y = bound.Min.y + (index / sizeX);
             var z = dz - x - y + 1;
             return new Cell(x, y, z);
         }
@@ -858,8 +858,8 @@ namespace Sylves
             var tob = Mathf.CeilToInt(fu) + 1;
             if(bound != null)
             {
-                fromb = Math.Max(fromb, bound.min.y);
-                tob = Math.Min(tob, bound.max.y);
+                fromb = Math.Max(fromb, bound.Min.y);
+                tob = Math.Min(tob, bound.Mex.y);
             }
             for (var b = fromb; b < tob; b++)
             {
@@ -875,9 +875,9 @@ namespace Sylves
                 int s;
                 if(bound != null)
                 {
-                    if (mina < bound.min.x)
+                    if (mina < bound.Min.x)
                     {
-                        var d = bound.min.x - mina;
+                        var d = bound.Min.x - mina;
                         if(mina + b + maxc == 1)
                         {
                             mina += d;
@@ -889,9 +889,9 @@ namespace Sylves
                             maxc -= d;
                         }
                     }
-                    if (maxc >= bound.max.z)
+                    if (maxc >= bound.Mex.z)
                     {
-                        var d = maxc - bound.max.z + 1;
+                        var d = maxc - bound.Mex.z + 1;
                         if (mina + b + maxc == 1)
                         {
                             maxc -= d;
@@ -904,8 +904,8 @@ namespace Sylves
 
                         }
                     }
-                    maxa = Math.Min(maxa, bound.max.x - 1);
-                    minc = Math.Max(minc, bound.min.z);
+                    maxa = Math.Min(maxa, bound.Mex.x - 1);
+                    minc = Math.Max(minc, bound.Min.z);
                 }
                 // Walk along the row left to right
                 var a = mina;
@@ -970,12 +970,12 @@ namespace Sylves
             // Filter to bounds
             if (bound != null)
             {
-                var ta1 = da == 0 ? (bound.min.x > fa ? 1 : -1) * float.PositiveInfinity : da >= 0 ? (bound.min.x - fa) / da : (bound.max.x - fa) / da;
-                var ta2 = da == 0 ? (bound.max.x > fa ? 1 : -1) * float.PositiveInfinity : da >= 0 ? (bound.max.x - fa) / da : (bound.min.x - fa) / da;
-                var tb1 = db == 0 ? (bound.min.y > fb ? 1 : -1) * float.PositiveInfinity : db >= 0 ? (bound.min.y - fb) / db : (bound.max.y - fb) / db;
-                var tb2 = db == 0 ? (bound.max.y > fb ? 1 : -1) * float.PositiveInfinity : db >= 0 ? (bound.max.y - fb) / db : (bound.min.y - fb) / db;
-                var tc1 = dc == 0 ? (bound.min.z > fc ? 1 : -1) * float.PositiveInfinity : dc >= 0 ? (bound.min.z - fc) / dc : (bound.max.z - fc) / dc;
-                var tc2 = dc == 0 ? (bound.max.z > fc ? 1 : -1) * float.PositiveInfinity : dc >= 0 ? (bound.max.z - fc) / dc : (bound.min.z - fc) / dc;
+                var ta1 = da == 0 ? (bound.Min.x > fa ? 1 : -1) * float.PositiveInfinity : da >= 0 ? (bound.Min.x - fa) / da : (bound.Mex.x - fa) / da;
+                var ta2 = da == 0 ? (bound.Mex.x > fa ? 1 : -1) * float.PositiveInfinity : da >= 0 ? (bound.Mex.x - fa) / da : (bound.Min.x - fa) / da;
+                var tb1 = db == 0 ? (bound.Min.y > fb ? 1 : -1) * float.PositiveInfinity : db >= 0 ? (bound.Min.y - fb) / db : (bound.Mex.y - fb) / db;
+                var tb2 = db == 0 ? (bound.Mex.y > fb ? 1 : -1) * float.PositiveInfinity : db >= 0 ? (bound.Mex.y - fb) / db : (bound.Min.y - fb) / db;
+                var tc1 = dc == 0 ? (bound.Min.z > fc ? 1 : -1) * float.PositiveInfinity : dc >= 0 ? (bound.Min.z - fc) / dc : (bound.Mex.z - fc) / dc;
+                var tc2 = dc == 0 ? (bound.Mex.z > fc ? 1 : -1) * float.PositiveInfinity : dc >= 0 ? (bound.Mex.z - fc) / dc : (bound.Min.z - fc) / dc;
 
                 var mint = Math.Max(ta1, Math.Max(tb1, tc1));
                 var maxt = Math.Min(ta2, Math.Min(tb2, tc2));
@@ -1062,7 +1062,7 @@ namespace Sylves
                     a += stepa;
                     ta += ida;
                     cellDir = cellDirX;
-                    if (bound != null && (a >= bound.max.x || a < bound.min.x)) yield break;
+                    if (bound != null && (a >= bound.Mex.x || a < bound.Min.x)) yield break;
                 }
                 else if (tb2 <= ta2 && tb2 <= tc2)
                 {
@@ -1071,7 +1071,7 @@ namespace Sylves
                     b += stepb;
                     tb += idb;
                     cellDir = cellDirY;
-                    if (bound != null && (b >= bound.max.y || b < bound.min.y)) yield break;
+                    if (bound != null && (b >= bound.Mex.y || b < bound.Min.y)) yield break;
                 }
                 else if(!float.IsInfinity(tc))
                 {
@@ -1080,7 +1080,7 @@ namespace Sylves
                     c += stepc;
                     tc += idc;
                     cellDir = cellDirZ;
-                    if (bound != null && (c >= bound.max.z || c < bound.min.z)) yield break;
+                    if (bound != null && (c >= bound.Mex.z || c < bound.Min.z)) yield break;
                 }
                 else
                 {
@@ -1140,12 +1140,12 @@ namespace Sylves
             }
             var cubeBound = (TriangleBound)srcBound;
             // TODO: Use operator*
-            if (!TryApplySymmetry(s, (Cell)(cubeBound.min), out var a, out var _))
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.Min), out var a, out var _))
             {
                 return false;
             }
             // This trick works best with *inclusive* bounds.
-            if (!TryApplySymmetry(s, (Cell)(cubeBound.max - Vector3Int.one), out var b, out var _))
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.Mex - Vector3Int.one), out var b, out var _))
             {
                 return false;
             }

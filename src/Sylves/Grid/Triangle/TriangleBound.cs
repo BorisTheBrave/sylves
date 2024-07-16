@@ -9,12 +9,25 @@ namespace Sylves
 {
     public class TriangleBound : IBound, IEnumerable<Cell>
     {
-        public Vector3Int min;
-        public Vector3Int max;
-        public TriangleBound(Vector3Int min, Vector3Int max)
+        public Vector3Int Min { get; set; }
+        public Vector3Int Mex { get; set; }
+
+        public Vector3Int Max
         {
-            this.min = min;
-            this.max = max;
+            get
+            {
+                return Mex - Vector3Int.one;
+            }
+            set
+            {
+                Mex = value + Vector3Int.one;
+            }
+        }
+
+        public TriangleBound(Vector3Int min, Vector3Int mex)
+        {
+            this.Min = min;
+            this.Mex = mex;
         }
 
         public static TriangleBound Hexagon(int radius)
@@ -28,16 +41,16 @@ namespace Sylves
 
         public bool Contains(Cell v)
         {
-            return v.x >= min.x && v.y >= min.y && v.z >= min.z && v.x < max.x && v.y < max.y && v.z < max.z;
+            return v.x >= Min.x && v.y >= Min.y && v.z >= Min.z && v.x < Mex.x && v.y < Mex.y && v.z < Mex.z;
         }
 
         public TriangleBound Intersect(TriangleBound other)
         {
-            return new TriangleBound(Vector3Int.Max(min, other.min), Vector3Int.Min(max, other.max));
+            return new TriangleBound(Vector3Int.Max(Min, other.Min), Vector3Int.Min(Mex, other.Mex));
         }
         public TriangleBound Union(TriangleBound other)
         {
-            return new TriangleBound(Vector3Int.Min(min, other.min), Vector3Int.Max(max, other.max));
+            return new TriangleBound(Vector3Int.Min(Min, other.Min), Vector3Int.Max(Mex, other.Mex));
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -47,16 +60,16 @@ namespace Sylves
 
         public IEnumerator<Cell> GetEnumerator()
         {
-            for (var x = min.x; x < max.x; x++)
+            for (var x = Min.x; x < Mex.x; x++)
             {
-                var minY = Math.Max(min.y, -x - max.z + 1);
-                var maxY = Math.Min(max.y, -x - min.z + 3);
+                var minY = Math.Max(Min.y, -x - Mex.z + 1);
+                var maxY = Math.Min(Mex.y, -x - Min.z + 3);
                 for (var y = minY; y < maxY; y++)
                 {
                     for (var s = 1; s <= 2; s++)
                     {
                         var z = -x - y + s;
-                        if (min.z <= z && z < max.z)
+                        if (Min.z <= z && z < Mex.z)
                         {
                             yield return new Cell(x, y, z);
                         }

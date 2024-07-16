@@ -112,7 +112,7 @@ namespace Sylves.Test
             var b = new CubeBound(Vector3Int.zero, new Vector3Int(6, 1, 7));
             var success = g.TryApplySymmetry(s, b, out var b2);
             Assert.IsTrue(success);
-            Assert.AreEqual(new Vector3Int(6, 1, 7), ((CubeBound)b2).max);
+            Assert.AreEqual(new Vector3Int(6, 1, 7), ((CubeBound)b2).Mex);
         }
 
         [Test]

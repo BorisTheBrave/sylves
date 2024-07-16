@@ -165,7 +165,7 @@ namespace Sylves
         {
             // TODO: This seems right, but I haven't really validated
             var dualBound = bound == null ? null :
-                new TriangleBound(bound.min, bound.max + Vector3Int.one);
+                new TriangleBound(bound.Min, bound.Mex + Vector3Int.one);
 
             // Note hex orientation is flipped vs triangle orientation
             if (orientation == HexOrientation.FlatTopped)
@@ -346,7 +346,7 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                var size = bound.max - bound.min;
+                var size = bound.Mex - bound.Min;
                 return size.x * size.y;
             }
         }
@@ -354,18 +354,18 @@ namespace Sylves
         public int GetIndex(Cell cell)
         {
             CheckBounded();
-            var sizeX = bound.max.x - bound.min.x;
-            var dx = cell.x - bound.min.x;
-            var dy = cell.y - bound.min.y;
+            var sizeX = bound.Mex.x - bound.Min.x;
+            var dx = cell.x - bound.Min.x;
+            var dy = cell.y - bound.Min.y;
             return dx + dy * sizeX;
 
         }
 
         public Cell GetCellByIndex(int index)
         {
-            var sizeX = bound.max.x - bound.min.x;
-            var x = bound.min.x + (index % sizeX);
-            var y = bound.min.y + (index / sizeX);
+            var sizeX = bound.Mex.x - bound.Min.x;
+            var x = bound.Min.x + (index % sizeX);
+            var y = bound.Min.y + (index / sizeX);
             var z = -x - y;
             return new Cell(x, y, z);
         }
@@ -645,12 +645,12 @@ namespace Sylves
             }
             var cubeBound = (HexBound)srcBound;
             // TODO: Use operator*
-            if (!TryApplySymmetry(s, (Cell)(cubeBound.min), out var a, out var _))
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.Min), out var a, out var _))
             {
                 return false;
             }
             // This trick works best with *inclusive* bounds.
-            if (!TryApplySymmetry(s, (Cell)(cubeBound.max - Vector3Int.one), out var b, out var _))
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.Mex - Vector3Int.one), out var b, out var _))
             {
                 return false;
             }
