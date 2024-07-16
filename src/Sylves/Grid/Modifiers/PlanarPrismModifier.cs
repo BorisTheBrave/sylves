@@ -620,7 +620,7 @@ namespace Sylves
             {
                 var (w, z) = SplitV(p);
                 uDeformation.GetJacobi(w, out jacobi);
-                jacobi.column2 = new Vector4(0, 0, layerHeight, 0);
+                jacobi.SetColumn(2, new Vector4(0, 0, layerHeight, 0));
                 jacobi.m23 += z * layerHeight + layerOffset;
             }
 
