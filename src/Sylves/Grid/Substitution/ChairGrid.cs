@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Sylves
 {
+    // https://tilings.math.uni-bielefeld.de/substitution/chair/
     public class ChairGrid : SubstitutionTilingGrid
 	{
         public ChairGrid(SubstitutionTilingBound bound = null) : base(Prototiles, new[] { "1", "2" }, bound)

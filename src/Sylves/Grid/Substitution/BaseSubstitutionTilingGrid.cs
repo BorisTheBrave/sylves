@@ -118,7 +118,20 @@ namespace Sylves
                     .ToArray();
             }
 
-            //if(GetType() == typeof(AmmannBeenkerGrid))
+            // Some defaults for the common case of a single tile per prototile.
+            foreach(var p in internalPrototiles)
+            {
+                if(p.InteriorTileAdjacencies == null && p.ChildTiles.Length == 1)
+                {
+                    p.InteriorTileAdjacencies = new (int, int, int, int)[0];
+                }
+                if (p.ExteriorTileAdjacencies == null && p.ChildTiles.Length == 1)
+                {
+                    p.ExteriorTileAdjacencies = Enumerable.Range(0, p.ChildTiles[0].Length).Select(x => (x, 0, 1, 0, x)).ToArray();
+                }
+            }
+
+            //if(GetType() == typeof(SphinxGrid))
             //    BuildPrototileAdjacencies(internalPrototiles);
 
             // Precompute centers
@@ -193,9 +206,9 @@ namespace Sylves
                     sides.Add((v1, v2, child, childSide));
                 }
 
-                for (var i = 0;i<p.ChildPrototiles.Length;i++)
+                for (var i = 0; i < p.ChildPrototiles.Length; i++)
                 {
-                    var (t,c) = p.ChildPrototiles[i];
+                    var (t, c) = p.ChildPrototiles[i];
                     var tile = c.ChildTiles.Single();
                     for (var j = 0; j < tile.Length; j++)
                     {

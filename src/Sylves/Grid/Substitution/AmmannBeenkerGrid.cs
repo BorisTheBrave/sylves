@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Sylves
 {
-    // https://tilings.math.uni-bielefeld.de/substitution/domino/
+    // https://tilings.math.uni-bielefeld.de/substitution/ammann-beenker/
     public class AmmannBeenkerGrid : SubstitutionTilingGrid
 	{
         public AmmannBeenkerGrid(SubstitutionTilingBound bound = null):base(Prototiles, new[] { "Square" }, bound)
@@ -147,8 +147,6 @@ namespace Sylves
             Square,
             Rhombus,
 		};
-
-        public bool IsSquare(Cell cell) => GetPrototile(cell, 0).Name == Square.Name;
 	}
 }
 

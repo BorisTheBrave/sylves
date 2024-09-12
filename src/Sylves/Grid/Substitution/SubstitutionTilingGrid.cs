@@ -72,6 +72,9 @@ namespace Sylves
 
         protected override InternalPrototile GetPrototile(Cell cell, int height) => GetCrumb(cell, height).prototile;
 
+        public string GetPrototileName(Cell cell, int height = 0) => GetPrototile(cell, height).Name;
+
+
 
         #region Crumb Utils
 

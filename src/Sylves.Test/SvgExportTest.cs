@@ -297,20 +297,38 @@ namespace Sylves.Test
                 penroseOptions
                 );
 
-            var ammannBeenkerGrid = new AmmannBeenkerGrid(new SubstitutionTilingBound { Height = 7 });
+            var ammannBeenkerGrid = new AmmannBeenkerGrid(new SubstitutionTilingBound { Height = 1 });
             var ammannBeenkerOptions = new Options
             {
                 textScale = null,
                 min = new Vector2(-80, -80),
                 max = new Vector2(80, 80),
                 trim = true,
-                fillFunc = (c) => ammannBeenkerGrid.IsSquare(c) ? "#ffcc66" : "#000060"
+                fillFunc = (c) => ammannBeenkerGrid.GetPrototileName(c) == "Square" ? "#ffcc66" : "#000060"
             };
             Export(
                 ammannBeenkerGrid,
                 "ammann_beenker.svg",
                 ammannBeenkerOptions
                 );
+
+
+
+            var sphinxGrid = new SphinxGrid(new SubstitutionTilingBound { Height = 8 });
+            var sphinxGridOptions = new Options
+            {
+                textScale = null,
+                min = new Vector2(-30, -30),
+                max = new Vector2(30, 30),
+                trim = true,
+                fillFunc = (c) => sphinxGrid.GetPrototileName(c) == "Sphinx" ? "#cecbe3" : "#f96610x"
+            };
+            Export(
+                sphinxGrid,
+                "sphinx.svg",
+                sphinxGridOptions
+                );
+
 
             // Export prototiles (i.e. substitution rules)
             ExportPrototiles("chair_prototiles.svg", ChairGrid.Prototiles);

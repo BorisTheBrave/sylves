@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Sylves
 {
-    // https://tilings.math.uni-bielefeld.de/substitution/domino/
+    // https://tilings.math.uni-bielefeld.de/substitution/penrose-rhomb/
     public class PenroseRhombGrid : SubstitutionTilingGrid
 	{
         public PenroseRhombGrid(SubstitutionTilingBound bound = null):base(Prototiles, new[] { "Fat" }, bound)
