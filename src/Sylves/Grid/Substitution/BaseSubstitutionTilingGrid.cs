@@ -118,6 +118,9 @@ namespace Sylves
                     .ToArray();
             }
 
+            //if(GetType() == typeof(AmmannBeenkerGrid))
+            //    BuildPrototileAdjacencies(internalPrototiles);
+
             // Precompute centers
             foreach(var prototile in internalPrototiles)
             {
@@ -161,6 +164,73 @@ namespace Sylves
                 var min = alpha * (prevBound.Min - tileBound.Min) + tileBound.Min;
                 prototile.bound = Aabb.FromMinMax(min, max);
             };
+        }
+
+        // Utility for computing adjacencies. Assumes one tile per prototile.
+        private static void BuildPrototileAdjacencies(InternalPrototile[] internalPrototiles)
+        {
+            const float eps = 1e-6f;
+            
+
+            foreach(var p in internalPrototiles)
+            {
+                var sides = new List<(Vector3 v1, Vector3 v2, int child, int childSide)>();
+                var internalAdjacencies = new List<(int fromChild, int fromChildSide, int toChild, int toChildSide)>();
+
+                void AddSide(Vector3 v1, Vector3 v2, int child, int childSide)
+                {
+                    for (var k = 0; k < sides.Count; k++)
+                    {
+                        var side = sides[k];
+                        if ((v1 - side.v2).magnitude < eps &&
+                            (v2 - side.v1).magnitude < eps)
+                        {
+                            internalAdjacencies.Add((child, childSide, side.child, side.childSide));
+                            sides.RemoveAt(k);
+                            return;
+                        }
+                    }
+                    sides.Add((v1, v2, child, childSide));
+                }
+
+                for (var i = 0;i<p.ChildPrototiles.Length;i++)
+                {
+                    var (t,c) = p.ChildPrototiles[i];
+                    var tile = c.ChildTiles.Single();
+                    for (var j = 0; j < tile.Length; j++)
+                    {
+                        var v1 = t.MultiplyPoint3x4(tile[j]);
+                        var v2 = t.MultiplyPoint3x4(tile[(j + 1) % tile.Length]);
+                        AddSide(v1, v2, i, j);
+                    }
+                }
+                p.InteriorPrototileAdjacencies = internalAdjacencies.ToArray();
+                {
+                    var tile = p.ChildTiles.Single();
+                    var externalAdjacencies = new List<(int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)>();
+                    for (var i = 0; i < tile.Length; i++)
+                    {
+                        var currentExternalAdjacencies = new List<(int parentSide, int parentSubSide, int child, int childSide)>();
+                        var current = tile[i];
+                        var end = tile[(i + 1) % tile.Length];
+                        var j = 0;
+                        while ((current - end).magnitude > eps)
+                        {
+                            var side = sides.Single(x => (x.v1 - current).magnitude < eps);
+
+                            currentExternalAdjacencies.Add((i, j, side.child, side.childSide));
+
+                            current = side.v2;
+                            j++;
+                        }
+                        foreach(var e in currentExternalAdjacencies)
+                        {
+                            externalAdjacencies.Add((e.parentSide, e.parentSubSide, currentExternalAdjacencies.Count, e.child, e.childSide));
+                        }
+                    }
+                    p.ExteriorPrototileAdjacencies = externalAdjacencies.ToArray();
+                }
+            }
         }
         #endregion
 

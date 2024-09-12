@@ -297,13 +297,30 @@ namespace Sylves.Test
                 penroseOptions
                 );
 
+            var ammannBeenkerGrid = new AmmannBeenkerGrid(new SubstitutionTilingBound { Height = 7 });
+            var ammannBeenkerOptions = new Options
+            {
+                textScale = null,
+                min = new Vector2(-80, -80),
+                max = new Vector2(80, 80),
+                trim = true,
+                fillFunc = (c) => ammannBeenkerGrid.IsSquare(c) ? "#ffcc66" : "#000060"
+            };
+            Export(
+                ammannBeenkerGrid,
+                "ammann_beenker.svg",
+                ammannBeenkerOptions
+                );
+
             // Export prototiles (i.e. substitution rules)
             ExportPrototiles("chair_prototiles.svg", ChairGrid.Prototiles);
             ExportPrototiles("penrose_rhomb_prototiles.svg", PenroseRhombGrid.Prototiles);
+            ExportPrototiles("ammann_beenker_prototiles.svg", AmmannBeenkerGrid.Prototiles);
 
             // Tree view
             ExportTreeView("chair_tree.svg", chairGrid, chairOptions);
             ExportTreeView("penrose_rhomb_tree.svg", penroseGrid, penroseOptions);
+            ExportTreeView("ammann_beenker_tree.svg", penroseGrid, penroseOptions);
 
             // Spigot view
             ExportSpigotView("chair_spigot.svg", chairGrid, chairOptions);

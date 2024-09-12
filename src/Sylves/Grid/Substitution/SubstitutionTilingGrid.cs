@@ -109,7 +109,7 @@ namespace Sylves
         {
             var pathLength = Math.Max(GetPathLength(cell), height);
 
-            // Find the closed crumb we can walk down from
+            // Find the closest crumb we can walk down from
             Crumb crumb = null;
             // TODO: Rather than linear search, could do bisection?
             var partialPath = ClearChildTileAndPathBelow(cell, height);
@@ -142,7 +142,7 @@ namespace Sylves
         }
 
         // Gets the crumb that is the parent of the crumb,
-        // This is being fast is the main reason to have crumbs.
+        // This being fast is the main reason to have crumbs.
         private Crumb GetParent(Crumb crumb)
         {
             if (crumb.parent != null)
