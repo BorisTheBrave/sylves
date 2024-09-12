@@ -109,6 +109,18 @@ var townscaperGrid = new RelaxModifier(unrelaxedGrid, 4);
 
 <img width="300px" src="../../images/grids/townscaper.svg" /></img>
 
+## 3d layers
+
+The actual townscaper grid is made up of deformed cubes, not quads. To take the existing grid, then make stacks of it along the 3rd dimension, we can use the [planar prism modifier](../modifiers/planarprismmodifier.md).
+
+To add layers, you can use 
+
+```csharp
+new PlanarPrismModifier(new TownscaperGrid(4).GetCompactGrid());
+```
+
+Note the use of `GetCompactGrid`. This forces TownscaperGrid to identify cells using just x and y values, leaving the z-coodinate free for tracking layers.
+
 ## Enhancements
 
 The above is enough to give an infinite irregular grid of quads with a nice organic look. The actual Townscaper grid is actually a bit more sophisticated:

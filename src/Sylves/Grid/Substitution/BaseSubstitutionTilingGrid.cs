@@ -371,6 +371,8 @@ namespace Sylves
 
         public IGrid GetDiagonalGrid() => throw new NotImplementedException();
 
+        public IGrid GetCompactGrid() => CoordinateDimension <= 2 ? this : throw new NotImplementedException("No compact grid for substitution tilings, consider supplying a tight bound first.");
+
         #endregion
 
         #region Cell info

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 #if UNITY
 using UnityEngine;
@@ -48,6 +49,13 @@ namespace Sylves
         private static ICellType[] s_cellTypes = new[] { SquareCellType.Instance };
 
         public override IEnumerable<ICellType> GetCellTypes() => s_cellTypes;
+
+        public override IGrid GetCompactGrid()
+        {
+            // There's probably a nice formula for this, based on area
+            var maxCellsPerHex = HexBound.Hexagon(n).Count();
+            return DefaultGridImpl.GetCompactGridFiniteX(this, maxCellsPerHex);
+        }
     }
 
     /// <summary>
@@ -60,7 +68,6 @@ namespace Sylves
 
         public TownscaperGrid(int n, int? seed = null, int relaxIterations = 10) : base(new UnrelaxedTownscaperGrid(n, seed ?? new System.Random().Next(), tolerance), n, relaxIterations: relaxIterations, weldTolerance: tolerance)
         {
-
         }
     }
 }

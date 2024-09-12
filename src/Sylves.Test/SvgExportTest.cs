@@ -500,6 +500,7 @@ namespace Sylves.Test
             var ico = TestMeshes.Icosahedron;
             ico.RecalculateNormals();
             ExportObj(new MeshPrismGrid(ico, new MeshPrismGridOptions { LayerHeight = 0.25f }), "meshprism.obj");
+            ExportObj(new PlanarPrismModifier(new TownscaperGrid(4).GetCompactGrid()).BoundBy(new PlanarPrismBound { MinLayer=0, MaxLayer = 2, PlanarBound=new SquareBound(0, 0, 3, 3)}), "townscaper_layers.obj");
 
             /* Handy blender script for tweaking these
 import bpy

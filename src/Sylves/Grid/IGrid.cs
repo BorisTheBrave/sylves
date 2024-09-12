@@ -82,9 +82,26 @@ namespace Sylves
         /// </summary>
         IGrid Unwrapped { get; }
 
+        /// <summary>
+        /// Returns a second grid which has one cell for every vertex of this grid,
+        /// and also methods for mapping corners of one grid to the other.
+        /// </summary>
         IDualMapping GetDual();
 
+        /// <summary>
+        /// Returns a new grid with the same cells as this grid, but more
+        /// directions allowing movement between diagonally adjacent cells.
+        /// </summary>
         IGrid GetDiagonalGrid();
+
+        /// <summary>
+        /// For a grid that has CoordinateDimension == 3,
+        /// returns a grid that is the same as the current, but uses at most 2 dimensions.
+        /// Otherwise, returns the current grid.
+        /// (see RavelModifier if you want to reduce to 1 dimension).
+        /// </summary>
+        IGrid GetCompactGrid();
+
 
         #endregion
 

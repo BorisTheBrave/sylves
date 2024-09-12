@@ -17,6 +17,37 @@ namespace Sylves
     /// </summary>
     internal static class DefaultGridImpl
     {
+
+        #region Relatives
+        public static IGrid GetCompactGrid(IGrid grid)
+        {
+            return new BijectModifier(grid, c =>
+            {
+                var (y, z) = Encoding.ZOrderDecode(c.y);
+                return new Cell(c.x, y, z);
+            }, c =>
+            {
+                return new Cell(c.x, Encoding.ZOrderEncode(checked((short)c.y), checked((short)c.z)));
+            }, 2);
+        }
+
+        // Nicer version of GetCompactGrid, when 0 <= cell.x < n for all cells
+        internal static IGrid GetCompactGridFiniteX(IGrid grid, int n)
+        {
+            return new BijectModifier(grid,
+                c =>
+                {
+                    var (a, b) = Encoding.RavelDecode(c.x, n);
+                    return new Cell(a, b, c.y);
+                },
+                c => new Cell(Encoding.RavelEncode(c.x, c.y, n), c.z, 0),
+                2
+                );
+        }
+
+        #endregion
+
+        #region Topology
         public static IEnumerable<CellDir> GetCellDirs(IGrid grid, Cell cell)
         {
             return grid.GetCellType(cell).GetCellDirs();
@@ -26,7 +57,6 @@ namespace Sylves
             return grid.GetCellType(cell).GetCellCorners();
         }
 
-        #region Topology
         public static bool TryMoveByOffset(IGrid grid, Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)
         {
             // TODO: Do parallel transport

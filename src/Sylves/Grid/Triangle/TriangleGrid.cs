@@ -379,6 +379,14 @@ namespace Sylves
         }
         */
 
+        public IGrid GetCompactGrid() => new BijectModifier(this, c =>
+        {
+            var s = MathUtils.PMod(c.x, 2);
+            var x = (c.x - s) / 2;
+            return new Cell(x, c.y, 1 + s - x - c.y);
+
+        }, c => new Cell(c.x * 2 + (c.x + c.y + c.z - 1), c.y, 0), 2);
+
         #endregion
 
         #region Cell info

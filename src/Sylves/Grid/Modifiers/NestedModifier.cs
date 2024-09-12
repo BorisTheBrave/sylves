@@ -128,6 +128,8 @@ namespace Sylves
         public virtual IDualMapping GetDual() => throw new NotImplementedException();
 
         public virtual IGrid GetDiagonalGrid() => throw new NotImplementedException();
+
+        public virtual IGrid GetCompactGrid() => DefaultGridImpl.GetCompactGrid(this);
         #endregion
 
         #region Cell info

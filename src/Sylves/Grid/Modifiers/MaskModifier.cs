@@ -77,6 +77,9 @@ namespace Sylves
             }
         }
 
+        // Hmm, needs some thought. Without a mapping, we can't easily make use of Underlying.GetCompactGrid();
+        public override IGrid GetCompactGrid() => throw new NotImplementedException();
+
 
         #endregion
 

@@ -188,6 +188,9 @@ namespace Sylves
 
             protected override IGrid Rebind(IGrid underlying) => new DiagonalGrid(underlying);
         }
+
+        public IGrid GetCompactGrid() => this;
+
         #endregion
 
         #region Cell info

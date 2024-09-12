@@ -258,6 +258,8 @@ namespace Sylves
         }
 
         public IGrid GetDiagonalGrid() => throw new NotImplementedException();
+
+        public IGrid GetCompactGrid() => DefaultGridImpl.GetCompactGridFiniteX(this, centerGrid.IndexCount);
         #endregion
 
         #region Cell info

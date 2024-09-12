@@ -64,15 +64,15 @@ namespace Sylves
             this.bound = bound;
             if (!underlying.Is2d)
             {
-                throw new Exception("Underlying should be a 2d grid");
+                throw new ArgumentException("Underlying should be a 2d grid");
             }
             if (!underlying.IsPlanar)
             {
-                throw new Exception("Underlying should be a planar grid");
+                throw new ArgumentException("Underlying should be a planar grid");
             }
             if (underlying.CoordinateDimension >= 3)
             {
-                throw new Exception("Underlying should be a grid that doesn't use the z coordinate (i.e. CoordinateDimension <= 2)");
+                throw new ArgumentException("Underlying should be a grid that doesn't use the z coordinate (i.e. CoordinateDimension <= 2). Consider using GetCompactGrid or RavelModifier before the PlanarPrismModifier.");
             }
         }
 
@@ -327,6 +327,8 @@ namespace Sylves
         }
 
         public IGrid GetDiagonalGrid() => throw new NotImplementedException();
+
+        public IGrid GetCompactGrid() => DefaultGridImpl.GetCompactGrid(this);
         #endregion
 
         #region Cell info

@@ -312,6 +312,8 @@ namespace Sylves
             return new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = diagCellData, Moves = diagMoves }, is2d);
         }
 
+        public override IGrid GetCompactGrid() => CoordinateDimension <= 2 ? this : throw new NotImplementedException();
+
         #endregion
 
         #region Cell info

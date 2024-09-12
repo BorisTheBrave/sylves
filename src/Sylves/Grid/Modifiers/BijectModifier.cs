@@ -101,6 +101,10 @@ namespace Sylves
             }
         }
 
+
+        // GetCompactGrid is a form of BijectModifier itself, it doesn't make sense to re-apply it.
+        public override IGrid GetCompactGrid() => Underlying;
+
         #endregion
 
         #region Cell info
