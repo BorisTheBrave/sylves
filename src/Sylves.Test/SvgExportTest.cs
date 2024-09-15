@@ -329,11 +329,31 @@ namespace Sylves.Test
                 sphinxGridOptions
                 );
 
+            var pinwheelGrid = new PinwheelGrid(new SubstitutionTilingBound { Height = 8 });
+            var pinwheelGridOptions = new Options
+            {
+                textScale = null,
+                min = new Vector2(-30, -30),
+                max = new Vector2(30, 30),
+                trim = true,
+                fillFunc = (c) => {
+                    var angle = pinwheelGrid.GetTRS(c).Rotation.eulerAngles.z;
+                    var r = ((int)(angle / 360 * 256) + 256) % 256;
+                    return $"#{r:X2}2222";
+                    }
+            };
+            Export(
+                pinwheelGrid,
+                "pinwheel.svg",
+                pinwheelGridOptions
+                );
+
 
             // Export prototiles (i.e. substitution rules)
             ExportPrototiles("chair_prototiles.svg", ChairGrid.Prototiles);
             ExportPrototiles("penrose_rhomb_prototiles.svg", PenroseRhombGrid.Prototiles);
             ExportPrototiles("ammann_beenker_prototiles.svg", AmmannBeenkerGrid.Prototiles);
+            ExportPrototiles("sphinx_prototiles.svg", SphinxGrid.Prototiles);
 
             // Tree view
             ExportTreeView("chair_tree.svg", chairGrid, chairOptions);

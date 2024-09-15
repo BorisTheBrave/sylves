@@ -43,9 +43,9 @@ namespace Sylves
             Name = "Sphinx",
             ChildPrototiles = new[]
                 {
-                (ScaleRotateAndTranslate(Deflation, 0, 0, 0), "Sphinx2"),
                 (ScaleRotateAndTranslate(Deflation, 0, 1.5f, 0), "Sphinx2"),
-                (ScaleRotateAndTranslate(Deflation, 180, 2.5f, HSqrt3), "Sphinx2"),
+                (ScaleRotateAndTranslate(Deflation, 0, 3, 0), "Sphinx2"),
+                (ScaleRotateAndTranslate(Deflation, 180, 1, HSqrt3), "Sphinx2"),
                 (ScaleRotateAndTranslate(Deflation, -120, 1, Sqrt3), "Sphinx"),
                 },
             InteriorPrototileAdjacencies = new[]
@@ -82,53 +82,15 @@ namespace Sylves
                 {
                     Polygon(0, 0, 1, 0, 2, 0, 3, 0, 2.5f, HSqrt3, 1.5f, HSqrt3, 1, Sqrt3, 0.5f, HSqrt3),
                 }
-        };
+        }.HasSingleTile();
 
-        private static Prototile Sphinx2 = new Prototile
-        {
-            Name = "Sphinx2",
-            ChildPrototiles = new[]
-                {
-                (ScaleRotateAndTranslate(Deflation, 0, 0f, 0), "Sphinx"),
-                (ScaleRotateAndTranslate(Deflation, 0, 1.5f, 0), "Sphinx"),
-                (ScaleRotateAndTranslate(Deflation, 180, 2f, HSqrt3), "Sphinx"),
-                (ScaleRotateAndTranslate(Deflation, 120, 2.75f, HSqrt3 / 2), "Sphinx2"),
-                },
-            InteriorPrototileAdjacencies = new[]
-                {
-                    (2, 3, 0, 5),
-                    (2, 4, 0, 4),
-                    (2, 5, 0, 3),
-                    (2, 6, 1, 7),
-                    (2, 7, 1, 6),
-                    (3, 5, 2, 0),
-                    (3, 6, 1, 5),
-                    (3, 7, 1, 4),
-                },
-            ExteriorPrototileAdjacencies = new[]
-                {
-                    (0, 0, 2, 0, 0),
-                    (0, 1, 2, 0, 1),
-                    (1, 0, 2, 0, 2),
-                    (1, 1, 2, 1, 0),
-                    (2, 0, 2, 1, 1),
-                    (2, 1, 2, 1, 2),
-                    (3, 0, 2, 1, 3),
-                    (3, 1, 2, 3, 0),
-                    (4, 0, 2, 3, 1),
-                    (4, 1, 2, 3, 2),
-                    (5, 0, 2, 3, 3),
-                    (5, 1, 2, 3, 4),
-                    (6, 0, 2, 2, 1),
-                    (6, 1, 2, 2, 2),
-                    (7, 0, 2, 0, 6),
-                    (7, 1, 2, 0, 7),
-                },
-            ChildTiles = new[]
-                {
-                    Polygon(0, 0, 1, 0, 2, 0, 3, 0, 2.5f, HSqrt3, 2, Sqrt3, 1.5f, HSqrt3, 0.5f, HSqrt3),
-                }
-        };
+        private static Prototile Sphinx2 = Sphinx
+            .HasSingleTile()
+            .Mirror()
+            .Rename("Sphinx2")
+            .RenameChildren(new Dictionary<string, string> { { "Sphinx", "Sphinx2" }, { "Sphinx2", "Sphinx" } })
+            .SwapChildren(0, 2)
+            ;
 
         public static Prototile[] Prototiles =
         {

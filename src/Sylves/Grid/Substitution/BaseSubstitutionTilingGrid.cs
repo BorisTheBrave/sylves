@@ -119,20 +119,10 @@ namespace Sylves
             }
 
             // Some defaults for the common case of a single tile per prototile.
-            foreach(var p in internalPrototiles)
-            {
-                if(p.InteriorTileAdjacencies == null && p.ChildTiles.Length == 1)
-                {
-                    p.InteriorTileAdjacencies = new (int, int, int, int)[0];
-                }
-                if (p.ExteriorTileAdjacencies == null && p.ChildTiles.Length == 1)
-                {
-                    p.ExteriorTileAdjacencies = Enumerable.Range(0, p.ChildTiles[0].Length).Select(x => (x, 0, 1, 0, x)).ToArray();
-                }
-            }
 
-            //if(GetType() == typeof(SphinxGrid))
-            //    BuildPrototileAdjacencies(internalPrototiles);
+
+            if(GetType() == typeof(PinwheelGrid))
+                BuildPrototileAdjacencies(internalPrototiles);
 
             // Precompute centers
             foreach(var prototile in internalPrototiles)
