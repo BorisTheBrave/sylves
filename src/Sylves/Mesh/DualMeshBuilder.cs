@@ -159,7 +159,7 @@ namespace Sylves
                         // Determine the vertex we are walking around
                         var vertex = face[edge];
                         bool isFar = isFarVertex[vertex];
-                        // Walk forword
+                        // Walk forward
                         dualFaceIndices.Clear();
                         (int, int) endHe = default;
                         {

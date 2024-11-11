@@ -67,7 +67,17 @@ namespace Sylves
             getChunkByCell = GetChunkByCell;
             MakeCaches(cachePolicy);
 
-            Setup(squareGrid, chunkSize / 2, cachePolicy: cachePolicy);
+            SquareBound bound = null;
+            if(planarGrid.IsFinite)
+            {
+                bound = SquareBound.FromVectors(planarGrid.GetCells().Select(c =>
+                {
+                    var chunk = GetChunkByCell(c);
+                    return new Vector2Int(c.x, c.y);
+                }));
+            }
+
+            Setup(squareGrid, chunkSize / 2, bound, cachePolicy: cachePolicy);
         }
 
         public DefaultDualMapping(PlanarLazyGrid grid, ICachePolicy cachePolicy)
@@ -208,12 +218,12 @@ namespace Sylves
                             {
                                 break;
                             }
-                            currentHe = NextHalfEdge(currentHe);
+                            currentHe = NextHalfEdge(nextHe.Value);
+                            dualCorner2--;
 
                             visited.Add(currentHe);
                             mapping.Add((currentHe.cell, DirToCorner(currentHe.dir), Combine(new Cell(dualCellCount, 0), chunkCell), (CellCorner)dualCorner2));
                             minChunk = LexMin(minChunk, getChunkByCell(currentHe.cell));
-                            dualCorner2--;
                         }
                     }
 
