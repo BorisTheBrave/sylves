@@ -599,7 +599,7 @@ mix.inputs[0].default_value = 0.433333
         }
 
         [Test]
-        [Ignore("Needs inspection to tell if there's a problem")]
+        [Explicit("Needs inspection to tell if there's a problem")]
         public void TestPrecision()
         {
             var n = 4;
@@ -672,6 +672,117 @@ mix.inputs[0].default_value = 0.433333
                 postProcess = PostProcess,
                 textScale = null,
             });
+        }
+
+        Vector2 RandomPointInPolygon(Vector3[] polygon, Random r)
+        {
+            // Fan based
+            var totalArea = 0.0f;
+            for(var i=2;i<polygon.Length;i++)
+            {
+                var v0 = polygon[0];
+                var v1 = polygon[i-1];
+                var v2 = polygon[i];
+                var area = 0.5f * (v0.x * (v1.y - v2.y) + v1.x * (v2.y - v0.y) + v2.x * (v0.y - v1.y));
+                totalArea += area;
+            }
+            var a = totalArea * r.NextSingle();
+            for (var i = 2; i < polygon.Length; i++)
+            {
+                var v0 = polygon[0];
+                var v1 = polygon[i - 1];
+                var v2 = polygon[i];
+                var area = 0.5f * (v0.x * (v1.y - v2.y) + v1.x * (v2.y - v0.y) + v2.x * (v0.y - v1.y));
+                a -= area;
+                if (a < 0)
+                {
+                    var x = r.NextSingle();
+                    var y = r.NextSingle();
+                    if(x+y>1)
+                    {
+                        x = 1 - x;
+                        y = 1 - y;
+                    }
+                    var v = v0 + x * (v1 - v0) + y * (v2 - v0);
+                    return new Vector2(v.x, v.y);
+                }
+            }
+            throw new Exception();
+        }
+
+        // Mitchell's best candidate
+        Vector2[] BlueNoise(Aabb bound, int n, int samples, Random r)
+        {
+            var points = new List<Vector2>();
+            var center = bound.Center;
+            var size = bound.Size;
+            for (var i = 0; i < n; i++)
+            {
+                var best = new Vector2();
+                var bestD = 0f;
+                for (var j = 0; j < samples; j++)
+                {
+                    var candidate = new Vector2(bound.Min.x + bound.Size.x * r.NextSingle(), bound.Min.y + bound.Size.y * r.NextSingle());
+                    if (i == 0)
+                    {
+                        best = candidate;
+                        bestD = 0f;
+                        break;
+                    }
+                    var d = points.Select(v =>
+                    {
+                        if (candidate.x > center.x && v.x < center.x) v.x += size.x;
+                        if (candidate.x < center.x && v.x > center.x) v.x -= size.x;
+                        if (candidate.y > center.y && v.y < center.y) v.y += size.y;
+                        if (candidate.y < center.y && v.y > center.y) v.y -= size.y;
+                        return (v - candidate).sqrMagnitude;
+                    }).Min();
+                    if (d > bestD)
+                    {
+                        best = candidate;
+                        bestD = d;
+                    }
+                }
+                points.Add(best);
+            }
+            return points.ToArray();
+        }
+
+        [Test]
+        [Explicit]
+        public void ExportVoronoiSampler()
+        {
+            var random = new Random();
+            var grids = new IGrid[] { new SquareGrid(1), new HexGrid(1) };
+            var relaxes = new[] { 0, 3, 10, 50 };
+            //var relaxes = Enumerable.Range(0, 11);
+            var bound = Aabb.FromMinMax(new Vector3(-10, -10, -10), new Vector3(10, 10, 10));
+            var larger = Aabb.FromMinMax(new Vector3(-15, -15, -15), new Vector3(15, 15, 15));
+            foreach (var grid in grids)
+            {
+                var points = grid.GetCellsIntersectsApprox(larger)
+                    .Select(c => RandomPointInPolygon(grid.GetPolygon(c), random))
+                    .Select(v => new Vector2(v.x, v.y))
+                    .ToList();
+                foreach (var r in relaxes)
+                {
+                    var v = new VoronoiGrid(points, new VoronoiGridOptions { LloydRelaxationIterations = r });
+                    var svgOptions = new Options() { textScale = null, strokeWidth = 0.05f, min = new Vector2(bound.Min.x, bound.Min.y), max = new Vector2(bound.Max.x, bound.Max.y) };
+                    Export(v, $"voronoi_{grid.GetType().Name}_{r}.svg", svgOptions);
+                }
+            }
+
+            // Do blue noise
+            {
+                var n = new SquareGrid(1).GetCellsIntersectsApprox(larger).Count();
+                var points = BlueNoise(larger, n, n, random);
+                foreach (var r in relaxes)
+                {
+                    var v = new VoronoiGrid(points, new VoronoiGridOptions { LloydRelaxationIterations = r });
+                    var svgOptions = new Options() { textScale = null, strokeWidth = 0.05f, min = new Vector2(bound.Min.x, bound.Min.y), max = new Vector2(bound.Max.x, bound.Max.y) };
+                    Export(v, $"voronoi_blue_{r}.svg", svgOptions);
+                }
+            }
         }
     }
 }

@@ -61,7 +61,8 @@ namespace Sylves
                 {
                     throw new Exception($"Unknown relaxation type {voronoiGridOptions.BorderRelaxation}");
                 }
-                voronator = voronoiGridOptions.ClipMin == null ? new Voronator(points) : new Voronator(points, voronoiGridOptions.ClipMin.Value, voronoiGridOptions.ClipMax.Value);
+                // Don't grow the bounds every iteration
+                voronator = new Voronator(points, voronator.ClipMin, voronator.ClipMax);
             }
 
             var indices = new List<int>();
@@ -71,6 +72,9 @@ namespace Sylves
                 if (mask != null && mask(i) == false)
                     continue;
                 var polygon = voronator.GetClippedPolygon(i);
+                // Hmm, should we just fail here?
+                if (polygon == null || polygon.Count == 0)
+                    continue;
                 for (var j = 0; j < polygon.Count; j++)
                 {
                     indices.Add(vertices.Count);
