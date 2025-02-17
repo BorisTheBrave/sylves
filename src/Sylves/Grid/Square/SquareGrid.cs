@@ -205,7 +205,7 @@ namespace Sylves
         {
             return SquareCellType.Instance;
         }
-        public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
+        public bool IsCellInGrid(Cell cell) => cell.z == 0 && IsCellInBound(cell, bound);
 
         #endregion
         #region Topology
@@ -305,6 +305,7 @@ namespace Sylves
 
         public Cell GetCellByIndex(int index)
         {
+            CheckBounded();
             var x = index % bound.Size.x;
             var y = index / bound.Size.x;
             return new Cell(x + bound.Min.x, y + bound.Min.y, 0);
