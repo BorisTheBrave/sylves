@@ -102,6 +102,11 @@ namespace Sylves.Test
             CollectionAssert.AreEquivalent(new[] { new Cell() }, g.GetCellsIntersectsApprox(new Vector3(), new Vector3(.1f, .1f, .1f))); ;
         }
 
-
+        [Test]
+        public void TestTriangleMesh()
+        {
+            var g = new PlanarPrismModifier(new SquareGrid(1));
+            GridTest.TestTriangleMesh(g, new Cell(), dir => ((CubeDir)dir).Forward(), _ => 2);
+        }
     }
 }

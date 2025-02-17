@@ -442,7 +442,30 @@ namespace Sylves
 
         public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell)
         {
-            throw new NotImplementedException();
+            var center = GetCellCenter(cell);
+
+            // Uses same conventions as MeshPrimitives.Cube, but inlined for efficiency
+            var v0 = Vector3.Scale(cellSize, new Vector3(+0.5f, -0.5f, -0.5f)) + center;
+            var v1 = Vector3.Scale(cellSize, new Vector3(+0.5f, +0.5f, -0.5f)) + center;
+            var v2 = Vector3.Scale(cellSize, new Vector3(-0.5f, +0.5f, -0.5f)) + center;
+            var v3 = Vector3.Scale(cellSize, new Vector3(-0.5f, -0.5f, -0.5f)) + center;
+            var v4 = Vector3.Scale(cellSize, new Vector3(+0.5f, -0.5f, +0.5f)) + center;
+            var v5 = Vector3.Scale(cellSize, new Vector3(+0.5f, +0.5f, +0.5f)) + center;
+            var v6 = Vector3.Scale(cellSize, new Vector3(-0.5f, +0.5f, +0.5f)) + center;
+            var v7 = Vector3.Scale(cellSize, new Vector3(-0.5f, -0.5f, +0.5f)) + center;
+
+            yield return (v0, v1, v5, (CellDir)CubeDir.Right);
+            yield return (v5, v4, v0, (CellDir)CubeDir.Right);
+            yield return (v7, v6, v2, (CellDir)CubeDir.Left);
+            yield return (v2, v3, v7, (CellDir)CubeDir.Left);
+            yield return (v2, v6, v5, (CellDir)CubeDir.Up);
+            yield return (v5, v1, v2, (CellDir)CubeDir.Up);
+            yield return (v0, v4, v7, (CellDir)CubeDir.Down);
+            yield return (v7, v3, v0, (CellDir)CubeDir.Down);
+            yield return (v4, v5, v6, (CellDir)CubeDir.Forward);
+            yield return (v6, v7, v4, (CellDir)CubeDir.Forward);
+            yield return (v3, v2, v1, (CellDir)CubeDir.Back);
+            yield return (v1, v0, v3, (CellDir)CubeDir.Back);
         }
 
         public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)

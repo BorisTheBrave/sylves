@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -204,6 +205,26 @@ namespace Sylves.Test
 
             var actualDiagonal = diagonals.GetNeighbours(cell).ToList();
             CollectionAssert.AreEqual(expectedDiagonals, actualDiagonal);
+        }
+
+        public static void TestTriangleMesh(IGrid grid, Cell cell, Func<CellDir, Vector3> expectedNormal, Func<CellDir, int> expectedCount)
+        {
+            var cellType = grid.GetCellType(cell);
+            int i = 0;
+            var counts = new Dictionary<CellDir, int>();
+            foreach (var (v0, v1, v2, dir) in grid.GetTriangleMesh(cell))
+            {
+                var n = MeshUtils.GetNormalDirection(v0, v1, v2);
+                var n2 = expectedNormal(dir);
+                var d = Vector3.Dot(n, n2);
+                Assert.IsTrue(d > 0, $"Normal = {n}, Expected {n2}, Dir = {cellType.Format(dir)}, Index={i}");
+                counts[dir] = counts.GetValueOrDefault(dir, 0) + 1;
+                i++;
+            }
+            foreach(var dir in grid.GetCellDirs(cell))
+            {
+                Assert.AreEqual(expectedCount(dir), counts.GetValueOrDefault(dir, 0), $"Dir = {cellType.Format(dir)}");
+            }
         }
     }
 }

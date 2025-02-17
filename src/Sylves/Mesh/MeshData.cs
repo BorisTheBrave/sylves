@@ -98,7 +98,7 @@ namespace Sylves
                         var v0 = vertices[i0];
                         var v1 = vertices[i1];
                         var v2 = vertices[i2];
-                        normals[i1] += Vector3.Cross(v2 - v1, v0 - v1).normalized;
+                        normals[i1] += MeshUtils.GetNormalDirection(v0, v1, v2).normalized;
                     }
                 }
             }

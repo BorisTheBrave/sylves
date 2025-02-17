@@ -95,6 +95,13 @@ namespace Sylves
             return true;
         }
 
+        // Uses Unity's winding order
+        // NB: Doesn't normalize magnitude
+        internal static Vector3 GetNormalDirection(Vector3 v0, Vector3 v1, Vector3 v2)
+        {
+            return Vector3.Cross(v2 - v1, v0 - v1);
+        }
+
         /// <summary>
         /// References a slice of indices for a face.
         /// </summary>

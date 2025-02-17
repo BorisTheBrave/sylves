@@ -249,5 +249,12 @@ namespace Sylves.Test
             var dual = g.GetDual();
             GridTest.DualMapping(dual, new Cell(0, 0, 0), checkPositions: false);
         }
+
+        [Test]
+        public void TestTriangleMesh()
+        {
+            var g = new MeshPrismGrid(TestMeshes.PlaneXY, new MeshPrismGridOptions { });
+            GridTest.TestTriangleMesh(g, new Cell(), dir => ((CubeDir)dir).Forward(), _ => 2);
+        }
     }
 }

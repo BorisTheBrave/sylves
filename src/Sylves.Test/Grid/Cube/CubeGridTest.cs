@@ -130,5 +130,12 @@ namespace Sylves.Test
             GridTest.DualMapping(dual, new Cell(0, 0, 0));
             GridTest.DualMapping(dual, new Cell(8, -4, 0));
         }
+
+        [Test]
+        public void TestTriangleMesh()
+        {
+            var g = new CubeGrid(1);
+            GridTest.TestTriangleMesh(g, new Cell(), dir => ((CubeDir)dir).Forward(), _ => 2);
+        }
     }
 }

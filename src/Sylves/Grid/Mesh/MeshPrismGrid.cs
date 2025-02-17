@@ -261,8 +261,8 @@ namespace Sylves
                 var n2 = normals[face[(i + 1) % face.Length]];
                 var baseCellDir = MeshGridBuilder.EdgeIndexToCellDir(i, face.Count, meshPrismOptions.DoubleOddFaces);
                 var cellDir = prismInfo.BaseToPrism(baseCellDir);
-                yield return (v1 + n1 * meshOffset1, v1 + n1 * meshOffset2, v2 + n2 * meshOffset2, cellDir);
-                yield return (v1 + n1 * meshOffset1, v2 + n2 * meshOffset2, v2 + n2 * meshOffset1, cellDir);
+                yield return (v1 + n1 * meshOffset1, v2 + n2 * meshOffset1, v2 + n2 * meshOffset2, cellDir);
+                yield return (v1 + n1 * meshOffset1, v2 + n2 * meshOffset2, v1 + n1 * meshOffset2, cellDir);
             }
             // Currently does fan detection
             // Doesn't work for convex faces
@@ -275,8 +275,8 @@ namespace Sylves
                 {
                     var v2 = vertices[face[i]];
                     var n2 = normals[face[i]];
-                    yield return (v0 + n0 * meshOffset2, v2 + n2 * meshOffset2, v1 + n1 * meshOffset2, prismInfo.ForwardDir);
-                    yield return (v0 + n0 * meshOffset1, v1 + n1 * meshOffset1, v2 + n2 * meshOffset1, prismInfo.BackDir);
+                    yield return (v0 + n0 * meshOffset2, v1 + n1 * meshOffset2, v2 + n2 * meshOffset2, prismInfo.ForwardDir);
+                    yield return (v0 + n0 * meshOffset1, v2 + n2 * meshOffset1, v1 + n1 * meshOffset1, prismInfo.BackDir);
                     v1 = v2;
                     n1 = n2;
                 }
