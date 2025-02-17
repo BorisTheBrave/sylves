@@ -11,3 +11,7 @@ Returns the same grid with [bounds](bounds.md) removed.
 ### [`Unwrapped`](xref:Sylves.IGrid.Unwrapped)
 
 Returns the same grid with most [modifiers](../modifiers/index.md) removed.
+
+### ['GetDual'](xref:Sylves.IGrid.GetDual)
+
+Returns the [dual grid](dual.md), described more in a [separate section](dual.md)

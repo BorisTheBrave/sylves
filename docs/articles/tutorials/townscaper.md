@@ -12,7 +12,7 @@ Fortunately, the developer has left detailed discussions for how to create such 
 
 ## Creating a hex
 
-The townscaper grid is infinite, but it's composed out of small collections of collects in a hexagon shape. First we'll look at creating a single hex.
+The townscaper grid is infinite, but it's composed out of hexagonal shaped chunks which contain several cells. First we'll look at creating a single hex.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I present: <br>Fairly even irregular quads grid in a hex<br><br>Todo: <br>1. Heuristic to reduce (or eliminate) 6 quad verts<br>2. Tile these babies to infinity <a href="https://t.co/o0kU68uovZ">pic.twitter.com/o0kU68uovZ</a></p>&mdash; Oskar Stålberg (@OskSta) <a href="https://twitter.com/OskSta/status/1147881669350891521?ref_src=twsrc%5Etfw">July 7, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 

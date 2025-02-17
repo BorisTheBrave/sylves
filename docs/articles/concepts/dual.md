@@ -29,7 +29,7 @@ Vector3 p2 = squareGrid.GetCellCorner(new Cell(1, 1), (CellCorner)SquareCorner.B
 
 In Sylves terminology, we say each cell has its own set of corners, but these corners all correspond to a single vertex. Because vertices correspond to cells in the dual grid, they're more commonly called dual cells.
 
-The dual grid api lets you find a unique cell value each vertex. You'll get the same value regardless of which corner you queried it about.
+The dual grid api lets you find a unique cell value for each vertex. You'll get the same value regardless of which corner you queried it about.
 
 ```csharp
 IDualMapping dualMapping = squareGrid.GetDual();
