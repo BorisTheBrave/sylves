@@ -155,7 +155,12 @@ These grids don't classify neatly and usually serve as demos for various feature
 </tr>
 <tr>
     <td><a href="../../images/grids/wrap_square_fake.svg"><img class="grid-thumb" src="../../images/grids/wrap_square_fake.svg" /></img></td>
-    <td><a href="xref:Sylves.WrappingSquareGrid">WrappingSquareGrid</a><br/>Turns any bounded grid into a grid which connects back on itself when you leave the grounds. </td>
+    <td><a href="xref:Sylves.WrappingSquareGrid">WrappingSquareGrid</a><br/>A bounded square grid the wraps at the edges back onto itself.</td>
+</tr>
+
+<tr>
+    <td><a href="../../images/grids/wrap_hex_fake.svg"><img class="grid-thumb" src="../../images/grids/wrap_hex_fake.svg" /></img></td>
+    <td><a href="xref:Sylves.WrappingHexGrid">WrappingHexGrid</a><br/>A bounded hexagon grid that wraps on the edges back to itself.</td>
 </tr>
 <tr>
     <td><a href="../../images/grids/townscaper.svg"><img class="grid-thumb" src="../../images/grids/townscaper.svg" /></img></td>

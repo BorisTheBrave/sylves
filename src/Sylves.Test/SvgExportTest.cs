@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.CodeCoverage;
+using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace Sylves.Test
             public bool includeDual = false;
             public bool trim = false;
             public Func<Cell, string> fillFunc = null;
+            public Func<Cell, string> textFunc = null;
             public Action<SvgBuilder> postProcess = null;
         }
 
@@ -38,7 +40,7 @@ namespace Sylves.Test
             {
                 foreach (var cell in cells)
                 {
-                    b.DrawCoordinateLabel(grid, cell, options.dim ?? grid.CoordinateDimension, options.textScale.Value);
+                    b.DrawCoordinateLabel(grid, cell, options.dim ?? grid.CoordinateDimension, options.textScale.Value, options.textFunc?.Invoke(cell));
                 }
             }
         }
@@ -264,7 +266,6 @@ namespace Sylves.Test
             }
         }
 
-
         [Test]
         public void ExportSubstitutionGrids()
         {
@@ -445,6 +446,9 @@ namespace Sylves.Test
             Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "townscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
             Export(new TownscaperGrid(4, 0).BoundBy(new SquareBound(new Vector2Int(-2, -2), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "unrelaxedtownscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
             Export(new OffGrid(0.2f, new SquareBound(-4, -4, 5, 5)), "off.svg", new Options { textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3)});
+
+            // For wrapping
+            Export(new HexGrid(1f, bound: HexBound.Hexagon(1)), "wrap_hex_fake.svg", new Options { textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3)});
 
             // Modifier grids
             var centerSquare = new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))).Transformed(Matrix4x4.Translate(new Vector3(-0.5f, -0.5f, 0)));

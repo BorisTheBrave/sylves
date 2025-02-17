@@ -80,7 +80,7 @@ namespace Sylves
             tw.WriteLine("\"/>");
         }
 
-        public void DrawCoordinateLabel(IGrid grid, Cell cell, int dim = 3, double textScale = 1.0)
+        public void DrawCoordinateLabel(IGrid grid, Cell cell, int dim = 3, double textScale = 1.0, string text = null)
         {
             // Style is hard coded for now
             var stroke_text_style = "fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05";
@@ -94,13 +94,21 @@ namespace Sylves
             foreach (var textStyle in new[] { stroke_text_style, text_style })
             {
                 tw.Write($@"<text text-anchor=""middle"" alignment-baseline=""middle"" style=""{ textStyle}"">");
-                tw.Write($@"<tspan {xs}>{cell.x}</tspan>");
-                if (dim >= 2)
+                if (text != null)
                 {
-                    tw.Write($@", <tspan {ys}>{cell.y}</tspan>");
+                    tw.Write(text);
                 }
-                if (dim >= 3) {
-                    tw.Write($@", <tspan {zs}>{cell.z}</tspan>");
+                else
+                {
+                    tw.Write($@"<tspan {xs}>{cell.x}</tspan>");
+                    if (dim >= 2)
+                    {
+                        tw.Write($@", <tspan {ys}>{cell.y}</tspan>");
+                    }
+                    if (dim >= 3)
+                    {
+                        tw.Write($@", <tspan {zs}>{cell.z}</tspan>");
+                    }
                 }
                 tw.WriteLine($@"</text>");
             }

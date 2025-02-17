@@ -1,0 +1,2120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="-3 -3 6 6"
+   version="1.1"
+   id="svg48"
+   sodipodi:docname="wrap_hex_fake.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs48" />
+  <sodipodi:namedview
+     id="namedview48"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="90.509668"
+     inkscape:cx="2.2925728"
+     inkscape:cy="-0.53585436"
+     inkscape:window-width="3840"
+     inkscape:window-height="2097"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg48" />
+  <style
+     id="style1">
+.cell-path {
+                stroke-linejoin: round;
+                fill: rgb(244, 244, 241);
+                stroke: rgb(51, 51, 51);
+                stroke-width: 0.1
+            }
+.dual .cell-path {
+                fill: none;
+                stroke: rgb(255, 0, 0);
+                stroke-opacity: 0.5;
+                stroke-width: 0.033333335
+            }
+</style>
+  <rect
+     style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:4;stroke-linejoin:round;stroke-dasharray:none"
+     id="rect1"
+     width="14.773097"
+     height="12.749576"
+     x="-7.5106573"
+     y="-7.1854296" />
+  <!-- (-1, 0, 1) -->
+  <!-- (-1, 1, 0) -->
+  <!-- (0, -1, 1) -->
+  <!-- (0, 0, 0) -->
+  <!-- (0, 1, -1) -->
+  <!-- (1, -1, 0) -->
+  <!-- (1, 0, -1) -->
+  <g
+     id="g50"
+     style="opacity:0.505222;stroke-width:0.715483"
+     transform="matrix(1.3976573,0,0,1.3976573,0,-0.11181258)">
+    <g
+       id="g49-8"
+       transform="translate(2.1650634,0.75)"
+       style="stroke-width:0.715483">
+      <path
+         class="cell-path"
+         d="m -0.4330127,0.25 v -0.5 L -0.8660254,-0.5 -1.299038,-0.25 v 0.5 l 0.4330126,0.25 z"
+         id="path1-6"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,-0.5 V -1 L -0.4330127,-1.25 -0.8660254,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path2-0"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,1 V 0.5 L -0.4330127,0.25 -0.8660254,0.5 V 1 l 0.4330127,0.25 z"
+         id="path3-2"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 0.4330127,0.25 v -0.5 L 0,-0.5 -0.4330127,-0.25 v 0.5 L 0,0.5 Z"
+         id="path4-4"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,-0.5 V -1 L 0.4330127,-1.25 0,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path5-8"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,1 V 0.5 L 0.4330127,0.25 0,0.5 V 1 l 0.4330127,0.25 z"
+         id="path6-6"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 1.299038,0.25 v -0.5 L 0.8660254,-0.5 0.4330127,-0.25 v 0.5 L 0.8660254,0.5 Z"
+         id="path7-5"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.8660254,0.08)"
+         id="g12-0"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text9-9"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan7-0">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan8-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan9-6">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text12-1"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan10-3">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan11-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan12-9">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,-0.67)"
+         id="g18-3"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text15-4"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan13-4">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan14-6">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan15-0">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text18-6"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan16-6">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan17-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan18-8">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,0.83)"
+         id="g24-4"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text21-9"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan19-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan20-3">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan21-7">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text24-8"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan22-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan23-2">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan24-9">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0,0.08)"
+         id="g30-1"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text27-3"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan25-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan26-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan27-8">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text30-4"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan28-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan29-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan30-6">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,-0.67)"
+         id="g36-3"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text33-6"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan31-1">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan32-5">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan33-4">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text36-2"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan34-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan35-9">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan36-7">-1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,0.83)"
+         id="g42-3"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text39-7"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan37-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan38-6">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan39-0">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text42-1"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan40-6">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan41-5">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan42-7">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.8660254,0.08)"
+         id="g48-5"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text45-4"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan43-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan44-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan45-0">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text48-0"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan46-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan47-4">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan48-6">-1</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g49-8-2"
+       transform="translate(2.5980761,3)"
+       style="stroke-width:0.715483">
+      <path
+         class="cell-path"
+         d="m -0.4330127,0.25 v -0.5 L -0.8660254,-0.5 -1.299038,-0.25 v 0.5 l 0.4330126,0.25 z"
+         id="path1-6-2"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,-0.5 V -1 L -0.4330127,-1.25 -0.8660254,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path2-0-17"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,1 V 0.5 L -0.4330127,0.25 -0.8660254,0.5 V 1 l 0.4330127,0.25 z"
+         id="path3-2-4"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 0.4330127,0.25 v -0.5 L 0,-0.5 -0.4330127,-0.25 v 0.5 L 0,0.5 Z"
+         id="path4-4-82"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,-0.5 V -1 L 0.4330127,-1.25 0,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path5-8-3"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,1 V 0.5 L 0.4330127,0.25 0,0.5 V 1 l 0.4330127,0.25 z"
+         id="path6-6-6"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 1.299038,0.25 v -0.5 L 0.8660254,-0.5 0.4330127,-0.25 v 0.5 L 0.8660254,0.5 Z"
+         id="path7-5-30"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.8660254,0.08)"
+         id="g12-0-35"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text9-9-28"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan7-0-0">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan8-0-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan9-6-2">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text12-1-2"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan10-3-5">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan11-8-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan12-9-1">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,-0.67)"
+         id="g18-3-0"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text15-4-85"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan13-4-07">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan14-6-90">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan15-0-5">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text18-6-3"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan16-6-4">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan17-1-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan18-8-0">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,0.83)"
+         id="g24-4-4"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text21-9-85"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan19-6-92">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan20-3-5">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan21-7-41">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text24-8-3"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan22-8-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan23-2-58">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan24-9-2">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0,0.08)"
+         id="g30-1-79"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text27-3-6"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan25-5-1">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan26-9-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan27-8-71">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text30-4-9"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan28-0-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan29-7-34">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan30-6-17">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,-0.67)"
+         id="g36-3-53"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text33-6-32"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan31-1-41">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan32-5-29">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan33-4-0">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text36-2-8"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan34-0-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan35-9-45">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan36-7-68">-1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,0.83)"
+         id="g42-3-0"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text39-7-7"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan37-2-7">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan38-6-43">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan39-0-13">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text42-1-6"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan40-6-3">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan41-5-01">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan42-7-9">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.8660254,0.08)"
+         id="g48-5-0"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text45-4-4"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan43-1-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan44-2-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan45-0-3">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text48-0-14"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan46-1-82">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan47-4-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan48-6-55">-1</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g49-8-99"
+       transform="translate(-2.5980761,-3)"
+       style="stroke-width:0.715483">
+      <path
+         class="cell-path"
+         d="m -0.4330127,0.25 v -0.5 L -0.8660254,-0.5 -1.299038,-0.25 v 0.5 l 0.4330126,0.25 z"
+         id="path1-6-8"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,-0.5 V -1 L -0.4330127,-1.25 -0.8660254,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path2-0-3"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,1 V 0.5 L -0.4330127,0.25 -0.8660254,0.5 V 1 l 0.4330127,0.25 z"
+         id="path3-2-8"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 0.4330127,0.25 v -0.5 L 0,-0.5 -0.4330127,-0.25 v 0.5 L 0,0.5 Z"
+         id="path4-4-6"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,-0.5 V -1 L 0.4330127,-1.25 0,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path5-8-9"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,1 V 0.5 L 0.4330127,0.25 0,0.5 V 1 l 0.4330127,0.25 z"
+         id="path6-6-86"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 1.299038,0.25 v -0.5 L 0.8660254,-0.5 0.4330127,-0.25 v 0.5 L 0.8660254,0.5 Z"
+         id="path7-5-62"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.8660254,0.08)"
+         id="g12-0-38"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text9-9-26"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan7-0-27">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan8-0-57">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan9-6-82">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text12-1-78"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan10-3-020">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan11-8-89">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan12-9-28">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,-0.67)"
+         id="g18-3-20"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text15-4-55"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan13-4-2">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan14-6-7">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan15-0-67">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text18-6-8"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan16-6-78">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan17-1-16">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan18-8-09">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,0.83)"
+         id="g24-4-58"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text21-9-90"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan19-6-00">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan20-3-72">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan21-7-55">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text24-8-21"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan22-8-48">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan23-2-6">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan24-9-46">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0,0.08)"
+         id="g30-1-89"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text27-3-83"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan25-5-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan26-9-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan27-8-15">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text30-4-58"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan28-0-4">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan29-7-05">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan30-6-4">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,-0.67)"
+         id="g36-3-72"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text33-6-1"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan31-1-49">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan32-5-9">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan33-4-03">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text36-2-0"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan34-0-3">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan35-9-5">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan36-7-07">-1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,0.83)"
+         id="g42-3-67"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text39-7-8"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan37-2-36">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan38-6-44">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan39-0-19">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text42-1-55"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan40-6-74">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan41-5-7">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan42-7-34">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.8660254,0.08)"
+         id="g48-5-08"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text45-4-8"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan43-1-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan44-2-52">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan45-0-32">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text48-0-46"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan46-1-6">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan47-4-62">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan48-6-9">-1</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g49-8-9"
+       transform="translate(1.7320507,-1.5)"
+       style="stroke-width:0.715483">
+      <path
+         class="cell-path"
+         d="m -0.4330127,0.25 v -0.5 L -0.8660254,-0.5 -1.299038,-0.25 v 0.5 l 0.4330126,0.25 z"
+         id="path1-6-6"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,-0.5 V -1 L -0.4330127,-1.25 -0.8660254,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path2-0-8"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,1 V 0.5 L -0.4330127,0.25 -0.8660254,0.5 V 1 l 0.4330127,0.25 z"
+         id="path3-2-3"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 0.4330127,0.25 v -0.5 L 0,-0.5 -0.4330127,-0.25 v 0.5 L 0,0.5 Z"
+         id="path4-4-4"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,-0.5 V -1 L 0.4330127,-1.25 0,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path5-8-8"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,1 V 0.5 L 0.4330127,0.25 0,0.5 V 1 l 0.4330127,0.25 z"
+         id="path6-6-4"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 1.299038,0.25 v -0.5 L 0.8660254,-0.5 0.4330127,-0.25 v 0.5 L 0.8660254,0.5 Z"
+         id="path7-5-9"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.8660254,0.08)"
+         id="g12-0-9"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text9-9-2"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan7-0-5">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan8-0-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan9-6-3">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text12-1-3"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan10-3-3">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan11-8-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan12-9-4">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,-0.67)"
+         id="g18-3-3"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text15-4-8"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan13-4-0">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan14-6-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan15-0-8">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text18-6-0"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan16-6-6">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan17-1-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan18-8-1">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,0.83)"
+         id="g24-4-9"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text21-9-8"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan19-6-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan20-3-7">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan21-7-2">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text24-8-2"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan22-8-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan23-2-2">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan24-9-8">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0,0.08)"
+         id="g30-1-9"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text27-3-0"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan25-5-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan26-9-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan27-8-1">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text30-4-5"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan28-0-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan29-7-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan30-6-1">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,-0.67)"
+         id="g36-3-2"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text33-6-4"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan31-1-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan32-5-5">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan33-4-8">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text36-2-6"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan34-0-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan35-9-6">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan36-7-5">-1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,0.83)"
+         id="g42-3-3"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text39-7-9"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan37-2-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan38-6-4">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan39-0-6">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text42-1-1"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan40-6-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan41-5-2">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan42-7-1">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.8660254,0.08)"
+         id="g48-5-1"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text45-4-9"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan43-1-7">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan44-2-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan45-0-2">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text48-0-9"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan46-1-5">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan47-4-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan48-6-0">-1</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g49-8-0"
+       transform="translate(-0.4330127,-2.25)"
+       style="stroke-width:0.715483">
+      <path
+         class="cell-path"
+         d="m -0.4330127,0.25 v -0.5 L -0.8660254,-0.5 -1.299038,-0.25 v 0.5 l 0.4330126,0.25 z"
+         id="path1-6-3"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,-0.5 V -1 L -0.4330127,-1.25 -0.8660254,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path2-0-9"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,1 V 0.5 L -0.4330127,0.25 -0.8660254,0.5 V 1 l 0.4330127,0.25 z"
+         id="path3-2-1"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 0.4330127,0.25 v -0.5 L 0,-0.5 -0.4330127,-0.25 v 0.5 L 0,0.5 Z"
+         id="path4-4-8"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,-0.5 V -1 L 0.4330127,-1.25 0,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path5-8-1"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,1 V 0.5 L 0.4330127,0.25 0,0.5 V 1 l 0.4330127,0.25 z"
+         id="path6-6-9"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 1.299038,0.25 v -0.5 L 0.8660254,-0.5 0.4330127,-0.25 v 0.5 L 0.8660254,0.5 Z"
+         id="path7-5-5"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.8660254,0.08)"
+         id="g12-0-3"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text9-9-25"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan7-0-2">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan8-0-58">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan9-6-6">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text12-1-7"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan10-3-7">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan11-8-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan12-9-2">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,-0.67)"
+         id="g18-3-9"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text15-4-4"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan13-4-1">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan14-6-9">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan15-0-6">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text18-6-9"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan16-6-8">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan17-1-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan18-8-5">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,0.83)"
+         id="g24-4-5"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text21-9-4"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan19-6-91">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan20-3-2">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan21-7-5">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text24-8-0"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan22-8-83">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan23-2-9">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan24-9-3">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0,0.08)"
+         id="g30-1-96"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text27-3-7"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan25-5-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan26-9-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan27-8-7">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text30-4-6"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan28-0-9">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan29-7-3">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan30-6-5">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,-0.67)"
+         id="g36-3-7"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text33-6-6"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan31-1-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan32-5-58">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan33-4-2">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text36-2-5"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan34-0-4">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan35-9-4">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan36-7-1">-1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,0.83)"
+         id="g42-3-6"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text39-7-1"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan37-2-6">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan38-6-3">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan39-0-3">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text42-1-5"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan40-6-5">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan41-5-3">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan42-7-2">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.8660254,0.08)"
+         id="g48-5-8"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text45-4-2"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan43-1-5">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan44-2-3">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan45-0-6">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text48-0-1"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan46-1-8">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan47-4-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan48-6-2">-1</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g49-8-1"
+       transform="translate(-2.1650634,-0.75)"
+       style="stroke-width:0.715483">
+      <path
+         class="cell-path"
+         d="m -0.4330127,0.25 v -0.5 L -0.8660254,-0.5 -1.299038,-0.25 v 0.5 l 0.4330126,0.25 z"
+         id="path1-6-4"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,-0.5 V -1 L -0.4330127,-1.25 -0.8660254,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path2-0-6"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,1 V 0.5 L -0.4330127,0.25 -0.8660254,0.5 V 1 l 0.4330127,0.25 z"
+         id="path3-2-2"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 0.4330127,0.25 v -0.5 L 0,-0.5 -0.4330127,-0.25 v 0.5 L 0,0.5 Z"
+         id="path4-4-9"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,-0.5 V -1 L 0.4330127,-1.25 0,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path5-8-15"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,1 V 0.5 L 0.4330127,0.25 0,0.5 V 1 l 0.4330127,0.25 z"
+         id="path6-6-0"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 1.299038,0.25 v -0.5 L 0.8660254,-0.5 0.4330127,-0.25 v 0.5 L 0.8660254,0.5 Z"
+         id="path7-5-3"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.8660254,0.08)"
+         id="g12-0-6"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text9-9-4"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan7-0-9">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan8-0-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan9-6-9">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text12-1-34"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan10-3-4">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan11-8-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan12-9-5">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,-0.67)"
+         id="g18-3-96"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text15-4-3"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan13-4-4">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan14-6-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan15-0-88">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text18-6-7"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan16-6-5">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan17-1-81">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan18-8-2">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,0.83)"
+         id="g24-4-57"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text21-9-44"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan19-6-4">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan20-3-4">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan21-7-4">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text24-8-29"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan22-8-3">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan23-2-0">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan24-9-7">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0,0.08)"
+         id="g30-1-7"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text27-3-8"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan25-5-73">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan26-9-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan27-8-3">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text30-4-8"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan28-0-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan29-7-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan30-6-2">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,-0.67)"
+         id="g36-3-0"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text33-6-3"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan31-1-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan32-5-2">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan33-4-9">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text36-2-7"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan34-0-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan35-9-3">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan36-7-4">-1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,0.83)"
+         id="g42-3-32"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text39-7-11"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan37-2-3">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan38-6-2">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan39-0-5">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text42-1-3"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan40-6-51">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan41-5-22">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan42-7-26">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.8660254,0.08)"
+         id="g48-5-4"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text45-4-0"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan43-1-70">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan44-2-34">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan45-0-0">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text48-0-0"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan46-1-53">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan47-4-1">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan48-6-06">-1</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g49-8-7"
+       transform="translate(-1.7320507,1.5)"
+       style="stroke-width:0.715483">
+      <path
+         class="cell-path"
+         d="m -0.4330127,0.25 v -0.5 L -0.8660254,-0.5 -1.299038,-0.25 v 0.5 l 0.4330126,0.25 z"
+         id="path1-6-5"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,-0.5 V -1 L -0.4330127,-1.25 -0.8660254,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path2-0-0"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,1 V 0.5 L -0.4330127,0.25 -0.8660254,0.5 V 1 l 0.4330127,0.25 z"
+         id="path3-2-0"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 0.4330127,0.25 v -0.5 L 0,-0.5 -0.4330127,-0.25 v 0.5 L 0,0.5 Z"
+         id="path4-4-45"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,-0.5 V -1 L 0.4330127,-1.25 0,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path5-8-4"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,1 V 0.5 L 0.4330127,0.25 0,0.5 V 1 l 0.4330127,0.25 z"
+         id="path6-6-95"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 1.299038,0.25 v -0.5 L 0.8660254,-0.5 0.4330127,-0.25 v 0.5 L 0.8660254,0.5 Z"
+         id="path7-5-6"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.8660254,0.08)"
+         id="g12-0-4"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text9-9-8"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan7-0-21">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan8-0-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan9-6-8">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text12-1-31"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan10-3-48">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan11-8-4">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan12-9-9">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,-0.67)"
+         id="g18-3-2"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text15-4-0"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan13-4-7">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan14-6-0">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan15-0-60">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text18-6-70"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan16-6-56">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan17-1-7">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan18-8-3">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,0.83)"
+         id="g24-4-8"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text21-9-49"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan19-6-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan20-3-6">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan21-7-57">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text24-8-7"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan22-8-4">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan23-2-5">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan24-9-79">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0,0.08)"
+         id="g30-1-8"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text27-3-3"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan25-5-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan26-9-2">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan27-8-2">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text30-4-3"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan28-0-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan29-7-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan30-6-15">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,-0.67)"
+         id="g36-3-5"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text33-6-40"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan31-1-26">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan32-5-0">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan33-4-6">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text36-2-1"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan34-0-1">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan35-9-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan36-7-7">-1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,0.83)"
+         id="g42-3-30"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text39-7-0"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan37-2-4">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan38-6-8">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan39-0-30">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text42-1-12"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan40-6-9">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan41-5-0">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan42-7-3">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.8660254,0.08)"
+         id="g48-5-88"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text45-4-5"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan43-1-77">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan44-2-0">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan45-0-8">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text48-0-93"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan46-1-0">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan47-4-7">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan48-6-4">-1</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g49-8-78"
+       transform="translate(0.4330127,2.25)"
+       style="stroke-width:0.715483">
+      <path
+         class="cell-path"
+         d="m -0.4330127,0.25 v -0.5 L -0.8660254,-0.5 -1.299038,-0.25 v 0.5 l 0.4330126,0.25 z"
+         id="path1-6-37"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,-0.5 V -1 L -0.4330127,-1.25 -0.8660254,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path2-0-1"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0,1 V 0.5 L -0.4330127,0.25 -0.8660254,0.5 V 1 l 0.4330127,0.25 z"
+         id="path3-2-00"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 0.4330127,0.25 v -0.5 L 0,-0.5 -0.4330127,-0.25 v 0.5 L 0,0.5 Z"
+         id="path4-4-83"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,-0.5 V -1 L 0.4330127,-1.25 0,-1 v 0.5 l 0.4330127,0.25 z"
+         id="path5-8-45"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="M 0.8660254,1 V 0.5 L 0.4330127,0.25 0,0.5 V 1 l 0.4330127,0.25 z"
+         id="path6-6-01"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <path
+         class="cell-path"
+         d="m 1.299038,0.25 v -0.5 L 0.8660254,-0.5 0.4330127,-0.25 v 0.5 L 0.8660254,0.5 Z"
+         id="path7-5-4"
+         style="fill:#f4f4f1;stroke:#333333;stroke-width:0.0715483;stroke-linejoin:round" />
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.8660254,0.08)"
+         id="g12-0-5"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text9-9-6"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan7-0-20">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan8-0-3">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan9-6-5">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text12-1-6"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan10-3-6">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan11-8-6">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan12-9-7">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,-0.67)"
+         id="g18-3-6"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text15-4-7"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan13-4-71">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan14-6-91">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan15-0-62">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text18-6-72"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan16-6-7">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan17-1-6">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan18-8-51">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,-0.4330127,0.83)"
+         id="g24-4-3"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text21-9-9"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan19-6-95">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan20-3-9">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan21-7-26">1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text24-8-5"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan22-8-32">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan23-2-4">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan24-9-4">1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0,0.08)"
+         id="g30-1-4"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text27-3-2"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan25-5-79">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan26-9-23">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan27-8-73">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text30-4-1"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan28-0-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan29-7-78">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan30-6-58">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,-0.67)"
+         id="g36-3-3"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text33-6-2"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan31-1-4">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan32-5-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan33-4-1">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text36-2-59"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan34-0-51">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan35-9-0">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan36-7-6">-1</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.4330127,0.83)"
+         id="g42-3-4"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text39-7-5"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan37-2-30">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan38-6-89">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan39-0-1">0</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text42-1-34"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan40-6-7">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan41-5-4">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan42-7-6">0</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.5,0,0,0.5,0.8660254,0.08)"
+         id="g48-5-3"
+         style="stroke-width:0.715483">
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+           id="text45-4-6"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan43-1-52">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan44-2-8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan45-0-1">-1</tspan></text>
+        <text
+           text-anchor="middle"
+           alignment-baseline="middle"
+           style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+           id="text48-0-03"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan46-1-1">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan47-4-5">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan48-6-5">-1</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g
+     id="g49"
+     transform="matrix(1.3976573,0,0,1.3976573,0,-0.11181258)"
+     style="stroke-width:0.715483">
+    <path
+       class="cell-path"
+       d="m -0.4330127,0.25 v -0.5 L -0.8660254,-0.5 -1.299038,-0.25 v 0.5 l 0.4330126,0.25 z"
+       id="path1" />
+    <path
+       class="cell-path"
+       d="M 0,-0.5 V -1 L -0.4330127,-1.25 -0.8660254,-1 v 0.5 l 0.4330127,0.25 z"
+       id="path2" />
+    <path
+       class="cell-path"
+       d="M 0,1 V 0.5 L -0.4330127,0.25 -0.8660254,0.5 V 1 l 0.4330127,0.25 z"
+       id="path3" />
+    <path
+       class="cell-path"
+       d="m 0.4330127,0.25 v -0.5 L 0,-0.5 -0.4330127,-0.25 v 0.5 L 0,0.5 Z"
+       id="path4" />
+    <path
+       class="cell-path"
+       d="M 0.8660254,-0.5 V -1 L 0.4330127,-1.25 0,-1 v 0.5 l 0.4330127,0.25 z"
+       id="path5" />
+    <path
+       class="cell-path"
+       d="M 0.8660254,1 V 0.5 L 0.4330127,0.25 0,0.5 V 1 l 0.4330127,0.25 z"
+       id="path6" />
+    <path
+       class="cell-path"
+       d="m 1.299038,0.25 v -0.5 L 0.8660254,-0.5 0.4330127,-0.25 v 0.5 L 0.8660254,0.5 Z"
+       id="path7" />
+    <g
+       transform="matrix(0.5,0,0,0.5,-0.8660254,0.08)"
+       id="g12"
+       style="stroke-width:0.715483">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+         id="text9"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan7">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan8">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan9">1</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+         id="text12"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan10">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan11">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan12">1</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-0.4330127,-0.67)"
+       id="g18"
+       style="stroke-width:0.715483">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+         id="text15"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan13">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan14">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan15">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+         id="text18"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan16">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan17">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan18">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,-0.4330127,0.83)"
+       id="g24"
+       style="stroke-width:0.715483">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+         id="text21"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan19">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan20">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan21">1</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+         id="text24"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan22">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan23">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan24">1</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,0,0.08)"
+       id="g30"
+       style="stroke-width:0.715483">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+         id="text27"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan25">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan26">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan27">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+         id="text30"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan28">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan29">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan30">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,0.4330127,-0.67)"
+       id="g36"
+       style="stroke-width:0.715483">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+         id="text33"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan31">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan32">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan33">-1</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+         id="text36"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan34">0</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan35">1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan36">-1</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,0.4330127,0.83)"
+       id="g42"
+       style="stroke-width:0.715483">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+         id="text39"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan37">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan38">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan39">0</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+         id="text42"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan40">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan41">-1</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan42">0</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.5,0,0,0.5,0.8660254,0.08)"
+       id="g48"
+       style="stroke-width:0.715483">
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke:#ffffff;stroke-width:0.0357741"
+         id="text45"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.0357741"
+   id="tspan43">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.0357741"
+   id="tspan44">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.0357741"
+   id="tspan45">-1</tspan></text>
+      <text
+         text-anchor="middle"
+         alignment-baseline="middle"
+         style="font-size:0.3px;fill:#333333;stroke-width:0.715483"
+         id="text48"><tspan
+   style="font-weight:bold;fill:#59b300;stroke-width:0.715483"
+   id="tspan46">1</tspan>, <tspan
+   style="font-weight:bold;fill:#e619e6;stroke-width:0.715483"
+   id="tspan47">0</tspan>, <tspan
+   style="font-weight:bold;fill:#0099e6;stroke-width:0.715483"
+   id="tspan48">-1</tspan></text>
+    </g>
+  </g>
+</svg>
