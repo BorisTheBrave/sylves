@@ -13,6 +13,7 @@ namespace Sylves.Test
         public void TestSignedAngle()
         {
             Assert.AreEqual(90, Vector2.SignedAngle(Vector2.right, Vector2.up));
+            Assert.AreEqual(-90, Vector2.SignedAngle(Vector2.up, Vector2.right));
         }
     }
 }

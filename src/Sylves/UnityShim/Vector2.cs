@@ -81,9 +81,9 @@ namespace Sylves
         public static Vector2 Scale(Vector2 a, Vector2 b) => new Vector2(a.x * b.x, a.y * b.y);
         public static float SignedAngle(Vector2 from, Vector2 to)
         {
-            var x = from.x * to.x - from.y * to.y;
-            var y = from.x * to.y + from.y * to.x;
-            return (180 / Mathf.PI * Mathf.Atan2(y, x));
+            float cross = from.x * to.y - from.y * to.x;
+            float dot = from.x * to.x + from.y * to.y;
+            return (180 / Mathf.PI * Mathf.Atan2(cross, dot));
         }
         //public static Vector2 SmoothDamp(Vector2 current, Vector2 target, ref Vector2 currentVelocity, float smoothTime, float maxSpeed);
         //public static Vector2 SmoothDamp(Vector2 current, Vector2 target, ref Vector2 currentVelocity, float smoothTime);
