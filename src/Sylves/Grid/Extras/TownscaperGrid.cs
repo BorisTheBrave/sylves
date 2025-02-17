@@ -11,6 +11,8 @@ namespace Sylves
     // The townscaper grid, without the extra relaxation step
     internal class UnrelaxedTownscaperGrid : PlanarLazyMeshGrid
     {
+        private const float TriangleSize = 0.5f;
+
         private readonly int n;
         private readonly float tolerance;
         private readonly HexGrid chunkGrid;
@@ -21,7 +23,7 @@ namespace Sylves
             this.n = n;
             this.seed = seed;
             this.tolerance = tolerance;
-            chunkGrid = new HexGrid(n);
+            chunkGrid = new HexGrid(n * 2 * TriangleSize);
 
             base.Setup(GetMeshData, chunkGrid, translateMeshData: true, meshGridOptions: new MeshGridOptions { Tolerance = tolerance });
         }
@@ -29,7 +31,7 @@ namespace Sylves
         private MeshData GetMeshData(Cell hex)
         {
             // Make a triangle grid that fills the chunk
-            var triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(n));
+            var triangleGrid = new TriangleGrid(TriangleSize, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(n));
             var meshData = triangleGrid.ToMeshData();
 
             // Randomly pair the triangles of that grid

@@ -172,6 +172,10 @@ namespace Sylves
         /// </summary>
         IEnumerable<CellDir> GetCellDirs(Cell cell);
 
+        /// <summary>
+        /// Returns corners of the given cell.
+        /// This usually just forwards to <see cref="ICellType.GetCellCorners()"/>
+        /// </summary>
         IEnumerable<CellCorner> GetCellCorners(Cell cell);
 
 
@@ -235,7 +239,7 @@ namespace Sylves
         IBound UnionBounds(IBound bound, IBound other);
 
         // TODO: Decide if this should return cells outside of grid.
-        // TOOD: Retname to GetCellsInBound
+        // TOOD: Rename to GetCellsInBound
         /// <summary>
         /// Returns the cells inside a given bound.
         /// </summary>
