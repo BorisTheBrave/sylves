@@ -83,6 +83,11 @@ namespace Sylves
             {
                 normals = new Vector3[vertices.Length];
             }
+            else
+            {
+                for (int i = 0; i < vertices.Length; i++)
+                    normals[i] = new Vector3();
+            }
 
             // TODO: There's got to be an official way of doing this.
             // Implementation below is just a guess
