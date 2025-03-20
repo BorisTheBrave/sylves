@@ -13,6 +13,7 @@ namespace Sylves.Test
         public void TestTryGetRotation()
         {
             GridTest.TryGetRotation(TriangleCellType.Get(TriangleOrientation.FlatTopped));
+            GridTest.TryGetRotation(TriangleCellType.Get(TriangleOrientation.FlatSides));
         }
 
         [Test]

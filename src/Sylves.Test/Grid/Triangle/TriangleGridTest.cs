@@ -49,10 +49,9 @@ namespace Sylves.Test
         }
 
         [Test]
-        [TestCase(TriangleOrientation.FlatTopped)]
-        public void TestGetCellsIntersectsApprox(TriangleOrientation orientation)
+        public void TestGetCellsIntersectsApprox()
         {
-            var t = new TriangleGrid(1, orientation);
+            var t = new TriangleGrid(1, TriangleOrientation.FlatTopped);
 
             var p = t.GetCellCenter(new Cell(0, 1, 0));
             CollectionAssert.AreEquivalent(
@@ -78,6 +77,33 @@ namespace Sylves.Test
 
         [Test]
         public void TestGetCellsIntersectsApprox2()
+        {
+            var t = new TriangleGrid(1, TriangleOrientation.FlatSides);
+
+            var p = t.GetCellCenter(new Cell(0, 1, 0));
+            CollectionAssert.AreEquivalent(
+                new[] { new Cell(0, 1, 0) },
+                t.GetCellsIntersectsApprox(p, p));
+            CollectionAssert.AreEquivalent(
+                new[] {
+                    new Cell(0, 1, 0),
+                    new Cell(1, 1, 0),
+                },
+                t.GetCellsIntersectsApprox(p, p + new Vector3(0.3f, 0.0f, 0)));
+            CollectionAssert.AreEquivalent(
+                new[] {
+                    new Cell(0, 1, 0),
+                    new Cell(1, 1, 0),
+                    new Cell(1, 1, -1),
+                    new Cell(0, 2, 0),
+                    new Cell(0, 2, -1),
+                    new Cell(1, 2, -1),
+                },
+                t.GetCellsIntersectsApprox(p, p + new Vector3(0.3f, 0.6f, 0)));
+        }
+
+        [Test]
+        public void TestGetCellsIntersectsApprox3()
         {
             GridTest.GetCellsIntersectsApprox(new TriangleGrid(1, bound: new TriangleBound(new Vector3Int(-3, -3, -3), new Vector3Int(4, 4, 4))), new Vector3(-10.1f,-1.1f, 0), new Vector3(10.1f, 1.1f, 0));
 
@@ -238,6 +264,18 @@ namespace Sylves.Test
             var g = new TriangleGrid(1, TriangleOrientation.FlatTopped);
 
             GridTest.GetDiagonals(g, new Cell(1, 0, 0));
+
+        }
+
+        [Test]
+        public void TestAltGridBounds()
+        {
+            var g = new TriangleGrid(1, TriangleOrientation.FlatSides, new TriangleBound(new Vector3Int(-30, 0, -30), new Vector3Int(0, 30, 30)));
+
+            var cells = g.Raycast(new Vector3(0.1f, -100, 0), new Vector3(0, 1, 0), 200).Select(x => x.cell).ToList();
+            var cells2 = g.GetCells().Where(c => c.x == 1).ToList();
+
+            CollectionAssert.AreEquivalent(cells, cells2);
 
         }
     }
