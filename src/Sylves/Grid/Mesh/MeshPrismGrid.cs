@@ -293,7 +293,9 @@ namespace Sylves
         {
             var meshCellData = CellData[cell] as MeshCellData;
             var cellType = meshCellData.CellType;
-            if (cellType is CubeCellType)
+            var (faceIndex, submesh, layer) = (cell.x, cell.y, cell.z);
+
+            if (this.meshData.topologies[submesh] == MeshTopology.Quads && cellType is CubeCellType)
             {
                 if(meshCellData.PrismInfo.BackDir != (CellDir)CubeDir.Back)
                 {
@@ -330,7 +332,6 @@ namespace Sylves
                 var prismInfo = meshCellData.PrismInfo;
                 var vertices = this.meshData.vertices;
                 var normals = this.meshData.normals;
-                var (faceIndex, submesh, layer) = (cell.x, cell.y, cell.z);
 
 
                 var meshOffset1 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset - meshPrismOptions.LayerHeight / 2;

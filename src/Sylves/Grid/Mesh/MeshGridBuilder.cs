@@ -172,7 +172,15 @@ namespace Sylves
                         var count = faceIndices.Count;
                         var prismInfo = PrismInfo.Get(layerCellData[new Cell(face, submesh, 0)].CellType);
                         var cellType = prismInfo.PrismCellType;
-                        var trs = deformation != null ? GetTRS(deformation, Vector3.zero) : new TRS(GetCentroid(faceIndices, data));
+                        TRS trs;
+                        if (deformation == null)
+                        {
+                            var (centroid, normal) = GetCentroidAndNormal(faceIndices, data);
+                            trs = new TRS(centroid + (layer * meshPrismGridOptions.LayerHeight + meshPrismGridOptions.LayerOffset) * normal);
+                        }
+                        else {
+                            trs = GetTRS(deformation, Vector3.zero);
+                        }
 
                         // Transform if necessary
                         if (meshPrismGridOptions.UseXZPlane)
@@ -195,16 +203,18 @@ namespace Sylves
                 }
             }
         }
-        private static Vector3 GetCentroid(MeshUtils.Face face, MeshData meshData)
+        private static (Vector3, Vector3) GetCentroidAndNormal(MeshUtils.Face face, MeshData meshData)
         {
             var c = Vector3.zero;
+            var normal = new Vector3();
             var n = 0;
             foreach(var i in face)
             {
                 c += meshData.vertices[i];
+                normal += meshData.normals[i];
                 n++;
             }
-            return c / n;
+            return (c / n, normal.normalized);
         }
 
         private static TRS GetTRS(Deformation deformation, Vector3 p)

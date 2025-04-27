@@ -229,6 +229,40 @@ namespace Sylves.Test
             Assert.IsNotNull(grid);
         }
 
+        [Test]
+        public void TestSquareNGon()
+        {
+            var meshData = new MeshData
+            {
+                vertices = new[]
+                {
+                    new Vector3(0.5f, -0.5f, 0.0f),
+                    new Vector3(0.5f, 0.5f, 0.0f),
+                    new Vector3(-0.5f, 0.5f, 0.0f),
+                    new Vector3(-0.5f, -0.5f, 0.0f),
+                },
+                normals = new[]
+                {
+                    Vector3.forward,
+                    Vector3.forward,
+                    Vector3.forward,
+                    Vector3.forward,
+                },
+                indices = new[] { new[] { 0, 1, 2, ~3, } },
+                topologies = new[] { MeshTopology.NGon }
+            };
+
+            var grid = new MeshPrismGrid(meshData, new Sylves.MeshPrismGridOptions
+            {
+                MinLayer = 0,
+                MaxLayer = 1,
+                LayerHeight = 1,
+                LayerOffset = 0,
+            });
+
+            var meshData2 = grid.ToMeshData();
+        }
+
 
         [Test]
         public void TestHex()
@@ -236,9 +270,12 @@ namespace Sylves.Test
             var h = new HexGrid(1, bound: HexBound.Hexagon(0));
             var meshData = h.ToMeshData();
             meshData.RecalculateNormals();
-            var g = new MeshPrismGrid(meshData, new MeshPrismGridOptions());
+            var g = new MeshPrismGrid(meshData, new MeshPrismGridOptions() { MaxLayer = 2});
 
             GridTest.FindCell(g, new Cell());
+
+            Assert.AreEqual(new Vector3(0, 0, 0), g.GetCellCenter(new Cell(0, 0, 0)));
+            Assert.AreEqual(new Vector3(0, 0, 1), g.GetCellCenter(new Cell(0, 0, 1)));
         }
 
 
