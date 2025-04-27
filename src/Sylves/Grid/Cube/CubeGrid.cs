@@ -728,8 +728,8 @@ namespace Sylves
             {
                 return false;
             }
-            // This trick works best with *inclusive* bounds.
-            if (!TryApplySymmetry(s, FromVector3Int(cubeBound.Mex - Vector3Int.one), out var b, out var _))
+            // This trick works best with inclusive bounds.
+            if (!TryApplySymmetry(s, FromVector3Int(cubeBound.Max), out var b, out var _))
             {
                 return false;
             }

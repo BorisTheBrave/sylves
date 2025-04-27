@@ -278,7 +278,7 @@ namespace Sylves
         public static CubeBound operator *(CubeRotation rotation, CubeBound bound)
         {
             var a = rotation * bound.Min;
-            var b = rotation * (bound.Mex - Vector3Int.one);
+            var b = rotation * bound.Max;
             return new CubeBound(Vector3Int.Min(a, b), Vector3Int.Max(a, b) + Vector3Int.one);
         }
 
