@@ -24,5 +24,29 @@ namespace Sylves.Test
             Assert.IsFalse(IsPointInCube(new Vector3(0, 0, 1)));
             Assert.IsFalse(IsPointInCube(new Vector3(0, 0, -1)));
         }
+
+        [Test]
+        public void TestGetNormalDirection()
+        {
+            var v0 = new Vector3(0.0f, 0.0f, 0.0f);
+            var v1 = new Vector3(1.0f, 0.0f, 0.0f);
+            var v2 = new Vector3(0.0f, 1.0f, 0.0f);
+
+            var normal = MeshUtils.GetNormalDirection(v0, v1, v2);
+
+            Assert.AreEqual(0.0f, normal.x, 1e-6f);
+            Assert.AreEqual(0.0f, normal.y, 1e-6f);
+            Assert.AreEqual(1.0f, normal.z, 1e-6f);
+
+            v0 = new Vector3(0.0f, 0.0f, 0.0f);
+            v1 = new Vector3(1.0f, 0.0f, 0.0f);
+            v2 = new Vector3(0.0f, 0.0f, 1.0f);
+
+            normal = MeshUtils.GetNormalDirection(v0, v1, v2);
+
+            Assert.AreEqual(0.0f, normal.x, 1e-6f);
+            Assert.AreEqual(-1.0f, normal.y, 1e-6f);
+            Assert.AreEqual(0.0f, normal.z, 1e-6f);
+        }
     }
 }
