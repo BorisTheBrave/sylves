@@ -111,7 +111,7 @@ namespace Sylves
                 passThroughMesh = a == b;
                 translateUnrelaxed = passThroughMesh && pg.TranslateMeshData;
             }
-            else
+            if (!passThroughMesh)
             {
                 splitCache = cachePolicy.GetDictionary<(Cell, Cell)>(underlying);
             }
