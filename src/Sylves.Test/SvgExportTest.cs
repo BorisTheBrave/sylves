@@ -22,10 +22,11 @@ namespace Sylves.Test
             public Vector2 min = new Vector2(-2, -2);
             public Vector2 max = new Vector2(2, 2);
             public bool includeDual = false;
+            // If true, trim the cells to the bounding box
             public bool trim = false;
-            public Func<Cell, string> fillFunc = null;
-            public Func<Cell, string> textFunc = null;
-            public Action<SvgBuilder> postProcess = null;
+            public Func<Cell, string>? fillFunc = null;
+            public Func<Cell, string>? textFunc = null;
+            public Action<SvgBuilder>? postProcess = null;
         }
 
         private const bool IsSeed = false;
@@ -617,6 +618,45 @@ mix.inputs[0].default_value = 0.433333
             var min = g.GetCells().Select(g.GetCellCenter).Aggregate(Vector3.Min);
             var max = g.GetCells().Select(g.GetCellCenter).Aggregate(Vector3.Max);
             Export(g, "precision.svg", new Options() { textScale = null, strokeWidth=0.05f, min = new Vector2(min.x, min.y), max = new Vector2(max.x, max.y) });
+        }
+
+
+
+        [Test]
+        public void TestRandomRhombus()
+        {
+            var g = RandomRhombusGrid.MakeFinite(TriangleBound.Hexagon(12));
+            Export(g, "random_rhombus.svg", new Options {min = new Vector2(-4, -4), max = new Vector2(4, 4)});
+
+            var meshData = g.ToMeshData();
+            //meshData = ConwayOperators.Ortho(meshData);
+            meshData = meshData.Weld();
+            meshData = meshData.Relax(10);
+            Export(new MeshGrid(meshData), "random_rhombus2.svg", new Options { textScale = null, min = new Vector2(-4, -4), max = new Vector2(4, 4) });
+
+            g = RandomRhombusGrid.MakeInfinite();
+
+            string FillFunc(Cell c)
+            {
+                var s = (c.y + c.z * 2 + 300) % 3;
+                return s == 0 ? "grey" : s == 1 ? "lightgrey" : "#AAAAAA";
+            }
+            Export(g.BoundBy(new SquareBound(-3, -3, 5, 5)), "infinite_random_rhombus.svg", new Options { textScale = null, fillFunc = FillFunc, min = new Vector2(-8, -8), max = new Vector2(8, 8), trim = true });
+            Export(new RelaxModifier(g.BoundBy(new SquareBound(-3, -3, 5, 5)), weldTolerance: 0.1f), "infinite_random_rhombus2.svg", new Options { textScale = null, fillFunc = FillFunc, min = new Vector2(-8, -8), max = new Vector2(8, 8), trim = true });
+
+        }
+
+        [Test]
+        [Explicit("Just for one off purposes")]
+        public void TestTemp()
+        {
+            string FillFunc(Cell c)
+            {
+                var s = (c.y + c.z * 2 + 300) % 3;
+                return s == 0 ? "#99C3EC" : s == 1 ? "#97E3C2" : "#F69C9E";
+            }
+            //Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-5, -5), new Vector2Int(5, 5))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "townscaper_colored.svg", new Options { textScale = null, strokeWidth = 0.01f, fillFunc = FillFunc, trim = true });
+            Export(new RhombilleGrid().BoundBy(new SquareBound(-5, -5, 5, 5)), "rhombille_empty.svg", new Options { textScale = null, strokeWidth = 0.01f, trim = true });
         }
 
         [Test]

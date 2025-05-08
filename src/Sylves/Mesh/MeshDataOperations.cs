@@ -71,7 +71,7 @@ namespace Sylves
             return ApplyPairing(md, meshGrid, pairs, unpaired);
         }
 
-        private static MeshData ApplyPairing(MeshData md, MeshGrid meshGrid, IEnumerable<(Cell, CellDir, Cell, CellDir)> pairs, HashSet<Cell> unpaired)
+        internal static MeshData ApplyPairing(MeshData md, MeshGrid meshGrid, IEnumerable<(Cell, CellDir, Cell, CellDir)> pairs, HashSet<Cell> unpaired)
         {
             // New mesh data with pairs of triangles merged
             var indices = new List<int>();
