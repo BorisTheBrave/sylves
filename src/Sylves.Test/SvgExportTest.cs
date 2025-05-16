@@ -560,7 +560,12 @@ namespace Sylves.Test
             ico.RecalculateNormals();
             ExportObj(new MeshPrismGrid(ico, new MeshPrismGridOptions { LayerHeight = 0.25f }), "meshprism.obj");
             ExportObj(new PlanarPrismModifier(new TownscaperGrid(4).GetCompactGrid()).BoundBy(new PlanarPrismBound { MinLayer=0, MaxLayer = 2, PlanarBound=new SquareBound(0, 0, 3, 3)}), "townscaper_layers.obj");
-
+            var rng = new System.Random(0);
+            var points = Enumerable.Range(0, 100).Select(x => new Vector3((float)rng.NextDouble(), (float)rng.NextDouble(), (float)rng.NextDouble())).ToArray();
+            ExportObj(new VoronoiSphereGrid(points), "voronoi_sphere.obj");
+            /* Handy blender script for tweaking these
+                new Vector3(0, 0, -1),
+            }), "voronoi_sphere.obj");
             /* Handy blender script for tweaking these
 import bpy
 
