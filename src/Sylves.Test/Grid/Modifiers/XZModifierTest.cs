@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sylves.Test.Grid.Modifiers
+namespace Sylves.Test
 {
     [TestFixture]
     internal class XZModifierTest
