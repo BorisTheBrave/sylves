@@ -570,7 +570,7 @@ namespace Sylves.Test
                 var z = Mathf.Sqrt(1 - y * y) * Mathf.Sin(theta);
                 return new Vector3(x, y, z) ;
             }).ToArray();
-            ExportObj(new VoronoiSphereGrid(points), "voronoi_sphere.obj");
+            ExportObj(new VoronoiSphereGrid(points, new VoronoiGridOptions { LloydRelaxationIterations = 1}), "voronoi_sphere.obj");
             /* Handy blender script for tweaking these
                 new Vector3(0, 0, -1),
             }), "voronoi_sphere.obj");
