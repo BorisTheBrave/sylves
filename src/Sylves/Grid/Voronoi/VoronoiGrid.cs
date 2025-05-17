@@ -14,6 +14,12 @@ namespace Sylves
         Relax,
     }
 
+    public enum VoronoiCenterType
+    {
+        Circumcenter,
+        Centroid,
+    }
+
     public class VoronoiGridOptions
     {
         public Vector2? ClipMin { get; set; }
@@ -26,6 +32,8 @@ namespace Sylves
         public int LloydRelaxationIterations { get; set; }
 
         public BorderRelaxation BorderRelaxation { get; set; }
+
+        public VoronoiCenterType CenterType { get; set; }
     }
 
     public class VoronoiGrid : MeshGrid
@@ -41,6 +49,10 @@ namespace Sylves
             if (voronoiGridOptions.ClipMin != null ^ voronoiGridOptions.ClipMax != null)
             {
                 throw new ArgumentException("ClipMin/ClipMax should be specified together");
+            }
+            if(voronoiGridOptions.CenterType != VoronoiCenterType.Circumcenter)
+            {
+                throw new ArgumentException($"CenterType {voronoiGridOptions.CenterType} not supported");
             }
             var voronator = voronoiGridOptions.ClipMin == null ? new Voronator(points) : new Voronator(points, voronoiGridOptions.ClipMin.Value, voronoiGridOptions.ClipMax.Value);
 

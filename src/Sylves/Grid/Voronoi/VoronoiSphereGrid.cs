@@ -28,13 +28,13 @@ namespace Sylves
             {
                 throw new ArgumentException($"ClipMin/ClipMax cannot be used with {nameof(VoronoiSphereGrid)}");
             }
-            var v = new SphericalVoronator(points);
+            var v = new SphericalVoronator(points, voronoiGridOptions.CenterType == VoronoiCenterType.Centroid);
 
             // TODO: Relax in 3d space
             for(var i=0; i< voronoiGridOptions.LloydRelaxationIterations; i++)
             {
                 var relaxedPoints = v.GetRelaxedPoints();
-                v = new SphericalVoronator(relaxedPoints);
+                v = new SphericalVoronator(relaxedPoints, voronoiGridOptions.CenterType == VoronoiCenterType.Centroid);
             }
             //(voronator, points2d) = VoronoiGrid.LloydRelax(voronator, points2d, voronoiGridOptions);
 

@@ -17,7 +17,7 @@ namespace Sylves
         private readonly Vector3[] hullCircumcenters;
         private readonly List<Vector3> hullPolygon;
 
-        public SphericalVoronator(IList<Vector3> points)
+        public SphericalVoronator(IList<Vector3> points, bool useCentroids = false)
         {
             IList<Vector2> points2d = new Vector2[points.Count - 1];
             var proj = points[points.Count - 1].normalized;
@@ -35,7 +35,10 @@ namespace Sylves
             for (var triangleId = 0; triangleId < triangleCount; triangleId++)
             {
                 var t = d.PointIndiciesAroundTriangle(triangleId);
-                circumcenters.Add(GetCircumcenter(points[t.Item1], points[t.Item2], points[t.Item3]).normalized);
+                if(useCentroids)
+                    circumcenters.Add(GetCentroid(points[t.Item1], points[t.Item2], points[t.Item3]));
+                else
+                    circumcenters.Add(GetCircumcenter(points[t.Item1], points[t.Item2], points[t.Item3]).normalized);
             }
 
             // Find the voronoi cells, storing the "starting" half edge.
@@ -201,6 +204,8 @@ namespace Sylves
             Vector3 ccs = a + toCircumsphereCenter; // now this is the actual 3space location
             return ccs;
         }
+
+        private static Vector3 GetCentroid(Vector3 a, Vector3 b, Vector3 c) => (a + b + c).normalized;
 
         #region Stereographic projection
 
