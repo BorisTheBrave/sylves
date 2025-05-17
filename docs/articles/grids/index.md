@@ -131,6 +131,10 @@ This can convert 2d grids into 3d ones, usually with the z-cordinate being the "
     <td><a href="../../images/grids/jitteredsquare.svg"><img class="grid-thumb" src="../../images/grids/jitteredsquare.svg" /></img></td>
     <td><a href="jitteredsquaregrid.md">JitteredSquareGrid</a><br/>An infinite version of <a href="voronoigrid.md">VoronoiGrid</a> where the points are taken from random positions in the cells of a square grid.</td>
 </tr>
+<tr>
+    <td><a href="../../images/grids/voronoi_sphere.png"><img class="grid-thumb" src="../../images/grids/voronoi_sphere.png" /></img></td>
+    <td><a href="xref:Sylves.VoronoiSphereGrid">VoronoiSphereGrid</a><br/>An spherical version of a voronoi grid, where points are on the surface of the unit sphere.</td>
+</tr>
 </table>
 
 

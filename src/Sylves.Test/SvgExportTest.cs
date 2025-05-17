@@ -562,7 +562,14 @@ namespace Sylves.Test
             ExportObj(new MeshPrismGrid(ico, new MeshPrismGridOptions { LayerHeight = 0.25f }), "meshprism.obj");
             ExportObj(new PlanarPrismModifier(new TownscaperGrid(4).GetCompactGrid()).BoundBy(new PlanarPrismBound { MinLayer=0, MaxLayer = 2, PlanarBound=new SquareBound(0, 0, 3, 3)}), "townscaper_layers.obj");
             var rng = new System.Random(0);
-            var points = Enumerable.Range(0, 100).Select(x => new Vector3((float)rng.NextDouble(), (float)rng.NextDouble(), (float)rng.NextDouble())).ToArray();
+            var points = Enumerable.Range(0, 100).Select(_ =>
+            {
+                var y = (float)rng.NextDouble() * 2 - 1;
+                var theta = (float)rng.NextDouble() * Mathf.PI * 2;
+                var x = Mathf.Sqrt(1 - y * y) * Mathf.Cos(theta);
+                var z = Mathf.Sqrt(1 - y * y) * Mathf.Sin(theta);
+                return new Vector3(x, y, z) ;
+            }).ToArray();
             ExportObj(new VoronoiSphereGrid(points), "voronoi_sphere.obj");
             /* Handy blender script for tweaking these
                 new Vector3(0, 0, -1),
@@ -575,7 +582,9 @@ bpy.ops.object.modifier_add(type='WELD')
 bpy.ops.object.modifier_add(type='WIREFRAME')
 bpy.context.object.modifiers["Wireframe"].thickness = 0.1
 
-bpy.context.object.active_material.node_tree.nodes["Principled BSDF"].inputs[0].default_value = (0.000973191, 0, 0.8, 1)
+mat = bpy.data.materials.new(name="New_Material")
+mat.diffuse_color = (0.000973191, 0, 0.8, 1) 
+bpy.context.object.data.materials.append(mat)
 
 # Set up rendering
 bpy.context.scene.render.resolution_y = 1080
@@ -585,6 +594,7 @@ bpy.context.scene.render.resolution_x = 1080
 bpy.context.scene.view_layers["ViewLayer"].use_pass_mist = True
 
 scene = bpy.context.scene
+scene.use_nodes
 node_tree = scene.node_tree
 scene.use_nodes = True
 rlayers = node_tree.nodes.new("CompositorNodeRLayers")
@@ -595,7 +605,6 @@ node_tree.links.new(rlayers.outputs["Mist"], mix.inputs[2])
 node_tree.links.new(mix.outputs[0], composite.inputs[0])
 
 mix.inputs[0].default_value = 0.433333
-
             */
         }
 
