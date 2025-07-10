@@ -180,7 +180,6 @@ namespace Sylves
             return new Vector2(x, y);
         }
 
-        }
         private static void GetPlaneBasis(Vector3 q, out Vector3 u, out Vector3 v)
         {
             // Pick an arbitrary vector not parallel to q
