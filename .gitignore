@@ -4,3 +4,4 @@ obj
 /upm
 src/Sylves.Godot/**/*.cs
 /release
+.DS_Store
