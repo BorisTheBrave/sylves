@@ -99,6 +99,7 @@ namespace Sylves
         {
             baseGrid = other.baseGrid;
             getCellsByChunk = other.getCellsByChunk;
+            getChunkByCell = other.getChunkByCell;
             meshDatas = other.meshDatas;
             toDual = other.toDual;
             toBase = other.toBase;
