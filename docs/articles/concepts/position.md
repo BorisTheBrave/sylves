@@ -12,7 +12,7 @@ Returns the translation/rotation/scale of a given cell.
 
 The translation will match GetCellCenter.
 
-The rotation is aims to make it so the adjcent cell in a cell direction actually lies roughly where that cell direction implies. E.g. 
+The rotation aims to make it so the adjacent cell in a cell direction actually lies roughly where that cell direction implies. E.g. 
 
 ```csharp
 var cell2 = grid.Move(cell1, SquareDir.Right);

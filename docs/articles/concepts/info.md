@@ -4,7 +4,7 @@ Every grid exports some basic details about what sort of grid it is.
 
 ### [`Is2d`](xref:Sylves.IGrid.Is2d)
 
-Are the cells flat surfaces. Note: Each cell is flat, but they can still be arranged in 3d space. i.e. the surface of a cube makes 2d grid.
+Are the cells flat surfaces. Note: Each cell may be flat but they can be placed at different angles leading to a grid that is not flat. E.g. the surface of a cube makes 2d grid, as are the majority of grids in Sylves. IsPlanar is used for grids that are completely flat.
 
 ### [`Is3d`](xref:Sylves.IGrid.Is3d)
 
