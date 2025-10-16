@@ -250,7 +250,7 @@ namespace Sylves
                     // Combine(centerCell, chunk) => new Cell(centerCell.x, chunk.x, chunk.y)
                     var srcChunk = new Vector2Int(cell.y, cell.z);
                     var destChunk = new Vector2Int(dest.y, dest.z);
-                    var chunkDelta = new Vector2Int(destChunk.x - srcChunk.x, destChunk.y - srcChunk.y);
+                    var chunkDelta = srcChunk - destChunk;
 
                     // Generate lattice lines for this delta
                     var lines = HalfPlaneUtils.Subtract(section.HalfPlanes, chunkDelta);
@@ -635,8 +635,11 @@ namespace Sylves
             var grid = boundedGrids[sectionIndex];
             if (grid.TryMove(localCell, dir, out var localDest, out inverseDir, out connection))
             {
-                dest = Combine(sectionIndex, localDest);
-                return sections[sectionIndex].Test(localDest);
+                if (sections[sectionIndex].Test(localDest))
+                {
+                    dest = Combine(sectionIndex, localDest);
+                    return true;
+                }
             }
             // Check for paired half-edges
             foreach (var pe in pairedHalfEdges)
@@ -652,7 +655,7 @@ namespace Sylves
                     dest = Combine(pe.DestSectionIndex, destCell);
                     inverseDir = pe.DestDir;
                     connection = new Connection();
-                    return sections[sectionIndex].Test(destCell);
+                    return sections[pe.DestSectionIndex].Test(destCell);
                 }
                 if (pe.DestSectionIndex == sectionIndex && pe.DestDir == dir && pe.DestCell.x == localCell.x && pe.DestLine.TryGet(new Vector2Int(localCell.y, localCell.z), out t))
                 {
@@ -664,7 +667,7 @@ namespace Sylves
                     dest = Combine(pe.SrcSectionIndex, destCell);
                     inverseDir = pe.SrcDir;
                     connection = new Connection();
-                    return sections[sectionIndex].Test(destCell);
+                    return sections[pe.SrcSectionIndex].Test(destCell);
                 }
             }
             dest = default;
@@ -894,7 +897,94 @@ namespace Sylves
             }
         }
 
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity) => throw new NotImplementedException();
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        {
+            // Run raycast on each bounded grid and collect results
+            var raycastResults = new List<IEnumerable<RaycastInfo>>();
+            
+            for (int i = 0; i < boundedGrids.Count; i++)
+            {
+                var grid = boundedGrids[i];
+                var section = sections[i];
+                
+                // Get raycast results from this grid
+                var gridResults = grid.Raycast(origin, direction, maxDistance)
+                    .Where(ri => 
+                    {
+                        return section.Test(ri.cell);
+                    })
+                    .Select(ri => new RaycastInfo
+                    {
+                        cell = Combine(i, ri.cell),
+                        point = ri.point,
+                        distance = ri.distance,
+                        cellDir = ri.cellDir
+                    });
+                
+                raycastResults.Add(gridResults);
+            }
+            
+            return MergeRaycastResults(raycastResults);
+        }
+        
+        private IEnumerable<RaycastInfo> MergeRaycastResults(List<IEnumerable<RaycastInfo>> raycastResults)
+        {
+            // Lazily merge multiple (potentially infinite) sorted enumerables by distance.
+            // Assumes each input enumerable yields RaycastInfo in non-decreasing distance order.
+            // No heap used; sections list is small.
+            var enumerators = new List<IEnumerator<RaycastInfo>>(raycastResults.Count);
+            var hasCurrent = new List<bool>(raycastResults.Count);
+            var currents = new List<RaycastInfo>(raycastResults.Count);
+
+            // Initialize enumerators and advance once to get the current heads
+            foreach (var seq in raycastResults)
+            {
+                var e = seq.GetEnumerator();
+                enumerators.Add(e);
+                var moved = e.MoveNext();
+                hasCurrent.Add(moved);
+                currents.Add(moved ? e.Current : default);
+            }
+
+            while (true)
+            {
+                // Find the index of the smallest current distance among active enumerators
+                var minIndex = -1;
+                var minDistance = float.PositiveInfinity;
+                for (int i = 0; i < enumerators.Count; i++)
+                {
+                    if (!hasCurrent[i]) continue;
+                    var d = currents[i].distance;
+                    if (d < minDistance)
+                    {
+                        minDistance = d;
+                        minIndex = i;
+                    }
+                }
+
+                if (minIndex == -1)
+                {
+                    // All enumerators exhausted
+                    yield break;
+                }
+
+                // Yield the min current
+                var result = currents[minIndex];
+                yield return result;
+
+                // Advance that enumerator
+                var movedNext = enumerators[minIndex].MoveNext();
+                hasCurrent[minIndex] = movedNext;
+                if (movedNext)
+                {
+                    currents[minIndex] = enumerators[minIndex].Current;
+                }
+                else
+                {
+                    currents[minIndex] = default;
+                }
+            }
+        }
         #endregion
 
         #region Symmetry

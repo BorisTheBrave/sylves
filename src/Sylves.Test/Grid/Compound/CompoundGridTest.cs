@@ -319,5 +319,54 @@ namespace Sylves.Test
         {
             var g = SquaresGrid;
         }
+
+        [Test]
+        public void TestMove()
+        {
+            var g = SquaresGrid;
+            Assert.That(g.Move(new Cell(0, 30, 0), (CellDir)SquareDir.Down), Is.EqualTo(new Cell(3, 30, -1)));
+            Assert.That(g.Move(new Cell(0, 30, 1), (CellDir)SquareDir.Down), Is.EqualTo(new Cell(0, 30, 0)));
+        }
+
+
+        [Test]
+        public void TestRaycast()
+        {
+            // Compare raycast outputs from CompoundGrid(Squares) and SquareGrid(1)
+            var compound = SquaresGrid;
+            var square = new SquareGrid(1);
+
+            var origins = new[]
+            {
+                new Vector3(-0.25f, 0.75f, 0),
+                new Vector3(0.2f, -0.1f, 0),
+                new Vector3(-0.3f, -0.4f, 0),
+            };
+            var directions = new[]
+            {
+                new Vector3(1, 0, 0),
+                new Vector3(0, -1.1f, 0),
+                new Vector3(1, 1.1f, 0),
+                new Vector3(-1, 2.1f, 0),
+            };
+
+            const int maxCompare = 50;
+            const float maxDistance = 50;
+            const float delta = 1e-4f;
+
+            foreach (var origin in origins)
+            foreach (var dir in directions)
+            {
+                var a = compound.Raycast(origin, dir, maxDistance).Take(maxCompare).ToList();
+                var b = square.Raycast(origin, dir, maxDistance).Take(maxCompare).ToList();
+
+                Assert.AreEqual(b.Count, a.Count, "Hit count differs");
+                for (int i = 0; i < a.Count; i++)
+                {
+                    TestUtils.AssertAreEqual(b[i].point, a[i].point, delta, $"point {i}, origin {origin} dir {dir}");
+                    Assert.AreEqual(b[i].distance, a[i].distance, delta, $"distance {i}, origin {origin} dir {dir}");
+                }
+            }
+        }
     }
 }
