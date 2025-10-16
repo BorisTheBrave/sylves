@@ -378,15 +378,23 @@ namespace Sylves.Test
 
         }
 
+        private static IGrid BoundByAabb(IGrid grid, float minX, float minY, float maxX, float maxY)
+        {
+            var bound = grid.GetBound(grid.GetCellsIntersectsApprox(new Vector3(minX, minY, 0), new Vector3(maxX, maxY, 0)));
+            return grid.BoundBy(bound);
+        }
+
 
         [Test]
         public void ExportSvgGrids()
         {
-
-            var compoundGrid = CompoundGridTest.SquaresGrid;
-            var compoundBound = compoundGrid.GetBound(
-                compoundGrid.GetCellsIntersectsApprox(new Vector3(-10, -10, 0), new Vector3(10, 10, 0)));
-            Export(compoundGrid.BoundBy(compoundBound), "compound.svg", new Options { textScale = 0.5f, min = new Vector2(-5, -5), max = new Vector2(5, 5) });
+            Export(BoundByAabb(RadialGrids.Rhombic, -10, -10, 10, 10),
+                "radial_rhombic.svg",
+                new Options { textScale = 0.5f, min = new Vector2(-5, -5), max = new Vector2(5, 5), fillFunc = c => c.x % 3 == 2 ? "#00a2e8" : "#fff200" });
+            var octagonColors = new[] { "#fff200", "#b5e61d", "#99d9ea", "#00a2e8", "#a349a4", "#ed1c24", "#ff7f27", "#ffc90e" };
+            Export(BoundByAabb(RadialGrids.Octagonal, -10, -10, 10, 10),
+                "radial_octagonal.svg",
+                new Options { textScale = 0.5f, min = new Vector2(-5, -5), max = new Vector2(5, 5), fillFunc = c => octagonColors[c.x] });
             return;
 
             // Basic grids

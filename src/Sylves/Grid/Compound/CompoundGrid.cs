@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Sylves
 {
@@ -114,9 +111,17 @@ namespace Sylves
             }
             return true;
         }
+
+        public static CompoundSection operator *(Matrix4x4 matrix, CompoundSection cs)
+        {
+            return new CompoundSection(matrix * cs.MeshData,
+                VectorUtils.ToVector2(matrix.MultiplyVector(VectorUtils.ToVector3(cs.StrideX))),
+                VectorUtils.ToVector2(matrix.MultiplyVector(VectorUtils.ToVector3(cs.StrideY))),
+                cs.HalfPlanes);
+        }
     }
 
-    internal class CompoundGrid : IGrid
+    public class CompoundGrid : IGrid
     {
         public class CompoundBound : IBound
         {
