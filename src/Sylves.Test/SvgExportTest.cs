@@ -388,15 +388,6 @@ namespace Sylves.Test
         [Test]
         public void ExportSvgGrids()
         {
-            Export(BoundByAabb(RadialGrids.Rhombic, -10, -10, 10, 10),
-                "radial_rhombic.svg",
-                new Options { textScale = 0.5f, min = new Vector2(-5, -5), max = new Vector2(5, 5), fillFunc = c => c.x % 3 == 2 ? "#00a2e8" : "#fff200" });
-            var octagonColors = new[] { "#fff200", "#b5e61d", "#99d9ea", "#00a2e8", "#a349a4", "#ed1c24", "#ff7f27", "#ffc90e" };
-            Export(BoundByAabb(RadialGrids.Octagonal, -10, -10, 10, 10),
-                "radial_octagonal.svg",
-                new Options { textScale = 0.5f, min = new Vector2(-5, -5), max = new Vector2(5, 5), fillFunc = c => octagonColors[c.x] });
-            return;
-
             // Basic grids
             Export(
                 new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-5, -5), new Vector2Int(5, 5))),
@@ -457,6 +448,15 @@ namespace Sylves.Test
 
             // Mesh grids
             Export(new MeshGrid(TestMeshes.Lion).Transformed(Matrix4x4.Scale(4f * Vector3.one)), "meshgrid.svg", new Options { textScale = null});
+
+            // Radial grids
+            Export(BoundByAabb(RadialGrids.Rhombic, -3, -3, 3, 3),
+                "radial_rhombic.svg",
+                new Options { textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3), fillFunc = c => c.x % 3 == 2 ? "#00a2e8" : "#fff200" });
+            var octagonColors = new[] { "#fff200", "#b5e61d", "#99d9ea", "#00a2e8", "#a349a4", "#ed1c24", "#ff7f27", "#ffc90e" };
+            Export(BoundByAabb(RadialGrids.Octagonal, -7, -7, 7, 7),
+                "radial_octagonal.svg",
+                new Options { textScale = 1f, min = new Vector2(-7, -7), max = new Vector2(7, 7), fillFunc = c => octagonColors[c.x] });
 
             // Extras grids
             Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "townscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });

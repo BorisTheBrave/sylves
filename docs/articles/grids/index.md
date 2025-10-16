@@ -137,6 +137,18 @@ This can convert 2d grids into 3d ones, usually with the z-cordinate being the "
 </tr>
 </table>
 
+## Radial
+Radial grids have rotational symmetry.
+<table>
+<tr>
+    <td><a href="../../images/grids/radial_rhombic.svg"><img class="grid-thumb" src="../../images/grids/radial_rhombic.svg" /></img></td>
+    <td><a href="xref:Sylves.RadialGrids.Rhombic">RadialGrids.Rhombic</a><br/>Creates a radial grid of rhombuses and squares inspired by <a href="https://robertlovespi.net/2021/05/28/a-radial-tessellation-of-the-plane-using-squares-and-45-135-degree-rhombi/">Robert Austin's design.</a></td>
+</tr>
+<tr>
+    <td><a href="../../images/grids/radial_octagonal.svg"><img class="grid-thumb" src="../../images/grids/radial_octagonal.svg" /></img></td>
+    <td><a href="xref:Sylves.RadialGrids.Octagonal">RadialGrids.Octagonal</a><br/>Creates a radial grid of irregular octagons inspired by <a href="hhttps://robertlovespi.net/2016/01/02/octagons-can-tile-a-plane-iii/">Robert Austin's design.</a></td>
+</tr>
+</table>
 
 
 ## Modifier Grids
