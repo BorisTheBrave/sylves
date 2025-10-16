@@ -32,47 +32,49 @@ namespace Sylves.Test
 
         public static CompoundSection[] Squares =
         {
-            new CompoundSection{
-                MeshData = Square,
-                StrideX = new Vector2(1, 0),
-                StrideY = new Vector2(0, 1),
-                HalfPlanes = new List<HalfPlane>
+            new CompoundSection(
+                Square,
+                new Vector2(1, 0),
+                new Vector2(0, 1),
+                new List<HalfPlane>
                 {
                     new HalfPlane {A = 1, B = 0, C = 0},
                     new HalfPlane {A = 0, B = 1, C = 0},
                 }
-            },
-            new CompoundSection{
-                MeshData = Square,
-                StrideX = new Vector2(1, 0),
-                StrideY = new Vector2(0, 1),
-                HalfPlanes = new List<HalfPlane>
+            ),
+            new CompoundSection(
+                Square,
+                new Vector2(1, 0),
+                new Vector2(0, 1),
+                new List<HalfPlane>
                 {
-                    new HalfPlane {A = -1, B = 0, C = 1},
+                    new HalfPlane {A = -1, B = 0, C = -1},
                     new HalfPlane {A = 0, B = 1, C = 0},
                 }
-            },
-            new CompoundSection{
-                MeshData = Square,
-                StrideX = new Vector2(1, 0),
-                StrideY = new Vector2(0, 1),
-                HalfPlanes = new List<HalfPlane>
+            ),
+            new CompoundSection(
+                Square,
+                new Vector2(1, 0),
+                new Vector2(0, 1),
+                new List<HalfPlane>
                 {
-                    new HalfPlane {A = -1, B = 0, C = 1},
-                    new HalfPlane {A = 0, B = -1, C = 1},
+                    new HalfPlane {A = -1, B = 0, C = -1},
+                    new HalfPlane {A = 0, B = -1, C = -1},
                 }
-            },
-            new CompoundSection{
-                MeshData = Square,
-                StrideX = new Vector2(1, 0),
-                StrideY = new Vector2(0, 1),
-                HalfPlanes = new List<HalfPlane>
+            ),
+            new CompoundSection(
+                Square,
+                new Vector2(1, 0),
+                new Vector2(0, 1),
+                new List<HalfPlane>
                 {
                     new HalfPlane {A = 1, B = 0, C = 0},
-                    new HalfPlane {A = 0, B = -1, C = 1},
+                    new HalfPlane {A = 0, B = -1, C = -1},
                 }
-            }
+            ),
         };
+
+        public static CompoundGrid SquaresGrid = new CompoundGrid(Squares.ToList());
 
 
         #region Subtract
@@ -315,7 +317,7 @@ namespace Sylves.Test
         [Test]
         public void TestCompoundGrid()
         {
-            var g = new CompoundGrid(Squares.ToList());
+            var g = SquaresGrid;
         }
     }
 }

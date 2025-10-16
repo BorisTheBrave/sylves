@@ -382,6 +382,13 @@ namespace Sylves.Test
         [Test]
         public void ExportSvgGrids()
         {
+
+            var compoundGrid = CompoundGridTest.SquaresGrid;
+            var compoundBound = compoundGrid.GetBound(
+                compoundGrid.GetCellsIntersectsApprox(new Vector3(-10, -10, 0), new Vector3(10, 10, 0)));
+            Export(compoundGrid.BoundBy(compoundBound), "compound.svg", new Options { textScale = 0.5f, min = new Vector2(-5, -5), max = new Vector2(5, 5) });
+            return;
+
             // Basic grids
             Export(
                 new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-5, -5), new Vector2Int(5, 5))),
@@ -652,7 +659,6 @@ mix.inputs[0].default_value = 0.433333
             }
             Export(g.BoundBy(new SquareBound(-3, -3, 5, 5)), "infinite_random_rhombus.svg", new Options { textScale = null, fillFunc = FillFunc, min = new Vector2(-8, -8), max = new Vector2(8, 8), trim = true });
             Export(new RelaxModifier(g.BoundBy(new SquareBound(-3, -3, 5, 5)), weldTolerance: 0.1f), "infinite_random_rhombus2.svg", new Options { textScale = null, fillFunc = FillFunc, min = new Vector2(-8, -8), max = new Vector2(8, 8), trim = true });
-
         }
 
         [Test]

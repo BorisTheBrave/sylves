@@ -175,9 +175,8 @@ namespace Sylves
 
         public static Aabb GetAabb(IGrid grid, IEnumerable<Cell> cells)
         {
-            var corners = cells.SelectMany(cell => grid.GetCellCorners(cell)
-                .Select(corner => grid.GetCellCorner(cell, corner)));
-            return Aabb.FromVectors(corners);
+            var aabbs = cells.Select(c => grid.GetAabb(c));
+            return Aabb.Union(aabbs);
         }
 
         public static Aabb? GetBoundAabb(IGrid grid, IBound bound)

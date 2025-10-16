@@ -69,6 +69,23 @@ namespace Sylves
             }
             return FromMinMax(min, max);
         }
+        public static Aabb? Union(IEnumerable<Aabb?> aabbs)
+        {
+            var i = aabbs.GetEnumerator();
+            i.MoveNext();
+            var first = i.Current;
+            if (first == null) return null;
+            var min = first.Value.Min;
+            var max = first.Value.Max;
+            while (i.MoveNext())
+            {
+                var current = i.Current;
+                if(current == null) return null;
+                min = Vector3.Min(min, current.Value.Min);
+                max = Vector3.Max(max, current.Value.Max);
+            }
+            return FromMinMax(min, max);
+        }
 
         public bool Intersects(Aabb other)
         {
