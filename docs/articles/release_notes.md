@@ -2,6 +2,7 @@
 * Added [`GetAabb`](xref:Sylves.IGrid.GetAabb(Sylves.Cell)) methods
 * Added [KruskalMinimumSpanningTree](xref:Sylves.KruskalMinimumSpanningTree)
 * Added [RandomRhombusGrid](xref:Sylves.RandomRhombusGrid) and [RandomRectGrid](xref:Sylves.RandomRectGrid)
+* Added [CompoundGrid](xref:Sylves.CompoundGrid) and some example [radial uses](xref:Sylves.RadialGrids)
 * Fix PlanarLazyMeshGrid when passing in a SquareGrid
 * Fix GetCellsIntersectsApprox in some grids
 * Fix triangle grid GetCellCorners
