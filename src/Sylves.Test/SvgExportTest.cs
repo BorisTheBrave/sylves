@@ -650,7 +650,7 @@ mix.inputs[0].default_value = 0.433333
         public void TestRandomRhombus()
         {
             var g = RandomRhombusGrid.MakeFinite(TriangleBound.Hexagon(12));
-            Export(g, "random_rhombus.svg", new Options {min = new Vector2(-4, -4), max = new Vector2(4, 4)});
+            Export(g, "random_rhombus.svg", new Options { min = new Vector2(-4, -4), max = new Vector2(4, 4) });
 
             var meshData = g.ToMeshData();
             //meshData = ConwayOperators.Ortho(meshData);
@@ -667,6 +667,21 @@ mix.inputs[0].default_value = 0.433333
             }
             Export(g.BoundBy(new SquareBound(-3, -3, 5, 5)), "infinite_random_rhombus.svg", new Options { textScale = null, fillFunc = FillFunc, min = new Vector2(-8, -8), max = new Vector2(8, 8), trim = true });
             Export(new RelaxModifier(g.BoundBy(new SquareBound(-3, -3, 5, 5)), weldTolerance: 0.1f), "infinite_random_rhombus2.svg", new Options { textScale = null, fillFunc = FillFunc, min = new Vector2(-8, -8), max = new Vector2(8, 8), trim = true });
+        }
+
+        [Test]
+        public void TestRandomRectangle()
+        {
+            var g = RandomRectGrid.MakeFinite(new SquareBound(-10, -10, 10, 10));
+            Export(g, "random_rect.svg", new Options { min = new Vector2(-4, -4), max = new Vector2(4, 4) });
+
+            g = RandomRectGrid.MakeInfinite();
+
+            string FillFunc(Cell c)
+            {
+                return "lightgrey";
+            }
+            Export(g.BoundBy(new SquareBound(-3, -3, 5, 5)), "infinite_random_rect.svg", new Options { textScale = null, fillFunc = FillFunc, min = new Vector2(-8, -8), max = new Vector2(8, 8), trim = true });
         }
 
         [Test]

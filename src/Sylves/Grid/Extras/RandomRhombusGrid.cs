@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Sylves
 {
-    // Experimental, based on https://www.youtube.com/watch?v=c6J_bd9seMg&t=277s
-    internal class RandomRhombusGrid
+    // See https://www.boristhebrave.com/2025/10/17/infinite-random-rhombus-tilings/
+    public class RandomRhombusGrid
     {
         private static HexGrid s_parentHexGrid = new HexGrid(1f, HexOrientation.FlatTopped);
         private static TriangleGrid s_triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatTopped);
@@ -268,8 +268,8 @@ namespace Sylves
         public static IGrid MakeInfinite()
         {
             var chunkSize = 4;
-            var layer1 = new ChunkedLayer(Layer.RhombillePairing, chunkSize, new Vector3Int(0, 1, -1));
-            var layer2 = new ChunkedLayer(layer1.GetPairing, chunkSize, new Vector3Int(1, 0, -1));
+            var layer1 = new ChunkedLayer(Layer.RhombillePairing, chunkSize, new Vector3Int(0, chunkSize, -chunkSize));
+            var layer2 = new ChunkedLayer(layer1.GetPairing, chunkSize, new Vector3Int(0, -chunkSize, chunkSize));
             var layer3 = new ChunkedLayer(layer2.GetPairing, chunkSize, new Vector3Int(0, 0, 0));
 
             MeshData GetMeshData(Cell chunk)

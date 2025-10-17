@@ -80,39 +80,91 @@ namespace Sylves
                 // TODO: Support non-triangles
                 var f1 = meshGrid.GetFaceIndices(cell);
                 var f2 = meshGrid.GetFaceIndices(dest);
-                int i1, i2, i3, i4;
-                switch ((int)dir)
+                if (f1.Count == 3 && f2.Count == 3)
                 {
-                    case 0:
-                        (i1, i2, i3) = (f1[1], f1[2], f1[0]);
-                        break;
-                    case 1:
-                        (i1, i2, i3) = (f1[2], f1[0], f1[1]);
-                        break;
-                    case 2:
-                        (i1, i2, i3) = (f1[0], f1[1], f1[2]);
-                        break;
-                    default:
-                        throw new Exception();
+                    int i1, i2, i3, i4;
+                    switch ((int)dir)
+                    {
+                        case 0:
+                            (i1, i2, i3) = (f1[1], f1[2], f1[0]);
+                            break;
+                        case 1:
+                            (i1, i2, i3) = (f1[2], f1[0], f1[1]);
+                            break;
+                        case 2:
+                            (i1, i2, i3) = (f1[0], f1[1], f1[2]);
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+                    switch ((int)inverseDir)
+                    {
+                        case 0:
+                            i4 = f2[2];
+                            break;
+                        case 1:
+                            i4 = f2[0];
+                            break;
+                        case 2:
+                            i4 = f2[1];
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+                    indices.Add(i1);
+                    indices.Add(i2);
+                    indices.Add(i3);
+                    indices.Add(~i4);
                 }
-                switch ((int)inverseDir)
+                else if (f1.Count == 4 && f2.Count == 4)
                 {
-                    case 0:
-                        i4 = f2[2];
-                        break;
-                    case 1:
-                        i4 = f2[0];
-                        break;
-                    case 2:
-                        i4 = f2[1];
-                        break;
-                    default:
-                        throw new Exception();
+
+                    int i1, i2, i3, i4, i5, i6;
+                    switch ((int)dir)
+                    {
+                        case 0:
+                            (i1, i2, i3, i4) = (f1[1], f1[2], f1[3], f2[0]);
+                            break;
+                        case 1:
+                            (i1, i2, i3, i4) = (f1[2], f1[3], f1[0], f1[1]);
+                            break;
+                        case 2:
+                            (i1, i2, i3, i4) = (f1[3], f1[0], f1[1], f1[2]);
+                            break;
+                        case 3:
+                            (i1, i2, i3, i4) = (f1[0], f1[1], f1[2], f1[3]);
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+                    switch ((int)inverseDir)
+                    {
+                        case 0:
+                            (i5, i6) = (f2[2], f2[3]);
+                            break;
+                        case 1:
+                            (i5, i6) = (f2[3], f2[0]);
+                            break;
+                        case 2:
+                            (i5, i6) = (f2[0], f2[1]);
+                            break;
+                        case 3:
+                            (i5, i6) = (f2[1], f2[2]);
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+                    indices.Add(i1);
+                    indices.Add(i2);
+                    indices.Add(i3);
+                    indices.Add(i4);
+                    indices.Add(i5);
+                    indices.Add(~i6);
                 }
-                indices.Add(i1);
-                indices.Add(i2);
-                indices.Add(i3);
-                indices.Add(~i4);
+                else
+                {
+                    throw new NotImplementedException("Pairing only supports triangles and squares currently.");
+                }
             }
             foreach (var cell in unpaired)
             {
