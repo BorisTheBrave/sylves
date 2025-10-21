@@ -761,7 +761,7 @@ mix.inputs[0].default_value = 0.433333
             });
         }
 
-        Vector2 RandomPointInPolygon(Vector3[] polygon, Random r)
+        Vector2 RandomPointInPolygon(Vector3[] polygon, System.Random r)
         {
             // Fan based
             var totalArea = 0.0f;
@@ -798,7 +798,7 @@ mix.inputs[0].default_value = 0.433333
         }
 
         // Mitchell's best candidate
-        Vector2[] BlueNoise(Aabb bound, int n, int samples, Random r)
+        Vector2[] BlueNoise(Aabb bound, int n, int samples, System.Random r)
         {
             var points = new List<Vector2>();
             var center = bound.Center;
@@ -839,7 +839,7 @@ mix.inputs[0].default_value = 0.433333
         [Explicit]
         public void ExportVoronoiSampler()
         {
-            var random = new Random();
+            var random = new System.Random();
             var grids = new IGrid[] { new SquareGrid(1), new HexGrid(1) };
             var relaxes = new[] { 0, 3, 10, 50 };
             //var relaxes = Enumerable.Range(0, 11);

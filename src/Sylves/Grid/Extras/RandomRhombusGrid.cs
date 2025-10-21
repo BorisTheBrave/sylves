@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
+#if UNITY
+using UnityEngine;
+#endif
 
 namespace Sylves
 {
@@ -124,7 +127,7 @@ namespace Sylves
                 var duals = dual.DualGrid.GetCells().ToList();
 
                 // Randomly rotate the rhombuses until the pairs are good and shuffled
-                var r = new Random();
+                var r = new System.Random();
                 for (var i = 0; i < duals.Count * ratio; i++)
                 {
                     var d = duals[(int)(r.NextDouble() * duals.Count)];
