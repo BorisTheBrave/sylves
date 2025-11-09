@@ -97,6 +97,37 @@ namespace Sylves
             return meshEmitter.ToMeshData();
         }
 
+        /// <summary>
+        /// Replaces each n-gon with a fan of n pentagons.
+        /// </summary>
+        public static MeshData Gyro(MeshData meshData)
+        {
+            var meshEmitter = new MeshEmitter(meshData);
+            meshEmitter.CopyAllVertices();
+            for (var submesh = 0; submesh < meshData.subMeshCount; submesh++)
+            {
+                meshEmitter.StartSubmesh(MeshTopology.NGon);
+                foreach (var face in MeshUtils.GetFaces(meshData, submesh))
+                {
+                    var centroid = meshEmitter.Average(face);
+                    var n = face.Count;
+                    for (var i = 0; i < n; i++)
+                    {
+                        var i1 = face[i];
+                        var i2 = face[(i + 1) % face.Count];
+                        var i3 = face[(i + 2) % face.Count];
+                        // TODO: Share these vertices between faces
+                        var m1 = meshEmitter.Interpolate(i1, i2, 1f / 3);
+                        var m2 = meshEmitter.Interpolate(i1, i2, 2f / 3);
+                        var m3 = meshEmitter.Interpolate(i2, i3, 1f / 3);
+                        meshEmitter.AddFace(centroid, m1, m2, i2, m3);
+                    }
+                }
+                meshEmitter.EndSubMesh();
+            }
+            return meshEmitter.ToMeshData();
+        }
+
         internal static MeshData Dual(MeshData meshData)
         {
             var dmb = new DualMeshBuilder(meshData);

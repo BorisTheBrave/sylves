@@ -683,18 +683,42 @@ mix.inputs[0].default_value = 0.433333
             }
             Export(g.BoundBy(new SquareBound(-3, -3, 5, 5)), "infinite_random_rect.svg", new Options { textScale = null, fillFunc = FillFunc, min = new Vector2(-8, -8), max = new Vector2(8, 8), trim = true });
         }
+        private static int PMod(int a, int b)
+        {
+            return ((a % b) + b) % b;
+        }
 
         [Test]
         [Explicit("Just for one off purposes")]
         public void TestTemp()
         {
+            
+            //var g = new SquareGrid(1, new SquareBound(-30, -30, 40, 40));
+            var g = new HexGrid(2, HexOrientation.PointyTopped, bound: HexBound.Hexagon(20));
+            //var g = new TriangleGrid(2, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(20));
+            //var g = new CairoGrid().BoundBy(new SquareBound(-20, -20, 20, 20));
+            var cells = g.GetCells().ToList();
+
             string FillFunc(Cell c)
             {
-                var s = (c.y + c.z * 2 + 300) % 3;
-                return s == 0 ? "#99C3EC" : s == 1 ? "#97E3C2" : "#F69C9E";
+                var cell = cells[c.x / g.GetCellType(cells[0]).N];
+                //var s = Math.Abs(cell.x + cell.y) % 2;// square
+                var s =  PMod(cell.x + 2 * cell.y, 3);// hex
+                //var s = ((c.x / 5)) % 4;//cairo
+                switch (s)
+                {
+                    case 0: return "#99C3EC";
+                    case 1: return "#97E3C2";
+                    case 2: return "#F69C9E";
+                    default: return "lightyellow";
+                }
             }
-            //Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-5, -5), new Vector2Int(5, 5))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "townscaper_colored.svg", new Options { textScale = null, strokeWidth = 0.01f, fillFunc = FillFunc, trim = true });
-            Export(new RhombilleGrid().BoundBy(new SquareBound(-5, -5, 5, 5)), "rhombille_empty.svg", new Options { textScale = null, strokeWidth = 0.01f, trim = true });
+
+            var md = g.ToMeshData();
+            md = ConwayOperators.Gyro(md);
+            md = md.Weld(1e-3f);
+            md = md.Relax(30);
+            Export(new MeshGrid(md), "gyro.svg", new Options { textScale = null, min = new Vector2(-10, -10), max = new Vector2(10, 10), trim = true, fillFunc = FillFunc });
         }
 
         [Test]
