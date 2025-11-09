@@ -21,7 +21,12 @@ namespace Sylves
     /// </summary>
     public interface ICellType
     {
+
         // Directions
+
+        // Gets the number of directions
+        int N { get; }
+
 
         /// <summary>
         /// Gets all the CellDir used by this cell type.

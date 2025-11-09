@@ -265,6 +265,7 @@ namespace Sylves
 
         public IEnumerable<CellCorner> GetCellCorners() => Underlying.GetCellCorners();
 
+        public int N => underlying.N;
         public IEnumerable<CellDir> GetCellDirs() => Underlying.GetCellDirs();
 
         public CellRotation GetIdentity() => (CellRotation)0;

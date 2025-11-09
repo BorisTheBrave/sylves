@@ -32,6 +32,7 @@ namespace Sylves
         private bool IsAxial(CellDir dir) => ((FSTrianglePrismDir)dir).IsAxial();
 
         public IEnumerable<CellCorner> GetCellCorners() => corners;
+        public int N => 5;
         public IEnumerable<CellDir> GetCellDirs() => dirs;
 
         public CellDir? Invert(CellDir dir) => (CellDir)((FSTrianglePrismDir)dir).Inverted();

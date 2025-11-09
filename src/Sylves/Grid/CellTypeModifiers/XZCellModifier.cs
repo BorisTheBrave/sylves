@@ -51,6 +51,9 @@ namespace Sylves
         }
 
         /// <inheritdoc />
+        public int N => underlying.N;
+
+        /// <inheritdoc />
         public IEnumerable<CellDir> GetCellDirs()
         {
             return underlying.GetCellDirs();

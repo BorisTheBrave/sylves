@@ -10,7 +10,7 @@ namespace Sylves
     /// <summary>
     /// Specialization of MeshGrid specifically for planar meshes.
     /// </summary>
-    internal class PlanarMeshGrid : MeshGrid
+    public class PlanarMeshGrid : MeshGrid
     {
         public PlanarMeshGrid(MeshData meshData, MeshGridOptions meshGridOptions = null) : base(meshData, meshGridOptions)
         {
@@ -37,5 +37,12 @@ namespace Sylves
             }
             return false;
         }
+        public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
+        {
+            min.z = this.min.z;
+            max.z = this.max.z;
+            return base.GetCellsIntersectsApprox(min, max);
+        }
+
     }
 }

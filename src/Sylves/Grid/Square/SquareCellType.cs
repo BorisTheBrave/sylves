@@ -55,6 +55,8 @@ namespace Sylves
 
         private SquareCellType(){}
 
+        public int N => 4;
+
         public IEnumerable<CellDir> GetCellDirs() => allCellDirs;
 
         public CellDir? Invert(CellDir dir) => (CellDir)((SquareDir)dir).Inverted();

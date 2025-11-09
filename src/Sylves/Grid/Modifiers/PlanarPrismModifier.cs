@@ -307,10 +307,6 @@ namespace Sylves
                 uDualCell = toUnderlying(uDualCell);
                 var underlyingDualCellType = dualGrid.underlying.GetCellType(uDualCell);
                 var dualPrismInfo = PrismInfo.Get(underlyingDualCellType);
-                if (!dualPrismInfo.PrismToBaseCorners.ContainsKey(corner))
-                {
-                    dualPrismInfo = dualPrismInfo;
-                }
                 var (uDualCorner, isForward) = dualPrismInfo.PrismToBaseCorners[corner];
                 var t = planarDualMapping.ToBasePair(uDualCell, uDualCorner);
                 if (t == null)

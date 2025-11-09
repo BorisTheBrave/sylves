@@ -49,6 +49,7 @@ namespace Sylves
 
         public IEnumerable<CellCorner> GetCellCorners() => allCellCorners;
 
+        public int N => 6;
         public IEnumerable<CellDir> GetCellDirs() => allCellDirs;
 
         public CellDir? Invert(CellDir dir) => (CellDir)((CubeDir)dir).Inverted();

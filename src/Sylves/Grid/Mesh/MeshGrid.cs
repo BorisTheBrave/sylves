@@ -31,6 +31,7 @@ namespace Sylves
         private const float PlanarThickness = 1e-35f;
 
         private MeshDetails meshDetails;
+        protected Vector3 min, max;
         protected readonly MeshData meshData;
         private readonly MeshGridOptions meshGridOptions;
         protected readonly bool is2d;
@@ -102,8 +103,8 @@ namespace Sylves
                 min = min == null ? cellMin : Vector3.Min(min.Value, cellMin);
                 max = max == null ? cellMax : Vector3.Max(max.Value, cellMax);
             }
-            min = min ?? new Vector3();
-            max = max ?? new Vector3();
+            min = this.min = min ?? new Vector3();
+            max = this.max = max ?? new Vector3();
 
             // Also, hashCellSize must be larger than floating point precision
             // This avoids issues with non-origin planes
