@@ -189,6 +189,11 @@ namespace Sylves
 
         public IGrid GetCompactGrid() => new BijectModifier(this, c => new Cell(c.x, c.y, -c.x - c.y), c => new Cell(c.x, c.y, 0), 2);
 
+        public IGrid Recenter(Cell cell)
+        {
+            return new CellTranslateModifier(this, (Vector3Int)cell);
+        }
+
         public Cell[] GetChildTriangles(Cell cell)
         {
             var a = cell.x - cell.y;

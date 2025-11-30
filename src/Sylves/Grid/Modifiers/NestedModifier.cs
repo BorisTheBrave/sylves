@@ -95,7 +95,6 @@ namespace Sylves
         // TOOD: Think about this
         protected virtual Vector3 MeshTranslation(Cell chunkCell) => new Vector3();
 
-
         #region Basics
 
         public virtual bool Is2d => chunkGrid.Is2d;
@@ -130,6 +129,14 @@ namespace Sylves
         public virtual IGrid GetDiagonalGrid() => throw new NotImplementedException();
 
         public virtual IGrid GetCompactGrid() => DefaultGridImpl.GetCompactGrid(this);
+
+        public virtual IGrid Recenter(Cell cell)
+        {
+            // We cannot do anything clever by default, but subclasses
+            // can potentially use MeshTranslation.
+            return DefaultGridImpl.Recenter(this, cell);
+        }
+
         #endregion
 
         #region Cell info

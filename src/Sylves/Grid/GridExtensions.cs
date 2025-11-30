@@ -50,7 +50,15 @@ namespace Sylves
         /// Applies a linear transformation to each of the cells of the grid.
         /// <see cref="TransformModifier"/>
         /// </summary>
-        public static IGrid Transformed(this IGrid grid, Matrix4x4 transform) => new TransformModifier(grid, transform);
+        public static IGrid Transformed(this IGrid grid, Matrix4x4 transform)
+        {
+            if(grid is TransformModifier tm)
+            {
+                // Combine transforms
+                return new TransformModifier(tm.Underlying, transform * tm.Transform);
+            }
+            return new TransformModifier(grid, transform);
+        }
 
         /// <summary>
         /// Filters the grid cells to the given subset.

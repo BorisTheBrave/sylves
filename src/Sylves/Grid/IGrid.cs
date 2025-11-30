@@ -102,6 +102,12 @@ namespace Sylves
         /// </summary>
         IGrid GetCompactGrid();
 
+        /// <summary>
+        /// Translates the grid so that the given cell is at the origin,
+        /// trying to minimize floating point error for nearby cells.
+        /// </summary>
+        IGrid Recenter(Cell cell);
+
 
         #endregion
 

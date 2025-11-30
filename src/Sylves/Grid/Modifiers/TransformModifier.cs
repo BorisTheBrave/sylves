@@ -34,6 +34,11 @@ namespace Sylves
 
         protected override IGrid Rebind(IGrid underlying)
         {
+            if (underlying is TransformModifier tm)
+            {
+                // Combine transforms.
+                return new TransformModifier(tm.Underlying, transform * tm.Transform);
+            }
             return new TransformModifier(underlying, transform, iTransform);
         }
 
@@ -64,6 +69,23 @@ namespace Sylves
             }
         }
 
+        public override IGrid Recenter(Cell cell)
+        {
+            var underlyingRecentered = Underlying.Recenter(cell);
+            if(underlyingRecentered is TransformModifier tm)
+            {
+                // Is the rotation part of the transform the identty
+                if(transform.column0 == new Vector4(1, 0, 0, 0) &&
+                   transform.column1 == new Vector4(0, 1, 0, 0) &&
+                   transform.column2 == new Vector4(0, 0, 1, 0))
+                {
+                    // Just return the underlying recentered, there's no need for another translation
+                    return tm;
+                }
+            }
+            // Apply transform, then translate again
+            return DefaultGridImpl.Recenter(Rebind(underlyingRecentered), cell);
+        }
         #endregion
 
         #region Bounds

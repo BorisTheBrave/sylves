@@ -45,6 +45,12 @@ namespace Sylves
                 );
         }
 
+        public static IGrid Recenter(IGrid grid, Cell cell)
+        {
+            var center = grid.GetCellCenter(cell);
+            return grid.Transformed(Matrix4x4.Translate(-center));
+        }
+
         #endregion
 
         #region Topology

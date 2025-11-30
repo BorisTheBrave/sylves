@@ -39,6 +39,7 @@ namespace Sylves
         public IGrid GetDiagonalGrid() => throw new NotImplementedException();
 
         public IGrid GetCompactGrid() => throw new NotImplementedException();
+        public IGrid Recenter(Cell cell) => throw new NotImplementedException();
 
         #endregion
 

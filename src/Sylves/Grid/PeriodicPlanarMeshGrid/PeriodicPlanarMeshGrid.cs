@@ -260,6 +260,13 @@ namespace Sylves
         public IGrid GetDiagonalGrid() => throw new NotImplementedException();
 
         public IGrid GetCompactGrid() => DefaultGridImpl.GetCompactGridFiniteX(this, centerGrid.IndexCount);
+
+        public IGrid Recenter(Cell cell)
+        {
+            var (_, chunk) = Split(cell);
+            var grid = new CellTranslateModifier(this, Promote(chunk));
+            return DefaultGridImpl.Recenter(grid, cell);
+        }
         #endregion
 
         #region Cell info

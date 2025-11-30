@@ -610,6 +610,8 @@ namespace Sylves
 
         public IGrid GetCompactGrid() => throw new NotImplementedException();
 
+        public IGrid Recenter(Cell cell) => throw new NotImplementedException();
+
         #endregion
 
         #region Cell info

@@ -221,6 +221,13 @@ namespace Sylves
         */
 
         public IGrid GetCompactGrid() => DefaultGridImpl.GetCompactGrid(this);
+
+        public IGrid Recenter(Cell cell)
+        {
+            var grid = new CellTranslateModifier(this, (Vector3Int)cell);
+            // Still need to recenter as this grid doesn't put the origin cell precisely at the origin.
+            return DefaultGridImpl.Recenter(grid, cell);
+        }
         #endregion
 
         #region Cell info

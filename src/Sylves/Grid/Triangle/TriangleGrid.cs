@@ -387,6 +387,13 @@ namespace Sylves
 
         }, c => new Cell(c.x * 2 + (c.x + c.y + c.z - 1), c.y, 0), 2);
 
+        public IGrid Recenter(Cell cell)
+        {
+            var grid = new CellTranslateModifier(this, (Vector3Int)cell);
+            // Still need to recenter as this grid doesn't put the origin cell precisely at the origin.
+            return DefaultGridImpl.Recenter(grid, cell);
+        }
+
         #endregion
 
         #region Cell info

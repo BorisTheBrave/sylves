@@ -76,6 +76,7 @@ namespace Sylves
         public virtual IDualMapping GetDual() => throw new NotSupportedException();
         public IGrid GetDiagonalGrid() => throw new NotSupportedException();
         public IGrid GetCompactGrid() => this;
+        public IGrid Recenter(Cell cell) => throw new NotImplementedException();
         #endregion
 
         #region Cell info

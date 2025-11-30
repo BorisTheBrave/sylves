@@ -105,6 +105,11 @@ namespace Sylves
         // GetCompactGrid is a form of BijectModifier itself, it doesn't make sense to re-apply it.
         public override IGrid GetCompactGrid() => Underlying;
 
+        public override IGrid Recenter(Cell cell)
+        {
+            return Rebind(Underlying.Recenter(toUnderlying(cell)));
+        }
+
         #endregion
 
         #region Cell info

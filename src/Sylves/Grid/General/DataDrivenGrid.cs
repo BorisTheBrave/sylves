@@ -73,6 +73,8 @@ namespace Sylves
         public virtual IGrid GetDiagonalGrid() => throw new NotSupportedException();
 
         public virtual IGrid GetCompactGrid() => throw new NotSupportedException();
+
+        public virtual IGrid Recenter(Cell cell) => DefaultGridImpl.Recenter(this, cell);
         #endregion
 
         #region Cell info

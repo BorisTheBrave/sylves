@@ -325,6 +325,14 @@ namespace Sylves
         public IGrid GetDiagonalGrid() => throw new NotImplementedException();
 
         public IGrid GetCompactGrid() => DefaultGridImpl.GetCompactGrid(this);
+
+        public IGrid Recenter(Cell cell)
+        {
+            var (uCell, layer) = Split(cell);
+            IGrid grid = new PlanarPrismModifier(Underlying.Recenter(uCell), planarPrismOptions, bound);
+            grid = new CellTranslateModifier(grid, new Vector3Int(0, 0, layer));
+            return DefaultGridImpl.Recenter(grid, cell);
+        }
         #endregion
 
         #region Cell info

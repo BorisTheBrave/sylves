@@ -37,5 +37,18 @@ namespace Sylves.Test
             var grid = new SquareGrid(1);
             Assert.AreEqual(cell1 + new Vector3Int(1, 0, 0), grid.Move(cell1, (CellDir)SquareDir.Right));
         }
+
+        [Test]
+        public void TestRecenter()
+        {
+            var cell1 = new Cell(OneTrillion * OneTrillion, 0, 0);
+            IGrid grid = new SquareGrid(1);
+            var cell2 = cell1 + new Vector3Int(1, 0, 0);
+            var offset1 = grid.GetCellCenter(cell2) - grid.GetCellCenter(cell1);
+            grid = grid.Recenter(cell1);
+            var offset2 = grid.GetCellCenter(cell2) - grid.GetCellCenter(cell1);
+            Assert.AreNotEqual(new Vector3(1, 0, 0), offset1);
+            Assert.AreEqual(new Vector3(1, 0, 0), offset2);
+        }
     }
 }

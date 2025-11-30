@@ -55,6 +55,7 @@ namespace Sylves
         public virtual IDualMapping GetDual() => throw new NotImplementedException();
         public virtual IGrid GetDiagonalGrid() => Rebind(underlying.GetDiagonalGrid());
         public virtual IGrid GetCompactGrid() => Rebind(underlying.GetCompactGrid());
+        public virtual IGrid Recenter(Cell cell) => Rebind(underlying.Recenter(cell));
         #endregion
 
         #region Cell info
