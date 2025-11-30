@@ -5,6 +5,8 @@ using System.Linq;
 using UnityEngine;
 #endif
 
+using static Sylves.MathUtils;
+
 namespace Sylves
 {
 #if !PURE_SYLVES
@@ -13,10 +15,10 @@ namespace Sylves
         // Extra border to add to each chunk to ensure they see every relevant point
         private const int b = 2;
 
-        private readonly int chunkSize;
-        private readonly int seed;
+        private readonly Int32 chunkSize;
+        private readonly Int32 seed;
 
-        public JitteredSquareGrid(int chunkSize = 10, int? seed = null, ICachePolicy cachePolicy = null)
+        public JitteredSquareGrid(Int32 chunkSize = 10, Int32? seed = null, ICachePolicy cachePolicy = null)
             : base()
         {
             this.chunkSize = chunkSize;
@@ -34,7 +36,7 @@ namespace Sylves
 
         protected virtual Vector2 GetPointInCell(Cell cell)
         {
-            var cellSeed = HashUtils.Hash(cell.x, cell.y, seed);
+            var cellSeed = HashUtils.Hash(cell.x.GetHashCode(), cell.y.GetHashCode(), seed);
             var random = new System.Random(cellSeed);
             var p = new Vector2(cell.x + (float)random.NextDouble(), cell.y + (float)random.NextDouble());
             return p;
@@ -50,11 +52,6 @@ namespace Sylves
             {
                 return (a / b);
             }
-        }
-
-        private static int PMod(int a, int b)
-        {
-            return ((a % b) + b) % b;
         }
 
         protected override (Cell childCell, Cell chunkCell) Split(Cell cell)
@@ -98,7 +95,7 @@ namespace Sylves
 
         public override IGrid Unbounded => new JitteredSquareGrid(this, null);
 
-        public override int CoordinateDimension => 2;
+        public override Int32 CoordinateDimension => 2;
     }
 #endif
 }

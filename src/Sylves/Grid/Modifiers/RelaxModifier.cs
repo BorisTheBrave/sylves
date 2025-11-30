@@ -18,7 +18,7 @@ namespace Sylves
         private readonly IGrid underlying;
         private readonly float chunkSize;
         private readonly float weldTolerance;
-        private readonly int relaxIterations;
+        private readonly Int32 relaxIterations;
 
         // Fast path optimization
         // If the underlying mesh shares the same structure as the relax modifier,
@@ -37,12 +37,12 @@ namespace Sylves
 
         // Unrelaxed chunks are just the raw mesh data taken from underlying
         // We also store the mapping from mesh faces back to underlying cells
-        private readonly IDictionary<Cell, (MeshData, BiMap<int, Cell>)> unrelaxedChunksByHex;
+        private readonly IDictionary<Cell, (MeshData, BiMap<Int32, Cell>)> unrelaxedChunksByHex;
 
         // Relaxed patches are the result of concatting several unrelaxed chunks together,
         // then relaxing them
         // Also stored is for each neighbour chunk, where the vertices of the unrelated mesh data can be found in relaxed patch.
-        private readonly IDictionary<Cell, (MeshData, Dictionary<Cell, int[]>)> relaxedPatchesByHex;
+        private readonly IDictionary<Cell, (MeshData, Dictionary<Cell, Int32[]>)> relaxedPatchesByHex;
 
         /// <summary>
         /// Cache for the Split operation.
@@ -54,7 +54,7 @@ namespace Sylves
             IGrid underlying,
             float chunkSize = 10,
             float weldTolerance = 1e-7f,
-            int relaxIterations = 3,
+            Int32 relaxIterations = 3,
             ICachePolicy cachePolicy = null)
             :base()
         {
@@ -216,7 +216,7 @@ namespace Sylves
         }
 
         // Unrelaxed chunks are just the raw mesh data taken from underlying
-        (MeshData meshData, BiMap<int, Cell> cells) GetUnrelaxedChunk(Cell hex)
+        (MeshData meshData, BiMap<Int32, Cell> cells) GetUnrelaxedChunk(Cell hex)
         {
             if (unrelaxedChunksByHex.ContainsKey(hex))
                 return unrelaxedChunksByHex[hex];
@@ -244,14 +244,14 @@ namespace Sylves
 
                 // To mesh data
                 var meshData = underlying.ToMeshData(cells);
-                var map = new BiMap<int, Cell>(cells.Select((x, i) => (i, x)));
+                var map = new BiMap<Int32, Cell>(cells.Select((x, i) => (i, x)));
                 return unrelaxedChunksByHex[hex] = (meshData, map);
             }
         }
 
         // Relaxed patches are the result of concatting several unrelaxed chunks together,
         // then relaxing them
-        (MeshData meshData, Dictionary<Cell, int[]> indexMaps) GetRelaxedPatch(Cell hex)
+        (MeshData meshData, Dictionary<Cell, Int32[]> indexMaps) GetRelaxedPatch(Cell hex)
         {
             if (relaxedPatchesByHex.ContainsKey(hex))
                 return relaxedPatchesByHex[hex];
@@ -334,7 +334,7 @@ namespace Sylves
 
         public override bool IsSingleCellType => underlying.IsSingleCellType;
 
-        public override int CoordinateDimension => underlying.CoordinateDimension;
+        public override Int32 CoordinateDimension => underlying.CoordinateDimension;
 
         public override IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes();
 

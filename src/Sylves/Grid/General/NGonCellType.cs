@@ -18,20 +18,20 @@ namespace Sylves
     /// </summary>
     public class NGonCellType : ICellType
     {
-        private static IDictionary<int, ICellType> instances = new Dictionary<int, ICellType>
+        private static IDictionary<Int32, ICellType> instances = new Dictionary<Int32, ICellType>
         {
             // Despite being a different class, it should be identical
             [4] = SquareCellType.Instance,
         };
 
-        private int n;
+        private Int32 n;
 
         private CellDir[] dirs;
         private CellCorner[] corners;
         private CellRotation[] rotations;
         private CellRotation[] rotationsAndReflections;
 
-        internal NGonCellType(int n)
+        internal NGonCellType(Int32 n)
         {
             this.n = n;
             dirs = Enumerable.Range(0, n).Select(x => (CellDir)x).ToArray();
@@ -43,7 +43,7 @@ namespace Sylves
         /// <summary>
         /// Returns the cell type corresponding to a polygon with n sides.
         /// </summary>
-        public static ICellType Get(int n)
+        public static ICellType Get(Int32 n)
         {
             if (instances.TryGetValue(n, out var cellType))
                 return cellType;
@@ -56,7 +56,7 @@ namespace Sylves
         /// as they are compatible with NGonCellType.
         /// Other celltypes return null.
         /// </summary>
-        public static int? Extract(ICellType cellType)
+        public static Int32? Extract(ICellType cellType)
         {
             if (cellType is NGonCellType ngct)
             {
@@ -74,7 +74,7 @@ namespace Sylves
         }
 
 
-        public int N => n;
+        public Int32 N => n;
 
         public CellRotation ReflectY => (CellRotation)~0;
         public CellRotation ReflectX => (n & 1) == 0 ? (CellRotation)~(n/2) : throw new Exception("Cannot reflex x on odd-sided polygon");
@@ -92,7 +92,7 @@ namespace Sylves
             return (CellRotation)0;
         }
 
-        internal static CellRotation? FromMatrix(Matrix4x4 matrix, int n)
+        internal static CellRotation? FromMatrix(Matrix4x4 matrix, Int32 n)
         {
             // Check that this matrix doesn't touch the z-axis
             var forward = matrix.MultiplyVector(Vector3.forward).normalized;
@@ -110,7 +110,7 @@ namespace Sylves
                 right.y = -right.y;
             }
             var angle = Mathf.Atan2(right.y, right.x);
-            var angleInt = Mathf.RoundToInt(angle / (Mathf.PI * 2 / n));
+            var angleInt = Mathf.RoundToInt32(angle / (Mathf.PI * 2 / n));
 
             var reflectY = (CellRotation)~0;
             var identity = (CellRotation)0;
@@ -152,7 +152,7 @@ namespace Sylves
             }
         }
 
-        internal static CellRotation Multiply(CellRotation a, CellRotation b, int n)
+        internal static CellRotation Multiply(CellRotation a, CellRotation b, Int32 n)
         {
             var ia = (int)a;
             var ib = (int)b;
@@ -185,7 +185,7 @@ namespace Sylves
             return Multiply(a, b, n);
         }
 
-        internal static CellDir Rotate(CellDir dir, CellRotation rotation, int n)
+        internal static CellDir Rotate(CellDir dir, CellRotation rotation, Int32 n)
         {
             if ((int)rotation >= 0)
             {
@@ -197,7 +197,7 @@ namespace Sylves
             }
         }
 
-        internal static CellCorner Rotate(CellCorner corner, CellRotation rotation, int n)
+        internal static CellCorner Rotate(CellCorner corner, CellRotation rotation, Int32 n)
         {
             if ((int)rotation >= 0)
             {
@@ -246,7 +246,7 @@ namespace Sylves
             return GetMatrix(cellRotation, n);
         }
 
-        internal static Matrix4x4 GetMatrix(CellRotation cellRotation, int n)
+        internal static Matrix4x4 GetMatrix(CellRotation cellRotation, Int32 n)
         {
             var i = (int)cellRotation;
             var rot = i < 0 ? ~i : i;
@@ -261,26 +261,26 @@ namespace Sylves
             return GetCornerPosition(corner, n);
         }
 
-        internal static Vector3 GetCornerPosition(CellCorner corner, int n)
+        internal static Vector3 GetCornerPosition(CellCorner corner, Int32 n)
         {
             var angle = (-0.5f + (int)corner) / n * Mathf.PI * 2;
             var circumradius = InradiusToCircumradius(0.5f, n);
             return new Vector3(Mathf.Cos(angle) * circumradius, Mathf.Sin(angle) * circumradius, 0);
         }
 
-        internal static float SideLengthToInradius(float sideLength, int n) => 0.5f * sideLength * Mathf.Cos(Mathf.PI / n) / Mathf.Sin(Mathf.PI / n);
+        internal static float SideLengthToInradius(float sideLength, Int32 n) => 0.5f * sideLength * Mathf.Cos(Mathf.PI / n) / Mathf.Sin(Mathf.PI / n);
 
-        internal static float InradiusToSideLength(float inradius, int n) => inradius / SideLengthToInradius(1, n);
+        internal static float InradiusToSideLength(float inradius, Int32 n) => inradius / SideLengthToInradius(1, n);
 
-        internal static float SideLengthToCircumradius(float sideLength, int n) => 0.5f * sideLength / Mathf.Sin(Mathf.PI / n);
-        internal static float CircumradiusToSideLength(float circumradius, int n) => circumradius / SideLengthToCircumradius(1, n);
+        internal static float SideLengthToCircumradius(float sideLength, Int32 n) => 0.5f * sideLength / Mathf.Sin(Mathf.PI / n);
+        internal static float CircumradiusToSideLength(float circumradius, Int32 n) => circumradius / SideLengthToCircumradius(1, n);
 
-        internal static float InradiusToCircumradius(float inradius, int n) => inradius / Mathf.Cos(Mathf.PI / n);
+        internal static float InradiusToCircumradius(float inradius, Int32 n) => inradius / Mathf.Cos(Mathf.PI / n);
 
-        public static string Format(CellRotation rotation, int n) => ((int)rotation).ToString();
+        public static string Format(CellRotation rotation, Int32 n) => ((int)rotation).ToString();
 
-        public static string Format(CellDir dir, int n) => ((int)dir).ToString();
-        public static string Format(CellCorner corner, int n) => ((int)corner).ToString();
+        public static string Format(CellDir dir, Int32 n) => ((int)dir).ToString();
+        public static string Format(CellCorner corner, Int32 n) => ((int)corner).ToString();
 
         public string Format(CellRotation rotation) => Format(rotation, N);
         public string Format(CellDir dir) => Format(dir, N);

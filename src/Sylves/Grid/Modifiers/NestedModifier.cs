@@ -112,7 +112,7 @@ namespace Sylves
 
         public virtual bool IsSingleCellType => cellTypes != null && cellTypes.Count() == 1;
 
-        public virtual int CoordinateDimension => 3;
+        public virtual Int32 CoordinateDimension => 3;
 
         public virtual IEnumerable<ICellType> GetCellTypes() => cellTypes ?? throw new NotSupportedException($"Grid {GetType().Name} does not support GetCellTypes()");
 

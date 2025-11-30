@@ -19,7 +19,7 @@ namespace Sylves
             this.fromUnderlying = fromUnderlying;
         }
 
-        public int Count => underlying.Count;
+        public Int32 Count => underlying.Count;
 
         public bool IsReadOnly => true;
 
@@ -35,7 +35,7 @@ namespace Sylves
 
         public bool Contains(Cell item) => underlying.Contains(toUnderlying(item));
 
-        public void CopyTo(Cell[] array, int arrayIndex)
+        public void CopyTo(Cell[] array, Int32 arrayIndex)
         {
             throw new NotImplementedException();
         }

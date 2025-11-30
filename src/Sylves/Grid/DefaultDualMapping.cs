@@ -269,7 +269,7 @@ namespace Sylves
             // Make a vertex for every primal cell mentioned in mappings (this includes cells not in current chunk)
             var allPrimalCells = mapping.Select(x => x.primalCell).Distinct().ToList();
             var vertices = new List<Vector3>(allPrimalCells.Count);
-            var primalCellToVertex = new Dictionary<Cell, int>();
+            var primalCellToVertex = new Dictionary<Cell, Int32>();
             for(var i=0;i<allPrimalCells.Count;i++)
             {
                 var p = baseGrid.GetCellCenter(allPrimalCells[i]);
@@ -278,7 +278,7 @@ namespace Sylves
             }
 
             // For each dual cell, make a face
-            var indices = new List<int>();
+            var indices = new List<Int32>();
             // TODO: Mapping is contiguous, we don't really need this group by or order by
             foreach(var mappingGroup in mapping.GroupBy(x=>x.dualCell))
             {

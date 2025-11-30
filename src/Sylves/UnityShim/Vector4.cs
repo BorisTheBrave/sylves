@@ -31,7 +31,7 @@ namespace Sylves
         public float z { get; set; }
         public float w { get; set; }
 
-        public float this[int index]
+        public float this[Int32 index]
         {
             get { switch (index) { case 0: return x; case 1: return y; case 2: return z; case 3: return w; default: throw new IndexOutOfRangeException(); } }
             set { switch (index) { case 0: x = value; break; case 1: y = value; break; case 2: z = value; break; case 3: w = value; break; default: throw new IndexOutOfRangeException(); } }
@@ -76,7 +76,7 @@ namespace Sylves
                 return Equals(v);
             return false;
         }
-        public override int GetHashCode() => (x, y, z, w).GetHashCode();
+        public override System.Int32 GetHashCode() => (x, y, z, w).GetHashCode();
         public void Normalize()
         {
             var m = magnitude;

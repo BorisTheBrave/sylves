@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 #if UNITY
 using UnityEngine;
 #endif
@@ -45,7 +46,7 @@ namespace Sylves
 
         public IEnumerable<CellCorner> GetCellCorners() => corners;
 
-        public int N => 6;
+        public Int32 N => 6;
         public IEnumerable<CellDir> GetCellDirs() => dirs;
 
         public CellRotation GetIdentity()

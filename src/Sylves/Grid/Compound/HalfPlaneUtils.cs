@@ -81,7 +81,7 @@ namespace Sylves
 					{
 						new LatticeLine{ Origin = new Vector2Int(x0, y0), Direction = dir, TMin = tMin, TMax = tMax }
 					};
-					for (int r = 0; r < result.Count && pending.Count > 0; r++)
+					for (var r = 0; r < result.Count && pending.Count > 0; r++)
 					{
 						var existing = result[r];
 						var nextPending = new List<LatticeLine>();
@@ -321,9 +321,15 @@ namespace Sylves
             var g = ExtendedGcd(Math.Abs(a), Math.Abs(b), out x, out y);
             if (s % g != 0)
                 return false;
+#if BIGINT
+			var mul = s / g;
+            var xx = x * mul;
+            var yy = y * mul;
+#else
             long mul = s / g;
             long xx = x * mul;
             long yy = y * mul;
+#endif
             if (a < 0) xx = -xx;
             if (b < 0) yy = -yy;
             x0 = (int)xx;

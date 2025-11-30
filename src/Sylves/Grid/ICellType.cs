@@ -25,7 +25,7 @@ namespace Sylves
         // Directions
 
         // Gets the number of directions
-        int N { get; }
+        Int32 N { get; }
 
 
         /// <summary>

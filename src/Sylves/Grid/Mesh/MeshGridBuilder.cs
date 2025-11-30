@@ -267,27 +267,27 @@ namespace Sylves
         #endregion
 
         // Edge index i is the edge from vertex i to vertex i+1
-        public static CellDir EdgeIndexToCellDir(int edgeIndex, int edgeCount, bool doubleOddFaces)
+        public static CellDir EdgeIndexToCellDir(Int32 edgeIndex, Int32 edgeCount, bool doubleOddFaces)
         {
             return (CellDir)(edgeCount % 2 == 1 && doubleOddFaces ? edgeIndex * 2 : edgeIndex);
         }
 
-        public static int CellDirToEdgeIndex(CellDir cellDir, int edgeCount, bool doubleOddFaces)
+        public static Int32 CellDirToEdgeIndex(CellDir cellDir, Int32 edgeCount, bool doubleOddFaces)
         {
-            return edgeCount % 2 == 1 && doubleOddFaces ? ((int)cellDir) / 2 : (int)cellDir;
+            return edgeCount % 2 == 1 && doubleOddFaces ? ((Int32)cellDir) / 2 : (Int32)cellDir;
         }
 
-        public static CellCorner VertexIndexToCellCorner(int index, int edgeCount, bool doubleOddFaces)
+        public static CellCorner VertexIndexToCellCorner(Int32 index, Int32 edgeCount, bool doubleOddFaces)
         {
             return (CellCorner)(edgeCount % 2 == 1 && doubleOddFaces ? index * 2 : index);
         }
 
-        public static int CellCornerToVertexIndex(CellCorner corner, int edgeCount, bool doubleOddFaces)
+        public static Int32 CellCornerToVertexIndex(CellCorner corner, Int32 edgeCount, bool doubleOddFaces)
         {
-            return edgeCount % 2 == 1 && doubleOddFaces ? ((int)corner) / 2 : (int)corner;
+            return edgeCount % 2 == 1 && doubleOddFaces ? ((Int32)corner) / 2 : (Int32)corner;
         }
 
-        private static ICellType GetCellType(int edgeCount, bool doubleOddFaces)
+        private static ICellType GetCellType(Int32 edgeCount, bool doubleOddFaces)
         {
             return edgeCount == 3 && doubleOddFaces ? TriangleCellType.Get(TriangleOrientation.FlatTopped) :
                 edgeCount == 4 ? SquareCellType.Instance :

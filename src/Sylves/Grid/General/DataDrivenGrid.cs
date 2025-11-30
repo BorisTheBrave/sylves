@@ -32,14 +32,14 @@ namespace Sylves
         private ICellType[] cellTypes;
         private readonly IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves;
         private readonly IDictionary<Cell, DataDrivenCellData> cellData;
-        private BiMap<Cell, int> indices;
+        private BiMap<Cell, Int32> indices;
 
         protected DataDrivenGrid(DataDrivenData data)
         {
             this.cellData = data.Cells;
             this.moves = data.Moves;
             cellTypes = cellData.Select(x => x.Value.CellType).Distinct().ToArray();
-            indices = new BiMap<Cell, int>(cellData.Keys.Select((x, i) => (x, i)));
+            indices = new BiMap<Cell, Int32>(cellData.Keys.Select((x, i) => (x, i)));
         }
 
 
@@ -56,7 +56,7 @@ namespace Sylves
         public bool IsFinite => true;
         public bool IsSingleCellType => cellTypes.Length == 1;
 
-        public virtual int CoordinateDimension => 3;
+        public virtual Int32 CoordinateDimension => 3;
         public IEnumerable<ICellType> GetCellTypes()
         {
             return cellTypes;
@@ -125,7 +125,7 @@ namespace Sylves
 
         public int GetIndex(Cell cell) => indices[cell];
 
-        public Cell GetCellByIndex(int index) => indices[index];
+        public Cell GetCellByIndex(int index) => indices[(Int32)index];
         #endregion
 
         #region Bounds

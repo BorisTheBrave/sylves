@@ -63,7 +63,7 @@ namespace Sylves
 
         public bool IsSingleCellType => true;
 
-        public int CoordinateDimension => 2;
+        public Int32 CoordinateDimension => 2;
 
         public IEnumerable<ICellType> GetCellTypes() => cellTypes;
         #endregion

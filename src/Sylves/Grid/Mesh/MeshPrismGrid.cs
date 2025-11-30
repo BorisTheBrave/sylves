@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using static Sylves.MeshGridUtils;
+
 namespace Sylves
 {
     /// <summary>
@@ -220,7 +222,7 @@ namespace Sylves
         private void GetCubeCellVertices(Cell cell, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8)
         {
             // TODO: Share this code with QuadInterpolation.InterpolatePosition?
-            var (face, submesh, layer) = (cell.x, cell.y, cell.z);
+            var (face, submesh, layer) = Unpack(cell);
 
             var meshOffset1 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset - meshPrismOptions.LayerHeight / 2;
             var meshOffset2 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset + meshPrismOptions.LayerHeight / 2;
@@ -246,7 +248,7 @@ namespace Sylves
             var prismInfo = meshCellData.PrismInfo;
             var vertices = meshData.vertices;
             var normals = meshData.normals;
-            var (faceIndex, submesh, layer) = (cell.x, cell.y, cell.z);
+            var (faceIndex, submesh, layer) = Unpack(cell);
 
 
             var meshOffset1 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset - meshPrismOptions.LayerHeight / 2;
@@ -293,7 +295,7 @@ namespace Sylves
         {
             var meshCellData = CellData[cell] as MeshCellData;
             var cellType = meshCellData.CellType;
-            var (faceIndex, submesh, layer) = (cell.x, cell.y, cell.z);
+            var (faceIndex, submesh, layer) = Unpack(cell);
 
             if (this.meshData.topologies[submesh] == MeshTopology.Quads && cellType is CubeCellType)
             {
@@ -307,7 +309,7 @@ namespace Sylves
                 var vertices = new[] { v1, v2, v3, v4, v5, v6, v7, v8 };
 
                 // z-forward convetion (see TestMeshes.Cube)
-                var indices = new[]
+                var indices = new Int32[]
                 {
                     7, 6, 2, 3, // Left
                     0, 1, 5, 4, // Right

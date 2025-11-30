@@ -41,7 +41,7 @@ namespace Sylves
 
         public virtual bool IsSingleCellType => underlying.IsSingleCellType;
 
-        public virtual int CoordinateDimension => underlying.CoordinateDimension;
+        public virtual Int32 CoordinateDimension => underlying.CoordinateDimension;
 
         public virtual IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes();
 

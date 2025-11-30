@@ -33,7 +33,7 @@ namespace Sylves
         public static Vector2Int left => new Vector2Int(-1, 0);
         public static Vector2Int right => new Vector2Int(1, 0);
 
-        public int this[int index]
+        public int this[System.Int32 index]
         {
             get { switch (index) { case 0: return x; case 1: return y; default: throw new IndexOutOfRangeException(); } }
             set { switch (index) { case 0: x = value; break; case 1: y = value; break; default: throw new IndexOutOfRangeException(); } }
@@ -56,7 +56,7 @@ namespace Sylves
                 return Equals(v);
             return false;
         }
-        public override int GetHashCode() => (x, y).GetHashCode();
+        public override System.Int32 GetHashCode() => (x, y).GetHashCode();
         public void Scale(Vector2Int scale) => Scale(this, scale);
         public void Set(int x, int y)
         {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 #if UNITY
 using UnityEngine;
 #endif
@@ -12,17 +13,17 @@ namespace Sylves
 
 		public (Matrix4x4 transform, string childName)[] ChildPrototiles { get; set; }
 
-		public (int fromChild, int fromChildSide, int toChild, int toChildSide)[] InteriorPrototileAdjacencies { get; set; }
+		public (Int32 fromChild, Int32 fromChildSide, Int32 toChild, Int32 toChildSide)[] InteriorPrototileAdjacencies { get; set; }
 
-		public (int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)[] ExteriorPrototileAdjacencies { get; set; }
-		public (int fromParentSide, int fromParentSubSide, int toParentSide, int toParentSubSide)[] PassthroughPrototileAdjacencies { get; set; }
+		public (Int32 parentSide, Int32 parentSubSide, Int32 parentSubSideCount, Int32 child, Int32 childSide)[] ExteriorPrototileAdjacencies { get; set; }
+		public (Int32 fromParentSide, Int32 fromParentSubSide, Int32 toParentSide, Int32 toParentSubSide)[] PassthroughPrototileAdjacencies { get; set; }
 
 
 		public Vector3[][] ChildTiles { get; set; }
 
-        public (int fromChild, int fromChildSide, int toChild, int toChildSide)[] InteriorTileAdjacencies { get; set; }
+        public (Int32 fromChild, Int32 fromChildSide, Int32 toChild, Int32 toChildSide)[] InteriorTileAdjacencies { get; set; }
 
-        public (int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)[] ExteriorTileAdjacencies { get; set; }
+        public (Int32 parentSide, Int32 parentSubSide, Int32 parentSubSideCount, Int32 child, Int32 childSide)[] ExteriorTileAdjacencies { get; set; }
 
 		public Prototile CopyPrototileToTiles()
 		{
@@ -35,7 +36,7 @@ namespace Sylves
         public Prototile HasSingleTile()
         {
             var r = Clone();
-			r.InteriorTileAdjacencies = new (int fromChild, int fromChildSide, int toChild, int toChildSide)[0];
+			r.InteriorTileAdjacencies = new (Int32 fromChild, Int32 fromChildSide, Int32 toChild, Int32 toChildSide)[0];
             r.ExteriorTileAdjacencies = Enumerable.Range(0, ChildTiles[0].Length).Select(x => (x, 0, 1, 0, x)).ToArray();
             return r;
         }
@@ -49,9 +50,9 @@ namespace Sylves
 			return r;
 		}
 
-        public Prototile SwapChildren(int a, int b)
+        public Prototile SwapChildren(Int32 a, Int32 b)
         {
-            int Update(int c) => c == a ? b : c == b ? a : c;
+            Int32 Update(Int32 c) => c == a ? b : c == b ? a : c;
             var r = Clone();
             r.ChildPrototiles = ((Matrix4x4, string)[])r.ChildPrototiles.Clone();
             r.ChildPrototiles[a] = ChildPrototiles[b];

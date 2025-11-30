@@ -7,10 +7,10 @@ namespace Sylves
 {
     internal class DefaultDiagonalGrid : BaseModifier
     {
-        private readonly int m;
+        private readonly Int32 m;
         private readonly IDualMapping dualMapping;
 
-        public DefaultDiagonalGrid(IGrid underlying, int m = 8) : base(underlying)
+        public DefaultDiagonalGrid(IGrid underlying, Int32 m = 8) : base(underlying)
         {
             if (!underlying.Is2d)
                 throw new Grid3dException();

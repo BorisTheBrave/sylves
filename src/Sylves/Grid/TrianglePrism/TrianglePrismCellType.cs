@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 #if UNITY
 using UnityEngine;
 #endif
@@ -32,7 +33,7 @@ namespace Sylves
         private bool IsAxial(CellDir dir) => ((FSTrianglePrismDir)dir).IsAxial();
 
         public IEnumerable<CellCorner> GetCellCorners() => corners;
-        public int N => 5;
+        public Int32 N => 5;
         public IEnumerable<CellDir> GetCellDirs() => dirs;
 
         public CellDir? Invert(CellDir dir) => (CellDir)((FSTrianglePrismDir)dir).Inverted();

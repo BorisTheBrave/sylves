@@ -59,7 +59,7 @@ namespace Sylves
 
         public bool IsSingleCellType => true;
 
-        public int CoordinateDimension => 3;
+        public Int32 CoordinateDimension => 3;
 
         public IEnumerable<ICellType> GetCellTypes()
         {
@@ -596,17 +596,17 @@ namespace Sylves
                     if (tx1 == mint)
                     {
                         startOnBorder = 0;
-                        x1 = dx == 0 ? (bound.Min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? bound.Min.x : bound.Mex.x;
+                        x1 = dx == 0 ? (bound.Min.x > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (float)bound.Min.x : (float)bound.Mex.x;
                     }
                     else if (ty1 == mint)
                     {
                         startOnBorder = 1;
-                        y1 = dy == 0 ? (bound.Min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? bound.Min.y : bound.Mex.y;
+                        y1 = dy == 0 ? (bound.Min.y > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (float)bound.Min.y : (float)bound.Mex.y;
                     }
                     else
                     {
                         startOnBorder = 2;
-                        z1 = dz == 0 ? (bound.Min.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? bound.Min.z : bound.Mex.z;
+                        z1 = dz == 0 ? (bound.Min.z > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (float)bound.Min.z : (float)bound.Mex.z;
                     }
                 }
                 else

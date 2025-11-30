@@ -15,17 +15,17 @@ namespace Sylves
 	{
         // Raycast and IntersectsAabb have a hard time knowing when to stop searching.
         // They give up when they haven't found anything interesting in this many heights.
-        protected const int DeadZone = 3;
+        protected const Int32 DeadZone = 3;
 
         protected readonly InternalPrototile[] prototiles;
-        protected int tileBits;
-        protected int prototileBits;
+        protected Int32 tileBits;
+        protected Int32 prototileBits;
         protected List<ICellType> cellTypes;
-        protected Func<int, InternalPrototile> hierarchy;
+        protected Func<Int32, InternalPrototile> hierarchy;
         protected SubstitutionTilingBound bound;
         protected Matrix4x4 baseTransform;
         // By height
-        private List<Dictionary<InternalPrototile, int>> indexCounts;
+        private List<Dictionary<InternalPrototile, Int32>> indexCounts;
 
         // Copy constructor
         protected BaseSubstitutionTilingGrid(BaseSubstitutionTilingGrid other, SubstitutionTilingBound bound)
@@ -41,7 +41,7 @@ namespace Sylves
         }
 
         // Copy constructor
-        protected BaseSubstitutionTilingGrid(BaseSubstitutionTilingGrid other, Func<int, InternalPrototile> hierarchy, Matrix4x4 baseTransform)
+        protected BaseSubstitutionTilingGrid(BaseSubstitutionTilingGrid other, Func<Int32, InternalPrototile> hierarchy, Matrix4x4 baseTransform)
         {
             prototiles = other.prototiles;
             tileBits = other.tileBits;
@@ -59,13 +59,13 @@ namespace Sylves
 
         }
 
-        public BaseSubstitutionTilingGrid(Prototile[] prototiles, Func<int, string> hierarchy, SubstitutionTilingBound bound = null)
+        public BaseSubstitutionTilingGrid(Prototile[] prototiles, Func<Int32, string> hierarchy, SubstitutionTilingBound bound = null)
 		{
             // Prep bit arithmetic
             var maxTileCount = prototiles.Max(x => x.ChildTiles?.Length ?? 0);
-            tileBits = (int)Math.Ceiling(Math.Log(maxTileCount) / Math.Log(2));
+            tileBits = (Int32)Math.Ceiling(Math.Log(maxTileCount) / Math.Log(2));
             var maxPrototileCount = prototiles.Max(x => x.ChildPrototiles?.Length ?? 0);
-            prototileBits = (int)Math.Ceiling(Math.Log(maxPrototileCount) / Math.Log(2));
+            prototileBits = (Int32)Math.Ceiling(Math.Log(maxPrototileCount) / Math.Log(2));
 
             var (internalPrototiles, prototilesByName) = BuildPrototiles(prototiles);
             this.prototiles = internalPrototiles;
@@ -177,10 +177,10 @@ namespace Sylves
 
             foreach(var p in internalPrototiles)
             {
-                var sides = new List<(Vector3 v1, Vector3 v2, int child, int childSide)>();
-                var internalAdjacencies = new List<(int fromChild, int fromChildSide, int toChild, int toChildSide)>();
+                var sides = new List<(Vector3 v1, Vector3 v2, Int32 child, Int32 childSide)>();
+                var internalAdjacencies = new List<(Int32 fromChild, Int32 fromChildSide, Int32 toChild, Int32 toChildSide)>();
 
-                void AddSide(Vector3 v1, Vector3 v2, int child, int childSide)
+                void AddSide(Vector3 v1, Vector3 v2, Int32 child, Int32 childSide)
                 {
                     for (var k = 0; k < sides.Count; k++)
                     {
@@ -210,10 +210,10 @@ namespace Sylves
                 p.InteriorPrototileAdjacencies = internalAdjacencies.ToArray();
                 {
                     var tile = p.ChildTiles.Single();
-                    var externalAdjacencies = new List<(int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)>();
+                    var externalAdjacencies = new List<(Int32 parentSide, Int32 parentSubSide, Int32 parentSubSideCount, Int32 child, Int32 childSide)>();
                     for (var i = 0; i < tile.Length; i++)
                     {
-                        var currentExternalAdjacencies = new List<(int parentSide, int parentSubSide, int child, int childSide)>();
+                        var currentExternalAdjacencies = new List<(Int32 parentSide, Int32 parentSubSide, Int32 child, Int32 childSide)>();
                         var current = tile[i];
                         var end = tile[(i + 1) % tile.Length];
                         var j = 0;
@@ -243,9 +243,9 @@ namespace Sylves
 
 
         // Returns the largest value that GetPathAt(cell, i - 1) is non-zero
-        internal int GetPathLength(Cell cell)
+        internal Int32 GetPathLength(Cell cell)
         {
-            int leadingBits;
+            Int32 leadingBits;
             if (cell.z != 0)
             {
                 leadingBits = BitUtils.LeadingZeroCount((uint)cell.z);
@@ -263,9 +263,9 @@ namespace Sylves
             return Math.Max(0, (bits + prototileBits - 1) / prototileBits);
         }
 
-        internal int GetPathDiffLength(Cell a, Cell b)
+        internal Int32 GetPathDiffLength(Cell a, Cell b)
         {
-            int leadingBits;
+            Int32 leadingBits;
             if (a.z != b.z)
             {
                 leadingBits = BitUtils.LeadingZeroCount((uint)(a.z ^ b.z));
@@ -283,7 +283,7 @@ namespace Sylves
             return Math.Max(0, (bits + prototileBits - 1) / prototileBits);
         }
 
-        internal int GetPathAt(Cell cell, int height)
+        internal Int32 GetPathAt(Cell cell, Int32 height)
         {
             var bits = tileBits + prototileBits * height;
             var mask1 = (1U << prototileBits) - 1;
@@ -291,18 +291,18 @@ namespace Sylves
             {
                 var l = (uint)cell.y |  (((ulong)(uint)cell.z) << 32);
                 l = l >> (bits - 32);
-                return (int)(l & mask1);
+                return (Int32)(l & mask1);
             }
             else
             {
 
                 var l = (uint)cell.x | (((ulong)(uint)cell.y) << 32);
                 l = l >> bits;
-                return (int)(l & mask1);
+                return (Int32)(l & mask1);
             }
         }
 
-        internal Cell SetPathAt(Cell cell, int height, int value)
+        internal Cell SetPathAt(Cell cell, Int32 height, Int32 value)
         {
             var bits = tileBits + prototileBits * height;
             var mask1 = (1U << prototileBits) - 1;
@@ -312,42 +312,42 @@ namespace Sylves
             }
             if (bits >= 64)
             {
-                cell.z = cell.z & ~(int)(mask1 << (bits - 64)) | (int)(value << (bits - 64));
+                cell.z = cell.z & ~(Int32)(mask1 << (bits - 64)) | (Int32)(value << (bits - 64));
 
             }
             else if (bits > 32)
             {
-                cell.y = cell.y & ~(int)(mask1 << (bits - 32)) | (int)(value << (bits - 32));
-                cell.z = cell.z & ~(int)(mask1 << (bits - 64)) | (int)(value >>- (bits - 64));
+                cell.y = cell.y & ~(Int32)(mask1 << (bits - 32)) | (Int32)(value << (bits - 32));
+                cell.z = cell.z & ~(Int32)(mask1 << (bits - 64)) | (Int32)(value >>- (bits - 64));
             }
             else if(bits == 32)
             {
-                cell.y = cell.y & ~(int)(mask1 << (bits - 32)) | (int)(value << (bits - 32));
+                cell.y = cell.y & ~(Int32)(mask1 << (bits - 32)) | (Int32)(value << (bits - 32));
             }
             else if(bits > 0)
             {
-                cell.x = cell.x & ~(int)(mask1 << bits) | (int)(value << bits);
-                cell.y = cell.y & ~(int)(mask1 << (bits - 32)) | (int)(value >>- (bits - 32));
+                cell.x = cell.x & ~(Int32)(mask1 << bits) | (Int32)(value << bits);
+                cell.y = cell.y & ~(Int32)(mask1 << (bits - 32)) | (Int32)(value >>- (bits - 32));
             }
             else
             {
-                cell.x = cell.x & ~(int)(mask1 << bits) | (int)(value << bits);
+                cell.x = cell.x & ~(Int32)(mask1 << bits) | (Int32)(value << bits);
             }
             return cell;
         }
 
-        internal int GetChildTileAt(Cell cell)
+        internal Int32 GetChildTileAt(Cell cell)
         {
             return cell.x & ((1 << tileBits) - 1);
         }
 
-        internal Cell SetChildTileAt(Cell cell, int value)
+        internal Cell SetChildTileAt(Cell cell, Int32 value)
         {
             cell.x = cell.x & ~((1 << tileBits) - 1) | value;
             return cell;
         }
 
-        internal Cell ClearChildTileAndPathBelow(Cell cell, int height)
+        internal Cell ClearChildTileAndPathBelow(Cell cell, Int32 height)
         {
             var bits = tileBits + prototileBits * height;
             if(bits >= 96)
@@ -357,21 +357,21 @@ namespace Sylves
             else if (bits >= 64)
             {
                 var mask = (1 << (bits - 64)) - 1;
-                return new Cell(0, 0, (int)((uint)cell.z & ~mask));
+                return new Cell(0, 0, (Int32)((uint)cell.z & ~mask));
             }
             else if (bits >= 32)
             {
                 var mask = (1 << (bits - 32)) - 1;
-                return new Cell(0, (int)((uint)cell.y & ~mask), cell.z);
+                return new Cell(0, (Int32)((uint)cell.y & ~mask), cell.z);
             }
             else
             {
                 var mask = (1 << (bits - 0)) - 1;
-                return new Cell((int)((uint)cell.x & ~mask), cell.y, cell.z);
+                return new Cell((Int32)((uint)cell.x & ~mask), cell.y, cell.z);
             }
         }
 
-        #endregion
+#endregion
 
         #region Other Utils
 
@@ -382,13 +382,13 @@ namespace Sylves
             return transform * parent.ChildPrototiles[0].transform.inverse;
         }
 
-        protected (Matrix4x4, InternalPrototile) Down(Matrix4x4 transform, InternalPrototile prototile, int child)
+        protected (Matrix4x4, InternalPrototile) Down(Matrix4x4 transform, InternalPrototile prototile, Int32 child)
         {
             var t = prototile.ChildPrototiles[child];
             return (transform * t.transform, t.child);
         }
 
-        protected abstract InternalPrototile GetPrototile(Cell cell, int height);
+        protected abstract InternalPrototile GetPrototile(Cell cell, Int32 height);
 
         #endregion
 
@@ -408,7 +408,7 @@ namespace Sylves
 
         public bool IsSingleCellType => cellTypes.Count == 1;
 
-        public int CoordinateDimension
+        public Int32 CoordinateDimension
         {
             get
             {
@@ -485,11 +485,11 @@ namespace Sylves
 
         #region Index
 
-        private void FillIndexCounts(int height)
+        private void FillIndexCounts(Int32 height)
         {
             if(indexCounts == null)
             {
-                indexCounts = new List<Dictionary<InternalPrototile, int>>();
+                indexCounts = new List<Dictionary<InternalPrototile, Int32>>();
                 indexCounts.Add(prototiles.ToDictionary(x => x, x => x.ChildTiles.Length));
             }
 
@@ -750,19 +750,19 @@ namespace Sylves
 
             public (Matrix4x4 transform, InternalPrototile child)[] ChildPrototiles { get; set; }
 
-            public (int fromChild, int fromChildSide, int toChild, int toChildSide)[] InteriorPrototileAdjacencies { get; set; }
+            public (Int32 fromChild, Int32 fromChildSide, Int32 toChild, Int32 toChildSide)[] InteriorPrototileAdjacencies { get; set; }
 
-            public (int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)[] ExteriorPrototileAdjacencies { get; set; }
+            public (Int32 parentSide, Int32 parentSubSide, Int32 parentSubSideCount, Int32 child, Int32 childSide)[] ExteriorPrototileAdjacencies { get; set; }
             
-            public (int fromParentSide, int fromParentSubSide, int toParentSide, int toParentSubSide)[] PassthroughPrototileAdjacencies { get; set; }
+            public (Int32 fromParentSide, Int32 fromParentSubSide, Int32 toParentSide, Int32 toParentSubSide)[] PassthroughPrototileAdjacencies { get; set; }
 
             public Vector3[][] ChildTiles { get; set; }
 
             public Vector3[] Centers { get; set; }
 
-            public (int fromChild, int fromChildSide, int toChild, int toChildSide)[] InteriorTileAdjacencies { get; set; }
+            public (Int32 fromChild, Int32 fromChildSide, Int32 toChild, Int32 toChildSide)[] InteriorTileAdjacencies { get; set; }
 
-            public (int parentSide, int parentSubSide, int parentSubSideCount, int child, int childSide)[] ExteriorTileAdjacencies { get; set; }
+            public (Int32 parentSide, Int32 parentSubSide, Int32 parentSubSideCount, Int32 child, Int32 childSide)[] ExteriorTileAdjacencies { get; set; }
 
             public Aabb bound;
 

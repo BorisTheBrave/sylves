@@ -29,9 +29,9 @@ namespace Sylves
                 new Vector3(1 + ISqrt2, -ISqrt2, 0),
                 new Vector3(1 + ISqrt2 + ISqrt2, 0, 0),
             },
-            indices = new int[][]
+            indices = new Int32[][]
             {
-                new int []{0, 1, 4, 2, 0, 3, 5, 1, 1, 5, 6, 4 },
+                new Int32 []{0, 1, 4, 2, 0, 3, 5, 1, 1, 5, 6, 4 },
             },
             topologies = new MeshTopology[]
             {
@@ -82,7 +82,7 @@ namespace Sylves
                 new Vector3(ISqrt2, 1+ISqrt2, 0 ),
                 new Vector3(0, 1, 0),
             },
-            indices = new int[][] { new int[] { 0, 1, 2, 3, 4, 5, 6, ~7 } },
+            indices = new Int32[][] { new Int32[] { 0, 1, 2, 3, 4, 5, 6, ~7 } },
             topologies = new[] { MeshTopology.NGon }
         };
         private static CompoundSection Section3 = new CompoundSection(

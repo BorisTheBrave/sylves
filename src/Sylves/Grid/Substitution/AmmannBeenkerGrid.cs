@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 #if UNITY
 using UnityEngine;
 #endif
@@ -79,7 +80,7 @@ namespace Sylves
                     (3, 1, 3, 3, 1),
                     (3, 2, 3, 2, 3),
                 },
-            InteriorTileAdjacencies = new (int, int, int, int)[0],
+            InteriorTileAdjacencies = new (Int32, Int32, Int32, Int32)[0],
             ExteriorTileAdjacencies = new[]
             {
                 (0, 0, 1, 0, 0),
@@ -128,7 +129,7 @@ namespace Sylves
                     (3, 1, 3, 1, 1),
                     (3, 2, 3, 0, 3),
                 },
-            InteriorTileAdjacencies = new (int, int, int, int)[0],
+            InteriorTileAdjacencies = new (Int32, Int32, Int32, Int32)[0],
             ExteriorTileAdjacencies = new[]
             {
                 (0, 0, 1, 0, 0),

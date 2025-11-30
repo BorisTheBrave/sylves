@@ -40,7 +40,7 @@ namespace Sylves
                 return Equals(v);
             return false;
         }
-        public override int GetHashCode() => (x, y, z).GetHashCode();
+        public override System.Int32 GetHashCode() => (x, y, z).GetHashCode();
 
         public static Cell operator +(Cell cell, Vector3Int offset)
         {

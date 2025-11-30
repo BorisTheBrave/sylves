@@ -72,7 +72,7 @@ namespace Sylves
         {
             cells = cells ?? grid.GetCells();
             var vertices = new List<Vector3>();
-            var indices = new List<int>();
+            var indices = new List<Int32>();
 
             bool allTris = true;
             bool allQuads = true;

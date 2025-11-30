@@ -6,6 +6,7 @@ using UnityEngine;
 #endif
 
 using static Sylves.VectorUtils;
+using static Sylves.MeshGridUtils;
 
 namespace Sylves
 {
@@ -165,9 +166,9 @@ namespace Sylves
                 // So we're careful to clip things in a way that avoids problems
                 int FloorToInt(float x)
                 {
-                    return x < int.MinValue + 1 ? int.MinValue + 1 :
-                        x> int.MaxValue - 1 ? int.MaxValue - 1 :
-                        (int)x;
+                    return x < Int32.MinValue + 1 ? Int32.MinValue + 1 :
+                        x> Int32.MaxValue - 1 ? Int32.MaxValue - 1 :
+                        (Int32)x;
                 }
                 return new Vector3Int(
                     FloorToInt((v.x - hashCellBase.x) / hashCellSize.x),
@@ -203,7 +204,7 @@ namespace Sylves
 
         public override bool IsPlanar => is2d && meshDetails.isPlanar;
 
-        public override int CoordinateDimension => is2d ? (meshData.subMeshCount == 1 ? 1 : 2) : 3;
+        public override Int32 CoordinateDimension => is2d ? (meshData.subMeshCount == 1 ? 1 : 2) : 3;
         #endregion
 
         #region Relatives
@@ -738,17 +739,17 @@ namespace Sylves
         #endregion
 
         #region Shape
-        public IReadOnlyList<int> GetFaceIndices(Cell cell)
+        public IReadOnlyList<Int32> GetFaceIndices(Cell cell)
         {
-            var (face, submesh, layer) = (cell.x, cell.y, cell.z);
+            var (face, submesh, layer) = Unpack(cell);
             var topology = meshData.GetTopology(submesh);
             if (topology == MeshTopology.Triangles)
             {
-                return new ArraySegment<int>(meshData.indices[submesh], face * 3, 3);
+                return new ArraySegment<Int32>(meshData.indices[submesh], face * 3, 3);
             }
             else if (topology == MeshTopology.Quads)
             {
-                return new ArraySegment<int>(meshData.indices[submesh], face * 4, 4);
+                return new ArraySegment<Int32>(meshData.indices[submesh], face * 4, 4);
             }
             else
             {

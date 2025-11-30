@@ -221,7 +221,7 @@ namespace Sylves
 
         public virtual bool IsSingleCellType => underlying.IsSingleCellType;
 
-        public int CoordinateDimension => 3;
+        public Int32 CoordinateDimension => 3;
 
         public virtual IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes().Select(PrismCellType);
 
@@ -480,8 +480,8 @@ namespace Sylves
         {
             var uBound = underlying.GetBound(cells.Select(c=>Split(c).cell));
             var first = true;
-            var minLayer = 0;
-            var maxLayer = 0;
+            int minLayer = 0;
+            int maxLayer = 0;
             foreach (var cell in cells)
             {
                 var layer = Split(cell).layer;
@@ -650,7 +650,7 @@ namespace Sylves
         {
             var n = polygon.Length;
             var vertices = new Vector3[n * 2];
-            var indices = new int[n * 4 + n * 2];
+            var indices = new Int32[n * 4 + n * 2];
             // Find the vertices
             for (var i = 0; i < n; i++)
             {
@@ -694,8 +694,8 @@ namespace Sylves
         {
             var aabb = Underlying.GetAabb(cells.Select(c => Split(c).cell));
             var first = true;
-            var minLayer = 0;
-            var maxLayer = 0;
+            int minLayer = 0;
+            int maxLayer = 0;
             foreach(var cell in cells)
             {
                 var layer = Split(cell).layer;

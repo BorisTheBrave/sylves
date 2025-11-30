@@ -263,7 +263,7 @@ namespace Sylves
                 }
             }
 
-            public int N { get; }
+            public Int32 N { get; }
 
             public void Left()
             {

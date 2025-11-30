@@ -2,6 +2,8 @@
 using UnityEngine;
 #endif
 
+using System;
+
 namespace Sylves
 {
     /// <summary>
@@ -34,7 +36,7 @@ namespace Sylves
 
         public bool IsReflection => value < 0;
 
-        public int Rotation => value < 0 ? ~value : value;
+        public Int32 Rotation => value < 0 ? ~value : value;
 
         public static HexRotation Identity => new HexRotation(0);
 
@@ -50,7 +52,7 @@ namespace Sylves
 
         public static HexRotation RotateCW => new HexRotation(5);
 
-        public static HexRotation Rotate60(int i) => new HexRotation((short)(((i % 6) + 6) % 6));
+        public static HexRotation Rotate60(Int32 i) => new HexRotation((short)(((i % 6) + 6) % 6));
 
         public static HexRotation[] All => all;
 
@@ -72,7 +74,7 @@ namespace Sylves
                    value == rotation.value;
         }
 
-        public override int GetHashCode()
+        public override System.Int32 GetHashCode()
         {
             return 45106587 + value.GetHashCode();
         }
@@ -142,7 +144,7 @@ namespace Sylves
         // Scared to make this an operator when it's a non-standard use of co-ordinates
         public Vector3Int Multiply(Vector3Int v)
         {
-            var ir = (int)value;
+            var ir = (Int32)value;
             if (ir < 0)
             {
                 ir = ~ir;
@@ -206,7 +208,7 @@ namespace Sylves
             }
 
             var angle = Mathf.Atan2(right.y, right.x);
-            var angleInt = Mathf.RoundToInt(angle / (Mathf.PI / 3));
+            var angleInt = Mathf.RoundToInt32(angle / (Mathf.PI / 3));
 
             if (orientation == HexOrientation.FlatTopped)
             {

@@ -53,7 +53,7 @@ namespace Sylves
             }
             // TODO: Handle connection?
             var cellType = Grid.GetCellType(dest);
-            if (NGonCellType.Extract(cellType) is int n)
+            if (NGonCellType.Extract(cellType) is Int32 n)
             {
                 var nextDir = (int)inverseDir + (n / 2) + (bearLeft && (n % 2 == 1 ) ? 1 : 0);
 

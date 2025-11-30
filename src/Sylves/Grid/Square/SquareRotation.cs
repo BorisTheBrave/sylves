@@ -31,7 +31,7 @@ namespace Sylves
 
         public bool IsReflection => value < 0;
 
-        public int Rotation => value < 0 ? ~value : value;
+        public Int32 Rotation => value < 0 ? ~value : value;
 
         public static SquareRotation Identity => new SquareRotation(0);
 
@@ -43,7 +43,7 @@ namespace Sylves
 
         public static SquareRotation RotateCW => new SquareRotation(3);
 
-        public static SquareRotation Rotate90(int i) => new SquareRotation((short)(((i % 4) + 4) % 4));
+        public static SquareRotation Rotate90(Int32 i) => new SquareRotation((short)(((i % 4) + 4) % 4));
 
         public static SquareRotation[] All => all;
 
@@ -65,7 +65,7 @@ namespace Sylves
                    value == rotation.value;
         }
 
-        public override int GetHashCode()
+        public override System.Int32 GetHashCode()
         {
             return 45106587 + value.GetHashCode();
         }
@@ -151,7 +151,7 @@ namespace Sylves
                 right.y = -right.y;
             }
             var angle = Mathf.Atan2(right.y, right.x);
-            var angleInt = Mathf.RoundToInt(angle / (Mathf.PI / 2));
+            var angleInt = Mathf.RoundToInt32(angle / (Mathf.PI / 2));
 
             return (isReflection ? ReflectY : Identity) * Rotate90(angleInt);
         }

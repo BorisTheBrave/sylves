@@ -17,7 +17,7 @@ namespace Sylves
         {
         }
 
-        private RawSubstitutionTilingGrid(RawSubstitutionTilingGrid other, Func<int, InternalPrototile> hierarchy, Matrix4x4 baseTransform) : base(other, hierarchy, baseTransform)
+        private RawSubstitutionTilingGrid(RawSubstitutionTilingGrid other, Func<Int32, InternalPrototile> hierarchy, Matrix4x4 baseTransform) : base(other, hierarchy, baseTransform)
         {
         }
 
@@ -25,14 +25,14 @@ namespace Sylves
         {
         }
 
-        public RawSubstitutionTilingGrid(Prototile[] prototiles, Func<int, string> hierarchy, SubstitutionTilingBound bound = null) : base(prototiles, hierarchy, bound)
+        public RawSubstitutionTilingGrid(Prototile[] prototiles, Func<Int32, string> hierarchy, SubstitutionTilingBound bound = null) : base(prototiles, hierarchy, bound)
         {
         }
 
         #region Utils
 
         // Some of the most common things we want to look up
-        private (InternalPrototile prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
+        private (InternalPrototile prototile, Matrix4x4 prototileTransform, Int32 childTile) LocateCell(Cell cell)
         {
             var childTile = GetChildTileAt(cell);
             var pathLength = GetPathLength(cell);
@@ -61,7 +61,7 @@ namespace Sylves
             return (parent, GetChildTileAt(cell));
         }
 
-        protected override InternalPrototile GetPrototile(Cell cell, int height)
+        protected override InternalPrototile GetPrototile(Cell cell, Int32 height)
         {
             var pathLength = GetPathLength(cell);
             var parent = hierarchy(pathLength);
@@ -75,7 +75,7 @@ namespace Sylves
         /// <summary>
         /// Returns n+1 parent elements for a path of length n
         /// </summary>
-        private IList<InternalPrototile> Parents(Cell cell, int minHeight = 0)
+        private IList<InternalPrototile> Parents(Cell cell, Int32 minHeight = 0)
         {
             var pathLength = GetPathLength(cell);
             var parents = new InternalPrototile[pathLength + 1];
@@ -95,7 +95,7 @@ namespace Sylves
         public override IGrid Unbounded => new RawSubstitutionTilingGrid(this, (SubstitutionTilingBound)null);
 
 
-        public RawSubstitutionTilingGrid ParentGrid(int n = 1)
+        public RawSubstitutionTilingGrid ParentGrid(Int32 n = 1)
         {
             // Check subdividable
             if (tileBits != 0)
@@ -110,7 +110,7 @@ namespace Sylves
             return new RawSubstitutionTilingGrid(this, (h) => hierarchy(h + n), t);
         }
 
-        public Cell CellToParentGrid(Cell cell, int n = 1)
+        public Cell CellToParentGrid(Cell cell, Int32 n = 1)
         {
             // TODO: This can be done with bit shifting
             var l = GetPathLength(cell);
@@ -201,7 +201,7 @@ namespace Sylves
         // Given a prototile (height, partialPath), and a side of that prototile,
         // Moves to the adjacent prototile at the same height, returning which side we entered from.
         // Parents must the list of parent prototiles for partial path. It's indexed from height 0, but it'll only be inspected at height+1 and above.
-        private (Cell partialPath, int side, InternalPrototile prototile) TryMovePrototile(int height, Cell partialPath, int prototileSide, IList<InternalPrototile> parents)
+        private (Cell partialPath, Int32 side, InternalPrototile prototile) TryMovePrototile(Int32 height, Cell partialPath, Int32 prototileSide, IList<InternalPrototile> parents)
         {
             var childPrototile = GetPathAt(partialPath, height);
             var parent = height + 1 < parents.Count ? parents[height + 1] : hierarchy(height + 1);
@@ -419,7 +419,7 @@ namespace Sylves
                     {
                         if (height == 0)
                         {
-                            highestFoundHeight = Math.Max(highestFoundHeight, t.height);
+                            highestFoundHeight = highestFoundHeight > t.height ? highestFoundHeight : t.height;
                             yield return (prototile, transform, partialPath);
                         }
                         else
@@ -533,7 +533,7 @@ namespace Sylves
                         if (t2.initialHeight <= t.height - DeadZone)
                         {
                             var (initialHeight, itemHeight, prototile, transform, partialPath, dist2) = queue.Pop();
-                            highestFoundHeight = Math.Max(highestFoundHeight, initialHeight);
+                            highestFoundHeight = highestFoundHeight > initialHeight ? highestFoundHeight : initialHeight;
                             yield return (prototile, transform, partialPath, dist2);
                         }
                         else

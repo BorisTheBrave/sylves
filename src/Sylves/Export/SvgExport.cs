@@ -80,7 +80,7 @@ namespace Sylves
             tw.WriteLine("\"/>");
         }
 
-        public void DrawCoordinateLabel(IGrid grid, Cell cell, int dim = 3, double textScale = 1.0, string text = null)
+        public void DrawCoordinateLabel(IGrid grid, Cell cell, Int32 dim = 3, double textScale = 1.0, string text = null)
         {
             // Style is hard coded for now
             var stroke_text_style = "fill: rgb(51, 51, 51); font-size: 0.3px;stroke: white; stroke-width: 0.05";

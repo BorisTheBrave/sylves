@@ -51,7 +51,11 @@ namespace Sylves
 
         public static int Hash(Cell cell)
         {
-            return Hash(cell.x, cell.y, cell.z);
+            return Hash(cell.x.GetHashCode(), cell.y.GetHashCode(), cell.z.GetHashCode());
+        }
+        public static int Hash(Cell cell, int v4)
+        {
+            return Hash(cell.x.GetHashCode(), cell.y.GetHashCode(), cell.z.GetHashCode(), v4);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Sylves
         }
 
 
-        public static MeshData CreateMeshData(IList<Vector3> points, VoronoiGridOptions voronoiGridOptions = null, Func<int, bool> mask = null)
+        public static MeshData CreateMeshData(IList<Vector3> points, VoronoiGridOptions voronoiGridOptions = null, Func<Int32, bool> mask = null)
         {
 
             voronoiGridOptions = voronoiGridOptions ?? new VoronoiGridOptions();
@@ -40,7 +40,7 @@ namespace Sylves
 
 
 
-            var indices = new List<int>();
+            var indices = new List<Int32>();
             var vertices = new List<Vector3>();
             var polygon = new List<Vector3>();
             for (var i = 0; i < points.Count; i++)

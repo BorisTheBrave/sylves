@@ -3,5 +3,6 @@ bin
 obj
 /upm
 src/Sylves.Godot/**/*.cs
+src/Sylves.BigInt/**/*.cs
 /release
 .DS_Store

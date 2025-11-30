@@ -58,7 +58,7 @@ namespace Sylves
         /// dim 2 means cell.z === 0
         /// dim 3 means all three co-ordinates are relevant.
         /// </summary>
-        int CoordinateDimension { get; }
+        Int32 CoordinateDimension { get; }
 
         // TODO: Supports MeshDistortion
         // TODO: Similar to Orientable for cell rotation

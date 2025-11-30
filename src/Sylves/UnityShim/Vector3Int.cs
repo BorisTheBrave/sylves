@@ -36,7 +36,7 @@ namespace Sylves
         public static Vector3Int right => new Vector3Int(1, 0, 0);
         // Note: There's no forward/back, because Unity also misses them
 
-        public int this[int index]
+        public int this[System.Int32 index]
         {
             get { switch(index) { case 0: return x; case 1: return y; case 2: return z; default: throw new IndexOutOfRangeException(); } }
             set { switch(index) { case 0: x = value; break; case 1: y = value; break; case 2: z = value; break; default: throw new IndexOutOfRangeException();} }
@@ -62,7 +62,7 @@ namespace Sylves
                 return Equals(v);
             return false;
         }
-        public override int GetHashCode() => (x, y, z).GetHashCode();
+        public override System.Int32 GetHashCode() => (x, y, z).GetHashCode();
         public void Scale(Vector3Int scale) => Scale(this, scale);
         public void Set(int x, int y, int z)
         {

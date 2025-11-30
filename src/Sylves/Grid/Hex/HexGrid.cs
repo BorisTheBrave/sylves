@@ -132,7 +132,7 @@ namespace Sylves
 
         public bool IsSingleCellType => true;
 
-        public int CoordinateDimension => 3;
+        public Int32 CoordinateDimension => 3;
 
         /// <summary>
         /// Returns the full list of cell types that can be returned by <see cref="GetCellType(Cell)"/>

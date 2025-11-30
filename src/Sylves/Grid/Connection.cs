@@ -17,13 +17,13 @@ namespace Sylves
     public struct Connection : IEquatable<Connection>
     {
         public bool Mirror { get; set; }
-        public int Rotation { get; set; }
-        public int Sides { get; set; }
+        public Int32 Rotation { get; set; }
+        public Int32 Sides { get; set; }
 
         public static Connection operator*(Connection a, Connection b)
         {
             var n = a.Sides != 0 ? a.Sides : b.Sides;
-            int rotation;
+            Int32 rotation;
 
             if (n == 0)
             {
@@ -92,7 +92,7 @@ namespace Sylves
                 return Equals(v);
             return false;
         }
-        public override int GetHashCode() => (Mirror, Rotation, Sides).GetHashCode();
+        public override System.Int32 GetHashCode() => (Mirror, Rotation, Sides).GetHashCode();
 
         public override string ToString()
         {

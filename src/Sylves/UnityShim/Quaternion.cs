@@ -130,7 +130,7 @@ namespace Sylves
                 return false;
             }
         }
-        public override int GetHashCode() => (x, y, z, w).GetHashCode();
+        public override System.Int32 GetHashCode() => (x, y, z, w).GetHashCode();
         /*
         public void Normalize();
         public void Set(float newX, float newY, float newZ, float newW);

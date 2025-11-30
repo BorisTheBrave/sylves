@@ -109,7 +109,7 @@ namespace Sylves
 
         public static Vector3 ToPoint(string s) => ToPoints(s).Last();
 
-        public static (Matrix4x4 transform, string childName) MakeChild(string tile, int turn, string offset)
+        public static (Matrix4x4 transform, string childName) MakeChild(string tile, Int32 turn, string offset)
         {
             var translate = ToPoint(offset);
             var transform = Matrix4x4.Scale(Vector3.one / Phi / Phi) * Matrix4x4.Translate(translate) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 60 * turn));
@@ -178,7 +178,7 @@ namespace Sylves
             },
         };
 
-        public static Vector3[] ChildHat(string offset, int turn, bool flipped, int shift)
+        public static Vector3[] ChildHat(string offset, int turn, bool flipped, Int32 shift)
         {
             var offsetVector = ToPoint(offset);
             var rot = Matrix4x4.Rotate(Quaternion.Euler(0, 0, 30 * turn));

@@ -257,7 +257,7 @@ namespace Sylves
             }
         }
 
-        public override int GetHashCode() => (column0, column1, column2, column3).GetHashCode();
+        public override System.Int32 GetHashCode() => (column0, column1, column2, column3).GetHashCode();
         public Vector4 GetRow(int index)
         {
             switch(index)

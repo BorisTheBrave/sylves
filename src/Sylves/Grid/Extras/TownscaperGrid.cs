@@ -13,12 +13,12 @@ namespace Sylves
     {
         private const float TriangleSize = 0.5f;
 
-        private readonly int n;
+        private readonly Int32 n;
         private readonly float tolerance;
         private readonly HexGrid chunkGrid;
-        private readonly int seed;
+        private readonly Int32 seed;
 
-        public UnrelaxedTownscaperGrid(int n, int seed, float tolerance) : base()
+        public UnrelaxedTownscaperGrid(Int32 n, Int32 seed, float tolerance) : base()
         {
             this.n = n;
             this.seed = seed;
@@ -35,7 +35,7 @@ namespace Sylves
             var meshData = triangleGrid.ToMeshData();
 
             // Randomly pair the triangles of that grid
-            var hexSeed = HashUtils.Hash(hex.x, hex.y, hex.z, seed);
+            var hexSeed = HashUtils.Hash(hex, seed);
             var random = new System.Random(hexSeed);
             meshData = meshData.RandomPairing(random.NextDouble);
 
@@ -68,7 +68,7 @@ namespace Sylves
     {
         const float tolerance = 1e-2f;
 
-        public TownscaperGrid(int n, int? seed = null, int relaxIterations = 10) : base(new UnrelaxedTownscaperGrid(n, seed ?? new System.Random().Next(), tolerance), n, relaxIterations: relaxIterations, weldTolerance: tolerance)
+        public TownscaperGrid(Int32 n, Int32? seed = null, Int32 relaxIterations = 10) : base(new UnrelaxedTownscaperGrid(n, seed ?? new System.Random().Next(), tolerance), n, relaxIterations: relaxIterations, weldTolerance: tolerance)
         {
         }
     }

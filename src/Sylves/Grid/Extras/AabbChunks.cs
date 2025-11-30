@@ -148,7 +148,7 @@ namespace Sylves
 
         private class RaycastInfoComparer : IComparer<RaycastInfo>
         {
-            public int Compare(RaycastInfo x, RaycastInfo y)
+            public Int32 Compare(RaycastInfo x, RaycastInfo y)
             {
                 return x.distance.CompareTo(y.distance);
             }

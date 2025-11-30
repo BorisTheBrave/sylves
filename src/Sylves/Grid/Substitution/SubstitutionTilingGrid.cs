@@ -20,7 +20,7 @@ namespace Sylves
     public class SubstitutionTilingGrid : BaseSubstitutionTilingGrid
     {
         private ICachePolicy cachePolicy;
-        private Dictionary<(int Height, Cell Path), Crumb> crumbCache;
+        private Dictionary<(Int32 Height, Cell Path), Crumb> crumbCache;
         private List<Crumb> hierarchyCrumbs;
 
 
@@ -35,7 +35,7 @@ namespace Sylves
         private SubstitutionTilingGrid(SubstitutionTilingGrid other, Func<int, InternalPrototile> hierarchy, Matrix4x4 baseTransform) : base(other, hierarchy, baseTransform)
         {
             cachePolicy = other.cachePolicy;
-            crumbCache = new Dictionary<(int Height, Cell Path), Crumb>();
+            crumbCache = new Dictionary<(Int32 Height, Cell Path), Crumb>();
             hierarchyCrumbs = new List<Crumb>
             {
                 new Crumb
@@ -56,7 +56,7 @@ namespace Sylves
         public SubstitutionTilingGrid(Prototile[] prototiles, Func<int, string> hierarchy, SubstitutionTilingBound bound = null, ICachePolicy cachePolicy = null) : base(prototiles, hierarchy, bound)
         {
             this.cachePolicy = cachePolicy ?? CachePolicy.Always;
-            crumbCache = new Dictionary<(int Height, Cell Path), Crumb>();
+            crumbCache = new Dictionary<(Int32 Height, Cell Path), Crumb>();
             hierarchyCrumbs = new List<Crumb>
             {
                 new Crumb
@@ -70,9 +70,9 @@ namespace Sylves
             };
         }
 
-        protected override InternalPrototile GetPrototile(Cell cell, int height) => GetCrumb(cell, height).prototile;
+        protected override InternalPrototile GetPrototile(Cell cell, Int32 height) => GetCrumb(cell, height).prototile;
 
-        public string GetPrototileName(Cell cell, int height = 0) => GetPrototile(cell, height).Name;
+        public string GetPrototileName(Cell cell, Int32 height = 0) => GetPrototile(cell, height).Name;
 
 
 
@@ -91,7 +91,7 @@ namespace Sylves
             // Use GetParent, don't read this!
             public Crumb parent;
 
-            public int height;
+            public Int32 height;
             public Cell partialPath;
 
             public Matrix4x4 transform;
@@ -108,7 +108,7 @@ namespace Sylves
 
         // Force creates a crumb which is the ancestor of cell at the given height.
         // Uses the cache if possible
-        private Crumb GetCrumb(Cell cell, int height = 0)
+        private Crumb GetCrumb(Cell cell, Int32 height = 0)
         {
             var pathLength = Math.Max(GetPathLength(cell), height);
 
@@ -203,7 +203,7 @@ namespace Sylves
         public RawSubstitutionTilingGrid Raw => new RawSubstitutionTilingGrid(this, bound);
 
 
-        public SubstitutionTilingGrid ParentGrid(int n = 1)
+        public SubstitutionTilingGrid ParentGrid(Int32 n = 1)
         {
             // Check subdividable
             if (tileBits != 0)
@@ -218,7 +218,7 @@ namespace Sylves
             return new SubstitutionTilingGrid(this, (h) => hierarchy(h + n), t);
         }
 
-        public Cell CellToParentGrid(Cell cell, int n = 1)
+        public Cell CellToParentGrid(Cell cell, Int32 n = 1)
         {
             // TODO: This can be done with bit shifting
             var l = GetPathLength(cell);
@@ -314,7 +314,7 @@ namespace Sylves
         // Given a prototile (height, partialPath), and a side of that prototile,
         // Moves to the adjacent prototile at the same height, returning which side we entered from.
         // Parents must the list of parent prototiles for partial path. It's indexed from height 0, but it'll only be inspected at height+1 and above.
-        private (Crumb crumb, int side) TryMovePrototile(Crumb crumb, int prototileSide)
+        private (Crumb crumb, Int32 side) TryMovePrototile(Crumb crumb, Int32 prototileSide)
         {
             var partialPath = crumb.partialPath;
             var height = crumb.height;
@@ -528,7 +528,7 @@ namespace Sylves
                     {
                         if (crumb.height == 0)
                         {
-                            highestFoundHeight = Math.Max(highestFoundHeight, t.height);
+                            highestFoundHeight = highestFoundHeight > t.height ? highestFoundHeight : t.height;
                             yield return crumb;
                         }
                         else
@@ -643,7 +643,7 @@ namespace Sylves
                         if (t2.initialHeight <= t.height - DeadZone)
                         {
                             var (initialHeight, crumb, dist2) = queue.Pop();
-                            highestFoundHeight = Math.Max(highestFoundHeight, initialHeight);
+                            highestFoundHeight = highestFoundHeight > initialHeight ? highestFoundHeight : initialHeight;
                             yield return (crumb, dist2);
                         }
                         else

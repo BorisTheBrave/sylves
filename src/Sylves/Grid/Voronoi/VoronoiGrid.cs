@@ -29,7 +29,7 @@ namespace Sylves
         /// Applies this many steps of https://en.wikipedia.org/wiki/Lloyd's_algorithm
         /// giving move evenly sized cell.
         /// </summary>
-        public int LloydRelaxationIterations { get; set; }
+        public Int32 LloydRelaxationIterations { get; set; }
 
         public BorderRelaxation BorderRelaxation { get; set; }
 
@@ -43,7 +43,7 @@ namespace Sylves
         {
         }
 
-        public static MeshData CreateMeshData(IList<Vector2> points, VoronoiGridOptions voronoiGridOptions = null, Func<int, bool> mask = null)
+        public static MeshData CreateMeshData(IList<Vector2> points, VoronoiGridOptions voronoiGridOptions = null, Func<Int32, bool> mask = null)
         {
             voronoiGridOptions = voronoiGridOptions ?? new VoronoiGridOptions();
             if (voronoiGridOptions.ClipMin != null ^ voronoiGridOptions.ClipMax != null)
@@ -77,7 +77,7 @@ namespace Sylves
                 voronator = new Voronator(points, voronator.ClipMin, voronator.ClipMax);
             }
 
-            var indices = new List<int>();
+            var indices = new List<Int32>();
             var vertices = new List<Vector3>();
             for (var i = 0; i < points.Count; i++)
             {

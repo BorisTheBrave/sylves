@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 #if UNITY
 using UnityEngine;
 #endif
@@ -31,7 +32,7 @@ namespace Sylves
         public HexOrientation Orientation => orientation;
 
 
-        public int N => 8;
+        public Int32 N => 8;
         private bool IsAxial(CellDir dir) => ((PTHexPrismDir)dir).IsAxial();
 
         public IEnumerable<CellCorner> GetCellCorners() => corners;

@@ -17,17 +17,17 @@ namespace Sylves
     internal class OffsetCollection
     {
         private readonly Vector3Int[] offsets;
-        private readonly int[] inverses;
+        private readonly Int32[] inverses;
 
         // self inverses
         public OffsetCollection(Vector3Int[] offsets)
         {
             this.offsets = offsets;
             // Compute inverses
-            inverses = new int[offsets.Length];
+            inverses = new Int32[offsets.Length];
             for (var i = 0; i < offsets.Length; i++)
             {
-                var inv = offsets.Select((x, j) => x == -offsets[i] ? j : (int?)null).Where(x => x != null).SingleOrDefault();
+                var inv = offsets.Select((x, j) => x == -offsets[i] ? j : (Int32?)null).Where(x => x != null).SingleOrDefault();
                 if (inv == null)
                     throw new Exception($"No inverse found for offset {offsets[i]}");
                 inverses[i] = inv.Value;
@@ -72,17 +72,17 @@ namespace Sylves
     /// </summary>
     internal class NGonDiagonalsCellType : ICellType
     {
-        private static IDictionary<(int, int), ICellType> instances = new Dictionary<(int, int), ICellType>();
+        private static IDictionary<(Int32, Int32), ICellType> instances = new Dictionary<(Int32, Int32), ICellType>();
 
-        private int n;
-        private int d;
+        private Int32 n;
+        private Int32 d;
 
         private CellDir[] dirs;
         private CellCorner[] corners;
         private CellRotation[] rotations;
         private CellRotation[] rotationsAndReflections;
 
-        internal NGonDiagonalsCellType(int n, int d)
+        internal NGonDiagonalsCellType(Int32 n, Int32 d)
         {
             this.n = n;
             this.d = d;
@@ -95,14 +95,14 @@ namespace Sylves
         /// <summary>
         /// Returns the cell type corresponding to a polygon with n sides.
         /// </summary>
-        public static ICellType Get(int n, int d)
+        public static ICellType Get(Int32 n, Int32 d)
         {
             if (instances.TryGetValue((n, d), out var cellType))
                 return cellType;
             return instances[(n, d)] = new NGonDiagonalsCellType(n, d);
         }
 
-        public int N => n;
+        public Int32 N => n;
         public int D => d;
 
         public CellRotation ReflectY => (CellRotation)~0;
@@ -161,7 +161,7 @@ namespace Sylves
             return NGonCellType.Multiply(a, b, n);
         }
 
-        internal static CellDir Rotate(CellDir dir, CellRotation rotation, int n, int d)
+        internal static CellDir Rotate(CellDir dir, CellRotation rotation, Int32 n, Int32 d)
         {
             var r = (int)rotation;
             r *= (d / n);
@@ -265,7 +265,7 @@ namespace Sylves
 
         public IEnumerable<CellCorner> GetCellCorners() => Underlying.GetCellCorners();
 
-        public int N => underlying.N;
+        public Int32 N => underlying.N;
         public IEnumerable<CellDir> GetCellDirs() => Underlying.GetCellDirs();
 
         public CellRotation GetIdentity() => (CellRotation)0;
