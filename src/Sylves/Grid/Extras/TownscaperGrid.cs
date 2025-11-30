@@ -18,6 +18,15 @@ namespace Sylves
         private readonly HexGrid chunkGrid;
         private readonly Int32 seed;
 
+        // Clone constructor
+        public UnrelaxedTownscaperGrid(UnrelaxedTownscaperGrid original, SquareBound bound) : base(original, bound)
+        {
+            this.n = original.n;
+            this.seed = original.seed;
+            this.tolerance = original.tolerance;
+            this.chunkGrid = original.chunkGrid;
+        }
+
         public UnrelaxedTownscaperGrid(Int32 n, Int32 seed, float tolerance) : base()
         {
             this.n = n;
@@ -58,6 +67,10 @@ namespace Sylves
             var maxCellsPerHex = HexBound.Hexagon(n).Count();
             return DefaultGridImpl.GetCompactGridFiniteX(this, maxCellsPerHex);
         }
+
+        public override IGrid Unbounded => new UnrelaxedTownscaperGrid(this, null);
+
+        public override IGrid BoundBy(IBound bound) => bound == null ? this : new UnrelaxedTownscaperGrid(this, (SquareBound)IntersectBounds(this.GetBound(), bound));
     }
 
     /// <summary>
