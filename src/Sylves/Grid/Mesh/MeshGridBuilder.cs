@@ -98,9 +98,9 @@ namespace Sylves
                 var face = 0;
                 foreach (var faceIndices in MeshUtils.GetFaces(data, submesh, meshGridOptions.InvertWinding))
                 {
-                    int first = -1;
-                    int prev = -1;
-                    int indexCount = 0;
+                    var first = -1;
+                    var prev = -1;
+                    var indexCount = 0;
                     foreach (var index in faceIndices)
                     {
                         if (first == -1)

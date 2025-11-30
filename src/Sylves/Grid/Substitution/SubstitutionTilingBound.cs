@@ -1,12 +1,13 @@
 ﻿#if UNITY
 using UnityEngine;
 #endif
+using System;
 
 namespace Sylves
 {
     public class SubstitutionTilingBound : IBound
     {
-        public int Height { get; set; }
+        public Int32 Height { get; set; }
         public Cell Path { get; set; }
     }
 }

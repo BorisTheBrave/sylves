@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Sylves.BigIntRewriter": {
+      "commandName": "Project",
+      "workingDirectory": "$(MSBuildProjectDirectory)"
+    }
+  }
+}

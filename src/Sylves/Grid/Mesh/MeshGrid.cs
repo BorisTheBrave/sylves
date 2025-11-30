@@ -223,7 +223,7 @@ namespace Sylves
             Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toDual;
             Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toBase;
 
-            public DualMapping(MeshGrid baseGrid, MeshGrid dualGrid, List<(int primalFace, int primalVert, int dualFace, int dualVert)> rawMapping) : base(baseGrid, dualGrid)
+            public DualMapping(MeshGrid baseGrid, MeshGrid dualGrid, List<(Int32 primalFace, Int32 primalVert, Int32 dualFace, Int32 dualVert)> rawMapping) : base(baseGrid, dualGrid)
             {
                 toDual = rawMapping.ToDictionary(
                     x => (new Cell(x.primalFace, 0, 0), (CellCorner)x.primalVert),

@@ -170,7 +170,7 @@ namespace Sylves
             // There's too many faces in dualGrid, work out which ones to keep,
             // and re-index them
             var keepFaces = new List<bool>();
-            var keptFaceIndices = new List<int>();
+            var keptFaceIndices = new List<Int32>();
             var keptFaceCount = 0;
             foreach(var face in MeshUtils.GetFaces(dualMeshData))
             {
@@ -194,13 +194,13 @@ namespace Sylves
             var dualGrid = new PeriodicPlanarMeshGrid(dualMesh, strideX, strideY);
 
             // Convert primal faces back to which chunk they are from,
-            // and compress dual faces to just hose kept
-            var centralFaceCount = centerGrid.IndexCount;
-            (int, Vector2Int) MapPrimalFace(int primalFace)
+            // and compress dual faces to just those kept
+            var centralFaceCount = (Int32)centerGrid.IndexCount;
+            (Int32, Vector2Int) MapPrimalFace(Int32 primalFace)
             {
                 return (primalFace % centralFaceCount, chunks[primalFace / centralFaceCount]);
             }
-            int MapDualFace(int dualFace)
+            Int32 MapDualFace(Int32 dualFace)
             {
                 return keptFaceIndices[dualFace];
             }
@@ -218,7 +218,7 @@ namespace Sylves
             Dictionary<(Cell, CellCorner), (Cell, Vector2Int, CellCorner)> toDual;
             Dictionary<(Cell, CellCorner), (Cell, Vector2Int, CellCorner)> toBase;
 
-            public DualMapping(PeriodicPlanarMeshGrid baseGrid, PeriodicPlanarMeshGrid dualGrid, List<((int face, Vector2Int chunk) primal, int primalVert, int dualFace, int dualVert)> rawMapping) : base(baseGrid, dualGrid)
+            public DualMapping(PeriodicPlanarMeshGrid baseGrid, PeriodicPlanarMeshGrid dualGrid, List<((Int32 face, Vector2Int chunk) primal, Int32 primalVert, Int32 dualFace, Int32 dualVert)> rawMapping) : base(baseGrid, dualGrid)
             {
                 toDual = toBase = rawMapping.ToDictionary(
                     x => (new Cell(x.primal.face, 0, 0), (CellCorner)x.primalVert),

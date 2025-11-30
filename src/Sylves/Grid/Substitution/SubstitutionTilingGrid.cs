@@ -32,7 +32,7 @@ namespace Sylves
             hierarchyCrumbs = other.hierarchyCrumbs;
         }
 
-        private SubstitutionTilingGrid(SubstitutionTilingGrid other, Func<int, InternalPrototile> hierarchy, Matrix4x4 baseTransform) : base(other, hierarchy, baseTransform)
+        private SubstitutionTilingGrid(SubstitutionTilingGrid other, Func<Int32, InternalPrototile> hierarchy, Matrix4x4 baseTransform) : base(other, hierarchy, baseTransform)
         {
             cachePolicy = other.cachePolicy;
             crumbCache = new Dictionary<(Int32 Height, Cell Path), Crumb>();
@@ -53,7 +53,7 @@ namespace Sylves
         {
         }
 
-        public SubstitutionTilingGrid(Prototile[] prototiles, Func<int, string> hierarchy, SubstitutionTilingBound bound = null, ICachePolicy cachePolicy = null) : base(prototiles, hierarchy, bound)
+        public SubstitutionTilingGrid(Prototile[] prototiles, Func<Int32, string> hierarchy, SubstitutionTilingBound bound = null, ICachePolicy cachePolicy = null) : base(prototiles, hierarchy, bound)
         {
             this.cachePolicy = cachePolicy ?? CachePolicy.Always;
             crumbCache = new Dictionary<(Int32 Height, Cell Path), Crumb>();
@@ -110,7 +110,8 @@ namespace Sylves
         // Uses the cache if possible
         private Crumb GetCrumb(Cell cell, Int32 height = 0)
         {
-            var pathLength = Math.Max(GetPathLength(cell), height);
+            var pathLength = GetPathLength(cell);
+            if (height > pathLength) pathLength = height;
 
             // Find the closest crumb we can walk down from
             Crumb crumb = null;
@@ -168,7 +169,7 @@ namespace Sylves
             return parentCrumb;
         }
 
-        private Crumb GetChild(Crumb crumb, int childIndex)
+        private Crumb GetChild(Crumb crumb, Int32 childIndex)
         {
             var height = crumb.height - 1;
             var partialPath = SetPathAt(crumb.partialPath, crumb.height - 1, childIndex);
@@ -602,7 +603,7 @@ namespace Sylves
         /// </summary>
         private IEnumerable<(Crumb, float minDist)> RaycastCrumbs(Func<Crumb, float?> getDist)
         {
-            var queue = new PriorityQueue<(int initialHeight, Crumb crumb, float dist)>(x => x.dist, (x, y) => -x.dist.CompareTo(y.dist));
+            var queue = new PriorityQueue<(Int32 initialHeight, Crumb crumb, float dist)>(x => x.dist, (x, y) => -x.dist.CompareTo(y.dist));
 
             var highestFoundHeight = -1;
             foreach (var t in Spigot())

@@ -67,7 +67,7 @@ namespace Sylves
             Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toDual;
             Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toBase;
 
-            public DualMapping(MeshPrismGrid baseGrid, MeshPrismGrid dualGrid, List<(int primalFace, int primalVert, int dualFace, int dualVert)> rawMapping, int minLayer, int maxLayer) : base(baseGrid, dualGrid)
+            public DualMapping(MeshPrismGrid baseGrid, MeshPrismGrid dualGrid, List<(Int32 primalFace, Int32 primalVert, Int32 dualFace, Int32 dualVert)> rawMapping, int minLayer, int maxLayer) : base(baseGrid, dualGrid)
             {
                 toDual = new Dictionary<(Cell, CellCorner), (Cell, CellCorner)>();
                 foreach(var (primalFace, primalVert, dualFace, dualVert) in rawMapping)
@@ -76,7 +76,7 @@ namespace Sylves
                     var dualPrismInfo = (dualGrid.CellData[new Cell(dualFace, 0, 0)] as MeshCellData).PrismInfo;
                     var (primalBack, primalForward) = basePrismInfo.BaseToPrismCorners[(CellCorner)primalVert];
                     var (dualBack, dualForward) = dualPrismInfo.BaseToPrismCorners[(CellCorner)dualVert];
-                    foreach (var layer in Enumerable.Range(minLayer, maxLayer - minLayer))
+                    for (var layer = minLayer; layer < maxLayer; layer++)
                     {
                         toDual.Add(
                             (new Cell(primalFace, 0, layer), primalForward),
@@ -229,7 +229,7 @@ namespace Sylves
             QuadInterpolation.GetCorners(meshData, submesh, face, meshPrismOptions.InvertWinding, meshOffset1, meshOffset2, out v1, out v2, out v3, out v4, out v5, out v6, out v7, out v8);
         }
 
-        private static readonly ILookup<CellDir, int> s_faces = new[]
+        private static readonly ILookup<CellDir, Int32> s_faces = new[]
         {
                 ((CellDir)(CubeDir.Left), 0),
                 ((CellDir)(CubeDir.Right), 1),
@@ -291,7 +291,7 @@ namespace Sylves
             transform = trs.ToMatrix();
         }
 
-        public void GetCellMesh(Cell cell, out MeshData meshData, out TRS trs, out ILookup<CellDir, int> faces)
+        public void GetCellMesh(Cell cell, out MeshData meshData, out TRS trs, out ILookup<CellDir, Int32> faces)
         {
             var meshCellData = CellData[cell] as MeshCellData;
             var cellType = meshCellData.CellType;
@@ -341,8 +341,8 @@ namespace Sylves
 
                 var n = face.Length;
                 var outVertices = new Vector3[n * 2];
-                var outIndices = new int[n * 4 + n * 2];
-                var outFaces = new (CellDir, int)[n + 2];
+                var outIndices = new Int32[n * 4 + n * 2];
+                var outFaces = new (CellDir, Int32)[n + 2];
 
                 // Find the vertices
                 for (var i = 0; i < n; i++)

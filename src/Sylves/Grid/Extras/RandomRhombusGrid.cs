@@ -130,7 +130,7 @@ namespace Sylves
                 var r = new System.Random();
                 for (var i = 0; i < duals.Count * ratio; i++)
                 {
-                    var d = duals[(int)(r.NextDouble() * duals.Count)];
+                    var d = duals[(Int32)(r.NextDouble() * duals.Count)];
                     RotateAt(d);
                 }
             }

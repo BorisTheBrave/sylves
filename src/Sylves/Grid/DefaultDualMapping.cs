@@ -5,6 +5,8 @@ using System.Linq;
 using UnityEngine;
 #endif
 
+using static Sylves.MeshGridUtils;
+
 
 namespace Sylves
 {
@@ -286,7 +288,7 @@ namespace Sylves
                 {
                     indices.Add(primalCellToVertex[item.primalCell]);
                 }
-                var arcEnd = arcEnds[mappingGroup.Key.x];
+                var arcEnd = arcEnds[GetFace(mappingGroup.Key)];
                 if(arcEnd != null)
                 {
                     // Add some extra vertices to terminate the arc

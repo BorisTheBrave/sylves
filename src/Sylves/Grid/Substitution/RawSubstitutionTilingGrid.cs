@@ -50,7 +50,7 @@ namespace Sylves
             return (parent, transform, childTile);
         }
 
-        private (InternalPrototile prototile, int childTile) GetPrototileAndChildTile(Cell cell)
+        private (InternalPrototile prototile, Int32 childTile) GetPrototileAndChildTile(Cell cell)
         {
             var pathLength = GetPathLength(cell);
             var parent = hierarchy(pathLength);
@@ -370,7 +370,7 @@ namespace Sylves
 
 
         // Returns a set of non-overlapping prototiles at different heights that collectively contain all prototiles
-        private IEnumerable<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> Spigot()
+        private IEnumerable<(Int32 height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> Spigot()
         {
             var height = 0;
             var transform = baseTransform;
@@ -398,7 +398,7 @@ namespace Sylves
         // We stop when we haven't found anything in a while.
         private IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternal(Aabb inputAabb)
         {
-            var stack = new Stack<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)>();
+            var stack = new Stack<(Int32 height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)>();
             var highestFoundHeight = -1;
             foreach (var t in Spigot())
             {
@@ -492,7 +492,7 @@ namespace Sylves
         /// </summary>
         private IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float minDist)> RaycastPrototiles(Func<Matrix4x4, InternalPrototile, float?> getDist)
         {
-            var queue = new PriorityQueue<(int initialHeight, int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float dist)>(x => x.dist, (x, y) => -x.dist.CompareTo(y.dist));
+            var queue = new PriorityQueue<(Int32 initialHeight, Int32 height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float dist)>(x => x.dist, (x, y) => -x.dist.CompareTo(y.dist));
 
             var highestFoundHeight = -1;
             foreach (var t in Spigot())

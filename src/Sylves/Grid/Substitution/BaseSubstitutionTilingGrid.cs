@@ -260,7 +260,8 @@ namespace Sylves
             }
             var bits = 96 - leadingBits;
             bits -= tileBits;
-            return Math.Max(0, (bits + prototileBits - 1) / prototileBits);
+            var length = (bits + prototileBits - 1) / prototileBits;
+            return length > 0 ? length : 0;
         }
 
         internal Int32 GetPathDiffLength(Cell a, Cell b)
@@ -280,7 +281,8 @@ namespace Sylves
             }
             var bits = 96 - leadingBits;
             bits -= tileBits;
-            return Math.Max(0, (bits + prototileBits - 1) / prototileBits);
+            var length = (bits + prototileBits - 1) / prototileBits;
+            return length > 0 ? length : 0;
         }
 
         internal Int32 GetPathAt(Cell cell, Int32 height)
@@ -338,7 +340,7 @@ namespace Sylves
 
         internal Int32 GetChildTileAt(Cell cell)
         {
-            return cell.x & ((1 << tileBits) - 1);
+            return (Int32)(cell.x & ((1 << tileBits) - 1));
         }
 
         internal Cell SetChildTileAt(Cell cell, Int32 value)
@@ -570,7 +572,7 @@ namespace Sylves
                 cell = SetPathAt(cell, height, p);
                 parent = parent.ChildPrototiles[p].child;
             }
-            cell = SetChildTileAt(cell, index);
+            cell = SetChildTileAt(cell, (Int32)index);
             return cell;
         }
         #endregion
@@ -580,7 +582,7 @@ namespace Sylves
 
         public IBound GetBound(IEnumerable<Cell> cells)
         {
-            int height = -1;
+            Int32 height = -1;
             Cell path = new Cell();
             foreach(var cell in cells)
             {
@@ -632,7 +634,10 @@ namespace Sylves
             if (other == null) return null;
             var stBound = (SubstitutionTilingBound)bound;
             var stOther = (SubstitutionTilingBound)other;
-            var newHeight = Math.Max(Math.Max(stBound.Height, stOther.Height), GetPathDiffLength(stBound.Path, stOther.Path));
+            var newHeight = stBound.Height;
+            if(stOther.Height > newHeight) newHeight = stOther.Height;
+            var diffLength = GetPathDiffLength(stBound.Path, stOther.Path);
+            if (diffLength > newHeight) newHeight = diffLength;
             return new SubstitutionTilingBound
             {
                 Height = newHeight,
@@ -643,7 +648,7 @@ namespace Sylves
         public IEnumerable<Cell> GetCellsInBounds(IBound bound)
         {
             var stBound = (SubstitutionTilingBound)bound;
-            var stack = new Stack<(int height, InternalPrototile prototile, Cell partialPath)>();
+            var stack = new Stack<(Int32 height, InternalPrototile prototile, Cell partialPath)>();
             stack.Push((stBound.Height, GetPrototile(stBound.Path, stBound.Height), stBound.Path));
             while (stack.Count > 0)
             {
@@ -694,7 +699,7 @@ namespace Sylves
             return transform.MultiplyPoint3x4(vertices[(int)cellCorner]);
         }
 
-        protected Matrix4x4 GetTRS(InternalPrototile prototile, Matrix4x4 transform, int childTile)
+        protected Matrix4x4 GetTRS(InternalPrototile prototile, Matrix4x4 transform, Int32 childTile)
         {
             // TODO: Translate this so the child is centered appropriately
             return transform;

@@ -133,7 +133,7 @@ namespace Sylves
 
         internal class HalfEdgeSet
         {
-            public int SectionIndex {get;set;}
+            public Int32 SectionIndex {get;set;}
             public Cell Cell {get;set;}
             public CellDir Dir {get;set;}
             public Vector2 V0 {get;set;}
@@ -147,8 +147,8 @@ namespace Sylves
 
         internal class PairedHalfEdgeSet
         {
-            public int SrcSectionIndex {get;set;}
-            public int DestSectionIndex {get;set;}
+            public Int32 SrcSectionIndex {get;set;}
+            public Int32 DestSectionIndex {get;set;}
             public Cell SrcCell {get;set;}
             public CellDir SrcDir {get;set;}
             public Cell DestCell {get;set;}
@@ -174,7 +174,7 @@ namespace Sylves
         private readonly List<CompoundSection> sections;
         private readonly List<HalfEdgeSet> halfEdges = new List<HalfEdgeSet>();
         private readonly List<ICellType> cellTypes;
-        private readonly int cellsPerSection;
+        private readonly Int32 cellsPerSection;
         private readonly List<PeriodicPlanarMeshGrid> grids = new List<PeriodicPlanarMeshGrid>();
         private readonly List<PairedHalfEdgeSet> pairedHalfEdges;
         private readonly CompoundBound bound;
@@ -186,7 +186,7 @@ namespace Sylves
             if(sections == null) throw new ArgumentNullException(nameof(sections));
 
             this.sections = sections;
-            for (int sectionIndex = 0; sectionIndex < sections.Count; sectionIndex++)
+            for (var sectionIndex = 0; sectionIndex < sections.Count; sectionIndex++)
             {
                 var section = sections[sectionIndex];
                 var grid = new PeriodicPlanarMeshGrid(section.MeshData, section.StrideX, section.StrideY);
@@ -222,7 +222,7 @@ namespace Sylves
                 if (bound.SectionBounds.Length != sections.Count)
                     throw new ArgumentException($"Expected {sections.Count} section bounds, got {bound.SectionBounds.Length}");
                 boundedGrids = new List<PeriodicPlanarMeshGrid>();
-                for (int i = 0; i < sections.Count; i++)
+                for (var i = 0; i < sections.Count; i++)
                 {
                     var grid = grids[i];
                     var b = bound.SectionBounds[i];
@@ -235,7 +235,7 @@ namespace Sylves
 
         #region Construction helpers
 
-        private static List<HalfEdgeSet> GetHalfEdges(int sectionIndex, CompoundSection section, PeriodicPlanarMeshGrid grid)
+        private static List<HalfEdgeSet> GetHalfEdges(Int32 sectionIndex, CompoundSection section, PeriodicPlanarMeshGrid grid)
         {
             var halfEdges = new List<HalfEdgeSet>();
 
@@ -458,10 +458,10 @@ namespace Sylves
             while (progress)
             {
                 progress = false;
-                for (int i = 0; i < pool.Count; i++)
+                for (var i = 0; i < pool.Count; i++)
                 {
                     var a = pool[i];
-                    for (int j = i + 1; j < pool.Count; j++)
+                    for (var j = i + 1; j < pool.Count; j++)
                     {
                         var b = pool[j];
                         if (!TryMatch(a, b, out var matched, out var remaindersA, out var remaindersB))
@@ -564,17 +564,18 @@ namespace Sylves
         }
         #endregion
 
-        private (int, Cell) Split(Cell cell)
+        private (Int32, Cell) Split(Cell cell)
         {
+            var (sectionIndex, localX) = Encoding.RavelDecode(cell.x, cellsPerSection);
             return (
-                cell.x / cellsPerSection,
-                new Cell(cell.x % cellsPerSection, cell.y, cell.z)
+                (Int32)sectionIndex,
+                new Cell(localX, cell.y, cell.z)
                 );
         }
 
         private Cell Combine(int sectionIndex, Cell cell)
         {
-            return new Cell(sectionIndex * cellsPerSection + cell.x, cell.y, cell.z);
+            return new Cell(Encoding.RavelEncode(sectionIndex, cell.x, cellsPerSection), cell.y, cell.z);
         }
 
 
@@ -905,7 +906,7 @@ namespace Sylves
             // Run raycast on each bounded grid and collect results
             var raycastResults = new List<IEnumerable<RaycastInfo>>();
             
-            for (int i = 0; i < boundedGrids.Count; i++)
+            for (var i = 0; i < boundedGrids.Count; i++)
             {
                 var grid = boundedGrids[i];
                 var section = sections[i];
@@ -954,7 +955,7 @@ namespace Sylves
                 // Find the index of the smallest current distance among active enumerators
                 var minIndex = -1;
                 var minDistance = float.PositiveInfinity;
-                for (int i = 0; i < enumerators.Count; i++)
+                for (var i = 0; i < enumerators.Count; i++)
                 {
                     if (!hasCurrent[i]) continue;
                     var d = currents[i].distance;

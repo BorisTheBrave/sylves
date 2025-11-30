@@ -67,8 +67,8 @@ namespace Sylves
 
             hexGrid = new HexGrid(chunkSize);
 
-            unrelaxedChunksByHex = cachePolicy.GetDictionary<(MeshData, BiMap<int, Cell>)>(hexGrid);
-            relaxedPatchesByHex = cachePolicy.GetDictionary<(MeshData, Dictionary<Cell, int[]>)>(hexGrid);
+            unrelaxedChunksByHex = cachePolicy.GetDictionary<(MeshData, BiMap<Int32, Cell>)>(hexGrid);
+            relaxedPatchesByHex = cachePolicy.GetDictionary<(MeshData, Dictionary<Cell, Int32[]>)>(hexGrid);
             this.underlying = underlying;
             this.chunkSize = chunkSize;
             this.weldTolerance = weldTolerance;
@@ -178,7 +178,7 @@ namespace Sylves
             }
             else
             {
-                return GetUnrelaxedChunk(ChunkToHex(chunkCell)).cells[childCell.x];
+                return GetUnrelaxedChunk(ChunkToHex(chunkCell)).cells[(Int32)childCell.x];
             }
         }
 
