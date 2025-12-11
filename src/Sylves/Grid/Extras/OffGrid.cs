@@ -14,7 +14,7 @@ namespace Sylves
     /// Cell (0, 0, 0) is a random rectangle filling at most from (-1, -1, 0) to (1, 1, 0),
     /// and having height and width at least minSize
     /// </summary>
-    internal class OffGrid : PlanarLazyGrid
+    public class OffGrid : PlanarLazyGrid
     {
         private static readonly ICellType[] cellTypes = new[] { SquareCellType.Instance };
         private static readonly SquareGrid unitSquareGrid = new SquareGrid(1f);

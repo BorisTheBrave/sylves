@@ -17,7 +17,7 @@ There are several classes for converting to/from meshes.
 
 ## Deformation
 
-The [grid deformation functionality](shape.md#deformation) can be used from any mesh with [`Sylves.DeformationUtils.GetDeformation`](xref:Sylves.DeformationUtils.GetDeformation(Sylves.MeshData,System.Single,System.Single,System.Boolean,System.Int32,System.Int32,System.Int32,System.Boolean)).
+The [grid deformation functionality](shape.md#deformation) can be used from any mesh with [`Sylves.DeformationUtils.GetDeformation`](xref:Sylves.DeformationUtils.GetDeformation(Sylves.MeshData,System.Single,System.Single,System.Boolean,System.Int32,System.Single,System.Int32,System.Boolean)).
 
 
 

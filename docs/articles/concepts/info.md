@@ -20,7 +20,7 @@ Does this grid use the same cell shapes over and over.
 
 ### [`IsOrientable`](xref:Sylves.IGrid.IsOrientable)
 
-A [non-orientable](https://en.wikipedia.org/wiki/Orientability) grid some paths on the grid end up mirroring your as you travel them. See [Connections](rotation.html#connection)
+A [non-orientable](https://en.wikipedia.org/wiki/Orientability) grid some paths on the grid end up mirroring your as you travel them. See [Connections](rotation.md#connection)
 
 ### [`IsFinite`](xref:Sylves.IGrid.IsFinite)
 

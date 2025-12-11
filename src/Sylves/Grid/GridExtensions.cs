@@ -76,9 +76,16 @@ namespace Sylves
         /// <summary>
         /// Converts a finite grid to a MeshData.
         /// </summary>
-        public static MeshData ToMeshData(this IGrid grid, IEnumerable<Cell> cells = null)
+        public static MeshData ToMeshData(this IGrid grid)
         {
-            cells = cells ?? grid.GetCells();
+            return grid.ToMeshData(grid.GetCells());
+        }
+
+        /// <summary>
+        /// Converts a finite grid to a MeshData.
+        /// </summary>
+        public static MeshData ToMeshData(this IGrid grid, IEnumerable<Cell> cells)
+        {
             var vertices = new List<Vector3>();
             var indices = new List<Int32>();
 
