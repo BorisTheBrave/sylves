@@ -6,7 +6,7 @@ It can be downloaded from <a href="https://github.com/BorisTheBrave/sylves/relea
 
 **Q**: Isn't working with grids easy? It's basically a 2d array.
 
-**A**: Sure, if you only care about *square* grids. Sylves defines a "grid" much more broadly than that. Grids can be 2d or 3d, built out of varying or irregular shapes, and can be infinite.
+**A**: Sure, if you only care about *square* grids. Sylves defines a "grid" much more broadly than that. Grids can be 2d or 3d, built out of varying or irregular shapes, and can be [infinite](concepts/infinity.md).
 
 Furthermore:
 

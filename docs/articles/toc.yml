@@ -37,6 +37,8 @@
        href: concepts/dual.md
     -  name: Caching
        href: concepts/caching.md
+    -  name: Infinity
+       href: concepts/infinity.md
 - name: Tutorials
   items:
     -  name: Getting Started in Unity
