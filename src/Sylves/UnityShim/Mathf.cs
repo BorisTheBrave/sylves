@@ -27,12 +27,6 @@ namespace Sylves
             return (int)Math.Round(x);
         }
 
-        // Relevant for BigInteger support
-        public static Int32 RoundToInt32(float x)
-        {
-            return (Int32)Math.Round(x);
-        }
-
         public static float Sin(float x)
         {
             return (float)Math.Sin(x);

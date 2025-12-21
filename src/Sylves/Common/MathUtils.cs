@@ -11,5 +11,11 @@ namespace Sylves
 #if BIGINT
         public static int PMod(int a, Int32 b) => ((a % b) + b) % b;
 #endif
+
+        // Relevant for BigInteger support
+        public static Int32 RoundToInt32(float x)
+        {
+            return (Int32)Math.Round(x);
+        }
     }
 }

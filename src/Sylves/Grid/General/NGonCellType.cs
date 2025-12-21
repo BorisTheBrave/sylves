@@ -110,7 +110,7 @@ namespace Sylves
                 right.y = -right.y;
             }
             var angle = Mathf.Atan2(right.y, right.x);
-            var angleInt = Mathf.RoundToInt32(angle / (Mathf.PI * 2 / n));
+            var angleInt = MathUtils.RoundToInt32(angle / (Mathf.PI * 2 / n));
 
             var reflectY = (CellRotation)~0;
             var identity = (CellRotation)0;

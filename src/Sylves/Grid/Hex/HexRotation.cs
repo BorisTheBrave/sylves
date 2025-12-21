@@ -208,7 +208,7 @@ namespace Sylves
             }
 
             var angle = Mathf.Atan2(right.y, right.x);
-            var angleInt = Mathf.RoundToInt32(angle / (Mathf.PI / 3));
+            var angleInt = MathUtils.RoundToInt32(angle / (Mathf.PI / 3));
 
             if (orientation == HexOrientation.FlatTopped)
             {

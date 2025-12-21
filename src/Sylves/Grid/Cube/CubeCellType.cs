@@ -104,7 +104,7 @@ namespace Sylves
                 y = -y;
             }
             var angle = Mathf.Atan2(y, x);
-            var angleInt = Mathf.RoundToInt32(angle / (Mathf.PI / 2));
+            var angleInt = MathUtils.RoundToInt32(angle / (Mathf.PI / 2));
             if(isReflection)
             {
                 angleInt = (-angleInt + 4) % 4;

@@ -75,9 +75,9 @@ namespace Sylves
             if(underlyingRecentered is TransformModifier tm)
             {
                 // Is the rotation part of the transform the identty
-                if(transform.column0 == new Vector4(1, 0, 0, 0) &&
-                   transform.column1 == new Vector4(0, 1, 0, 0) &&
-                   transform.column2 == new Vector4(0, 0, 1, 0))
+                if(transform.GetColumn(0) == new Vector4(1, 0, 0, 0) &&
+                   transform.GetColumn(1) == new Vector4(0, 1, 0, 0) &&
+                   transform.GetColumn(2) == new Vector4(0, 0, 1, 0))
                 {
                     // Just return the underlying recentered, there's no need for another translation
                     return tm;

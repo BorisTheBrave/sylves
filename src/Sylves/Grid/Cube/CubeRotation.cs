@@ -146,7 +146,7 @@ namespace Sylves
             Vector4 Rotate(Vector3Int v)
             {
                 var v1 = matrix.MultiplyVector(v).normalized;
-                var v2 = new Vector4(Mathf.RoundToInt32(v1.x), Mathf.RoundToInt32(v1.y), Mathf.RoundToInt32(v1.z), 0);
+                var v2 = new Vector4(MathUtils.RoundToInt32(v1.x), MathUtils.RoundToInt32(v1.y), MathUtils.RoundToInt32(v1.z), 0);
 
                 return v2;
             }

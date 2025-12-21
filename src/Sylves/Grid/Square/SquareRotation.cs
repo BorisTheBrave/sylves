@@ -151,7 +151,7 @@ namespace Sylves
                 right.y = -right.y;
             }
             var angle = Mathf.Atan2(right.y, right.x);
-            var angleInt = Mathf.RoundToInt32(angle / (Mathf.PI / 2));
+            var angleInt = MathUtils.RoundToInt32(angle / (Mathf.PI / 2));
 
             return (isReflection ? ReflectY : Identity) * Rotate90(angleInt);
         }
