@@ -1,8 +1,12 @@
-# Unreleased
+# v1.1.0
 * Added [`GetAabb`](xref:Sylves.IGrid.GetAabb(Sylves.Cell)) methods
-* Added [KruskalMinimumSpanningTree](xref:Sylves.KruskalMinimumSpanningTree)
+* Added [KruskalMinimumSpanningTree](xref:Sylves.KruskalMinimumSpanningTree) algo
 * Added [RandomRhombusGrid](xref:Sylves.RandomRhombusGrid) and [RandomRectGrid](xref:Sylves.RandomRectGrid)
 * Added [CompoundGrid](xref:Sylves.CompoundGrid) and some example [radial uses](xref:Sylves.RadialGrids)
+* Added [Recenter](xref:Sylves.IGrid.Recenter(Sylves.Cell)) operation and [docs](concepts/infinity.md) on how to use it.
+* Added BigInt compilation variant.
+* Added [ICellType.N](xref:Sylves.ICellType.N) for convenience.
+* Added [Gyro](xref:Sylves.ConwayOperators.Gyro(Sylves.MeshData)) Conway operator.
 * Fix PlanarLazyMeshGrid when passing in a SquareGrid
 * Fix GetCellsIntersectsApprox in some grids
 * Fix triangle grid GetCellCorners
