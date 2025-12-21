@@ -27,6 +27,8 @@ namespace Sylves
         #region Relatives
         // It no longer makes sense to consider an unbounded variant of this.
         public override IGrid Unbounded => this;
+
+        public override IDualMapping GetDual() => throw new NotImplementedException();
         #endregion
 
         #region Topology

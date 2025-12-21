@@ -1,15 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Townscaper Grid </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Townscaper Grid ">
-    <meta name="generator" content="docfx 2.59.0.0">
-    
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../../styles/docfx.css">
@@ -17,14 +17,14 @@
     <link rel="stylesheet" href="../../styles/custom.css">
     <meta property="docfx:navrel" content="../../toc.html">
     <meta property="docfx:tocrel" content="../toc.html">
-    
-    
-    
+  
+  
+  
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -34,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../../index.html">
                 <img id="logo" class="svg" src="../../logo.svg" alt="">
               </a>
@@ -48,7 +48,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -58,7 +58,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -76,8 +76,8 @@
 <p>You can find the <a class="xref" href="../../api/Sylves.TownscaperGrid.html">finished code</a> in the Extras folder.</p>
 <p>Fortunately, the developer has left detailed discussions for how to create such a grid on Twitter.</p>
 <h2 id="creating-a-hex">Creating a hex</h2>
-<p>The townscaper grid is infinite, but it's composed out of small collections of collects in a hexagon shape. First we'll look at creating a single hex.</p>
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I present: <br>Fairly even irregular quads grid in a hex<br><br>Todo: <br>1. Heuristic to reduce (or eliminate) 6 quad verts<br>2. Tile these babies to infinity <a href="https://t.co/o0kU68uovZ">pic.twitter.com/o0kU68uovZ</a></p>&mdash; Oskar Stålberg (@OskSta) <a href="https://twitter.com/OskSta/status/1147881669350891521?ref_src=twsrc%5Etfw">July 7, 2019</a></blockquote> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>The townscaper grid is infinite, but it's composed out of hexagonal shaped chunks which contain several cells. First we'll look at creating a single hex.</p>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I present: <br>Fairly even irregular quads grid in a hex<br><br>Todo: <br>1. Heuristic to reduce (or eliminate) 6 quad verts<br>2. Tile these babies to infinity <a href="https://t.co/o0kU68uovZ">pic.twitter.com/o0kU68uovZ</a></p>&mdash; Oskar Stålberg (@OskSta) <a href="https://twitter.com/OskSta/status/1147881669350891521?ref_src=twsrc%5Etfw">July 7, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>This breaks down as:</p>
 <ul>
 <li>Create a hexagon filled with equilateral triangles</li>
@@ -127,6 +127,7 @@ MeshData GetMeshData(Cell hex)
     meshData = meshData.RandomPairing(new Random(seed).NextDouble);
     meshData = ConwayOperators.Ortho(meshData);
     meshData = meshData.Weld();
+    return meshData;
 }
 </code></pre>
 <p>The key differences are:</p>
@@ -146,6 +147,12 @@ We need the mesh to exactly fill the hex so that we can detect which edges borde
 var townscaperGrid = new RelaxModifier(unrelaxedGrid, 4);
 </code></pre>
 <p><img width="300px" src="../../images/grids/townscaper.svg"></p>
+<h2 id="3d-layers">3d layers</h2>
+<p>The actual townscaper grid is made up of deformed cubes, not quads. To take the existing grid, then make stacks of it along the 3rd dimension, we can use the <a href="../modifiers/planarprismmodifier.html">planar prism modifier</a>.</p>
+<p>To add layers, you can use</p>
+<pre><code class="lang-csharp">new PlanarPrismModifier(new TownscaperGrid(4).GetCompactGrid());
+</code></pre>
+<p>Note the use of <code>GetCompactGrid</code>. This forces TownscaperGrid to identify cells using just x and y values, leaving the z-coodinate free for tracking layers.</p>
 <h2 id="enhancements">Enhancements</h2>
 <p>The above is enough to give an infinite irregular grid of quads with a nice organic look. The actual Townscaper grid is actually a bit more sophisticated:</p>
 <ul>
@@ -153,9 +160,10 @@ var townscaperGrid = new RelaxModifier(unrelaxedGrid, 4);
 <li><a href="https://twitter.com/osksta/status/1151770831619534848">It uses a slightly more efficient relaxation regime</a></li>
 <li><a href="https://twitter.com/OskSta/status/1169940644669861888">The relaxation rule encourages squarish cell shapes</a></li>
 </ul>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
@@ -163,14 +171,14 @@ var townscaperGrid = new RelaxModifier(unrelaxedGrid, 4);
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -178,8 +186,8 @@ var townscaperGrid = new RelaxModifier(unrelaxedGrid, 4);
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
           </div>
         </div>
       </footer>

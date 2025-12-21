@@ -8,7 +8,7 @@ namespace Sylves
 {
 
     /// <summary>
-    /// An infinite planar grid. It is evaluated lazily by splitting the plane into overlapping period rectangles
+    /// An infinite planar grid. It is evaluated lazily by splitting the plane into overlapping periodic rectangles
     /// which then each has a grid associated.
     /// 
     /// This class requires you to compute inter-chunk neighbours yourself, which is often tricky.
@@ -106,6 +106,8 @@ namespace Sylves
         {
             return new DefaultDualMapping(this, CachePolicy);
         }
+
+        public IGrid GetDiagonalGrid() => new DefaultDiagonalGrid(this);
         #endregion
     }
 }

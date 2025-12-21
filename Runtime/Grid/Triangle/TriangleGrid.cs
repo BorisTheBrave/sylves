@@ -71,7 +71,7 @@ namespace Sylves
         // Also used for FSTriangleDir Right, UpLeft, DownLeft
         private static readonly CellCorner[] cellCornersA = { (CellCorner)FTTriangleCorner.DownRight, (CellCorner)FTTriangleCorner.Up, (CellCorner)FTTriangleCorner.DownLeft };
         // Also used for FSTriangleDir UpRight, Left, DownRight
-        private static readonly CellCorner[] cellCornersB = { (CellCorner)FTTriangleDir.UpRight, (CellCorner)FTTriangleDir.UpLeft, (CellCorner)FTTriangleDir.Down };
+        private static readonly CellCorner[] cellCornersB = { (CellCorner)FTTriangleCorner.UpRight, (CellCorner)FTTriangleCorner.UpLeft, (CellCorner)FTTriangleCorner.Down };
 
         // The triangle polygons, scaled to fit in a unit square
         private static readonly Vector3[] upPolygon =
@@ -190,6 +190,7 @@ namespace Sylves
         public bool IsLeft(Cell cell) => orientation == TriangleOrientation.FlatSides && cell.x + cell.y + cell.z == 1;
         public bool IsRight(Cell cell) => orientation == TriangleOrientation.FlatSides && cell.x + cell.y + cell.z == 2;
         private bool IsUpOrLeft(Cell cell) => (orientation == TriangleOrientation.FlatSides) ^ (cell.x + cell.y + cell.z == 2);
+        private bool IsUpOrRight(Cell cell) => (cell.x + cell.y + cell.z == 2);
 
         #region Basics
         public bool Is2d => true;
@@ -206,7 +207,7 @@ namespace Sylves
 
         public bool IsSingleCellType => true;
 
-        public int CoordinateDimension => 3;
+        public Int32 CoordinateDimension => 3;
 
         public IEnumerable<ICellType> GetCellTypes()
         {
@@ -236,7 +237,7 @@ namespace Sylves
         {
             // TODO: This seems right, but I haven't really validated
             var dualBound = bound == null ? null :
-                new HexBound(bound.min - Vector3Int.one, bound.max);
+                new HexBound(bound.Min - Vector3Int.one, bound.Mex);
 
             // Note hex orientation is flipped vs triangle orientation
             if (orientation == TriangleOrientation.FlatTopped)
@@ -345,6 +346,52 @@ namespace Sylves
             }
         }
 
+        public IGrid GetDiagonalGrid() => new DefaultDiagonalGrid(this, 3);
+
+        // TODO: This needs some thought...
+        /*
+        public IGrid GetDiagonalGrid()
+        {
+            return new DiagonalGrid(this);
+        }
+
+        private class DiagonalGrid : BaseOffsetDiagonalsModifier
+        {
+            private static OffsetCollection s_offsetsA = new OffsetCollection(new[]
+            {
+                new Vector3Int(1, 0, 0),
+            });
+            private static ICellType s_cellType = NGonDiagonalsCellType.Get(4, 12);
+            private static ICellType[] s_cellTypes = new[] { NGonDiagonalsCellType.Get(4, 12) };
+
+            public DiagonalGrid(IGrid underlying) : base(underlying)
+            {
+            }
+
+            public override ICellType GetCellType(Cell cell) => s_cellType;
+            public override IEnumerable<ICellType> GetCellTypes() => s_cellTypes;
+
+            public override OffsetCollection GetOffsetCollection(Cell cell) => s_offsets;
+
+            protected override IGrid Rebind(IGrid underlying) => new DiagonalGrid(underlying);
+        }
+        */
+
+        public IGrid GetCompactGrid() => new BijectModifier(this, c =>
+        {
+            var s = MathUtils.PMod(c.x, 2);
+            var x = (c.x - s) / 2;
+            return new Cell(x, c.y, 1 + s - x - c.y);
+
+        }, c => new Cell(c.x * 2 + (c.x + c.y + c.z - 1), c.y, 0), 2);
+
+        public IGrid Recenter(Cell cell)
+        {
+            var grid = new CellTranslateModifier(this, (Vector3Int)cell);
+            // Still need to recenter as this grid doesn't put the origin cell precisely at the origin.
+            return DefaultGridImpl.Recenter(grid, cell);
+        }
+
         #endregion
 
         #region Cell info
@@ -360,6 +407,11 @@ namespace Sylves
             return cellType;
         }
         public bool IsCellInGrid(Cell cell) => IsCellInBound(cell, bound);
+
+        public Aabb? GetBoundAabb(IBound bound)
+        {
+            return DefaultGridImpl.GetBoundAabb(this, bound);
+        }
         #endregion
         #region Topology
 
@@ -447,13 +499,13 @@ namespace Sylves
 
         public IEnumerable<CellCorner> GetCellCorners(Cell cell)
         {
-            if (IsUpOrLeft(cell))
+            if (IsUpOrRight(cell))
             {
-                return cellCornersB;
+                return cellCornersA;
             }
             else
             {
-                return cellCornersA;
+                return cellCornersB;
             }
         }
 
@@ -582,7 +634,7 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                var size = bound.max - bound.min;
+                var size = bound.Mex - bound.Min;
                 return 2 * size.x * size.y;
             }
         }
@@ -590,20 +642,20 @@ namespace Sylves
         public int GetIndex(Cell cell)
         {
             CheckBounded();
-            var sizeX = bound.max.x - bound.min.x;
-            var dx = cell.x - bound.min.x;
-            var dy = cell.y - bound.min.y;
+            var sizeX = bound.Mex.x - bound.Min.x;
+            var dx = cell.x - bound.Min.x;
+            var dy = cell.y - bound.Min.y;
             var dz = cell.x + cell.y + cell.z - 1;
             return dz + (dx + dy * sizeX) * 2;
         }
 
         public Cell GetCellByIndex(int index)
         {
-            var sizeX = bound.max.x - bound.min.x;
+            var sizeX = bound.Mex.x - bound.Min.x;
             var dz = index % 2;
             index /= 2;
-            var x = bound.min.x + (index % sizeX);
-            var y = bound.min.y + (index / sizeX);
+            var x = bound.Min.x + (index % sizeX);
+            var y = bound.Min.y + (index / sizeX);
             var z = dz - x - y + 1;
             return new Cell(x, y, z);
         }
@@ -733,6 +785,10 @@ namespace Sylves
         {
             DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
+
+        public Aabb GetAabb(Cell cell) => DefaultGridImpl.GetAabb(this, cell);
+
+        public Aabb GetAabb(IEnumerable<Cell> cells) => DefaultGridImpl.GetAabb(this, cells);
         #endregion
 
         #region Query
@@ -802,8 +858,6 @@ namespace Sylves
             {
                 throw new ArgumentOutOfRangeException($"Rectangle should have non-negative area");
             }
-            //assert width >= 0, "Rectangle should have non-negative width"
-            //assert height >= 0, "Rectangle should have non-negative height"
             // For consistency, we treat the triangles as exclusive of their border, and the rect as inclusive
             x /= cellSize.x;
             y /= cellSize.y;
@@ -813,7 +867,14 @@ namespace Sylves
             var fl = y;
             var fu = (y + height);
             // Loop over all rows that the rectangle is in
-            for (var b = Mathf.FloorToInt(fl) + 1; b < Mathf.CeilToInt(fu) + 1; b++)
+            var fromb = Mathf.FloorToInt(fl) + 1;
+            var tob = Mathf.CeilToInt(fu) + 1;
+            if(bound != null)
+            {
+                fromb = Math.Max(fromb, bound.Min.y);
+                tob = Math.Min(tob, bound.Mex.y);
+            }
+            for (var b = fromb; b < tob; b++)
             {
                 // Consider each row vs a trimmed rect
                 var minb = Math.Max(b - 1, fl);
@@ -824,17 +885,56 @@ namespace Sylves
                 var maxa = Mathf.CeilToInt(x + width - minb / 2);
                 var minc = Mathf.FloorToInt(-x - width - maxb / 2) + 1;
                 var maxc = Mathf.CeilToInt(-x - minb / 2);
+                int s;
+                if(bound != null)
+                {
+                    if (mina < bound.Min.x)
+                    {
+                        var d = bound.Min.x - mina;
+                        if(mina + b + maxc == 1)
+                        {
+                            mina += d;
+                            maxc -= d - 1;
+                        }
+                        else
+                        {
+                            mina += d;
+                            maxc -= d;
+                        }
+                    }
+                    if (maxc >= bound.Mex.z)
+                    {
+                        var d = maxc - bound.Mex.z + 1;
+                        if (mina + b + maxc == 1)
+                        {
+                            maxc -= d;
+                            mina += d;
+                        }
+                        else
+                        {
+                            maxc -= d;
+                            mina += d - 1;
+
+                        }
+                    }
+                    maxa = Math.Min(maxa, bound.Mex.x - 1);
+                    minc = Math.Max(minc, bound.Min.z);
+                }
                 // Walk along the row left to right
                 var a = mina;
                 var c = maxc;
-                //assert a + b + c == 1 or a + b + c == 2
+                s = a + b + c;
+                if (s != 1 && s != 2)
+                    throw new Exception("Internal error in TriangleGrid.GetCellsIntersectsApprox");
                 while (a <= maxa && c >= minc)
                 {
                     yield return new Cell(a, b, c);
-                    if (a + b + c == 1) {
+                    if (a + b + c == 1)
+                    {
                         a += 1;
                     }
-                    else {
+                    else
+                    {
                         c -= 1;
                     }
                 }
@@ -883,12 +983,12 @@ namespace Sylves
             // Filter to bounds
             if (bound != null)
             {
-                var ta1 = da == 0 ? (bound.min.x > fa ? 1 : -1) * float.PositiveInfinity : da >= 0 ? (bound.min.x - fa) / da : (bound.max.x - fa) / da;
-                var ta2 = da == 0 ? (bound.max.x > fa ? 1 : -1) * float.PositiveInfinity : da >= 0 ? (bound.max.x - fa) / da : (bound.min.x - fa) / da;
-                var tb1 = db == 0 ? (bound.min.y > fb ? 1 : -1) * float.PositiveInfinity : db >= 0 ? (bound.min.y - fb) / db : (bound.max.y - fb) / db;
-                var tb2 = db == 0 ? (bound.max.y > fb ? 1 : -1) * float.PositiveInfinity : db >= 0 ? (bound.max.y - fb) / db : (bound.min.y - fb) / db;
-                var tc1 = dc == 0 ? (bound.min.z > fc ? 1 : -1) * float.PositiveInfinity : dc >= 0 ? (bound.min.z - fc) / dc : (bound.max.z - fc) / dc;
-                var tc2 = dc == 0 ? (bound.max.z > fc ? 1 : -1) * float.PositiveInfinity : dc >= 0 ? (bound.max.z - fc) / dc : (bound.min.z - fc) / dc;
+                var ta1 = da == 0 ? (bound.Min.x > fa ? 1 : -1) * float.PositiveInfinity : da >= 0 ? (bound.Min.x - fa) / da : (bound.Mex.x - fa) / da;
+                var ta2 = da == 0 ? (bound.Mex.x > fa ? 1 : -1) * float.PositiveInfinity : da >= 0 ? (bound.Mex.x - fa) / da : (bound.Min.x - fa) / da;
+                var tb1 = db == 0 ? (bound.Min.y > fb ? 1 : -1) * float.PositiveInfinity : db >= 0 ? (bound.Min.y - fb) / db : (bound.Mex.y - fb) / db;
+                var tb2 = db == 0 ? (bound.Mex.y > fb ? 1 : -1) * float.PositiveInfinity : db >= 0 ? (bound.Mex.y - fb) / db : (bound.Min.y - fb) / db;
+                var tc1 = dc == 0 ? (bound.Min.z > fc ? 1 : -1) * float.PositiveInfinity : dc >= 0 ? (bound.Min.z - fc) / dc : (bound.Mex.z - fc) / dc;
+                var tc2 = dc == 0 ? (bound.Mex.z > fc ? 1 : -1) * float.PositiveInfinity : dc >= 0 ? (bound.Mex.z - fc) / dc : (bound.Min.z - fc) / dc;
 
                 var mint = Math.Max(ta1, Math.Max(tb1, tc1));
                 var maxt = Math.Min(ta2, Math.Min(tb2, tc2));
@@ -975,7 +1075,7 @@ namespace Sylves
                     a += stepa;
                     ta += ida;
                     cellDir = cellDirX;
-                    if (bound != null && (a >= bound.max.x || a < bound.min.x)) yield break;
+                    if (bound != null && (a >= bound.Mex.x || a < bound.Min.x)) yield break;
                 }
                 else if (tb2 <= ta2 && tb2 <= tc2)
                 {
@@ -984,7 +1084,7 @@ namespace Sylves
                     b += stepb;
                     tb += idb;
                     cellDir = cellDirY;
-                    if (bound != null && (b >= bound.max.y || b < bound.min.y)) yield break;
+                    if (bound != null && (b >= bound.Mex.y || b < bound.Min.y)) yield break;
                 }
                 else if(!float.IsInfinity(tc))
                 {
@@ -993,7 +1093,7 @@ namespace Sylves
                     c += stepc;
                     tc += idc;
                     cellDir = cellDirZ;
-                    if (bound != null && (c >= bound.max.z || c < bound.min.z)) yield break;
+                    if (bound != null && (c >= bound.Mex.z || c < bound.Min.z)) yield break;
                 }
                 else
                 {
@@ -1053,12 +1153,12 @@ namespace Sylves
             }
             var cubeBound = (TriangleBound)srcBound;
             // TODO: Use operator*
-            if (!TryApplySymmetry(s, (Cell)(cubeBound.min), out var a, out var _))
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.Min), out var a, out var _))
             {
                 return false;
             }
-            // This trick works best with *inclusive* bounds.
-            if (!TryApplySymmetry(s, (Cell)(cubeBound.max - Vector3Int.one), out var b, out var _))
+            // This trick works best with inclusive bounds.
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.Max), out var b, out var _))
             {
                 return false;
             }

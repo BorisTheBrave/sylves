@@ -61,7 +61,7 @@ namespace Sylves
 
         public bool IsSingleCellType => true;
 
-        public int CoordinateDimension => 2;
+        public Int32 CoordinateDimension => 2;
 
         public IEnumerable<ICellType> GetCellTypes() => cellTypes;
         #endregion
@@ -71,11 +71,10 @@ namespace Sylves
 
         public IGrid Unwrapped => this;
 
-        public virtual IDualMapping GetDual()
-        {
-            throw new NotSupportedException();
-        }
-
+        public virtual IDualMapping GetDual() => throw new NotSupportedException();
+        public IGrid GetDiagonalGrid() => throw new NotSupportedException();
+        public IGrid GetCompactGrid() => this;
+        public IGrid Recenter(Cell cell) => throw new NotImplementedException();
         #endregion
 
         #region Cell info
@@ -168,6 +167,18 @@ namespace Sylves
         }
 
         public bool IsCellInBound(Cell cell, IBound bound) => bound is SquareBound sb ? sb.Contains(cell) : true;
+
+        public Aabb? GetBoundAabb(IBound bound)
+        {
+            if (bound is SquareBound sb)
+            {
+                var (localMin, localMax) = chunks.GetBoundAabb(sb);
+                return Aabb.FromMinMax(
+                    new Vector3(localMin.x, localMin.y, 0),
+                    new Vector3(localMax.x, localMax.y, 0));
+            }
+            return null;
+        }
         #endregion
 
         #region Position
@@ -187,6 +198,12 @@ namespace Sylves
         public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => throw new NotImplementedException();
 
         public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => throw new NotImplementedException();
+        public Aabb GetAabb(Cell cell)
+        {
+            var v = ToVector2Int(cell);
+            return GetBoundAabb(new SquareBound(v, v + Vector2Int.one)).Value;
+        }
+        public Aabb GetAabb(IEnumerable<Cell> cells) => GetBoundAabb(GetBound(cells)).Value;
 
         #endregion
 

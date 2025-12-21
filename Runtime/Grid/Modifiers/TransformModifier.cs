@@ -32,6 +32,11 @@ namespace Sylves
 
         protected override IGrid Rebind(IGrid underlying)
         {
+            if (underlying is TransformModifier tm)
+            {
+                // Combine transforms.
+                return new TransformModifier(tm.Underlying, transform * tm.Transform);
+            }
             return new TransformModifier(underlying, transform, iTransform);
         }
 
@@ -62,7 +67,35 @@ namespace Sylves
             }
         }
 
+        public override IGrid Recenter(Cell cell)
+        {
+            var underlyingRecentered = Underlying.Recenter(cell);
+            if(underlyingRecentered is TransformModifier tm)
+            {
+                // Is the rotation part of the transform the identty
+                if(transform.GetColumn(0) == new Vector4(1, 0, 0, 0) &&
+                   transform.GetColumn(1) == new Vector4(0, 1, 0, 0) &&
+                   transform.GetColumn(2) == new Vector4(0, 0, 1, 0))
+                {
+                    // Just return the underlying recentered, there's no need for another translation
+                    return tm;
+                }
+            }
+            // Apply transform, then translate again
+            return DefaultGridImpl.Recenter(Rebind(underlyingRecentered), cell);
+        }
+        #endregion
 
+        #region Bounds
+
+        public override Aabb? GetBoundAabb(IBound bound)
+        {
+            if (Underlying.GetBoundAabb(bound) is Aabb aabb)
+            {
+                return transform * aabb;
+            }
+            return null;
+        }
         #endregion
 
         #region Position
@@ -73,7 +106,7 @@ namespace Sylves
         #endregion
 
         #region Shape
-        public override Deformation GetDeformation(Cell cell) => throw new NotImplementedException();
+        public override Deformation GetDeformation(Cell cell) => transform * Underlying.GetDeformation(cell);
 
         public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)
         {
@@ -95,6 +128,10 @@ namespace Sylves
             transform = this.transform * uTransform;
         }
 
+        public override Aabb GetAabb(Cell cell) => transform * Underlying.GetAabb(cell);
+
+        public override Aabb GetAabb(IEnumerable<Cell> cells) => transform * Underlying.GetAabb(cells);
+
         #endregion
 
         #region Query
@@ -107,15 +144,8 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-            var center = (min + max) / 2;
-            var hsize = (max - min) / 2;
-            var center2 = iTransform.MultiplyPoint3x4(center);
-            var hsize2 = iTransform.MultiplyVector(hsize);
-            hsize2 = new Vector3(Mathf.Abs(hsize2.x), Mathf.Abs(hsize2.y), Mathf.Abs(hsize2.z));
-            return Underlying.GetCellsIntersectsApprox(
-                center2 - hsize2,
-                center2 + hsize2
-                );
+            Aabb.Transform(iTransform, ref min, ref max);
+            return Underlying.GetCellsIntersectsApprox(min, max);
         }
 
         public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)

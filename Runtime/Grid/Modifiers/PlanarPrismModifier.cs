@@ -62,21 +62,21 @@ namespace Sylves
             this.bound = bound;
             if (!underlying.Is2d)
             {
-                throw new Exception("Underlying should be a 2d grid");
+                throw new ArgumentException("Underlying should be a 2d grid");
             }
             if (!underlying.IsPlanar)
             {
-                throw new Exception("Underlying should be a planar grid");
+                throw new ArgumentException("Underlying should be a planar grid");
             }
             if (underlying.CoordinateDimension >= 3)
             {
-                throw new Exception("Underlying should be a grid that doesn't use the z coordinate (i.e. CoordinateDimension <= 2)");
+                throw new ArgumentException("Underlying should be a grid that doesn't use the z coordinate (i.e. CoordinateDimension <= 2). Consider using GetCompactGrid or RavelModifier before the PlanarPrismModifier.");
             }
         }
 
         // Reduces a grid to only using the x-y co-ordinates, if necessary
         // TODO: Should this be a method on IGrid
-        private (Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) CompressXY(IGrid grid)
+        private static (Func<Cell, Cell> toUnderlying, Func<Cell, Cell> fromUnderlying) CompressXY(IGrid grid)
         {
             if (grid is TransformModifier tf)
             {
@@ -219,7 +219,7 @@ namespace Sylves
 
         public virtual bool IsSingleCellType => underlying.IsSingleCellType;
 
-        public int CoordinateDimension => 3;
+        public Int32 CoordinateDimension => 3;
 
         public virtual IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes().Select(PrismCellType);
 
@@ -277,6 +277,10 @@ namespace Sylves
             }
             public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner)
             {
+                if(baseCell == new Cell(623,0,-7) && (int)corner == 2)
+                {
+                    baseCell = baseCell;
+                }
                 var (uCell, layer) = baseGrid.Split(baseCell);
                 var underlyingCellType = baseGrid.underlying.GetCellType(uCell);
                 var prismInfo = PrismInfo.Get(underlyingCellType);
@@ -314,6 +318,18 @@ namespace Sylves
                     return null;
                 return (baseCell, isForward ? corners.Back : corners.Forward);
             }
+        }
+
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
+
+        public IGrid GetCompactGrid() => DefaultGridImpl.GetCompactGrid(this);
+
+        public IGrid Recenter(Cell cell)
+        {
+            var (uCell, layer) = Split(cell);
+            IGrid grid = new PlanarPrismModifier(Underlying.Recenter(uCell), planarPrismOptions, bound);
+            grid = new CellTranslateModifier(grid, new Vector3Int(0, 0, layer));
+            return DefaultGridImpl.Recenter(grid, cell);
         }
         #endregion
 
@@ -469,13 +485,30 @@ namespace Sylves
         public virtual IBound GetBound(IEnumerable<Cell> cells) 
         {
             var uBound = underlying.GetBound(cells.Select(c=>Split(c).cell));
-            var maxLayer = cells.Select(c => Split(c).layer).Max() + 1;
-            var minLayer = cells.Select(c => Split(c).layer).Min();
+            var first = true;
+            int minLayer = 0;
+            int maxLayer = 0;
+            foreach (var cell in cells)
+            {
+                var layer = Split(cell).layer;
+                if (first)
+                {
+                    minLayer = maxLayer = layer;
+                    first = false;
+                }
+                else
+                {
+                    minLayer = Math.Min(layer, minLayer);
+                    maxLayer = Math.Min(layer, maxLayer);
+                }
+            }
+            if (first)
+                throw new Exception("Enumerable empty");
             return new PlanarPrismBound
             {
                 PlanarBound = uBound,
                 MinLayer = minLayer,
-                MaxLayer = maxLayer,
+                MaxLayer = maxLayer + 1,
             };
         }
 
@@ -526,6 +559,20 @@ namespace Sylves
                 return true;
             }
         }
+
+        public Aabb? GetBoundAabb(IBound bound)
+        {
+            if(bound is PlanarPrismBound ppb)
+            {
+                if(Underlying.GetBoundAabb(bound) is Aabb aabb)
+                {
+                    return Aabb.FromMinMax(
+                        aabb.Min + GetOffset(ppb.MinLayer),
+                        aabb.Max + GetOffset(ppb.MaxLayer));
+                }
+            }
+            return null;
+        }
         #endregion
 
         #region Position
@@ -558,9 +605,30 @@ namespace Sylves
         #region Shape
         public virtual Deformation GetDeformation(Cell cell)
         {
+            // Build a deformation that is the underlying deformation plus a z mapping.
+
             var (uCell, layer) = Split(cell);
-            var deformation = underlying.GetDeformation(uCell);
-            return Matrix4x4.Translate(GetOffset(layer)) * deformation;
+            var uDeformation = underlying.GetDeformation(uCell);
+            (Vector3, float) SplitV(Vector3 p) => (new Vector3(p.x, p.y, 0), p.z);
+            var layerHeight = planarPrismOptions.LayerHeight;
+            var layerOffset = planarPrismOptions.LayerOffset;
+            Vector3 DeformPoint(Vector3 p)
+            {
+                var (w, z) = SplitV(p);
+                return uDeformation.DeformPoint(w) + GetOffset(z);
+            }
+            // Do these have simple forms?
+            //Vector3 DeformNormal(Vector3 p, Vector3 n)
+            //Vector4 DeformTangent(Vector3 p, Vector4 t)
+            void GetJacobi(Vector3 p, out Matrix4x4 jacobi)
+            {
+                var (w, z) = SplitV(p);
+                uDeformation.GetJacobi(w, out jacobi);
+                jacobi.SetColumn(2, new Vector4(0, 0, layerHeight, 0));
+                jacobi.m23 += z * layerHeight + layerOffset;
+            }
+
+            return new Deformation(DeformPoint, GetJacobi, uDeformation.InvertWinding);
         }
 
         public void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new Grid3dException();
@@ -588,7 +656,7 @@ namespace Sylves
         {
             var n = polygon.Length;
             var vertices = new Vector3[n * 2];
-            var indices = new int[n * 4 + n * 2];
+            var indices = new Int32[n * 4 + n * 2];
             // Find the vertices
             for (var i = 0; i < n; i++)
             {
@@ -621,6 +689,37 @@ namespace Sylves
             };
         }
 
+        public Aabb GetAabb(Cell cell)
+        {
+            var (uCell, layer) = Split(cell);
+            var aabb = Underlying.GetAabb(uCell);
+            return Aabb.FromMinMax(aabb.Min + GetOffset(layer), aabb.Max + GetOffset(layer + 1));
+        }
+
+        public Aabb GetAabb(IEnumerable<Cell> cells)
+        {
+            var aabb = Underlying.GetAabb(cells.Select(c => Split(c).cell));
+            var first = true;
+            int minLayer = 0;
+            int maxLayer = 0;
+            foreach(var cell in cells)
+            {
+                var layer = Split(cell).layer;
+                if(first)
+                {
+                    minLayer = maxLayer = layer;
+                    first = false;
+                }
+                else
+                {
+                    minLayer = Math.Min(layer, minLayer);
+                    maxLayer = Math.Min(layer, maxLayer);
+                }
+            }
+            if (first)
+                throw new Exception("Enumerable empty");
+            return Aabb.FromMinMax(aabb.Min + GetOffset(minLayer), aabb.Max + GetOffset(maxLayer + 1));
+        }
 
         #endregion
 
@@ -685,12 +784,12 @@ namespace Sylves
             if(bound != null)
             {
                 minLayer = Math.Max(minLayer, bound.MinLayer);
-                maxLayer = Math.Min(maxLayer, bound.MaxLayer);
+                maxLayer = Math.Min(maxLayer, bound.MaxLayer - 1);
             }
 
             foreach (var uCell in underlying.GetCellsIntersectsApprox(GetPlanarPosition(min), GetPlanarPosition(max)))
             {
-                for (var layer = minLayer; layer < maxLayer; layer++)
+                for (var layer = minLayer; layer <= maxLayer; layer++)
                 {
                     yield return Combine(uCell, layer);
                 }

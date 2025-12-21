@@ -16,21 +16,36 @@ namespace Sylves
         private static readonly Matrix4x4 RotateYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 0, 1));
         private static readonly Matrix4x4 RotateZY = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, -1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
 
-        private readonly ICellType cellType;
-        private readonly ICellType[] cellTypes;
+        private ICellType cellType;
+        private ICellType[] cellTypes;
 
         public XZModifier(IGrid underlying) : base(underlying, RotateZY)
         {
-            if(underlying.IsSingleCellType)
+            try
             {
-                cellType = XZCellTypeModifier.Get(underlying.GetCellTypes().Single());
+                FillCellTypes();
+            }
+            catch (NotSupportedException)
+            {
+
+            }
+        }
+
+        // Loads cell types from Underlying. Note that this can fail if the grid doesn't support GetCellType()
+        // (e.g. NestedGrid)
+        private void FillCellTypes()
+        {
+
+            if (Underlying.IsSingleCellType)
+            {
+                cellType = XZCellTypeModifier.Get(Underlying.GetCellTypes().Single());
                 cellTypes = new[] { cellType };
 
             }
             else
             {
                 cellType = null;
-                cellTypes = underlying.GetCellTypes().Select(XZCellTypeModifier.Get).ToArray();
+                cellTypes = Underlying.GetCellTypes().Select(XZCellTypeModifier.Get).ToArray();
             }
         }
 
@@ -44,6 +59,8 @@ namespace Sylves
 
         public override IEnumerable<ICellType> GetCellTypes()
         {
+            if (cellTypes == null)
+                FillCellTypes();
             return cellTypes;
         }
 

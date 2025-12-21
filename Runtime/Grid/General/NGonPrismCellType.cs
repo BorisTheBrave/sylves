@@ -13,18 +13,18 @@ namespace Sylves
     /// </summary>
     public class NGonPrismCellType : ICellType
     {
-        private static IDictionary<int, ICellType> instances = new Dictionary<int, ICellType>
+        private static IDictionary<Int32, ICellType> instances = new Dictionary<Int32, ICellType>
         {
         };
 
-        private int n;
+        private Int32 n;
 
         private CellDir[] dirs;
         private CellCorner[] corners;
         private CellRotation[] rotations;
         private CellRotation[] rotationsAndReflections;
 
-        internal NGonPrismCellType(int n)
+        internal NGonPrismCellType(Int32 n)
         {
             this.n = n;
             dirs = Enumerable.Range(0, n).Select(x => (CellDir)x).Concat(new[] { (CellDir)n, (CellDir)(n +1) }).ToArray();
@@ -33,7 +33,7 @@ namespace Sylves
             rotationsAndReflections = rotations.Concat(Enumerable.Range(0, n).Select(x => (CellRotation)~x)).ToArray();
         }
 
-        public static ICellType Get(int n)
+        public static ICellType Get(Int32 n)
         {
             if (instances.TryGetValue(n, out var cellType))
                 return cellType;
@@ -41,7 +41,7 @@ namespace Sylves
         }
 
 
-        public int N => n;
+        public Int32 N => n;
 
         private bool IsAxial(CellDir dir) => ((int)dir) >= n;
 

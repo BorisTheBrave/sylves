@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using static Sylves.MeshGridUtils;
+
 
 namespace Sylves
 {
@@ -65,7 +67,17 @@ namespace Sylves
             getChunkByCell = GetChunkByCell;
             MakeCaches(cachePolicy);
 
-            Setup(squareGrid, chunkSize / 2, cachePolicy: cachePolicy);
+            SquareBound bound = null;
+            if(planarGrid.IsFinite)
+            {
+                bound = SquareBound.FromVectors(planarGrid.GetCells().Select(c =>
+                {
+                    var chunk = GetChunkByCell(c);
+                    return new Vector2Int(c.x, c.y);
+                }));
+            }
+
+            Setup(squareGrid, chunkSize / 2, bound, cachePolicy: cachePolicy);
         }
 
         public DefaultDualMapping(PlanarLazyGrid grid, ICachePolicy cachePolicy)
@@ -87,6 +99,7 @@ namespace Sylves
         {
             baseGrid = other.baseGrid;
             getCellsByChunk = other.getCellsByChunk;
+            getChunkByCell = other.getChunkByCell;
             meshDatas = other.meshDatas;
             toDual = other.toDual;
             toBase = other.toBase;
@@ -173,7 +186,7 @@ namespace Sylves
                     var dualCorner2 = 0;
                     var minChunk = getChunkByCell(currentHe.cell);
                     var oldMappingCount = mapping.Count;
-                    bool isArc = false;
+                    var isArc = false;
                     while(true)
                     {
                         visited.Add(currentHe);
@@ -206,12 +219,12 @@ namespace Sylves
                             {
                                 break;
                             }
-                            currentHe = NextHalfEdge(currentHe);
+                            currentHe = NextHalfEdge(nextHe.Value);
+                            dualCorner2--;
 
                             visited.Add(currentHe);
                             mapping.Add((currentHe.cell, DirToCorner(currentHe.dir), Combine(new Cell(dualCellCount, 0), chunkCell), (CellCorner)dualCorner2));
                             minChunk = LexMin(minChunk, getChunkByCell(currentHe.cell));
-                            dualCorner2--;
                         }
                     }
 
@@ -256,7 +269,7 @@ namespace Sylves
             // Make a vertex for every primal cell mentioned in mappings (this includes cells not in current chunk)
             var allPrimalCells = mapping.Select(x => x.primalCell).Distinct().ToList();
             var vertices = new List<Vector3>(allPrimalCells.Count);
-            var primalCellToVertex = new Dictionary<Cell, int>();
+            var primalCellToVertex = new Dictionary<Cell, Int32>();
             for(var i=0;i<allPrimalCells.Count;i++)
             {
                 var p = baseGrid.GetCellCenter(allPrimalCells[i]);
@@ -265,7 +278,7 @@ namespace Sylves
             }
 
             // For each dual cell, make a face
-            var indices = new List<int>();
+            var indices = new List<Int32>();
             // TODO: Mapping is contiguous, we don't really need this group by or order by
             foreach(var mappingGroup in mapping.GroupBy(x=>x.dualCell))
             {
@@ -273,7 +286,7 @@ namespace Sylves
                 {
                     indices.Add(primalCellToVertex[item.primalCell]);
                 }
-                var arcEnd = arcEnds[mappingGroup.Key.x];
+                var arcEnd = arcEnds[GetFace(mappingGroup.Key)];
                 if(arcEnd != null)
                 {
                     // Add some extra vertices to terminate the arc

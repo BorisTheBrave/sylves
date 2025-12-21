@@ -240,8 +240,14 @@ namespace Sylves
             {
                 throw new Exception($"Mesh topology {mesh.GetTopology(submesh)} not supported. You need to select \"Keep Quads\" in the import options.");
             }
+
+            if(mesh.uv == null || mesh.uv.Length == 0)
+            {
+                throw new Exception($"Mesh needs uvs to calculate smoothed normals.");
+            }
+
             //if (!mesh.HasVertexAttribute(UnityEngine.Rendering.VertexAttribute.Tangent))
-            if (mesh.tangents.Length == 0)
+            if (mesh.tangents == null || mesh.tangents.Length == 0)
             {
                 throw new Exception($"Mesh needs tangents to calculate smoothed normals. You need to select \"Calculate\" the tangent field of the import options.");
             }

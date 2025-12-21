@@ -1,17 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class MeshGrid
-   </title>
+    <title>Class MeshGrid </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class MeshGrid
-   ">
-    <meta name="generator" content="docfx 2.59.0.0">
-    
+    <meta name="title" content="Class MeshGrid ">
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -19,14 +17,14 @@
     <link rel="stylesheet" href="../styles/custom.css">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    
-    
+  
+  
+  
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -36,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../index.html">
                 <img id="logo" class="svg" src="../logo.svg" alt="">
               </a>
@@ -50,7 +48,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -60,7 +58,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -70,23 +68,25 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Sylves.MeshGrid">
-  
-  
-  <h1 id="Sylves_MeshGrid" data-uid="Sylves.MeshGrid" class="text-break">Class MeshGrid
-  </h1>
+
+
+
+  <h1 id="Sylves_MeshGrid" data-uid="Sylves.MeshGrid" class="text-break">Class MeshGrid</h1>
   <div class="markdown level0 summary"><p>Represents a 2d grid, where each cell corresponds to a face in a given mesh.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><a class="xref" href="Sylves.DataDrivenGrid.html">DataDrivenGrid</a></div>
     <div class="level2"><span class="xref">MeshGrid</span></div>
       <div class="level3"><a class="xref" href="Sylves.MeshPrismGrid.html">MeshPrismGrid</a></div>
       <div class="level3"><a class="xref" href="Sylves.MobiusSquareGrid.html">MobiusSquareGrid</a></div>
+      <div class="level3"><a class="xref" href="Sylves.PlanarMeshGrid.html">PlanarMeshGrid</a></div>
       <div class="level3"><a class="xref" href="Sylves.VoronoiGrid.html">VoronoiGrid</a></div>
+      <div class="level3"><a class="xref" href="Sylves.VoronoiSphereGrid.html">VoronoiSphereGrid</a></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Sylves.IGrid.html">IGrid</a></div>
   </div>
@@ -96,22 +96,19 @@
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellTypes">DataDrivenGrid.GetCellTypes()</a>
     </div>
     <div>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Recenter_Sylves_Cell_">DataDrivenGrid.Recenter(Cell)</a>
+    </div>
+    <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCells">DataDrivenGrid.GetCells()</a>
     </div>
     <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellType_Sylves_Cell_">DataDrivenGrid.GetCellType(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IsCellInGrid_Sylves_Cell_">DataDrivenGrid.IsCellInGrid(Cell)</a>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryMoveByOffset_Sylves_Cell_Sylves_Vector3Int_Sylves_Vector3Int_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.TryMoveByOffset(Cell, Vector3Int, Vector3Int, CellRotation, out Cell, out CellRotation)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__">DataDrivenGrid.TryMove(Cell, CellDir, Cell, CellDir, Connection)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryMoveByOffset_Sylves_Cell_Sylves_Vector3Int_Sylves_Vector3Int_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.TryMoveByOffset(Cell, Vector3Int, Vector3Int, CellRotation, Cell, CellRotation)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, Cell, CellRotation)</a>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, out Cell, out CellRotation)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellDirs_Sylves_Cell_">DataDrivenGrid.GetCellDirs(Cell)</a>
@@ -126,28 +123,7 @@
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetIndex_Sylves_Cell_">DataDrivenGrid.GetIndex(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellByIndex_System_Int32_">DataDrivenGrid.GetCellByIndex(Int32)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetBound">DataDrivenGrid.GetBound()</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetBound_System_Collections_Generic_IEnumerable_Sylves_Cell__">DataDrivenGrid.GetBound(IEnumerable&lt;Cell&gt;)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_BoundBy_Sylves_IBound_">DataDrivenGrid.BoundBy(IBound)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IntersectBounds_Sylves_IBound_Sylves_IBound_">DataDrivenGrid.IntersectBounds(IBound, IBound)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_UnionBounds_Sylves_IBound_Sylves_IBound_">DataDrivenGrid.UnionBounds(IBound, IBound)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellsInBounds_Sylves_IBound_">DataDrivenGrid.GetCellsInBounds(IBound)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IsCellInBound_Sylves_Cell_Sylves_IBound_">DataDrivenGrid.IsCellInBound(Cell, IBound)</a>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellByIndex_System_Int32_">DataDrivenGrid.GetCellByIndex(int)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellCenter_Sylves_Cell_">DataDrivenGrid.GetCellCenter(Cell)</a>
@@ -162,10 +138,10 @@
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_FindGridSymmetry_System_Collections_Generic_ISet_Sylves_Cell__System_Collections_Generic_ISet_Sylves_Cell__Sylves_Cell_Sylves_CellRotation_">DataDrivenGrid.FindGridSymmetry(ISet&lt;Cell&gt;, ISet&lt;Cell&gt;, Cell, CellRotation)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">DataDrivenGrid.TryApplySymmetry(GridSymmetry, IBound, IBound)</a>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">DataDrivenGrid.TryApplySymmetry(GridSymmetry, IBound, out IBound)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.TryApplySymmetry(GridSymmetry, Cell, Cell, CellRotation)</a>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.TryApplySymmetry(GridSymmetry, Cell, out Cell, out CellRotation)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Moves">DataDrivenGrid.Moves</a>
@@ -186,13 +162,31 @@
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IsSingleCellType">DataDrivenGrid.IsSingleCellType</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Unbounded">DataDrivenGrid.Unbounded</a>
-    </div>
-    <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Unwrapped">DataDrivenGrid.Unwrapped</a>
     </div>
     <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IndexCount">DataDrivenGrid.IndexCount</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
@@ -202,19 +196,19 @@
     <pre><code class="lang-csharp hljs">public class MeshGrid : DataDrivenGrid, IGrid</code></pre>
   </div>
   <h3 id="constructors">Constructors
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_MeshGrid__ctor_" data-uid="Sylves.MeshGrid.#ctor*"></a>
   <h4 id="Sylves_MeshGrid__ctor_Sylves_MeshData_Sylves_MeshGridOptions_" data-uid="Sylves.MeshGrid.#ctor(Sylves.MeshData,Sylves.MeshGridOptions)">MeshGrid(MeshData, MeshGridOptions)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -235,19 +229,51 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="fields">Fields
-  </h3>
-  
-  
-  <h4 id="Sylves_MeshGrid_is2d" data-uid="Sylves.MeshGrid.is2d">is2d</h4>
+
+
+  <a id="Sylves_MeshGrid__ctor_" data-uid="Sylves.MeshGrid.#ctor*"></a>
+  <h4 id="Sylves_MeshGrid__ctor_Sylves_MeshGrid_Sylves_CubeBound_" data-uid="Sylves.MeshGrid.#ctor(Sylves.MeshGrid,Sylves.CubeBound)">MeshGrid(MeshGrid, CubeBound)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected bool is2d</code></pre>
+    <pre><code class="lang-csharp hljs">protected MeshGrid(MeshGrid meshGrid, CubeBound bound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.MeshGrid.html">MeshGrid</a></td>
+        <td><span class="parametername">meshGrid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.CubeBound.html">CubeBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+</h3>
+
+
+  <h4 id="Sylves_MeshGrid_bound" data-uid="Sylves.MeshGrid.bound">bound</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly CubeBound bound</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -256,22 +282,70 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="Sylves.CubeBound.html">CubeBound</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
+  <h4 id="Sylves_MeshGrid_is2d" data-uid="Sylves.MeshGrid.is2d">is2d</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly bool is2d</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h4 id="Sylves_MeshGrid_max" data-uid="Sylves.MeshGrid.max">max</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Vector3 max</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
   <h4 id="Sylves_MeshGrid_meshData" data-uid="Sylves.MeshGrid.meshData">meshData</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected readonly MeshData meshData</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -285,20 +359,17 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="properties">Properties
-  </h3>
-  
-  
-  <a id="Sylves_MeshGrid_CoordinateDimension_" data-uid="Sylves.MeshGrid.CoordinateDimension*"></a>
-  <h4 id="Sylves_MeshGrid_CoordinateDimension" data-uid="Sylves.MeshGrid.CoordinateDimension">CoordinateDimension</h4>
+
+
+  <h4 id="Sylves_MeshGrid_min" data-uid="Sylves.MeshGrid.min">min</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override int CoordinateDimension { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">protected Vector3 min</code></pre>
   </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -307,25 +378,58 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="Sylves.Vector3.html">Vector3</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+</h3>
+
+
+  <a id="Sylves_MeshGrid_CoordinateDimension_" data-uid="Sylves.MeshGrid.CoordinateDimension*"></a>
+  <h4 id="Sylves_MeshGrid_CoordinateDimension" data-uid="Sylves.MeshGrid.CoordinateDimension">CoordinateDimension</h4>
+  <div class="markdown level1 summary"><p>Returns the number of co-ordinates needed to identify a cell.
+i.e.
+dim 1 means cell.y === 0 and cell.z === 0
+dim 2 means cell.z === 0
+dim 3 means all three co-ordinates are relevant.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int CoordinateDimension { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_CoordinateDimension">DataDrivenGrid.CoordinateDimension</a></div>
-  
-  
+
+
   <a id="Sylves_MeshGrid_Is2d_" data-uid="Sylves.MeshGrid.Is2d*"></a>
   <h4 id="Sylves_MeshGrid_Is2d" data-uid="Sylves.MeshGrid.Is2d">Is2d</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>True if this grid uses 2d cell types</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool Is2d { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -334,25 +438,26 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Is2d">DataDrivenGrid.Is2d</a></div>
-  
-  
+
+
   <a id="Sylves_MeshGrid_Is3d_" data-uid="Sylves.MeshGrid.Is3d*"></a>
   <h4 id="Sylves_MeshGrid_Is3d" data-uid="Sylves.MeshGrid.Is3d">Is3d</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>True if this grid uses 3d cell types</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool Is3d { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -361,25 +466,26 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Is3d">DataDrivenGrid.Is3d</a></div>
-  
-  
+
+
   <a id="Sylves_MeshGrid_IsPlanar_" data-uid="Sylves.MeshGrid.IsPlanar*"></a>
   <h4 id="Sylves_MeshGrid_IsPlanar" data-uid="Sylves.MeshGrid.IsPlanar">IsPlanar</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>True if this grid uses 2d cell types, and all cells fit in the XY plane.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool IsPlanar { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -388,27 +494,101 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IsPlanar">DataDrivenGrid.IsPlanar</a></div>
+
+
+  <a id="Sylves_MeshGrid_Unbounded_" data-uid="Sylves.MeshGrid.Unbounded*"></a>
+  <h4 id="Sylves_MeshGrid_Unbounded" data-uid="Sylves.MeshGrid.Unbounded">Unbounded</h4>
+  <div class="markdown level1 summary"><p>Returns the grid with any bounds removed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IGrid Unbounded { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Unbounded">DataDrivenGrid.Unbounded</a></div>
   <h3 id="methods">Methods
-  </h3>
-  
-  
+</h3>
+
+
+  <a id="Sylves_MeshGrid_BoundBy_" data-uid="Sylves.MeshGrid.BoundBy*"></a>
+  <h4 id="Sylves_MeshGrid_BoundBy_Sylves_IBound_" data-uid="Sylves.MeshGrid.BoundBy(Sylves.IBound)">BoundBy(IBound)</h4>
+  <div class="markdown level1 summary"><p>Returns a new grid restricted to just the given bound.
+If the grid already has a bound, the new grid will have the intersection of both.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IGrid BoundBy(IBound bound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_BoundBy_Sylves_IBound_">DataDrivenGrid.BoundBy(IBound)</a></div>
+
+
   <a id="Sylves_MeshGrid_ComputeBounds_" data-uid="Sylves.MeshGrid.ComputeBounds*"></a>
   <h4 id="Sylves_MeshGrid_ComputeBounds_Sylves_Cell_" data-uid="Sylves.MeshGrid.ComputeBounds(Sylves.Cell)">ComputeBounds(Cell)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual (Vector3, Vector3) ComputeBounds(Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -425,7 +605,7 @@
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -434,23 +614,24 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.ValueTuple</span>&lt;<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>&gt;</td>
+        <td>(<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>)</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_MeshGrid_FindCell_" data-uid="Sylves.MeshGrid.FindCell*"></a>
   <h4 id="Sylves_MeshGrid_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__" data-uid="Sylves.MeshGrid.FindCell(Sylves.Matrix4x4,Sylves.Cell@,Sylves.CellRotation@)">FindCell(Matrix4x4, out Cell, out CellRotation)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns the cell and rotation corresponding to a given transform matrix.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool FindCell(Matrix4x4 matrix, out Cell cell, out CellRotation rotation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -477,7 +658,7 @@
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -486,25 +667,26 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.FindCell(Matrix4x4, out Cell, out CellRotation)</a></div>
-  
-  
+
+
   <a id="Sylves_MeshGrid_FindCell_" data-uid="Sylves.MeshGrid.FindCell*"></a>
   <h4 id="Sylves_MeshGrid_FindCell_Sylves_Vector3_Sylves_Cell__" data-uid="Sylves.MeshGrid.FindCell(Sylves.Vector3,Sylves.Cell@)">FindCell(Vector3, out Cell)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Finds the cell containg the give position</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool FindCell(Vector3 position, out Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -526,7 +708,7 @@
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -535,25 +717,236 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_FindCell_Sylves_Vector3_Sylves_Cell__">DataDrivenGrid.FindCell(Vector3, out Cell)</a></div>
-  
-  
+
+
+  <a id="Sylves_MeshGrid_GetAabb_" data-uid="Sylves.MeshGrid.GetAabb*"></a>
+  <h4 id="Sylves_MeshGrid_GetAabb_Sylves_Cell_" data-uid="Sylves.MeshGrid.GetAabb(Sylves.Cell)">GetAabb(Cell)</h4>
+  <div class="markdown level1 summary"><p>Gets a bounding box for a single cell.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Aabb GetAabb(Cell cell)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Aabb.html">Aabb</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetAabb_Sylves_Cell_">DataDrivenGrid.GetAabb(Cell)</a></div>
+
+
+  <a id="Sylves_MeshGrid_GetAabb_" data-uid="Sylves.MeshGrid.GetAabb*"></a>
+  <h4 id="Sylves_MeshGrid_GetAabb_System_Collections_Generic_IEnumerable_Sylves_Cell__" data-uid="Sylves.MeshGrid.GetAabb(System.Collections.Generic.IEnumerable{Sylves.Cell})">GetAabb(IEnumerable&lt;Cell&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets a bounding box for a collection of cells.
+Throws if cells is empty.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Aabb GetAabb(IEnumerable&lt;Cell&gt; cells)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td><span class="parametername">cells</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Aabb.html">Aabb</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetAabb_System_Collections_Generic_IEnumerable_Sylves_Cell__">DataDrivenGrid.GetAabb(IEnumerable&lt;Cell&gt;)</a></div>
+
+
+  <a id="Sylves_MeshGrid_GetBound_" data-uid="Sylves.MeshGrid.GetBound*"></a>
+  <h4 id="Sylves_MeshGrid_GetBound" data-uid="Sylves.MeshGrid.GetBound">GetBound()</h4>
+  <div class="markdown level1 summary"><p>Returns the bound currently applied to the grid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IBound GetBound()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetBound">DataDrivenGrid.GetBound()</a></div>
+
+
+  <a id="Sylves_MeshGrid_GetBound_" data-uid="Sylves.MeshGrid.GetBound*"></a>
+  <h4 id="Sylves_MeshGrid_GetBound_System_Collections_Generic_IEnumerable_Sylves_Cell__" data-uid="Sylves.MeshGrid.GetBound(System.Collections.Generic.IEnumerable{Sylves.Cell})">GetBound(IEnumerable&lt;Cell&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns a bound that contains all the listed cells.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IBound GetBound(IEnumerable&lt;Cell&gt; cells)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td><span class="parametername">cells</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetBound_System_Collections_Generic_IEnumerable_Sylves_Cell__">DataDrivenGrid.GetBound(IEnumerable&lt;Cell&gt;)</a></div>
+
+
+  <a id="Sylves_MeshGrid_GetBoundAabb_" data-uid="Sylves.MeshGrid.GetBoundAabb*"></a>
+  <h4 id="Sylves_MeshGrid_GetBoundAabb_Sylves_IBound_" data-uid="Sylves.MeshGrid.GetBoundAabb(Sylves.IBound)">GetBoundAabb(IBound)</h4>
+  <div class="markdown level1 summary"><p>Returns a bounding box that fully covers all the cells in bounds.
+Returns null</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Aabb? GetBoundAabb(IBound bound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Aabb.html">Aabb</a>?</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetBoundAabb_Sylves_IBound_">DataDrivenGrid.GetBoundAabb(IBound)</a></div>
+
+
   <a id="Sylves_MeshGrid_GetCellCorner_" data-uid="Sylves.MeshGrid.GetCellCorner*"></a>
   <h4 id="Sylves_MeshGrid_GetCellCorner_Sylves_Cell_Sylves_CellCorner_" data-uid="Sylves.MeshGrid.GetCellCorner(Sylves.Cell,Sylves.CellCorner)">GetCellCorner(Cell, CellCorner)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns the position of a corner.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override Vector3 GetCellCorner(Cell cell, CellCorner corner)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -575,7 +968,7 @@
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -591,18 +984,64 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellCorner_Sylves_Cell_Sylves_CellCorner_">DataDrivenGrid.GetCellCorner(Cell, CellCorner)</a></div>
-  
-  
+
+
+  <a id="Sylves_MeshGrid_GetCellsInBounds_" data-uid="Sylves.MeshGrid.GetCellsInBounds*"></a>
+  <h4 id="Sylves_MeshGrid_GetCellsInBounds_Sylves_IBound_" data-uid="Sylves.MeshGrid.GetCellsInBounds(Sylves.IBound)">GetCellsInBounds(IBound)</h4>
+  <div class="markdown level1 summary"><p>Returns the cells inside a given bound.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Cell&gt; GetCellsInBounds(IBound bound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellsInBounds_Sylves_IBound_">DataDrivenGrid.GetCellsInBounds(IBound)</a></div>
+
+
   <a id="Sylves_MeshGrid_GetCellsIntersectsApprox_" data-uid="Sylves.MeshGrid.GetCellsIntersectsApprox*"></a>
   <h4 id="Sylves_MeshGrid_GetCellsIntersectsApprox_Sylves_Vector3_Sylves_Vector3_" data-uid="Sylves.MeshGrid.GetCellsIntersectsApprox(Sylves.Vector3,Sylves.Vector3)">GetCellsIntersectsApprox(Vector3, Vector3)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets the set of cells that potentially overlap bounds.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Cell&gt; GetCellsIntersectsApprox(Vector3 min, Vector3 max)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -624,7 +1063,7 @@
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -633,25 +1072,87 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellsIntersectsApprox_Sylves_Vector3_Sylves_Vector3_">DataDrivenGrid.GetCellsIntersectsApprox(Vector3, Vector3)</a></div>
-  
-  
+
+
+  <a id="Sylves_MeshGrid_GetCompactGrid_" data-uid="Sylves.MeshGrid.GetCompactGrid*"></a>
+  <h4 id="Sylves_MeshGrid_GetCompactGrid" data-uid="Sylves.MeshGrid.GetCompactGrid">GetCompactGrid()</h4>
+  <div class="markdown level1 summary"><p>For a grid that has CoordinateDimension == 3,
+returns a grid that is the same as the current, but uses at most 2 dimensions.
+Otherwise, returns the current grid.
+(see RavelModifier if you want to reduce to 1 dimension).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IGrid GetCompactGrid()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCompactGrid">DataDrivenGrid.GetCompactGrid()</a></div>
+
+
+  <a id="Sylves_MeshGrid_GetDiagonalGrid_" data-uid="Sylves.MeshGrid.GetDiagonalGrid*"></a>
+  <h4 id="Sylves_MeshGrid_GetDiagonalGrid" data-uid="Sylves.MeshGrid.GetDiagonalGrid">GetDiagonalGrid()</h4>
+  <div class="markdown level1 summary"><p>Returns a new grid with the same cells as this grid, but more
+directions allowing movement between diagonally adjacent cells.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IGrid GetDiagonalGrid()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetDiagonalGrid">DataDrivenGrid.GetDiagonalGrid()</a></div>
+
+
   <a id="Sylves_MeshGrid_GetDual_" data-uid="Sylves.MeshGrid.GetDual*"></a>
   <h4 id="Sylves_MeshGrid_GetDual" data-uid="Sylves.MeshGrid.GetDual">GetDual()</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns a second grid which has one cell for every vertex of this grid,
+and also methods for mapping corners of one grid to the other.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override IDualMapping GetDual()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -667,18 +1168,18 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetDual">DataDrivenGrid.GetDual()</a></div>
-  
-  
+
+
   <a id="Sylves_MeshGrid_GetFaceIndices_" data-uid="Sylves.MeshGrid.GetFaceIndices*"></a>
   <h4 id="Sylves_MeshGrid_GetFaceIndices_Sylves_Cell_" data-uid="Sylves.MeshGrid.GetFaceIndices(Sylves.Cell)">GetFaceIndices(Cell)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;int&gt; GetFaceIndices(Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -695,7 +1196,7 @@
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -704,23 +1205,24 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_MeshGrid_GetMeshData_" data-uid="Sylves.MeshGrid.GetMeshData*"></a>
   <h4 id="Sylves_MeshGrid_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__" data-uid="Sylves.MeshGrid.GetMeshData(Sylves.Cell,Sylves.MeshData@,Sylves.Matrix4x4@)">GetMeshData(Cell, out MeshData, out Matrix4x4)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>For 3d cells, returns the mesh of a given cell.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -748,18 +1250,21 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__">DataDrivenGrid.GetMeshData(Cell, out MeshData, out Matrix4x4)</a></div>
-  
-  
+
+
   <a id="Sylves_MeshGrid_GetPolygon_" data-uid="Sylves.MeshGrid.GetPolygon*"></a>
   <h4 id="Sylves_MeshGrid_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__" data-uid="Sylves.MeshGrid.GetPolygon(Sylves.Cell,Sylves.Vector3[]@,Sylves.Matrix4x4@)">GetPolygon(Cell, out Vector3[], out Matrix4x4)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>For 2d cells, returns the polygon of the boundary of the cell.
+For performance reasons, cells can share a vertices array, so you need to apply
+a specific transform to get the polygon specific to a particular cell.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -776,29 +1281,32 @@
       <tr>
         <td><a class="xref" href="Sylves.Vector3.html">Vector3</a>[]</td>
         <td><span class="parametername">vertices</span></td>
-        <td></td>
+        <td><p>The vertices of the polygon. This should not be mutated.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Sylves.Matrix4x4.html">Matrix4x4</a></td>
         <td><span class="parametername">transform</span></td>
-        <td></td>
+        <td><p>A transformation that needs to be applied to each vertex.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__">DataDrivenGrid.GetPolygon(Cell, out Vector3[], out Matrix4x4)</a></div>
-  
-  
+
+
   <a id="Sylves_MeshGrid_GetTriangleMesh_" data-uid="Sylves.MeshGrid.GetTriangleMesh*"></a>
   <h4 id="Sylves_MeshGrid_GetTriangleMesh_Sylves_Cell_" data-uid="Sylves.MeshGrid.GetTriangleMesh(Sylves.Cell)">GetTriangleMesh(Cell)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>For 3d cells, returns triangles on the boundary of a given cell, and which direction they correspond to.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override IEnumerable&lt;(Vector3, Vector3, Vector3, CellDir)&gt; GetTriangleMesh(Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -815,7 +1323,7 @@
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -824,25 +1332,168 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.ValueTuple</span>&lt;<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.CellDir.html">CellDir</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;(<a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.Vector3.html">Vector3</a>, <a class="xref" href="Sylves.CellDir.html">CellDir</a>)&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetTriangleMesh_Sylves_Cell_">DataDrivenGrid.GetTriangleMesh(Cell)</a></div>
-  
-  
+
+
+  <a id="Sylves_MeshGrid_IntersectBounds_" data-uid="Sylves.MeshGrid.IntersectBounds*"></a>
+  <h4 id="Sylves_MeshGrid_IntersectBounds_Sylves_IBound_Sylves_IBound_" data-uid="Sylves.MeshGrid.IntersectBounds(Sylves.IBound,Sylves.IBound)">IntersectBounds(IBound, IBound)</h4>
+  <div class="markdown level1 summary"><p>Returns a bound that contains cells included in both arguments.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IBound IntersectBounds(IBound bound, IBound other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IntersectBounds_Sylves_IBound_Sylves_IBound_">DataDrivenGrid.IntersectBounds(IBound, IBound)</a></div>
+
+
+  <a id="Sylves_MeshGrid_IsCellInBound_" data-uid="Sylves.MeshGrid.IsCellInBound*"></a>
+  <h4 id="Sylves_MeshGrid_IsCellInBound_Sylves_Cell_Sylves_IBound_" data-uid="Sylves.MeshGrid.IsCellInBound(Sylves.Cell,Sylves.IBound)">IsCellInBound(Cell, IBound)</h4>
+  <div class="markdown level1 summary"><p>Tests if a given cell is in bound.
+i.e. returns true if the cell is listed in GetCellsInBounds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsCellInBound(Cell cell, IBound bound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IsCellInBound_Sylves_Cell_Sylves_IBound_">DataDrivenGrid.IsCellInBound(Cell, IBound)</a></div>
+
+
+  <a id="Sylves_MeshGrid_IsCellInGrid_" data-uid="Sylves.MeshGrid.IsCellInGrid*"></a>
+  <h4 id="Sylves_MeshGrid_IsCellInGrid_Sylves_Cell_" data-uid="Sylves.MeshGrid.IsCellInGrid(Sylves.Cell)">IsCellInGrid(Cell)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool IsCellInGrid(Cell cell)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
   <a id="Sylves_MeshGrid_IsPointInCell_" data-uid="Sylves.MeshGrid.IsPointInCell*"></a>
   <h4 id="Sylves_MeshGrid_IsPointInCell_Sylves_Vector3_Sylves_Cell_" data-uid="Sylves.MeshGrid.IsPointInCell(Sylves.Vector3,Sylves.Cell)">IsPointInCell(Vector3, Cell)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual bool IsPointInCell(Vector3 position, Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -864,7 +1515,7 @@
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -873,23 +1524,24 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_MeshGrid_Raycast_" data-uid="Sylves.MeshGrid.Raycast*"></a>
-  <h4 id="Sylves_MeshGrid_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_" data-uid="Sylves.MeshGrid.Raycast(Sylves.Vector3,Sylves.Vector3,System.Single)">Raycast(Vector3, Vector3, Single)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Sylves_MeshGrid_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_" data-uid="Sylves.MeshGrid.Raycast(Sylves.Vector3,Sylves.Vector3,System.Single)">Raycast(Vector3, Vector3, float)</h4>
+  <div class="markdown level1 summary"><p>Returns the cells intersecting a ray starting at origin, of length direction.magnitude * maxDistance, in order.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;RaycastInfo&gt; Raycast(Vector3 origin, Vector3 direction, float maxDistance = InfinityF)</code></pre>
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;RaycastInfo&gt; Raycast(Vector3 origin, Vector3 direction, float maxDistance = Infinity)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -909,14 +1561,14 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Single</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></td>
         <td><span class="parametername">maxDistance</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -925,25 +1577,25 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.RaycastInfo.html">RaycastInfo</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.RaycastInfo.html">RaycastInfo</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">DataDrivenGrid.Raycast(Vector3, Vector3, Single)</a></div>
-  
-  
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">DataDrivenGrid.Raycast(Vector3, Vector3, float)</a></div>
+
+
   <a id="Sylves_MeshGrid_RaycastCell_" data-uid="Sylves.MeshGrid.RaycastCell*"></a>
   <h4 id="Sylves_MeshGrid_RaycastCell_Sylves_Cell_Sylves_Vector3_Sylves_Vector3_" data-uid="Sylves.MeshGrid.RaycastCell(Sylves.Cell,Sylves.Vector3,Sylves.Vector3)">RaycastCell(Cell, Vector3, Vector3)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual Nullable&lt;RaycastInfo&gt; RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -970,7 +1622,7 @@
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -979,18 +1631,173 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<a class="xref" href="Sylves.RaycastInfo.html">RaycastInfo</a>&gt;</td>
+        <td><a class="xref" href="Sylves.RaycastInfo.html">RaycastInfo</a>?</td>
         <td></td>
       </tr>
     </tbody>
   </table>
+
+
+  <a id="Sylves_MeshGrid_TryMove_" data-uid="Sylves.MeshGrid.TryMove*"></a>
+  <h4 id="Sylves_MeshGrid_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__" data-uid="Sylves.MeshGrid.TryMove(Sylves.Cell,Sylves.CellDir,Sylves.Cell@,Sylves.CellDir@,Sylves.Connection@)">TryMove(Cell, CellDir, out Cell, out CellDir, out Connection)</h4>
+  <div class="markdown level1 summary"><p>Attempts to move from a cell in a given direction, and returns information about the move if successful.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">cell</span></td>
+        <td><p>The cell to move from</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.CellDir.html">CellDir</a></td>
+        <td><span class="parametername">dir</span></td>
+        <td><p>The direction to move in</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
+        <td><span class="parametername">dest</span></td>
+        <td><p>The cell moved to</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.CellDir.html">CellDir</a></td>
+        <td><span class="parametername">inverseDir</span></td>
+        <td><p>The direction leading back from dest to cell.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.Connection.html">Connection</a></td>
+        <td><span class="parametername">connection</span></td>
+        <td><p>A descriptor of how cell-local space relates between cell and dest.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__">DataDrivenGrid.TryMove(Cell, CellDir, out Cell, out CellDir, out Connection)</a></div>
+
+
+  <a id="Sylves_MeshGrid_UnionBounds_" data-uid="Sylves.MeshGrid.UnionBounds*"></a>
+  <h4 id="Sylves_MeshGrid_UnionBounds_Sylves_IBound_Sylves_IBound_" data-uid="Sylves.MeshGrid.UnionBounds(Sylves.IBound,Sylves.IBound)">UnionBounds(IBound, IBound)</h4>
+  <div class="markdown level1 summary"><p>Returns a bound that contains cells included in either argument.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IBound UnionBounds(IBound bound, IBound other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td><span class="parametername">bound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IBound.html">IBound</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_UnionBounds_Sylves_IBound_Sylves_IBound_">DataDrivenGrid.UnionBounds(IBound, IBound)</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Sylves.IGrid.html">IGrid</a>
   </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_FindCell_Sylves_IGrid_Sylves_Vector3_">GridExtensions.FindCell(IGrid, Vector3)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetCellsIntersectsApprox_Sylves_IGrid_Sylves_Aabb_">GridExtensions.GetCellsIntersectsApprox(IGrid, Aabb)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetMeshData_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetMeshData(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetNeighbours_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetNeighbours(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetPolygon_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetPolygon(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Masked_Sylves_IGrid_System_Collections_Generic_ISet_Sylves_Cell__">GridExtensions.Masked(IGrid, ISet&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Masked_Sylves_IGrid_System_Func_Sylves_Cell_System_Boolean__System_Collections_Generic_IEnumerable_Sylves_Cell__">GridExtensions.Masked(IGrid, Func&lt;Cell, bool&gt;, IEnumerable&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Move_Sylves_IGrid_Sylves_Cell_Sylves_CellDir_">GridExtensions.Move(IGrid, Cell, CellDir)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_ToMeshData_Sylves_IGrid_">GridExtensions.ToMeshData(IGrid)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_ToMeshData_Sylves_IGrid_System_Collections_Generic_IEnumerable_Sylves_Cell__">GridExtensions.ToMeshData(IGrid, IEnumerable&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Transformed_Sylves_IGrid_Sylves_Matrix4x4_">GridExtensions.Transformed(IGrid, Matrix4x4)</a>
+  </div>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
@@ -998,14 +1805,14 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -1013,8 +1820,8 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
           </div>
         </div>
       </footer>

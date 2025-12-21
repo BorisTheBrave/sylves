@@ -15,7 +15,7 @@ namespace Sylves
         {
         }
 
-        private RawSubstitutionTilingGrid(RawSubstitutionTilingGrid other, Func<int, InternalPrototile> hierarchy, Matrix4x4 baseTransform) : base(other, hierarchy, baseTransform)
+        private RawSubstitutionTilingGrid(RawSubstitutionTilingGrid other, Func<Int32, InternalPrototile> hierarchy, Matrix4x4 baseTransform) : base(other, hierarchy, baseTransform)
         {
         }
 
@@ -23,14 +23,14 @@ namespace Sylves
         {
         }
 
-        public RawSubstitutionTilingGrid(Prototile[] prototiles, Func<int, string> hierarchy, SubstitutionTilingBound bound = null) : base(prototiles, hierarchy, bound)
+        public RawSubstitutionTilingGrid(Prototile[] prototiles, Func<Int32, string> hierarchy, SubstitutionTilingBound bound = null) : base(prototiles, hierarchy, bound)
         {
         }
 
         #region Utils
 
         // Some of the most common things we want to look up
-        private (InternalPrototile prototile, Matrix4x4 prototileTransform, int childTile) LocateCell(Cell cell)
+        private (InternalPrototile prototile, Matrix4x4 prototileTransform, Int32 childTile) LocateCell(Cell cell)
         {
             var childTile = GetChildTileAt(cell);
             var pathLength = GetPathLength(cell);
@@ -48,7 +48,7 @@ namespace Sylves
             return (parent, transform, childTile);
         }
 
-        private (InternalPrototile prototile, int childTile) GetPrototileAndChildTile(Cell cell)
+        private (InternalPrototile prototile, Int32 childTile) GetPrototileAndChildTile(Cell cell)
         {
             var pathLength = GetPathLength(cell);
             var parent = hierarchy(pathLength);
@@ -59,7 +59,7 @@ namespace Sylves
             return (parent, GetChildTileAt(cell));
         }
 
-        protected override InternalPrototile GetPrototile(Cell cell, int height)
+        protected override InternalPrototile GetPrototile(Cell cell, Int32 height)
         {
             var pathLength = GetPathLength(cell);
             var parent = hierarchy(pathLength);
@@ -73,7 +73,7 @@ namespace Sylves
         /// <summary>
         /// Returns n+1 parent elements for a path of length n
         /// </summary>
-        private IList<InternalPrototile> Parents(Cell cell, int minHeight = 0)
+        private IList<InternalPrototile> Parents(Cell cell, Int32 minHeight = 0)
         {
             var pathLength = GetPathLength(cell);
             var parents = new InternalPrototile[pathLength + 1];
@@ -93,7 +93,7 @@ namespace Sylves
         public override IGrid Unbounded => new RawSubstitutionTilingGrid(this, (SubstitutionTilingBound)null);
 
 
-        public RawSubstitutionTilingGrid ParentGrid(int n = 1)
+        public RawSubstitutionTilingGrid ParentGrid(Int32 n = 1)
         {
             // Check subdividable
             if (tileBits != 0)
@@ -108,7 +108,7 @@ namespace Sylves
             return new RawSubstitutionTilingGrid(this, (h) => hierarchy(h + n), t);
         }
 
-        public Cell CellToParentGrid(Cell cell, int n = 1)
+        public Cell CellToParentGrid(Cell cell, Int32 n = 1)
         {
             // TODO: This can be done with bit shifting
             var l = GetPathLength(cell);
@@ -199,7 +199,7 @@ namespace Sylves
         // Given a prototile (height, partialPath), and a side of that prototile,
         // Moves to the adjacent prototile at the same height, returning which side we entered from.
         // Parents must the list of parent prototiles for partial path. It's indexed from height 0, but it'll only be inspected at height+1 and above.
-        private (Cell partialPath, int side, InternalPrototile prototile) TryMovePrototile(int height, Cell partialPath, int prototileSide, IList<InternalPrototile> parents)
+        private (Cell partialPath, Int32 side, InternalPrototile prototile) TryMovePrototile(Int32 height, Cell partialPath, Int32 prototileSide, IList<InternalPrototile> parents)
         {
             var childPrototile = GetPathAt(partialPath, height);
             var parent = height + 1 < parents.Count ? parents[height + 1] : hierarchy(height + 1);
@@ -287,7 +287,7 @@ namespace Sylves
         #region Query
         public override bool FindCell(Vector3 position, out Cell cell)
         {
-            var inputAabb = new Aabb { min = position, max = position };
+            var inputAabb = Aabb.FromMinMax(position, position);
             foreach (var (prototile, transform, partialPath) in GetPrototilesIntersectsApproxInternal(inputAabb))
             {
                 for (var childIndex = 0; childIndex < prototile.ChildTiles.Length; childIndex++)
@@ -321,7 +321,7 @@ namespace Sylves
             out CellRotation rotation)
         {
             var position = matrix.MultiplyPoint3x4(new Vector3());
-            var inputAabb = new Aabb { min = position, max = position };
+            var inputAabb = Aabb.FromMinMax(position, position);
             foreach (var (prototile, transform, partialPath) in GetPrototilesIntersectsApproxInternal(inputAabb))
             {
                 for (var childIndex = 0; childIndex < prototile.ChildTiles.Length; childIndex++)
@@ -356,7 +356,7 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-            var inputAabb = new Aabb { min = min, max = max };
+            var inputAabb = Aabb.FromMinMax(min, max);
             foreach (var (prototile, transform, partialPath) in GetPrototilesIntersectsApproxInternal(inputAabb))
             {
                 for (var i = 0; i < prototile.ChildTiles.Length; i++)
@@ -368,7 +368,7 @@ namespace Sylves
 
 
         // Returns a set of non-overlapping prototiles at different heights that collectively contain all prototiles
-        private IEnumerable<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> Spigot()
+        private IEnumerable<(Int32 height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> Spigot()
         {
             var height = 0;
             var transform = baseTransform;
@@ -396,7 +396,7 @@ namespace Sylves
         // We stop when we haven't found anything in a while.
         private IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)> GetPrototilesIntersectsApproxInternal(Aabb inputAabb)
         {
-            var stack = new Stack<(int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)>();
+            var stack = new Stack<(Int32 height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath)>();
             var highestFoundHeight = -1;
             foreach (var t in Spigot())
             {
@@ -417,7 +417,7 @@ namespace Sylves
                     {
                         if (height == 0)
                         {
-                            highestFoundHeight = Math.Max(highestFoundHeight, t.height);
+                            highestFoundHeight = highestFoundHeight > t.height ? highestFoundHeight : t.height;
                             yield return (prototile, transform, partialPath);
                         }
                         else
@@ -490,7 +490,7 @@ namespace Sylves
         /// </summary>
         private IEnumerable<(InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float minDist)> RaycastPrototiles(Func<Matrix4x4, InternalPrototile, float?> getDist)
         {
-            var queue = new PriorityQueue<(int initialHeight, int height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float dist)>(x => x.dist, (x, y) => -x.dist.CompareTo(y.dist));
+            var queue = new PriorityQueue<(Int32 initialHeight, Int32 height, InternalPrototile prototile, Matrix4x4 transform, Cell partialPath, float dist)>(x => x.dist, (x, y) => -x.dist.CompareTo(y.dist));
 
             var highestFoundHeight = -1;
             foreach (var t in Spigot())
@@ -531,7 +531,7 @@ namespace Sylves
                         if (t2.initialHeight <= t.height - DeadZone)
                         {
                             var (initialHeight, itemHeight, prototile, transform, partialPath, dist2) = queue.Pop();
-                            highestFoundHeight = Math.Max(highestFoundHeight, initialHeight);
+                            highestFoundHeight = highestFoundHeight > initialHeight ? highestFoundHeight : initialHeight;
                             yield return (prototile, transform, partialPath, dist2);
                         }
                         else

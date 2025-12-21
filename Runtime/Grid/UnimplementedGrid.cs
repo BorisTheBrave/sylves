@@ -22,7 +22,7 @@ namespace Sylves
 
         public bool IsSingleCellType => throw new NotImplementedException();
 
-        public int CoordinateDimension => throw new NotImplementedException();
+        public Int32 CoordinateDimension => throw new NotImplementedException();
 
         public IEnumerable<ICellType> GetCellTypes() => throw new NotImplementedException();
         #endregion
@@ -32,7 +32,12 @@ namespace Sylves
 
         public IGrid Unwrapped => throw new NotImplementedException();
 
-        public virtual IDualMapping GetDual() => throw new NotImplementedException();
+        public IDualMapping GetDual() => throw new NotImplementedException();
+
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
+
+        public IGrid GetCompactGrid() => throw new NotImplementedException();
+        public IGrid Recenter(Cell cell) => throw new NotImplementedException();
 
         #endregion
 
@@ -85,6 +90,9 @@ namespace Sylves
         public IEnumerable<Cell> GetCellsInBounds(IBound bound) => throw new NotImplementedException();
 
         public bool IsCellInBound(Cell cell, IBound bound) => throw new NotImplementedException();
+
+        public Aabb? GetBoundAabb(IBound bound) => throw new NotImplementedException();
+
         #endregion
 
         #region Position
@@ -103,7 +111,11 @@ namespace Sylves
 
         public IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => throw new NotImplementedException();
 
-        public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => throw new NotImplementedException();
+        public void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => throw new NotImplementedException(); 
+        
+        public Aabb GetAabb(Cell cell) => throw new NotImplementedException();
+
+        public Aabb GetAabb(IEnumerable<Cell> cells) => throw new NotImplementedException();
 
         #endregion
 

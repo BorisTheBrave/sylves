@@ -1,3 +1,19 @@
+# v1.1.0
+* Added [`GetAabb`](xref:Sylves.IGrid.GetAabb(Sylves.Cell)) methods
+* Added [KruskalMinimumSpanningTree](xref:Sylves.KruskalMinimumSpanningTree) algo
+* Added [RandomRhombusGrid](xref:Sylves.RandomRhombusGrid) and [RandomRectGrid](xref:Sylves.RandomRectGrid)
+* Added [CompoundGrid](xref:Sylves.CompoundGrid) and some example [radial uses](xref:Sylves.RadialGrids)
+* Added [Recenter](xref:Sylves.IGrid.Recenter(Sylves.Cell)) operation and [docs](concepts/infinity.md) on how to use it.
+* Added BigInt compilation variant.
+* Added [ICellType.N](xref:Sylves.ICellType.N) for convenience.
+* Added [Gyro](xref:Sylves.ConwayOperators.Gyro(Sylves.MeshData)) Conway operator.
+* Fix PlanarLazyMeshGrid when passing in a SquareGrid
+* Fix GetCellsIntersectsApprox in some grids
+* Fix triangle grid GetCellCorners
+* Fix generalized winding.
+* Fix FlatTopped TrianglePrism Connections
+* MaskModifier is now removed when calling Unbounded.
+
 # 1.0.0
 * **Breaking**: Swapped CubeDir.Left and CubeDir.Right
 * Added [OffGrid](grids/offgrid.md)
@@ -6,7 +22,7 @@
 * Added [JitteredSquareGrid](grids/jitteredsquaregrid.md)
 * Added [Voronator](xref:Sylves.Voronator) utiliyt class
 * Added [NestedModifier](xref:Sylves.NestedModifier) (for internal use)
-* Added [AabbGrid](xref:Sylves.AabbGrid) (for internal use)
+* Added AabbGrid (for internal use)
 * 2d grids now support GetMeshData.
 * Fixes for RelaxModifier. It now uses the same coordinates as underlying.
 * Fix IsPointInTriangle.

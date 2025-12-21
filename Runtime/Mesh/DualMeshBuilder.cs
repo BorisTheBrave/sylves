@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using static Sylves.MeshGridUtils;
+
 namespace Sylves
 {
     public class DualMeshBuilder
@@ -61,7 +63,7 @@ namespace Sylves
                 foreach (var kv in cellData)
                 {
                     var centroid = meshEmitter.AddVertex(kv.Value.TRS.Position);
-                    r[kv.Key.x] = centroid;
+                    r[GetFace(kv.Key)] = centroid;
                 }
             }
             else
@@ -69,7 +71,7 @@ namespace Sylves
                 foreach (var kv in cellData)
                 {
                     var centroid = meshEmitter.Average(((MeshCellData)kv.Value).Face, meshData);
-                    r[kv.Key.x] = centroid;
+                    r[GetFace(kv.Key)] = centroid;
                 }
             }
             return r;
@@ -93,7 +95,7 @@ namespace Sylves
                 var (destCell, inverseDir, connection) = t;
                 if (connection != new Connection())
                     throw new Exception("Cannot handle non-trivial connection");
-                return (destCell.x, (int)inverseDir);
+                return (GetFace(destCell), (int)inverseDir);
             }
             else
             {
@@ -117,7 +119,7 @@ namespace Sylves
         {
             foreach (var kv in cellData)
             {
-                yield return (kv.Key.x, ((MeshCellData)kv.Value).Face);
+                yield return (GetFace(kv.Key), ((MeshCellData)kv.Value).Face);
             }
         }
 
@@ -125,6 +127,8 @@ namespace Sylves
         {
             return ((MeshCellData)cellData[new Cell(face, 0)]).Face;
         }
+
+        private static Int32 GetFace(Cell cell) => MeshGridUtils.GetFace(cell);
 
         private void Build()
         {
@@ -157,7 +161,7 @@ namespace Sylves
                         // Determine the vertex we are walking around
                         var vertex = face[edge];
                         bool isFar = isFarVertex[vertex];
-                        // Walk forword
+                        // Walk forward
                         dualFaceIndices.Clear();
                         (int, int) endHe = default;
                         {

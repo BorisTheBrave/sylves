@@ -48,7 +48,15 @@ namespace Sylves
         /// Applies a linear transformation to each of the cells of the grid.
         /// <see cref="TransformModifier"/>
         /// </summary>
-        public static IGrid Transformed(this IGrid grid, Matrix4x4 transform) => new TransformModifier(grid, transform);
+        public static IGrid Transformed(this IGrid grid, Matrix4x4 transform)
+        {
+            if(grid is TransformModifier tm)
+            {
+                // Combine transforms
+                return new TransformModifier(tm.Underlying, transform * tm.Transform);
+            }
+            return new TransformModifier(grid, transform);
+        }
 
         /// <summary>
         /// Filters the grid cells to the given subset.
@@ -66,11 +74,18 @@ namespace Sylves
         /// <summary>
         /// Converts a finite grid to a MeshData.
         /// </summary>
-        public static MeshData ToMeshData(this IGrid grid, IEnumerable<Cell> cells = null)
+        public static MeshData ToMeshData(this IGrid grid)
         {
-            cells = cells ?? grid.GetCells();
+            return grid.ToMeshData(grid.GetCells());
+        }
+
+        /// <summary>
+        /// Converts a finite grid to a MeshData.
+        /// </summary>
+        public static MeshData ToMeshData(this IGrid grid, IEnumerable<Cell> cells)
+        {
             var vertices = new List<Vector3>();
-            var indices = new List<int>();
+            var indices = new List<Int32>();
 
             bool allTris = true;
             bool allQuads = true;
@@ -150,6 +165,8 @@ namespace Sylves
             grid.GetMeshData(cell, out var meshData, out var transform);
             return transform * meshData;
         }
+
+        public static IEnumerable<Cell> GetCellsIntersectsApprox(this IGrid grid, Aabb aabb) => grid.GetCellsIntersectsApprox(aabb.Min, aabb.Max);
 
     }
 }

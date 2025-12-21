@@ -1,17 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class HexBound
-   </title>
+    <title>Class HexBound </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class HexBound
-   ">
-    <meta name="generator" content="docfx 2.59.0.0">
-    
+    <meta name="title" content="Class HexBound ">
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -19,14 +17,14 @@
     <link rel="stylesheet" href="../styles/custom.css">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    
-    
+  
+  
+  
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -36,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../index.html">
                 <img id="logo" class="svg" src="../logo.svg" alt="">
               </a>
@@ -50,7 +48,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -60,7 +58,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -70,45 +68,69 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Sylves.HexBound">
-  
-  
-  <h1 id="Sylves_HexBound" data-uid="Sylves.HexBound" class="text-break">Class HexBound
-  </h1>
+
+
+
+  <h1 id="Sylves_HexBound" data-uid="Sylves.HexBound" class="text-break">Class HexBound</h1>
   <div class="markdown level0 summary"><p>Bounding boxes for cube coordinate hexes.
 This can represent rhombuses and hex shapes drawn on the hex grid.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">HexBound</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Sylves.IBound.html">IBound</a></div>
-    <div><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</div>
-    <div><span class="xref">System.Collections.IEnumerable</span></div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_HexBound_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class HexBound : Object, IBound</code></pre>
+    <pre><code class="lang-csharp hljs">public class HexBound : IBound, IEnumerable&lt;Cell&gt;, IEnumerable</code></pre>
   </div>
   <h3 id="constructors">Constructors
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_HexBound__ctor_" data-uid="Sylves.HexBound.#ctor*"></a>
   <h4 id="Sylves_HexBound__ctor_Sylves_Vector3Int_Sylves_Vector3Int_" data-uid="Sylves.HexBound.#ctor(Sylves.Vector3Int,Sylves.Vector3Int)">HexBound(Vector3Int, Vector3Int)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public HexBound(Vector3Int min, Vector3Int max)</code></pre>
+    <pre><code class="lang-csharp hljs">public HexBound(Vector3Int min, Vector3Int mex)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -124,25 +146,26 @@ This can represent rhombuses and hex shapes drawn on the hex grid.</p>
       </tr>
       <tr>
         <td><a class="xref" href="Sylves.Vector3Int.html">Vector3Int</a></td>
-        <td><span class="parametername">max</span></td>
+        <td><span class="parametername">mex</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h3 id="fields">Fields
-  </h3>
-  
-  
-  <h4 id="Sylves_HexBound_max" data-uid="Sylves.HexBound.max">max</h4>
-  <div class="markdown level1 summary"><p>Exclusive upper bound for each coordinate</p>
+  <h3 id="properties">Properties
+</h3>
+
+
+  <a id="Sylves_HexBound_Max_" data-uid="Sylves.HexBound.Max*"></a>
+  <h4 id="Sylves_HexBound_Max" data-uid="Sylves.HexBound.Max">Max</h4>
+  <div class="markdown level1 summary"><p>Inclusive upper bound for each coordinate</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Vector3Int max</code></pre>
+    <pre><code class="lang-csharp hljs">public Vector3Int Max { get; set; }</code></pre>
   </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -156,18 +179,45 @@ This can represent rhombuses and hex shapes drawn on the hex grid.</p>
       </tr>
     </tbody>
   </table>
-  
-  
-  <h4 id="Sylves_HexBound_min" data-uid="Sylves.HexBound.min">min</h4>
+
+
+  <a id="Sylves_HexBound_Mex_" data-uid="Sylves.HexBound.Mex*"></a>
+  <h4 id="Sylves_HexBound_Mex" data-uid="Sylves.HexBound.Mex">Mex</h4>
+  <div class="markdown level1 summary"><p>Exclusive upper bound for each coordinate</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector3Int Mex { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.Vector3Int.html">Vector3Int</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Sylves_HexBound_Min_" data-uid="Sylves.HexBound.Min*"></a>
+  <h4 id="Sylves_HexBound_Min" data-uid="Sylves.HexBound.Min">Min</h4>
   <div class="markdown level1 summary"><p>Inclusive lower bound for each coordinate</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Vector3Int min</code></pre>
+    <pre><code class="lang-csharp hljs">public Vector3Int Min { get; set; }</code></pre>
   </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -182,19 +232,19 @@ This can represent rhombuses and hex shapes drawn on the hex grid.</p>
     </tbody>
   </table>
   <h3 id="methods">Methods
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_HexBound_Contains_" data-uid="Sylves.HexBound.Contains*"></a>
   <h4 id="Sylves_HexBound_Contains_Sylves_Cell_" data-uid="Sylves.HexBound.Contains(Sylves.Cell)">Contains(Cell)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public bool Contains(Cell v)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -211,7 +261,7 @@ This can represent rhombuses and hex shapes drawn on the hex grid.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -220,23 +270,23 @@ This can represent rhombuses and hex shapes drawn on the hex grid.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_HexBound_GetEnumerator_" data-uid="Sylves.HexBound.GetEnumerator*"></a>
   <h4 id="Sylves_HexBound_GetEnumerator" data-uid="Sylves.HexBound.GetEnumerator">GetEnumerator()</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public IEnumerator&lt;Cell&gt; GetEnumerator()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -245,25 +295,25 @@ This can represent rhombuses and hex shapes drawn on the hex grid.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerator</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1">IEnumerator</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_HexBound_Hexagon_" data-uid="Sylves.HexBound.Hexagon*"></a>
-  <h4 id="Sylves_HexBound_Hexagon_System_Int32_Sylves_Cell_" data-uid="Sylves.HexBound.Hexagon(System.Int32,Sylves.Cell)">Hexagon(Int32, Cell)</h4>
+  <h4 id="Sylves_HexBound_Hexagon_System_Int32_Sylves_Cell_" data-uid="Sylves.HexBound.Hexagon(System.Int32,Sylves.Cell)">Hexagon(int, Cell)</h4>
   <div class="markdown level1 summary"><p>Returns a rough hexagonal shape of cells with a given distance of center, inclusive.
 I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static HexBound Hexagon(int radius, Cell center = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static HexBound Hexagon(int radius, Cell center = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -273,7 +323,7 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">radius</span></td>
         <td></td>
       </tr>
@@ -285,7 +335,7 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -299,18 +349,18 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_HexBound_Intersect_" data-uid="Sylves.HexBound.Intersect*"></a>
   <h4 id="Sylves_HexBound_Intersect_Sylves_HexBound_" data-uid="Sylves.HexBound.Intersect(Sylves.HexBound)">Intersect(HexBound)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public HexBound Intersect(HexBound other)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -327,7 +377,7 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -341,19 +391,19 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_HexBound_Rhombus_" data-uid="Sylves.HexBound.Rhombus*"></a>
-  <h4 id="Sylves_HexBound_Rhombus_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Sylves.HexBound.Rhombus(System.Int32,System.Int32,System.Int32,System.Int32)">Rhombus(Int32, Int32, Int32, Int32)</h4>
+  <h4 id="Sylves_HexBound_Rhombus_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Sylves.HexBound.Rhombus(System.Int32,System.Int32,System.Int32,System.Int32)">Rhombus(int, int, int, int)</h4>
   <div class="markdown level1 summary"><p>Returns a bound of a rhombus that bounds the X and Y axes.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static HexBound Rhombus(int minX, int minY, int maxX, int maxY)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -363,29 +413,29 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">minX</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">minY</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">maxX</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">maxY</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -399,18 +449,18 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_HexBound_Union_" data-uid="Sylves.HexBound.Union*"></a>
   <h4 id="Sylves_HexBound_Union_Sylves_HexBound_" data-uid="Sylves.HexBound.Union(Sylves.HexBound)">Union(HexBound)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public HexBound Union(HexBound other)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -427,7 +477,7 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -446,14 +496,15 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
       <a class="xref" href="Sylves.IBound.html">IBound</a>
   </div>
   <div>
-      <span class="xref">System.Collections.Generic.IEnumerable&lt;&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">System.Collections.IEnumerable</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a>
   </div>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
@@ -461,14 +512,14 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -476,8 +527,8 @@ I.e. a radius 0 hexagon contains 1 cell, a radius 1 hexagon contains 7 cells.</p
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
           </div>
         </div>
       </footer>

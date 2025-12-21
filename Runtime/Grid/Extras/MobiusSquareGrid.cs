@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Sylves
@@ -9,12 +10,12 @@ namespace Sylves
     /// </summary>
     public class MobiusSquareGrid : MeshGrid
     { 
-        public MobiusSquareGrid(int width, int height)
+        public MobiusSquareGrid(Int32 width, Int32 height)
             :base(MakeMeshData(width, height))
         {
         }
 
-        private static MeshData MakeMeshData(int w, int h)
+        private static MeshData MakeMeshData(Int32 w, Int32 h)
         {
             var radius1 = 10;
             var radius2 = 3;
@@ -46,10 +47,10 @@ namespace Sylves
 
                 }
             }
-            var indices = new int[h][];
+            var indices = new Int32[h][];
             for (var y = 0; y < h; y++)
             {
-                indices[y] = new int[4 * w];
+                indices[y] = new Int32[4 * w];
                 for (var x = 0; x < w; x++)
                 {
                     indices[y][4 * x + 0] = x + 1 + (w + 1) * (y + 0);

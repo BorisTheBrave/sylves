@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Algorithms </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Algorithms ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+  
+  
+  
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="algorithms">Algorithms</h1>
+
+<p>Sylves comes equiped with some usful algorithms for working with graphs and grids.</p>
+<h2 id="pathfinding">Pathfinding</h2>
+<p>See <a href="pathfinding.html">Pathfinding</a></p>
+<h2 id="kruskalminimumspanningtree">KruskalMinimumSpanningTree</h2>
+<p><a class="xref" href="../../api/Sylves.KruskalMinimumSpanningTree.html#Sylves_KruskalMinimumSpanningTree_Calculate_Sylves_IGrid_System_Func_Sylves_Step_System_Nullable_System_Single___"><code>KruskalMinimumSpanningTree.Calculate</code></a> computes a <a href="https://en.wikipedia.org/wiki/Minimum_spanning_tree">minimal spanning tree</a>. That is, it returns a set of <a class="xref" href="../../api/Sylves.Step.html"><code>Step</code></a> objects, such that you can use those just steps to move from any cell in the grid to any other. It returns the set of steps with the smallest summed stepLengths, which is a user customizable field.</p>
+<p><img width="200px" src="../../images/kruskal.svg"></p>
+<h2 id="outlinecells">OutlineCells</h2>
+<p><a class="xref" href="../../api/Sylves.OutlineCells.html#Sylves_OutlineCells_Outline_Sylves_IGrid_System_Collections_Generic_ISet_Sylves_Cell__System_Boolean_"><code>OutlineCells.Outline</code></a> traces the edges around a set of cells to find their outline.</p>
+<p>The returned edges are returned organized into loops, in counter-clockwise order.</p>
+<p><img width="200px" src="../../images/outline.svg"></p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

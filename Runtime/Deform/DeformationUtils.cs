@@ -15,7 +15,7 @@ namespace Sylves
         /// For quad meshes, cell co-ordinates is a unit cube centered at the origin.
         /// For tri meshes, cell co-ordinates are a triangle prism centered at the origin.
         /// </summary>
-        public static Deformation GetDeformation(MeshData surfaceMesh, float tileHeight, float surfaceOffset, bool smoothNormals, int face, int layer, int subMesh, bool invertWinding)
+        public static Deformation GetDeformation(MeshData surfaceMesh, float tileHeight, float surfaceOffset, bool smoothNormals, int face, float layer, int subMesh, bool invertWinding)
         {
             var isQuads = surfaceMesh.GetTopology(subMesh) == MeshTopology.Quads;
             var isTris = surfaceMesh.GetTopology(subMesh) == MeshTopology.Triangles;

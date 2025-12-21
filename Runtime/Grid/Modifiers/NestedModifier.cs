@@ -21,8 +21,8 @@ namespace Sylves
         /// Applies NestedModifier to chunkGrid.
         /// </summary>
         /// <param name="chunkGrid">The base grid</param>
-        /// <param name="cellTypes">What should the response of GetCellType </param>
-        /// <param name="cachePolicy">Configures how to store the cahced meshes.</param>
+        /// <param name="cellTypes">What should the response of GetCellType be</param>
+        /// <param name="cachePolicy">Configures how to store the cached meshes.</param>
         public NestedModifier(IGrid chunkGrid, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
             Setup(chunkGrid, cellTypes, cachePolicy);
@@ -93,7 +93,6 @@ namespace Sylves
         // TOOD: Think about this
         protected virtual Vector3 MeshTranslation(Cell chunkCell) => new Vector3();
 
-
         #region Basics
 
         public virtual bool Is2d => chunkGrid.Is2d;
@@ -110,9 +109,9 @@ namespace Sylves
 
         public virtual bool IsSingleCellType => cellTypes != null && cellTypes.Count() == 1;
 
-        public virtual int CoordinateDimension => 3;
+        public virtual Int32 CoordinateDimension => 3;
 
-        public virtual IEnumerable<ICellType> GetCellTypes() => cellTypes ?? throw new Exception("Unknown cell types");
+        public virtual IEnumerable<ICellType> GetCellTypes() => cellTypes ?? throw new NotSupportedException($"Grid {GetType().Name} does not support GetCellTypes()");
 
         #endregion
 
@@ -123,10 +122,19 @@ namespace Sylves
         public IGrid Unwrapped => this;
 
 
-        public virtual IDualMapping GetDual()
+        public virtual IDualMapping GetDual() => throw new NotImplementedException();
+
+        public virtual IGrid GetDiagonalGrid() => throw new NotImplementedException();
+
+        public virtual IGrid GetCompactGrid() => DefaultGridImpl.GetCompactGrid(this);
+
+        public virtual IGrid Recenter(Cell cell)
         {
-            throw new NotImplementedException();
+            // We cannot do anything clever by default, but subclasses
+            // can potentially use MeshTranslation.
+            return DefaultGridImpl.Recenter(this, cell);
         }
+
         #endregion
 
         #region Cell info
@@ -164,7 +172,7 @@ namespace Sylves
             if (GetChildGridCached(chunkCell).TryMove(childCell, dir, out dest, out inverseDir, out connection))
             {
                 dest = Combine(dest, chunkCell);
-                return true;
+                // TODO: Do we need to split and check this against chunkGrid founds?
             }
             return false;
         }
@@ -242,6 +250,11 @@ namespace Sylves
             // No need to check childCell, this method should only be called with cells in the grid
             return chunkGrid.IsCellInBound(chunkCell, bound);
         }
+
+        public Aabb? GetBoundAabb(IBound bound)
+        {
+            return chunkGrid.GetBoundAabb(bound);
+        }
         #endregion
 
 
@@ -293,6 +306,19 @@ namespace Sylves
             GetChildGridCached(chunkCell).GetMeshData(childCell, out meshData, out transform);
             transform = Matrix4x4.Translate(MeshTranslation(chunkCell)) * transform;
         }
+
+        public Aabb GetAabb(Cell cell)
+        {
+            var (childCell, chunkCell) = Split(cell);
+            var aabb = GetChildGridCached(chunkCell).GetAabb(childCell);
+            return aabb + MeshTranslation(chunkCell);
+        }
+
+        public Aabb GetAabb(IEnumerable<Cell> cells)
+        {
+            return Aabb.Union(cells.Select(GetAabb));
+        }
+
         #endregion
 
         #region Query

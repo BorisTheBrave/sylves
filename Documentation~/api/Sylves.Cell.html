@@ -1,17 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Cell
-   </title>
+    <title>Struct Cell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Cell
-   ">
-    <meta name="generator" content="docfx 2.59.0.0">
-    
+    <meta name="title" content="Struct Cell ">
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -19,14 +17,14 @@
     <link rel="stylesheet" href="../styles/custom.css">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    
-    
+  
+  
+  
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -36,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../index.html">
                 <img id="logo" class="svg" src="../logo.svg" alt="">
               </a>
@@ -50,7 +48,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -60,7 +58,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -70,44 +68,51 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Sylves.Cell">
-  
-  
-  <h1 id="Sylves_Cell" data-uid="Sylves.Cell" class="text-break">Class Cell
-  </h1>
+
+
+
+  <h1 id="Sylves_Cell" data-uid="Sylves.Cell" class="text-break">Struct Cell</h1>
   <div class="markdown level0 summary"><p>Represents a single cell in the grid.
 Cell is just a set of co-ordinates, the grid itself must be called to get any details about the cell.
 For more details see the basic concepts in the docs.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">Cell</span></div>
-  </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_Cell_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class Cell : ValueType</code></pre>
+    <pre><code class="lang-csharp hljs">public struct Cell : IEquatable&lt;Cell&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_Cell__ctor_" data-uid="Sylves.Cell.#ctor*"></a>
-  <h4 id="Sylves_Cell__ctor_System_Int32_System_Int32_" data-uid="Sylves.Cell.#ctor(System.Int32,System.Int32)">Cell(Int32, Int32)</h4>
+  <h4 id="Sylves_Cell__ctor_System_Int32_System_Int32_" data-uid="Sylves.Cell.#ctor(System.Int32,System.Int32)">Cell(int, int)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public Cell(int x, int y)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -117,29 +122,29 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">x</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">y</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Cell__ctor_" data-uid="Sylves.Cell.#ctor*"></a>
-  <h4 id="Sylves_Cell__ctor_System_Int32_System_Int32_System_Int32_" data-uid="Sylves.Cell.#ctor(System.Int32,System.Int32,System.Int32)">Cell(Int32, Int32, Int32)</h4>
+  <h4 id="Sylves_Cell__ctor_System_Int32_System_Int32_System_Int32_" data-uid="Sylves.Cell.#ctor(System.Int32,System.Int32,System.Int32)">Cell(int, int, int)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public Cell(int x, int y, int z)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -149,35 +154,35 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">x</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">y</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">z</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="fields">Fields
-  </h3>
-  
-  
+</h3>
+
+
   <h4 id="Sylves_Cell_x" data-uid="Sylves.Cell.x">x</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public int x</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -186,22 +191,22 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <h4 id="Sylves_Cell_y" data-uid="Sylves.Cell.y">y</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public int y</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -210,22 +215,22 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <h4 id="Sylves_Cell_z" data-uid="Sylves.Cell.z">z</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public int z</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -234,25 +239,25 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_Cell_Equals_" data-uid="Sylves.Cell.Equals*"></a>
   <h4 id="Sylves_Cell_Equals_Sylves_Cell_" data-uid="Sylves.Cell.Equals(Sylves.Cell)">Equals(Cell)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public bool Equals(Cell other)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -269,7 +274,7 @@ For more details see the basic concepts in the docs.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -278,23 +283,23 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Cell_Equals_" data-uid="Sylves.Cell.Equals*"></a>
-  <h4 id="Sylves_Cell_Equals_System_Object_" data-uid="Sylves.Cell.Equals(System.Object)">Equals(Object)</h4>
+  <h4 id="Sylves_Cell_Equals_System_Object_" data-uid="Sylves.Cell.Equals(System.Object)">Equals(object)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool Equals(object other)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -304,14 +309,14 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Object</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></td>
         <td><span class="parametername">other</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -320,23 +325,25 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.equals">ValueType.Equals(object)</a></div>
+
+
   <a id="Sylves_Cell_GetHashCode_" data-uid="Sylves.Cell.GetHashCode*"></a>
   <h4 id="Sylves_Cell_GetHashCode" data-uid="Sylves.Cell.GetHashCode">GetHashCode()</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -345,23 +352,25 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode">ValueType.GetHashCode()</a></div>
+
+
   <a id="Sylves_Cell_ToString_" data-uid="Sylves.Cell.ToString*"></a>
   <h4 id="Sylves_Cell_ToString" data-uid="Sylves.Cell.ToString">ToString()</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -370,25 +379,27 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.tostring">ValueType.ToString()</a></div>
   <h3 id="operators">Operators
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_Cell_op_Addition_" data-uid="Sylves.Cell.op_Addition*"></a>
-  <h4 id="Sylves_Cell_op_Addition_Sylves_Cell_Sylves_Vector3Int_" data-uid="Sylves.Cell.op_Addition(Sylves.Cell,Sylves.Vector3Int)">Addition(Cell, Vector3Int)</h4>
+  <h4 id="Sylves_Cell_op_Addition_Sylves_Cell_Sylves_Vector3Int_" data-uid="Sylves.Cell.op_Addition(Sylves.Cell,Sylves.Vector3Int)">operator +(Cell, Vector3Int)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static Cell operator +(Cell cell, Vector3Int offset)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -410,7 +421,7 @@ For more details see the basic concepts in the docs.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -424,18 +435,18 @@ For more details see the basic concepts in the docs.</p>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Cell_op_Addition_" data-uid="Sylves.Cell.op_Addition*"></a>
-  <h4 id="Sylves_Cell_op_Addition_Sylves_Vector3Int_Sylves_Cell_" data-uid="Sylves.Cell.op_Addition(Sylves.Vector3Int,Sylves.Cell)">Addition(Vector3Int, Cell)</h4>
+  <h4 id="Sylves_Cell_op_Addition_Sylves_Vector3Int_Sylves_Cell_" data-uid="Sylves.Cell.op_Addition(Sylves.Vector3Int,Sylves.Cell)">operator +(Vector3Int, Cell)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static Cell operator +(Vector3Int offset, Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -457,7 +468,7 @@ For more details see the basic concepts in the docs.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -471,18 +482,18 @@ For more details see the basic concepts in the docs.</p>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Cell_op_Equality_" data-uid="Sylves.Cell.op_Equality*"></a>
-  <h4 id="Sylves_Cell_op_Equality_Sylves_Cell_Sylves_Cell_" data-uid="Sylves.Cell.op_Equality(Sylves.Cell,Sylves.Cell)">Equality(Cell, Cell)</h4>
+  <h4 id="Sylves_Cell_op_Equality_Sylves_Cell_Sylves_Cell_" data-uid="Sylves.Cell.op_Equality(Sylves.Cell,Sylves.Cell)">operator ==(Cell, Cell)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static bool operator ==(Cell lhs, Cell rhs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -504,7 +515,7 @@ For more details see the basic concepts in the docs.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -513,23 +524,23 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Cell_op_Explicit_" data-uid="Sylves.Cell.op_Explicit*"></a>
-  <h4 id="Sylves_Cell_op_Explicit_Sylves_Cell__Sylves_Vector3Int" data-uid="Sylves.Cell.op_Explicit(Sylves.Cell)~Sylves.Vector3Int">Explicit(Cell to Vector3Int)</h4>
+  <h4 id="Sylves_Cell_op_Explicit_Sylves_Cell__Sylves_Vector3Int" data-uid="Sylves.Cell.op_Explicit(Sylves.Cell)~Sylves.Vector3Int">explicit operator Vector3Int(Cell)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static explicit operator Vector3Int(Cell c)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -546,7 +557,7 @@ For more details see the basic concepts in the docs.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -560,18 +571,18 @@ For more details see the basic concepts in the docs.</p>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Cell_op_Explicit_" data-uid="Sylves.Cell.op_Explicit*"></a>
-  <h4 id="Sylves_Cell_op_Explicit_Sylves_Vector3Int__Sylves_Cell" data-uid="Sylves.Cell.op_Explicit(Sylves.Vector3Int)~Sylves.Cell">Explicit(Vector3Int to Cell)</h4>
+  <h4 id="Sylves_Cell_op_Explicit_Sylves_Vector3Int__Sylves_Cell" data-uid="Sylves.Cell.op_Explicit(Sylves.Vector3Int)~Sylves.Cell">explicit operator Cell(Vector3Int)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static explicit operator Cell(Vector3Int c)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -588,7 +599,7 @@ For more details see the basic concepts in the docs.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -602,18 +613,18 @@ For more details see the basic concepts in the docs.</p>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Cell_op_Inequality_" data-uid="Sylves.Cell.op_Inequality*"></a>
-  <h4 id="Sylves_Cell_op_Inequality_Sylves_Cell_Sylves_Cell_" data-uid="Sylves.Cell.op_Inequality(Sylves.Cell,Sylves.Cell)">Inequality(Cell, Cell)</h4>
+  <h4 id="Sylves_Cell_op_Inequality_Sylves_Cell_Sylves_Cell_" data-uid="Sylves.Cell.op_Inequality(Sylves.Cell,Sylves.Cell)">operator !=(Cell, Cell)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static bool operator !=(Cell lhs, Cell rhs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -635,7 +646,7 @@ For more details see the basic concepts in the docs.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -644,23 +655,23 @@ For more details see the basic concepts in the docs.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Cell_op_Subtraction_" data-uid="Sylves.Cell.op_Subtraction*"></a>
-  <h4 id="Sylves_Cell_op_Subtraction_Sylves_Cell_Sylves_Vector3Int_" data-uid="Sylves.Cell.op_Subtraction(Sylves.Cell,Sylves.Vector3Int)">Subtraction(Cell, Vector3Int)</h4>
+  <h4 id="Sylves_Cell_op_Subtraction_Sylves_Cell_Sylves_Vector3Int_" data-uid="Sylves.Cell.op_Subtraction(Sylves.Cell,Sylves.Vector3Int)">operator -(Cell, Vector3Int)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static Cell operator -(Cell cell, Vector3Int offset)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -682,7 +693,7 @@ For more details see the basic concepts in the docs.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -696,18 +707,18 @@ For more details see the basic concepts in the docs.</p>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Cell_op_Subtraction_" data-uid="Sylves.Cell.op_Subtraction*"></a>
-  <h4 id="Sylves_Cell_op_Subtraction_Sylves_Vector3Int_Sylves_Cell_" data-uid="Sylves.Cell.op_Subtraction(Sylves.Vector3Int,Sylves.Cell)">Subtraction(Vector3Int, Cell)</h4>
+  <h4 id="Sylves_Cell_op_Subtraction_Sylves_Vector3Int_Sylves_Cell_" data-uid="Sylves.Cell.op_Subtraction(Sylves.Vector3Int,Sylves.Cell)">operator -(Vector3Int, Cell)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static Cell operator -(Vector3Int offset, Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -729,7 +740,7 @@ For more details see the basic concepts in the docs.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -745,11 +756,12 @@ For more details see the basic concepts in the docs.</p>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">System.IEquatable&lt;&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable&lt;T&gt;</a>
   </div>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
@@ -757,14 +769,14 @@ For more details see the basic concepts in the docs.</p>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -772,8 +784,8 @@ For more details see the basic concepts in the docs.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
           </div>
         </div>
       </footer>

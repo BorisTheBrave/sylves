@@ -51,7 +51,7 @@ namespace Sylves
                         m.SetIndices(indices[i], (UnityEngine.MeshTopology)topologies[i], i);
                         break;
                     default:
-                        throw new System.Exception($"Topology {topologies[i]} not supported by unity");
+                        throw new System.Exception($"Topology {topologies[i]} not supported by Unity. Consider triangulating the mesh data first.");
                 }
             }
             return m;
@@ -79,6 +79,11 @@ namespace Sylves
             {
                 normals = new Vector3[vertices.Length];
             }
+            else
+            {
+                for (int i = 0; i < vertices.Length; i++)
+                    normals[i] = new Vector3();
+            }
 
             // TODO: There's got to be an official way of doing this.
             // Implementation below is just a guess
@@ -94,7 +99,7 @@ namespace Sylves
                         var v0 = vertices[i0];
                         var v1 = vertices[i1];
                         var v2 = vertices[i2];
-                        normals[i1] += Vector3.Cross(v2 - v1, v0 - v1).normalized;
+                        normals[i1] += MeshUtils.GetNormalDirection(v0, v1, v2).normalized;
                     }
                 }
             }

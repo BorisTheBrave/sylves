@@ -1,5 +1,4 @@
 {
-  "homepages": [],
   "source_base_path": "C:/Users/Adam/Documents/Programming/Programming 2022/Sylves/docs",
   "xrefmap": "xrefmap.yml",
   "files": [
@@ -8,1943 +7,2557 @@
       "source_relative_path": "api/Sylves.AStarPathfinding.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.AStarPathfinding.html",
-          "hash": "6b4BNHMUaEwJGM88kd3fcpAVoBE7THhW3aOnU3Sk2TM="
+          "relative_path": "api/Sylves.AStarPathfinding.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.AStarPathfinding",
+      "Summary": "<p sourcefile=\"api/Sylves.AStarPathfinding.yml\" sourcestartlinenumber=\"1\">Implementation class for the A* Pathfinding algorithm.\nThis algorith takes an admissible heuristic, and uses it to find the shortest path</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Aabb.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Aabb.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Aabb",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.AmmannBeenkerGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.AmmannBeenkerGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.AmmannBeenkerGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.BaseModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.BaseModifier.html",
-          "hash": "aQymj0bhmFnRGaiDOzr+ha6UlX8mJlrzmMrhsx22vI8="
+          "relative_path": "api/Sylves.BaseModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.BaseModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.BaseModifier.yml\" sourcestartlinenumber=\"1\">Abstract class for creating wrapper grids.\nWrappers defer most methods to an underlying grid.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.BaseSubstitutionTilingGrid.Aabb.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.BaseSubstitutionTilingGrid.Aabb.html",
-          "hash": "fdhmoKB5gcZ9PRZvw/6Jhy0QefjFUG67Ys7mAnkAcAA="
+          "relative_path": "api/Sylves.BaseSubstitutionTilingGrid.Aabb.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.BaseSubstitutionTilingGrid.Aabb",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.BaseSubstitutionTilingGrid.InternalPrototile.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.BaseSubstitutionTilingGrid.InternalPrototile.html",
-          "hash": "Qe4AA6fRvEX/XZBIil6YsiFOxA+Zbp3uvJS/1QTfzQ4="
+          "relative_path": "api/Sylves.BaseSubstitutionTilingGrid.InternalPrototile.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.BaseSubstitutionTilingGrid.InternalPrototile",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.BaseSubstitutionTilingGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.BaseSubstitutionTilingGrid.html",
-          "hash": "/wr4xyYNtjo/MJkMC1QDyWx617TJIKgKnQYI5m1H7is="
+          "relative_path": "api/Sylves.BaseSubstitutionTilingGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.BaseSubstitutionTilingGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.BaseSubstitutionTilingGrid.yml\" sourcestartlinenumber=\"1\">Base class for <xref href=\"Sylves.SubstitutionTilingGrid\" data-throw-if-not-resolved=\"false\"></xref>\nThis contains common utilities and calculations that do no rely on caching.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.BiMap-2.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.BiMap-2.html",
-          "hash": "jmaanoAkrFVeK/02bL4mZ36Jxom9HSWtfYaloDxKB1I="
+          "relative_path": "api/Sylves.BiMap-2.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.BiMap<U, V>",
+      "Summary": "<p sourcefile=\"api/Sylves.BiMap-2.yml\" sourcestartlinenumber=\"1\">Represents a 1:1 mapping between two types</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.BijectModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.BijectModifier.html",
-          "hash": "Uyc0XZAKSpxVyv7ll/U0cYtJyoz9uNfeKD3EQg1ZDjY="
+          "relative_path": "api/Sylves.BijectModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.BijectModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.BijectModifier.yml\" sourcestartlinenumber=\"1\">Remaps the cells of the grid by changing their co-ordinates,\nwithout touching the position, shape or topology.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.BorderRelaxation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.BorderRelaxation.html",
-          "hash": "drrrOZsqqSHSUQTUSqpX1zsJBvMSq/k4tXiFb0cWfaw="
+          "relative_path": "api/Sylves.BorderRelaxation.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.BorderRelaxation",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CachePolicy.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CachePolicy.html",
-          "hash": "8tJQ0VEzsYaiMzR6+7pcqwJC0XhonnVKfJFvcbAolTc="
+          "relative_path": "api/Sylves.CachePolicy.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CachePolicy",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CairoGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CairoGrid.html",
-          "hash": "11iI9f/ks7dRUoqqAUVVzVwFRfDb8ZI2gYUGLGoW1/c="
+          "relative_path": "api/Sylves.CairoGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CairoGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.CairoGrid.yml\" sourcestartlinenumber=\"1\">Periodic 2d grid of pentagons.\n<a href=\"https://en.wikipedia.org/wiki/Cairo_pentagonal_tiling\" sourcefile=\"api/Sylves.CairoGrid.yml\" sourcestartlinenumber=\"2\">https://en.wikipedia.org/wiki/Cairo_pentagonal_tiling</a>\nThis is an specialization of <xref href=\"Sylves.PeriodicPlanarMeshGrid\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Cell.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Cell.html",
-          "hash": "GX1KhmoR+hWOgrKl0TDYjn4tf3OQKqgeons8DubOx8U="
+          "relative_path": "api/Sylves.Cell.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Cell",
+      "Summary": "<p sourcefile=\"api/Sylves.Cell.yml\" sourcestartlinenumber=\"1\">Represents a single cell in the grid.\nCell is just a set of co-ordinates, the grid itself must be called to get any details about the cell.\nFor more details see the basic concepts in the docs.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CellCorner.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CellCorner.html",
-          "hash": "sivionzLSk9K0Xsd/E4sYlKSXcbHa+xj7LobOl4QDq4="
+          "relative_path": "api/Sylves.CellCorner.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CellCorner",
+      "Summary": "<p sourcefile=\"api/Sylves.CellCorner.yml\" sourcestartlinenumber=\"1\">Represents a particular corner of a generic cell.\nThe enum is empty - to work with corners, you need to either:</p>\n<ul sourcefile=\"api/Sylves.CellCorner.yml\" sourcestartlinenumber=\"3\">\n<li sourcefile=\"api/Sylves.CellCorner.yml\" sourcestartlinenumber=\"3\">Use the methods on <xref href=\"Sylves.ICellType\" data-throw-if-not-resolved=\"false\"></xref>.</li>\n<li sourcefile=\"api/Sylves.CellCorner.yml\" sourcestartlinenumber=\"4\">Cast to the enum specific to a given cell type, e.g. <xref href=\"Sylves.CellCorner\" data-throw-if-not-resolved=\"false\"></xref>.</li>\n</ul>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CellDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CellDir.html",
-          "hash": "PD4o19J4LiTfWhK0zWzvSVa8WU4x/dgBimSq/QnV8pU="
+          "relative_path": "api/Sylves.CellDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CellDir",
+      "Summary": "<p sourcefile=\"api/Sylves.CellDir.yml\" sourcestartlinenumber=\"1\">Represents a particular edge (2d) or face (3d) of a generic cell.\nThe enum is empty - to work with directions, you need to either:</p>\n<ul sourcefile=\"api/Sylves.CellDir.yml\" sourcestartlinenumber=\"3\">\n<li sourcefile=\"api/Sylves.CellDir.yml\" sourcestartlinenumber=\"3\">Use the methods on <xref href=\"Sylves.ICellType\" data-throw-if-not-resolved=\"false\"></xref>.</li>\n<li sourcefile=\"api/Sylves.CellDir.yml\" sourcestartlinenumber=\"4\">Cast to the enum specific to a given cell type, e.g. <xref href=\"Sylves.CubeDir\" data-throw-if-not-resolved=\"false\"></xref>.</li>\n</ul>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CellPath.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CellPath.html",
-          "hash": "pmAnYuVep41obGCWK5XqUSgIvof8qxDp5cRYzImqg6k="
+          "relative_path": "api/Sylves.CellPath.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CellPath",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CellRotation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CellRotation.html",
-          "hash": "OxMDi+CizA4CpAejANp55zDWz6oTVpks/wU6wX93LjE="
+          "relative_path": "api/Sylves.CellRotation.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CellRotation",
+      "Summary": "<p sourcefile=\"api/Sylves.CellRotation.yml\" sourcestartlinenumber=\"1\">Represents a particular rotation of a generic cell.\nDespite the name, this usually includes reflections too.\nThe enum is empty - to work with directions, you need to either:</p>\n<ul sourcefile=\"api/Sylves.CellRotation.yml\" sourcestartlinenumber=\"4\">\n<li sourcefile=\"api/Sylves.CellRotation.yml\" sourcestartlinenumber=\"4\">Use the methods on <xref href=\"Sylves.ICellType\" data-throw-if-not-resolved=\"false\"></xref>.</li>\n<li sourcefile=\"api/Sylves.CellRotation.yml\" sourcestartlinenumber=\"5\">Cast to the enum specific to a given cell type, e.g. <xref href=\"Sylves.CubeRotation\" data-throw-if-not-resolved=\"false\"></xref>.</li>\n</ul>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CellSwizzle.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CellSwizzle.html",
-          "hash": "3jP85sGASzbhAqa/B4o8SNgjRz2JVb+2YXLs3GxBfQ8="
+          "relative_path": "api/Sylves.CellSwizzle.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CellSwizzle",
+      "Summary": "<p sourcefile=\"api/Sylves.CellSwizzle.yml\" sourcestartlinenumber=\"1\">Identifies a permutation of the 3 axes\nIdentical to Unity's CellSwizzle.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CellSwizzleExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CellSwizzleExtensions.html",
-          "hash": "faqUoNT7fMVGKfEQB//vnYvYJ154cSpUQ6+jQqcS7zY="
+          "relative_path": "api/Sylves.CellSwizzleExtensions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CellSwizzleExtensions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.ChairGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.ChairGrid.html",
-          "hash": "fjQHzkG0j78k7NqPxjMAYl1R2A4S/2FhcTPGe4ebUvU="
+          "relative_path": "api/Sylves.ChairGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.ChairGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.ChisledPathfinding.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.ChisledPathfinding.html",
-          "hash": "PckY/JTqrT7IXqugO5AC62hYOwbztZCAw2TU23OMZJY="
+          "relative_path": "api/Sylves.ChisledPathfinding.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.ChisledPathfinding",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CompoundGrid.CompoundBound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CompoundGrid.CompoundBound.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CompoundGrid.CompoundBound",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CompoundGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CompoundGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CompoundGrid",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.CompoundSection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.CompoundSection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CompoundSection",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Connection.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Connection.html",
-          "hash": "0I84dAqf4uRlZjiPRGptbgKRJNtX0iSYzhurL9BLAtM="
+          "relative_path": "api/Sylves.Connection.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Connection",
+      "Summary": "<p sourcefile=\"api/Sylves.Connection.yml\" sourcestartlinenumber=\"1\">Represents how the edges (2d) or faces (3d) of cells can connect to each other.\nIn 2d, rotation/sides are unused, as two edges can only connect together normally or reflected.\nIn 3d, this represents both a rotation and reflection\nThe rotation and reflection are interpreted, similar to NGonCellType rotations.\nI.e. Mirror represents is a reflection that keeps (CellDir)0 unchanged (i.e. inverts the y-axis),\nand Rotation represents a rotation counter clockwise of Rotation/Sides*360 degrees.\nMirror is applied first, then rotation.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.ConwayOperators.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.ConwayOperators.html",
-          "hash": "5iv5JDbcJCBIpWHN7870geWfVXx/l4Bw4gW712FPHjI="
+          "relative_path": "api/Sylves.ConwayOperators.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.ConwayOperators",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CubeBound.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CubeBound.html",
-          "hash": "qz2V5gHcg3ffcVvgv3vP0pJ8SKYK1cYktNm/cG9HN5s="
+          "relative_path": "api/Sylves.CubeBound.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CubeBound",
+      "Summary": "<p sourcefile=\"api/Sylves.CubeBound.yml\" sourcestartlinenumber=\"1\">A bounding box on a regular 2d grid of squares.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CubeCellType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CubeCellType.html",
-          "hash": "Ihddz1+YF2uWCk6To+sAiywC2me5KnTqRWEkw6sfvhw="
+          "relative_path": "api/Sylves.CubeCellType.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CubeCellType",
+      "Summary": "<p sourcefile=\"api/Sylves.CubeCellType.yml\" sourcestartlinenumber=\"1\">Handles cell information about cubes.\nThis is a 3d cell type, and it supports all 48 rotations / reflections of a cube.</p>\n<p sourcefile=\"api/Sylves.CubeCellType.yml\" sourcestartlinenumber=\"4\">The canonical shape (for use with deformations) is a unit cube centered at the origin.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CubeCorner.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CubeCorner.html",
-          "hash": "Wo4SRgf2Mb5g+EIeM3YqNafGpNXUndFJelfS5WzEqzk="
+          "relative_path": "api/Sylves.CubeCorner.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CubeCorner",
+      "Summary": "<p sourcefile=\"api/Sylves.CubeCorner.yml\" sourcestartlinenumber=\"1\">Enum of the 8 corners on a cube.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CubeDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CubeDir.html",
-          "hash": "+4eMy0K8tZ1gyT+SC2hwCmyTu9dZyMNPTxjpdzvkMUo="
+          "relative_path": "api/Sylves.CubeDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CubeDir",
+      "Summary": "<p sourcefile=\"api/Sylves.CubeDir.yml\" sourcestartlinenumber=\"1\">Enum of the 6 faces on a cube.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CubeDirExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CubeDirExtensions.html",
-          "hash": "Tw2r1nvqos38jP0jc1LZH20D7eko8/qlLdm8WGIL6Tc="
+          "relative_path": "api/Sylves.CubeDirExtensions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CubeDirExtensions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CubeGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CubeGrid.html",
-          "hash": "UKEUKQyeCmJ145coZHKyNkoFv/mND1Kau3VTQRCHZwE="
+          "relative_path": "api/Sylves.CubeGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CubeGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CubeRotation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CubeRotation.html",
-          "hash": "JfAl424PrBip410ComUeH7MZTKcU4XJoLL/eTsfNs2k="
+          "relative_path": "api/Sylves.CubeRotation.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CubeRotation",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.CubiusGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.CubiusGrid.html",
-          "hash": "4b941blprNvZJ9Oqi7UMtYSawzOBx7iU7RcI6CRW1sg="
+          "relative_path": "api/Sylves.CubiusGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.CubiusGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.CubiusGrid.yml\" sourcestartlinenumber=\"1\">A torus with a quarter turn. Demonstrates how Sylves handles non-orientability on 3d surfaces.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.DataDrivenCellData.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.DataDrivenCellData.html",
-          "hash": "u5u031O9c8PjlhSFmGaRcNij75WlZetpXuJZKlXcSIw="
+          "relative_path": "api/Sylves.DataDrivenCellData.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.DataDrivenCellData",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.DataDrivenData.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.DataDrivenData.html",
-          "hash": "Oq1EHvX3cMDVq4IPehkW+Ggtwn0OGV18IBZIEHHd3c4="
+          "relative_path": "api/Sylves.DataDrivenData.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.DataDrivenData",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.DataDrivenGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.DataDrivenGrid.html",
-          "hash": "O/rWfojrdHhafRHL987jS7bdGXwyLqBlJHNnkZzAvmk="
+          "relative_path": "api/Sylves.DataDrivenGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.DataDrivenGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Deformation.GetJacobiFunc.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Deformation.GetJacobiFunc.html",
-          "hash": "wqRod27DRE4QWy/kzXDjd8fkstIrCbKieo0k4T/0SA4="
+          "relative_path": "api/Sylves.Deformation.GetJacobiFunc.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Deformation.GetJacobiFunc",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Deformation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Deformation.html",
-          "hash": "iKpJ8gFql8XZTSFVQWbvn2AHpDVPr3Z2txdZwEQSCn0="
+          "relative_path": "api/Sylves.Deformation.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Deformation",
+      "Summary": "<p sourcefile=\"api/Sylves.Deformation.yml\" sourcestartlinenumber=\"1\">A deformation is a continuous, differentable mapping from one space to another.\nIt is used to warp meshes in arbitrary ways, by mapping the vertices, normals and tangents of the mesh.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.DeformationUtils.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.DeformationUtils.html",
-          "hash": "I3p8b0Kch7bNLecSGpTlWrrd/VIOvW4hONdkaRhJkFc="
+          "relative_path": "api/Sylves.DeformationUtils.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.DeformationUtils",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Delaunator.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Delaunator.html",
-          "hash": "4vV1XlqumdOeLBR9T6wWBRrWeYd08ymlq4ypwLyEwPs="
+          "relative_path": "api/Sylves.Delaunator.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Delaunator",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.DelaunayTriangle.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.DelaunayTriangle.html",
-          "hash": "70f2uLPBDq8JosuMbzHp1gCCX2186N5sqnWeZnyBKS4="
+          "relative_path": "api/Sylves.DelaunayTriangle.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.DelaunayTriangle",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.DijkstraPathfinding.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.DijkstraPathfinding.html",
-          "hash": "uWRhk0GUtLqO+n2H9W+AgZWdNgWREpYR7LmcnwxZW4c="
+          "relative_path": "api/Sylves.DijkstraPathfinding.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.DijkstraPathfinding",
+      "Summary": "<p sourcefile=\"api/Sylves.DijkstraPathfinding.yml\" sourcestartlinenumber=\"1\">Computes Dijkstra's Algorithm.</p>\n<p sourcefile=\"api/Sylves.DijkstraPathfinding.yml\" sourcestartlinenumber=\"3\">This class to find paths starting at source, and terminating at a single point, or a range of points.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.DominoGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.DominoGrid.html",
-          "hash": "eCCLZm75O+E11S+bWfV4VNUWiPJZlApLgmVmUqxcHzM="
+          "relative_path": "api/Sylves.DominoGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.DominoGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.DualMappingExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.DualMappingExtensions.html",
-          "hash": "embXInLscPqkcNkUtsWn6Sy2qwhTSpK0rGq7blX+KW4="
+          "relative_path": "api/Sylves.DualMappingExtensions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.DualMappingExtensions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.DualMeshBuilder.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.DualMeshBuilder.html",
-          "hash": "Q9vO7q8NZ5xEEmppo3Tm6cqhb5B/poFQkkKq5sojkv8="
+          "relative_path": "api/Sylves.DualMeshBuilder.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.DualMeshBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.Encoding.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.Encoding.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Encoding",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.FSTriangleCorner.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.FSTriangleCorner.html",
-          "hash": "9xOrD1EYys2aTuxrvZiEinQpQvVAMOUIy9DQqjSKMsE="
+          "relative_path": "api/Sylves.FSTriangleCorner.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.FSTriangleCorner",
+      "Summary": "<p sourcefile=\"api/Sylves.FSTriangleCorner.yml\" sourcestartlinenumber=\"1\">Values for CellCorner when working with FlatSides triangles\nIdentical to FTHexCorner</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.FSTriangleDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.FSTriangleDir.html",
-          "hash": "zGGMqTWSNctn18b4fKGdtgn+j8BO7Vc8ui/KfIWQCEg="
+          "relative_path": "api/Sylves.FSTriangleDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.FSTriangleDir",
+      "Summary": "<p sourcefile=\"api/Sylves.FSTriangleDir.yml\" sourcestartlinenumber=\"1\">Values for CellDir when working with FlatSides triangles.\nIdentical to PTHexDir</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.FSTrianglePrismDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.FSTrianglePrismDir.html",
-          "hash": "Fg/vSXYb0J1TuEPl7MPlxC/nFdK4jlYLWz0zHDvlOEE="
+          "relative_path": "api/Sylves.FSTrianglePrismDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.FSTrianglePrismDir",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.FTHexCorner.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.FTHexCorner.html",
-          "hash": "RlAr3AFj7+iuDv4deycBU4le17mNOP0oG819PJTQ9RA="
+          "relative_path": "api/Sylves.FTHexCorner.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.FTHexCorner",
+      "Summary": "<p sourcefile=\"api/Sylves.FTHexCorner.yml\" sourcestartlinenumber=\"1\">Values for CellCorner when working with FlatTopped hexes</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.FTHexDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.FTHexDir.html",
-          "hash": "DEnBOeHfDvRUveIE4Qom4WpLsAKp1OIz9DoZ9qXXBYs="
+          "relative_path": "api/Sylves.FTHexDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.FTHexDir",
+      "Summary": "<p sourcefile=\"api/Sylves.FTHexDir.yml\" sourcestartlinenumber=\"1\">Values for CellDir when working with FlatTopped hexes</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.FTHexPrismDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.FTHexPrismDir.html",
-          "hash": "Tj12e9m0zbIJ3hbaT4zoEyn6vJAHU806z1+mMfjjIkg="
+          "relative_path": "api/Sylves.FTHexPrismDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.FTHexPrismDir",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.FTTriangleCorner.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.FTTriangleCorner.html",
-          "hash": "BlOZJ0rKQjNCY0YYwbkui1hlEeG0PmpHO3mDk925QJA="
+          "relative_path": "api/Sylves.FTTriangleCorner.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.FTTriangleCorner",
+      "Summary": "<p sourcefile=\"api/Sylves.FTTriangleCorner.yml\" sourcestartlinenumber=\"1\">Values for CellCorner when working with FlatTopped triangles.\nIdentical to PTHexCorner</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.FTTriangleDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.FTTriangleDir.html",
-          "hash": "5Ym8wFIoWDRig/U7R4vZc/OnkgF9HTxBPuCNREIX2Zg="
+          "relative_path": "api/Sylves.FTTriangleDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.FTTriangleDir",
+      "Summary": "<p sourcefile=\"api/Sylves.FTTriangleDir.yml\" sourcestartlinenumber=\"1\">Values for CellDir when working with FlatTopped triangles\nIdentical to FTHexDir</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.FTTrianglePrismDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.FTTrianglePrismDir.html",
-          "hash": "KGixYB4eywr7J5Yfie1IGI/EPOvxcsiXkOhV39E+ZsM="
+          "relative_path": "api/Sylves.FTTrianglePrismDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.FTTrianglePrismDir",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Grid2dException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Grid2dException.html",
-          "hash": "l+46xto84eHIr7937tyPTowMQbJzfNNEKpqMLMB/HzI="
+          "relative_path": "api/Sylves.Grid2dException.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Grid2dException",
+      "Summary": "<p sourcefile=\"api/Sylves.Grid2dException.yml\" sourcestartlinenumber=\"1\">This exception is thrown when you call a grid method that is only appropriate for grids with 3d cells.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Grid3dException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Grid3dException.html",
-          "hash": "/QdQ4kSQdIu1jpz+VFl0ibIg0c+KoD6iIPnPXNXaatQ="
+          "relative_path": "api/Sylves.Grid3dException.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Grid3dException",
+      "Summary": "<p sourcefile=\"api/Sylves.Grid3dException.yml\" sourcestartlinenumber=\"1\">This exception is thrown when you call a grid method that is only appropriate for grids with 2d cells.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.GridExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.GridExtensions.html",
-          "hash": "aM5Y7cvJ5pUMNyfORCl98FYu2EUC1BFHBANOTwqn8tQ="
+          "relative_path": "api/Sylves.GridExtensions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.GridExtensions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.GridInfiniteException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.GridInfiniteException.html",
-          "hash": "R61dNO2BOK35BfR60UKbGoTn/2st9tuRIBE3qBC7TEI="
+          "relative_path": "api/Sylves.GridInfiniteException.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.GridInfiniteException",
+      "Summary": "<p sourcefile=\"api/Sylves.GridInfiniteException.yml\" sourcestartlinenumber=\"1\">This exception is thrown when you call a grid method that is only appropriate for grids with a finite amount of cells.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.GridSymmetry.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.GridSymmetry.html",
-          "hash": "ngbz2LGW8kd9QQDm6xYFPk++MqclYu0L8pOdyR8+T5A="
+          "relative_path": "api/Sylves.GridSymmetry.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.GridSymmetry",
+      "Summary": "<p sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"1\">Defines a mapping that maps the cells of a grid onto themselves, potentially rotated.\nThis is used to describe reflections and rotations of a grid (as apposed to CellRotation, which\njust talks about what you can do to a single cell alone).</p>\n<p sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"5\">Use IGrid.TryApplySymmetry to evaluate the map.</p>\n<p sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"7\">The mapping is <em sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"7\">consistent</em> with the topology of the grid, i.e.</p>\n<ul sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"8\">\n<li sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"8\">Let s by any grid symmetry,</li>\n<li sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"9\">Let a, and b be any cells, with b is a neighbour of a, in direction d.</li>\n<li sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"10\">Then if ma, ra is the cell and rotation from applying s to a, and likewise mb, rb for apply s to b.</li>\n<li sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"11\">Then mb is a neighbour of ma, in direciton ra * d.</li>\n</ul>\n<p sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"13\">The consistency property means that the mapping are fully specified over an entire connected grid once you know how it applies\nto a single cell. All the other cells can be computed via <xref href=\"Sylves.DefaultGridImpl.ParallelTransport(Sylves.IGrid%2cSylves.Cell%2cSylves.Cell%2cSylves.IGrid%2cSylves.Cell%2cSylves.CellRotation%2cSylves.Cell%40%2cSylves.CellRotation%40)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n<p sourcefile=\"api/Sylves.GridSymmetry.yml\" sourcestartlinenumber=\"16\">In practice, symmetries on regular grids can be easily computed using vector maths operations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.HalfPlane.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.HalfPlane.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HalfPlane",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HashUtils.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HashUtils.html",
-          "hash": "pcMJTizy+oVL5mgSszcYh7Wih0piTBE4ersIoIH0lKM="
+          "relative_path": "api/Sylves.HashUtils.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HashUtils",
+      "Summary": "<p sourcefile=\"api/Sylves.HashUtils.yml\" sourcestartlinenumber=\"1\">Supplies simple deterministic hashes.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HexBound.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HexBound.html",
-          "hash": "NG7zjrx4djqc5V+1XY/Sw5MENVX8PsjkyMC1ShG/R4Y="
+          "relative_path": "api/Sylves.HexBound.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HexBound",
+      "Summary": "<p sourcefile=\"api/Sylves.HexBound.yml\" sourcestartlinenumber=\"1\">Bounding boxes for cube coordinate hexes.\nThis can represent rhombuses and hex shapes drawn on the hex grid.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HexCellType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HexCellType.html",
-          "hash": "Y/Z0UJiQvlWEf64fWfffGc7fyxrByeJotQqwMfPcufk="
+          "relative_path": "api/Sylves.HexCellType.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HexCellType",
+      "Summary": "<p sourcefile=\"api/Sylves.HexCellType.yml\" sourcestartlinenumber=\"1\">Cell type for a regular hexagon with 6 sides.\nSupports both flat and pointy topped orientations.\nCellDirs are PTHexDir/FTHexDir, integers 0 to 5.\nCellCorners are PTHexCorner/FTHexCorner, integers 0 to 5.\nThe CellRotations are the numbers 0 to 5 for a CCW rotation of that many sides,\nplus numbers ~0 to ~5 for the reflections, where rotation ~0 has dir 0 as a fix point.</p>\n<p sourcefile=\"api/Sylves.HexCellType.yml\" sourcestartlinenumber=\"8\">The canonical shape (for use with deformations) is a regular hexagon with incircle diamater 1.0 in the XY centered at the origin, with normal pointing Z-forward.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HexDirExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HexDirExtensions.html",
-          "hash": "aAjgt+uBGjRsz2QPzM7/fR7pMH/WjQCMIb0Ft7F29AU="
+          "relative_path": "api/Sylves.HexDirExtensions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HexDirExtensions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HexGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HexGrid.html",
-          "hash": "QKIVwA3/9OiZZQLifhRROEKT2ubgiiwk2+hCdBhNXEU="
+          "relative_path": "api/Sylves.HexGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HexGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.HexGrid.yml\" sourcestartlinenumber=\"1\">A regular 2d grid of hexagons.\nThe co-ordinate system used is &quot;Cube-cordinates described here: <a href=\"https://www.redblobgames.com/grids/hexagons/\" sourcefile=\"api/Sylves.HexGrid.yml\" sourcestartlinenumber=\"2\">https://www.redblobgames.com/grids/hexagons/</a>\nHowever, it'll usually be fairly forgiving if you just use x,y and don't fill the z value.\nSee HexOrientation for more details.\nCovers both the infinite grid, and bounded versions.\nRelated classes:</p>\n<ul sourcefile=\"api/Sylves.HexGrid.yml\" sourcestartlinenumber=\"7\">\n<li sourcefile=\"api/Sylves.HexGrid.yml\" sourcestartlinenumber=\"7\"><xref href=\"Sylves.FTHexDir\" data-throw-if-not-resolved=\"false\"></xref>/<xref href=\"Sylves.PTHexDir\" data-throw-if-not-resolved=\"false\"></xref></li>\n<li sourcefile=\"api/Sylves.HexGrid.yml\" sourcestartlinenumber=\"8\"><xref href=\"Sylves.HexCellType\" data-throw-if-not-resolved=\"false\"></xref></li>\n<li sourcefile=\"api/Sylves.HexGrid.yml\" sourcestartlinenumber=\"9\"><xref href=\"Sylves.HexBound\" data-throw-if-not-resolved=\"false\"></xref></li>\n</ul>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HexOrientation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HexOrientation.html",
-          "hash": "viVUXwzk2eZYVhQKTTRd/vQCaSzTthLNzLuGsDDQ/7c="
+          "relative_path": "api/Sylves.HexOrientation.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HexOrientation",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HexPrismBound.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HexPrismBound.html",
-          "hash": "e8hFiQSfNaizs5XNxOiANThiU7IroWzxkV0+r0JUk88="
+          "relative_path": "api/Sylves.HexPrismBound.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HexPrismBound",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HexPrismCellDirExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HexPrismCellDirExtensions.html",
-          "hash": "S4FWMN3uYIg+uPLWEu46lOU5sRlzfVvp6bNIF/H9D+w="
+          "relative_path": "api/Sylves.HexPrismCellDirExtensions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HexPrismCellDirExtensions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HexPrismCellType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HexPrismCellType.html",
-          "hash": "ZJOGrIm60X5FdBlxUxLpbX/vIWaxm8+db2/CUwNy92Q="
+          "relative_path": "api/Sylves.HexPrismCellType.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HexPrismCellType",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HexPrismGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HexPrismGrid.html",
-          "hash": "MJxaCjp8mmL3d+bXnaAzZ/AMdVTAueyFqXd7F38fqeA="
+          "relative_path": "api/Sylves.HexPrismGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HexPrismGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.HexRotation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.HexRotation.html",
-          "hash": "8wjgbvoARj9aXoexI7q9wCw9fpEcCuWfwsyzeABFVVI="
+          "relative_path": "api/Sylves.HexRotation.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.HexRotation",
+      "Summary": "<p sourcefile=\"api/Sylves.HexRotation.yml\" sourcestartlinenumber=\"1\">Represents rotations / reflections of a hex</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.IBound.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.IBound.html",
-          "hash": "U9KVv2Irl0LSWenqdO59x3HPpiubE0aqGLrt+5RHKMw="
+          "relative_path": "api/Sylves.IBound.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.IBound",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.ICachePolicy.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.ICachePolicy.html",
-          "hash": "k/zJo4FK2XStEmS5TFRCY1ELDVzRtdwC9ZjPL1K+oy8="
+          "relative_path": "api/Sylves.ICachePolicy.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.ICachePolicy",
+      "Summary": "<p sourcefile=\"api/Sylves.ICachePolicy.yml\" sourcestartlinenumber=\"1\">Describes how long data should be cached.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.ICellType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.ICellType.html",
-          "hash": "Zn/rUt7ZXJuI3QyrxcbFAOoZIMvi/KPtGU4d/0/rFjc="
+          "relative_path": "api/Sylves.ICellType.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.ICellType",
+      "Summary": "<p sourcefile=\"api/Sylves.ICellType.yml\" sourcestartlinenumber=\"1\">An ICellType gives summarized info about a single cell in isolation of the grid it comes from.\nICellType allows you to enumerate the edges/faces/corners of a cell, and work with cell symmetries (called CellRotation).</p>\n<p sourcefile=\"api/Sylves.ICellType.yml\" sourcestartlinenumber=\"4\">ICellType's are always singletons, e.g. SquareCellType.Instance is used for all square cells.</p>\n<p sourcefile=\"api/Sylves.ICellType.yml\" sourcestartlinenumber=\"6\">Note that cells can share an cell type, even if they are different shapes. Thus any methods that refer to positions, such as GetMatrix,\ndon't refer to the specific cell in the grid, but the &quot;canonical&quot; cell.\nYou must use IGrid methods like GetPolygon or GetDeformation to get the shape of a specific cell.</p>\n<p sourcefile=\"api/Sylves.ICellType.yml\" sourcestartlinenumber=\"10\">The canonical cell is usually a regular polygon or polyhedron of unit size centered on the origin. See the docs for more details</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.IDualMapping.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.IDualMapping.html",
-          "hash": "kmEtGmsDwwpmtLBXZDdZhI0F+3Aaw4v/BN9K7gmCRKk="
+          "relative_path": "api/Sylves.IDualMapping.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.IDualMapping",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.IGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.IGrid.html",
-          "hash": "msYNcrgd0ykFU3G4SISEOLom641v6wUpcYc652zKqHc="
+          "relative_path": "api/Sylves.IGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.IGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.IGrid.yml\" sourcestartlinenumber=\"1\">Contains all the methods for querying a grid.\nA grid is a collection of cells, with each cell having various data associated with it\nsuch as neighbours, position in space.\nFor more details see the basic concepts in the docs.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.IntUtils.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.IntUtils.html",
-          "hash": "2/8C1GJpGdcxYazDLZa0Dzo4Mu/XVagtljLeJRtVRJ8="
+          "relative_path": "api/Sylves.IntUtils.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.IntUtils",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.JitteredSquareGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.JitteredSquareGrid.html",
-          "hash": "4jMMidUuQvBbNwKLroBseSau+w7Lw6Naz/PHLiSmjQ8="
+          "relative_path": "api/Sylves.JitteredSquareGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.JitteredSquareGrid",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.KruskalMinimumSpanningTree.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.KruskalMinimumSpanningTree.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.KruskalMinimumSpanningTree",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.LatticeLine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.LatticeLine.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.LatticeLine",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MaskModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MaskModifier.html",
-          "hash": "KcdYoi1e/D9t8l1g+7fPGJFW+vXtGPmL3qp0STjP5BY="
+          "relative_path": "api/Sylves.MaskModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MaskModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.MaskModifier.yml\" sourcestartlinenumber=\"1\">Filters the cells in the the grid to a customizable subset.</p>\n<p sourcefile=\"api/Sylves.MaskModifier.yml\" sourcestartlinenumber=\"3\">Filtered cells will not be returned by GetCells, TryMove, etc. Passing them as inputs\nis undefined.</p>\n<p sourcefile=\"api/Sylves.MaskModifier.yml\" sourcestartlinenumber=\"6\">Calling Unbounded will remove this modifier (as well as any bounds)</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Mathf.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Mathf.html",
-          "hash": "Wed3kCP0HdTJ+IHdfqMFgCEnA8qgYg344GauR93h87Y="
+          "relative_path": "api/Sylves.Mathf.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Mathf",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Matrix4x4.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Matrix4x4.html",
-          "hash": "AVT/JNVh4adL1dXQwcerBoI4Jffvq0F8mTkZoI3rf4Q="
+          "relative_path": "api/Sylves.Matrix4x4.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Matrix4x4",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshCellData.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshCellData.html",
-          "hash": "5PiSn3Bh0mWSr7qG2104yUdP2B8cZC9RyZn5MYEEksA="
+          "relative_path": "api/Sylves.MeshCellData.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshCellData",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshData.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshData.html",
-          "hash": "jZ9OV12ENT5QWxsHC+30JAZe7CseLuqEVoIGTQLwJ+0="
+          "relative_path": "api/Sylves.MeshData.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshData",
+      "Summary": "<p sourcefile=\"api/Sylves.MeshData.yml\" sourcestartlinenumber=\"1\">A replacement for UnityEngine.Mesh that stores all the data in memory, for fast access from C#.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshDataOperations.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshDataOperations.html",
-          "hash": "0EodQlvBzaRO3pWdSI8gyfiMXatJURVsDT/JNjWgVT4="
+          "relative_path": "api/Sylves.MeshDataOperations.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshDataOperations",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshEmitter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshEmitter.html",
-          "hash": "uTSZwu5Fr3zJYeWUNT6tw+YOXjZCjUFY1RhQK5LZawY="
+          "relative_path": "api/Sylves.MeshEmitter.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshEmitter",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshGrid.html",
-          "hash": "O6KdppyeptIUVpjfP2EfW8r9dX98d6O7YCeGlTYOTLE="
+          "relative_path": "api/Sylves.MeshGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.MeshGrid.yml\" sourcestartlinenumber=\"1\">Represents a 2d grid, where each cell corresponds to a face in a given mesh.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshGridOptions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshGridOptions.html",
-          "hash": "itJBpKvDXoc9n9xyZ4NK0LXHQNxFB3hhmgujEMa58aA="
+          "relative_path": "api/Sylves.MeshGridOptions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshGridOptions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshPrimitives.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshPrimitives.html",
-          "hash": "nB2Rg4lzgmDST7IU2TWJiH72ZMMlP2n2Y0Z1qj/8d1g="
+          "relative_path": "api/Sylves.MeshPrimitives.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshPrimitives",
+      "Summary": "<p sourcefile=\"api/Sylves.MeshPrimitives.yml\" sourcestartlinenumber=\"1\">Contains some constant meshes</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshPrismGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshPrismGrid.html",
-          "hash": "E9RVMJFhSG5PikIQJx/SXBP2ky/Di8HBN+dxLFDPyvM="
+          "relative_path": "api/Sylves.MeshPrismGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshPrismGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.MeshPrismGrid.yml\" sourcestartlinenumber=\"1\">Represents a 3d grid, where each cell is an extrusion of a face along the normals, offset to a given height.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshPrismGridOptions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshPrismGridOptions.html",
-          "hash": "wG9pBM36IXWpSGoSVHuQPT5NOY9GWk9+F8csPcevy0U="
+          "relative_path": "api/Sylves.MeshPrismGridOptions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshPrismGridOptions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshRaycast.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshRaycast.html",
-          "hash": "CIkHYfh8L7PR5HikfJe8iVnPKAszVyvrPuXL28rxGqM="
+          "relative_path": "api/Sylves.MeshRaycast.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshRaycast",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshTopology.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshTopology.html",
-          "hash": "rykgmC1VCNEU+twuzruUlC8A6Ur4rlb4sioqJkhXGJ4="
+          "relative_path": "api/Sylves.MeshTopology.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshTopology",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshUtils.Face.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshUtils.Face.html",
-          "hash": "rrwNUK+w1ykHQ0fBaKffUCfe3jp1O9pptkDeiZMUNKs="
+          "relative_path": "api/Sylves.MeshUtils.Face.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshUtils.Face",
+      "Summary": "<p sourcefile=\"api/Sylves.MeshUtils.Face.yml\" sourcestartlinenumber=\"1\">References a slice of indices for a face.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MeshUtils.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MeshUtils.html",
-          "hash": "JFhL/K4UhR0/Y/gENe2oDA4XCFCfBKcIH1ieFs+ZdPU="
+          "relative_path": "api/Sylves.MeshUtils.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MeshUtils",
+      "Summary": "<p sourcefile=\"api/Sylves.MeshUtils.yml\" sourcestartlinenumber=\"1\">Utility for working with meshes.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MetaHexagonGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MetaHexagonGrid.html",
-          "hash": "+5w6+aJ3fmcUmA9uyLC4US42W1XT/vU4m8YKZz83cBY="
+          "relative_path": "api/Sylves.MetaHexagonGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MetaHexagonGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.MobiusSquareGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.MobiusSquareGrid.html",
-          "hash": "zux7ubKq6IUHhv/VtzKJpImQH+9KdWChkjNGY6+Blu0="
+          "relative_path": "api/Sylves.MobiusSquareGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.MobiusSquareGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.MobiusSquareGrid.yml\" sourcestartlinenumber=\"1\">A square grid on a Möbius strip.\nDemonstrates how Sylves handles non-orientability on 2d surfaces.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.NGonCellType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.NGonCellType.html",
-          "hash": "H7VsOnMEnuRUVz0tcx66Jza09g2qnlFMfEcsnkkW0vk="
+          "relative_path": "api/Sylves.NGonCellType.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.NGonCellType",
+      "Summary": "<p sourcefile=\"api/Sylves.NGonCellType.yml\" sourcestartlinenumber=\"1\">Cell type for a regular polygon with n sides.\nThe CellDirs are simply the numbers 0 to n-1 with dir 0 being to the right.\nThe CellRotations are the numbers 0 to n-1 for a CCW rotation of that many sides,\nplus numbers ~0 to ~(n-1) for the reflections, where rotation ~0 has dir 0 as a fix point.</p>\n<p sourcefile=\"api/Sylves.NGonCellType.yml\" sourcestartlinenumber=\"6\">The canonical shape (for use with deformations) is a regular polygon with incircle diamater 1.0 in the XY centered at the origin, with normal pointing Z-forward.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.NGonPrismCellType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.NGonPrismCellType.html",
-          "hash": "BBMktSde3hBYUN+E7CGThSh8nqwWX9TxpYg6FhcjL5w="
+          "relative_path": "api/Sylves.NGonPrismCellType.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.NGonPrismCellType",
+      "Summary": "<p sourcefile=\"api/Sylves.NGonPrismCellType.yml\" sourcestartlinenumber=\"1\">Cell type for a regular polygon with n sides extended in the z-axis to a prism.</p>\n<p sourcefile=\"api/Sylves.NGonPrismCellType.yml\" sourcestartlinenumber=\"3\">The canonical shape (for use with deformations) is the shape for the corresponding NGonCellType, extended to +-0.5 along the z-axis.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.NestedModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.NestedModifier.html",
-          "hash": "i/2/xjZoqdHaP36c7Fma6iu17djFak72Jlg2bpMJlk8="
+          "relative_path": "api/Sylves.NestedModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.NestedModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.NestedModifier.yml\" sourcestartlinenumber=\"1\">Replaces every cell in one grid (the chunk grid) with a collection of cells from lazily computed child grids.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.OffGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.OffGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.OffGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.OffGrid.yml\" sourcestartlinenumber=\"1\">Variant of a Square grid with irregularly shaped rectangles.\n<a href=\"https://gitlab.com/chriscox/offgrid/-/wikis/home\" sourcefile=\"api/Sylves.OffGrid.yml\" sourcestartlinenumber=\"2\">https://gitlab.com/chriscox/offgrid/-/wikis/home</a></p>\n<p sourcefile=\"api/Sylves.OffGrid.yml\" sourcestartlinenumber=\"4\">Cell (0, 0, 0) is a random rectangle filling at most from (-1, -1, 0) to (1, 1, 0),\nand having height and width at least minSize</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.OutlineCells.OutlineLoop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.OutlineCells.OutlineLoop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.OutlineCells.OutlineLoop",
+      "Summary": "<p sourcefile=\"api/Sylves.OutlineCells.OutlineLoop.yml\" sourcestartlinenumber=\"1\">Describes a collection of (Cell, CellDir) edges which are arranged in order.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.OutlineCells.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.OutlineCells.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.OutlineCells",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PTHexCorner.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PTHexCorner.html",
-          "hash": "+dcVWCdBdhbhVAGy64KXQ8oMAZ6oCIH0+wV/y5M6m78="
+          "relative_path": "api/Sylves.PTHexCorner.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PTHexCorner",
+      "Summary": "<p sourcefile=\"api/Sylves.PTHexCorner.yml\" sourcestartlinenumber=\"1\">Values for CellCorner when working with PointyTopped hexes</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PTHexDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PTHexDir.html",
-          "hash": "8eDvGkXBt/98ebREvwDNRhyKWgOhpljwEJmzqgBSYwQ="
+          "relative_path": "api/Sylves.PTHexDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PTHexDir",
+      "Summary": "<p sourcefile=\"api/Sylves.PTHexDir.yml\" sourcestartlinenumber=\"1\">Values for CellDir when working with PointyTopped hexes</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PTHexPrismDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PTHexPrismDir.html",
-          "hash": "NRjZb94xpuuUG5B77P6zVSEydIHJknCe3QNSGDqtrBM="
+          "relative_path": "api/Sylves.PTHexPrismDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PTHexPrismDir",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Pathfinding.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Pathfinding.html",
-          "hash": "qXSBQvWJXIvfoBiaKkinIEdSLeSZaglocK4WyYfecIU="
+          "relative_path": "api/Sylves.Pathfinding.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Pathfinding",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PenroseRhombGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PenroseRhombGrid.html",
-          "hash": "GyK3UBjtHBBd0+XHDZxava8Y4GYTe4sVDYXyr6ALdNQ="
+          "relative_path": "api/Sylves.PenroseRhombGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PenroseRhombGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PeriodicPlanarMeshGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PeriodicPlanarMeshGrid.html",
-          "hash": "cEHuanqmvSk6nt/NsNm690f2oSQwUYJQ+8MXx583G+Q="
+          "relative_path": "api/Sylves.PeriodicPlanarMeshGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PeriodicPlanarMeshGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.PeriodicPlanarMeshGrid.yml\" sourcestartlinenumber=\"1\">A grid made of a repeating pattern of a given mesh, that must be planar in the XY plane.\nThe repeats are given by translation in two independent axes, strideX and strideY .</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PinwheelGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PinwheelGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PinwheelGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PlanarLazyGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PlanarLazyGrid.html",
-          "hash": "nbRL9GGKn0NwSvE8QtlH1w3RK2+on5IZ+CVFreGqwvk="
+          "relative_path": "api/Sylves.PlanarLazyGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PlanarLazyGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.PlanarLazyGrid.yml\" sourcestartlinenumber=\"1\">An infinite planar grid. It is evaluated lazily by splitting the plane into overlapping periodic rectangles\nwhich then each has a grid associated.</p>\n<p sourcefile=\"api/Sylves.PlanarLazyGrid.yml\" sourcestartlinenumber=\"4\">This class requires you to compute inter-chunk neighbours yourself, which is often tricky.\nYou are recommended to use PlanarLazyMeshGrid instead, which handles this automatically.</p>\n<p sourcefile=\"api/Sylves.PlanarLazyGrid.yml\" sourcestartlinenumber=\"7\">This class is simply a specialization of NestedModifier, applied to a grid of overlapping rectangles.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PlanarLazyMeshGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PlanarLazyMeshGrid.html",
-          "hash": "9jfqZRoYqAFOkhNZlXuiLezVpZ5mnJPg3tEz11p9+B4="
+          "relative_path": "api/Sylves.PlanarLazyMeshGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PlanarLazyMeshGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.PlanarLazyMeshGrid.yml\" sourcestartlinenumber=\"1\">An infinite planar grid. It is evaluated lazily by splitting the plane into overlapping period rectangles\nwhich then each has a mesh associated.\nThe meshes are converted to cells like a MeshGrid, then stitched together.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.PlanarMeshGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.PlanarMeshGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PlanarMeshGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.PlanarMeshGrid.yml\" sourcestartlinenumber=\"1\">Specialization of MeshGrid specifically for planar meshes.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PlanarPrismBound.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PlanarPrismBound.html",
-          "hash": "FFn5gctCJ34zFKg5fPYw8TMdpMzIS+QcrXTLLNUY2jY="
+          "relative_path": "api/Sylves.PlanarPrismBound.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PlanarPrismBound",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PlanarPrismModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PlanarPrismModifier.html",
-          "hash": "Y4KNDnJaYpI62prnzE9PZwC3op2j4u7z2yNEOv3jTyo="
+          "relative_path": "api/Sylves.PlanarPrismModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PlanarPrismModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.PlanarPrismModifier.yml\" sourcestartlinenumber=\"1\">Takes a 2d planar grid, and extends it into multiple layers along the third the dimension.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PlanarPrismOptions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PlanarPrismOptions.html",
-          "hash": "M8TWfPCV9vef9cz1leWvz4fPPZpckF2z5aueaZcuMSk="
+          "relative_path": "api/Sylves.PlanarPrismOptions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PlanarPrismOptions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.PrismInfo.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.PrismInfo.html",
-          "hash": "/uuQncN2TKwuxiuysw0lfqpxwz74lW4541qxJjr6/sw="
+          "relative_path": "api/Sylves.PrismInfo.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.PrismInfo",
+      "Summary": "<p sourcefile=\"api/Sylves.PrismInfo.yml\" sourcestartlinenumber=\"1\">Provides information about promoting a 2d cell type to a 3d cell type via extrusion.</p>\n<p sourcefile=\"api/Sylves.PrismInfo.yml\" sourcestartlinenumber=\"3\">Usually this results in NGonPrismCellType, but squares go to CubeCellType, which has additional symmetry.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Prototile.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Prototile.html",
-          "hash": "lECVtRHsnltMyS4rRAQS5ujYd1dK8R6rMeM51dmvyTc="
+          "relative_path": "api/Sylves.Prototile.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Prototile",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.QuadInterpolation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.QuadInterpolation.html",
-          "hash": "VjdsqRlP33ckhedyyoHBjcoOFof9tzE9qvlUFzsxQrk="
+          "relative_path": "api/Sylves.QuadInterpolation.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.QuadInterpolation",
+      "Summary": "<p sourcefile=\"api/Sylves.QuadInterpolation.yml\" sourcestartlinenumber=\"1\">Supplies various bilinear and trilinear interpolation methods.\nThe conventions are based on a XY plane\nusing either a unit square or unit cube.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Quaternion.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Quaternion.html",
-          "hash": "aWTssewoWPZFdC8JEgU6kLiF6Ig1urOjufzYhM+o17g="
+          "relative_path": "api/Sylves.Quaternion.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Quaternion",
+      "Summary": "<p sourcefile=\"api/Sylves.Quaternion.yml\" sourcestartlinenumber=\"1\">A pure .NET implemenation of Unity's Quaternion.\nSee Unity's docs for more details.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.RadialGrids.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.RadialGrids.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.RadialGrids",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.RandomRectGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.RandomRectGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.RandomRectGrid",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.RandomRhombusGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.RandomRhombusGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.RandomRhombusGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.RavelModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.RavelModifier.html",
-          "hash": "3BQPOR4ZxLC7JOnmTTCpZzllll6JLDnsCT13doTLB1k="
+          "relative_path": "api/Sylves.RavelModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.RavelModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.RavelModifier.yml\" sourcestartlinenumber=\"1\">Relabels all the cell co-ordinates to be 1d, i.e. cell.y and cell.z are always zero.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.RawSubstitutionTilingGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.RawSubstitutionTilingGrid.html",
-          "hash": "U5kGW5crreX4/9yiDUGNCRfoP6v+Pv6bYCn923F4KSU="
+          "relative_path": "api/Sylves.RawSubstitutionTilingGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.RawSubstitutionTilingGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.RaycastInfo.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.RaycastInfo.html",
-          "hash": "liXm+hkcZ84iKaXJKmteEyuUoh38MS34wqlKUOOAZAk="
+          "relative_path": "api/Sylves.RaycastInfo.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.RaycastInfo",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.RelaxModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.RelaxModifier.html",
-          "hash": "FYaK8lfmGKP1gs6c7nIZqISAr0zM02hxjjQtES8UMjQ="
+          "relative_path": "api/Sylves.RelaxModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.RelaxModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.RelaxModifier.yml\" sourcestartlinenumber=\"1\">Applies relaxation to an infinite 2d plane, similar to MeshDataOperations.Relax.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.RhombilleGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.RhombilleGrid.html",
-          "hash": "6SSbJf+kU9KpAVwtV8gTBwFkRlbi2PPwbcDHjUGspsk="
+          "relative_path": "api/Sylves.RhombilleGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.RhombilleGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.RhombilleGrid.yml\" sourcestartlinenumber=\"1\">Periodic 2d grid of diamond shapes.\n<a href=\"https://en.wikipedia.org/wiki/Rhombille_tiling\" sourcefile=\"api/Sylves.RhombilleGrid.yml\" sourcestartlinenumber=\"2\">https://en.wikipedia.org/wiki/Rhombille_tiling</a>\nThis is an specialization of <xref href=\"Sylves.PeriodicPlanarMeshGrid\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.SphinxGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.SphinxGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SphinxGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SquareBound.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SquareBound.html",
-          "hash": "kaekS+NTFNcGfyxnqDJPqrhoMB/FdxZQ8CcvoBWTVDA="
+          "relative_path": "api/Sylves.SquareBound.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SquareBound",
+      "Summary": "<p sourcefile=\"api/Sylves.SquareBound.yml\" sourcestartlinenumber=\"1\">A bounding box on a regular 2d grid of squares.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SquareCellType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SquareCellType.html",
-          "hash": "LWwamHmmWnlITNHl1w7Y98N3J760rVSknU1KhuTssB0="
+          "relative_path": "api/Sylves.SquareCellType.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SquareCellType",
+      "Summary": "<p sourcefile=\"api/Sylves.SquareCellType.yml\" sourcestartlinenumber=\"1\">Handles cell information about squares.\nThis is a a customized version of NGonCellType and behaves virtually identically.</p>\n<p sourcefile=\"api/Sylves.SquareCellType.yml\" sourcestartlinenumber=\"4\">The canonical shape (for use with deformations) is a unit square in the XY centered at the origin, with normal pointing Z-forward.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SquareCorner.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SquareCorner.html",
-          "hash": "EyJaUZV3KhKORckXN7MlyS9Dxm7rWu8JXLDLXHfFSxA="
+          "relative_path": "api/Sylves.SquareCorner.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SquareCorner",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SquareDir.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SquareDir.html",
-          "hash": "wRIoaDbB5DlfD4QYaBck7Ku9FKLKt+bkMMYAC10UVw0="
+          "relative_path": "api/Sylves.SquareDir.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SquareDir",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SquareDirExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SquareDirExtensions.html",
-          "hash": "jJqxK6VbamKtgRSRTkxTGIjcLQAUOU0G22CCOYFA1mE="
+          "relative_path": "api/Sylves.SquareDirExtensions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SquareDirExtensions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SquareGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SquareGrid.html",
-          "hash": "VOgMY4/gYRhZWonraxwbzKR9yoA6oRhKXWKEUIVlS9k="
+          "relative_path": "api/Sylves.SquareGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SquareGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.SquareGrid.yml\" sourcestartlinenumber=\"1\">A regular square 2d grid.\nCovers both the infinite grid, and bounded versions.\nCell (0, 0) has center at (0.5, 0.5).\nRelated classes:</p>\n<ul sourcefile=\"api/Sylves.SquareGrid.yml\" sourcestartlinenumber=\"5\">\n<li sourcefile=\"api/Sylves.SquareGrid.yml\" sourcestartlinenumber=\"5\"><xref href=\"Sylves.FTHexDir\" data-throw-if-not-resolved=\"false\"></xref>/<xref href=\"Sylves.PTHexDir\" data-throw-if-not-resolved=\"false\"></xref></li>\n<li sourcefile=\"api/Sylves.SquareGrid.yml\" sourcestartlinenumber=\"6\"><xref href=\"Sylves.NGonCellType\" data-throw-if-not-resolved=\"false\"></xref> (with n = 6)</li>\n<li sourcefile=\"api/Sylves.SquareGrid.yml\" sourcestartlinenumber=\"7\"><xref href=\"Sylves.HexBound\" data-throw-if-not-resolved=\"false\"></xref></li>\n</ul>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SquareRotation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SquareRotation.html",
-          "hash": "NskrMOFsHsecYZucmyXtwUgEVi1KN8NywaJh4JRkN7I="
+          "relative_path": "api/Sylves.SquareRotation.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SquareRotation",
+      "Summary": "<p sourcefile=\"api/Sylves.SquareRotation.yml\" sourcestartlinenumber=\"1\">Represents rotations / reflections of a square</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SquareSnubGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SquareSnubGrid.html",
-          "hash": "3JAlAENV1oQ9ohbRmvvlcVaHaupLsxS2hO3udCJ8RgU="
+          "relative_path": "api/Sylves.SquareSnubGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SquareSnubGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.SquareSnubGrid.yml\" sourcestartlinenumber=\"1\">Periodic 2d grid of squares and triangles..\n<a href=\"https://en.wikipedia.org/wiki/Snub_square_tiling\" sourcefile=\"api/Sylves.SquareSnubGrid.yml\" sourcestartlinenumber=\"2\">https://en.wikipedia.org/wiki/Snub_square_tiling</a>\nThis is an specialization of <xref href=\"Sylves.PeriodicPlanarMeshGrid\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Step.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Step.html",
-          "hash": "ZBwYVS+p2m/oEMP8gVWjqKj4EySplsI0AGXcX1aZNvk="
+          "relative_path": "api/Sylves.Step.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Step",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.StepLengths.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.StepLengths.html",
-          "hash": "9aLUWv508fnmcFlv1nxr+9eF9Y1bP6ruZ3zfixuW8wg="
+          "relative_path": "api/Sylves.StepLengths.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.StepLengths",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SubstitutionTilingBound.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SubstitutionTilingBound.html",
-          "hash": "YNKF8s6oxtLQ3YqKVRmiF3Gk1RLeEHql82UO9cRv/nI="
+          "relative_path": "api/Sylves.SubstitutionTilingBound.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SubstitutionTilingBound",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SubstitutionTilingGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SubstitutionTilingGrid.html",
-          "hash": "cr49PsQnIXb9g+ydNG5TAc51Wj3FLsAREvuTTHg1G7Y="
+          "relative_path": "api/Sylves.SubstitutionTilingGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SubstitutionTilingGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.SubstitutionTilingGrid.yml\" sourcestartlinenumber=\"1\">Creates a tiling of the 2d plane from a set of substitution rules.\nIt is quite flexible:</p>\n<ul sourcefile=\"api/Sylves.SubstitutionTilingGrid.yml\" sourcestartlinenumber=\"3\">\n<li sourcefile=\"api/Sylves.SubstitutionTilingGrid.yml\" sourcestartlinenumber=\"3\">imperfect substitution rules where the replacement outline doesn't follow the original outline</li>\n<li sourcefile=\"api/Sylves.SubstitutionTilingGrid.yml\" sourcestartlinenumber=\"4\">tiles can freely transformed\n<ul sourcefile=\"api/Sylves.SubstitutionTilingGrid.yml\" sourcestartlinenumber=\"5\">\n<li sourcefile=\"api/Sylves.SubstitutionTilingGrid.yml\" sourcestartlinenumber=\"5\">tile equivalence under translation, euclidian motion, isometry, similarity all supported</li>\n<li sourcefile=\"api/Sylves.SubstitutionTilingGrid.yml\" sourcestartlinenumber=\"6\">&quot;statistically round&quot; substitutions like the pinwheel substitution supported</li>\n</ul>\n</li>\n</ul>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SvgBuilder.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SvgBuilder.html",
-          "hash": "cXSkx3hzdPd9XS5mz5ut7ZI/rxoIXqxOp0LKMGke9MM="
+          "relative_path": "api/Sylves.SvgBuilder.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SvgBuilder",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.SvgExport.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.SvgExport.html",
-          "hash": "BHuGXMlwlnVkE7WdbS4ErdrwqivCWopxwh2TVxBPre4="
+          "relative_path": "api/Sylves.SvgExport.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.SvgExport",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TRS.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TRS.html",
-          "hash": "32jZEQycip15C+W6m8trV6W3efxuI5oFYpfIujh2X00="
+          "relative_path": "api/Sylves.TRS.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TRS",
+      "Summary": "<p sourcefile=\"api/Sylves.TRS.yml\" sourcestartlinenumber=\"1\">Represents a position / rotation and scale.\nMuch like a Unity Transform, but without the association with a Unity object.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TetrakisSquareGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TetrakisSquareGrid.html",
-          "hash": "TVW5Xg9yd6tGDuyI6HTbeHm/NzCHVhjL6/4VcFUlu9U="
+          "relative_path": "api/Sylves.TetrakisSquareGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TetrakisSquareGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.TetrakisSquareGrid.yml\" sourcestartlinenumber=\"1\">Periodic 2d grid of triangles.\n<a href=\"https://en.wikipedia.org/wiki/Tetrakis_square_tiling\" sourcefile=\"api/Sylves.TetrakisSquareGrid.yml\" sourcestartlinenumber=\"2\">https://en.wikipedia.org/wiki/Tetrakis_square_tiling</a>\nThis is an specialization of <xref href=\"Sylves.PeriodicPlanarMeshGrid\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TownscaperGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TownscaperGrid.html",
-          "hash": "P3Cajlz5iT+putHMhbvt9RJCDgBEXz5ImEaXlQ0mpcs="
+          "relative_path": "api/Sylves.TownscaperGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TownscaperGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.TownscaperGrid.yml\" sourcestartlinenumber=\"1\">A grid closely modelled after the grid used in Townscaper.\nSee the corresponding tutorial.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TransformModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TransformModifier.html",
-          "hash": "DIXSX10RPeYJiWehC6d7MOLAQ7p6DVxIrl1Rs2exv7M="
+          "relative_path": "api/Sylves.TransformModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TransformModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.TransformModifier.yml\" sourcestartlinenumber=\"1\">Changes the world space positioning of the grid by a linear transform,\nleaving everything else unchanged.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TriHexGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TriHexGrid.html",
-          "hash": "t37NATXU6ImVxuOWlR3EsiT2WX5P8NHPBO63TgdvhlY="
+          "relative_path": "api/Sylves.TriHexGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TriHexGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.TriHexGrid.yml\" sourcestartlinenumber=\"1\">Periodic 2d grid of triangles and hexagons.\n<a href=\"https://en.wikipedia.org/wiki/Trihexagonal_tiling\" sourcefile=\"api/Sylves.TriHexGrid.yml\" sourcestartlinenumber=\"2\">https://en.wikipedia.org/wiki/Trihexagonal_tiling</a>\nThis is an specialization of <xref href=\"Sylves.PeriodicPlanarMeshGrid\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TriangleBound.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TriangleBound.html",
-          "hash": "akExJPxRIsB3Gcn3pZ5cr4E7T4jz4lfZtOt70ahw3CU="
+          "relative_path": "api/Sylves.TriangleBound.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TriangleBound",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TriangleCellType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TriangleCellType.html",
-          "hash": "jxU6mo22g8z8UjDxGVFNZMCO/FZM8xW5qwXVYasSpEU="
+          "relative_path": "api/Sylves.TriangleCellType.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TriangleCellType",
+      "Summary": "<p sourcefile=\"api/Sylves.TriangleCellType.yml\" sourcestartlinenumber=\"1\">Cell type for a regular hexagon with 6 sides.\nSupports both flat topped and flat sides orientations.\nUp/down triangles are given separate dirs and corners, so you can distinguish them without needing\nseparate cell types. Thus this cell type is quite similar to HexCellType.</p>\n<p sourcefile=\"api/Sylves.TriangleCellType.yml\" sourcestartlinenumber=\"7\">CellDirs are FSTriangleDir/FTTriangleDir, integers 0 to 5.\nCellCorners are FSTriangleCorner/FTDirableCorner, integers 0 to 5.\nThe CellRotations are the numbers 0 to 5 for a CCW rotation of that many sides,\nplus numbers ~0 to ~5 for the reflections, where rotation ~0 has dir 0 as a fix point.</p>\n<p sourcefile=\"api/Sylves.TriangleCellType.yml\" sourcestartlinenumber=\"12\">The canonical shape (for use with deformations) is a regular triangle with incircle diamater 1.0 in the XY centered at the origin, with normal pointing Z-forward.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TriangleGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TriangleGrid.html",
-          "hash": "E9tzxd1XtQ/dvtSLVK9fbpK3HfVZMtV9QpmVgndj6tQ="
+          "relative_path": "api/Sylves.TriangleGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TriangleGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.TriangleGrid.yml\" sourcestartlinenumber=\"1\">A uniform tiling of triangles.\nTriangleOrientation.FlatSides gives columns of triangles that alternate pointing left/right.\nTriangleOrientation.FlatTopped gives rows of triangles that alternate pointing up/down.</p>\n<p sourcefile=\"api/Sylves.TriangleGrid.yml\" sourcestartlinenumber=\"5\">In both cases, the cell type used is actually TriangleCellType. For each triangle, three of the directions\npoint towards neighbors, and the other three will point to nothing.\nThis is a similar setup to <xref href=\"Sylves.MeshGridOptions.DoubleOddFaces\" data-throw-if-not-resolved=\"false\"></xref>, and is usually simpler to work with\nas it doesn't force you to consider some cells as rotated by 180 degrees.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TriangleInterpolation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TriangleInterpolation.html",
-          "hash": "y771rCU1Z1jaq21EP1RGeL/bIm5wOq1GSM/Pyf4ZU/E="
+          "relative_path": "api/Sylves.TriangleInterpolation.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TriangleInterpolation",
+      "Summary": "<p sourcefile=\"api/Sylves.TriangleInterpolation.yml\" sourcestartlinenumber=\"1\">Supplies various linear interpolation methods from a triangle.\nThe conventions are based on a XY plane,\nwith an equilateral triangle of side 1, vertices:\n(0.5f, -0.5f / Sqrt3)\n(0, 1 / Sqrt3)\n(-0.5f, -0.5f / Sqrt3)</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TriangleOrientation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TriangleOrientation.html",
-          "hash": "dtYPCuFE2p/BDqABznIg80+Ybp2tmGd0U4RXmQtu08A="
+          "relative_path": "api/Sylves.TriangleOrientation.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TriangleOrientation",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TrianglePrismBound.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TrianglePrismBound.html",
-          "hash": "LyDtOc0AE7o/0rWdAWNnRdaAr/LymIyqpUK4dBXRpoE="
+          "relative_path": "api/Sylves.TrianglePrismBound.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TrianglePrismBound",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TrianglePrismCellDirExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TrianglePrismCellDirExtensions.html",
-          "hash": "5Mo3/RgatbZ3usnZSBCIsVV4IRu94gmMCVYi0AhvBwc="
+          "relative_path": "api/Sylves.TrianglePrismCellDirExtensions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TrianglePrismCellDirExtensions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TrianglePrismCellType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TrianglePrismCellType.html",
-          "hash": "2CYBelVUrUCLDpVodkUz6gKhMrETQxEpKDDDent+jkQ="
+          "relative_path": "api/Sylves.TrianglePrismCellType.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TrianglePrismCellType",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.TrianglePrismGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.TrianglePrismGrid.html",
-          "hash": "sIRytaMnBMTM4esMGDsG0mlOgpzci9tOSEcPZJqlxlI="
+          "relative_path": "api/Sylves.TrianglePrismGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.TrianglePrismGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Triple-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Triple-1.html",
-          "hash": "nEI/l1WZACY8SrNStRnkB3bpuC0Et+jy4Vb3SXVOnao="
+          "relative_path": "api/Sylves.Triple-1.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Triple<T>",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Vector2.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Vector2.html",
-          "hash": "K8ObHKqtxWNKHNKwQHiIk3L26nnSYZPv9r1ou+azOY0="
+          "relative_path": "api/Sylves.Vector2.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Vector2",
+      "Summary": "<p sourcefile=\"api/Sylves.Vector2.yml\" sourcestartlinenumber=\"1\">A pure .NET implemenation of Unity's Vector2.\nSee Unity's docs for more details.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Vector2Int.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Vector2Int.html",
-          "hash": "O4n8cO3mkgbn86MqlISUPk0gba+K2owWV1Bi1TLVC1g="
+          "relative_path": "api/Sylves.Vector2Int.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Vector2Int",
+      "Summary": "<p sourcefile=\"api/Sylves.Vector2Int.yml\" sourcestartlinenumber=\"1\">A pure .NET implemenation of Unity's Vector2Int.\nSee Unity's docs for more details.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Vector3.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Vector3.html",
-          "hash": "lVuz39AA4UPfRtHBdSPVTkKRhI0ODnp19mAobHC+ZOY="
+          "relative_path": "api/Sylves.Vector3.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Vector3",
+      "Summary": "<p sourcefile=\"api/Sylves.Vector3.yml\" sourcestartlinenumber=\"1\">A pure .NET implemenation of Unity's Vector3.\nSee Unity's docs for more details.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Vector3Int.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Vector3Int.html",
-          "hash": "NVOOISGHGwecAuRYD1xO/U0FOxitdbvsaY2mdZXa2nw="
+          "relative_path": "api/Sylves.Vector3Int.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Vector3Int",
+      "Summary": "<p sourcefile=\"api/Sylves.Vector3Int.yml\" sourcestartlinenumber=\"1\">A pure .NET implemenation of Unity's Vector3Int.\nSee Unity's docs for more details.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Vector4.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Vector4.html",
-          "hash": "J2u9cgBcLleMbNaXBYELpaO4Rx7aGGAPg/+rih7kg0Y="
+          "relative_path": "api/Sylves.Vector4.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Vector4",
+      "Summary": "<p sourcefile=\"api/Sylves.Vector4.yml\" sourcestartlinenumber=\"1\">A pure .NET implemenation of Unity's Vector4.\nSee Unity's docs for more details.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.VectorUtils.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.VectorUtils.html",
-          "hash": "zbgiW3GKeaTmctL/KyujR463zpD8c9kxyQVtJxcT/JM="
+          "relative_path": "api/Sylves.VectorUtils.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.VectorUtils",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Voronator.PolygonStatus.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Voronator.PolygonStatus.html",
-          "hash": "4/0mjC7XRxOVGbwqUgDo74LRk381y1MlbFCe+bHdhDU="
+          "relative_path": "api/Sylves.Voronator.PolygonStatus.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Voronator.PolygonStatus",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Voronator.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Voronator.html",
-          "hash": "HvGXwHFdz4geFNY9dfOsu7ZnBzTLWCgemiDUZ3jGM9s="
+          "relative_path": "api/Sylves.Voronator.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Voronator",
+      "Summary": "<p sourcefile=\"api/Sylves.Voronator.yml\" sourcestartlinenumber=\"1\">Computes a voronoi diagram in a 2d plane,\noptionally clipped to a rectangle.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.VoronoiCenterType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.VoronoiCenterType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.VoronoiCenterType",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.VoronoiGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.VoronoiGrid.html",
-          "hash": "fpQ5zxHwxbXWSI9jOv/36lrfIkP9KtqjYzNehIQUS8w="
+          "relative_path": "api/Sylves.VoronoiGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.VoronoiGrid",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.VoronoiGridOptions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.VoronoiGridOptions.html",
-          "hash": "3ueMQxpG7i6TuP9j3bW8WVkZYAZYgTqlC/kPpjoPhTM="
+          "relative_path": "api/Sylves.VoronoiGridOptions.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.VoronoiGridOptions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.VoronoiSphereGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.VoronoiSphereGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.VoronoiSphereGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.VoronoiSphereGrid.yml\" sourcestartlinenumber=\"1\">Sudivides the surface of a unit sphere into Voronoi cells,\none per input point.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.Walker.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.Walker.html",
-          "hash": "983hVapFNAwDN/7fK70/7yGy5P2NquFhxwZYM+pg3+s="
+          "relative_path": "api/Sylves.Walker.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.Walker",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.WrapModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.WrapModifier.html",
-          "hash": "R+SqcYLIkZYNKj352G+ZxW77vnArDnXQyEJpathRB9Y="
+          "relative_path": "api/Sylves.WrapModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.WrapModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.WrapModifier.yml\" sourcestartlinenumber=\"1\">Turns any bounded grid into a grid which connects back on itself when you leave the grounds.\nThis is done via a canonicalize method that is responsible for replacing cells that are outside of the bounds.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sylves.WrappingHexGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sylves.WrappingHexGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.WrappingHexGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.WrappingHexGrid.yml\" sourcestartlinenumber=\"1\">WrapModifier applied to HexGrid.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.WrappingSquareGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.WrappingSquareGrid.html",
-          "hash": "+Toia0vH/YGFdL3tpo/j8rf1NPnVd4FltSceI7UMTEU="
+          "relative_path": "api/Sylves.WrappingSquareGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.WrappingSquareGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.WrappingSquareGrid.yml\" sourcestartlinenumber=\"1\">WrapModifier applied to SquareGrid. This is a very common grid in games.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.XZCellTypeModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.XZCellTypeModifier.html",
-          "hash": "Itsv8syLHna8uwkWIvBcbG/+UPMZAWet8ZapJRE4mCk="
+          "relative_path": "api/Sylves.XZCellTypeModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.XZCellTypeModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.XZCellTypeModifier.yml\" sourcestartlinenumber=\"1\">Converts a ICellType based in the XY plane to one\nin the XZ plane. It does this by rotating Y+ to Z-  (and Z+ to Y+)</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.XZHexPrismGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.XZHexPrismGrid.html",
-          "hash": "jgJfEBmNrUCm4Ic1QoG2U9QWwG2ePbLY4+LAwgU/mh4="
+          "relative_path": "api/Sylves.XZHexPrismGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.XZHexPrismGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.XZHexPrismGrid.yml\" sourcestartlinenumber=\"1\">Variant of HexPrismGrid that places hexes in the XZ Plane</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.XZModifier.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.XZModifier.html",
-          "hash": "SoOEe41cR0yYc7tRzJhvZfxC4M2UH5Upc+9g8to2Kpo="
+          "relative_path": "api/Sylves.XZModifier.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.XZModifier",
+      "Summary": "<p sourcefile=\"api/Sylves.XZModifier.yml\" sourcestartlinenumber=\"1\">Converts a IGrid based in the XY plane to one\nin the XZ plane. It does this by rotating Y+ to Z-  (and Z+ to Y+).\nThis is different from a transform in that it doesn't rotate the cells, it applies XZCellModifier to them.</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.XZTrianglePrismGrid.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.XZTrianglePrismGrid.html",
-          "hash": "nIatYHcwQjJd9l9wxBdg+3Ru9H0hL0VKmR7iCEwrg/c="
+          "relative_path": "api/Sylves.XZTrianglePrismGrid.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves.XZTrianglePrismGrid",
+      "Summary": "<p sourcefile=\"api/Sylves.XZTrianglePrismGrid.yml\" sourcestartlinenumber=\"1\">Variant of TrianglePrismGrid that places triangles in the XZ Plane</p>\n"
     },
     {
       "type": "ManagedReference",
       "source_relative_path": "api/Sylves.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Sylves.html",
-          "hash": "g0LlTyxMNaua/z/DBER8qj2AyuqThHACkEFlXxjIoYM="
+          "relative_path": "api/Sylves.html"
         }
       },
-      "is_incremental": true,
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sylves",
+      "Summary": null
     },
     {
       "type": "Conceptual",
       "source_relative_path": "api/index.md",
       "output": {
         ".html": {
-          "relative_path": "api/index.html",
-          "hash": "VjnU7GlGMwjhrUwH9ehzhUPyv6qvGCHfMD304SqybqQ="
+          "relative_path": "api/index.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -1952,11 +2565,22 @@
       "source_relative_path": "api/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "api/toc.html",
-          "hash": "bQlZbXdzUqgovfmvYbb79wknrOLBdbLYB52B6fPhwro="
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/algorithms.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/algorithms.html"
+        }
+      },
       "version": ""
     },
     {
@@ -1964,11 +2588,9 @@
       "source_relative_path": "articles/concepts/bounds.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/bounds.html",
-          "hash": "aZah8TGZt3TQw83DGX6PLMF3zyBgjGmKUoiqPDBUPYI="
+          "relative_path": "articles/concepts/bounds.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -1976,11 +2598,9 @@
       "source_relative_path": "articles/concepts/caching.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/caching.html",
-          "hash": "Juu4geAG7ZlJbDE5ti3PYsxdPgKFIhJDMKQxdOAW2D4="
+          "relative_path": "articles/concepts/caching.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -1988,11 +2608,19 @@
       "source_relative_path": "articles/concepts/canonical.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/canonical.html",
-          "hash": "78zbI0F7AiHoZIzWEmMWn3E3LNVqOl4mRhapXmtJcYA="
+          "relative_path": "articles/concepts/canonical.html"
         }
       },
-      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/diagonal.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/diagonal.html"
+        }
+      },
       "version": ""
     },
     {
@@ -2000,11 +2628,9 @@
       "source_relative_path": "articles/concepts/dual.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/dual.html",
-          "hash": "9ngvSvs5mYYkXTXmO7j9PXkM9tgp4H01uUfA9XwOVBQ="
+          "relative_path": "articles/concepts/dual.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2012,11 +2638,9 @@
       "source_relative_path": "articles/concepts/grid_symmetry.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/grid_symmetry.html",
-          "hash": "NHwbbC9Ex3on3tiMtkZAQtx53r3kKnOHB+GHIl3s6Jw="
+          "relative_path": "articles/concepts/grid_symmetry.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2024,11 +2648,9 @@
       "source_relative_path": "articles/concepts/index.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/index.html",
-          "hash": "ogiz0y0PBbX8/wqA40h6UBY0968haGXvkNLkBNgopo4="
+          "relative_path": "articles/concepts/index.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2036,11 +2658,19 @@
       "source_relative_path": "articles/concepts/indices.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/indices.html",
-          "hash": "5HGhIB5EkHZneTHovy2kPcuPaUhAEl3thSZaTi6i8Ys="
+          "relative_path": "articles/concepts/indices.html"
         }
       },
-      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/concepts/infinity.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/concepts/infinity.html"
+        }
+      },
       "version": ""
     },
     {
@@ -2048,11 +2678,9 @@
       "source_relative_path": "articles/concepts/info.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/info.html",
-          "hash": "o+dzgHTE+9QSsRCSrywLkrEbmQJ6y68AV82Qx6/l7P4="
+          "relative_path": "articles/concepts/info.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2060,11 +2688,9 @@
       "source_relative_path": "articles/concepts/mesh.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/mesh.html",
-          "hash": "LL7kE+9cratU0OSXwHP4EAMVtu5q71Ql12qcspjwoPM="
+          "relative_path": "articles/concepts/mesh.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2072,11 +2698,9 @@
       "source_relative_path": "articles/concepts/pathfinding.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/pathfinding.html",
-          "hash": "jMY8gy/UpEvkBCH3wvALB4dTEgHT6xdYs2Hio9c/jFQ="
+          "relative_path": "articles/concepts/pathfinding.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2084,11 +2708,9 @@
       "source_relative_path": "articles/concepts/position.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/position.html",
-          "hash": "Y+nQW4ocaN/8bFwZpE1cl5pG3QJvlUFvIlsDf6cHq94="
+          "relative_path": "articles/concepts/position.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2096,11 +2718,9 @@
       "source_relative_path": "articles/concepts/query.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/query.html",
-          "hash": "5vcn+DImRZCk9xOteOWZmEsTWZF+3bVe58h1m95C8Nk="
+          "relative_path": "articles/concepts/query.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2108,11 +2728,9 @@
       "source_relative_path": "articles/concepts/relatives.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/relatives.html",
-          "hash": "Cv2rdbI42mmr6RxRUcwuIhpUdmAYWMD9Q8QR/cG7RQg="
+          "relative_path": "articles/concepts/relatives.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2120,11 +2738,9 @@
       "source_relative_path": "articles/concepts/rotation.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/rotation.html",
-          "hash": "v21f87NubEcAFyB3+HTTBUWg7Rx8VIFZaRS4a49rons="
+          "relative_path": "articles/concepts/rotation.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2132,11 +2748,9 @@
       "source_relative_path": "articles/concepts/shape.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/shape.html",
-          "hash": "EKrvdml6/mVWj3G0lwm0EdtThBlNg4rHnCquInR/pds="
+          "relative_path": "articles/concepts/shape.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2144,11 +2758,9 @@
       "source_relative_path": "articles/concepts/storage.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/storage.html",
-          "hash": "wxxaVhqO3FRtNP72/lfyXtULVeZ9suR5Wzb7Z+7ZlX0="
+          "relative_path": "articles/concepts/storage.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2156,11 +2768,9 @@
       "source_relative_path": "articles/concepts/topology.md",
       "output": {
         ".html": {
-          "relative_path": "articles/concepts/topology.html",
-          "hash": "banX7XBchyI4txmcih1AThwowgU9/gLhTLxjnfAWthA="
+          "relative_path": "articles/concepts/topology.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2168,11 +2778,9 @@
       "source_relative_path": "articles/creating.md",
       "output": {
         ".html": {
-          "relative_path": "articles/creating.html",
-          "hash": "1eQeHCc5HXbj5vp+8Q5Eqpqx0qXhbYmKI4UNOJXRop8="
+          "relative_path": "articles/creating.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2180,11 +2788,9 @@
       "source_relative_path": "articles/extras.md",
       "output": {
         ".html": {
-          "relative_path": "articles/extras.html",
-          "hash": "HdZJgeYjQ1bTQ5QxYecmI94dp8P82HviJ2e4Qjk1GT0="
+          "relative_path": "articles/extras.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2192,11 +2798,9 @@
       "source_relative_path": "articles/feature_comparison.md",
       "output": {
         ".html": {
-          "relative_path": "articles/feature_comparison.html",
-          "hash": "3TpPP89NhTVr3g2kYzsH6igTt2LVSZTUqjpVLPwzfwc="
+          "relative_path": "articles/feature_comparison.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2204,11 +2808,9 @@
       "source_relative_path": "articles/grids/_substitution_table.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/_substitution_table.html",
-          "hash": "z7yKIQZ2mQOAOCSKDMhnGfGiNEMKSz6/Iw/AHEml9Rk="
+          "relative_path": "articles/grids/_substitution_table.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2216,11 +2818,9 @@
       "source_relative_path": "articles/grids/cubegrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/cubegrid.html",
-          "hash": "NVhN3TINwuLfsDJ1qWToOr86U1nV5HVOoAVps8hRs34="
+          "relative_path": "articles/grids/cubegrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2228,11 +2828,9 @@
       "source_relative_path": "articles/grids/hexgrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/hexgrid.html",
-          "hash": "iIahGmh656AOSy1e68ZZYze346PyeegDL+Bq0IQVZVw="
+          "relative_path": "articles/grids/hexgrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2240,11 +2838,9 @@
       "source_relative_path": "articles/grids/index.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/index.html",
-          "hash": "gd7YKxi9rabq7xCiI33SZj3aXx5NsoyxlzMPl240ybw="
+          "relative_path": "articles/grids/index.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2252,11 +2848,9 @@
       "source_relative_path": "articles/grids/jitteredsquaregrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/jitteredsquaregrid.html",
-          "hash": "BpkpKPw4gtoFQPs29ydY9oJiuGhWkHDdwWJ+U6ozx0A="
+          "relative_path": "articles/grids/jitteredsquaregrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2264,11 +2858,9 @@
       "source_relative_path": "articles/grids/meshgrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/meshgrid.html",
-          "hash": "k4rn95w2pWWXNVlAOnfUFxb0XnANVnybJec/cHo/Q9s="
+          "relative_path": "articles/grids/meshgrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2276,11 +2868,9 @@
       "source_relative_path": "articles/grids/meshprismgrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/meshprismgrid.html",
-          "hash": "IpkwBTJbJCTdB2HbtzvbcZS+70Lc/aZOMMly/TOIWYE="
+          "relative_path": "articles/grids/meshprismgrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2288,11 +2878,9 @@
       "source_relative_path": "articles/grids/offgrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/offgrid.html",
-          "hash": "BGsHhovFdK0J7+8U5cjBRof3PCRma3O/nW52s3YOhDA="
+          "relative_path": "articles/grids/offgrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2300,11 +2888,9 @@
       "source_relative_path": "articles/grids/periodicplanarmeshgrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/periodicplanarmeshgrid.html",
-          "hash": "KnNO0MCfIQJhmni/3n9eb/ufBSr7jugwUsElUrSNzak="
+          "relative_path": "articles/grids/periodicplanarmeshgrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2312,11 +2898,9 @@
       "source_relative_path": "articles/grids/planarlazymeshgrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/planarlazymeshgrid.html",
-          "hash": "OjVNjo250gLYBgv6Lt6lco3JIhWZJC8Y/aQqCjYhqc4="
+          "relative_path": "articles/grids/planarlazymeshgrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2324,11 +2908,9 @@
       "source_relative_path": "articles/grids/squaregrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/squaregrid.html",
-          "hash": "jwQKxgcAbCMXGt4yVliRLqZW75D5tBRxrtgrJcPw4TA="
+          "relative_path": "articles/grids/squaregrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2336,11 +2918,9 @@
       "source_relative_path": "articles/grids/substitutiontilinggrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/substitutiontilinggrid.html",
-          "hash": "8geJJ9EmEx4oNWUJox0+f4+XRzu9PB0vUfuvbFWC+aE="
+          "relative_path": "articles/grids/substitutiontilinggrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2348,11 +2928,9 @@
       "source_relative_path": "articles/grids/trianglegrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/trianglegrid.html",
-          "hash": "vI1LzxYrdFmr/5MEET86rmzePcHyJZp6sgrpkTNDdYk="
+          "relative_path": "articles/grids/trianglegrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2360,11 +2938,9 @@
       "source_relative_path": "articles/grids/voronoigrid.md",
       "output": {
         ".html": {
-          "relative_path": "articles/grids/voronoigrid.html",
-          "hash": "i1AiMFU9mHTB6xQBnYD0y7xqyQHEWOjIRoFb7Tl+hBg="
+          "relative_path": "articles/grids/voronoigrid.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2372,11 +2948,9 @@
       "source_relative_path": "articles/index.md",
       "output": {
         ".html": {
-          "relative_path": "articles/index.html",
-          "hash": "71bsn/MLXLh+ESRK02Xx8Zr5PZTDcYOgzXGTA+zwjBY="
+          "relative_path": "articles/index.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2384,11 +2958,9 @@
       "source_relative_path": "articles/modifiers/_modifiers_table.md",
       "output": {
         ".html": {
-          "relative_path": "articles/modifiers/_modifiers_table.html",
-          "hash": "fvK4gk7nvRIWgrTsZpcsG8DLzppeWj2gJn3RmKtivPI="
+          "relative_path": "articles/modifiers/_modifiers_table.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2396,11 +2968,9 @@
       "source_relative_path": "articles/modifiers/bijectmodifier.md",
       "output": {
         ".html": {
-          "relative_path": "articles/modifiers/bijectmodifier.html",
-          "hash": "xO1UJRWIjhxAUH0o+2D5HjkZZBYXZTDAvW4qrTJWhSo="
+          "relative_path": "articles/modifiers/bijectmodifier.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2408,11 +2978,9 @@
       "source_relative_path": "articles/modifiers/index.md",
       "output": {
         ".html": {
-          "relative_path": "articles/modifiers/index.html",
-          "hash": "blKHbHTpWRQzieHh1JT90pf6GJ5oxMmjInPyWXvsLxo="
+          "relative_path": "articles/modifiers/index.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2420,11 +2988,9 @@
       "source_relative_path": "articles/modifiers/maskmodifier.md",
       "output": {
         ".html": {
-          "relative_path": "articles/modifiers/maskmodifier.html",
-          "hash": "k1z/d//prgIJBDkGefm00RpNk9EsJh+yedvVZsbQW2U="
+          "relative_path": "articles/modifiers/maskmodifier.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2432,11 +2998,9 @@
       "source_relative_path": "articles/modifiers/nestedmodifier.md",
       "output": {
         ".html": {
-          "relative_path": "articles/modifiers/nestedmodifier.html",
-          "hash": "kNEUXXBkIko407pVWGg0m/N1eSAfEUoFX0fh0Vuojos="
+          "relative_path": "articles/modifiers/nestedmodifier.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2444,11 +3008,9 @@
       "source_relative_path": "articles/modifiers/planarprismmodifier.md",
       "output": {
         ".html": {
-          "relative_path": "articles/modifiers/planarprismmodifier.html",
-          "hash": "eCX5yGu8s10eTvDtBJonzMg/wHBSO2ewqF6QYgQsjKc="
+          "relative_path": "articles/modifiers/planarprismmodifier.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2456,11 +3018,9 @@
       "source_relative_path": "articles/modifiers/ravelmodifier.md",
       "output": {
         ".html": {
-          "relative_path": "articles/modifiers/ravelmodifier.html",
-          "hash": "mOSl0CWwBROSyLc6UOZTCA09f/u1cf8uBMfvX+g9mxg="
+          "relative_path": "articles/modifiers/ravelmodifier.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2468,11 +3028,9 @@
       "source_relative_path": "articles/modifiers/relaxmodifier.md",
       "output": {
         ".html": {
-          "relative_path": "articles/modifiers/relaxmodifier.html",
-          "hash": "7E6iVtdy7Vw5HrPtVCH0MYSkYIC8G0pEGAFejTtMQng="
+          "relative_path": "articles/modifiers/relaxmodifier.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2480,11 +3038,9 @@
       "source_relative_path": "articles/modifiers/transformmodifier.md",
       "output": {
         ".html": {
-          "relative_path": "articles/modifiers/transformmodifier.html",
-          "hash": "VaGEdVU1VFKjzvtBt7E0Owk+hX5u4yTQDTLWgya3xVI="
+          "relative_path": "articles/modifiers/transformmodifier.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2492,11 +3048,9 @@
       "source_relative_path": "articles/modifiers/wrapmodifier.md",
       "output": {
         ".html": {
-          "relative_path": "articles/modifiers/wrapmodifier.html",
-          "hash": "HF1DYi0To86lFGPC1ceCHlkcvJaR0FHOUbH1WVE856Y="
+          "relative_path": "articles/modifiers/wrapmodifier.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2504,11 +3058,9 @@
       "source_relative_path": "articles/release_notes.md",
       "output": {
         ".html": {
-          "relative_path": "articles/release_notes.html",
-          "hash": "IDggWx+/iLUrPqKe1ZIx8LsjrcOIA7v1TO2Y+//fhrE="
+          "relative_path": "articles/release_notes.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2516,11 +3068,12 @@
       "source_relative_path": "articles/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "articles/toc.html",
-          "hash": "x1s6faMYWGEjTwx5zcSP4EQtbeaL8jUaYS3sBTESnyM="
+          "relative_path": "articles/toc.html"
+        },
+        ".json": {
+          "relative_path": "articles/toc.json"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2528,11 +3081,9 @@
       "source_relative_path": "articles/tutorials/getting_started_godot.md",
       "output": {
         ".html": {
-          "relative_path": "articles/tutorials/getting_started_godot.html",
-          "hash": "oWN6rD5Br0TgELZI+VWfqwDi0X5weTWxefVe606MLCU="
+          "relative_path": "articles/tutorials/getting_started_godot.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2540,11 +3091,9 @@
       "source_relative_path": "articles/tutorials/getting_started_unity.md",
       "output": {
         ".html": {
-          "relative_path": "articles/tutorials/getting_started_unity.html",
-          "hash": "zhhVXM9LW/pyTSzmtesTKnbrgxLuYQmTVxwNVgs8ahQ="
+          "relative_path": "articles/tutorials/getting_started_unity.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2552,11 +3101,9 @@
       "source_relative_path": "articles/tutorials/index.md",
       "output": {
         ".html": {
-          "relative_path": "articles/tutorials/index.html",
-          "hash": "l7s+TtjtjmgaorzpR8ZncF7TM8NqjjzAQNJlWhWgoS8="
+          "relative_path": "articles/tutorials/index.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2564,11 +3111,9 @@
       "source_relative_path": "articles/tutorials/langton.md",
       "output": {
         ".html": {
-          "relative_path": "articles/tutorials/langton.html",
-          "hash": "C9Ka+bfirpadt+Y5YvV7WTjCNzyhdKmUcN48/1tVayA="
+          "relative_path": "articles/tutorials/langton.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2576,11 +3121,9 @@
       "source_relative_path": "articles/tutorials/marching_squares.md",
       "output": {
         ".html": {
-          "relative_path": "articles/tutorials/marching_squares.html",
-          "hash": "n4QdSr/JAOIUvTYudFqTEqpUyeLLQSEyNNAuguQg7nM="
+          "relative_path": "articles/tutorials/marching_squares.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2588,11 +3131,9 @@
       "source_relative_path": "articles/tutorials/paint.md",
       "output": {
         ".html": {
-          "relative_path": "articles/tutorials/paint.html",
-          "hash": "x/YA0P5ZGEz2K8BgUjV61gcHwIUTi4IMEhEH7ddtTHo="
+          "relative_path": "articles/tutorials/paint.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -2600,11 +3141,19 @@
       "source_relative_path": "articles/tutorials/townscaper.md",
       "output": {
         ".html": {
-          "relative_path": "articles/tutorials/townscaper.html",
-          "hash": "/vPtDtu5n7mjaiRUQxoGjPIyXQH392ayJaqJ4DFJxyg="
+          "relative_path": "articles/tutorials/townscaper.html"
         }
       },
-      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/Minecraft_Farlands.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/Minecraft_Farlands.png"
+        }
+      },
       "version": ""
     },
     {
@@ -2615,7 +3164,6 @@
           "relative_path": "images/all_grids.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2626,7 +3174,6 @@
           "relative_path": "images/all_grids.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2637,7 +3184,6 @@
           "relative_path": "images/cell_anatomy.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2648,7 +3194,6 @@
           "relative_path": "images/cube_directions.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2659,7 +3204,6 @@
           "relative_path": "images/deformation.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2670,7 +3214,6 @@
           "relative_path": "images/demo/cellpicker.gif"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2681,7 +3224,6 @@
           "relative_path": "images/demo/langton.gif"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2692,7 +3234,6 @@
           "relative_path": "images/demo/pathfinding.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2703,7 +3244,16 @@
           "relative_path": "images/demo/polyominoes.gif"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/diags.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/diags.svg"
+        }
+      },
       "version": ""
     },
     {
@@ -2714,7 +3264,6 @@
           "relative_path": "images/documentation.jpg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2725,7 +3274,6 @@
           "relative_path": "images/duals/bounded_square_dual.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2736,7 +3284,6 @@
           "relative_path": "images/duals/hex_dual.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2747,7 +3294,6 @@
           "relative_path": "images/duals/square_dual.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2758,7 +3304,16 @@
           "relative_path": "images/duals/tri_dual.svg"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/ammann_beenker.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/ammann_beenker.svg"
+        }
+      },
       "version": ""
     },
     {
@@ -2769,7 +3324,6 @@
           "relative_path": "images/grids/biject_square.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2780,7 +3334,6 @@
           "relative_path": "images/grids/cairo.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2791,7 +3344,6 @@
           "relative_path": "images/grids/center_square.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2802,7 +3354,6 @@
           "relative_path": "images/grids/chair.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2813,7 +3364,6 @@
           "relative_path": "images/grids/cube.blend"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2824,7 +3374,6 @@
           "relative_path": "images/grids/cube.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2835,7 +3384,6 @@
           "relative_path": "images/grids/cubius.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2846,7 +3394,6 @@
           "relative_path": "images/grids/domino.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2857,7 +3404,6 @@
           "relative_path": "images/grids/hex_ft.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2868,7 +3414,6 @@
           "relative_path": "images/grids/hex_pt.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2879,7 +3424,6 @@
           "relative_path": "images/grids/hexprism.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2890,7 +3434,6 @@
           "relative_path": "images/grids/jitteredsquare.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2901,7 +3444,6 @@
           "relative_path": "images/grids/mask_square.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2912,7 +3454,6 @@
           "relative_path": "images/grids/meshgrid.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2923,7 +3464,6 @@
           "relative_path": "images/grids/meshprism.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2934,7 +3474,6 @@
           "relative_path": "images/grids/metahexagon.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2945,7 +3484,6 @@
           "relative_path": "images/grids/mobius.blend"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2956,7 +3494,6 @@
           "relative_path": "images/grids/mobiussquare.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2967,7 +3504,6 @@
           "relative_path": "images/grids/nested_square.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2978,7 +3514,6 @@
           "relative_path": "images/grids/off.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -2989,7 +3524,16 @@
           "relative_path": "images/grids/penrose_rhomb.svg"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/pinwheel.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/pinwheel.svg"
+        }
+      },
       "version": ""
     },
     {
@@ -3000,7 +3544,26 @@
           "relative_path": "images/grids/planarprismmodifier.png"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/radial_octagonal.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/radial_octagonal.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/radial_rhombic.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/radial_rhombic.svg"
+        }
+      },
       "version": ""
     },
     {
@@ -3011,7 +3574,6 @@
           "relative_path": "images/grids/ravel_square.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3022,7 +3584,6 @@
           "relative_path": "images/grids/relax_square.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3033,7 +3594,16 @@
           "relative_path": "images/grids/rhombille.svg"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/sphinx.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/sphinx.svg"
+        }
+      },
       "version": ""
     },
     {
@@ -3044,7 +3614,6 @@
           "relative_path": "images/grids/square.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3055,7 +3624,6 @@
           "relative_path": "images/grids/squaresnub.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3066,7 +3634,6 @@
           "relative_path": "images/grids/tetrakissquare.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3077,7 +3644,6 @@
           "relative_path": "images/grids/townscaper.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3088,7 +3654,6 @@
           "relative_path": "images/grids/transform_square.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3099,7 +3664,6 @@
           "relative_path": "images/grids/tri_fs.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3110,7 +3674,6 @@
           "relative_path": "images/grids/tri_ft.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3121,7 +3684,6 @@
           "relative_path": "images/grids/triangleprism.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3132,7 +3694,6 @@
           "relative_path": "images/grids/trihex.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3143,7 +3704,6 @@
           "relative_path": "images/grids/unrelaxedtownscaper.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3154,7 +3714,26 @@
           "relative_path": "images/grids/voronoi.svg"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/voronoi_sphere.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/voronoi_sphere.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/grids/wrap_hex_fake.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/grids/wrap_hex_fake.svg"
+        }
+      },
       "version": ""
     },
     {
@@ -3165,7 +3744,6 @@
           "relative_path": "images/grids/wrap_square.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3176,7 +3754,16 @@
           "relative_path": "images/grids/wrap_square_fake.svg"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/horizon_frustrum_culling.mp4",
+      "output": {
+        "resource": {
+          "relative_path": "images/horizon_frustrum_culling.mp4"
+        }
+      },
       "version": ""
     },
     {
@@ -3187,7 +3774,16 @@
           "relative_path": "images/icosahedron.png"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/kruskal.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/kruskal.svg"
+        }
+      },
       "version": ""
     },
     {
@@ -3198,7 +3794,6 @@
           "relative_path": "images/logo_cropped.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3209,7 +3804,6 @@
           "relative_path": "images/marching_squares_map.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3220,7 +3814,16 @@
           "relative_path": "images/marching_squares_tiles.png"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/outline.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/outline.svg"
+        }
+      },
       "version": ""
     },
     {
@@ -3231,7 +3834,6 @@
           "relative_path": "images/paint_hex.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3242,7 +3844,6 @@
           "relative_path": "images/paint_hex_animated.gif"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3253,7 +3854,6 @@
           "relative_path": "images/paint_hex_animated.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3264,7 +3864,6 @@
           "relative_path": "images/paint_line.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3275,7 +3874,6 @@
           "relative_path": "images/rhombille_example.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3286,7 +3884,6 @@
           "relative_path": "images/rotations_and_reflections.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3297,7 +3894,6 @@
           "relative_path": "images/seeds/cairo.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3308,7 +3904,6 @@
           "relative_path": "images/seeds/metahexagon.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3319,7 +3914,6 @@
           "relative_path": "images/seeds/rhombille.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3330,7 +3924,6 @@
           "relative_path": "images/seeds/squaresnub.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3341,7 +3934,6 @@
           "relative_path": "images/seeds/tetrakissquare.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3352,7 +3944,6 @@
           "relative_path": "images/seeds/trihex.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3363,7 +3954,6 @@
           "relative_path": "images/sphere.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3374,7 +3964,6 @@
           "relative_path": "images/square_grid.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3385,7 +3974,6 @@
           "relative_path": "images/townscaper_pan.webm"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3396,7 +3984,6 @@
           "relative_path": "images/townscaper_screenshot.jpg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3407,7 +3994,6 @@
           "relative_path": "images/townscaper_tutorial_1.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3418,7 +4004,6 @@
           "relative_path": "images/townscaper_tutorial_2.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3429,7 +4014,6 @@
           "relative_path": "images/townscaper_tutorial_3.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3440,7 +4024,6 @@
           "relative_path": "images/townscaper_tutorial_4.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3451,7 +4034,6 @@
           "relative_path": "images/walk_cube.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -3462,22 +4044,16 @@
           "relative_path": "images/walk_sphere.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "index",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
-          "relative_path": "index.html",
-          "hash": "QLkRBnqpUBUAhOqE1g1npvkNgDFmAm2SeuqYVxb/GUc="
+          "relative_path": "index.html"
         }
       },
-      "is_incremental": true,
       "version": ""
     },
     {
@@ -3485,63 +4061,15 @@
       "source_relative_path": "toc.yml",
       "output": {
         ".html": {
-          "relative_path": "toc.html",
-          "hash": "oTURDwgwfWcgGnkMfPIFGUWw9jF6WwZuYd0QxVje1KU="
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
         }
       },
-      "is_incremental": false,
       "version": ""
     }
   ],
-  "incremental_info": [
-    {
-      "status": {
-        "can_incremental": true,
-        "incrementalPhase": "build",
-        "total_file_count": 0,
-        "skipped_file_count": 0
-      },
-      "processors": {
-        "ConceptualDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build",
-          "total_file_count": 55,
-          "skipped_file_count": 55
-        },
-        "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build",
-          "total_file_count": 161,
-          "skipped_file_count": 161
-        },
-        "ResourceDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        },
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        }
-      }
-    },
-    {
-      "status": {
-        "can_incremental": true,
-        "details": "Can support incremental post processing.",
-        "incrementalPhase": "postProcessing",
-        "total_file_count": 0,
-        "skipped_file_count": 0
-      },
-      "processors": {}
-    }
-  ],
-  "version_info": {},
   "groups": [
     {
       "xrefmap": "xrefmap.yml"

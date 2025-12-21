@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 using UnityEngine;
 
 namespace Sylves
@@ -47,6 +48,7 @@ namespace Sylves
 
         public IEnumerable<CellCorner> GetCellCorners() => allCellCorners;
 
+        public Int32 N => 6;
         public IEnumerable<CellDir> GetCellDirs() => allCellDirs;
 
         public CellDir? Invert(CellDir dir) => (CellDir)((CubeDir)dir).Inverted();
@@ -100,7 +102,7 @@ namespace Sylves
                 y = -y;
             }
             var angle = Mathf.Atan2(y, x);
-            var angleInt = Mathf.RoundToInt(angle / (Mathf.PI / 2));
+            var angleInt = MathUtils.RoundToInt32(angle / (Mathf.PI / 2));
             if(isReflection)
             {
                 angleInt = (-angleInt + 4) % 4;

@@ -13,7 +13,9 @@ namespace Sylves
     public class RhombilleGrid : PeriodicPlanarMeshGrid
     {
 
-        public RhombilleGrid():base(RhombilleMeshData(), new Vector2(0, 1), new Vector2(0.75f, 0.5f))
+        const float Height = 0.43301270189f; // Mathf.Sqrt(3) / 4f;
+
+        public RhombilleGrid():base(RhombilleMeshData(), new Vector2(0, Height*2), new Vector2(0.75f, Height))
         {
 
         }
@@ -23,11 +25,11 @@ namespace Sylves
             meshData.vertices = new Vector3[]
             {
                 new Vector3(0.5f, 0, 0),
-                new Vector3(0.25f, 0.5f, 0),
-                new Vector3(-0.25f, 0.5f, 0),
+                new Vector3(0.25f, Height, 0),
+                new Vector3(-0.25f, Height, 0),
                 new Vector3(-0.5f, 0, 0),
-                new Vector3(-0.25f, -0.5f, 0),
-                new Vector3(0.25f, -0.5f, 0),
+                new Vector3(-0.25f, -Height, 0),
+                new Vector3(0.25f, -Height, 0),
                 new Vector3(0, 0 , 0),
             };
             meshData.indices = new[]{new []

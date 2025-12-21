@@ -175,11 +175,6 @@ namespace Sylves
             {
                 throw new Exception($"Mesh topology {mesh.GetTopology(submesh)} not supported.");
             }
-            //if (!mesh.HasVertexAttribute(UnityEngine.Rendering.VertexAttribute.Tangent))
-            if (mesh.tangents.Length == 0)
-            {
-                throw new Exception($"Mesh needs tangents to calculate smoothed normals. You need to select \"Calculate\" the tangent field of the import options.");
-            }
 
             var uvs = mesh.uv;
 
@@ -211,11 +206,6 @@ namespace Sylves
             if (mesh.GetTopology(submesh) != MeshTopology.Triangles)
             {
                 throw new Exception($"Mesh topology {mesh.GetTopology(submesh)} not supported.");
-            }
-            //if (!mesh.HasVertexAttribute(UnityEngine.Rendering.VertexAttribute.Tangent))
-            if (mesh.tangents.Length == 0)
-            {
-                throw new Exception($"Mesh needs tangents to calculate smoothed normals. You need to select \"Calculate\" the tangent field of the import options.");
             }
 
             var uvs = mesh.uv;
@@ -251,7 +241,7 @@ namespace Sylves
                 // Linear interpolate on each axis in turn
                 var u1 = b.x * v1 + b.y * v2 + b.z * v3;
                 var u2 = b.x * v4 + b.y * v5 + b.z * v6;
-                return (0.5f - p.x) * u1 + (0.5f + p.x) * u2;
+                return (0.5f - p.z) * u1 + (0.5f + p.z) * u2;
             }
 
             return InterpolatePoint;
@@ -382,7 +372,7 @@ namespace Sylves
         }
 
         // Assumes a standard equilateral triangle (see TestMeshes.Equilateral)
-        private static Vector3 StdBarycentric(Vector2 p)
+        internal static Vector3 StdBarycentric(Vector2 p)
         {
             const float sqrt3 = 1.73205080756888f;
             const float o = 1 / 3f;

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sylves
 {
-    // https://tilings.math.uni-bielefeld.de/substitution/domino/
+    // https://tilings.math.uni-bielefeld.de/substitution/penrose-rhomb/
     public class PenroseRhombGrid : SubstitutionTilingGrid
 	{
         public PenroseRhombGrid(SubstitutionTilingBound bound = null):base(Prototiles, new[] { "Fat" }, bound)
@@ -69,7 +70,7 @@ namespace Sylves
                 (3, 1, 3, 1, 3),
                 (3, 2, 3, 0, 1),
                 },
-            InteriorTileAdjacencies = new (int, int, int, int)[0],
+            InteriorTileAdjacencies = new (Int32, Int32, Int32, Int32)[0],
             ExteriorTileAdjacencies = new[]
             {
                 (0, 0, 1, 0, 0),
@@ -116,7 +117,7 @@ namespace Sylves
                 (3, 0, 2, 0),
                 (3, 1, 2, 1),
             },
-            InteriorTileAdjacencies = new (int, int, int, int)[0],
+            InteriorTileAdjacencies = new (Int32, Int32, Int32, Int32)[0],
             ExteriorTileAdjacencies = new[]
             {
                 (0, 0, 1, 0, 0),

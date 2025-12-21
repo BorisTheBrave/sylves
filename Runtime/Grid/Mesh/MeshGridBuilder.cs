@@ -96,9 +96,9 @@ namespace Sylves
                 var face = 0;
                 foreach (var faceIndices in MeshUtils.GetFaces(data, submesh, meshGridOptions.InvertWinding))
                 {
-                    int first = -1;
-                    int prev = -1;
-                    int indexCount = 0;
+                    var first = -1;
+                    var prev = -1;
+                    var indexCount = 0;
                     foreach (var index in faceIndices)
                     {
                         if (first == -1)
@@ -170,7 +170,15 @@ namespace Sylves
                         var count = faceIndices.Count;
                         var prismInfo = PrismInfo.Get(layerCellData[new Cell(face, submesh, 0)].CellType);
                         var cellType = prismInfo.PrismCellType;
-                        var trs = deformation != null ? GetTRS(deformation, Vector3.zero) : new TRS(GetCentroid(faceIndices, data));
+                        TRS trs;
+                        if (deformation == null)
+                        {
+                            var (centroid, normal) = GetCentroidAndNormal(faceIndices, data);
+                            trs = new TRS(centroid + (layer * meshPrismGridOptions.LayerHeight + meshPrismGridOptions.LayerOffset) * normal);
+                        }
+                        else {
+                            trs = GetTRS(deformation, Vector3.zero);
+                        }
 
                         // Transform if necessary
                         if (meshPrismGridOptions.UseXZPlane)
@@ -193,16 +201,18 @@ namespace Sylves
                 }
             }
         }
-        private static Vector3 GetCentroid(MeshUtils.Face face, MeshData meshData)
+        private static (Vector3, Vector3) GetCentroidAndNormal(MeshUtils.Face face, MeshData meshData)
         {
             var c = Vector3.zero;
+            var normal = new Vector3();
             var n = 0;
             foreach(var i in face)
             {
                 c += meshData.vertices[i];
+                normal += meshData.normals[i];
                 n++;
             }
-            return c / n;
+            return (c / n, normal.normalized);
         }
 
         private static TRS GetTRS(Deformation deformation, Vector3 p)
@@ -255,27 +265,27 @@ namespace Sylves
         #endregion
 
         // Edge index i is the edge from vertex i to vertex i+1
-        public static CellDir EdgeIndexToCellDir(int edgeIndex, int edgeCount, bool doubleOddFaces)
+        public static CellDir EdgeIndexToCellDir(Int32 edgeIndex, Int32 edgeCount, bool doubleOddFaces)
         {
             return (CellDir)(edgeCount % 2 == 1 && doubleOddFaces ? edgeIndex * 2 : edgeIndex);
         }
 
-        public static int CellDirToEdgeIndex(CellDir cellDir, int edgeCount, bool doubleOddFaces)
+        public static Int32 CellDirToEdgeIndex(CellDir cellDir, Int32 edgeCount, bool doubleOddFaces)
         {
-            return edgeCount % 2 == 1 && doubleOddFaces ? ((int)cellDir) / 2 : (int)cellDir;
+            return edgeCount % 2 == 1 && doubleOddFaces ? ((Int32)cellDir) / 2 : (Int32)cellDir;
         }
 
-        public static CellCorner VertexIndexToCellCorner(int index, int edgeCount, bool doubleOddFaces)
+        public static CellCorner VertexIndexToCellCorner(Int32 index, Int32 edgeCount, bool doubleOddFaces)
         {
             return (CellCorner)(edgeCount % 2 == 1 && doubleOddFaces ? index * 2 : index);
         }
 
-        public static int CellCornerToVertexIndex(CellCorner corner, int edgeCount, bool doubleOddFaces)
+        public static Int32 CellCornerToVertexIndex(CellCorner corner, Int32 edgeCount, bool doubleOddFaces)
         {
-            return edgeCount % 2 == 1 && doubleOddFaces ? ((int)corner) / 2 : (int)corner;
+            return edgeCount % 2 == 1 && doubleOddFaces ? ((Int32)corner) / 2 : (Int32)corner;
         }
 
-        private static ICellType GetCellType(int edgeCount, bool doubleOddFaces)
+        private static ICellType GetCellType(Int32 edgeCount, bool doubleOddFaces)
         {
             return edgeCount == 3 && doubleOddFaces ? TriangleCellType.Get(TriangleOrientation.FlatTopped) :
                 edgeCount == 4 ? SquareCellType.Instance :

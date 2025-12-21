@@ -1,17 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class VoronoiGrid
-   </title>
+    <title>Class VoronoiGrid </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class VoronoiGrid
-   ">
-    <meta name="generator" content="docfx 2.59.0.0">
-    
+    <meta name="title" content="Class VoronoiGrid ">
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -19,14 +17,14 @@
     <link rel="stylesheet" href="../styles/custom.css">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    
-    
+  
+  
+  
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -36,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../index.html">
                 <img id="logo" class="svg" src="../logo.svg" alt="">
               </a>
@@ -50,7 +48,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -60,7 +58,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -70,30 +68,39 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Sylves.VoronoiGrid">
-  
-  
-  <h1 id="Sylves_VoronoiGrid" data-uid="Sylves.VoronoiGrid" class="text-break">Class VoronoiGrid
-  </h1>
+
+
+
+  <h1 id="Sylves_VoronoiGrid" data-uid="Sylves.VoronoiGrid" class="text-break">Class VoronoiGrid</h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><a class="xref" href="Sylves.DataDrivenGrid.html">DataDrivenGrid</a></div>
     <div class="level2"><a class="xref" href="Sylves.MeshGrid.html">MeshGrid</a></div>
     <div class="level3"><span class="xref">VoronoiGrid</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Sylves.IGrid.html">IGrid</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_min">MeshGrid.min</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_max">MeshGrid.max</a>
+    </div>
+    <div>
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_meshData">MeshGrid.meshData</a>
     </div>
     <div>
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_is2d">MeshGrid.is2d</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_bound">MeshGrid.bound</a>
     </div>
     <div>
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_ComputeBounds_Sylves_Cell_">MeshGrid.ComputeBounds(Cell)</a>
@@ -102,22 +109,58 @@
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetDual">MeshGrid.GetDual()</a>
     </div>
     <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetDiagonalGrid">MeshGrid.GetDiagonalGrid()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetCompactGrid">MeshGrid.GetCompactGrid()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_IsCellInGrid_Sylves_Cell_">MeshGrid.IsCellInGrid(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__">MeshGrid.TryMove(Cell, CellDir, out Cell, out CellDir, out Connection)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetBound">MeshGrid.GetBound()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetBound_System_Collections_Generic_IEnumerable_Sylves_Cell__">MeshGrid.GetBound(IEnumerable&lt;Cell&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_BoundBy_Sylves_IBound_">MeshGrid.BoundBy(IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_IntersectBounds_Sylves_IBound_Sylves_IBound_">MeshGrid.IntersectBounds(IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_UnionBounds_Sylves_IBound_Sylves_IBound_">MeshGrid.UnionBounds(IBound, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetCellsInBounds_Sylves_IBound_">MeshGrid.GetCellsInBounds(IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_IsCellInBound_Sylves_Cell_Sylves_IBound_">MeshGrid.IsCellInBound(Cell, IBound)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetBoundAabb_Sylves_IBound_">MeshGrid.GetBoundAabb(IBound)</a>
+    </div>
+    <div>
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetCellCorner_Sylves_Cell_Sylves_CellCorner_">MeshGrid.GetCellCorner(Cell, CellCorner)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_IsPointInCell_Sylves_Vector3_Sylves_Cell_">MeshGrid.IsPointInCell(Vector3, Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_FindCell_Sylves_Vector3_Sylves_Cell__">MeshGrid.FindCell(Vector3, Cell)</a>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_FindCell_Sylves_Vector3_Sylves_Cell__">MeshGrid.FindCell(Vector3, out Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">MeshGrid.Raycast(Vector3, Vector3, Single)</a>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">MeshGrid.Raycast(Vector3, Vector3, float)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_RaycastCell_Sylves_Cell_Sylves_Vector3_Sylves_Vector3_">MeshGrid.RaycastCell(Cell, Vector3, Vector3)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__">MeshGrid.FindCell(Matrix4x4, Cell, CellRotation)</a>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__">MeshGrid.FindCell(Matrix4x4, out Cell, out CellRotation)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetCellsIntersectsApprox_Sylves_Vector3_Sylves_Vector3_">MeshGrid.GetCellsIntersectsApprox(Vector3, Vector3)</a>
@@ -126,13 +169,19 @@
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetFaceIndices_Sylves_Cell_">MeshGrid.GetFaceIndices(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__">MeshGrid.GetPolygon(Cell, Vector3[], Matrix4x4)</a>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__">MeshGrid.GetPolygon(Cell, out Vector3[], out Matrix4x4)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetTriangleMesh_Sylves_Cell_">MeshGrid.GetTriangleMesh(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__">MeshGrid.GetMeshData(Cell, MeshData, Matrix4x4)</a>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__">MeshGrid.GetMeshData(Cell, out MeshData, out Matrix4x4)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetAabb_Sylves_Cell_">MeshGrid.GetAabb(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_GetAabb_System_Collections_Generic_IEnumerable_Sylves_Cell__">MeshGrid.GetAabb(IEnumerable&lt;Cell&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_Is2d">MeshGrid.Is2d</a>
@@ -147,7 +196,13 @@
       <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_CoordinateDimension">MeshGrid.CoordinateDimension</a>
     </div>
     <div>
+      <a class="xref" href="Sylves.MeshGrid.html#Sylves_MeshGrid_Unbounded">MeshGrid.Unbounded</a>
+    </div>
+    <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellTypes">DataDrivenGrid.GetCellTypes()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Recenter_Sylves_Cell_">DataDrivenGrid.Recenter(Cell)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCells">DataDrivenGrid.GetCells()</a>
@@ -156,16 +211,10 @@
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellType_Sylves_Cell_">DataDrivenGrid.GetCellType(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IsCellInGrid_Sylves_Cell_">DataDrivenGrid.IsCellInGrid(Cell)</a>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryMoveByOffset_Sylves_Cell_Sylves_Vector3Int_Sylves_Vector3Int_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.TryMoveByOffset(Cell, Vector3Int, Vector3Int, CellRotation, out Cell, out CellRotation)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__">DataDrivenGrid.TryMove(Cell, CellDir, Cell, CellDir, Connection)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryMoveByOffset_Sylves_Cell_Sylves_Vector3Int_Sylves_Vector3Int_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.TryMoveByOffset(Cell, Vector3Int, Vector3Int, CellRotation, Cell, CellRotation)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, Cell, CellRotation)</a>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, out Cell, out CellRotation)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellDirs_Sylves_Cell_">DataDrivenGrid.GetCellDirs(Cell)</a>
@@ -180,28 +229,7 @@
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetIndex_Sylves_Cell_">DataDrivenGrid.GetIndex(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellByIndex_System_Int32_">DataDrivenGrid.GetCellByIndex(Int32)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetBound">DataDrivenGrid.GetBound()</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetBound_System_Collections_Generic_IEnumerable_Sylves_Cell__">DataDrivenGrid.GetBound(IEnumerable&lt;Cell&gt;)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_BoundBy_Sylves_IBound_">DataDrivenGrid.BoundBy(IBound)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IntersectBounds_Sylves_IBound_Sylves_IBound_">DataDrivenGrid.IntersectBounds(IBound, IBound)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_UnionBounds_Sylves_IBound_Sylves_IBound_">DataDrivenGrid.UnionBounds(IBound, IBound)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellsInBounds_Sylves_IBound_">DataDrivenGrid.GetCellsInBounds(IBound)</a>
-    </div>
-    <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IsCellInBound_Sylves_Cell_Sylves_IBound_">DataDrivenGrid.IsCellInBound(Cell, IBound)</a>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellByIndex_System_Int32_">DataDrivenGrid.GetCellByIndex(int)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_GetCellCenter_Sylves_Cell_">DataDrivenGrid.GetCellCenter(Cell)</a>
@@ -216,10 +244,10 @@
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_FindGridSymmetry_System_Collections_Generic_ISet_Sylves_Cell__System_Collections_Generic_ISet_Sylves_Cell__Sylves_Cell_Sylves_CellRotation_">DataDrivenGrid.FindGridSymmetry(ISet&lt;Cell&gt;, ISet&lt;Cell&gt;, Cell, CellRotation)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">DataDrivenGrid.TryApplySymmetry(GridSymmetry, IBound, IBound)</a>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">DataDrivenGrid.TryApplySymmetry(GridSymmetry, IBound, out IBound)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.TryApplySymmetry(GridSymmetry, Cell, Cell, CellRotation)</a>
+      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__">DataDrivenGrid.TryApplySymmetry(GridSymmetry, Cell, out Cell, out CellRotation)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Moves">DataDrivenGrid.Moves</a>
@@ -240,13 +268,31 @@
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IsSingleCellType">DataDrivenGrid.IsSingleCellType</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Unbounded">DataDrivenGrid.Unbounded</a>
-    </div>
-    <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_Unwrapped">DataDrivenGrid.Unwrapped</a>
     </div>
     <div>
       <a class="xref" href="Sylves.DataDrivenGrid.html#Sylves_DataDrivenGrid_IndexCount">DataDrivenGrid.IndexCount</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
@@ -256,19 +302,19 @@
     <pre><code class="lang-csharp hljs">public class VoronoiGrid : MeshGrid, IGrid</code></pre>
   </div>
   <h3 id="constructors">Constructors
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_VoronoiGrid__ctor_" data-uid="Sylves.VoronoiGrid.#ctor*"></a>
   <h4 id="Sylves_VoronoiGrid__ctor_System_Collections_Generic_IList_Sylves_Vector2__Sylves_VoronoiGridOptions_" data-uid="Sylves.VoronoiGrid.#ctor(System.Collections.Generic.IList{Sylves.Vector2},Sylves.VoronoiGridOptions)">VoronoiGrid(IList&lt;Vector2&gt;, VoronoiGridOptions)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public VoronoiGrid(IList&lt;Vector2&gt; points, VoronoiGridOptions voronoiGridOptions = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -278,7 +324,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IList</span>&lt;<a class="xref" href="Sylves.Vector2.html">Vector2</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Sylves.Vector2.html">Vector2</a>&gt;</td>
         <td><span class="parametername">points</span></td>
         <td></td>
       </tr>
@@ -290,19 +336,19 @@
     </tbody>
   </table>
   <h3 id="methods">Methods
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_VoronoiGrid_CreateMeshData_" data-uid="Sylves.VoronoiGrid.CreateMeshData*"></a>
-  <h4 id="Sylves_VoronoiGrid_CreateMeshData_System_Collections_Generic_IList_Sylves_Vector2__Sylves_VoronoiGridOptions_System_Func_System_Int32_System_Boolean__" data-uid="Sylves.VoronoiGrid.CreateMeshData(System.Collections.Generic.IList{Sylves.Vector2},Sylves.VoronoiGridOptions,System.Func{System.Int32,System.Boolean})">CreateMeshData(IList&lt;Vector2&gt;, VoronoiGridOptions, Func&lt;Int32, Boolean&gt;)</h4>
+  <h4 id="Sylves_VoronoiGrid_CreateMeshData_System_Collections_Generic_IList_Sylves_Vector2__Sylves_VoronoiGridOptions_System_Func_System_Int32_System_Boolean__" data-uid="Sylves.VoronoiGrid.CreateMeshData(System.Collections.Generic.IList{Sylves.Vector2},Sylves.VoronoiGridOptions,System.Func{System.Int32,System.Boolean})">CreateMeshData(IList&lt;Vector2&gt;, VoronoiGridOptions, Func&lt;int, bool&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static MeshData CreateMeshData(IList&lt;Vector2&gt; points, VoronoiGridOptions voronoiGridOptions = null, Func&lt;int, bool&gt; mask = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -312,7 +358,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IList</span>&lt;<a class="xref" href="Sylves.Vector2.html">Vector2</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Sylves.Vector2.html">Vector2</a>&gt;</td>
         <td><span class="parametername">points</span></td>
         <td></td>
       </tr>
@@ -322,14 +368,14 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Boolean</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">mask</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -347,9 +393,44 @@
   <div>
       <a class="xref" href="Sylves.IGrid.html">IGrid</a>
   </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_FindCell_Sylves_IGrid_Sylves_Vector3_">GridExtensions.FindCell(IGrid, Vector3)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetCellsIntersectsApprox_Sylves_IGrid_Sylves_Aabb_">GridExtensions.GetCellsIntersectsApprox(IGrid, Aabb)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetMeshData_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetMeshData(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetNeighbours_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetNeighbours(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetPolygon_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetPolygon(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Masked_Sylves_IGrid_System_Collections_Generic_ISet_Sylves_Cell__">GridExtensions.Masked(IGrid, ISet&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Masked_Sylves_IGrid_System_Func_Sylves_Cell_System_Boolean__System_Collections_Generic_IEnumerable_Sylves_Cell__">GridExtensions.Masked(IGrid, Func&lt;Cell, bool&gt;, IEnumerable&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Move_Sylves_IGrid_Sylves_Cell_Sylves_CellDir_">GridExtensions.Move(IGrid, Cell, CellDir)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_ToMeshData_Sylves_IGrid_">GridExtensions.ToMeshData(IGrid)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_ToMeshData_Sylves_IGrid_System_Collections_Generic_IEnumerable_Sylves_Cell__">GridExtensions.ToMeshData(IGrid, IEnumerable&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Transformed_Sylves_IGrid_Sylves_Matrix4x4_">GridExtensions.Transformed(IGrid, Matrix4x4)</a>
+  </div>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
@@ -357,14 +438,14 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -372,8 +453,8 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
           </div>
         </div>
       </footer>

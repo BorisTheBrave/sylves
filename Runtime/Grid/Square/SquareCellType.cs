@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System;
+using System;
 using UnityEngine;
 
 namespace Sylves
@@ -52,6 +54,8 @@ namespace Sylves
         public static SquareCellType Instance => instance;
 
         private SquareCellType(){}
+
+        public Int32 N => 4;
 
         public IEnumerable<CellDir> GetCellDirs() => allCellDirs;
 

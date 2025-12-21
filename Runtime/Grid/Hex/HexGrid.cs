@@ -130,7 +130,7 @@ namespace Sylves
 
         public bool IsSingleCellType => true;
 
-        public int CoordinateDimension => 3;
+        public Int32 CoordinateDimension => 3;
 
         /// <summary>
         /// Returns the full list of cell types that can be returned by <see cref="GetCellType(Cell)"/>
@@ -163,7 +163,7 @@ namespace Sylves
         {
             // TODO: This seems right, but I haven't really validated
             var dualBound = bound == null ? null :
-                new TriangleBound(bound.min, bound.max + Vector3Int.one);
+                new TriangleBound(bound.Min, bound.Mex + Vector3Int.one);
 
             // Note hex orientation is flipped vs triangle orientation
             if (orientation == HexOrientation.FlatTopped)
@@ -177,6 +177,19 @@ namespace Sylves
                 var triCellSize = new Vector2(cellSize.x, cellSize.y / (4f / 3));
                 return new TriangleGrid.DualMapping(new TriangleGrid(triCellSize, TriangleOrientation.FlatTopped, dualBound), this).Reversed();
             }
+        }
+
+        public IGrid GetDiagonalGrid()
+        {
+            // Hexagons have no diagonal neighbours!
+            return this;
+        }
+
+        public IGrid GetCompactGrid() => new BijectModifier(this, c => new Cell(c.x, c.y, -c.x - c.y), c => new Cell(c.x, c.y, 0), 2);
+
+        public IGrid Recenter(Cell cell)
+        {
+            return new CellTranslateModifier(this, (Vector3Int)cell);
         }
 
         public Cell[] GetChildTriangles(Cell cell)
@@ -338,7 +351,7 @@ namespace Sylves
             get
             {
                 CheckBounded();
-                var size = bound.max - bound.min;
+                var size = bound.Mex - bound.Min;
                 return size.x * size.y;
             }
         }
@@ -346,18 +359,18 @@ namespace Sylves
         public int GetIndex(Cell cell)
         {
             CheckBounded();
-            var sizeX = bound.max.x - bound.min.x;
-            var dx = cell.x - bound.min.x;
-            var dy = cell.y - bound.min.y;
+            var sizeX = bound.Mex.x - bound.Min.x;
+            var dx = cell.x - bound.Min.x;
+            var dy = cell.y - bound.Min.y;
             return dx + dy * sizeX;
 
         }
 
         public Cell GetCellByIndex(int index)
         {
-            var sizeX = bound.max.x - bound.min.x;
-            var x = bound.min.x + (index % sizeX);
-            var y = bound.min.y + (index / sizeX);
+            var sizeX = bound.Mex.x - bound.Min.x;
+            var x = bound.Min.x + (index % sizeX);
+            var y = bound.Min.y + (index / sizeX);
             var z = -x - y;
             return new Cell(x, y, z);
         }
@@ -410,6 +423,36 @@ namespace Sylves
         }
         
         public bool IsCellInBound(Cell cell, IBound bound) => bound is HexBound hb ? hb.Contains(cell) : true;
+
+        public Aabb? GetBoundAabb(IBound bound)
+        {
+            if (bound is HexBound hb)
+            {
+                var first = true;
+                Vector3 localMin = default, localMax = default;
+                foreach (var c in hb.GetCorners())
+                {
+                    var p = GetCellCenter(c);
+                    if (first)
+                    {
+                        localMin = localMin = p;
+                        first = false;
+                    }
+                    else
+                    {
+                        localMin = Vector3.Min(localMin, p);
+                        localMax = Vector3.Min(localMax, p);
+                    }
+                }
+                // Increase bounds to cover corners
+                localMin.x -= 0.5f * cellSize.x;
+                localMin.y -= 0.5f * cellSize.y;
+                localMax.x += 0.5f * cellSize.x;
+                localMax.y += 0.5f * cellSize.y;
+                return Aabb.FromMinMax(localMin, localMax);
+            }
+            return null;
+        }
         #endregion
 
         #region Position
@@ -473,6 +516,10 @@ namespace Sylves
         {
             DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
+
+        public Aabb GetAabb(Cell cell) => GetBoundAabb(new HexBound((Vector3Int)cell, (Vector3Int)cell + Vector3Int.one)).Value;
+
+        public Aabb GetAabb(IEnumerable<Cell> cells) => GetBoundAabb(GetBound(cells)).Value;
 
         #endregion
 
@@ -603,12 +650,12 @@ namespace Sylves
             }
             var cubeBound = (HexBound)srcBound;
             // TODO: Use operator*
-            if (!TryApplySymmetry(s, (Cell)(cubeBound.min), out var a, out var _))
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.Min), out var a, out var _))
             {
                 return false;
             }
-            // This trick works best with *inclusive* bounds.
-            if (!TryApplySymmetry(s, (Cell)(cubeBound.max - Vector3Int.one), out var b, out var _))
+            // This trick works best with inclusive bounds.
+            if (!TryApplySymmetry(s, (Cell)(cubeBound.Max), out var b, out var _))
             {
                 return false;
             }

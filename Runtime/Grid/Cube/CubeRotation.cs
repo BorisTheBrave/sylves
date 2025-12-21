@@ -144,7 +144,7 @@ namespace Sylves
             Vector4 Rotate(Vector3Int v)
             {
                 var v1 = matrix.MultiplyVector(v).normalized;
-                var v2 = new Vector4(Mathf.RoundToInt(v1.x), Mathf.RoundToInt(v1.y), Mathf.RoundToInt(v1.z), 0);
+                var v2 = new Vector4(MathUtils.RoundToInt32(v1.x), MathUtils.RoundToInt32(v1.y), MathUtils.RoundToInt32(v1.z), 0);
 
                 return v2;
             }
@@ -198,7 +198,7 @@ namespace Sylves
                    value == rotation.value;
         }
 
-        public override int GetHashCode()
+        public override System.Int32 GetHashCode()
         {
             return -1584136870 + value.GetHashCode();
         }
@@ -275,8 +275,8 @@ namespace Sylves
 
         public static CubeBound operator *(CubeRotation rotation, CubeBound bound)
         {
-            var a = rotation * bound.min;
-            var b = rotation * (bound.max - Vector3Int.one);
+            var a = rotation * bound.Min;
+            var b = rotation * bound.Max;
             return new CubeBound(Vector3Int.Min(a, b), Vector3Int.Max(a, b) + Vector3Int.one);
         }
 

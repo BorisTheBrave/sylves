@@ -11,6 +11,12 @@ namespace Sylves
         Relax,
     }
 
+    public enum VoronoiCenterType
+    {
+        Circumcenter,
+        Centroid,
+    }
+
     public class VoronoiGridOptions
     {
         public Vector2? ClipMin { get; set; }
@@ -20,9 +26,11 @@ namespace Sylves
         /// Applies this many steps of https://en.wikipedia.org/wiki/Lloyd's_algorithm
         /// giving move evenly sized cell.
         /// </summary>
-        public int LloydRelaxationIterations { get; set; }
+        public Int32 LloydRelaxationIterations { get; set; }
 
         public BorderRelaxation BorderRelaxation { get; set; }
+
+        public VoronoiCenterType CenterType { get; set; }
     }
 
     public class VoronoiGrid : MeshGrid
@@ -32,12 +40,16 @@ namespace Sylves
         {
         }
 
-        public static MeshData CreateMeshData(IList<Vector2> points, VoronoiGridOptions voronoiGridOptions = null, Func<int, bool> mask = null)
+        public static MeshData CreateMeshData(IList<Vector2> points, VoronoiGridOptions voronoiGridOptions = null, Func<Int32, bool> mask = null)
         {
             voronoiGridOptions = voronoiGridOptions ?? new VoronoiGridOptions();
             if (voronoiGridOptions.ClipMin != null ^ voronoiGridOptions.ClipMax != null)
             {
                 throw new ArgumentException("ClipMin/ClipMax should be specified together");
+            }
+            if(voronoiGridOptions.CenterType != VoronoiCenterType.Circumcenter)
+            {
+                throw new ArgumentException($"CenterType {voronoiGridOptions.CenterType} not supported");
             }
             var voronator = voronoiGridOptions.ClipMin == null ? new Voronator(points) : new Voronator(points, voronoiGridOptions.ClipMin.Value, voronoiGridOptions.ClipMax.Value);
 
@@ -58,16 +70,20 @@ namespace Sylves
                 {
                     throw new Exception($"Unknown relaxation type {voronoiGridOptions.BorderRelaxation}");
                 }
-                voronator = voronoiGridOptions.ClipMin == null ? new Voronator(points) : new Voronator(points, voronoiGridOptions.ClipMin.Value, voronoiGridOptions.ClipMax.Value);
+                // Don't grow the bounds every iteration
+                voronator = new Voronator(points, voronator.ClipMin, voronator.ClipMax);
             }
 
-            var indices = new List<int>();
+            var indices = new List<Int32>();
             var vertices = new List<Vector3>();
             for (var i = 0; i < points.Count; i++)
             {
                 if (mask != null && mask(i) == false)
                     continue;
                 var polygon = voronator.GetClippedPolygon(i);
+                // Hmm, should we just fail here?
+                if (polygon == null || polygon.Count == 0)
+                    continue;
                 for (var j = 0; j < polygon.Count; j++)
                 {
                     indices.Add(vertices.Count);

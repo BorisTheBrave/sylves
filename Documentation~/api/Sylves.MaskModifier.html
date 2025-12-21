@@ -1,17 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class MaskModifier
-   </title>
+    <title>Class MaskModifier </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class MaskModifier
-   ">
-    <meta name="generator" content="docfx 2.59.0.0">
-    
+    <meta name="title" content="Class MaskModifier ">
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -19,14 +17,14 @@
     <link rel="stylesheet" href="../styles/custom.css">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    
-    
+  
+  
+  
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -36,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../index.html">
                 <img id="logo" class="svg" src="../logo.svg" alt="">
               </a>
@@ -50,7 +48,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -60,7 +58,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -70,22 +68,23 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Sylves.MaskModifier">
-  
-  
-  <h1 id="Sylves_MaskModifier" data-uid="Sylves.MaskModifier" class="text-break">Class MaskModifier
-  </h1>
+
+
+
+  <h1 id="Sylves_MaskModifier" data-uid="Sylves.MaskModifier" class="text-break">Class MaskModifier</h1>
   <div class="markdown level0 summary"><p>Filters the cells in the the grid to a customizable subset.</p>
 <p>Filtered cells will not be returned by GetCells, TryMove, etc. Passing them as inputs
 is undefined.</p>
+<p>Calling Unbounded will remove this modifier (as well as any bounds)</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><a class="xref" href="Sylves.BaseModifier.html">BaseModifier</a></div>
     <div class="level2"><span class="xref">MaskModifier</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Sylves.IGrid.html">IGrid</a></div>
   </div>
@@ -95,7 +94,10 @@ is undefined.</p>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellTypes">BaseModifier.GetCellTypes()</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetDual">BaseModifier.GetDual()</a>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetDiagonalGrid">BaseModifier.GetDiagonalGrid()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Recenter_Sylves_Cell_">BaseModifier.Recenter(Cell)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellType_Sylves_Cell_">BaseModifier.GetCellType(Cell)</a>
@@ -113,7 +115,7 @@ is undefined.</p>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetIndex_Sylves_Cell_">BaseModifier.GetIndex(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellByIndex_System_Int32_">BaseModifier.GetCellByIndex(Int32)</a>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellByIndex_System_Int32_">BaseModifier.GetCellByIndex(int)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetBound">BaseModifier.GetBound()</a>
@@ -131,6 +133,9 @@ is undefined.</p>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_UnionBounds_Sylves_IBound_Sylves_IBound_">BaseModifier.UnionBounds(IBound, IBound)</a>
     </div>
     <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetBoundAabb_Sylves_IBound_">BaseModifier.GetBoundAabb(IBound)</a>
+    </div>
+    <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellCenter_Sylves_Cell_">BaseModifier.GetCellCenter(Cell)</a>
     </div>
     <div>
@@ -143,19 +148,25 @@ is undefined.</p>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetDeformation_Sylves_Cell_">BaseModifier.GetDeformation(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__">BaseModifier.GetPolygon(Cell, Vector3[], Matrix4x4)</a>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__">BaseModifier.GetPolygon(Cell, out Vector3[], out Matrix4x4)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetTriangleMesh_Sylves_Cell_">BaseModifier.GetTriangleMesh(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__">BaseModifier.GetMeshData(Cell, MeshData, Matrix4x4)</a>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__">BaseModifier.GetMeshData(Cell, out MeshData, out Matrix4x4)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetAabb_Sylves_Cell_">BaseModifier.GetAabb(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetAabb_System_Collections_Generic_IEnumerable_Sylves_Cell__">BaseModifier.GetAabb(IEnumerable&lt;Cell&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_FindGridSymmetry_System_Collections_Generic_ISet_Sylves_Cell__System_Collections_Generic_ISet_Sylves_Cell__Sylves_Cell_Sylves_CellRotation_">BaseModifier.FindGridSymmetry(ISet&lt;Cell&gt;, ISet&lt;Cell&gt;, Cell, CellRotation)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">BaseModifier.TryApplySymmetry(GridSymmetry, IBound, IBound)</a>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">BaseModifier.TryApplySymmetry(GridSymmetry, IBound, out IBound)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Is2d">BaseModifier.Is2d</a>
@@ -179,9 +190,6 @@ is undefined.</p>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_CoordinateDimension">BaseModifier.CoordinateDimension</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Unbounded">BaseModifier.Unbounded</a>
-    </div>
-    <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Unwrapped">BaseModifier.Unwrapped</a>
     </div>
     <div>
@@ -189,6 +197,27 @@ is undefined.</p>
     </div>
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IndexCount">BaseModifier.IndexCount</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
@@ -198,19 +227,19 @@ is undefined.</p>
     <pre><code class="lang-csharp hljs">public class MaskModifier : BaseModifier, IGrid</code></pre>
   </div>
   <h3 id="constructors">Constructors
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_MaskModifier__ctor_" data-uid="Sylves.MaskModifier.#ctor*"></a>
   <h4 id="Sylves_MaskModifier__ctor_Sylves_IGrid_System_Collections_Generic_ISet_Sylves_Cell__" data-uid="Sylves.MaskModifier.#ctor(Sylves.IGrid,System.Collections.Generic.ISet{Sylves.Cell})">MaskModifier(IGrid, ISet&lt;Cell&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public MaskModifier(IGrid underlying, ISet&lt;Cell&gt; allCells)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -225,24 +254,24 @@ is undefined.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.ISet</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
         <td><span class="parametername">allCells</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_MaskModifier__ctor_" data-uid="Sylves.MaskModifier.#ctor*"></a>
-  <h4 id="Sylves_MaskModifier__ctor_Sylves_IGrid_System_Func_Sylves_Cell_System_Boolean__System_Collections_Generic_IEnumerable_Sylves_Cell__" data-uid="Sylves.MaskModifier.#ctor(Sylves.IGrid,System.Func{Sylves.Cell,System.Boolean},System.Collections.Generic.IEnumerable{Sylves.Cell})">MaskModifier(IGrid, Func&lt;Cell, Boolean&gt;, IEnumerable&lt;Cell&gt;)</h4>
+  <h4 id="Sylves_MaskModifier__ctor_Sylves_IGrid_System_Func_Sylves_Cell_System_Boolean__System_Collections_Generic_IEnumerable_Sylves_Cell__" data-uid="Sylves.MaskModifier.#ctor(Sylves.IGrid,System.Func{Sylves.Cell,System.Boolean},System.Collections.Generic.IEnumerable{Sylves.Cell})">MaskModifier(IGrid, Func&lt;Cell, bool&gt;, IEnumerable&lt;Cell&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public MaskModifier(IGrid underlying, Func&lt;Cell, bool&gt; containsFunc, IEnumerable&lt;Cell&gt; allCells = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -257,31 +286,32 @@ is undefined.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>, <span class="xref">System.Boolean</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">containsFunc</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
         <td><span class="parametername">allCells</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_MaskModifier_IsFinite_" data-uid="Sylves.MaskModifier.IsFinite*"></a>
   <h4 id="Sylves_MaskModifier_IsFinite" data-uid="Sylves.MaskModifier.IsFinite">IsFinite</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>True if there is a finite amout of cells in the grid.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool IsFinite { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -290,27 +320,56 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IsFinite">BaseModifier.IsFinite</a></div>
+
+
+  <a id="Sylves_MaskModifier_Unbounded_" data-uid="Sylves.MaskModifier.Unbounded*"></a>
+  <h4 id="Sylves_MaskModifier_Unbounded" data-uid="Sylves.MaskModifier.Unbounded">Unbounded</h4>
+  <div class="markdown level1 summary"><p>Returns the grid with any bounds removed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IGrid Unbounded { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Unbounded">BaseModifier.Unbounded</a></div>
   <h3 id="methods">Methods
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_MaskModifier_FindCell_" data-uid="Sylves.MaskModifier.FindCell*"></a>
   <h4 id="Sylves_MaskModifier_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__" data-uid="Sylves.MaskModifier.FindCell(Sylves.Matrix4x4,Sylves.Cell@,Sylves.CellRotation@)">FindCell(Matrix4x4, out Cell, out CellRotation)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns the cell and rotation corresponding to a given transform matrix.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool FindCell(Matrix4x4 matrix, out Cell cell, out CellRotation rotation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -337,7 +396,7 @@ is undefined.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -346,25 +405,26 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__">BaseModifier.FindCell(Matrix4x4, out Cell, out CellRotation)</a></div>
-  
-  
+
+
   <a id="Sylves_MaskModifier_FindCell_" data-uid="Sylves.MaskModifier.FindCell*"></a>
   <h4 id="Sylves_MaskModifier_FindCell_Sylves_Vector3_Sylves_Cell__" data-uid="Sylves.MaskModifier.FindCell(Sylves.Vector3,Sylves.Cell@)">FindCell(Vector3, out Cell)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Finds the cell containg the give position</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool FindCell(Vector3 position, out Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -386,7 +446,7 @@ is undefined.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -395,25 +455,26 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_FindCell_Sylves_Vector3_Sylves_Cell__">BaseModifier.FindCell(Vector3, out Cell)</a></div>
-  
-  
+
+
   <a id="Sylves_MaskModifier_GetCells_" data-uid="Sylves.MaskModifier.GetCells*"></a>
   <h4 id="Sylves_MaskModifier_GetCells" data-uid="Sylves.MaskModifier.GetCells">GetCells()</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets a full list of cells in bounds.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Cell&gt; GetCells()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -422,25 +483,26 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCells">BaseModifier.GetCells()</a></div>
-  
-  
+
+
   <a id="Sylves_MaskModifier_GetCellsInBounds_" data-uid="Sylves.MaskModifier.GetCellsInBounds*"></a>
   <h4 id="Sylves_MaskModifier_GetCellsInBounds_Sylves_IBound_" data-uid="Sylves.MaskModifier.GetCellsInBounds(Sylves.IBound)">GetCellsInBounds(IBound)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns the cells inside a given bound.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Cell&gt; GetCellsInBounds(IBound bound)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -457,7 +519,7 @@ is undefined.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -466,25 +528,26 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellsInBounds_Sylves_IBound_">BaseModifier.GetCellsInBounds(IBound)</a></div>
-  
-  
+
+
   <a id="Sylves_MaskModifier_GetCellsIntersectsApprox_" data-uid="Sylves.MaskModifier.GetCellsIntersectsApprox*"></a>
   <h4 id="Sylves_MaskModifier_GetCellsIntersectsApprox_Sylves_Vector3_Sylves_Vector3_" data-uid="Sylves.MaskModifier.GetCellsIntersectsApprox(Sylves.Vector3,Sylves.Vector3)">GetCellsIntersectsApprox(Vector3, Vector3)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets the set of cells that potentially overlap bounds.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Cell&gt; GetCellsIntersectsApprox(Vector3 min, Vector3 max)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -506,7 +569,7 @@ is undefined.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -515,25 +578,87 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.Cell.html">Cell</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellsIntersectsApprox_Sylves_Vector3_Sylves_Vector3_">BaseModifier.GetCellsIntersectsApprox(Vector3, Vector3)</a></div>
-  
-  
+
+
+  <a id="Sylves_MaskModifier_GetCompactGrid_" data-uid="Sylves.MaskModifier.GetCompactGrid*"></a>
+  <h4 id="Sylves_MaskModifier_GetCompactGrid" data-uid="Sylves.MaskModifier.GetCompactGrid">GetCompactGrid()</h4>
+  <div class="markdown level1 summary"><p>For a grid that has CoordinateDimension == 3,
+returns a grid that is the same as the current, but uses at most 2 dimensions.
+Otherwise, returns the current grid.
+(see RavelModifier if you want to reduce to 1 dimension).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IGrid GetCompactGrid()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IGrid.html">IGrid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCompactGrid">BaseModifier.GetCompactGrid()</a></div>
+
+
+  <a id="Sylves_MaskModifier_GetDual_" data-uid="Sylves.MaskModifier.GetDual*"></a>
+  <h4 id="Sylves_MaskModifier_GetDual" data-uid="Sylves.MaskModifier.GetDual">GetDual()</h4>
+  <div class="markdown level1 summary"><p>Returns a second grid which has one cell for every vertex of this grid,
+and also methods for mapping corners of one grid to the other.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IDualMapping GetDual()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sylves.IDualMapping.html">IDualMapping</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetDual">BaseModifier.GetDual()</a></div>
+
+
   <a id="Sylves_MaskModifier_IsCellInBound_" data-uid="Sylves.MaskModifier.IsCellInBound*"></a>
   <h4 id="Sylves_MaskModifier_IsCellInBound_Sylves_Cell_Sylves_IBound_" data-uid="Sylves.MaskModifier.IsCellInBound(Sylves.Cell,Sylves.IBound)">IsCellInBound(Cell, IBound)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Tests if a given cell is in bound.
+i.e. returns true if the cell is listed in GetCellsInBounds.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool IsCellInBound(Cell cell, IBound bound)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -555,7 +680,7 @@ is undefined.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -564,25 +689,28 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IsCellInBound_Sylves_Cell_Sylves_IBound_">BaseModifier.IsCellInBound(Cell, IBound)</a></div>
-  
-  
+
+
   <a id="Sylves_MaskModifier_IsCellInGrid_" data-uid="Sylves.MaskModifier.IsCellInGrid*"></a>
   <h4 id="Sylves_MaskModifier_IsCellInGrid_Sylves_Cell_" data-uid="Sylves.MaskModifier.IsCellInGrid(Sylves.Cell)">IsCellInGrid(Cell)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns true if the cell is in the grid (and within bounds).
+This is one of the few methods that accepts any Cell object, most
+other methods only work with the cells in the grid.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool IsCellInGrid(Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -599,7 +727,7 @@ is undefined.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -608,25 +736,38 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IsCellInGrid_Sylves_Cell_">BaseModifier.IsCellInGrid(Cell)</a></div>
-  
-  
+
+
   <a id="Sylves_MaskModifier_ParallelTransport_" data-uid="Sylves.MaskModifier.ParallelTransport*"></a>
   <h4 id="Sylves_MaskModifier_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__" data-uid="Sylves.MaskModifier.ParallelTransport(Sylves.IGrid,Sylves.Cell,Sylves.Cell,Sylves.Cell,Sylves.CellRotation,Sylves.Cell@,Sylves.CellRotation@)">ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, out Cell, out CellRotation)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Given a path in aGrid from aSrcCell to aDestCell
+follows the same path in the current grid, starting at srcCell, and with the whole path rotated by startRotation.
+Reports the final spot that the path ends at, and it's rotation.
+Returns false if this cannot be done (typically because an equivalent pathc annot be found in the grid).</p>
+<p>This method is useful for translating co-ordinates between different grids that are similarish, at least having the same celltypes.
+For example, suppose
+aGrid = new SquareGrid(1);
+aSrcCell = new Cell(0, 0)
+aDestCell = new Cell(5, 0)
+srcCell = new Cell(100, 100)
+startRotation = identity</p>
+<p>Then the path in aGrid is a straight line moving 5 units to the right,
+and this method would attempt to move 5 units in the straight line that leads right out of (100, 100).</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -673,7 +814,7 @@ is undefined.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -682,25 +823,26 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">BaseModifier.ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, out Cell, out CellRotation)</a></div>
-  
-  
+
+
   <a id="Sylves_MaskModifier_Raycast_" data-uid="Sylves.MaskModifier.Raycast*"></a>
-  <h4 id="Sylves_MaskModifier_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_" data-uid="Sylves.MaskModifier.Raycast(Sylves.Vector3,Sylves.Vector3,System.Single)">Raycast(Vector3, Vector3, Single)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Sylves_MaskModifier_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_" data-uid="Sylves.MaskModifier.Raycast(Sylves.Vector3,Sylves.Vector3,System.Single)">Raycast(Vector3, Vector3, float)</h4>
+  <div class="markdown level1 summary"><p>Returns the cells intersecting a ray starting at origin, of length direction.magnitude * maxDistance, in order.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;RaycastInfo&gt; Raycast(Vector3 origin, Vector3 direction, float maxDistance = InfinityF)</code></pre>
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;RaycastInfo&gt; Raycast(Vector3 origin, Vector3 direction, float maxDistance = Infinity)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -720,14 +862,14 @@ is undefined.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Single</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></td>
         <td><span class="parametername">maxDistance</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -736,25 +878,26 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.RaycastInfo.html">RaycastInfo</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.RaycastInfo.html">RaycastInfo</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">BaseModifier.Raycast(Vector3, Vector3, Single)</a></div>
-  
-  
+  <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">BaseModifier.Raycast(Vector3, Vector3, float)</a></div>
+
+
   <a id="Sylves_MaskModifier_Rebind_" data-uid="Sylves.MaskModifier.Rebind*"></a>
   <h4 id="Sylves_MaskModifier_Rebind_Sylves_IGrid_" data-uid="Sylves.MaskModifier.Rebind(Sylves.IGrid)">Rebind(IGrid)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Creates a new grid applying the current wrapper to a new underlying.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected override IGrid Rebind(IGrid underlying)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -771,7 +914,7 @@ is undefined.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -787,18 +930,21 @@ is undefined.</p>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Rebind_Sylves_IGrid_">BaseModifier.Rebind(IGrid)</a></div>
-  
-  
+
+
   <a id="Sylves_MaskModifier_TryApplySymmetry_" data-uid="Sylves.MaskModifier.TryApplySymmetry*"></a>
   <h4 id="Sylves_MaskModifier_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__" data-uid="Sylves.MaskModifier.TryApplySymmetry(Sylves.GridSymmetry,Sylves.Cell,Sylves.Cell@,Sylves.CellRotation@)">TryApplySymmetry(GridSymmetry, Cell, out Cell, out CellRotation)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Applies the mapping of s to cell, and also returns the rotation</p>
+<p>For more details, see <a class="xref" href="Sylves.GridSymmetry.html">GridSymmetry</a>.</p>
+<p>For simple, regular grids, the output rotation is copied directly from <a class="xref" href="Sylves.GridSymmetry.html#Sylves_GridSymmetry_Rotation">Rotation</a>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool TryApplySymmetry(GridSymmetry s, Cell src, out Cell dest, out CellRotation r)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -830,7 +976,7 @@ is undefined.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -839,25 +985,26 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__">BaseModifier.TryApplySymmetry(GridSymmetry, Cell, out Cell, out CellRotation)</a></div>
-  
-  
+
+
   <a id="Sylves_MaskModifier_TryMove_" data-uid="Sylves.MaskModifier.TryMove*"></a>
   <h4 id="Sylves_MaskModifier_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__" data-uid="Sylves.MaskModifier.TryMove(Sylves.Cell,Sylves.CellDir,Sylves.Cell@,Sylves.CellDir@,Sylves.Connection@)">TryMove(Cell, CellDir, out Cell, out CellDir, out Connection)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Attempts to move from a cell in a given direction, and returns information about the move if successful.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -869,32 +1016,37 @@ is undefined.</p>
       <tr>
         <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
         <td><span class="parametername">cell</span></td>
-        <td></td>
+        <td><p>The cell to move from</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Sylves.CellDir.html">CellDir</a></td>
         <td><span class="parametername">dir</span></td>
-        <td></td>
+        <td><p>The direction to move in</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Sylves.Cell.html">Cell</a></td>
         <td><span class="parametername">dest</span></td>
-        <td></td>
+        <td><p>The cell moved to</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Sylves.CellDir.html">CellDir</a></td>
         <td><span class="parametername">inverseDir</span></td>
-        <td></td>
+        <td><p>The direction leading back from dest to cell.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Sylves.Connection.html">Connection</a></td>
         <td><span class="parametername">connection</span></td>
-        <td></td>
+        <td><p>A descriptor of how cell-local space relates between cell and dest.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -903,25 +1055,28 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__">BaseModifier.TryMove(Cell, CellDir, out Cell, out CellDir, out Connection)</a></div>
-  
-  
+
+
   <a id="Sylves_MaskModifier_TryMoveByOffset_" data-uid="Sylves.MaskModifier.TryMoveByOffset*"></a>
   <h4 id="Sylves_MaskModifier_TryMoveByOffset_Sylves_Cell_Sylves_Vector3Int_Sylves_Vector3Int_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__" data-uid="Sylves.MaskModifier.TryMoveByOffset(Sylves.Cell,Sylves.Vector3Int,Sylves.Vector3Int,Sylves.CellRotation,Sylves.Cell@,Sylves.CellRotation@)">TryMoveByOffset(Cell, Vector3Int, Vector3Int, CellRotation, out Cell, out CellRotation)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Maps between cell offsets and cells in the grid.
+This is normally done via <a class="xref" href="Sylves.IGrid.html#Sylves_IGrid_FindBasicPath_Sylves_Cell_Sylves_Cell_">FindBasicPath(Cell, Cell)</a>, but regular grids
+often have a more efficient implementation.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool TryMoveByOffset(Cell startCell, Vector3Int startOffset, Vector3Int destOffset, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -963,7 +1118,7 @@ is undefined.</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -972,7 +1127,7 @@ is undefined.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -983,9 +1138,44 @@ is undefined.</p>
   <div>
       <a class="xref" href="Sylves.IGrid.html">IGrid</a>
   </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_FindCell_Sylves_IGrid_Sylves_Vector3_">GridExtensions.FindCell(IGrid, Vector3)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetCellsIntersectsApprox_Sylves_IGrid_Sylves_Aabb_">GridExtensions.GetCellsIntersectsApprox(IGrid, Aabb)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetMeshData_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetMeshData(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetNeighbours_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetNeighbours(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetPolygon_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetPolygon(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Masked_Sylves_IGrid_System_Collections_Generic_ISet_Sylves_Cell__">GridExtensions.Masked(IGrid, ISet&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Masked_Sylves_IGrid_System_Func_Sylves_Cell_System_Boolean__System_Collections_Generic_IEnumerable_Sylves_Cell__">GridExtensions.Masked(IGrid, Func&lt;Cell, bool&gt;, IEnumerable&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Move_Sylves_IGrid_Sylves_Cell_Sylves_CellDir_">GridExtensions.Move(IGrid, Cell, CellDir)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_ToMeshData_Sylves_IGrid_">GridExtensions.ToMeshData(IGrid)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_ToMeshData_Sylves_IGrid_System_Collections_Generic_IEnumerable_Sylves_Cell__">GridExtensions.ToMeshData(IGrid, IEnumerable&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Transformed_Sylves_IGrid_Sylves_Matrix4x4_">GridExtensions.Transformed(IGrid, Matrix4x4)</a>
+  </div>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
@@ -993,14 +1183,14 @@ is undefined.</p>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -1008,8 +1198,8 @@ is undefined.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
           </div>
         </div>
       </footer>

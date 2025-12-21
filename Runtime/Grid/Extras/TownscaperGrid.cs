@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -7,17 +9,28 @@ namespace Sylves
     // The townscaper grid, without the extra relaxation step
     internal class UnrelaxedTownscaperGrid : PlanarLazyMeshGrid
     {
-        private readonly int n;
+        private const float TriangleSize = 0.5f;
+
+        private readonly Int32 n;
         private readonly float tolerance;
         private readonly HexGrid chunkGrid;
-        private readonly int seed;
+        private readonly Int32 seed;
 
-        public UnrelaxedTownscaperGrid(int n, int seed, float tolerance) : base()
+        // Clone constructor
+        public UnrelaxedTownscaperGrid(UnrelaxedTownscaperGrid original, SquareBound bound) : base(original, bound)
+        {
+            this.n = original.n;
+            this.seed = original.seed;
+            this.tolerance = original.tolerance;
+            this.chunkGrid = original.chunkGrid;
+        }
+
+        public UnrelaxedTownscaperGrid(Int32 n, Int32 seed, float tolerance) : base()
         {
             this.n = n;
             this.seed = seed;
             this.tolerance = tolerance;
-            chunkGrid = new HexGrid(n);
+            chunkGrid = new HexGrid(n * 2 * TriangleSize);
 
             base.Setup(GetMeshData, chunkGrid, translateMeshData: true, meshGridOptions: new MeshGridOptions { Tolerance = tolerance });
         }
@@ -25,11 +38,11 @@ namespace Sylves
         private MeshData GetMeshData(Cell hex)
         {
             // Make a triangle grid that fills the chunk
-            var triangleGrid = new TriangleGrid(0.5f, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(n));
+            var triangleGrid = new TriangleGrid(TriangleSize, TriangleOrientation.FlatSides, bound: TriangleBound.Hexagon(n));
             var meshData = triangleGrid.ToMeshData();
 
             // Randomly pair the triangles of that grid
-            var hexSeed = HashUtils.Hash(hex.x, hex.y, hex.z, seed);
+            var hexSeed = HashUtils.Hash(hex, seed);
             var random = new System.Random(hexSeed);
             meshData = meshData.RandomPairing(random.NextDouble);
 
@@ -41,6 +54,21 @@ namespace Sylves
 
             return meshData;
         }
+
+        private static ICellType[] s_cellTypes = new[] { SquareCellType.Instance };
+
+        public override IEnumerable<ICellType> GetCellTypes() => s_cellTypes;
+
+        public override IGrid GetCompactGrid()
+        {
+            // There's probably a nice formula for this, based on area
+            var maxCellsPerHex = HexBound.Hexagon(n).Count();
+            return DefaultGridImpl.GetCompactGridFiniteX(this, maxCellsPerHex);
+        }
+
+        public override IGrid Unbounded => new UnrelaxedTownscaperGrid(this, null);
+
+        public override IGrid BoundBy(IBound bound) => bound == null ? this : new UnrelaxedTownscaperGrid(this, (SquareBound)IntersectBounds(this.GetBound(), bound));
     }
 
     /// <summary>
@@ -51,9 +79,8 @@ namespace Sylves
     {
         const float tolerance = 1e-2f;
 
-        public TownscaperGrid(int n, int? seed = null, int relaxIterations = 10) : base(new UnrelaxedTownscaperGrid(n, seed ?? new System.Random().Next(), tolerance), n, relaxIterations: relaxIterations, weldTolerance: tolerance)
+        public TownscaperGrid(Int32 n, Int32? seed = null, Int32 relaxIterations = 10) : base(new UnrelaxedTownscaperGrid(n, seed ?? new System.Random().Next(), tolerance), n, relaxIterations: relaxIterations, weldTolerance: tolerance)
         {
-
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Sylves
     /// Cell (0, 0, 0) is a random rectangle filling at most from (-1, -1, 0) to (1, 1, 0),
     /// and having height and width at least minSize
     /// </summary>
-    internal class OffGrid : PlanarLazyGrid
+    public class OffGrid : PlanarLazyGrid
     {
         private static readonly ICellType[] cellTypes = new[] { SquareCellType.Instance };
         private static readonly SquareGrid unitSquareGrid = new SquareGrid(1f);
@@ -20,9 +20,9 @@ namespace Sylves
 
         private readonly float minSize;
         private readonly ICachePolicy cachePolicy;
-        private readonly int seed;
+        private readonly Int32 seed;
 
-        public OffGrid(float minSize = 0.2f, SquareBound bound = null, int? seed = null, ICachePolicy cachePolicy = null) 
+        public OffGrid(float minSize = 0.2f, SquareBound bound = null, Int32? seed = null, ICachePolicy cachePolicy = null) 
             : base(Vector2.right, Vector2.up, Vector2.one * (1 - minSize / 2) * -1, Vector2.one * (2 - minSize), bound, cellTypes, cachePolicy)
         {
             if (minSize > 1 || minSize < 0)
@@ -58,7 +58,7 @@ namespace Sylves
 
         private float GetValue(int x, int y)
         {
-            var rectSeed = HashUtils.Hash(x, y, seed);
+            var rectSeed = HashUtils.Hash(x.GetHashCode(), y.GetHashCode(), seed);
             var pureRandom = (float)new System.Random(rectSeed).NextDouble();
             return minSize / 2 + pureRandom * (1 - minSize);
         }

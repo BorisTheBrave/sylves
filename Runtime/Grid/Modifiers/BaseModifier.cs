@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sylves
@@ -38,7 +39,7 @@ namespace Sylves
 
         public virtual bool IsSingleCellType => underlying.IsSingleCellType;
 
-        public virtual int CoordinateDimension => underlying.CoordinateDimension;
+        public virtual Int32 CoordinateDimension => underlying.CoordinateDimension;
 
         public virtual IEnumerable<ICellType> GetCellTypes() => underlying.GetCellTypes();
 
@@ -49,7 +50,10 @@ namespace Sylves
         public virtual IGrid Unbounded => Rebind(underlying.Unbounded);
         public virtual IGrid Unwrapped => underlying.Unwrapped;
         public virtual IGrid Underlying => underlying;
-        public virtual IDualMapping GetDual() => underlying.GetDual();
+        public virtual IDualMapping GetDual() => throw new NotImplementedException();
+        public virtual IGrid GetDiagonalGrid() => Rebind(underlying.GetDiagonalGrid());
+        public virtual IGrid GetCompactGrid() => Rebind(underlying.GetCompactGrid());
+        public virtual IGrid Recenter(Cell cell) => Rebind(underlying.Recenter(cell));
         #endregion
 
         #region Cell info
@@ -96,6 +100,7 @@ namespace Sylves
         public virtual IBound UnionBounds(IBound bound, IBound other) => underlying.UnionBounds(bound, other);
         public virtual IEnumerable<Cell> GetCellsInBounds(IBound bound) => underlying.GetCellsInBounds(bound);
         public virtual bool IsCellInBound(Cell cell, IBound bound) => underlying.IsCellInBound(cell, bound);
+        public virtual Aabb? GetBoundAabb(IBound bound) => underlying.GetBoundAabb(bound);
         #endregion
 
         #region Position
@@ -112,6 +117,10 @@ namespace Sylves
         public virtual IEnumerable<(Vector3, Vector3, Vector3, CellDir)> GetTriangleMesh(Cell cell) => underlying.GetTriangleMesh(cell);
 
         public virtual void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => underlying.GetMeshData(cell, out meshData, out transform);
+
+        public virtual Aabb GetAabb(Cell cell) => underlying.GetAabb(cell);
+
+        public virtual Aabb GetAabb(IEnumerable<Cell> cells) => underlying.GetAabb(cells);
 
         #endregion
 

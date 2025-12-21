@@ -1,24 +1,30 @@
-﻿
+
 <div id="sidetoggle">
   <div>
     <div class="sidefilter">
       <form class="toc-filter">
         <span class="glyphicon glyphicon-filter filter-icon"></span>
         <span class="glyphicon glyphicon-remove clear-icon" id="toc_filter_clear"></span>
-        <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+        <input type="text" id="toc_filter_input" placeholder="Filter by title" onkeypress="if(event.keyCode==13) {return false;}">
       </form>
     </div>
     <div class="sidetoc">
       <div class="toc" id="toc">
-          
+
           <ul class="nav level1">
                 <li>
                     <span class="expand-stub"></span>
                     <a href="Sylves.html" name="" title="Sylves">Sylves</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="Sylves.AStarPathfinding.html" name="" title="AStarPathfinding">AStarPathfinding</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.Aabb.html" name="" title="Aabb">Aabb</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.AmmannBeenkerGrid.html" name="" title="AmmannBeenkerGrid">AmmannBeenkerGrid</a>
                           </li>
                           <li>
                               <a href="Sylves.BaseModifier.html" name="" title="BaseModifier">BaseModifier</a>
@@ -27,16 +33,13 @@
                               <a href="Sylves.BaseSubstitutionTilingGrid.html" name="" title="BaseSubstitutionTilingGrid">BaseSubstitutionTilingGrid</a>
                           </li>
                           <li>
-                              <a href="Sylves.BaseSubstitutionTilingGrid.Aabb.html" name="" title="BaseSubstitutionTilingGrid.Aabb">BaseSubstitutionTilingGrid.Aabb</a>
-                          </li>
-                          <li>
                               <a href="Sylves.BaseSubstitutionTilingGrid.InternalPrototile.html" name="" title="BaseSubstitutionTilingGrid.InternalPrototile">BaseSubstitutionTilingGrid.InternalPrototile</a>
                           </li>
                           <li>
-                              <a href="Sylves.BijectModifier.html" name="" title="BijectModifier">BijectModifier</a>
+                              <a href="Sylves.BiMap-2.html" name="" title="BiMap&lt;U, V&gt;">BiMap&lt;U, V&gt;</a>
                           </li>
                           <li>
-                              <a href="Sylves.BiMap-2.html" name="" title="BiMap&lt;U, V&gt;">BiMap&lt;U, V&gt;</a>
+                              <a href="Sylves.BijectModifier.html" name="" title="BijectModifier">BijectModifier</a>
                           </li>
                           <li>
                               <a href="Sylves.BorderRelaxation.html" name="" title="BorderRelaxation">BorderRelaxation</a>
@@ -73,6 +76,15 @@
                           </li>
                           <li>
                               <a href="Sylves.ChisledPathfinding.html" name="" title="ChisledPathfinding">ChisledPathfinding</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.CompoundGrid.html" name="" title="CompoundGrid">CompoundGrid</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.CompoundGrid.CompoundBound.html" name="" title="CompoundGrid.CompoundBound">CompoundGrid.CompoundBound</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.CompoundSection.html" name="" title="CompoundSection">CompoundSection</a>
                           </li>
                           <li>
                               <a href="Sylves.Connection.html" name="" title="Connection">Connection</a>
@@ -141,6 +153,9 @@
                               <a href="Sylves.DualMeshBuilder.html" name="" title="DualMeshBuilder">DualMeshBuilder</a>
                           </li>
                           <li>
+                              <a href="Sylves.Encoding.html" name="" title="Encoding">Encoding</a>
+                          </li>
+                          <li>
                               <a href="Sylves.FSTriangleCorner.html" name="" title="FSTriangleCorner">FSTriangleCorner</a>
                           </li>
                           <li>
@@ -181,6 +196,9 @@
                           </li>
                           <li>
                               <a href="Sylves.GridSymmetry.html" name="" title="GridSymmetry">GridSymmetry</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.HalfPlane.html" name="" title="HalfPlane">HalfPlane</a>
                           </li>
                           <li>
                               <a href="Sylves.HashUtils.html" name="" title="HashUtils">HashUtils</a>
@@ -237,6 +255,12 @@
                               <a href="Sylves.JitteredSquareGrid.html" name="" title="JitteredSquareGrid">JitteredSquareGrid</a>
                           </li>
                           <li>
+                              <a href="Sylves.KruskalMinimumSpanningTree.html" name="" title="KruskalMinimumSpanningTree">KruskalMinimumSpanningTree</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.LatticeLine.html" name="" title="LatticeLine">LatticeLine</a>
+                          </li>
+                          <li>
                               <a href="Sylves.MaskModifier.html" name="" title="MaskModifier">MaskModifier</a>
                           </li>
                           <li>
@@ -291,13 +315,31 @@
                               <a href="Sylves.MobiusSquareGrid.html" name="" title="MobiusSquareGrid">MobiusSquareGrid</a>
                           </li>
                           <li>
-                              <a href="Sylves.NestedModifier.html" name="" title="NestedModifier">NestedModifier</a>
-                          </li>
-                          <li>
                               <a href="Sylves.NGonCellType.html" name="" title="NGonCellType">NGonCellType</a>
                           </li>
                           <li>
                               <a href="Sylves.NGonPrismCellType.html" name="" title="NGonPrismCellType">NGonPrismCellType</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.NestedModifier.html" name="" title="NestedModifier">NestedModifier</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.OffGrid.html" name="" title="OffGrid">OffGrid</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.OutlineCells.html" name="" title="OutlineCells">OutlineCells</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.OutlineCells.OutlineLoop.html" name="" title="OutlineCells.OutlineLoop">OutlineCells.OutlineLoop</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.PTHexCorner.html" name="" title="PTHexCorner">PTHexCorner</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.PTHexDir.html" name="" title="PTHexDir">PTHexDir</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.PTHexPrismDir.html" name="" title="PTHexPrismDir">PTHexPrismDir</a>
                           </li>
                           <li>
                               <a href="Sylves.Pathfinding.html" name="" title="Pathfinding">Pathfinding</a>
@@ -309,10 +351,16 @@
                               <a href="Sylves.PeriodicPlanarMeshGrid.html" name="" title="PeriodicPlanarMeshGrid">PeriodicPlanarMeshGrid</a>
                           </li>
                           <li>
+                              <a href="Sylves.PinwheelGrid.html" name="" title="PinwheelGrid">PinwheelGrid</a>
+                          </li>
+                          <li>
                               <a href="Sylves.PlanarLazyGrid.html" name="" title="PlanarLazyGrid">PlanarLazyGrid</a>
                           </li>
                           <li>
                               <a href="Sylves.PlanarLazyMeshGrid.html" name="" title="PlanarLazyMeshGrid">PlanarLazyMeshGrid</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.PlanarMeshGrid.html" name="" title="PlanarMeshGrid">PlanarMeshGrid</a>
                           </li>
                           <li>
                               <a href="Sylves.PlanarPrismBound.html" name="" title="PlanarPrismBound">PlanarPrismBound</a>
@@ -330,19 +378,19 @@
                               <a href="Sylves.Prototile.html" name="" title="Prototile">Prototile</a>
                           </li>
                           <li>
-                              <a href="Sylves.PTHexCorner.html" name="" title="PTHexCorner">PTHexCorner</a>
-                          </li>
-                          <li>
-                              <a href="Sylves.PTHexDir.html" name="" title="PTHexDir">PTHexDir</a>
-                          </li>
-                          <li>
-                              <a href="Sylves.PTHexPrismDir.html" name="" title="PTHexPrismDir">PTHexPrismDir</a>
-                          </li>
-                          <li>
                               <a href="Sylves.QuadInterpolation.html" name="" title="QuadInterpolation">QuadInterpolation</a>
                           </li>
                           <li>
                               <a href="Sylves.Quaternion.html" name="" title="Quaternion">Quaternion</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.RadialGrids.html" name="" title="RadialGrids">RadialGrids</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.RandomRectGrid.html" name="" title="RandomRectGrid">RandomRectGrid</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.RandomRhombusGrid.html" name="" title="RandomRhombusGrid">RandomRhombusGrid</a>
                           </li>
                           <li>
                               <a href="Sylves.RavelModifier.html" name="" title="RavelModifier">RavelModifier</a>
@@ -358,6 +406,9 @@
                           </li>
                           <li>
                               <a href="Sylves.RhombilleGrid.html" name="" title="RhombilleGrid">RhombilleGrid</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.SphinxGrid.html" name="" title="SphinxGrid">SphinxGrid</a>
                           </li>
                           <li>
                               <a href="Sylves.SquareBound.html" name="" title="SquareBound">SquareBound</a>
@@ -402,6 +453,9 @@
                               <a href="Sylves.SvgExport.html" name="" title="SvgExport">SvgExport</a>
                           </li>
                           <li>
+                              <a href="Sylves.TRS.html" name="" title="TRS">TRS</a>
+                          </li>
+                          <li>
                               <a href="Sylves.TetrakisSquareGrid.html" name="" title="TetrakisSquareGrid">TetrakisSquareGrid</a>
                           </li>
                           <li>
@@ -409,6 +463,9 @@
                           </li>
                           <li>
                               <a href="Sylves.TransformModifier.html" name="" title="TransformModifier">TransformModifier</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.TriHexGrid.html" name="" title="TriHexGrid">TriHexGrid</a>
                           </li>
                           <li>
                               <a href="Sylves.TriangleBound.html" name="" title="TriangleBound">TriangleBound</a>
@@ -438,13 +495,7 @@
                               <a href="Sylves.TrianglePrismGrid.html" name="" title="TrianglePrismGrid">TrianglePrismGrid</a>
                           </li>
                           <li>
-                              <a href="Sylves.TriHexGrid.html" name="" title="TriHexGrid">TriHexGrid</a>
-                          </li>
-                          <li>
                               <a href="Sylves.Triple-1.html" name="" title="Triple&lt;T&gt;">Triple&lt;T&gt;</a>
-                          </li>
-                          <li>
-                              <a href="Sylves.TRS.html" name="" title="TRS">TRS</a>
                           </li>
                           <li>
                               <a href="Sylves.Vector2.html" name="" title="Vector2">Vector2</a>
@@ -471,16 +522,25 @@
                               <a href="Sylves.Voronator.PolygonStatus.html" name="" title="Voronator.PolygonStatus">Voronator.PolygonStatus</a>
                           </li>
                           <li>
+                              <a href="Sylves.VoronoiCenterType.html" name="" title="VoronoiCenterType">VoronoiCenterType</a>
+                          </li>
+                          <li>
                               <a href="Sylves.VoronoiGrid.html" name="" title="VoronoiGrid">VoronoiGrid</a>
                           </li>
                           <li>
                               <a href="Sylves.VoronoiGridOptions.html" name="" title="VoronoiGridOptions">VoronoiGridOptions</a>
                           </li>
                           <li>
+                              <a href="Sylves.VoronoiSphereGrid.html" name="" title="VoronoiSphereGrid">VoronoiSphereGrid</a>
+                          </li>
+                          <li>
                               <a href="Sylves.Walker.html" name="" title="Walker">Walker</a>
                           </li>
                           <li>
                               <a href="Sylves.WrapModifier.html" name="" title="WrapModifier">WrapModifier</a>
+                          </li>
+                          <li>
+                              <a href="Sylves.WrappingHexGrid.html" name="" title="WrappingHexGrid">WrappingHexGrid</a>
                           </li>
                           <li>
                               <a href="Sylves.WrappingSquareGrid.html" name="" title="WrappingSquareGrid">WrappingSquareGrid</a>

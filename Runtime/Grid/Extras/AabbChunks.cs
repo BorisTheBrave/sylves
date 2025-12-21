@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace Sylves
 {
-    // Experimentals
     internal class AabbChunks
     {
+        // Even though I've been careful with inclusive vs exclusive bounds
+        // it seems rounding errors for inclusive bounds still cause problems.
         const float eps = 1e-6f;
 
         private readonly Vector2 strideX;
@@ -43,7 +44,7 @@ namespace Sylves
             var minFR = fundamentalRhombusCorners.Aggregate(Vector2.Min);
             var maxFR = fundamentalRhombusCorners.Aggregate(Vector2.Max);
             // TODO: this could actually be a tighter bound
-            chunksInFundamentalRhombus = GetChunkIntersects(minFR, maxFR).ToArray();
+            chunksInFundamentalRhombus = GetChunkIntersects(minFR - eps * Vector2.one, maxFR + eps * Vector2.one).ToArray();
 
         }
 
@@ -53,6 +54,14 @@ namespace Sylves
             var tr = bl + aabbSize;
             return (bl, tr);
         }
+
+        public (Vector2, Vector2) GetBoundAabb(SquareBound bound)
+        {
+            var bl = aabbBottomLeft + strideX * bound.Min.x + strideY * bound.Min.y;
+            var tr = aabbBottomLeft + strideX * bound.Mex.x + strideY * bound.Mex.y + aabbSize;
+            return (bl, tr);
+        }
+
 
         // Partitions the plane so that every point is associated with one chunk it belongs to
         public Vector2Int? GetUniqueChunk(Vector2 pos)
@@ -75,7 +84,7 @@ namespace Sylves
             // Evaluate bounds on a central chunk
             // This cuts down on floating point issues as the chunks get further from the origin.
             var (min, max) = GetChunkBounds(new Vector2Int());
-            return GetChunkIntersects(min, max).Select(x => x + chunk);
+            return GetChunkIntersects(min - eps * Vector2.one, max + eps * Vector2.one).Select(x => x + chunk);
         }
 
 
@@ -110,8 +119,8 @@ namespace Sylves
             var maxX = Mathf.FloorToInt(right.x);
             if(bound != null)
             {
-                minX = Math.Max(minX, bound.min.x);
-                maxX = Math.Min(maxX, bound.max.x - 1);
+                minX = Math.Max(minX, bound.Min.x);
+                maxX = Math.Min(maxX, bound.Mex.x - 1);
             }
             for (var x = minX; x <= maxX; x++)
             {
@@ -125,8 +134,8 @@ namespace Sylves
                     ));
                 if (bound != null)
                 {
-                    minY = Math.Max(minY, bound.min.y);
-                    maxY = Math.Min(maxY, bound.max.y - 1);
+                    minY = Math.Max(minY, bound.Min.y);
+                    maxY = Math.Min(maxY, bound.Mex.y - 1);
                 }
                 for (var y = minY; y <= maxY; y++)
                 {
@@ -137,7 +146,7 @@ namespace Sylves
 
         private class RaycastInfoComparer : IComparer<RaycastInfo>
         {
-            public int Compare(RaycastInfo x, RaycastInfo y)
+            public Int32 Compare(RaycastInfo x, RaycastInfo y)
             {
                 return x.distance.CompareTo(y.distance);
             }
@@ -162,8 +171,8 @@ namespace Sylves
                     var actualChunk = new Vector2Int(fundamentalRi.cell.x + chunk.x, fundamentalRi.cell.y + chunk.y);
                     if(bound != null)
                     {
-                        var inBounds = bound.min.x <= actualChunk.x && actualChunk.x < bound.max.x &&
-                            bound.min.y <= actualChunk.y && actualChunk.y < bound.max.y;
+                        var inBounds = bound.Min.x <= actualChunk.x && actualChunk.x < bound.Mex.x &&
+                            bound.Min.y <= actualChunk.y && actualChunk.y < bound.Mex.y;
                         if (!inBounds)
                         {
                             continue;

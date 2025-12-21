@@ -56,7 +56,7 @@ namespace Sylves
         /// dim 2 means cell.z === 0
         /// dim 3 means all three co-ordinates are relevant.
         /// </summary>
-        int CoordinateDimension { get; }
+        Int32 CoordinateDimension { get; }
 
         // TODO: Supports MeshDistortion
         // TODO: Similar to Orientable for cell rotation
@@ -80,7 +80,32 @@ namespace Sylves
         /// </summary>
         IGrid Unwrapped { get; }
 
+        /// <summary>
+        /// Returns a second grid which has one cell for every vertex of this grid,
+        /// and also methods for mapping corners of one grid to the other.
+        /// </summary>
         IDualMapping GetDual();
+
+        /// <summary>
+        /// Returns a new grid with the same cells as this grid, but more
+        /// directions allowing movement between diagonally adjacent cells.
+        /// </summary>
+        IGrid GetDiagonalGrid();
+
+        /// <summary>
+        /// For a grid that has CoordinateDimension == 3,
+        /// returns a grid that is the same as the current, but uses at most 2 dimensions.
+        /// Otherwise, returns the current grid.
+        /// (see RavelModifier if you want to reduce to 1 dimension).
+        /// </summary>
+        IGrid GetCompactGrid();
+
+        /// <summary>
+        /// Translates the grid so that the given cell is at the origin,
+        /// trying to minimize floating point error for nearby cells.
+        /// </summary>
+        IGrid Recenter(Cell cell);
+
 
         #endregion
 
@@ -151,6 +176,10 @@ namespace Sylves
         /// </summary>
         IEnumerable<CellDir> GetCellDirs(Cell cell);
 
+        /// <summary>
+        /// Returns corners of the given cell.
+        /// This usually just forwards to <see cref="ICellType.GetCellCorners()"/>
+        /// </summary>
         IEnumerable<CellCorner> GetCellCorners(Cell cell);
 
 
@@ -214,6 +243,7 @@ namespace Sylves
         IBound UnionBounds(IBound bound, IBound other);
 
         // TODO: Decide if this should return cells outside of grid.
+        // TOOD: Rename to GetCellsInBound
         /// <summary>
         /// Returns the cells inside a given bound.
         /// </summary>
@@ -224,6 +254,12 @@ namespace Sylves
         /// i.e. returns true if the cell is listed in GetCellsInBounds.
         /// </summary>
         bool IsCellInBound(Cell cell, IBound bound);
+
+        /// <summary>
+        /// Returns a bounding box that fully covers all the cells in bounds.
+        /// Returns null
+        /// </summary>
+        Aabb? GetBoundAabb(IBound bound);
         #endregion
 
         #region Position
@@ -275,6 +311,17 @@ namespace Sylves
         /// For 3d cells, returns the mesh of a given cell.
         /// </summary>
         void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform);
+
+        /// <summary>
+        /// Gets a bounding box for a single cell.
+        /// </summary>
+        Aabb GetAabb(Cell cell);
+
+        /// <summary>
+        /// Gets a bounding box for a collection of cells.
+        /// Throws if cells is empty.
+        /// </summary>
+        Aabb GetAabb(IEnumerable<Cell> cells);
 
         #endregion
 

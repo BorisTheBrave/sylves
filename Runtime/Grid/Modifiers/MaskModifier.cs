@@ -10,6 +10,8 @@ namespace Sylves
     /// 
     /// Filtered cells will not be returned by GetCells, TryMove, etc. Passing them as inputs
     /// is undefined.
+    /// 
+    /// Calling Unbounded will remove this modifier (as well as any bounds)
     /// </summary>
     public class MaskModifier : BaseModifier
     {
@@ -36,6 +38,46 @@ namespace Sylves
         #region Basics
 
         public override bool IsFinite => allCells != null || Underlying.IsFinite;
+
+        #endregion
+
+        #region Relatives
+        public override IGrid Unbounded => Underlying.Unbounded;
+
+        public override IDualMapping GetDual()
+        {
+            var dm = Underlying.GetDual();
+            return new DualMapping(this, dm.DualGrid, dm);
+        }
+
+        private class DualMapping : BasicDualMapping
+        {
+            private readonly MaskModifier baseGrid;
+            private readonly IDualMapping underlyingDualMapping;
+
+            public DualMapping(MaskModifier baseGrid, IGrid dualGrid, IDualMapping underlyingDualMapping) : base(baseGrid, dualGrid)
+            {
+                this.baseGrid = baseGrid;
+                this.underlyingDualMapping = underlyingDualMapping;
+            }
+
+            public override (Cell baseCell, CellCorner inverseCorner)? ToBasePair(Cell dualCell, CellCorner corner)
+            {
+                var t = underlyingDualMapping.ToBasePair(dualCell, corner);
+                if (t == null || !baseGrid.containsFunc(t.Value.baseCell))
+                    return null;
+                return t;
+            }
+
+            public override (Cell dualCell, CellCorner inverseCorner)? ToDualPair(Cell baseCell, CellCorner corner)
+            {
+                return underlyingDualMapping.ToDualPair(baseCell, corner);
+            }
+        }
+
+        // Hmm, needs some thought. Without a mapping, we can't easily make use of Underlying.GetCompactGrid();
+        public override IGrid GetCompactGrid() => throw new NotImplementedException();
+
 
         #endregion
 

@@ -6,19 +6,22 @@ namespace Sylves
     /// <summary>
     /// Represents how the edges (2d) or faces (3d) of cells can connect to each other.
     /// In 2d, rotation/sides are unused, as two edges can only connect together normally or reflected.
-    /// In 3d, this represents both a rotation and reflection, similar to NGonCellType rotations.
-    /// As there, Mirror inverts the y-axis, and is applied before rotation, which is counter clockwise.
+    /// In 3d, this represents both a rotation and reflection
+    /// The rotation and reflection are interpreted, similar to NGonCellType rotations.
+    /// I.e. Mirror represents is a reflection that keeps (CellDir)0 unchanged (i.e. inverts the y-axis), 
+    /// and Rotation represents a rotation counter clockwise of Rotation/Sides*360 degrees.
+    /// Mirror is applied first, then rotation.
     /// </summary>
     public struct Connection : IEquatable<Connection>
     {
         public bool Mirror { get; set; }
-        public int Rotation { get; set; }
-        public int Sides { get; set; }
+        public Int32 Rotation { get; set; }
+        public Int32 Sides { get; set; }
 
         public static Connection operator*(Connection a, Connection b)
         {
             var n = a.Sides != 0 ? a.Sides : b.Sides;
-            int rotation;
+            Int32 rotation;
 
             if (n == 0)
             {
@@ -50,6 +53,9 @@ namespace Sylves
         /// </summary>
         public Matrix4x4 ToMatrix()
         {
+            if (Sides == 0)
+                return Matrix4x4.identity;
+
             // Same logic as NGonCellType
             var rot = Rotation;
             var n = Sides;
@@ -84,7 +90,7 @@ namespace Sylves
                 return Equals(v);
             return false;
         }
-        public override int GetHashCode() => (Mirror, Rotation, Sides).GetHashCode();
+        public override System.Int32 GetHashCode() => (Mirror, Rotation, Sides).GetHashCode();
 
         public override string ToString()
         {

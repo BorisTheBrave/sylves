@@ -62,8 +62,7 @@ namespace Sylves
         public static IEnumerable<(CellCorner corner, Cell dualCell, CellCorner inverseCorner)> DualNeighbours(this IDualMapping dm, Cell baseCell)
         {
             // TODO: Perhaps have this overridable as many grids will have swifter methods
-            var cellType = dm.BaseGrid.GetCellType(baseCell);
-            foreach(var corner in cellType.GetCellCorners())
+            foreach(var corner in dm.BaseGrid.GetCellCorners(baseCell))
             {
                 var t = dm.ToDualPair(baseCell, corner);
                 if(t != null)
@@ -73,11 +72,34 @@ namespace Sylves
             }
         }
 
+
+        /// <summary>
+        /// Finds all dual cells that correspond to some corner of the base cell;
+        /// </summary>
+        public static IEnumerable<Cell> DualNeighbourCells(this IDualMapping dm, Cell baseCell)
+        {
+            // TODO: Perhaps have this overridable as many grids will have swifter methods
+            foreach (var corner in dm.BaseGrid.GetCellCorners(baseCell))
+            {
+                var t = dm.ToDualPair(baseCell, corner);
+                if (t != null)
+                {
+                    yield return t.Value.dualCell;
+                }
+            }
+        }
+
         /// <summary>
         /// Finds all base cells that correspond to some corner of the dual cell, and returns the corners and pairs.
         /// </summary>
         // TODO: Be less lazy
         public static IEnumerable<(CellCorner corner, Cell baseCell, CellCorner inverseCorner)> BaseNeighbours(this IDualMapping dm, Cell dualCell) => dm.Reversed().DualNeighbours(dualCell);
+
+        /// <summary>
+        /// Finds all base cells that correspond to some corner of the dual cell.
+        /// </summary>
+        // TODO: Be less lazy
+        public static IEnumerable<Cell> BaseNeighbourCells(this IDualMapping dm, Cell dualCell) => dm.Reversed().DualNeighbourCells(dualCell);
 
 
         public static IDualMapping Reversed(this IDualMapping dualMapping)

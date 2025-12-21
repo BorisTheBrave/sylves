@@ -1,17 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Connection
-   </title>
+    <title>Struct Connection </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Connection
-   ">
-    <meta name="generator" content="docfx 2.59.0.0">
-    
+    <meta name="title" content="Struct Connection ">
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -19,14 +17,14 @@
     <link rel="stylesheet" href="../styles/custom.css">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    
-    
+  
+  
+  
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -36,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../index.html">
                 <img id="logo" class="svg" src="../logo.svg" alt="">
               </a>
@@ -50,7 +48,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -60,7 +58,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -70,45 +68,55 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Sylves.Connection">
-  
-  
-  <h1 id="Sylves_Connection" data-uid="Sylves.Connection" class="text-break">Class Connection
-  </h1>
+
+
+
+  <h1 id="Sylves_Connection" data-uid="Sylves.Connection" class="text-break">Struct Connection</h1>
   <div class="markdown level0 summary"><p>Represents how the edges (2d) or faces (3d) of cells can connect to each other.
 In 2d, rotation/sides are unused, as two edges can only connect together normally or reflected.
-In 3d, this represents both a rotation and reflection, similar to NGonCellType rotations.
-As there, Mirror inverts the y-axis, and is applied before rotation, which is counter clockwise.</p>
+In 3d, this represents both a rotation and reflection
+The rotation and reflection are interpreted, similar to NGonCellType rotations.
+I.e. Mirror represents is a reflection that keeps (CellDir)0 unchanged (i.e. inverts the y-axis),
+and Rotation represents a rotation counter clockwise of Rotation/Sides*360 degrees.
+Mirror is applied first, then rotation.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">Connection</span></div>
-  </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Sylves.Connection.html">Connection</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Sylves.Connection.html">Connection</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
   <h5 id="Sylves_Connection_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class Connection : ValueType</code></pre>
+    <pre><code class="lang-csharp hljs">public struct Connection : IEquatable&lt;Connection&gt;</code></pre>
   </div>
   <h3 id="properties">Properties
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_Connection_Mirror_" data-uid="Sylves.Connection.Mirror*"></a>
   <h4 id="Sylves_Connection_Mirror" data-uid="Sylves.Connection.Mirror">Mirror</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public bool Mirror { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -117,23 +125,23 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Connection_Rotation_" data-uid="Sylves.Connection.Rotation*"></a>
   <h4 id="Sylves_Connection_Rotation" data-uid="Sylves.Connection.Rotation">Rotation</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public int Rotation { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -142,23 +150,23 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Connection_Sides_" data-uid="Sylves.Connection.Sides*"></a>
   <h4 id="Sylves_Connection_Sides" data-uid="Sylves.Connection.Sides">Sides</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public int Sides { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -167,25 +175,25 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_Connection_Equals_" data-uid="Sylves.Connection.Equals*"></a>
   <h4 id="Sylves_Connection_Equals_Sylves_Connection_" data-uid="Sylves.Connection.Equals(Sylves.Connection)">Equals(Connection)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public bool Equals(Connection other)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -202,7 +210,7 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -211,23 +219,23 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Connection_Equals_" data-uid="Sylves.Connection.Equals*"></a>
-  <h4 id="Sylves_Connection_Equals_System_Object_" data-uid="Sylves.Connection.Equals(System.Object)">Equals(Object)</h4>
+  <h4 id="Sylves_Connection_Equals_System_Object_" data-uid="Sylves.Connection.Equals(System.Object)">Equals(object)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool Equals(object other)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -237,14 +245,14 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Object</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></td>
         <td><span class="parametername">other</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -253,23 +261,25 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.equals">ValueType.Equals(object)</a></div>
+
+
   <a id="Sylves_Connection_GetHashCode_" data-uid="Sylves.Connection.GetHashCode*"></a>
   <h4 id="Sylves_Connection_GetHashCode" data-uid="Sylves.Connection.GetHashCode">GetHashCode()</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -278,23 +288,25 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode">ValueType.GetHashCode()</a></div>
+
+
   <a id="Sylves_Connection_GetInverse_" data-uid="Sylves.Connection.GetInverse*"></a>
   <h4 id="Sylves_Connection_GetInverse" data-uid="Sylves.Connection.GetInverse">GetInverse()</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public Connection GetInverse()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -308,19 +320,19 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Connection_ToMatrix_" data-uid="Sylves.Connection.ToMatrix*"></a>
   <h4 id="Sylves_Connection_ToMatrix" data-uid="Sylves.Connection.ToMatrix">ToMatrix()</h4>
   <div class="markdown level1 summary"><p>Give an equivalent rotation in the XY plane.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public Matrix4x4 ToMatrix()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -334,18 +346,18 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Connection_ToString_" data-uid="Sylves.Connection.ToString*"></a>
   <h4 id="Sylves_Connection_ToString" data-uid="Sylves.Connection.ToString">ToString()</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -354,25 +366,27 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.tostring">ValueType.ToString()</a></div>
   <h3 id="operators">Operators
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_Connection_op_Equality_" data-uid="Sylves.Connection.op_Equality*"></a>
-  <h4 id="Sylves_Connection_op_Equality_Sylves_Connection_Sylves_Connection_" data-uid="Sylves.Connection.op_Equality(Sylves.Connection,Sylves.Connection)">Equality(Connection, Connection)</h4>
+  <h4 id="Sylves_Connection_op_Equality_Sylves_Connection_Sylves_Connection_" data-uid="Sylves.Connection.op_Equality(Sylves.Connection,Sylves.Connection)">operator ==(Connection, Connection)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static bool operator ==(Connection lhs, Connection rhs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -394,7 +408,7 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -403,23 +417,23 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Connection_op_Inequality_" data-uid="Sylves.Connection.op_Inequality*"></a>
-  <h4 id="Sylves_Connection_op_Inequality_Sylves_Connection_Sylves_Connection_" data-uid="Sylves.Connection.op_Inequality(Sylves.Connection,Sylves.Connection)">Inequality(Connection, Connection)</h4>
+  <h4 id="Sylves_Connection_op_Inequality_Sylves_Connection_Sylves_Connection_" data-uid="Sylves.Connection.op_Inequality(Sylves.Connection,Sylves.Connection)">operator !=(Connection, Connection)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static bool operator !=(Connection lhs, Connection rhs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -441,7 +455,7 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -450,23 +464,23 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+
+
   <a id="Sylves_Connection_op_Multiply_" data-uid="Sylves.Connection.op_Multiply*"></a>
-  <h4 id="Sylves_Connection_op_Multiply_Sylves_Connection_Sylves_Connection_" data-uid="Sylves.Connection.op_Multiply(Sylves.Connection,Sylves.Connection)">Multiply(Connection, Connection)</h4>
+  <h4 id="Sylves_Connection_op_Multiply_Sylves_Connection_Sylves_Connection_" data-uid="Sylves.Connection.op_Multiply(Sylves.Connection,Sylves.Connection)">operator *(Connection, Connection)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static Connection operator *(Connection a, Connection b)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -488,7 +502,7 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -504,11 +518,12 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">System.IEquatable&lt;&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable&lt;T&gt;</a>
   </div>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
@@ -516,14 +531,14 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -531,8 +546,8 @@ As there, Mirror inverts the y-axis, and is applied before rotation, which is co
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
           </div>
         </div>
       </footer>

@@ -51,6 +51,9 @@ namespace Sylves
 
         public IEnumerable<CellCorner> GetCellCorners() => corners;
 
+        // Yep, there's 6 dirs even though it's triangles, because up and down triangles have different dirs.
+        // Use NGonCellType.Get(3) for regular triangles
+        public Int32 N => 6; 
         public IEnumerable<CellDir> GetCellDirs() => dirs;
 
         public CellRotation GetIdentity()

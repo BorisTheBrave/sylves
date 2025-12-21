@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 using static Sylves.VectorUtils;
+using static Sylves.MeshGridUtils;
 
 namespace Sylves
 {
@@ -29,9 +30,13 @@ namespace Sylves
         private const float PlanarThickness = 1e-35f;
 
         private MeshDetails meshDetails;
+        protected Vector3 min, max;
         protected readonly MeshData meshData;
         private readonly MeshGridOptions meshGridOptions;
-        protected bool is2d;
+        protected readonly bool is2d;
+
+        // If set, is always contained by meshDetails.hashCellBounds
+        protected readonly CubeBound bound;
 
         public MeshGrid(MeshData meshData, MeshGridOptions meshGridOptions = null) :
             base(MeshGridBuilder.Build(meshData, meshGridOptions ?? new MeshGridOptions()))
@@ -50,6 +55,17 @@ namespace Sylves
             this.meshData = meshData;
             this.meshGridOptions = meshGridOptions;
             this.is2d = is2d;
+        }
+
+        // Copy constructor
+        protected MeshGrid(MeshGrid meshGrid, CubeBound bound) :
+            base(new DataDrivenData { Cells = meshGrid.CellData, Moves = meshGrid.Moves})
+        {
+            this.meshData = meshGrid.meshData;
+            this.meshGridOptions = meshGrid.meshGridOptions;
+            this.is2d = meshGrid.is2d;
+            this.meshDetails = meshGrid.meshDetails;
+            this.bound = bound;
         }
 
         #region Impl
@@ -86,8 +102,8 @@ namespace Sylves
                 min = min == null ? cellMin : Vector3.Min(min.Value, cellMin);
                 max = max == null ? cellMax : Vector3.Max(max.Value, cellMax);
             }
-            min = min ?? new Vector3();
-            max = max ?? new Vector3();
+            min = this.min = min ?? new Vector3();
+            max = this.max = max ?? new Vector3();
 
             // Also, hashCellSize must be larger than floating point precision
             // This avoids issues with non-origin planes
@@ -115,7 +131,7 @@ namespace Sylves
                 hashCellMin = hashCellMin == null ? hashCell : Vector3Int.Min(hashCellMin.Value, hashCell);
                 hashCellMax = hashCellMax == null ? hashCell : Vector3Int.Max(hashCellMax.Value, hashCell);
             }
-            if(hashCellMin == null)
+            if (hashCellMin == null)
             {
                 hashCellMin = new Vector3Int();
                 hashCellMax = -Vector3Int.one;
@@ -141,16 +157,39 @@ namespace Sylves
             public Dictionary<Vector3Int, List<Cell>> hashedCells;
             public bool isPlanar;
 
-            public Vector3Int GetHashCell(Vector3 v) => Vector3Int.FloorToInt(Divide(v - hashCellBase, hashCellSize));
+            public Vector3Int GetHashCell(Vector3 v)
+            {
+                // Planar meshes tend to produce overflow values here.
+                // Also, many other routines add/subtract one from these values.
+                // So we're careful to clip things in a way that avoids problems
+                int FloorToInt(float x)
+                {
+                    return x < Int32.MinValue + 1 ? Int32.MinValue + 1 :
+                        x> Int32.MaxValue - 1 ? Int32.MaxValue - 1 :
+                        (Int32)x;
+                }
+                return new Vector3Int(
+                    FloorToInt((v.x - hashCellBase.x) / hashCellSize.x),
+                    FloorToInt((v.y - hashCellBase.y) / hashCellSize.y),
+                    FloorToInt((v.z - hashCellBase.z) / hashCellSize.z)
+                    );
+            }
         }
 
-        private static ICellType UnwrapXZCellModifier(ICellType cellType)
+        private CubeBound ExpandBound(CubeBound bound)
         {
-            if(cellType is XZCellTypeModifier modifier)
-            {
-                return modifier.Underlying;
-            }
-            return cellType;
+            return new CubeBound(bound.Min - Vector3Int.one, bound.Mex + Vector3Int.one);
+        }
+
+        private Aabb ExpandAabb(Aabb aabb)
+        {
+            var min = meshDetails.GetHashCell(aabb.Min);
+            var max = meshDetails.GetHashCell(aabb.Max);
+            // Note that max + 2 is not overflow safe, so we do the operation in floating point.
+            return Aabb.FromMinMax(
+                Vector3.Scale(min, meshDetails.hashCellSize) - Vector3.Scale(Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                Vector3.Scale(max, meshDetails.hashCellSize) + Vector3.Scale(2 * Vector3Int.one, meshDetails.hashCellSize) + meshDetails.hashCellBase
+                );
         }
         #endregion
 
@@ -163,10 +202,12 @@ namespace Sylves
 
         public override bool IsPlanar => is2d && meshDetails.isPlanar;
 
-        public override int CoordinateDimension => is2d ? (meshData.subMeshCount == 1 ? 1 : 2) : 3;
+        public override Int32 CoordinateDimension => is2d ? (meshData.subMeshCount == 1 ? 1 : 2) : 3;
         #endregion
 
         #region Relatives
+
+        public override IGrid Unbounded => new MeshGrid(this, null);
 
         public override IDualMapping GetDual()
         {
@@ -180,7 +221,7 @@ namespace Sylves
             Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toDual;
             Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toBase;
 
-            public DualMapping(MeshGrid baseGrid, MeshGrid dualGrid, List<(int primalFace, int primalVert, int dualFace, int dualVert)> rawMapping) : base(baseGrid, dualGrid)
+            public DualMapping(MeshGrid baseGrid, MeshGrid dualGrid, List<(Int32 primalFace, Int32 primalVert, Int32 dualFace, Int32 dualVert)> rawMapping) : base(baseGrid, dualGrid)
             {
                 toDual = rawMapping.ToDictionary(
                     x => (new Cell(x.primalFace, 0, 0), (CellCorner)x.primalVert),
@@ -213,12 +254,137 @@ namespace Sylves
                 }
             }
         }
+
+        override public IGrid GetDiagonalGrid()
+        {
+            if (!Is2d) throw new NotImplementedException();
+
+            var diagCellData = new Dictionary<Cell, DataDrivenCellData>();
+            var diagMovesByPair = new Dictionary<(Cell, Cell), CellDir>();
+            var dualMapping = GetDual();
+            var dualGrid = (MeshGrid)dualMapping.DualGrid;
+            foreach (var cell in GetCells())
+            {
+                var cellData = (MeshCellData)CellData[cell];
+                var n = cellData.Face.Count;
+                var diagCount = 0;
+                for (var i = 0; i < n; i++)
+                {
+                    // Start from corner 1 as the second loop effectively steps back by one
+                    var dualPair = dualMapping.ToDualPair(cell, (CellCorner)((i + 1) % n));
+                    if (dualPair == null)
+                        continue;
+                    var (dualCell, inverseCorner) = dualPair.Value;
+                    var m = ((MeshCellData)dualGrid.CellData[dualCell]).Face.Count;
+                    // Find all cells adjacent to this dual cell, starting from the original cell,
+                    // and skipping first (the original cell) and last (will be covered by next iteration of i)
+                    for (var j = 1; j < m - 1; j++)
+                    {
+                        var basePair = dualMapping.ToBasePair(dualCell, (CellCorner)(((int)inverseCorner + j) % m));
+                        if (basePair == null)
+                            continue;
+                        var (baseCell, _) = basePair.Value;
+
+                        diagMovesByPair[(cell, baseCell)] = (CellDir)(diagCount++);
+
+                    }
+                }
+                diagCellData[cell] = new MeshCellData
+                {
+                    CellType = NoRotationCellType.Get(NGonCellType.Get(diagCount)),
+                    Deformation = cellData.Deformation,
+                    Face = cellData.Face,
+                    TRS = cellData.TRS,
+                };
+            }
+
+            // Fill in inverse dirs
+            var diagMoves = new Dictionary<(Cell, CellDir), (Cell, CellDir, Connection)>();
+            foreach (var kv in diagMovesByPair)
+            {
+                if(diagMovesByPair.TryGetValue((kv.Key.Item2, kv.Key.Item1), out var other))
+                {
+                    diagMoves[(kv.Key.Item1, kv.Value)] = (kv.Key.Item2, other, new Connection());
+                    diagMoves[(kv.Key.Item2, other)] = (kv.Key.Item1, kv.Value, new Connection());
+                }
+            }
+
+            return new MeshGrid(meshData, meshGridOptions, new DataDrivenData { Cells = diagCellData, Moves = diagMoves }, is2d);
+        }
+
+        public override IGrid GetCompactGrid() => CoordinateDimension <= 2 ? this : throw new NotImplementedException();
+
+        #endregion
+
+        #region Cell info
+
+        public virtual bool IsCellInGrid(Cell cell) => base.IsCellInGrid(cell) && IsCellInBound(cell, bound);
         #endregion
 
         #region Topology
 
+        public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
+        {
+            // NB: We test IsCellInBound and not IsCellInGrid as this permits "improper" grids with moves outside
+            // the grid, a feature some other grid impls rely on.
+            return base.TryMove(cell, dir, out dest, out inverseDir, out connection) && IsCellInBound(dest, bound);
+        }
+
+
         // TODO: Pathfind on mesh, without involving layers
         //public override IEnumerable<(Cell, CellDir)> FindBasicPath(Cell startCell, Cell destCell);
+        #endregion
+
+        #region Bounds
+        public override IBound GetBound() => bound;
+        public override IBound GetBound(IEnumerable<Cell> cells)
+        {
+            var hashCells = cells.Select(c => meshDetails.GetHashCell(GetCellCenter(c)));
+            return CubeBound.FromVectors(hashCells);
+        }
+        public override IGrid BoundBy(IBound bound)
+        {
+            return new MeshGrid(this, (CubeBound)IntersectBounds(this.bound, bound));
+        }
+        public override IBound IntersectBounds(IBound bound, IBound other)
+        {
+            if (bound == null) return other;
+            if (other == null) return bound;
+            return ((CubeBound)bound).Intersect((CubeBound)other);
+        }
+        public override IBound UnionBounds(IBound bound, IBound other)
+        {
+            if (bound == null) return null;
+            if (other == null) return null;
+            return ((CubeBound)bound).Union((CubeBound)other);
+        }
+        public override IEnumerable<Cell> GetCellsInBounds(IBound bound)
+        {
+            if (bound == null) throw new Exception("Cannot get cells in null bound as it is infinite");
+            return (CubeBound)bound;
+        }
+        public override bool IsCellInBound(Cell cell, IBound bound)
+        {
+            if (bound == null) return true;
+            var cb = (CubeBound)bound;
+            return cb.Contains((Cell)meshDetails.GetHashCell(GetCellCenter(cell)));
+        }
+        public override Aabb? GetBoundAabb(IBound bound)
+        {
+            if (bound is CubeBound cb)
+            {
+                return Aabb.FromMinMax(
+                    Vector3.Scale((Vector3)(cb.Min - Vector3Int.one), meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                    Vector3.Scale((Vector3)(cb.Mex + Vector3Int.one), meshDetails.hashCellSize) + meshDetails.hashCellBase);
+            }
+            else
+            {
+                return Aabb.FromMinMax(
+                    Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.Min, meshDetails.hashCellSize) + meshDetails.hashCellBase,
+                    Vector3.Scale((Vector3)meshDetails.expandedHashCellBounds.Mex, meshDetails.hashCellSize) + meshDetails.hashCellBase);
+
+            }
+        }
         #endregion
 
         #region Position
@@ -285,7 +451,8 @@ namespace Sylves
             }
 
             // Broadphase - walk through the hashCells looking for cells to check.
-            var bfRaycastInfos = CubeGrid.Raycast(origin - meshDetails.hashCellBase, direction, maxDistance, meshDetails.hashCellSize, meshDetails.expandedHashCellBounds);
+            var bfByBound = bound == null ? meshDetails.expandedHashCellBounds : ExpandBound(bound);
+            var bfRaycastInfos = CubeGrid.Raycast(origin - meshDetails.hashCellBase, direction, maxDistance, meshDetails.hashCellSize, bfByBound);
             Vector3Int? prevHashCell = null;
             var queuedRaycastInfos = new PriorityQueue<RaycastInfo>(x=>x.distance, (x, y) => -x.distance.CompareTo(y.distance));
             foreach (var bfRaycastInfo in bfRaycastInfos)
@@ -434,11 +601,22 @@ namespace Sylves
             }
         }
 
+
+        private static readonly Matrix4x4 RotateYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 0, 1));
+        private static readonly Matrix4x4 RotateZY = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, -1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
+
         internal static bool GetRotationFromMatrix(ICellType cellType, Matrix4x4 cellTransform, Matrix4x4 matrix, out CellRotation rotation)
         {
-            cellType = UnwrapXZCellModifier(cellType);
             var m = cellTransform.inverse * matrix;
             // TODO: Dispatch to celltype method?
+            if (cellType is XZCellTypeModifier modifier)
+            {
+                cellType = modifier.Underlying;
+                if (cellType != CubeCellType.Instance)
+                {
+                    m = RotateYZ * m * RotateZY;
+                }
+            }
             if (cellType == CubeCellType.Instance)
             {
                 var cubeRotation = CubeRotation.FromMatrix(m);
@@ -460,6 +638,33 @@ namespace Sylves
             else if (cellType is HexCellType hexCellType)
             {
                 var hexRotation = HexRotation.FromMatrix(m, hexCellType.Orientation);
+                if (hexRotation != null)
+                {
+                    rotation = hexRotation.Value;
+                    return true;
+                }
+            }
+            else if (cellType is TriangleCellType triangleCellType)
+            {
+                var hexRotation = HexRotation.FromMatrix(m, triangleCellType.Orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
+                if (hexRotation != null)
+                {
+                    rotation = hexRotation.Value;
+                    return true;
+                }
+            }
+            else if (cellType is HexPrismCellType hexPrismCellType)
+            {
+                var hexRotation = HexRotation.FromMatrix(m, hexPrismCellType.Orientation);
+                if (hexRotation != null)
+                {
+                    rotation = hexRotation.Value;
+                    return true;
+                }
+            }
+            else if (cellType is TrianglePrismCellType trianglePrismCellType)
+            {
+                var hexRotation = HexRotation.FromMatrix(m, trianglePrismCellType.Orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
                 if (hexRotation != null)
                 {
                     rotation = hexRotation.Value;
@@ -493,7 +698,6 @@ namespace Sylves
             out Cell cell,
             out CellRotation rotation)
         {
-            // TODO: Only supporting cube cell type
             var p = matrix.MultiplyPoint(Vector3.zero);
             if (FindCell(p, out cell))
             {
@@ -507,8 +711,9 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
-            var minHashCell = Vector3Int.Max(meshDetails.hashCellBounds.min, meshDetails.GetHashCell(min) - Vector3Int.one);
-            var maxHashCell = Vector3Int.Min(meshDetails.hashCellBounds.max - Vector3Int.one, meshDetails.GetHashCell(max) + Vector3Int.one);
+            var boundBy = bound ?? meshDetails.hashCellBounds;
+            var minHashCell = Vector3Int.Max(boundBy.Min, meshDetails.GetHashCell(min) - Vector3Int.one);
+            var maxHashCell = Vector3Int.Min(boundBy.Mex - Vector3Int.one, meshDetails.GetHashCell(max) + Vector3Int.one);
 
             // Use a spatial hash to locate cells near the tile, and test each one.
             for (var x = minHashCell.x; x <= maxHashCell.x; x++)
@@ -532,17 +737,17 @@ namespace Sylves
         #endregion
 
         #region Shape
-        public IReadOnlyList<int> GetFaceIndices(Cell cell)
+        public IReadOnlyList<Int32> GetFaceIndices(Cell cell)
         {
-            var (face, submesh, layer) = (cell.x, cell.y, cell.z);
+            var (face, submesh, layer) = Unpack(cell);
             var topology = meshData.GetTopology(submesh);
             if (topology == MeshTopology.Triangles)
             {
-                return new ArraySegment<int>(meshData.indices[submesh], face * 3, 3);
+                return new ArraySegment<Int32>(meshData.indices[submesh], face * 3, 3);
             }
             else if (topology == MeshTopology.Quads)
             {
-                return new ArraySegment<int>(meshData.indices[submesh], face * 4, 4);
+                return new ArraySegment<Int32>(meshData.indices[submesh], face * 4, 4);
             }
             else
             {
@@ -572,6 +777,20 @@ namespace Sylves
         {
             DefaultGridImpl.GetMeshDataFromPolygon(this, cell, out meshData, out transform);
         }
+
+        public override Aabb GetAabb(Cell cell)
+        {
+            var center = GetCellCenter(cell);
+            var aabb = Aabb.FromMinMax(center, center);
+            return ExpandAabb(aabb);
+        }
+
+        public override Aabb GetAabb(IEnumerable<Cell> cells)
+        {
+            var aabb = Aabb.FromVectors(cells.Select(GetCellCenter));
+            return ExpandAabb(aabb);
+        }
+
         #endregion
     }
 }

@@ -163,6 +163,9 @@ namespace Sylves
         // Or an arbitrary choice if there isn't one.
         public int[] Inedges => inedges;
 
+        public Vector2 ClipMin => clipMin;
+        public Vector2 ClipMax => clipMax;
+
         #region d3-delauney
 
         /// <summary>
@@ -765,14 +768,34 @@ namespace Sylves
         /// <summary>
         /// Returns the centroid of each voronoi cell.
         /// This is suitable for use with Lloyd relaxation.
-        /// Unbounded cells are clipped down, which tends to move them inowards.
+        /// Unbounded cells return their original point.
         /// </summary>
         public List<Vector2> GetRelaxedPoints()
         {
             var relaxedPoints = new List<Vector2>();
             for (var i = 0; i < points.Count; i++)
             {
-                relaxedPoints.Add(GetCentroid(GetPolygon(i)));
+                var polygon = GetPolygon(i);
+                var polygonStatus = GetPolygonStatus(i);
+                var relaxedPoint = polygonStatus == PolygonStatus.Normal ? GetCentroid(polygon) : points[i];
+                relaxedPoints.Add(relaxedPoint);
+            }
+            return relaxedPoints;
+        }
+
+        /// <summary>
+        /// Returns the centroid of each voronoi cell.
+        /// This is suitable for use with Lloyd relaxation.
+        /// Unbounded cells are clipped down, which tends to move them inwards.
+        /// </summary>
+        public List<Vector2> GetClippedRelaxedPoints()
+        {
+            var relaxedPoints = new List<Vector2>();
+            for (var i = 0; i < points.Count; i++)
+            {
+                var polygon = GetClippedPolygon(i);
+                var relaxedPoint = polygon == null ? points[i] : GetCentroid(polygon);
+                relaxedPoints.Add(relaxedPoint);
             }
             return relaxedPoints;
         }

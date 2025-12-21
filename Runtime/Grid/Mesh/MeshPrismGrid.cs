@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using static Sylves.MeshGridUtils;
 
 namespace Sylves
 {
@@ -27,7 +30,23 @@ namespace Sylves
             this.meshPrismOptions = meshPrismOptions;
         }
 
+        // Copy constructor
+        private MeshPrismGrid(MeshPrismGrid meshPrismGrid, CubeBound bound) :
+            base(meshPrismGrid, bound)
+        {
+            this.meshPrismOptions = meshPrismGrid.meshPrismOptions;
+        }
+
+        #region Bounds
+        public override IGrid BoundBy(IBound bound)
+        {
+            return new MeshPrismGrid(this, (CubeBound)IntersectBounds(this.bound, bound));
+        }
+        #endregion
+
         #region Relatives
+
+        public override IGrid Unbounded => new MeshPrismGrid(this, null);
 
         public override IDualMapping GetDual()
         {
@@ -46,7 +65,7 @@ namespace Sylves
             Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toDual;
             Dictionary<(Cell, CellCorner), (Cell, CellCorner)> toBase;
 
-            public DualMapping(MeshPrismGrid baseGrid, MeshPrismGrid dualGrid, List<(int primalFace, int primalVert, int dualFace, int dualVert)> rawMapping, int minLayer, int maxLayer) : base(baseGrid, dualGrid)
+            public DualMapping(MeshPrismGrid baseGrid, MeshPrismGrid dualGrid, List<(Int32 primalFace, Int32 primalVert, Int32 dualFace, Int32 dualVert)> rawMapping, int minLayer, int maxLayer) : base(baseGrid, dualGrid)
             {
                 toDual = new Dictionary<(Cell, CellCorner), (Cell, CellCorner)>();
                 foreach(var (primalFace, primalVert, dualFace, dualVert) in rawMapping)
@@ -55,7 +74,7 @@ namespace Sylves
                     var dualPrismInfo = (dualGrid.CellData[new Cell(dualFace, 0, 0)] as MeshCellData).PrismInfo;
                     var (primalBack, primalForward) = basePrismInfo.BaseToPrismCorners[(CellCorner)primalVert];
                     var (dualBack, dualForward) = dualPrismInfo.BaseToPrismCorners[(CellCorner)dualVert];
-                    foreach (var layer in Enumerable.Range(minLayer, maxLayer - minLayer))
+                    for (var layer = minLayer; layer < maxLayer; layer++)
                     {
                         toDual.Add(
                             (new Cell(primalFace, 0, layer), primalForward),
@@ -95,6 +114,8 @@ namespace Sylves
                 }
             }
         }
+
+        public IGrid GetDiagonalGrid() => throw new NotImplementedException();
         #endregion
 
         #region Query
@@ -164,7 +185,7 @@ namespace Sylves
             var cl = c.magnitude;
             // divisor in atan
             var divisor = al * bl * cl + Vector3.Dot(a, b) * cl + Vector3.Dot(b, c) * al + Vector3.Dot(c, a) * bl;
-            var sabc = 2 * Mathf.Atan(detabc / divisor);
+            var sabc = 2 * Mathf.Atan2(detabc, divisor);
             return sabc / (4 * Mathf.PI);
         }
 
@@ -199,14 +220,14 @@ namespace Sylves
         private void GetCubeCellVertices(Cell cell, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8)
         {
             // TODO: Share this code with QuadInterpolation.InterpolatePosition?
-            var (face, submesh, layer) = (cell.x, cell.y, cell.z);
+            var (face, submesh, layer) = Unpack(cell);
 
             var meshOffset1 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset - meshPrismOptions.LayerHeight / 2;
             var meshOffset2 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset + meshPrismOptions.LayerHeight / 2;
             QuadInterpolation.GetCorners(meshData, submesh, face, meshPrismOptions.InvertWinding, meshOffset1, meshOffset2, out v1, out v2, out v3, out v4, out v5, out v6, out v7, out v8);
         }
 
-        private static readonly ILookup<CellDir, int> s_faces = new[]
+        private static readonly ILookup<CellDir, Int32> s_faces = new[]
         {
                 ((CellDir)(CubeDir.Left), 0),
                 ((CellDir)(CubeDir.Right), 1),
@@ -225,7 +246,7 @@ namespace Sylves
             var prismInfo = meshCellData.PrismInfo;
             var vertices = meshData.vertices;
             var normals = meshData.normals;
-            var (faceIndex, submesh, layer) = (cell.x, cell.y, cell.z);
+            var (faceIndex, submesh, layer) = Unpack(cell);
 
 
             var meshOffset1 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset - meshPrismOptions.LayerHeight / 2;
@@ -240,8 +261,8 @@ namespace Sylves
                 var n2 = normals[face[(i + 1) % face.Length]];
                 var baseCellDir = MeshGridBuilder.EdgeIndexToCellDir(i, face.Count, meshPrismOptions.DoubleOddFaces);
                 var cellDir = prismInfo.BaseToPrism(baseCellDir);
-                yield return (v1 + n1 * meshOffset1, v1 + n1 * meshOffset2, v2 + n2 * meshOffset2, cellDir);
-                yield return (v1 + n1 * meshOffset1, v2 + n2 * meshOffset2, v2 + n2 * meshOffset1, cellDir);
+                yield return (v1 + n1 * meshOffset1, v2 + n2 * meshOffset1, v2 + n2 * meshOffset2, cellDir);
+                yield return (v1 + n1 * meshOffset1, v2 + n2 * meshOffset2, v1 + n1 * meshOffset2, cellDir);
             }
             // Currently does fan detection
             // Doesn't work for convex faces
@@ -254,8 +275,8 @@ namespace Sylves
                 {
                     var v2 = vertices[face[i]];
                     var n2 = normals[face[i]];
-                    yield return (v0 + n0 * meshOffset2, v2 + n2 * meshOffset2, v1 + n1 * meshOffset2, prismInfo.ForwardDir);
-                    yield return (v0 + n0 * meshOffset1, v1 + n1 * meshOffset1, v2 + n2 * meshOffset1, prismInfo.BackDir);
+                    yield return (v0 + n0 * meshOffset2, v1 + n1 * meshOffset2, v2 + n2 * meshOffset2, prismInfo.ForwardDir);
+                    yield return (v0 + n0 * meshOffset1, v2 + n2 * meshOffset1, v1 + n1 * meshOffset1, prismInfo.BackDir);
                     v1 = v2;
                     n1 = n2;
                 }
@@ -268,11 +289,13 @@ namespace Sylves
             transform = trs.ToMatrix();
         }
 
-        public void GetCellMesh(Cell cell, out MeshData meshData, out TRS trs, out ILookup<CellDir, int> faces)
+        public void GetCellMesh(Cell cell, out MeshData meshData, out TRS trs, out ILookup<CellDir, Int32> faces)
         {
             var meshCellData = CellData[cell] as MeshCellData;
             var cellType = meshCellData.CellType;
-            if (cellType is CubeCellType)
+            var (faceIndex, submesh, layer) = Unpack(cell);
+
+            if (this.meshData.topologies[submesh] == MeshTopology.Quads && cellType is CubeCellType)
             {
                 if(meshCellData.PrismInfo.BackDir != (CellDir)CubeDir.Back)
                 {
@@ -284,7 +307,7 @@ namespace Sylves
                 var vertices = new[] { v1, v2, v3, v4, v5, v6, v7, v8 };
 
                 // z-forward convetion (see TestMeshes.Cube)
-                var indices = new[]
+                var indices = new Int32[]
                 {
                     7, 6, 2, 3, // Left
                     0, 1, 5, 4, // Right
@@ -309,7 +332,6 @@ namespace Sylves
                 var prismInfo = meshCellData.PrismInfo;
                 var vertices = this.meshData.vertices;
                 var normals = this.meshData.normals;
-                var (faceIndex, submesh, layer) = (cell.x, cell.y, cell.z);
 
 
                 var meshOffset1 = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset - meshPrismOptions.LayerHeight / 2;
@@ -317,8 +339,8 @@ namespace Sylves
 
                 var n = face.Length;
                 var outVertices = new Vector3[n * 2];
-                var outIndices = new int[n * 4 + n * 2];
-                var outFaces = new (CellDir, int)[n + 2];
+                var outIndices = new Int32[n * 4 + n * 2];
+                var outFaces = new (CellDir, Int32)[n + 2];
 
                 // Find the vertices
                 for (var i = 0; i < n; i++)

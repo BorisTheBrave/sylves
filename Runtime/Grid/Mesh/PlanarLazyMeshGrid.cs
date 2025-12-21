@@ -84,6 +84,8 @@ namespace Sylves
 
         protected void Setup(Func<Cell, MeshData> getMeshData, HexGrid chunkGrid, float margin = 0.0f, bool translateMeshData = false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
+            // TOOD: Check if chunkGrid has bound
+
             // Work out the dimensions of the chunk grid
             var strideX = ToVector2(chunkGrid.GetCellCenter(new Cell(1, 0, -1)));
             var strideY = ToVector2(chunkGrid.GetCellCenter(new Cell(0, 1, -1)));
@@ -100,9 +102,8 @@ namespace Sylves
 
         protected void Setup(Func<Cell, MeshData> getMeshData, SquareGrid chunkGrid, float margin = 0.0f, bool translateMeshData = false, MeshGridOptions meshGridOptions = null, SquareBound bound = null, IEnumerable<ICellType> cellTypes = null, ICachePolicy cachePolicy = null)
         {
-            // Work out the dimensions of the chunk grid
-            var strideX = ToVector2(chunkGrid.GetCellCenter(new Cell(1, 0)));
-            var strideY = ToVector2(chunkGrid.GetCellCenter(new Cell(0, 1)));
+            var strideX = new Vector2(chunkGrid.CellSize.x, 0);
+            var strideY = new Vector2(0, chunkGrid.CellSize.y);
 
             var polygon = chunkGrid.GetPolygon(new Cell()).Select(ToVector2);
             var aabbBottomLeft = polygon.Aggregate(Vector2.Min);
@@ -221,7 +222,10 @@ namespace Sylves
         public override bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
             var (_, chunkCell) = Split(cell);
-            return GetChildGridCached(chunkCell).TryMove(cell, dir, out dest, out inverseDir, out connection);
+            if (!GetChildGridCached(chunkCell).TryMove(cell, dir, out dest, out inverseDir, out connection))
+                return false;
+            var bound = (SquareBound)GetBound();
+            return bound == null || bound.Contains(Split(dest).chunkCell);
         }
         #endregion
     }

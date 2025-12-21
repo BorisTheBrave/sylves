@@ -51,7 +51,7 @@ namespace Sylves
                     return witness;
 
                 // Randomly pick an open cell
-                var i = (int)(openCells.Count * randomDouble());
+                var i = (Int32)(openCells.Count * randomDouble());
                 var c = openCells.Skip(i).First();
 
                 // Set it to blocked

@@ -1,17 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class XZModifier
-   </title>
+    <title>Class XZModifier </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class XZModifier
-   ">
-    <meta name="generator" content="docfx 2.59.0.0">
-    
+    <meta name="title" content="Class XZModifier ">
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -19,14 +17,14 @@
     <link rel="stylesheet" href="../styles/custom.css">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    
-    
+  
+  
+  
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -36,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../index.html">
                 <img id="logo" class="svg" src="../logo.svg" alt="">
               </a>
@@ -50,7 +48,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -60,7 +58,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -70,10 +68,10 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Sylves.XZModifier">
-  
-  
-  <h1 id="Sylves_XZModifier" data-uid="Sylves.XZModifier" class="text-break">Class XZModifier
-  </h1>
+
+
+
+  <h1 id="Sylves_XZModifier" data-uid="Sylves.XZModifier" class="text-break">Class XZModifier</h1>
   <div class="markdown level0 summary"><p>Converts a IGrid based in the XY plane to one
 in the XZ plane. It does this by rotating Y+ to Z-  (and Z+ to Y+).
 This is different from a transform in that it doesn't rotate the cells, it applies XZCellModifier to them.</p>
@@ -81,14 +79,14 @@ This is different from a transform in that it doesn't rotate the cells, it appli
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><a class="xref" href="Sylves.BaseModifier.html">BaseModifier</a></div>
     <div class="level2"><a class="xref" href="Sylves.TransformModifier.html">TransformModifier</a></div>
     <div class="level3"><span class="xref">XZModifier</span></div>
       <div class="level4"><a class="xref" href="Sylves.XZHexPrismGrid.html">XZHexPrismGrid</a></div>
       <div class="level4"><a class="xref" href="Sylves.XZTrianglePrismGrid.html">XZTrianglePrismGrid</a></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Sylves.IGrid.html">IGrid</a></div>
   </div>
@@ -96,6 +94,12 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     <h5>Inherited Members</h5>
     <div>
       <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetDual">TransformModifier.GetDual()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_Recenter_Sylves_Cell_">TransformModifier.Recenter(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetBoundAabb_Sylves_IBound_">TransformModifier.GetBoundAabb(IBound)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetCellCenter_Sylves_Cell_">TransformModifier.GetCellCenter(Cell)</a>
@@ -107,25 +111,37 @@ This is different from a transform in that it doesn't rotate the cells, it appli
       <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetDeformation_Sylves_Cell_">TransformModifier.GetDeformation(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__">TransformModifier.GetPolygon(Cell, Vector3[], Matrix4x4)</a>
+      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetPolygon_Sylves_Cell_Sylves_Vector3____Sylves_Matrix4x4__">TransformModifier.GetPolygon(Cell, out Vector3[], out Matrix4x4)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetTriangleMesh_Sylves_Cell_">TransformModifier.GetTriangleMesh(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__">TransformModifier.GetMeshData(Cell, MeshData, Matrix4x4)</a>
+      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetMeshData_Sylves_Cell_Sylves_MeshData__Sylves_Matrix4x4__">TransformModifier.GetMeshData(Cell, out MeshData, out Matrix4x4)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_FindCell_Sylves_Vector3_Sylves_Cell__">TransformModifier.FindCell(Vector3, Cell)</a>
+      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetAabb_Sylves_Cell_">TransformModifier.GetAabb(Cell)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetAabb_System_Collections_Generic_IEnumerable_Sylves_Cell__">TransformModifier.GetAabb(IEnumerable&lt;Cell&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_FindCell_Sylves_Vector3_Sylves_Cell__">TransformModifier.FindCell(Vector3, out Cell)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetCellsIntersectsApprox_Sylves_Vector3_Sylves_Vector3_">TransformModifier.GetCellsIntersectsApprox(Vector3, Vector3)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">TransformModifier.Raycast(Vector3, Vector3, Single)</a>
+      <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_Raycast_Sylves_Vector3_Sylves_Vector3_System_Single_">TransformModifier.Raycast(Vector3, Vector3, float)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_Transform">TransformModifier.Transform</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetDiagonalGrid">BaseModifier.GetDiagonalGrid()</a>
+    </div>
+    <div>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCompactGrid">BaseModifier.GetCompactGrid()</a>
     </div>
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCells">BaseModifier.GetCells()</a>
@@ -134,10 +150,10 @@ This is different from a transform in that it doesn't rotate the cells, it appli
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IsCellInGrid_Sylves_Cell_">BaseModifier.IsCellInGrid(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__">BaseModifier.TryMove(Cell, CellDir, Cell, CellDir, Connection)</a>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryMove_Sylves_Cell_Sylves_CellDir_Sylves_Cell__Sylves_CellDir__Sylves_Connection__">BaseModifier.TryMove(Cell, CellDir, out Cell, out CellDir, out Connection)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryMoveByOffset_Sylves_Cell_Sylves_Vector3Int_Sylves_Vector3Int_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">BaseModifier.TryMoveByOffset(Cell, Vector3Int, Vector3Int, CellRotation, Cell, CellRotation)</a>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryMoveByOffset_Sylves_Cell_Sylves_Vector3Int_Sylves_Vector3Int_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">BaseModifier.TryMoveByOffset(Cell, Vector3Int, Vector3Int, CellRotation, out Cell, out CellRotation)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellDirs_Sylves_Cell_">BaseModifier.GetCellDirs(Cell)</a>
@@ -152,7 +168,7 @@ This is different from a transform in that it doesn't rotate the cells, it appli
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetIndex_Sylves_Cell_">BaseModifier.GetIndex(Cell)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellByIndex_System_Int32_">BaseModifier.GetCellByIndex(Int32)</a>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellByIndex_System_Int32_">BaseModifier.GetCellByIndex(int)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetBound">BaseModifier.GetBound()</a>
@@ -179,10 +195,10 @@ This is different from a transform in that it doesn't rotate the cells, it appli
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_FindGridSymmetry_System_Collections_Generic_ISet_Sylves_Cell__System_Collections_Generic_ISet_Sylves_Cell__Sylves_Cell_Sylves_CellRotation_">BaseModifier.FindGridSymmetry(ISet&lt;Cell&gt;, ISet&lt;Cell&gt;, Cell, CellRotation)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">BaseModifier.TryApplySymmetry(GridSymmetry, IBound, IBound)</a>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryApplySymmetry_Sylves_GridSymmetry_Sylves_IBound_Sylves_IBound__">BaseModifier.TryApplySymmetry(GridSymmetry, IBound, out IBound)</a>
     </div>
     <div>
-      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__">BaseModifier.TryApplySymmetry(GridSymmetry, Cell, Cell, CellRotation)</a>
+      <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_TryApplySymmetry_Sylves_GridSymmetry_Sylves_Cell_Sylves_Cell__Sylves_CellRotation__">BaseModifier.TryApplySymmetry(GridSymmetry, Cell, out Cell, out CellRotation)</a>
     </div>
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_Is2d">BaseModifier.Is2d</a>
@@ -220,6 +236,27 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     <div>
       <a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_IndexCount">BaseModifier.IndexCount</a>
     </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Sylves.html">Sylves</a></h6>
   <h6><strong>Assembly</strong>: Sylves.dll</h6>
@@ -228,19 +265,19 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     <pre><code class="lang-csharp hljs">public class XZModifier : TransformModifier, IGrid</code></pre>
   </div>
   <h3 id="constructors">Constructors
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_XZModifier__ctor_" data-uid="Sylves.XZModifier.#ctor*"></a>
   <h4 id="Sylves_XZModifier__ctor_Sylves_IGrid_" data-uid="Sylves.XZModifier.#ctor(Sylves.IGrid)">XZModifier(IGrid)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public XZModifier(IGrid underlying)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -257,19 +294,20 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     </tbody>
   </table>
   <h3 id="methods">Methods
-  </h3>
-  
-  
+</h3>
+
+
   <a id="Sylves_XZModifier_FindCell_" data-uid="Sylves.XZModifier.FindCell*"></a>
   <h4 id="Sylves_XZModifier_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__" data-uid="Sylves.XZModifier.FindCell(Sylves.Matrix4x4,Sylves.Cell@,Sylves.CellRotation@)">FindCell(Matrix4x4, out Cell, out CellRotation)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns the cell and rotation corresponding to a given transform matrix.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool FindCell(Matrix4x4 matrix, out Cell cell, out CellRotation rotation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -296,7 +334,7 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -305,25 +343,26 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_FindCell_Sylves_Matrix4x4_Sylves_Cell__Sylves_CellRotation__">TransformModifier.FindCell(Matrix4x4, out Cell, out CellRotation)</a></div>
-  
-  
+
+
   <a id="Sylves_XZModifier_GetCellType_" data-uid="Sylves.XZModifier.GetCellType*"></a>
   <h4 id="Sylves_XZModifier_GetCellType_Sylves_Cell_" data-uid="Sylves.XZModifier.GetCellType(Sylves.Cell)">GetCellType(Cell)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns the cell type associated with a given cell</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override ICellType GetCellType(Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -340,7 +379,7 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -356,18 +395,19 @@ This is different from a transform in that it doesn't rotate the cells, it appli
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellType_Sylves_Cell_">BaseModifier.GetCellType(Cell)</a></div>
-  
-  
+
+
   <a id="Sylves_XZModifier_GetCellTypes_" data-uid="Sylves.XZModifier.GetCellTypes*"></a>
   <h4 id="Sylves_XZModifier_GetCellTypes" data-uid="Sylves.XZModifier.GetCellTypes">GetCellTypes()</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns the full list of cell types that can be returned by <a class="xref" href="Sylves.IGrid.html#Sylves_IGrid_GetCellType_Sylves_Cell_">GetCellType(Cell)</a></p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override IEnumerable&lt;ICellType&gt; GetCellTypes()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -376,25 +416,31 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sylves.ICellType.html">ICellType</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sylves.ICellType.html">ICellType</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_GetCellTypes">BaseModifier.GetCellTypes()</a></div>
-  
-  
+
+
   <a id="Sylves_XZModifier_GetTRS_" data-uid="Sylves.XZModifier.GetTRS*"></a>
   <h4 id="Sylves_XZModifier_GetTRS_Sylves_Cell_" data-uid="Sylves.XZModifier.GetTRS(Sylves.Cell)">GetTRS(Cell)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns the appropriate transform for the cell.
+The translation will always be to GetCellCenter,
+rotation reflects the particular orientation of this cell
+and the scale will reflect cell sizing.
+GetTRS is often &quot;best effort&quot;, there might not be an obvious
+linear transformation from the canonical cell to the grid cell.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override TRS GetTRS(Cell cell)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -411,7 +457,7 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -427,18 +473,31 @@ This is different from a transform in that it doesn't rotate the cells, it appli
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.TransformModifier.html#Sylves_TransformModifier_GetTRS_Sylves_Cell_">TransformModifier.GetTRS(Cell)</a></div>
-  
-  
+
+
   <a id="Sylves_XZModifier_ParallelTransport_" data-uid="Sylves.XZModifier.ParallelTransport*"></a>
   <h4 id="Sylves_XZModifier_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__" data-uid="Sylves.XZModifier.ParallelTransport(Sylves.IGrid,Sylves.Cell,Sylves.Cell,Sylves.Cell,Sylves.CellRotation,Sylves.Cell@,Sylves.CellRotation@)">ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, out Cell, out CellRotation)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Given a path in aGrid from aSrcCell to aDestCell
+follows the same path in the current grid, starting at srcCell, and with the whole path rotated by startRotation.
+Reports the final spot that the path ends at, and it's rotation.
+Returns false if this cannot be done (typically because an equivalent pathc annot be found in the grid).</p>
+<p>This method is useful for translating co-ordinates between different grids that are similarish, at least having the same celltypes.
+For example, suppose
+aGrid = new SquareGrid(1);
+aSrcCell = new Cell(0, 0)
+aDestCell = new Cell(5, 0)
+srcCell = new Cell(100, 100)
+startRotation = identity</p>
+<p>Then the path in aGrid is a straight line moving 5 units to the right,
+and this method would attempt to move 5 units in the straight line that leads right out of (100, 100).</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool ParallelTransport(IGrid aGrid, Cell aSrcCell, Cell aDestCell, Cell srcCell, CellRotation startRotation, out Cell destCell, out CellRotation destRotation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -485,7 +544,7 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -494,25 +553,26 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Sylves.BaseModifier.html#Sylves_BaseModifier_ParallelTransport_Sylves_IGrid_Sylves_Cell_Sylves_Cell_Sylves_Cell_Sylves_CellRotation_Sylves_Cell__Sylves_CellRotation__">BaseModifier.ParallelTransport(IGrid, Cell, Cell, Cell, CellRotation, out Cell, out CellRotation)</a></div>
-  
-  
+
+
   <a id="Sylves_XZModifier_Rebind_" data-uid="Sylves.XZModifier.Rebind*"></a>
   <h4 id="Sylves_XZModifier_Rebind_Sylves_IGrid_" data-uid="Sylves.XZModifier.Rebind(Sylves.IGrid)">Rebind(IGrid)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Creates a new grid applying the current wrapper to a new underlying.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected override IGrid Rebind(IGrid underlying)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -529,7 +589,7 @@ This is different from a transform in that it doesn't rotate the cells, it appli
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -549,9 +609,44 @@ This is different from a transform in that it doesn't rotate the cells, it appli
   <div>
       <a class="xref" href="Sylves.IGrid.html">IGrid</a>
   </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_FindCell_Sylves_IGrid_Sylves_Vector3_">GridExtensions.FindCell(IGrid, Vector3)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetCellsIntersectsApprox_Sylves_IGrid_Sylves_Aabb_">GridExtensions.GetCellsIntersectsApprox(IGrid, Aabb)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetMeshData_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetMeshData(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetNeighbours_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetNeighbours(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_GetPolygon_Sylves_IGrid_Sylves_Cell_">GridExtensions.GetPolygon(IGrid, Cell)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Masked_Sylves_IGrid_System_Collections_Generic_ISet_Sylves_Cell__">GridExtensions.Masked(IGrid, ISet&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Masked_Sylves_IGrid_System_Func_Sylves_Cell_System_Boolean__System_Collections_Generic_IEnumerable_Sylves_Cell__">GridExtensions.Masked(IGrid, Func&lt;Cell, bool&gt;, IEnumerable&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Move_Sylves_IGrid_Sylves_Cell_Sylves_CellDir_">GridExtensions.Move(IGrid, Cell, CellDir)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_ToMeshData_Sylves_IGrid_">GridExtensions.ToMeshData(IGrid)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_ToMeshData_Sylves_IGrid_System_Collections_Generic_IEnumerable_Sylves_Cell__">GridExtensions.ToMeshData(IGrid, IEnumerable&lt;Cell&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Sylves.GridExtensions.html#Sylves_GridExtensions_Transformed_Sylves_IGrid_Sylves_Matrix4x4_">GridExtensions.Transformed(IGrid, Matrix4x4)</a>
+  </div>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
@@ -559,14 +654,14 @@ This is different from a transform in that it doesn't rotate the cells, it appli
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -574,8 +669,8 @@ This is different from a transform in that it doesn't rotate the cells, it appli
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
           </div>
         </div>
       </footer>

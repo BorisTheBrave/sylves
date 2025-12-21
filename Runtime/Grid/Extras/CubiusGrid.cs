@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Sylves
@@ -8,12 +9,12 @@ namespace Sylves
     /// </summary>
     public class CubiusGrid : MeshPrismGrid
     { 
-        public CubiusGrid(int width, int height, float outerRadius = 10, float innerRadius = 3)
+        public CubiusGrid(Int32 width, Int32 height, float outerRadius = 10, float innerRadius = 3)
             :base(MakeMeshData(width, height, outerRadius, innerRadius), Options(width, height, outerRadius, innerRadius), MakeData(width, height, outerRadius, innerRadius), false)
         {
         }
 
-        private static MeshPrismGridOptions Options(int w, int h, float outerRadius, float innerRadius) => new MeshPrismGridOptions
+        private static MeshPrismGridOptions Options(Int32 w, Int32 h, float outerRadius, float innerRadius) => new MeshPrismGridOptions
         {
             LayerHeight = 2 * innerRadius / h,
             LayerOffset = -2 * innerRadius / h * (h - 1) / 2,
@@ -21,7 +22,7 @@ namespace Sylves
             MaxLayer = h,
         };
 
-        private static DataDrivenData MakeData(int w, int h, float outerRadius, float innerRadius)
+        private static DataDrivenData MakeData(Int32 w, Int32 h, float outerRadius, float innerRadius)
         {
             var meshData = MakeMeshData(w, h, outerRadius, innerRadius);
             var meshPrismGridOptions = Options(w, h, outerRadius, innerRadius);
@@ -38,7 +39,7 @@ namespace Sylves
             return data;
         }
 
-        private static MeshData MakeMeshData(int w, int h, float outerRadius, float innerRadius)
+        private static MeshData MakeMeshData(Int32 w, Int32 h, float outerRadius, float innerRadius)
         {
             var radius1 = outerRadius;
             var radius2 = innerRadius;
@@ -68,10 +69,10 @@ namespace Sylves
 
                 }
             }
-            var indices = new int[h][];
+            var indices = new Int32[h][];
             for (var y = 0; y < h; y++)
             {
-                indices[y] = new int[4 * w];
+                indices[y] = new Int32[4 * w];
                 for (var x = 0; x < w; x++)
                 {
                     indices[y][4 * x + 0] = x + 1 + (w + 1) * (y + 0);

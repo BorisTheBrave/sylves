@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,62 +13,94 @@ namespace Sylves
         /// <summary>
         /// Inclusive lower bound for each coordinate
         /// </summary>
-        public Vector2Int min;
+        public Vector2Int Min { get; set; }
         
         /// <summary>
         /// Exclusive upper bound for each coordinate
         /// </summary>
-        public Vector2Int max;
+        public Vector2Int Mex { get; set; }
 
-        public SquareBound(Vector2Int min, Vector2Int max)
+        /// <summary>
+        /// Inclusive upper bound for each coordinate
+        /// </summary>
+        public Vector2Int Max
         {
-            this.min = min;
-            this.max = max;
+            get
+            {
+                return Mex - Vector2Int.one;
+            }
+            set
+            {
+                Mex = value + Vector2Int.one;
+            }
+        }
+
+        public SquareBound(Vector2Int min, Vector2Int mex)
+        {
+            this.Min = min;
+            this.Mex = mex;
         }
         public SquareBound(int minX, int minY, int maxX, int maxY)
         {
-            this.min = new Vector2Int(minX, minY);
-            this.max = new Vector2Int(maxX, maxY);
+            this.Min = new Vector2Int(minX, minY);
+            this.Mex = new Vector2Int(maxX, maxY);
+        }
+        public static SquareBound FromVectors(IEnumerable<Vector2Int> vs)
+        {
+            var enumerator = vs.GetEnumerator();
+            if (!enumerator.MoveNext())
+            {
+                throw new Exception($"Enumerator empty");
+            }
+            var min = enumerator.Current;
+            var max = min;
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                min = Vector2Int.Min(min, current);
+                max = Vector2Int.Max(max, current);
+            }
+            return new SquareBound(min, max + Vector2Int.one);
         }
 
-        public Vector2Int size => max - min;
+        public Vector2Int Size => Mex - Min;
 
         public bool Contains(Vector2Int v)
         {
-            return v.x >= min.x && v.y >= min.y && v.x < max.x && v.y < max.y;
+            return v.x >= Min.x && v.y >= Min.y && v.x < Mex.x && v.y < Mex.y;
         }
         public bool Contains(Cell v)
         {
-            return v.x >= min.x && v.y >= min.y && v.x < max.x && v.y < max.y;
+            return v.x >= Min.x && v.y >= Min.y && v.x < Mex.x && v.y < Mex.y;
         }
 
         public SquareBound Intersect(SquareBound other)
         {
-            return new SquareBound(Vector2Int.Max(min, other.min), Vector2Int.Min(max, other.max));
+            return new SquareBound(Vector2Int.Max(Min, other.Min), Vector2Int.Min(Mex, other.Mex));
         }
         public SquareBound Union(SquareBound other)
         {
-            return new SquareBound(Vector2Int.Min(min, other.min), Vector2Int.Max(max, other.max));
+            return new SquareBound(Vector2Int.Min(Min, other.Min), Vector2Int.Max(Mex, other.Mex));
         }
 
         public int IndexCount
         {
             get
             {
-                return size.x * size.y;
+                return Size.x * Size.y;
             }
         }
 
         public int GetIndex(Vector2Int cell)
         {
-            return (cell.x - min.x) + (cell.y - min.y) * size.x;
+            return (cell.x - Min.x) + (cell.y - Min.y) * Size.x;
         }
 
         public Vector2Int GetCellByIndex(int index)
         {
-            var x = index % size.x;
-            var y = index / size.x;
-            return new Vector2Int(x + min.x, y + min.y);
+            var x = index % Size.x;
+            var y = index / Size.x;
+            return new Vector2Int(x + Min.x, y + Min.y);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -77,9 +110,9 @@ namespace Sylves
 
         public IEnumerator<Cell> GetEnumerator()
         {
-            for (var x = min.x; x < max.x; x++)
+            for (var x = Min.x; x < Mex.x; x++)
             {
-                for (var y = min.y; y < max.y; y++)
+                for (var y = Min.y; y < Mex.y; y++)
                 {
                     yield return new Cell(x, y);
                 }

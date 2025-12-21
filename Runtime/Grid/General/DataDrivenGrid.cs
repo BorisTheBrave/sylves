@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -29,14 +30,14 @@ namespace Sylves
         private ICellType[] cellTypes;
         private readonly IDictionary<(Cell, CellDir), (Cell, CellDir, Connection)> moves;
         private readonly IDictionary<Cell, DataDrivenCellData> cellData;
-        private BiMap<Cell, int> indices;
+        private BiMap<Cell, Int32> indices;
 
         protected DataDrivenGrid(DataDrivenData data)
         {
             this.cellData = data.Cells;
             this.moves = data.Moves;
             cellTypes = cellData.Select(x => x.Value.CellType).Distinct().ToArray();
-            indices = new BiMap<Cell, int>(cellData.Keys.Select((x, i) => (x, i)));
+            indices = new BiMap<Cell, Int32>(cellData.Keys.Select((x, i) => (x, i)));
         }
 
 
@@ -53,7 +54,7 @@ namespace Sylves
         public bool IsFinite => true;
         public bool IsSingleCellType => cellTypes.Length == 1;
 
-        public virtual int CoordinateDimension => 3;
+        public virtual Int32 CoordinateDimension => 3;
         public IEnumerable<ICellType> GetCellTypes()
         {
             return cellTypes;
@@ -62,11 +63,16 @@ namespace Sylves
 
         #region Relatives
 
-        public IGrid Unbounded => this;
+        public virtual IGrid Unbounded => this;
 
         public IGrid Unwrapped => this;
-        public virtual IDualMapping GetDual() => throw new System.NotSupportedException();
+        public virtual IDualMapping GetDual() => throw new NotSupportedException();
 
+        public virtual IGrid GetDiagonalGrid() => throw new NotSupportedException();
+
+        public virtual IGrid GetCompactGrid() => throw new NotSupportedException();
+
+        public virtual IGrid Recenter(Cell cell) => DefaultGridImpl.Recenter(this, cell);
         #endregion
 
         #region Cell info
@@ -75,12 +81,12 @@ namespace Sylves
 
         public ICellType GetCellType(Cell cell) => cellData[cell].CellType;
 
-        public bool IsCellInGrid(Cell cell) => cellData.ContainsKey(cell);
+        public virtual bool IsCellInGrid(Cell cell) => cellData.ContainsKey(cell);
         #endregion
 
         #region Topology
 
-        public bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
+        public virtual bool TryMove(Cell cell, CellDir dir, out Cell dest, out CellDir inverseDir, out Connection connection)
         {
             if(moves.TryGetValue((cell, dir), out var t))
             {
@@ -119,20 +125,22 @@ namespace Sylves
 
         public int GetIndex(Cell cell) => indices[cell];
 
-        public Cell GetCellByIndex(int index) => indices[index];
+        public Cell GetCellByIndex(int index) => indices[(Int32)index];
         #endregion
 
         #region Bounds
-        public IBound GetBound() => DefaultGridImpl.GetBound(this);
+        public virtual IBound GetBound() => DefaultGridImpl.GetBound(this);
 
-        public IBound GetBound(IEnumerable<Cell> cells) => DefaultGridImpl.GetBound(this, cells);
+        public virtual IBound GetBound(IEnumerable<Cell> cells) => DefaultGridImpl.GetBound(this, cells);
 
-        public IGrid BoundBy(IBound bound) => DefaultGridImpl.BoundBy(this, bound);
+        public virtual IGrid BoundBy(IBound bound) => DefaultGridImpl.BoundBy(this, bound);
 
-        public IBound IntersectBounds(IBound bound, IBound other) => DefaultGridImpl.IntersectBounds(this, bound, other);
-        public IBound UnionBounds(IBound bound, IBound other) => DefaultGridImpl.UnionBounds(this, bound, other);
-        public IEnumerable<Cell> GetCellsInBounds(IBound bound) => DefaultGridImpl.GetCellsInBounds(this, bound);
+        public virtual IBound IntersectBounds(IBound bound, IBound other) => DefaultGridImpl.IntersectBounds(this, bound, other);
+        public virtual IBound UnionBounds(IBound bound, IBound other) => DefaultGridImpl.UnionBounds(this, bound, other);
+        public virtual IEnumerable<Cell> GetCellsInBounds(IBound bound) => DefaultGridImpl.GetCellsInBounds(this, bound);
         public virtual bool IsCellInBound(Cell cell, IBound bound) => DefaultGridImpl.IsCellInBound(this, cell, bound);
+
+        public virtual Aabb? GetBoundAabb(IBound bound) => DefaultGridImpl.GetBoundAabb(this, bound);
 
         #endregion
 
@@ -154,6 +162,9 @@ namespace Sylves
 
         public virtual void GetMeshData(Cell cell, out MeshData meshData, out Matrix4x4 transform) => throw new System.NotImplementedException();
 
+        public virtual Aabb GetAabb(Cell cell) => DefaultGridImpl.GetAabb(this, cell);
+
+        public virtual Aabb GetAabb(IEnumerable<Cell> cells) => DefaultGridImpl.GetAabb(this, cells);
         #endregion
 
         #region Query

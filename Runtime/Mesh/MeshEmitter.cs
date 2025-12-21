@@ -62,6 +62,16 @@ namespace Sylves
             return vertices.Count - 1;
         }
 
+        public int Interpolate(int i1, int i2, float t)
+        {
+            var it = 1 - t;
+            var v = (it * vertices[i1] + t * vertices[i2]);
+            var uv = this.uv == null ? null : (Vector2?)(it * this.uv[i1] + t * this.uv[i2]);
+            var normal = normals == null ? null : (Vector3?)(it * normals[i1] + t * normals[i2]).normalized;
+            var tangent = tangents == null ? null : (Vector4?)(it * tangents[i1] + t * tangents[i2]);
+            return AddVertex(v, uv, normal, tangent);
+        }
+
         public int Average(int i1, int i2)
         {
             var v = (vertices[i1] + vertices[i2]) / 2;
@@ -153,6 +163,25 @@ namespace Sylves
                 indices[indices.Count - 1].Add(i2);
                 indices[indices.Count - 1].Add(i3);
                 indices[indices.Count - 1].Add(~i4);
+            }
+            else
+            {
+                throw new Exception($"Cannot add a triangle to topology {topologies[topologies.Count - 1]}");
+            }
+        }
+
+        public void AddFace(int i1, int i2, int i3, int i4, int i5)
+        {
+            if (topologies.Count == 0)
+                throw new Exception("Must first add a submesh");
+
+            if (topologies[topologies.Count - 1] == MeshTopology.NGon)
+            {
+                indices[indices.Count - 1].Add(i1);
+                indices[indices.Count - 1].Add(i2);
+                indices[indices.Count - 1].Add(i3);
+                indices[indices.Count - 1].Add(i4);
+                indices[indices.Count - 1].Add(~i5);
             }
             else
             {

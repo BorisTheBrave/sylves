@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Dealing with infinity </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Dealing with infinity ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/custom.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+  
+  
+  
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="dealing-with-infinity">Dealing with infinity</h1>
+
+<p>In computing terms, nothing is truly infinite. But Sylves supports grids that have all the computing tricks needed giving the appearance of infinity:</p>
+<ul>
+<li>the grids are very, very large</li>
+<li>details can be filled in on the fly</li>
+<li>very little needs to be stored by the system</li>
+<li>floating point precision is managed to avoid glitches</li>
+</ul>
+<p>These same tricks power almost all &quot;infinite&quot; worlds, such as Minecraft, No Man's Sky, etc. In this tutorial, we'll cover how these tricks work, and how to use them in your own game building on Sylves.</p>
+<p>Most grids in Sylves are infinite by default. You have to <a href="bounds.html">bound</a> the grid in order to get something finite. Infinite grids can be detected by checking the <a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_IsFinite"><code>IsFinite</code></a> property, and they will typically throw <a class="xref" href="../../api/Sylves.GridInfiniteException.html">GridInfiniteException</a> if you try to do any eager operation that needs the full set of tiles, such as GetCells.</p>
+<h3 id="grids-are-very-very-large">Grids are very, very large.</h3>
+<p>The Cell struct Sylves uses are an x, y, z co-ordinate, each an <code>int</code>. That means that the maximum extent of a grid is from -2,147,483,648 to 2,147,483,647 in each co-ordinate. The exact number of cells depends on the grid co-ordinate system - square grids have about 16 quintillion cells in them. That's usually enough for any practical purpose (but see <a href="#biginteger-support">BigInteger support</a> if it isn't).</p>
+<p>Supporting a similar range in your game is as simple as re-using <code>Sylves.Cell</code> in your own code, or at least storing co-ordinates as a 32-bit integer.</p>
+<h3 id="the-details-can-be-filled-in-on-the-fly">The details can be filled in on the fly</h3>
+<p><code>Cell</code> structs contain no data except the co-ordinate. All methods on a grid, such as <a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_GetCellCenter_Sylves_Cell_">GetCellCenter</a>, take the co-ordinate and compute what is needed there and then. That means there is not a huge startup cost to pay when you create grid - you only pay for what you use, which is a tiny fraction of the grid.</p>
+<p><video tabindex="-1" aria-label="video player" style="object-fit: contain; width:500px; max-width:100%;" src="../../images/horizon_frustrum_culling.mp4" autoplay loop muted></video></p>
+<p>You can do the same for aspects of your game, like the map. Rather than create everything all at once, you procedurally generate it on demand. This is often called lazy generation. There's several popular techniques for this. Some important ones to know include:</p>
+<ul>
+<li>&quot;fields&quot; like perlin noise that can mathematically make a coherent infinite image which can be lazily generated one pixel at a time</li>
+<li>&quot;chunking&quot; to subdivide your world into separately generated sections</li>
+<li>saving random seeds so that randomized processes can give consistent results every time they are run</li>
+</ul>
+<p>I'd recommend starting by reading about Perlin noise, and then read <a href="https://www.alanzucconi.com/2022/06/05/minecraft-world-generation/">Alan Zucconi's article on Minecraft</a> when you want to get into the technical weeds.</p>
+<h3 id="very-little-needs-to-be-stored-by-the-system">Very little needs to be stored by the system</h3>
+<p>Computing on the fly doesn't just save on the amount of time needed to start up - it also saves on the amount of memory or storage your game needs. The majority of Sylves grids store a fixed amount of metadata that never grows, so they are very efficient on this front. There are a few grids that do need to save expensive calculations all use the same <a href="caching.html">caching</a> system that gives you control over how long the memory is kept for.</p>
+<p>In your game, you may find that you have rather more storage needs. The typical approach for infinite grids is to to have an on-the-fly calculation of the initial value of the grid, and then fill a store with just the changed cells. This allows a very large game world, providing you don't let users make an unreasonable amount of changes to it. The <a href="../tutorials/langton.html">Langton's Ant tutorial</a> has a good example of this technique, as it stores a list of player-visited cells.</p>
+<h3 id="floating-point-precision-is-managed">Floating point precision is managed</h3>
+<p>Sylves uses <code>int</code> for co-ordinates, but <code>float</code> for many spatial operations. Floating point is a complex topic, but the main thing to be aware of is that it becomes less precise the larger a number is stored. In fact, by the time you get to ±16.7 million, it doesn't even have the accuracy to distinguish between two adjacent cells of size 1. This is far smaller than Sylves' supported grid size, so you'll run into the same problems unless you are careful.</p>
+<p>This exact bug is responsible for the infamous <a href="https://minecraft.fandom.com/wiki/Far_Lands">Far Lands bug</a> of Minecraft.</p>
+<p><a href="https://minecraft.wiki/w/Far_Lands"><img width="600" src="../../images/Minecraft_Farlands.png"></a></p>
+<p>Managing this mostly means being careful about when to use floating point. Integer co-ordinates should be used wherever possible. Using <code>double</code> precision floats can also help, but Sylves has no support for this internally.</p>
+<p>To completely resolve the problem, it is necessary to apply <a href="#grid-recentering">Grid Recentering</a></p>
+<h2 id="grid-recentering">Grid Recentering</h2>
+<p>Floating point precision is a common problem in games with large scales. It comes up in many space games which simulate human sized physics on a planet sized scale or larger.</p>
+<p>If the problem is that floating point operations are only really acceptably accurate near the (0, 0, 0), the you need to ensure that all floating points in your game never really get too large, even as you explore farther out in the world.</p>
+<p>The solution is a &quot;floating origin&quot;, as seen, e.g. in <a href="https://frozenfractal.com/blog/2024/4/11/around-the-world-14-floating-the-origin/">Kerbal Space Program</a>. This designates an arbitrary point in space to be the origin. All floating point positions are computed <em>relative to the origin</em>. If the player moves too far away, you just move the origin to be closer. Everything in the vicinity of the origin is high precision, while stuff further away is worse quality. By keeping the origin near the player or camera, we can ensure users always see things happening with sufficient precision.</p>
+<p>What does this look like in Sylves? Sylves has a special method <a class="xref" href="../../api/Sylves.IGrid.html#Sylves_IGrid_Recenter_Sylves_Cell_"><code>Recenter(Cell cell)</code></a> which returns a translated grid so that the given cell's center is at (0, 0, 0). This translation means that effectively all floating point operations done by the grid are relative to this origin cell. Internally, the translation is done with integer arithmetic, so it never has any precision issues.</p>
+<p>You can use this recentering to set the origin to something nearby the player.</p>
+<pre><code class="lang-csharp">IGrid grid = new SquareGrid(1);
+Cell origin = new Cell(0, 0, 0);
+Vector3 cameraPos = new Vector3(0, 0, 0); // Camera position, relative to origin
+
+// Call this however you like to move the camera around
+void PanCamera(Vector3 offset)
+{
+    cameraPos += offset;
+    if(cameraPos.magnitude &gt; 100)
+    {
+        grid.FindCell(cameraPos, out var newOrigin);
+        RecenterGrid(newOrigin);
+    }
+}
+
+void Recenter(Cell newOrigin)
+{
+    var offset = grid.GetCellCenter(newOrigin);
+    grid = grid.Recenter(newOrigin);
+    // Update all positions in the entire game to be relative to the new origin.
+    // In this example the only position is camera, but you'd have to loop over all objects
+    cameraPos -= offset;
+}
+
+void DrawWorld()
+{
+    const float CameraWidth = 80;
+    const float CameraHeight = 40;
+    var cameraMin = new Vector3(cameraPos.x - CameraWidth/2, cameraPos.y - CameraHeight/2, 0);
+    var cameraMax = new Vector3(cameraPos.x + CameraWidth/2, cameraPos.y + CameraHeight/2, 0);
+    // Loop over all cells visible to the camera
+    foreach(var cell in grid.GetCellsIntersectsApprox(cameraMin, cameraM))
+    {
+        // Both grid.GetCellCenter and cameraPos are relative to the origin.
+        // But graphics routines typically want things relative to the camera
+        var positionRelativeToCamera = grid.GetCellCenter(cell) - cameraPos;
+        DrawCell(cell, positionRelativeToCamera);
+    }
+
+}
+</code></pre>
+<p>Note: recentering only really helps precision in the vicinity of the origin. You should still aim to use integer co-ordinates for anything that needs high precision across the entire grid.</p>
+<h2 id="biginteger-support">BigInteger support</h2>
+<p>Sometimes, a quadrillion cells is not enough. If, for some perverse reason, you really need larger grids, then Sylves comes with a special build that replaces all <code>int</code> co-ordinates with <a href="https://learn.microsoft.com/en-us/dotnet/api/system.numerics.biginteger"><code>System.Numerics.BigInteger</code></a>, which is C#'s built in class for representing arbitrarily large numbers. Each number is stored as an array of bytes, which itself can be long enough to be unlimited for all practical and impractical purposes.</p>
+<p>You can find this custom build in the GitHub releases, or you can build it yourself by running the <a href="https://github.com/BorisTheBrave/sylves/blob/main/src/Sylves.BigIntRewriter/Sylves.BigIntRewriter.csproj"><code>Sylves.BigIntRewriter</code></a> project, which generates the source from scratch.</p>
+<p>The majority of Sylves is completely unchanged in this build, but there are some minor differences to cell co-ordinates in some grids, and a few features are not supported. You will almost certainly need to apply the <a href="#grid-recentering">Grid Recentering</a> technique described above too.</p>
+<p>Example:</p>
+<pre><code class="lang-csharp">using System.Numerics;
+using Sylves;
+
+var grid = new SquareGrid(1);
+var oneTrillion = BigInteger.Pow(10, 12);
+var cell = new Cell(OneTrillion, 2 * OneTrillion, 0);
+foreach(var n in grid.GetNeighbours(cell))
+{
+    Console.WriteLine(n);
+}
+// Outputs
+// (1000000000001, 2000000000000, 0)
+// (1000000000000, 2000000000001, 0)
+// (999999999999, 2000000000000, 0)
+// (1000000000000, 1999999999999, 0)
+Console.WriteLine(grid.GetCellCenter(cell));
+// (1E+12, 2E+12, 0)
+</code></pre>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
