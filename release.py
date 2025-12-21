@@ -1,14 +1,12 @@
 # Sets up upm branch with a Unity importable version of the Sylves source
 # Requires, subdir upm set up as a git clone, checked out to branch upm
 
-import os
-import shutil
-import re
 import subprocess
 import zipfile
 
 # Pre-process Unity.Godot
 subprocess.check_call(["dotnet","run","--project", "Sylves.GodotRewriter.csproj"], cwd="src/Sylves.GodotRewriter")
+subprocess.check_call(["dotnet","run","--project", "Sylves.BigIntRewriter.csproj"], cwd="src/Sylves.BigIntRewriter")
 
 # Build solution
 subprocess.check_call(["dotnet","build","src/Sylves.sln","-c","Release"])
@@ -33,4 +31,10 @@ with zipfile.ZipFile('release/Godot.zip', 'w') as z:
     z.write("src/Sylves.Godot/bin/Release/net6.0/Sylves.Godot.dll", "Sylves.Godot.dll")
     z.write("src/Sylves.Godot/bin/Release/net6.0/Sylves.Godot.xml", "Sylves.Godot.xml")
     z.write("LICENSE.txt", "LICENSE.txt")
+
+with zipfile.ZipFile('release/BigInt.zip', 'w') as z:
+    z.write("src/Sylves.BigInt/bin/Release/net6.0/Sylves.BigInt.dll", "Sylves.BigInt.dll")
+    z.write("src/Sylves.BigInt/bin/Release/net6.0/Sylves.BigInt.xml", "Sylves.BigInt.xml")
+    z.write("LICENSE.txt", "LICENSE.txt")
+
 
