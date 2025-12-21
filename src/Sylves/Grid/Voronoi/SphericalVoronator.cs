@@ -226,8 +226,8 @@ namespace Sylves
         {
             // Pick an arbitrary vector not parallel to q
             Vector3 temp = (Mathf.Abs(Vector3.Dot(q, Vector3.up)) < 0.99f) ? Vector3.up : Vector3.right;
-            u = Vector3.Normalize(Vector3.Cross(q, temp));
-            v = Vector3.Normalize(Vector3.Cross(q, u));
+            u = Vector3.Cross(q, temp).normalized;
+            v = Vector3.Cross(q, u).normalized;
         }
         #endregion
     }
