@@ -146,7 +146,7 @@ def get_version():
             if version == "unreleased":
                 is_preview = True
                 continue
-            if not re.fullmatch("\d+\.\d+.\d", version):
+            if not re.fullmatch(r"\d+\.\d+.\d", version):
                 raise Exception(f"Version doesn't appear to be semver: {version}")
             return version + ("-preview" if is_preview else "")
 

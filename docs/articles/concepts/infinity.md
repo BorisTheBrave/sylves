@@ -19,11 +19,11 @@ Supporting a similar range in your game is as simple as re-using `Sylves.Cell` i
 
 ### The details can be filled in on the fly
 
-`Cell` structs contain no data except the co-ordinate. All methods on a grid, such as [GetCellCenter](xref:Sylves.IGrid.GetCellCenter(Sylves.Cell)), take the co-ordinate and compute what is needed there and then. That means there is not a huge startup cost to pay when you create grid - you only pay for what you use, which is a tiny fraction of the grid.
+`Cell` structs contain no data except the co-ordinate. All methods on a grid, such as [GetCellCenter](xref:Sylves.IGrid.GetCellCenter(Sylves.Cell)), take the co-ordinate and compute what is needed there and then. That means there is not a huge startup cost to pay when you create a grid - you only pay for what you use, which is a tiny fraction of the grid.
 
 <video tabindex="-1" aria-label="video player" style="object-fit: contain; width:500px; max-width:100%;" src="../../images/horizon_frustrum_culling.mp4" autoplay loop muted></video>
 
-You can do the same for aspects of your game, like the map. Rather than create everything all at once, you procedurally generate it on demand. This is often called lazy generation. There's several popular techniques for this. Some important ones to know include:
+You can do the same for aspects of your game. Rather than create everything all at once, you procedurally generate it on demand. This is often called lazy generation. There's several popular techniques for this. Some important ones to know include:
 * "fields" like perlin noise that can mathematically make a coherent infinite image which can be lazily generated one pixel at a time
 * "chunking" to subdivide your world into separately generated sections
 * saving random seeds so that randomized processes can give consistent results every time they are run
@@ -32,15 +32,15 @@ I'd recommend starting by reading about Perlin noise, and then read [Alan Zuccon
 
 ### Very little needs to be stored by the system
 
-Computing on the fly doesn't just save on the amount of time needed to start up - it also saves on the amount of memory or storage your game needs. The majority of Sylves grids store a fixed amount of metadata that never grows, so they are very efficient on this front. There are a few grids that do need to save expensive calculations all use the same [caching](caching.md) system that gives you control over how long the memory is kept for.
+Computing on the fly doesn't just save on the amount of time needed to start up - it also saves on the amount of memory or storage your game needs. The majority of Sylves grids store a fixed amount of metadata that never grows, so they are very efficient on this front. There are a few grids that do need to save expensive calculations. These all use the same [caching](caching.md) system that gives you control over how long the memory is kept for.
 
 In your game, you may find that you have rather more storage needs. The typical approach for infinite grids is to to have an on-the-fly calculation of the initial value of the grid, and then fill a store with just the changed cells. This allows a very large game world, providing you don't let users make an unreasonable amount of changes to it. The [Langton's Ant tutorial](../tutorials/langton.md) has a good example of this technique, as it stores a list of player-visited cells.
 
 ### Floating point precision is managed
 
-Sylves uses `int` for co-ordinates, but `float` for many spatial operations. Floating point is a complex topic, but the main thing to be aware of is that it becomes less precise the larger a number is stored. In fact, by the time you get to ±16.7 million, it doesn't even have the accuracy to distinguish between two adjacent cells of size 1. This is far smaller than Sylves' supported grid size, so you'll run into the same problems unless you are careful.
+Sylves uses `int` for co-ordinates, but `float` for many spatial operations. Floating point is a complex topic, but the main thing to be aware of is that it becomes less precise the larger a number is stored. In fact, by the time you get to ±16.7 million, it doesn't even have the accuracy to distinguish between two adjacent cells of size 1. This is far smaller than Sylves' supported grid size, so you'll run into problems unless you are careful.
 
-This exact bug is responsible for the infamous [Far Lands bug](https://minecraft.fandom.com/wiki/Far_Lands) of Minecraft.
+This issue is responsible for the infamous [Far Lands bug](https://minecraft.fandom.com/wiki/Far_Lands) of Minecraft.
 
 <a href="https://minecraft.wiki/w/Far_Lands"><img width="600" src="../../images/Minecraft_Farlands.png"></a>
 
