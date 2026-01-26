@@ -14,7 +14,7 @@ The key features include:
  * A common grid and cell interface so you can write algorithms that work on any grid.
  * An integrated understanding of orientation and rotation for grid entities.
  * Methods for working with meshes, such as remeshing, and deforming them to fit a grid cells.
- * Fully Unity compatible, or works as a standalone library.
+ * Fully Unity compatible, Godot compatible, and works as a standalone library.
 
 # Unity Installation
 
