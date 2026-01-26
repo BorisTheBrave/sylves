@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 #if UNITY
 using UnityEngine;
@@ -120,6 +120,18 @@ namespace Sylves
         public Matrix4x4 GetMatrix(CellRotation cellRotation)
         {
             return RotateZY * underlying.GetMatrix(cellRotation) * RotateYZ;
+        }
+
+        /// <inheritdoc />
+        public bool GetRotationFromMatrix(Matrix4x4 cellTransform, Matrix4x4 matrix, out CellRotation rotation)
+        {
+            var m = cellTransform.inverse * matrix;
+            // Handle XZ modifier: if underlying is not CubeCellType, we need to transform the matrix
+            if (underlying != CubeCellType.Instance)
+            {
+                m = RotateYZ * m * RotateZY;
+            }
+            return underlying.GetRotationFromMatrix(Matrix4x4.identity, m, out rotation);
         }
 
         /// <inheritdoc />

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -202,6 +202,19 @@ namespace Sylves
         public Matrix4x4 GetMatrix(CellRotation cellRotation)
         {
             return NGonCellType.GetMatrix(cellRotation, n);
+        }
+
+        public bool GetRotationFromMatrix(Matrix4x4 cellTransform, Matrix4x4 matrix, out CellRotation rotation)
+        {
+            var m = cellTransform.inverse * matrix;
+            var cellRotation = FromMatrix(m);
+            if (cellRotation != null)
+            {
+                rotation = cellRotation.Value;
+                return true;
+            }
+            rotation = default;
+            return false;
         }
 
         public Vector3 GetCornerPosition(CellCorner corner)

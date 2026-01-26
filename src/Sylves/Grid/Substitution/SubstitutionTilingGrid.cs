@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -460,7 +460,7 @@ namespace Sylves
                             // Get the rotation
                             var cellType = NGonCellType.Get(crumb.prototile.ChildTiles[childIndex].Length);
                             var cellTransform = GetTRS(crumb.prototile, crumb.transform, childIndex);
-                            return MeshGrid.GetRotationFromMatrix(cellType, cellTransform, matrix, out rotation);
+                            return cellType.GetRotationFromMatrix(cellTransform, matrix, out rotation);
                         }
                         prev = v;
                     }

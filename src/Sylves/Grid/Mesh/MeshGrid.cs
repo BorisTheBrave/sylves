@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -604,96 +604,6 @@ namespace Sylves
         }
 
 
-        private static readonly Matrix4x4 RotateYZ = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(0, -1, 0, 0), new Vector4(0, 0, 0, 1));
-        private static readonly Matrix4x4 RotateZY = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 0, -1, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
-
-        internal static bool GetRotationFromMatrix(ICellType cellType, Matrix4x4 cellTransform, Matrix4x4 matrix, out CellRotation rotation)
-        {
-            var m = cellTransform.inverse * matrix;
-            // TODO: Dispatch to celltype method?
-            if (cellType is XZCellTypeModifier modifier)
-            {
-                cellType = modifier.Underlying;
-                if (cellType != CubeCellType.Instance)
-                {
-                    m = RotateYZ * m * RotateZY;
-                }
-            }
-            if (cellType == CubeCellType.Instance)
-            {
-                var cubeRotation = CubeRotation.FromMatrix(m);
-                if (cubeRotation != null)
-                {
-                    rotation = cubeRotation.Value;
-                    return true;
-                }
-            }
-            else if (cellType == SquareCellType.Instance)
-            {
-                var squareRotation = SquareRotation.FromMatrix(m);
-                if (squareRotation != null)
-                {
-                    rotation = squareRotation.Value;
-                    return true;
-                }
-            }
-            else if (cellType is HexCellType hexCellType)
-            {
-                var hexRotation = HexRotation.FromMatrix(m, hexCellType.Orientation);
-                if (hexRotation != null)
-                {
-                    rotation = hexRotation.Value;
-                    return true;
-                }
-            }
-            else if (cellType is TriangleCellType triangleCellType)
-            {
-                var hexRotation = HexRotation.FromMatrix(m, triangleCellType.Orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
-                if (hexRotation != null)
-                {
-                    rotation = hexRotation.Value;
-                    return true;
-                }
-            }
-            else if (cellType is HexPrismCellType hexPrismCellType)
-            {
-                var hexRotation = HexRotation.FromMatrix(m, hexPrismCellType.Orientation);
-                if (hexRotation != null)
-                {
-                    rotation = hexRotation.Value;
-                    return true;
-                }
-            }
-            else if (cellType is TrianglePrismCellType trianglePrismCellType)
-            {
-                var hexRotation = HexRotation.FromMatrix(m, trianglePrismCellType.Orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
-                if (hexRotation != null)
-                {
-                    rotation = hexRotation.Value;
-                    return true;
-                }
-            }
-            else if (cellType is NGonCellType ngonCellType)
-            {
-                var cellRotation = ngonCellType.FromMatrix(m);
-                if (cellRotation != null)
-                {
-                    rotation = cellRotation.Value;
-                    return true;
-                }
-            }
-            else if (cellType is NGonPrismCellType ngonPrismCellType)
-            {
-                var cellRotation = ngonPrismCellType.FromMatrix(m);
-                if (cellRotation != null)
-                {
-                    rotation = cellRotation.Value;
-                    return true;
-                }
-            }
-            rotation = default;
-            return false;
-        }
 
         public override bool FindCell(
             Matrix4x4 matrix,
@@ -704,7 +614,7 @@ namespace Sylves
             if (FindCell(p, out cell))
             {
                 var cellData = CellData[cell];
-                return GetRotationFromMatrix(cellData.CellType, cellData.TRS.ToMatrix(), matrix, out rotation);
+                return cellData.CellType.GetRotationFromMatrix(cellData.TRS.ToMatrix(), matrix, out rotation);
             }
 
             rotation = default;

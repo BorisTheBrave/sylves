@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -144,6 +144,19 @@ namespace Sylves
         public Matrix4x4 GetMatrix(CellRotation cellRotation)
         {
             return ((HexRotation)cellRotation).ToMatrix(orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
+        }
+
+        public bool GetRotationFromMatrix(Matrix4x4 cellTransform, Matrix4x4 matrix, out CellRotation rotation)
+        {
+            var m = cellTransform.inverse * matrix;
+            var hexRotation = HexRotation.FromMatrix(m, orientation == TriangleOrientation.FlatTopped ? HexOrientation.FlatTopped : HexOrientation.PointyTopped);
+            if (hexRotation != null)
+            {
+                rotation = hexRotation.Value;
+                return true;
+            }
+            rotation = default;
+            return false;
         }
 
         // TODO

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -216,6 +216,19 @@ namespace Sylves
             return NGonCellType.GetMatrix(cellRotation, n);
         }
 
+        public bool GetRotationFromMatrix(Matrix4x4 cellTransform, Matrix4x4 matrix, out CellRotation rotation)
+        {
+            var m = cellTransform.inverse * matrix;
+            var cellRotation = FromMatrix(m);
+            if (cellRotation != null)
+            {
+                rotation = cellRotation.Value;
+                return true;
+            }
+            rotation = default;
+            return false;
+        }
+
         public Vector3 GetCornerPosition(CellCorner corner)
         {
             return NGonCellType.GetCornerPosition(corner, n);
@@ -318,6 +331,24 @@ namespace Sylves
         {
             AssertNoRotation(cellRotation);
             return Matrix4x4.identity;
+        }
+
+        public bool GetRotationFromMatrix(Matrix4x4 cellTransform, Matrix4x4 matrix, out CellRotation rotation)
+        {
+            // Only accept identity rotation
+            var m = cellTransform.inverse * matrix;
+            // Check if the matrix is close to identity (accounting for cellTransform)
+            var diff = m - Matrix4x4.identity;
+            var isIdentity = Mathf.Abs(diff.m00) < 1e-3f && Mathf.Abs(diff.m11) < 1e-3f && Mathf.Abs(diff.m22) < 1e-3f &&
+                             Mathf.Abs(diff.m01) < 1e-3f && Mathf.Abs(diff.m02) < 1e-3f && Mathf.Abs(diff.m10) < 1e-3f &&
+                             Mathf.Abs(diff.m12) < 1e-3f && Mathf.Abs(diff.m20) < 1e-3f && Mathf.Abs(diff.m21) < 1e-3f;
+            if (isIdentity)
+            {
+                rotation = GetIdentity();
+                return true;
+            }
+            rotation = default;
+            return false;
         }
 
         public Vector3 GetCornerPosition(CellCorner corner) => underlying.GetCornerPosition(corner);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 
 namespace Sylves
@@ -343,6 +343,18 @@ namespace Sylves
         };
         public static bool operator ==(Matrix4x4 lhs, Matrix4x4 rhs) => lhs.Equals(rhs);
         public static bool operator !=(Matrix4x4 lhs, Matrix4x4 rhs) => !(lhs == rhs);
+        public static Matrix4x4 operator +(Matrix4x4 lhs, Matrix4x4 rhs) => new Matrix4x4(
+            lhs.column0 + rhs.column0,
+            lhs.column1 + rhs.column1,
+            lhs.column2 + rhs.column2,
+            lhs.column3 + rhs.column3
+        );
+        public static Matrix4x4 operator -(Matrix4x4 lhs, Matrix4x4 rhs) => new Matrix4x4(
+            lhs.column0 - rhs.column0,
+            lhs.column1 - rhs.column1,
+            lhs.column2 - rhs.column2,
+            lhs.column3 - rhs.column3
+        );
     }
 #endif
 }

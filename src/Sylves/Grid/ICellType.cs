@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 #if UNITY
 using UnityEngine;
@@ -94,6 +94,12 @@ namespace Sylves
         /// Note: This method works for the canonical cell shape, but many shapes of cell might reference this cell type.
         /// </summary>
         Matrix4x4 GetMatrix(CellRotation cellRotation);
+
+        /// <summary>
+        /// Attempts to extract a CellRotation from a matrix, given a cell transform.
+        /// This is the inverse operation of GetMatrix, accounting for the cell's transform in the grid.
+        /// </summary>
+        bool GetRotationFromMatrix(Matrix4x4 cellTransform, Matrix4x4 matrix, out CellRotation rotation);
 
         /// <summary>
         /// Returns the position of a given corner in the canonical cell shape.
