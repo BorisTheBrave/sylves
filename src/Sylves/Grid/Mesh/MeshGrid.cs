@@ -392,10 +392,9 @@ namespace Sylves
         #region Position
         public override Vector3 GetCellCorner(Cell cell, CellCorner corner)
         {
-            GetPolygon(cell, out var vertices, out var transform);
-            var i = MeshGridBuilder.CellCornerToVertexIndex(corner, ((MeshCellData)CellData[cell]).Face.Count, meshGridOptions.DoubleOddFaces);
-            return transform.MultiplyPoint3x4(vertices[i]);
-
+            var face = ((MeshCellData)CellData[cell]).Face;
+            var i = MeshGridBuilder.CellCornerToVertexIndex(corner, face.Count, meshGridOptions.DoubleOddFaces);
+            return meshData.vertices[face[i]];
         }
 
         #endregion

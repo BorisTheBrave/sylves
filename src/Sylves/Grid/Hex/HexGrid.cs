@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -481,8 +481,10 @@ namespace Sylves
 
         public Vector3 GetCellCorner(Cell cell, CellCorner corner)
         {
-            GetPolygon(cell, out var vertices, out var transform);
-            return transform.MultiplyPoint3x4(vertices[(int)corner]);
+            var center = GetCellCenter(cell);
+            var vertices = orientation == HexOrientation.PointyTopped ? ptPolygon : ftPolygon;
+            var scale = new Vector3(cellSize.x, cellSize.y, 0);
+            return center + Vector3.Scale(scale, vertices[(int)corner]);
         }
 
         /// <summary>
