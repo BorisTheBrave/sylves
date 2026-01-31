@@ -25,13 +25,16 @@ namespace Sylves
             if (!isQuads && !isTris)
                 return null;
 
+            var meshOffset1 = tileHeight * layer + surfaceOffset - tileHeight / 2;
+            var meshOffset2 = tileHeight * layer + surfaceOffset + tileHeight / 2;
+
             var interpolatePoint = isQuads
-                ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2)
-                : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2);
+                ? QuadInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding, meshOffset1, meshOffset2)
+                : TriangleInterpolation.InterpolatePosition(surfaceMesh, subMesh, face, invertWinding, meshOffset1, meshOffset2);
 
             var jacobiPoint = isQuads
-                ? QuadInterpolation.JacobiPosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2)
-                : TriangleInterpolation.JacobiPosition(surfaceMesh, subMesh, face, invertWinding, tileHeight * layer + surfaceOffset - tileHeight / 2, tileHeight * layer + surfaceOffset + tileHeight / 2);
+                ? QuadInterpolation.JacobiPosition(surfaceMesh, subMesh, face, invertWinding, meshOffset1, meshOffset2)
+                : TriangleInterpolation.JacobiPosition(surfaceMesh, subMesh, face, invertWinding, meshOffset1, meshOffset2);
 
             var interpolateNormal = !smoothNormals ? null : isQuads
                 ? QuadInterpolation.InterpolateNormal(surfaceMesh, subMesh, face, invertWinding)
