@@ -2,6 +2,7 @@
 * Added [HexRect](xref:Svyles.HexRect)
 * Some calls to GetCellCorner are now more efficient
 * Some fixes for CompoundGrid.
+* Added [ModHexGrid](xref:Sylves.ModHexGrid)
 
 # v1.1.0
 * Added [`GetAabb`](xref:Sylves.IGrid.GetAabb(Sylves.Cell)) methods

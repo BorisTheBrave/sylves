@@ -176,7 +176,11 @@ These grids don't classify neatly and usually serve as demos for various feature
 
 <tr>
     <td><a href="../../images/grids/wrap_hex_fake.svg"><img class="grid-thumb" src="../../images/grids/wrap_hex_fake.svg" /></img></td>
-    <td><a href="xref:Sylves.WrappingHexGrid">WrappingHexGrid</a><br/>A bounded hexagon grid that wraps on the edges back to itself.</td>
+    <td><a href="xref:Sylves.WrappingHexGrid">WrappingHexGrid</a><br/>A hexagonally bounded hexagon grid that wraps on the edges back to itself.</td>
+</tr>
+<tr>
+    <td><a href="../../images/grids/modhex.svg"><img class="grid-thumb" src="../../images/grids/modhex.svg" /></img></td>
+    <td><a href="xref:Sylves.ModHexGrid">ModHexGrid</a><br/>A hex grid that supports wrapping by various rhombus shapes.</td>
 </tr>
 <tr>
     <td><a href="../../images/grids/townscaper.svg"><img class="grid-thumb" src="../../images/grids/townscaper.svg" /></img></td>

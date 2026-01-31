@@ -58,6 +58,9 @@ namespace Sylves
                 stroke-opacity: 0.5;
                 stroke-width: {strokeWidth / 3}
             }}");
+            tw.WriteLine($@".unmasked {{
+                opacity: 0.5
+            }}");
             tw.WriteLine("</style>");
         }
 

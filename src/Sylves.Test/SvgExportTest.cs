@@ -22,11 +22,17 @@ namespace Sylves.Test
             public Vector2 min = new Vector2(-2, -2);
             public Vector2 max = new Vector2(2, 2);
             public bool includeDual = false;
+            public bool includeUnwrapped = false;
             // If true, trim the cells to the bounding box
             public bool trim = false;
             public Func<Cell, string>? fillFunc = null;
             public Func<Cell, string>? textFunc = null;
             public Action<SvgBuilder>? postProcess = null;
+
+            public Options Clone()
+            {
+                return (Options)MemberwiseClone();
+            }
         }
 
         private const bool IsSeed = false;
@@ -79,6 +85,24 @@ namespace Sylves.Test
             var min = options.min;
             var max = options.max;
             BeginSvg(b, options);
+
+            if (options.includeUnwrapped)
+            {
+                var wrapModifier = (WrapModifier)grid;
+                var unbounded = wrapModifier.Underlying.Unbounded;
+                unbounded = BoundByAabb(unbounded, min.x, min.y, max.x, max.y);
+                tw.WriteLine("<g class=\"unmasked\">");
+                var options2 = options.Clone();
+                options2.includeUnwrapped = false;
+                options2.textFunc = c =>
+                {
+                    var x = wrapModifier.Canonicalize(c);
+                    return x == null ? "" : $"{x?.x},{x?.y},{x?.z}";
+                };
+                WriteCells(unbounded, unbounded.GetCells(), tw, b, options2);
+                tw.WriteLine("</g>");
+            }
+
             var cells = grid.GetCells();
             if(options.trim)
             {
@@ -384,7 +408,6 @@ namespace Sylves.Test
             return grid.BoundBy(bound);
         }
 
-
         [Test]
         public void ExportSvgGrids()
         {
@@ -462,6 +485,7 @@ namespace Sylves.Test
             Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "townscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
             Export(new TownscaperGrid(4, 0).BoundBy(new SquareBound(new Vector2Int(-2, -2), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "unrelaxedtownscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
             Export(new OffGrid(0.2f, new SquareBound(-4, -4, 5, 5)), "off.svg", new Options { textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3)});
+            Export(new ModHexGrid(1f, new EisensteinInteger(3, 2)), "modhex.svg", new Options { includeUnwrapped=true, textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3)});
 
             // For wrapping
             Export(new HexGrid(1f, bound: HexBound.Hexagon(1)), "wrap_hex_fake.svg", new Options { textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3)});
