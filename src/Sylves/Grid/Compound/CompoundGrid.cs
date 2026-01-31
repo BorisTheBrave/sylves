@@ -575,7 +575,7 @@ namespace Sylves
 
         private Cell Combine(int sectionIndex, Cell cell)
         {
-            return new Cell(Encoding.RavelEncode(sectionIndex, cell.x, cellsPerSection), cell.y, cell.z);
+            return new Cell(Encoding.RavelEncode(cell.x, sectionIndex, cellsPerSection), cell.y, cell.z);
         }
 
 
@@ -717,14 +717,17 @@ namespace Sylves
 
         public IBound GetBound(IEnumerable<Cell> cells)
         {
+            var boundsBySection = cells
+                    .Select(Split)
+                    .GroupBy(x => x.Item1, (k, g) => (k, (SquareBound)grids[k].GetBound(g.Select(x => x.Item2))))
+                    .ToDictionary(x => x.k, x => x.Item2);
+
             return new CompoundBound
             {
-                SectionBounds = cells
-                    .Select(Split)
-                    .GroupBy(x => x.Item1, (k, g) => g.Count() == 0 ? new SquareBound(0, 0, -1, -1) : (SquareBound)grids[k].GetBound(g.Select(x => x.Item2)))
+                SectionBounds = Enumerable.Range(0, sections.Count)
+                    .Select(i => boundsBySection.TryGetValue(i, out var bounds) ? bounds : new SquareBound(0, 0, -1, -1))
                     .ToArray()
             };
-            
         }
 
         public IGrid BoundBy(IBound bound)

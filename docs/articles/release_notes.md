@@ -1,3 +1,8 @@
+# Unreleased
+* Added [HexRect](xref:Svyles.HexRect)
+* Some calls to GetCellCorner are now more efficient
+* Some fixes for CompoundGrid.
+
 # v1.1.0
 * Added [`GetAabb`](xref:Sylves.IGrid.GetAabb(Sylves.Cell)) methods
 * Added [KruskalMinimumSpanningTree](xref:Sylves.KruskalMinimumSpanningTree) algo

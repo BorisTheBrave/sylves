@@ -368,5 +368,15 @@ namespace Sylves.Test
                 }
             }
         }
+
+        [Test]
+        public void TestBoundBy()
+        {
+            var grid = RadialGrids.Rhombic;
+            var bound = grid.GetBound(grid.GetCellsIntersectsApprox(new Vector3(-3, -3, 0), new Vector3(3, 3, 0)));
+            var boundedGrid = grid.BoundBy(bound);
+
+            Assert.AreEqual(36, boundedGrid.GetCells().Count());
+        }
     }
 }
