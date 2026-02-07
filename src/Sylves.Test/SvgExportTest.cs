@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.CodeCoverage;
+using Microsoft.VisualStudio.CodeCoverage;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using System;
@@ -220,7 +220,6 @@ namespace Sylves.Test
                 var svg = new SvgBuilder(tw);
 
                 BeginSvg(svg, options);
-                var y = 0;
                 foreach (var cell in grid.GetCells())
                 {
                     svg.DrawCell(grid, cell);
@@ -409,9 +408,8 @@ namespace Sylves.Test
         }
 
         [Test]
-        public void ExportSvgGrids()
+        public void ExportSvgGrids_BasicGrids()
         {
-            // Basic grids
             Export(
                 new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-5, -5), new Vector2Int(5, 5))),
                 "square.svg",
@@ -432,8 +430,11 @@ namespace Sylves.Test
                 new TriangleGrid(1, TriangleOrientation.FlatTopped).BoundBy(TriangleBound.Hexagon(3)),
                 "tri_ft.svg",
                 new Options { textScale = 0.5 });
+        }
 
-            // Periodic grids
+        [Test]
+        public void ExportSvgGrids_PeriodicGrids()
+        {
             Export(
                 new CairoGrid().BoundBy(new SquareBound(new Vector2Int(-5, -5), new Vector2Int(6, 6))),
                 "cairo.svg",
@@ -468,11 +469,17 @@ namespace Sylves.Test
                 new JitteredSquareGrid().BoundBy(new SquareBound(-1, -1, 2, 2)),
                 "jitteredsquare.svg",
                 new Options { min = new Vector2(5, 5), max = new Vector2(15, 15), textScale = 0.5 });
+        }
 
-            // Mesh grids
+        [Test]
+        public void ExportSvgGrids_MeshGrids()
+        {
             Export(new MeshGrid(TestMeshes.Lion).Transformed(Matrix4x4.Scale(4f * Vector3.one)), "meshgrid.svg", new Options { textScale = null});
+        }
 
-            // Radial grids
+        [Test]
+        public void ExportSvgGrids_RadialGrids()
+        {
             Export(BoundByAabb(RadialGrids.Rhombic, -3, -3, 3, 3),
                 "radial_rhombic.svg",
                 new Options { textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3), fillFunc = c => c.x % 3 == 2 ? "#00a2e8" : "#fff200" });
@@ -480,17 +487,20 @@ namespace Sylves.Test
             Export(BoundByAabb(RadialGrids.Octagonal, -7, -7, 7, 7),
                 "radial_octagonal.svg",
                 new Options { textScale = 1f, min = new Vector2(-7, -7), max = new Vector2(7, 7), fillFunc = c => octagonColors[c.x] });
+        }
 
-            // Extras grids
+        [Test]
+        public void ExportSvgGrids_ExtrasGrids()
+        {
             Export(new TownscaperGrid(4).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "townscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
             Export(new TownscaperGrid(4, 0).BoundBy(new SquareBound(new Vector2Int(-2, -2), new Vector2Int(3, 3))).Transformed(Matrix4x4.Scale(Vector3.one * 0.3f)), "unrelaxedtownscaper.svg", new Options { textScale = null, strokeWidth = 0.01f, });
             Export(new OffGrid(0.2f, new SquareBound(-4, -4, 5, 5)), "off.svg", new Options { textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3)});
             Export(new ModHexGrid(1f, new EisensteinInteger(3, 2)), "modhex.svg", new Options { includeUnwrapped=true, textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3)});
+        }
 
-            // For wrapping
-            Export(new HexGrid(1f, bound: HexBound.Hexagon(1)), "wrap_hex_fake.svg", new Options { textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3)});
-
-            // Modifier grids
+        [Test]
+        public void ExportSvgGrids_ModifierGrids()
+        {
             var centerSquare = new SquareGrid(1).BoundBy(new SquareBound(new Vector2Int(-3, -3), new Vector2Int(4, 4))).Transformed(Matrix4x4.Translate(new Vector3(-0.5f, -0.5f, 0)));
 
             Export(
@@ -919,5 +929,34 @@ mix.inputs[0].default_value = 0.433333
                 }
             }
         }
+
+/*
+        [Test]
+        public void ExportHexponents()
+        {
+            var modulus = new EisensteinInteger(3, 2);
+            var grid = new ModHexGrid(1f, modulus);
+            var cells = grid.GetCells().ToList();
+
+            // Group cells into orbits
+            var orbitIndex = new Dictionary<Cell, int>();
+            var orbitCount = 0;
+            foreach(var cell in cells)
+            {
+                if(orbitIndex.ContainsKey(cell))
+                    continue;
+                var current = (EisensteinInteger)cell;
+                var initial = current;
+                do{
+                    orbitIndex[cell] = orbitCount;
+                    current = current * initial;
+
+                }while(current != initial);
+                orbitCount++;
+            }
+
+            Export(new ModHexGrid(1f, new EisensteinInteger(3, 2)), "modhex.svg", new Options { includeUnwrapped=true, textScale = 0.5f, min = new Vector2(-3, -3), max = new Vector2(3, 3)});
+        }
+*/
     }
 }
