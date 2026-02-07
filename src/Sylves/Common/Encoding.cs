@@ -28,7 +28,7 @@ namespace Sylves
         }
         public static (BigInteger, BigInteger) ZOrderDecode(BigInteger i)
         {
-            return (0, 0);
+            throw new NotImplementedException();
         }
 #else
         public static int ZigZagEncode(int i) => (i << 1) ^ (i >> 31);
