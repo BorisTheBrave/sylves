@@ -1,4 +1,4 @@
-﻿#if UNITY
+#if UNITY
 using UnityEngine;
 #endif
 
@@ -118,6 +118,22 @@ namespace Sylves
         }
 
         public IGrid GetDiagonalGrid() => throw new NotImplementedException();
+        #endregion
+
+
+        #region Position
+        public override Vector3 GetCellCorner(Cell cell, CellCorner corner)
+        {
+            var meshCellData = (MeshCellData)CellData[cell];
+            var face = meshCellData.Face;
+            var prismInfo = meshCellData.PrismInfo;
+            var (baseCorner, isForward) = prismInfo.PrismToBaseCorners[corner];
+            var i = MeshGridBuilder.CellCornerToVertexIndex(baseCorner, face.Count, meshPrismOptions.DoubleOddFaces);
+            var (faceIndex, submesh, layer) = Unpack(cell);
+            var meshOffset = meshPrismOptions.LayerHeight * layer + meshPrismOptions.LayerOffset + meshPrismOptions.LayerHeight / 2 * (isForward ? 1 : -1);
+            return meshData.vertices[face[i]] + meshData.normals[face[i]] * meshOffset;
+        }
+
         #endregion
 
         #region Query
@@ -290,6 +306,8 @@ namespace Sylves
             GetCellMesh(cell, out meshData, out var trs, out var _);
             transform = trs.ToMatrix();
         }
+
+        public override void GetPolygon(Cell cell, out Vector3[] vertices, out Matrix4x4 transform) => throw new Grid3dException();
 
         public void GetCellMesh(Cell cell, out MeshData meshData, out TRS trs, out ILookup<CellDir, Int32> faces)
         {

@@ -4,6 +4,7 @@
 * Some fixes for CompoundGrid.
 * Added [ModHexGrid](xref:Sylves.ModHexGrid)
 * [Fix](https://github.com/BorisTheBrave/sylves/issues/6) GetChildTriangles for pointy topped hex grids.
+* Fix MeshPrismGrid.GetCellCorner.
 
 # v1.1.0
 * Added [`GetAabb`](xref:Sylves.IGrid.GetAabb(Sylves.Cell)) methods

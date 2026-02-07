@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System.Linq;
 #if UNITY
 using UnityEngine;
@@ -292,6 +292,48 @@ namespace Sylves.Test
         {
             var g = new MeshPrismGrid(TestMeshes.PlaneXY, new MeshPrismGridOptions { });
             GridTest.TestTriangleMesh(g, new Cell(), dir => ((CubeDir)dir).Forward(), _ => 2);
+        }
+
+        [Test]
+        public void TestGetCellCorner_PlaneXY_Structure()
+        {
+            var g = new MeshPrismGrid(TestMeshes.PlaneXY, new MeshPrismGridOptions
+            {
+                LayerHeight = 1,
+                LayerOffset = 0,
+                MinLayer = 0,
+                MaxLayer = 1,
+            });
+            var cell = new Cell(0, 0, 0);
+            var corners = g.GetCellType(cell).GetCellCorners().ToList();
+            Assert.AreEqual(8, corners.Count);
+            var positions = corners.Select(c => g.GetCellCorner(cell, c)).ToList();
+            Assert.AreEqual(8, positions.Distinct().Count(), "All 8 corner positions should be distinct");
+            // Back face (CubeCorner 0..3) at z = -0.5, forward (4..7) at z = 0.5
+            var backZ = positions.Take(4).Select(p => p.z).Distinct().ToList();
+            var forwardZ = positions.Skip(4).Select(p => p.z).Distinct().ToList();
+            Assert.AreEqual(1, backZ.Count, "Back corners should share one z");
+            Assert.AreEqual(1, forwardZ.Count, "Forward corners should share one z");
+            Assert.AreEqual(-0.5f, backZ[0], 1e-5f);
+            Assert.AreEqual(0.5f, forwardZ[0], 1e-5f);
+        }
+
+        [Test]
+        public void TestGetCellCorner_MatchesTriangleMeshVertices()
+        {
+            var grid = new MeshPrismGrid(TestMeshes.PlaneXY, options);
+            foreach (var cell in new[] { new Cell(0, 0, 0), new Cell(0, 0, 1) })
+            {
+                var meshVertices = grid.GetTriangleMesh(cell)
+                    .SelectMany(t => new[] { t.Item1, t.Item2, t.Item3 })
+                    .ToList();
+                foreach (var corner in grid.GetCellType(cell).GetCellCorners())
+                {
+                    var pos = grid.GetCellCorner(cell, corner);
+                    Assert.IsTrue(meshVertices.Any(v => Vector3.Distance(v, pos) < tol),
+                        $"GetCellCorner({cell}, {corner}) = {pos} should match a vertex of the cell's triangle mesh");
+                }
+            }
         }
     }
 }
