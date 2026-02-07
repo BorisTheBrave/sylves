@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System.Linq;
 #if UNITY
 using UnityEngine;
@@ -156,5 +156,91 @@ namespace Sylves.Test
             Assert.AreEqual(bound.Mex, corners.Select(x=>(Vector3Int)x).Aggregate(Vector3Int.Max) + Vector3Int.one);
             Assert.IsTrue(corners.All(cells.Contains));
         }
+
+        #region GetChildTriangleGrid / GetChildTriangles / GetTrianglePareny
+
+        [Test]
+        public void GetChildTriangles_PointyTopped()
+        {
+            const float cellSize = 1f;
+            var hexGrid = new HexGrid(cellSize, HexOrientation.PointyTopped);
+            var hexCell = new Cell(-1, 0, 1);
+
+            var triangles = hexGrid.GetChildTriangles(hexCell);
+
+            // Exact triangle list from issue #6
+            var expectedTriangles = new[]
+            {
+                new Cell(-2, 2,1),
+                new Cell(-1, 2, 1),
+                new Cell(-1, 1, 1),
+                new Cell(-1, 1, 2),
+                new Cell(-2, 1, 2),
+                new Cell(-2, 2, 2),
+            };
+            CollectionAssert.AreEquivalent(expectedTriangles, triangles);
+        }
+
+        [Test]
+        public void GetChildTriangles_FlatTopped()
+        {
+            const float cellSize = 1f;
+            var hexGrid = new HexGrid(cellSize, HexOrientation.FlatTopped);
+            var hexCell = new Cell(-1, 1, 0);
+
+            var triangles = hexGrid.GetChildTriangles(hexCell);
+
+            // Exact triangle list from issue #6
+            var expectedTriangles = new[]
+            {
+                new Cell(-2, 2, 1),
+                new Cell(-1, 2, 1),
+                new Cell(-1, 1, 1),
+                new Cell(-1, 1, 2),
+                new Cell(-2, 1, 2),
+                new Cell(-2, 2, 2),
+            };
+            CollectionAssert.AreEquivalent(expectedTriangles, triangles);
+        }
+
+        [Test]
+        [TestCase(0, 0, 0, HexOrientation.PointyTopped)]
+        [TestCase(1, 0, -1, HexOrientation.PointyTopped)]
+        [TestCase(-1, 0, 1, HexOrientation.PointyTopped)]
+        [TestCase(2, 7, -9, HexOrientation.PointyTopped)]
+        [TestCase(0, 0, 0, HexOrientation.FlatTopped)]
+        [TestCase(1, 0, -1, HexOrientation.FlatTopped)]
+        [TestCase(-1, 0, 1, HexOrientation.FlatTopped)]
+        [TestCase(2, 7, -9, HexOrientation.FlatTopped)]
+        public void GetChildTriangles_GetTriangleParent_RoundTrip(int x, int y, int z, HexOrientation orientation)
+        {
+            var hexGrid = new HexGrid(1f, orientation);
+            var hexCell = new Cell(x, y, z);
+
+            var triangles = hexGrid.GetChildTriangles(hexCell);
+            Assert.AreEqual(6, triangles.Length);
+            Assert.AreEqual(6, triangles.Distinct().Count(), "Child triangles should be distinct");
+
+            foreach (var triangle in triangles)
+            {
+                var hexParent = hexGrid.GetTriangleParent(triangle);
+                Assert.AreEqual(hexCell, hexParent,
+                    $"GetTriangleParent({triangle}) should return {hexCell}, but got {hexParent}");
+            }
+        }
+
+        [Test]
+        [TestCase(HexOrientation.PointyTopped)]
+        [TestCase(HexOrientation.FlatTopped)]
+        public void GetChildTriangleGrid(HexOrientation orientation)
+        {
+            var hexGrid = new HexGrid(1f, orientation);
+            var triangleGrid = hexGrid.GetChildTriangleGrid();
+
+            Assert.IsNotNull(triangleGrid);
+            Assert.AreEqual(orientation == HexOrientation.PointyTopped ? TriangleOrientation.FlatSides : TriangleOrientation.FlatTopped, triangleGrid.Orientation);
+        }
+
+        #endregion
     }
 }

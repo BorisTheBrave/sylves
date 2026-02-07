@@ -196,17 +196,34 @@ namespace Sylves
 
         public Cell[] GetChildTriangles(Cell cell)
         {
-            var a = cell.x - cell.y;
-            var b = cell.y - cell.z;
-            var c = cell.z - cell.x;
-            return new[] {
-                new Cell(a + 1, b, c),
-                new Cell(a + 1, b + 1, c),
-                new Cell(a, b + 1, c),
-                new Cell(a, b + 1, c + 1),
-                new Cell(a, b, c + 1),
-                new Cell(a + 1, b, c + 1),
-            };
+            if (orientation == HexOrientation.FlatTopped)
+            {
+                var a = cell.x - cell.y;
+                var b = cell.y - cell.z;
+                var c = cell.z - cell.x;
+                return new[] {
+                    new Cell(a + 1, b, c),
+                    new Cell(a + 1, b + 1, c),
+                    new Cell(a, b + 1, c),
+                    new Cell(a, b + 1, c + 1),
+                    new Cell(a, b, c + 1),
+                    new Cell(a + 1, b, c + 1),
+                };
+            }
+            else
+            {
+                var a = cell.x - cell.z;
+                var b = cell.y - cell.x;
+                var c = cell.z - cell.y;
+                return new[] {
+                    new Cell(a + 1, b, c),
+                    new Cell(a + 1, b + 1, c),
+                    new Cell(a, b + 1, c),
+                    new Cell(a, b + 1, c + 1),
+                    new Cell(a, b, c + 1),
+                    new Cell(a + 1, b, c + 1),
+                };
+            }
         }
 
         public Cell GetTriangleParent(Cell triangleCell)
