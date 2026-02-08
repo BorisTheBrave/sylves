@@ -20,6 +20,13 @@ namespace Sylves
             }
         }
 
+        // Internals constructor used for other meshgrid like grids.
+        // You need to call BuildMeshDetails() after calling this.
+        internal PlanarMeshGrid(MeshData meshData, MeshGridOptions meshGridOptions, DataDrivenData data, bool is2d) :
+            base(meshData, meshGridOptions, data, true)
+        {
+        }
+
         protected override bool IsPointInCell(Vector3 position, Cell cell)
         {
             var cellData = (MeshCellData)CellData[cell];

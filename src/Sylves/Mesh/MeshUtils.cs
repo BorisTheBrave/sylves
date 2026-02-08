@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,18 +52,43 @@ namespace Sylves
 
         internal static bool IsPointInPolygonPlanar(Vector3 p, Vector3[] vs)
         {
-            // Currently does fan detection
-            // Doesn't work for convex faces
-            var v0 = vs[0];
-            var prev = vs[1];
-            for (var i = 2; i < vs.Length; i++)
+            if (vs == null || vs.Length < 3)
+                return false;
+            var px = p.x;
+            var py = p.y;
+            var n = vs.Length;
+            const float eps = 1e-6f;
+
+            int crossings = 0;
+            for (var i = 0; i < n; i++)
             {
-                var v = vs[i];
-                if (GeometryUtils.IsPointInTrianglePlanar(p, v0, prev, v))
+                var a = vs[i];
+                var b = vs[(i + 1) % n];
+                if (IsPointOnSegmentPlanar(px, py, a.x, a.y, b.x, b.y, eps))
                     return true;
-                prev = v;
+                if ((a.y < py && b.y > py) || (a.y > py && b.y < py))
+                {
+                    var t = (py - a.y) / (b.y - a.y);
+                    var x = a.x + t * (b.x - a.x);
+                    if (x > px)
+                        crossings++;
+                }
             }
-            return false;
+            return (crossings % 2) != 0;
+        }
+
+        private static bool IsPointOnSegmentPlanar(float px, float py, float ax, float ay, float bx, float by, float eps = 1e-6f)
+        {
+            var dx = bx - ax;
+            var dy = by - ay;
+            var lenSq = dx * dx + dy * dy;
+            if (lenSq <= eps * eps)
+                return Math.Abs(px - ax) <= eps && Math.Abs(py - ay) <= eps;
+            var cross = (px - ax) * dy - (py - ay) * dx;
+            if (Math.Abs(cross) > eps * (Math.Abs(dx) + Math.Abs(dy) + 1))
+                return false;
+            var dot = (px - ax) * dx + (py - ay) * dy;
+            return dot >= -eps * (lenSq + 1) && dot <= lenSq + eps * (lenSq + 1);
         }
 
         internal static bool IsPointInPolygon(Vector3 p, Vector3[] vs, float planarThickness=1e-35f)

@@ -69,7 +69,7 @@ namespace Sylves
                 }
             }
 
-            var mg = new MeshGrid(meshData, new MeshGridOptions { }, dataDrivenData, true);
+            var mg = new PlanarMeshGrid(meshData, new MeshGridOptions { }, dataDrivenData, true);
             mg.BuildMeshDetails();
             centerMeshData = meshData;
             centerGrid = mg;
