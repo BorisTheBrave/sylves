@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System.Linq;
 #if UNITY
 using UnityEngine;
@@ -33,6 +33,38 @@ namespace Sylves.Test
         {
             var g = new MeshGrid(TestMeshes.Cube);
             GridTest.FindCell(g, new Cell());
+        }
+
+        [Test]
+        [Ignore("Not supported yet")]
+        public void TestFindCell_Concave()
+        {
+            // Dart: quad with vertices (0,0), (1,0), (1,1), (0.5, 0.5) - concave at (0.5, 0.5).
+            // Convex hull = triangle (0,0)-(1,0)-(1,1). Notch = triangle (1,0)-(1,1)-(0.5,0.5).
+            var dartMesh = new MeshData
+            {
+                vertices = new[]
+                {
+                    new Vector3(0f, 0f, 0f),
+                    new Vector3(1f, 0f, 0f),
+                    new Vector3(1f, 1f, 0f),
+                    new Vector3(0.5f, 0.5f, 0f),
+                },
+                normals = new[] { Vector3.forward, Vector3.forward, Vector3.forward, Vector3.forward },
+                indices = new[] { new[] { 0, 1, 2, 3 } },
+                topologies = new[] { MeshTopology.Quads }
+            };
+            var g = new MeshGrid(dartMesh);
+            var dartCell = new Cell(0, 0, 0);
+
+            // Point inside the dart (e.g. left of the notch) should find the cell
+            Assert.IsTrue(g.FindCell(new Vector3(0.25f, 0.25f, 0f), out var found), "Point inside dart should find cell");
+            Assert.AreEqual(dartCell, found);
+
+            // Point in the notch (in hull but not in polygon) must NOT find the cell
+            var pointInHullNotInPolygon = new Vector3(0.85f, 0.85f, 0f);
+            bool foundInNotch = g.FindCell(pointInHullNotInPolygon, out _);
+            Assert.IsFalse(foundInNotch, "Point in convex hull but outside concave polygon (dart notch) must not be found by FindCell");
         }
 
         [Test]

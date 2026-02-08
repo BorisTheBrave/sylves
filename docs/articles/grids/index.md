@@ -77,6 +77,10 @@ Mesh grids accept a [mesh](xref:Sylves.MeshData) as the input, and base cells of
     <td><a href="meshgrid.md">Mesh Grid</a><br/>Turns a mesh into a 2d grid, one cell per face. Doesn't need to be planar.</td>
 </tr>
 <tr>
+    <td><a href="../../images/grids/meshgrid.svg"><img class="grid-thumb" src="../../images/grids/meshgrid.svg" /></img></td>
+    <td><a href="planarmeshgrid.md">Planar Mesh Grid</a><br/>Turns a mesh into a 2d grid, one cell per face. Restricted to the XY plane, with some specialization for this case.</td>
+</tr>
+<tr>
     <td><a href="../../images/grids/meshprism.png"><img class="grid-thumb" src="../../images/grids/meshprism.png" /></img></td>
     <td><a href="meshprismgrid.md">MeshPrismGrid</a><br/>Turns a mesh into a 3d grid, one cell being one extruded face in a given layer.</td>
 </tr>

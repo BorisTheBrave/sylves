@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 #if UNITY
@@ -22,20 +22,49 @@ namespace Sylves
 
         protected override bool IsPointInCell(Vector3 position, Cell cell)
         {
-            // Currently does fan detection
-            // Doesn't work for convex faces
             var cellData = (MeshCellData)CellData[cell];
             var face = cellData.Face;
-            var v0 = meshData.vertices[face[0]];
-            var prev = meshData.vertices[face[1]];
-            for (var i = 2; i < face.Count; i++)
+            var vertices = meshData.vertices;
+            var px = position.x;
+            var py = position.y;
+            var n = face.Count;
+
+            // Ray casting (crossing number): cast ray in +X from (px, py); odd crossings = inside.
+            // Use strict straddle (a.y < py && b.y > py) || (a.y > py && b.y < py) so a ray through a vertex is counted once.
+            int crossings = 0;
+            for (var i = 0; i < n; i++)
             {
-                var v = meshData.vertices[face[i]];
-                if (GeometryUtils.IsPointInTrianglePlanar(position, v0, prev, v))
+                var a = vertices[face[i]];
+                var b = vertices[face[(i + 1) % n]];
+
+                // Point on segment (a,b)? Treat as inside.
+                if (IsPointOnSegmentPlanar(px, py, a.x, a.y, b.x, b.y))
                     return true;
-                prev = v;
+
+                if ((a.y < py && b.y > py) || (a.y > py && b.y < py))
+                {
+                    var t = (py - a.y) / (b.y - a.y);
+                    var x = a.x + t * (b.x - a.x);
+                    if (x > px)
+                        crossings++;
+                }
             }
-            return false;
+            return (crossings % 2) != 0;
+        }
+
+        /// <summary>Point (px,py) on segment (ax,ay)-(bx,by) in XY, within tolerance.</summary>
+        private static bool IsPointOnSegmentPlanar(float px, float py, float ax, float ay, float bx, float by, float eps = 1e-6f)
+        {
+            var dx = bx - ax;
+            var dy = by - ay;
+            var lenSq = dx * dx + dy * dy;
+            if (lenSq <= eps * eps)
+                return Math.Abs(px - ax) <= eps && Math.Abs(py - ay) <= eps;
+            var cross = (px - ax) * dy - (py - ay) * dx;
+            if (Math.Abs(cross) > eps * (Math.Abs(dx) + Math.Abs(dy) + 1))
+                return false;
+            var dot = (px - ax) * dx + (py - ay) * dy;
+            return dot >= -eps * (lenSq + 1) && dot <= lenSq + eps * (lenSq + 1);
         }
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max)
         {
