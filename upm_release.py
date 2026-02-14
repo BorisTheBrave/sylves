@@ -60,6 +60,16 @@ MonoImporter:
   assetBundleName: 
   assetBundleVariant: 
 """
+DIR_META="""
+fileFormatVersion: 2
+guid: GUID
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+"""
 
 def parse_if(line) -> Tuple[str, bool]:
     expr = line.strip()
@@ -120,7 +130,27 @@ def preprocess_dir(dir):
             preprocess_file(infilename, ["UNITY"], [])
 
 def create_meta_files(dir):
-    for (dirpath, _, filenames) in os.walk(dir):
+    import uuid
+
+    # Create .meta for the root directory (e.g. upm/Runtime/ -> upm/Runtime.meta)
+    root_meta = (dir.rstrip("/\\") + ".meta") if dir.rstrip("/\\") else None
+    if root_meta and not os.path.exists(root_meta):
+        with open(root_meta, "x") as f:
+            guid = str(uuid.uuid4()).replace("-", "")
+            print(f"Creating .meta file for directory {os.path.basename(dir.rstrip(os.sep))}")
+            f.write(DIR_META.replace("GUID", guid))
+
+    for (dirpath, dirnames, filenames) in os.walk(dir):
+        # Create .meta for each subdirectory (e.g. Foo/Bar/ -> Foo/Bar.meta)
+        for subdir in dirnames:
+            meta_path = os.path.join(dirpath, subdir + ".meta")
+            if os.path.exists(meta_path):
+                continue
+            with open(meta_path, "x") as f:
+                guid = str(uuid.uuid4()).replace("-", "")
+                print(f"Creating .meta file for directory {subdir}")
+                f.write(DIR_META.replace("GUID", guid))
+
         for filename in filenames:
             infilename = os.path.join(dirpath, filename)
 
@@ -133,7 +163,6 @@ def create_meta_files(dir):
                 continue
 
             with open(metafilename, "x") as f:
-                import uuid
                 guid = str(uuid.uuid4()).replace("-", "")
                 print(f"Creating .meta file for new file {filename}")
                 f.write(CS_META.replace("GUID", guid))
