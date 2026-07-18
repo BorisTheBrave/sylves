@@ -14,14 +14,17 @@ The key features include:
  * A common grid and cell interface so you can write algorithms that work on any grid.
  * An integrated understanding of orientation and rotation for grid entities.
  * Methods for working with meshes, such as remeshing, and deforming them to fit a grid cells.
- * Fully Unity compatible, Godot compatible, and works as a standalone library.
+ * Fully Unity compatible, Godot compatible, and works as a [standalone NuGet package](https://www.nuget.org/packages/Sylves/).
 
 # Unity Installation
+
+The version of Sylves on NuGet is *not* customized to Unity. Instead, use one of these sources which re-uses many Unity specific classes.
 
 There are three ways of doing this. Either
 * Either add the dll's from [the latest release](https://github.com/BorisTheBrave/sylves/releases)
 * or add as a [unity package from git url](https://docs.unity3d.com/Manual/upm-git.html) https://github.com/BorisTheBrave/sylves.git#upm
 * or [install from the OpenUPM package repository manually or with their CLI tool](https://openupm.com/packages/com.boristhebrave.sylves/)
+
 # See also
 * https://github.com/BorisTheBrave/grids
 * https://www.redblobgames.com/grids/hexagons

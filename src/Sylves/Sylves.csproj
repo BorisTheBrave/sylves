@@ -4,7 +4,20 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Configurations>Debug;Release;UnityRelease;GodotRelease</Configurations>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Version>1.1.0</Version>
+    <Authors>BorisTheBrave</Authors>
+    <Description>A C# library for working with 2d and 3d grids for games and procedural generation.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.boristhebrave.com/docs/sylves/1/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/BorisTheBrave/sylves</RepositoryUrl>
+    <PackageTags>grid hex cube mesh pcg procedural games</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <!-- Dotnet specific configuration-->
   <PropertyGroup Condition=" '$(Configuration)' != 'UnityRelease' And '$(Configuration)' != 'GodotRelease'">
@@ -17,6 +30,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
 	<DefineConstants>UNITY</DefineConstants>
     <Title>Sylves is a library for handling maths relating to grids, for games and procedural generation. (Unity Version)</Title>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'UnityRelease' ">
     <Reference Include="UnityEngine">
@@ -32,6 +46,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <DefineConstants>GODOT</DefineConstants>
 	<Title>Sylves is a library for handling maths relating to grids, for games and procedural generation. (Godot Version)</Title>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'GodotRelease' ">
     <PackageReference Include="GodotSharp" Version="4.1.1" />
