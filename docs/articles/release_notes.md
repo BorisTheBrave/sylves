@@ -1,4 +1,5 @@
 # Unreleased
+* Added [RhombicDodecahedronGrid](grids/rhombicdodecahedrongrid.md)
 * Added [HexRect](xref:Svyles.HexRect)
 * Added [SpiralGrid](xref:Sylves.SpiralGrid)
 * Added [ModHexGrid](xref:Sylves.ModHexGrid)

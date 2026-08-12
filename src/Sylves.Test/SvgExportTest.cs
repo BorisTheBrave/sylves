@@ -618,6 +618,7 @@ namespace Sylves.Test
         public void ExportObjGrids()
         {
             ExportObj(new CubeGrid(1, new CubeBound(new Vector3Int(-2, -2, -2), new Vector3Int(3, 3, 3))), "cube.obj");
+            ExportObj(new RhombicDodecahedronGrid(1, new CubeBound(new Vector3Int(-2, -2, -2), new Vector3Int(3, 3, 3))), "rhombicdodecahedron.obj");
             ExportObj(new HexPrismGrid(1, 1, bound: new HexPrismBound(HexBound.Hexagon(2), 0, 2)), "hexprism.obj");
             ExportObj(new TrianglePrismGrid(1, 1, bound: new TrianglePrismBound(TriangleBound.Hexagon(2), 0, 2)), "triangleprism.obj");
             ExportObj(new MobiusSquareGrid(10, 10), "mobiussquare.obj");
@@ -661,9 +662,8 @@ bpy.context.scene.render.resolution_x = 1080
 bpy.context.scene.view_layers["ViewLayer"].use_pass_mist = True
 
 scene = bpy.context.scene
-scene.use_nodes
-node_tree = scene.node_tree
 scene.use_nodes = True
+node_tree = scene.node_tree
 rlayers = node_tree.nodes.new("CompositorNodeRLayers")
 mix = node_tree.nodes.new("CompositorNodeMixRGB")
 composite = node_tree.nodes.new("CompositorNodeComposite")

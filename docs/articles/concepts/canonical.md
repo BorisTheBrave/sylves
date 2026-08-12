@@ -12,6 +12,7 @@ These methods assume a fixed size shape. These are documented on the specific im
 |--------|-----|-------------------------------------------------------|---------------------------------------------------------------|
 |SquareCellType|Square of width/height 1 and centered at (0, 0).|0.5|√2 / 2
 |CubeCellType|Cube of width/height/depth 1 and centered at (0, 0).|0.5|√3 / 2
+|RhombicDodecahedronCellType|Rhombic dodecahedron centered at (0, 0). Cube vertices at (±0.5, ±0.5, ±0.5); octahedron vertices at (±1, 0, 0) and permutations.|√2 / 2|1
 |TriangleCellType (FlatTopped)|A upwards pointing equilateral triangle|0.5|√3 / 3
 |TriangleCellType (FlatSides)|A left pointing equilateral triangle|0.5|√3 / 3
 |HexCellType (PointyTopped)|A regular hexagon with a side normal to (0, +1).|0.5|

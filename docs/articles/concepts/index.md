@@ -93,6 +93,7 @@ This table gives a summary of some of the specific classes backing each grid. Th
 |`HexGrid`|`HexCellType`|`PTHexDir` *or* `FTHexDir`|`HexRotation`|`HexBound`|
 |`TriangleGrid`|`HexCellType`|`PTHexDir` *or* `FTHexDir`|`HexRotation`|`HexBound`|
 |`HexPrismGrid`|`HexPrismCellType`|`HexPrismDir`|`HexRotation`|`HexPrismBound`|
+|`RhombicDodecahedronGrid`|`RhombicDodecahedronCellType`|`RhombicDodecahedronDir`|`RhombicDodecahedronRotation`|`CubeBound`|
 |`MeshGrid`|* |* |* | `null`|
 |`MeshPrismGrid`|* |* |* | `null`|
 

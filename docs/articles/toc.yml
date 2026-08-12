@@ -60,6 +60,8 @@
        href: grids/squaregrid.md
     -  name: CubeGrid
        href: grids/Cubegrid.md
+    -  name: RhombicDodecahedronGrid
+       href: grids/rhombicdodecahedrongrid.md
     -  name: HexGrid
        href: grids/hexgrid.md
     -  name: TriangleGrid

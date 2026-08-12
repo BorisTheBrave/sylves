@@ -18,16 +18,27 @@ These are the most common grids you are likely to want to use.
     <td><a href="squaregrid.md">Square Grid</a></td>
 </tr>
 <tr>
-    <td><a href="../../images/grids/cube.png"><img class="grid-thumb" src="../../images/grids/cube.png" /></img></td>
-    <td><a href="cubegrid.md">Cube Grid</a></td>
-</tr>
-<tr>
     <td><a href="../../images/grids/hex_pt.svg"><img class="grid-thumb" src="../../images/grids/hex_pt.svg" /></img></td>
     <td><a href="hexgrid.md">Hex Grid</a><br/>Supports both pointy topped and flat topped variants.</td>
 </tr>
 <tr>
     <td><a href="../../images/grids/tri_fs.svg"><img class="grid-thumb" src="../../images/grids/tri_fs.svg" /></img></td>
     <td><a href="trianglegrid.md">Triangle Grid</a><br/>Supports vertical and horizontal variants.</td>
+</tr>
+</table>
+
+## Basic 3d grids
+
+3d grids, also called honeycombs, are supported.
+
+<table>
+<tr>
+    <td><a href="../../images/grids/cube.png"><img class="grid-thumb" src="../../images/grids/cube.png" /></img></td>
+    <td><a href="cubegrid.md">Cube Grid</a></td>
+</tr>
+<tr>
+    <td><a href="../../images/grids/rhombicdodecahedron.png"><img class="grid-thumb" src="../../images/grids/rhombicdodecahedron.png" /></img></td>
+    <td><a href="rhombicdodecahedrongrid.md">Rhombic Dodecahedron Grid</a></td>
 </tr>
 </table>
 
