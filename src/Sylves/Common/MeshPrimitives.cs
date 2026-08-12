@@ -90,5 +90,56 @@ namespace Sylves
                 return meshData;
             }
         }
+
+        /// <summary>
+        /// MeshData for a rhombic dodecahedron centered at the origin.
+        /// Vertices are in <see cref="RhombicDodecahedronCorner"/> order,
+        /// and faces are in <see cref="RhombicDodecahedronDir"/> order.
+        /// </summary>
+        public static MeshData RhombicDodecahedron
+        {
+            get
+            {
+                var meshData = new MeshData();
+                Vector3[] vertices = {
+                    new Vector3(-0.5f, -0.5f, -0.5f), // BackDownLeft
+                    new Vector3(+0.5f, -0.5f, -0.5f), // BackDownRight
+                    new Vector3(-0.5f, +0.5f, -0.5f), // BackUpLeft
+                    new Vector3(+0.5f, +0.5f, -0.5f), // BackUpRight
+                    new Vector3(-0.5f, -0.5f, +0.5f), // ForwardDownLeft
+                    new Vector3(+0.5f, -0.5f, +0.5f), // ForwardDownRight
+                    new Vector3(-0.5f, +0.5f, +0.5f), // ForwardUpLeft
+                    new Vector3(+0.5f, +0.5f, +0.5f), // ForwardUpRight
+                    new Vector3(+1.0f,  0.0f,  0.0f), // Right
+                    new Vector3(-1.0f,  0.0f,  0.0f), // Left
+                    new Vector3( 0.0f, +1.0f,  0.0f), // Up
+                    new Vector3( 0.0f, -1.0f,  0.0f), // Down
+                    new Vector3( 0.0f,  0.0f, +1.0f), // Forward
+                    new Vector3( 0.0f,  0.0f, -1.0f), // Back
+                };
+
+                Int32[] quads = {
+                    8,  3, 10,  7, // RightUp
+                    9,  0, 11,  4, // LeftDown
+                    8,  5, 11,  1, // RightDown
+                    9,  6, 10,  2, // LeftUp
+                    8,  7, 12,  5, // RightForward
+                    9,  2, 13,  0, // LeftBack
+                    8,  1, 13,  3, // RightBack
+                    9,  4, 12,  6, // LeftForward
+                    10, 6, 12,  7, // UpForward
+                    11, 0, 13,  1, // DownBack
+                    10, 3, 13,  2, // UpBack
+                    11, 5, 12,  4, // DownForward
+                };
+
+                meshData.vertices = vertices;
+                meshData.indices = new[] { quads };
+                meshData.topologies = new[] { MeshTopology.Quads };
+                meshData.RecalculateNormals();
+
+                return meshData;
+            }
+        }
     }
 }
