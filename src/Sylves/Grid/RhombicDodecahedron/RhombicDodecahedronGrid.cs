@@ -459,7 +459,180 @@ namespace Sylves
             }
         }
 
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity) => throw new NotImplementedException();
+        // The 12 fa
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        {
+            var x1 = origin.x / cellSize.x;
+            var y1 = origin.y / cellSize.y;
+            var z1 = origin.z / cellSize.z;
+            var dx = direction.x / cellSize.x;
+            var dy = direction.y / cellSize.y;
+            var dz = direction.z / cellSize.z;
+
+            if (dx == 0 && dy == 0 && dz == 0)
+            {
+                UnboundedFindCell(origin, out var c0);
+                if (IsCellInGrid(c0))
+                {
+                    yield return new RaycastInfo
+                    {
+                        cell = c0,
+                        point = origin,
+                        cellDir = null,
+                        distance = 0,
+                    };
+                }
+                yield break;
+            }
+
+            var extraDistance = 0f;
+            if (bound != null)
+            {
+                var minx = bound.Min.x - 0.5f;
+                var miny = bound.Min.y - 0.5f;
+                var minz = bound.Min.z - 0.5f;
+                var maxx = bound.Mex.x + 0.5f;
+                var maxy = bound.Mex.y + 0.5f;
+                var maxz = bound.Mex.z + 0.5f;
+
+                var tx1 = dx == 0 ? (minx > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (minx - x1) / dx : (maxx - x1) / dx;
+                var tx2 = dx == 0 ? (maxx > x1 ? 1 : -1) * float.PositiveInfinity : dx >= 0 ? (maxx - x1) / dx : (minx - x1) / dx;
+                var ty1 = dy == 0 ? (miny > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (miny - y1) / dy : (maxy - y1) / dy;
+                var ty2 = dy == 0 ? (maxy > y1 ? 1 : -1) * float.PositiveInfinity : dy >= 0 ? (maxy - y1) / dy : (miny - y1) / dy;
+                var tz1 = dz == 0 ? (minz > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (minz - z1) / dz : (maxz - z1) / dz;
+                var tz2 = dz == 0 ? (maxz > z1 ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (maxz - z1) / dz : (minz - z1) / dz;
+
+                var mint = Math.Max(tx1, Math.Max(ty1, tz1));
+                var maxt = Math.Min(tx2, Math.Min(ty2, tz2));
+                maxDistance = Math.Min(maxDistance, maxt);
+
+                if (mint > 0)
+                {
+                    x1 += dx * mint;
+                    y1 += dy * mint;
+                    z1 += dz * mint;
+                    maxDistance -= mint;
+                    extraDistance = mint;
+                    origin += direction * mint;
+                }
+
+                if (maxDistance < 0)
+                    yield break;
+                if (mint == float.PositiveInfinity)
+                    yield break;
+            }
+
+            UnboundedFindCell(origin, out var cell);
+            if (IsCellInGrid(cell))
+            {
+                yield return new RaycastInfo
+                {
+                    cell = cell,
+                    point = origin,
+                    cellDir = null,
+                    distance = extraDistance,
+                };
+            }
+
+            // 6-family plane Digital Differential Analyzer.
+            // Face of the cell lies a plane x±y, x±z, or y±z.
+            // Like with CubeGrid.Raycast, we compute
+            // "t" values, the time the ray crosses each plane.
+            // And find the minimum in order to step to the next cell.
+            // Then recompute all six t values and try again.
+            var lastT = -1f;
+            while (true)
+            {
+                var bestT = float.PositiveInfinity;
+                var bestFamily = -1;
+                var bestDuPositive = false;
+                ConsiderFamily(0, dx + dy, x1 + y1);
+                ConsiderFamily(1, dx - dy, x1 - y1);
+                ConsiderFamily(2, dx + dz, x1 + z1);
+                ConsiderFamily(3, dx - dz, x1 - z1);
+                ConsiderFamily(4, dy + dz, y1 + z1);
+                ConsiderFamily(5, dy - dz, y1 - z1);
+
+                if (bestFamily < 0 || bestT > maxDistance)
+                    yield break;
+
+                FamilyStep(bestFamily, bestDuPositive, out var step, out var enterDir);
+                cell += step;
+                lastT = bestT;
+
+                if (IsCellInGrid(cell))
+                {
+                    yield return new RaycastInfo
+                    {
+                        cell = cell,
+                        point = origin + bestT * direction,
+                        cellDir = (CellDir)enterDir,
+                        distance = bestT + extraDistance,
+                    };
+                }
+
+                void ConsiderFamily(int family, float du, float u0)
+                {
+                    if (du == 0)
+                        return;
+                    var plane = FamilyExitPlane(family, cell, du > 0);
+                    var t = (plane - u0) / du;
+                    if (t > lastT + 1e-7f && t < bestT)
+                    {
+                        bestT = t;
+                        bestFamily = family;
+                        bestDuPositive = du > 0;
+                    }
+                }
+            }
+        }
+
+        private static float FamilyExitPlane(int family, Cell cell, bool positive)
+        {
+            switch (family)
+            {
+                case 0: return positive ? cell.x + cell.y + 2 : cell.x + cell.y;
+                case 1: return positive ? cell.x - cell.y + 1 : cell.x - cell.y - 1;
+                case 2: return positive ? cell.x + cell.z + 2 : cell.x + cell.z;
+                case 3: return positive ? cell.x - cell.z + 1 : cell.x - cell.z - 1;
+                case 4: return positive ? cell.y + cell.z + 2 : cell.y + cell.z;
+                case 5: return positive ? cell.y - cell.z + 1 : cell.y - cell.z - 1;
+                default: throw new ArgumentOutOfRangeException(nameof(family));
+            }
+        }
+
+        private static void FamilyStep(int family, bool positive, out Vector3Int step, out RhombicDodecahedronDir enterDir)
+        {
+            switch (family)
+            {
+                case 0:
+                    step = positive ? new Vector3Int(1, 1, 0) : new Vector3Int(-1, -1, 0);
+                    enterDir = positive ? RhombicDodecahedronDir.LeftDown : RhombicDodecahedronDir.RightUp;
+                    return;
+                case 1:
+                    step = positive ? new Vector3Int(1, -1, 0) : new Vector3Int(-1, 1, 0);
+                    enterDir = positive ? RhombicDodecahedronDir.LeftUp : RhombicDodecahedronDir.RightDown;
+                    return;
+                case 2:
+                    step = positive ? new Vector3Int(1, 0, 1) : new Vector3Int(-1, 0, -1);
+                    enterDir = positive ? RhombicDodecahedronDir.LeftBack : RhombicDodecahedronDir.RightForward;
+                    return;
+                case 3:
+                    step = positive ? new Vector3Int(1, 0, -1) : new Vector3Int(-1, 0, 1);
+                    enterDir = positive ? RhombicDodecahedronDir.LeftForward : RhombicDodecahedronDir.RightBack;
+                    return;
+                case 4:
+                    step = positive ? new Vector3Int(0, 1, 1) : new Vector3Int(0, -1, -1);
+                    enterDir = positive ? RhombicDodecahedronDir.DownBack : RhombicDodecahedronDir.UpForward;
+                    return;
+                case 5:
+                    step = positive ? new Vector3Int(0, 1, -1) : new Vector3Int(0, -1, 1);
+                    enterDir = positive ? RhombicDodecahedronDir.DownForward : RhombicDodecahedronDir.UpBack;
+                    return;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(family));
+            }
+        }
         #endregion
 
         #region Symmetry

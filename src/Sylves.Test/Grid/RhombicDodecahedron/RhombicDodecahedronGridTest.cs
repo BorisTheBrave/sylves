@@ -201,5 +201,58 @@ namespace Sylves.Test
             var g = new RhombicDodecahedronGrid(1);
             GridTest.TestTriangleMesh(g, new Cell(), dir => ((RhombicDodecahedronDir)dir).Forward(), _ => 2);
         }
+
+        [Test]
+        public void TestRaycast()
+        {
+            var g = new RhombicDodecahedronGrid(1);
+            var start = g.GetCellCenter(new Cell(0, 0, 0));
+            var end = g.GetCellCenter(new Cell(1, 1, 0));
+            var infos = g.Raycast(start, end - start, 1).ToList();
+            Assert.AreEqual(new Cell(0, 0, 0), infos[0].cell);
+            Assert.AreEqual(null, infos[0].cellDir);
+            Assert.AreEqual(new Cell(1, 1, 0), infos[1].cell);
+            Assert.AreEqual(RhombicDodecahedronDir.LeftDown, (RhombicDodecahedronDir?)infos[1].cellDir);
+            Assert.AreEqual(2, infos.Count);
+            TestUtils.AssertAreEqual(new Vector3(1f, 1f, 0.5f), infos[1].point, 1e-5);
+
+            // Off-axis +X goes via an FCC neighbour, not straight to (2,0,0)
+            infos = g.Raycast(new Vector3(0.5f, 0.6f, 0.5f), Vector3.right, 3).ToList();
+            Assert.AreEqual(new Cell(0, 0, 0), infos[0].cell);
+            Assert.AreEqual(null, infos[0].cellDir);
+            Assert.AreEqual(new Cell(1, 1, 0), infos[1].cell);
+            Assert.AreEqual(RhombicDodecahedronDir.LeftDown, (RhombicDodecahedronDir?)infos[1].cellDir);
+            Assert.AreEqual(new Cell(2, 0, 0), infos[2].cell);
+            Assert.AreEqual(RhombicDodecahedronDir.LeftUp, (RhombicDodecahedronDir?)infos[2].cellDir);
+
+            // Test bad direction doesn't break things
+            g.Raycast(new Vector3(1.23f, 4.56f, 0), new Vector3(), 1).ToList();
+
+            var bound = new CubeBound(new Vector3Int(0, 0, 0), new Vector3Int(1, 1, 1));
+            g = new RhombicDodecahedronGrid(1, bound);
+
+            // Expanded AABB starts at x=-0.5, which is the Left vertex of (0,0,0)
+            Assert.AreEqual(0.5f, g.Raycast(new Vector3(-1f, 0.5f, 0.5f), Vector3.right).First().distance);
+        }
+
+        [Test]
+        public void TestRaycast_Bounds()
+        {
+            var bound = new CubeBound(new Vector3Int(-1, -1, -1), new Vector3Int(2, 2, 2));
+            var g = new RhombicDodecahedronGrid(1, bound);
+
+            var hits = g.Raycast(new Vector3(0.5f, 0.6f, 0.5f), Vector3.right).ToList();
+            CollectionAssert.AreEqual(new[] { new Cell(0, 0, 0), new Cell(1, 1, 0) }, hits.Select(x => x.cell));
+
+            hits = g.Raycast(new Vector3(0.5f, 0.6f, 0.5f), Vector3.left).ToList();
+            CollectionAssert.AreEqual(new[] { new Cell(0, 0, 0), new Cell(-1, 1, 0) }, hits.Select(x => x.cell));
+
+            // Offset in z so the ray does not pass through an octahedron vertex
+            hits = g.Raycast(new Vector3(0.5f, 10f, 0.6f), new Vector3(0, -1, 0)).ToList();
+            CollectionAssert.AreEqual(new[] { new Cell(0, 1, 1), new Cell(0, 0, 0), new Cell(0, -1, 1) }, hits.Select(x => x.cell));
+
+            hits = g.Raycast(new Vector3(0.5f, -10f, 0.6f), new Vector3(0, 1, 0)).ToList();
+            CollectionAssert.AreEqual(new[] { new Cell(0, -1, 1), new Cell(0, 0, 0), new Cell(0, 1, 1) }, hits.Select(x => x.cell));
+        }
     }
 }
