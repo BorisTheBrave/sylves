@@ -7,6 +7,20 @@ namespace Sylves
 {
     public static class RhombicDodecahedronDirExtensions
     {
+        /// <returns>
+        /// The short diagonal of the rhombus, along the unused axis of <see cref="Forward"/>.
+        /// Always a positive unit axis.
+        /// </returns>
+        public static Vector3Int Up(this RhombicDodecahedronDir dir)
+        {
+            var f = dir.Forward();
+            if (f.x == 0)
+                return new Vector3Int(1, 0, 0);
+            if (f.y == 0)
+                return new Vector3Int(0, 1, 0);
+            return new Vector3Int(0, 0, 1);
+        }
+
         /// <returns>The neighbor offset for a given face.</returns>
         public static Vector3Int Forward(this RhombicDodecahedronDir dir)
         {
@@ -26,6 +40,18 @@ namespace Sylves
                 case RhombicDodecahedronDir.DownForward: return new Vector3Int(0, -1, 1);
             }
             throw new Exception($"Unrecognized dir {dir}");
+        }
+
+        /// <returns>Cross product of Up() and Forward().</returns>
+        /// I.e. the long diagonal of the rhombus, pointing right if you face along Forward with head toward Up.
+        public static Vector3Int Right(this RhombicDodecahedronDir dir)
+        {
+            var u = dir.Up();
+            var f = dir.Forward();
+            return new Vector3Int(
+                u.y * f.z - u.z * f.y,
+                u.z * f.x - u.x * f.z,
+                u.x * f.y - u.y * f.x);
         }
 
         /// <returns>Returns the face dir with the opposite normal vector.</returns>

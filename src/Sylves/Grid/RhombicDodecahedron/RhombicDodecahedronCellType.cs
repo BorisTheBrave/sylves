@@ -90,7 +90,44 @@ namespace Sylves
 
         public void Rotate(CellDir dir, CellRotation rotation, out CellDir resultDir, out Connection connection)
         {
-            throw new NotImplementedException();
+            resultDir = Rotate(dir, rotation);
+
+            var rdRotation = (RhombicDodecahedronRotation)rotation;
+            var rdDir = (RhombicDodecahedronDir)dir;
+            var rdResultDir = (RhombicDodecahedronDir)resultDir;
+
+            var up = rdRotation * rdDir.Up();
+            var right = rdRotation * rdDir.Right();
+
+            var resultUp = rdResultDir.Up();
+            var resultRight = rdResultDir.Right();
+            var resultForward = rdResultDir.Forward();
+
+            // Convert to 2d rotation, same as SquareRotation.FromMatrix
+            var isReflection = Vector3.Dot(Vector3.Cross(right, up), resultForward) < 0;
+            var y = Vector3.Dot(right, resultUp);
+            var x = Vector3.Dot(right, resultRight);
+            if (isReflection)
+            {
+                y = -y;
+            }
+            var angle = Mathf.Atan2(y, x);
+            var angleInt = MathUtils.RoundToInt32(angle / (Mathf.PI / 2));
+            if (isReflection)
+            {
+                angleInt = (-angleInt + 4) % 4;
+            }
+            else
+            {
+                angleInt = (angleInt + 4) % 4;
+            }
+
+            connection = new Connection
+            {
+                Mirror = isReflection,
+                Rotation = angleInt,
+                Sides = 4,
+            };
         }
 
         public CellRotation RotateCW => throw new System.NotSupportedException("RhombicDodecahedronCellType doesn't have a generic axis to rotate around");
@@ -98,7 +135,32 @@ namespace Sylves
 
         public bool TryGetRotation(CellDir fromDir, CellDir toDir, Connection connection, out CellRotation rotation)
         {
-            throw new NotImplementedException();
+            var rdFromDir = (RhombicDodecahedronDir)fromDir;
+            var rdToDir = (RhombicDodecahedronDir)toDir;
+            var m1 = FaceMatrix(rdFromDir);
+            var m2 = FaceMatrix(rdToDir);
+            var m3 = connection.ToMatrix();
+
+            // Transpose is equivalent to inverse because FaceMatrix is orthonormal.
+            var rdRotation = RhombicDodecahedronRotation.FromMatrix(m2 * m3 * m1.transpose);
+            if (rdRotation != null)
+            {
+                rotation = rdRotation.Value;
+                return true;
+            }
+            else
+            {
+                rotation = default;
+                return false;
+            }
+        }
+
+        private static Matrix4x4 FaceMatrix(RhombicDodecahedronDir dir)
+        {
+            return VectorUtils.ToMatrix(
+                ((Vector3)dir.Right()).normalized,
+                ((Vector3)dir.Up()).normalized,
+                ((Vector3)dir.Forward()).normalized);
         }
 
         public Matrix4x4 GetMatrix(CellRotation cellRotation)
