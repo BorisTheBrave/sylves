@@ -10,6 +10,12 @@ This is by far the easiest way to create practically useful grids as the tooling
 
 There's also [`MeshPrismGrid`](xref:Sylves.MeshPrismGrid) which creates multiple cells per face, using extrusion to arrange the cells into layers, and [`PeriodicPlanarMeshGrid`](xref:Sylves.PeriodicPlanarMeshGrid) which repeats a mesh at fixed intervals across an infinite 2d plane, and [`PlanarLazyMeshGrid`](xref:Sylves.PlanarLazyMeshGrid) which generates a different mesh at fixed intervals.
 
+## Use CompoundGrid
+
+[`CompoundGrid`](xref:Sylves.CompoundGrid) builds a planar grid from several **sections** that are glued together along their boundaries. Each [`CompoundSection`](xref:Sylves.CompoundSection) is a [`PeriodicPlanarMeshGrid`](xref:Sylves.PeriodicPlanarMeshGrid) — a mesh plus two stride vectors — further restricted by a set of [`HalfPlane`](xref:Sylves.HalfPlane)s.
+
+This is useful when a single repeating mesh is not enough, for example grids with rotational symmetry. The built-in [radial grids](xref:Sylves.RadialGrids) are CompoundGrids.
+
 ## Use modifiers
 
 If you just want to customize an existing grid, there are various modifiers you can apply that change an aspect of their behaviour.

@@ -124,6 +124,12 @@ namespace Sylves
         }
     }
 
+    /// <summary>
+    /// A grid that is composed out of a finite number of "sections".
+    /// Each section is a PeriodicPlanarMeshGrid, masked by a set of half planes.
+    /// This grid handles "gluing" the sections together.
+    /// 
+    /// </summary>
     public class CompoundGrid : IGrid
     {
         public class CompoundBound : IBound

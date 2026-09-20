@@ -161,7 +161,7 @@ Radial grids have rotational symmetry.
 </tr>
 <tr>
     <td><a href="../../images/grids/radial_octagonal.svg"><img class="grid-thumb" src="../../images/grids/radial_octagonal.svg" /></img></td>
-    <td><a href="xref:Sylves.RadialGrids.Octagonal">RadialGrids.Octagonal</a><br/>Creates a radial grid of irregular octagons inspired by <a href="hhttps://robertlovespi.net/2016/01/02/octagons-can-tile-a-plane-iii/">Robert Austin's design.</a></td>
+    <td><a href="xref:Sylves.RadialGrids.Octagonal">RadialGrids.Octagonal</a><br/>Creates a radial grid of irregular octagons inspired by <a href="https://robertlovespi.net/2016/01/02/octagons-can-tile-a-plane-iii/">Robert Austin's design.</a></td>
 </tr>
 </table>
 

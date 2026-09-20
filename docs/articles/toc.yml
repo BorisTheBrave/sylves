@@ -59,7 +59,7 @@
     -  name: SquareGrid
        href: grids/squaregrid.md
     -  name: CubeGrid
-       href: grids/Cubegrid.md
+       href: grids/cubegrid.md
     -  name: RhombicDodecahedronGrid
        href: grids/rhombicdodecahedrongrid.md
     -  name: HexGrid
@@ -68,6 +68,10 @@
        href: grids/trianglegrid.md
     -  name: MeshGrid
        href: grids/meshgrid.md
+    -  name: PlanarMeshGrid
+       href: grids/planarmeshgrid.md
+    -  name: MeshPrismGrid
+       href: grids/meshprismgrid.md
     -  name: PeriodicPlanarMeshGrid
        href: grids/periodicplanarmeshgrid.md
     -  name: PlanarLazyMeshGrid
@@ -76,6 +80,8 @@
        href: grids/substitutiontilinggrid.md
     -  name: VoronoiGrid
        href: grids/voronoigrid.md
+    -  name: JitteredSquareGrid
+       href: grids/jitteredsquaregrid.md
     -  name: OffGrid
        href: grids/offgrid.md
 - name: Modifiers
