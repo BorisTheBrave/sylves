@@ -27,6 +27,9 @@ namespace Sylves
 
         // Further info about the primal mesh
         private int[] faceCentroids;
+        private bool[] primalIsFarVertex;
+
+        // Indexed like DualMeshData.vertices. True for the "off to infinity" stand-ins.
         private bool[] isFarVertex;
 
         public DualMeshBuilder(MeshData meshData):this(meshData, MeshGridBuilder.Build(meshData, new MeshGridOptions()))
@@ -46,7 +49,7 @@ namespace Sylves
 
             faceCentroids = BuildFaceCentroids(meshData, cellData, meshEmitter);
 
-            isFarVertex = BuildIsFarVertex(meshData);
+            primalIsFarVertex = BuildIsFarVertex(meshData);
 
             Build();
         }
@@ -54,6 +57,12 @@ namespace Sylves
         public MeshData DualMeshData => dualMeshData;
 
         public List<(int primalFace, int primalVert, int dualFace, int dualVert)> Mapping => mapping;
+
+        /// <summary>
+        /// True for dual-mesh vertices that stand in for "off to infinity".
+        /// Indexed like <see cref="DualMeshData"/> vertices.
+        /// </summary>
+        public bool[] IsFarVertex => isFarVertex;
 
         private static int[] BuildFaceCentroids(MeshData meshData, IDictionary<Cell, DataDrivenCellData> cellData, MeshEmitter meshEmitter)
         {
@@ -162,7 +171,7 @@ namespace Sylves
                         }
                         // Determine the vertex we are walking around
                         var vertex = face[edge];
-                        bool isFar = isFarVertex[vertex];
+                        bool isFar = primalIsFarVertex[vertex];
                         // Walk forward
                         dualFaceIndices.Clear();
                         (int, int) endHe = default;
@@ -234,6 +243,11 @@ namespace Sylves
             meshEmitter.AddSubmesh(outputIndices, MeshTopology.NGon);
 
             dualMeshData = meshEmitter.ToMeshData();
+            isFarVertex = new bool[dualMeshData.vertices.Length];
+            for (var i = 0; i < dualMeshData.vertices.Length; i++)
+            {
+                isFarVertex[i] = dualMeshData.vertices[i].magnitude >= FAR;
+            }
         }
     }
 }

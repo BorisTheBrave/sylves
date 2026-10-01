@@ -176,6 +176,12 @@ namespace Sylves
             var keptFaceCount = 0;
             foreach(var face in MeshUtils.GetFaces(dualMeshData))
             {
+                if (face.Any(i => dmb.IsFarVertex[i]))
+                {
+                    keepFaces.Add(false);
+                    keptFaceIndices.Add(-1);
+                    continue;
+                }
                 var centroid = face.Select(i => dualMeshData.vertices[i]).Aggregate((a, b) => a + b) / face.Count;
                 var isCentral = aabbChunks.GetUniqueChunk(new Vector2(centroid.x, centroid.y)) == new Vector2Int(0, 0);
                 if(isCentral)
