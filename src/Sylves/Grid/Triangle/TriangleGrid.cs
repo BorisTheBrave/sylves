@@ -959,10 +959,9 @@ namespace Sylves
 
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
-            if (exitInfo) throw new NotImplementedException();
             if (orientation == TriangleOrientation.FlatSides)
             {
-                foreach (var info in altGrid.Raycast(origin, direction, maxDistance))
+                foreach (var info in altGrid.Raycast(origin, direction, maxDistance, exitInfo))
                 {
                     yield return info;
                 }
@@ -1058,11 +1057,13 @@ namespace Sylves
             var b = startOnBorder == 1 ? Mathf.RoundToInt(fb) + (db > 0 ? -1 : 0) : Mathf.FloorToInt(fb) + 1;
             var c = startOnBorder == 2 ? Mathf.RoundToInt(fc) + (dc > 0 ? -1 : 0) : Mathf.CeilToInt(fc);
 
+            Cell? currentCell = default;
             if (startOnBorder == -1)
             {
+                currentCell = new Cell(a, b, c);
                 yield return new RaycastInfo
                 {
-                    cell = new Cell(a, b, c),
+                    cell = currentCell.Value,
                     point = origin,
                     cellDir = null,
                     distance = 0,
@@ -1074,6 +1075,9 @@ namespace Sylves
             var tc = (c - 1 + (dc >= 0 ? 1 : 0) - fc) / dc;
             var isUp = a + b + c == 2;
 
+            float t;
+            CellDir cellDir;
+
             while (true)
             {
                 // Find the next line crossed. We filter out lines that 
@@ -1082,9 +1086,6 @@ namespace Sylves
                 var tb2 = (stepb == 1) != isUp ? tb : float.PositiveInfinity;
                 var tc2 = (stepc == 1) != isUp ? tc : float.PositiveInfinity;
 
-
-                float t;
-                CellDir cellDir;
                 if (ta2 <= tb2 && ta2 <= tc2)
                 {
                     if (ta > maxDistance) yield break;
@@ -1092,7 +1093,6 @@ namespace Sylves
                     a += stepa;
                     ta += ida;
                     cellDir = cellDirX;
-                    if (bound != null && (a >= bound.Mex.x || a < bound.Min.x)) yield break;
                 }
                 else if (tb2 <= ta2 && tb2 <= tc2)
                 {
@@ -1101,7 +1101,6 @@ namespace Sylves
                     b += stepb;
                     tb += idb;
                     cellDir = cellDirY;
-                    if (bound != null && (b >= bound.Mex.y || b < bound.Min.y)) yield break;
                 }
                 else if(!float.IsInfinity(tc))
                 {
@@ -1110,15 +1109,30 @@ namespace Sylves
                     c += stepc;
                     tc += idc;
                     cellDir = cellDirZ;
-                    if (bound != null && (c >= bound.Mex.z || c < bound.Min.z)) yield break;
                 }
                 else
                 {
                     yield break;
                 }
+
+                if (exitInfo && currentCell.HasValue)
+                {
+                    yield return new RaycastInfo
+                    {
+                        cell = currentCell.Value,
+                        point = origin + t * direction,
+                        cellDir = (CellDir)((FTHexDir)cellDir).Inverted(),
+                        distance = t + extraDistance,
+                        isExit = true,
+                    };
+                }
+
+                currentCell = new Cell(a, b, c);
+                if (bound != null && !bound.Contains(currentCell.Value)) yield break;
+
                 yield return new RaycastInfo
                 {
-                    cell = new Cell(a, b, c),
+                    cell = currentCell.Value,
                     point = origin + t * direction,
                     cellDir = cellDir,
                     distance = t + extraDistance,

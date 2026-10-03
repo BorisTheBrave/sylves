@@ -254,5 +254,45 @@ namespace Sylves.Test
             hits = g.Raycast(new Vector3(0.5f, -10f, 0.6f), new Vector3(0, 1, 0)).ToList();
             CollectionAssert.AreEqual(new[] { new Cell(0, -1, 1), new Cell(0, 0, 0), new Cell(0, 1, 1) }, hits.Select(x => x.cell));
         }
+
+        [Test]
+        public void TestRaycast_ExitInfo()
+        {
+            var g = new RhombicDodecahedronGrid(1);
+            var start = g.GetCellCenter(new Cell(0, 0, 0));
+            var end = g.GetCellCenter(new Cell(1, 1, 0));
+            var infos = g.Raycast(start, end - start, 1, exitInfo: true).ToList();
+            Assert.AreEqual(3, infos.Count);
+            AssertExit(infos[0], new Cell(0, 0, 0), 0f, null, false);
+            AssertExit(infos[1], new Cell(0, 0, 0), 0.5f, RhombicDodecahedronDir.RightUp, true);
+            AssertExit(infos[2], new Cell(1, 1, 0), 0.5f, RhombicDodecahedronDir.LeftDown, false);
+
+            infos = g.Raycast(new Vector3(0.5f, 0.6f, 0.5f), Vector3.right, 3, exitInfo: true).ToList();
+            Assert.AreEqual(7, infos.Count);
+            AssertExit(infos[0], new Cell(0, 0, 0), 0f, null, false);
+            AssertExit(infos[1], new Cell(0, 0, 0), 0.9f, RhombicDodecahedronDir.RightUp, true);
+            AssertExit(infos[2], new Cell(1, 1, 0), 0.9f, RhombicDodecahedronDir.LeftDown, false);
+            AssertExit(infos[3], new Cell(1, 1, 0), 1.1f, RhombicDodecahedronDir.RightDown, true);
+            AssertExit(infos[4], new Cell(2, 0, 0), 1.1f, RhombicDodecahedronDir.LeftUp, false);
+            AssertExit(infos[5], new Cell(2, 0, 0), 2.9f, RhombicDodecahedronDir.RightUp, true);
+            AssertExit(infos[6], new Cell(3, 1, 0), 2.9f, RhombicDodecahedronDir.LeftDown, false);
+
+            var bound = new CubeBound(new Vector3Int(-1, -1, -1), new Vector3Int(2, 2, 2));
+            g = new RhombicDodecahedronGrid(1, bound);
+            infos = g.Raycast(new Vector3(0.5f, 0.6f, 0.5f), Vector3.right, exitInfo: true).ToList();
+            Assert.AreEqual(4, infos.Count);
+            AssertExit(infos[0], new Cell(0, 0, 0), 0f, null, false);
+            AssertExit(infos[1], new Cell(0, 0, 0), 0.9f, RhombicDodecahedronDir.RightUp, true);
+            AssertExit(infos[2], new Cell(1, 1, 0), 0.9f, RhombicDodecahedronDir.LeftDown, false);
+            AssertExit(infos[3], new Cell(1, 1, 0), 1.1f, RhombicDodecahedronDir.RightDown, true);
+        }
+
+        private static void AssertExit(RaycastInfo info, Cell cell, float distance, RhombicDodecahedronDir? dir, bool isExit)
+        {
+            Assert.AreEqual(cell, info.cell);
+            Assert.AreEqual(distance, info.distance, 1e-4);
+            Assert.AreEqual(dir, (RhombicDodecahedronDir?)info.cellDir);
+            Assert.AreEqual(isExit, info.isExit);
+        }
     }
 }

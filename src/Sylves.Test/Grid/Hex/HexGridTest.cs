@@ -101,6 +101,18 @@ namespace Sylves.Test
             Assert.AreEqual(new Cell(-1, 1, 0), infos[1].cell);
             Assert.AreEqual(FTHexDir.DownRight, (FTHexDir?)infos[1].cellDir);
             Assert.AreEqual(2, infos.Count);
+
+            infos = g.Raycast(start, end - start, 1, exitInfo: true).ToList();
+            Assert.AreEqual(3, infos.Count);
+            Assert.AreEqual(new Cell(0, 0, 0), infos[0].cell);
+            Assert.IsFalse(infos[0].isExit);
+            Assert.AreEqual(new Cell(0, 0, 0), infos[1].cell);
+            Assert.IsTrue(infos[1].isExit);
+            Assert.AreEqual(infos[2].distance, infos[1].distance, 1e-4);
+            Assert.AreEqual(FTHexDir.UpLeft, (FTHexDir?)infos[1].cellDir);
+            Assert.AreEqual(new Cell(-1, 1, 0), infos[2].cell);
+            Assert.AreEqual(FTHexDir.DownRight, (FTHexDir?)infos[2].cellDir);
+            Assert.IsFalse(infos[2].isExit);
         }
 
         [Test]

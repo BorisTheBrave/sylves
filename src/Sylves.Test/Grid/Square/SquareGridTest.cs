@@ -64,6 +64,36 @@ namespace Sylves.Test
         }
 
         [Test]
+        public void TestRaycast_ExitInfo()
+        {
+            var g = new SquareGrid(1);
+            var infos = g.Raycast(new Vector3(0.5f, 0.5f, 0), Vector3.right, 1.5f, exitInfo: true).ToList();
+
+            Assert.AreEqual(5, infos.Count);
+            AssertExit(infos[0], new Cell(0, 0, 0), 0f, null, false);
+            AssertExit(infos[1], new Cell(0, 0, 0), 0.5f, SquareDir.Right, true);
+            AssertExit(infos[2], new Cell(1, 0, 0), 0.5f, SquareDir.Left, false);
+            AssertExit(infos[3], new Cell(1, 0, 0), 1.5f, SquareDir.Right, true);
+            AssertExit(infos[4], new Cell(2, 0, 0), 1.5f, SquareDir.Left, false);
+
+            var bound = new SquareBound(new Vector2Int(0, 0), new Vector2Int(2, 1));
+            infos = SquareGrid.Raycast(new Vector3(-0.5f, 0.5f, 0), Vector3.right, float.PositiveInfinity, Vector2.one, bound, exitInfo: true).ToList();
+            Assert.AreEqual(4, infos.Count);
+            AssertExit(infos[0], new Cell(0, 0, 0), 0.5f, SquareDir.Left, false);
+            AssertExit(infos[1], new Cell(0, 0, 0), 1.5f, SquareDir.Right, true);
+            AssertExit(infos[2], new Cell(1, 0, 0), 1.5f, SquareDir.Left, false);
+            AssertExit(infos[3], new Cell(1, 0, 0), 2.5f, SquareDir.Right, true);
+        }
+
+        private static void AssertExit(RaycastInfo info, Cell cell, float distance, SquareDir? dir, bool isExit)
+        {
+            Assert.AreEqual(cell, info.cell);
+            Assert.AreEqual(distance, info.distance, 1e-4);
+            Assert.AreEqual(dir, (SquareDir?)info.cellDir);
+            Assert.AreEqual(isExit, info.isExit);
+        }
+
+        [Test]
         public void TestRaycast2()
         {
             var g = new SquareGrid(1000);

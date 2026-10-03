@@ -462,7 +462,6 @@ namespace Sylves
         // The 12 fa
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
-            if (exitInfo) throw new NotImplementedException();
             var x1 = origin.x / cellSize.x;
             var y1 = origin.y / cellSize.y;
             var z1 = origin.z / cellSize.z;
@@ -524,8 +523,10 @@ namespace Sylves
             }
 
             UnboundedFindCell(origin, out var cell);
+            Cell? currentCell = default;
             if (IsCellInGrid(cell))
             {
+                currentCell = cell;
                 yield return new RaycastInfo
                 {
                     cell = cell,
@@ -561,8 +562,21 @@ namespace Sylves
                 cell += step;
                 lastT = bestT;
 
+                if (exitInfo && currentCell.HasValue)
+                {
+                    yield return new RaycastInfo
+                    {
+                        cell = currentCell.Value,
+                        point = origin + bestT * direction,
+                        cellDir = (CellDir)enterDir.Inverted(),
+                        distance = bestT + extraDistance,
+                        isExit = true,
+                    };
+                }
+
                 if (IsCellInGrid(cell))
                 {
+                    currentCell = cell;
                     yield return new RaycastInfo
                     {
                         cell = cell,
@@ -570,6 +584,10 @@ namespace Sylves
                         cellDir = (CellDir)enterDir,
                         distance = bestT + extraDistance,
                     };
+                }
+                else
+                {
+                    currentCell = null;
                 }
 
                 void ConsiderFamily(int family, float du, float u0)

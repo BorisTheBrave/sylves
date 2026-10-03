@@ -148,6 +148,42 @@ namespace Sylves.Test
         [Test]
         [TestCase(TriangleOrientation.FlatTopped)]
         [TestCase(TriangleOrientation.FlatSides)]
+        public void TestRaycast_ExitInfo(TriangleOrientation orientation)
+        {
+            var g = new TriangleGrid(1, orientation);
+            var start = g.GetCellCenter(new Cell(1, 0, 1));
+            var end = g.GetCellCenter(new Cell(2, 0, 0));
+            var plain = g.Raycast(start, end - start, 1).ToList();
+            var infos = g.Raycast(start, end - start, 1, exitInfo: true).ToList();
+
+            var entries = infos.Where(i => !i.isExit).ToList();
+            Assert.AreEqual(plain.Count, entries.Count);
+            for (var i = 0; i < plain.Count; i++)
+            {
+                Assert.AreEqual(plain[i].cell, entries[i].cell);
+                Assert.AreEqual(plain[i].cellDir, entries[i].cellDir);
+                Assert.AreEqual(plain[i].distance, entries[i].distance, 1e-4);
+            }
+
+            // The ray ends at the center of the last cell, so that cell has no exit within maxDistance.
+            Assert.AreEqual(plain.Count * 2 - 1, infos.Count);
+            Assert.IsFalse(infos[infos.Count - 1].isExit);
+            for (var i = 0; i < entries.Count - 1; i++)
+            {
+                var exit = infos[i * 2 + 1];
+                var next = infos[i * 2 + 2];
+                Assert.IsTrue(exit.isExit);
+                Assert.IsFalse(next.isExit);
+                Assert.AreEqual(entries[i].cell, exit.cell);
+                Assert.AreEqual(next.distance, exit.distance, 1e-4);
+                Assert.LessOrEqual(exit.distance, 1f);
+                Assert.AreEqual((FTHexDir)next.cellDir!, ((FTHexDir)exit.cellDir!).Inverted());
+            }
+        }
+
+        [Test]
+        [TestCase(TriangleOrientation.FlatTopped)]
+        [TestCase(TriangleOrientation.FlatSides)]
         public void TestFindGridSymmetry(TriangleOrientation orientation)
         {
             var g = new TriangleGrid(1, orientation);
