@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -912,7 +912,7 @@ namespace Sylves
             }
         }
 
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
             // Run raycast on each bounded grid and collect results
             var raycastResults = new List<IEnumerable<RaycastInfo>>();
@@ -923,7 +923,7 @@ namespace Sylves
                 var section = sections[i];
                 
                 // Get raycast results from this grid
-                var gridResults = grid.Raycast(origin, direction, maxDistance)
+                var gridResults = grid.Raycast(origin, direction, maxDistance, exitInfo)
                     .Where(ri => 
                     {
                         return section.Test(ri.cell);
@@ -933,7 +933,8 @@ namespace Sylves
                         cell = Combine(i, ri.cell),
                         point = ri.point,
                         distance = ri.distance,
-                        cellDir = ri.cellDir
+                        cellDir = ri.cellDir,
+                        isExit = ri.isExit,
                     });
                 
                 raycastResults.Add(gridResults);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -545,13 +545,13 @@ namespace Sylves
             }
         }
 
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
-            return Raycast(origin, direction, maxDistance, cellSize, bound);
+            return Raycast(origin, direction, maxDistance, cellSize, bound, exitInfo);
         }
 
         // TOOD: Move somewhere more appropriate?
-        public static IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance, Vector3 cellSize, CubeBound bound)
+        public static IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance, Vector3 cellSize, CubeBound bound, bool exitInfo = false)
         { 
             // Normalize things into a space where each cell
             // occupies a unit cube.
@@ -637,11 +637,13 @@ namespace Sylves
             var y = startOnBorder == 1 ? Mathf.RoundToInt(y1) + (dy > 0 ? -1 : 0) : Mathf.FloorToInt(y1);
             var z = startOnBorder == 2 ? Mathf.RoundToInt(z1) + (dz > 0 ? -1 : 0) : Mathf.FloorToInt(z1);
 
+            Cell? currentCell = default;
             if (startOnBorder == -1)
             {
+                currentCell = new Cell(x, y, z);
                 yield return new RaycastInfo
                 {
-                    cell = new Cell(x, y, z),
+                    cell = currentCell.Value,
                     point = origin,
                     cellDir = null,
                     distance = 0,
@@ -652,10 +654,11 @@ namespace Sylves
             var ty = (y + (dy >= 0 ? 1 : 0) - y1) / dy;
             var tz = (z + (dz >= 0 ? 1 : 0) - z1) / dz;
 
+            float t;
+            CellDir cellDir;
+
             while (true)
             {
-                float t;
-                CellDir cellDir;
                 if (tx < ty && tx < tz)
                 {
                     if (tx > maxDistance) yield break;
@@ -663,7 +666,6 @@ namespace Sylves
                     x += stepx;
                     tx += idx;
                     cellDir = cellDirX;
-                    if (bound != null && (x >= bound.Mex.x || x < bound.Min.x)) yield break;
                 }
                 else if (ty < tz)
                 {
@@ -672,7 +674,6 @@ namespace Sylves
                     y += stepy;
                     ty += idy;
                     cellDir = cellDirY;
-                    if (bound != null && (y >= bound.Mex.y || y < bound.Min.y)) yield break;
                 }
                 else
                 {
@@ -681,11 +682,26 @@ namespace Sylves
                     z += stepz;
                     tz += idz;
                     cellDir = cellDirZ;
-                    if (bound != null && (z >= bound.Mex.z || z < bound.Min.z)) yield break;
                 }
+
+                if (exitInfo && currentCell.HasValue)
+                {
+                    yield return new RaycastInfo
+                    {
+                        cell = currentCell.Value,
+                        point = origin + t * direction,
+                        cellDir = (CellDir)((CubeDir)cellDir).Inverted(),
+                        distance = t + extraDistance,
+                        isExit = true,
+                    };
+                }
+
+                currentCell = new Cell(x, y, z);
+                if (bound != null && !bound.Contains(currentCell.Value)) yield break;
+
                 yield return new RaycastInfo
                 {
-                    cell = new Cell(x, y, z),
+                    cell = currentCell.Value,
                     point = origin + t * direction,
                     cellDir = cellDir,
                     distance = t + extraDistance,

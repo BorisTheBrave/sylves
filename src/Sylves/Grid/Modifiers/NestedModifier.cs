@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -366,10 +366,10 @@ namespace Sylves
             }
         }
 
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
             var queuedRaycastInfos = new PriorityQueue<RaycastInfo>(x => x.distance, (x, y) => -x.distance.CompareTo(y.distance));
-            foreach (var chunkRaycastInfo in chunkGrid.Raycast(origin, direction, maxDistance))
+            foreach (var chunkRaycastInfo in chunkGrid.Raycast(origin, direction, maxDistance, exitInfo))
             {
                 foreach (var ri in queuedRaycastInfos.Drain(chunkRaycastInfo.distance))
                 {
@@ -378,7 +378,7 @@ namespace Sylves
 
                 var chunkCell = chunkRaycastInfo.cell;
                 var t = MeshTranslation(chunkCell);
-                foreach (var raycastInfo in GetChildGridCached(chunkCell).Raycast(origin - t, direction, maxDistance))
+                foreach (var raycastInfo in GetChildGridCached(chunkCell).Raycast(origin - t, direction, maxDistance, exitInfo))
                 {
                     queuedRaycastInfos.Add(new RaycastInfo
                     {
@@ -386,6 +386,7 @@ namespace Sylves
                         cellDir = raycastInfo.cellDir,
                         distance = raycastInfo.distance,
                         point = raycastInfo.point + t,
+                        isExit = raycastInfo.isExit,
                     });
                 }
             }

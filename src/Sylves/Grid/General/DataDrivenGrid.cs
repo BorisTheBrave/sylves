@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -179,7 +179,7 @@ namespace Sylves
 
         public abstract IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max);
 
-        public abstract IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity);
+        public abstract IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false);
         #endregion
 
         #region Symmetry

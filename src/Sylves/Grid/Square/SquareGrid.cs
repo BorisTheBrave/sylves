@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -489,14 +489,16 @@ namespace Sylves
                 }
             }
         }
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
-            return Raycast(origin, direction, maxDistance, cellSize, bound);
+            if (exitInfo) throw new NotImplementedException();
+            return Raycast(origin, direction, maxDistance, cellSize, bound, exitInfo);
         }
 
         // TOOD: Move somewhere more appropriate?
-        public static IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance, Vector2 cellSize, SquareBound bound)
+        public static IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance, Vector2 cellSize, SquareBound bound, bool exitInfo = false)
         {
+            if (exitInfo) throw new NotImplementedException();
             // Normalize things into a space where each cell
             // occupies a unit cube.
             var x1 = origin.x / cellSize.x;

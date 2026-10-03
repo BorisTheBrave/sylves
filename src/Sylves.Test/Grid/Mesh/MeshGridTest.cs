@@ -209,6 +209,37 @@ namespace Sylves.Test
         }
 
         [Test]
+        public void TestRaycast_Planar_ExitInfo()
+        {
+            var g = new MeshGrid(TestMeshes.PlaneXY);
+            var results = g.Raycast(new Vector3(-0.6f, 0.1f, 0), Vector3.right, exitInfo: true).ToList();
+            Assert.AreEqual(2, results.Count);
+            Assert.AreEqual(new Cell(), results[0].cell);
+            Assert.AreEqual(SquareDir.Left, (SquareDir?)results[0].cellDir);
+            Assert.AreEqual(0.1f, results[0].distance, 1e-4);
+            Assert.IsFalse(results[0].isExit);
+
+            Assert.AreEqual(new Cell(), results[1].cell);
+            Assert.AreEqual(SquareDir.Right, (SquareDir?)results[1].cellDir);
+            Assert.AreEqual(1.1f, results[1].distance, 1e-4);
+            Assert.IsTrue(results[1].isExit);
+
+            // Starting inside. The leave at t=0.5 is past maxDistance, so only the entry is reported.
+            results = g.Raycast(new Vector3(0f, 0f, 0), Vector3.right, 0.25f, exitInfo: true).ToList();
+            Assert.AreEqual(1, results.Count);
+            Assert.AreEqual(0f, results[0].distance, 1e-4);
+            Assert.IsFalse(results[0].isExit);
+
+            results = g.Raycast(new Vector3(0f, 0f, 0), Vector3.right, exitInfo: true).ToList();
+            Assert.AreEqual(2, results.Count);
+            Assert.AreEqual(0f, results[0].distance, 1e-4);
+            Assert.IsFalse(results[0].isExit);
+            Assert.AreEqual(SquareDir.Right, (SquareDir?)results[1].cellDir);
+            Assert.AreEqual(0.5f, results[1].distance, 1e-4);
+            Assert.IsTrue(results[1].isExit);
+        }
+
+        [Test]
         public void TestRaycast_Planar_Glancing()
         {
             var g = new MeshGrid(TestMeshes.PlaneXY);

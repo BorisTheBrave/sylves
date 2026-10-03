@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 #if UNITY
 using UnityEngine;
@@ -74,9 +74,9 @@ namespace Sylves
         #endregion
 
         #region Shape
-        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
-            foreach (var info in unboundedUnderlying.Raycast(origin, direction, maxDistance))
+            foreach (var info in unboundedUnderlying.Raycast(origin, direction, maxDistance, exitInfo))
             {
                 var info2 = info;
                 var cell = canonicalize(info.cell);

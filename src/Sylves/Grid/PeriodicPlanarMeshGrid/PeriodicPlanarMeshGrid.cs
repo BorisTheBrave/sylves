@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -533,7 +533,7 @@ namespace Sylves
         }
 
         /// <inheritdoc />
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
             var origin2 = new Vector2(origin.x, origin.y);
             var direction2 = new Vector2(direction.x, direction.y);
@@ -547,7 +547,7 @@ namespace Sylves
 
                 var chunk = new Vector2Int(chunkRaycastInfo.cell.x, chunkRaycastInfo.cell.y);
                 var chunkOffset = ChunkOffset(chunk);
-                foreach(var raycastInfo in centerGrid.Raycast(origin - chunkOffset, direction, maxDistance))
+                foreach(var raycastInfo in centerGrid.Raycast(origin - chunkOffset, direction, maxDistance, exitInfo))
                 {
                     queuedRaycastInfos.Add(new RaycastInfo
                     {
@@ -555,6 +555,7 @@ namespace Sylves
                         cellDir = raycastInfo.cellDir,
                         distance = raycastInfo.distance,
                         point = raycastInfo.point + chunkOffset,
+                        isExit = raycastInfo.isExit,
                     });
                 }
             }

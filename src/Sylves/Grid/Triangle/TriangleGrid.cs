@@ -957,8 +957,9 @@ namespace Sylves
             }
         }
 
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
+            if (exitInfo) throw new NotImplementedException();
             if (orientation == TriangleOrientation.FlatSides)
             {
                 foreach (var info in altGrid.Raycast(origin, direction, maxDistance))

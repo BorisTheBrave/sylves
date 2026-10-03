@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 #if UNITY
 using UnityEngine;
@@ -348,8 +348,10 @@ namespace Sylves
 
         /// <summary>
         /// Returns the cells intersecting a ray starting at origin, of length direction.magnitude * maxDistance, in order.
+        /// When <paramref name="exitInfo"/> is true, each time the ray leaves a cell is also yielded, with <see cref="RaycastInfo.isExit"/> set.
+        /// That exit can be past <paramref name="maxDistance"/>, and is still yielded when the next cell is out of bounds.
         /// </summary>
-        IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity);
+        IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false);
         #endregion
 
         #region Symmetry

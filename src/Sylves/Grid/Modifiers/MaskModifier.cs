@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -118,9 +118,9 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max) => Underlying.GetCellsIntersectsApprox(min, max).Where(containsFunc);
 
-        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
-            return Underlying.Raycast(origin, direction, maxDistance).Where(info =>containsFunc(info.cell));
+            return Underlying.Raycast(origin, direction, maxDistance, exitInfo).Where(info =>containsFunc(info.cell));
         }
         #endregion
 

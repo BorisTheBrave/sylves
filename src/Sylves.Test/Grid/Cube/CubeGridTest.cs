@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System.Linq;
 #if UNITY
 using UnityEngine;
@@ -66,6 +66,36 @@ namespace Sylves.Test
             Assert.AreEqual(1, g.Raycast(new Vector3(-0.5f, 0.5f, 0), Vector3.right).Count());
             Assert.AreEqual(0, g.Raycast(new Vector3(-0.5f, 1f, 0), Vector3.right).Count());
             Assert.AreEqual(0, g.Raycast(new Vector3(-0.5f, 1.5f, 0), Vector3.right).Count());
+        }
+
+        [Test]
+        public void TestRaycast_ExitInfo()
+        {
+            var g = new CubeGrid(1);
+            var infos = g.Raycast(new Vector3(0.5f, 0.5f, 0.5f), Vector3.forward, 1.5f, exitInfo: true).ToList();
+
+            Assert.AreEqual(5, infos.Count);
+            AssertExit(infos[0], new Cell(0, 0, 0), 0f, null, false);
+            AssertExit(infos[1], new Cell(0, 0, 0), 0.5f, CubeDir.Forward, true);
+            AssertExit(infos[2], new Cell(0, 0, 1), 0.5f, CubeDir.Back, false);
+            AssertExit(infos[3], new Cell(0, 0, 1), 1.5f, CubeDir.Forward, true);
+            AssertExit(infos[4], new Cell(0, 0, 2), 1.5f, CubeDir.Back, false);
+
+            var bound = new CubeBound(new Vector3Int(0, 0, 0), new Vector3Int(1, 1, 2));
+            infos = CubeGrid.Raycast(new Vector3(0.5f, 0.5f, -0.5f), Vector3.forward, float.PositiveInfinity, Vector3.one, bound, exitInfo: true).ToList();
+            Assert.AreEqual(4, infos.Count);
+            AssertExit(infos[0], new Cell(0, 0, 0), 0.5f, CubeDir.Back, false);
+            AssertExit(infos[1], new Cell(0, 0, 0), 1.5f, CubeDir.Forward, true);
+            AssertExit(infos[2], new Cell(0, 0, 1), 1.5f, CubeDir.Back, false);
+            AssertExit(infos[3], new Cell(0, 0, 1), 2.5f, CubeDir.Forward, true);
+        }
+
+        private static void AssertExit(RaycastInfo info, Cell cell, float distance, CubeDir? dir, bool isExit)
+        {
+            Assert.AreEqual(cell, info.cell);
+            Assert.AreEqual(distance, info.distance, 1e-4);
+            Assert.AreEqual(dir, (CubeDir?)info.cellDir);
+            Assert.AreEqual(isExit, info.isExit);
         }
 
         [Test]

@@ -137,36 +137,33 @@ namespace Sylves
         #endregion
 
         #region Query
-        protected override RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
+        protected override (RaycastInfo? entry, RaycastInfo? exit) RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
         {
+            RaycastInfo? hit;
             var meshCellData = CellData[cell] as MeshCellData;
             if (meshCellData.CellType == CubeCellType.Instance && meshCellData.PrismInfo.BackDir != (CellDir)CubeDir.Back)
             {
                 // Fast path?
                 GetCubeCellVertices(cell, out Vector3 v1, out Vector3 v2, out Vector3 v3, out Vector3 v4, out Vector3 v5, out Vector3 v6, out Vector3 v7, out Vector3 v8);
-                var hit = MeshRaycast.RaycastCube(rayOrigin, direction, v1, v2, v3, v4, v5, v6, v7, v8);
+                hit = MeshRaycast.RaycastCube(rayOrigin, direction, v1, v2, v3, v4, v5, v6, v7, v8);
                 if (hit != null)
                 {
                     var hit2 = hit.Value;
                     hit2.cell = cell;
-                    return hit2;
-                }
-                else
-                {
-                    return null;
+                    hit = hit2;
                 }
             }
             else
             {
                 float bestDistance = float.MaxValue;
-                RaycastInfo? bestHit = null;
+                hit = null;
                 foreach (var (v0, v1, v2, cellDir) in GetTriangleMesh(cell))
                 {
-                    var hit = MeshRaycast.RaycastTri(rayOrigin, direction, v0, v1, v2, out var point, out var distance);
-                    if (hit && distance < bestDistance)
+                    var triHit = MeshRaycast.RaycastTri(rayOrigin, direction, v0, v1, v2, out var point, out var distance);
+                    if (triHit && distance < bestDistance)
                     {
                         bestDistance = distance;
-                        bestHit = new RaycastInfo
+                        hit = new RaycastInfo
                         {
                             cell = cell,
                             cellDir = cellDir,
@@ -175,8 +172,25 @@ namespace Sylves
                         };
                     }
                 }
-                return bestHit;
             }
+
+            if (IsPointInCell(rayOrigin, cell))
+            {
+                var entry = new RaycastInfo
+                {
+                    cell = cell,
+                    distance = 0,
+                    point = rayOrigin,
+                };
+                if (hit != null && hit.Value.distance > 0)
+                {
+                    var exit = hit.Value;
+                    exit.isExit = true;
+                    return (entry, exit);
+                }
+                return (entry, null);
+            }
+            return (hit, null);
         }
 
         /// <summary>

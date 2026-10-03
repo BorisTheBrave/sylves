@@ -547,8 +547,9 @@ namespace Sylves
 
 
 
-        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
+            if (exitInfo) throw new NotImplementedException();
             // Computes distance to interection of aabb, or null if it misses the truncated array.
             Func<Crumb, float?> getDist = (crumb) =>
             {

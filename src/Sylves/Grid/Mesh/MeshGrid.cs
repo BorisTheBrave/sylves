@@ -436,21 +436,8 @@ namespace Sylves
             return false;
         }
 
-        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
-            // Report the cell the origin starts in.
-            // This is a special case as RaycastCell is dumb and doesn't always report it.
-            bool hasOriginCell = FindCell(origin, out var originCell);
-            if (hasOriginCell)
-            {
-                yield return new RaycastInfo
-                {
-                    cell = originCell,
-                    distance = 0,
-                    point = origin,
-                };
-            }
-
             // Broadphase - walk through the hashCells looking for cells to check.
             var bfByBound = bound == null ? meshDetails.expandedHashCellBounds : ExpandBound(bound);
             var bfRaycastInfos = CubeGrid.Raycast(origin - meshDetails.hashCellBase, direction, maxDistance, meshDetails.hashCellSize, bfByBound);
@@ -480,7 +467,7 @@ namespace Sylves
                                 }
                             }
 
-                            queuedRaycastInfos.AddRange(RaycastHashCell(hashCell, origin, direction, maxDistance));
+                            queuedRaycastInfos.AddRange(RaycastHashCell(hashCell, origin, direction, maxDistance, exitInfo));
                         }
                     }
                 }
@@ -496,8 +483,6 @@ namespace Sylves
                 // Actually stream all the safe raycastInfos
                 foreach(var ri in  queuedRaycastInfos.Drain(minDistance))
                 {
-                    if (hasOriginCell && originCell == ri.cell)
-                        continue;
                     yield return ri;
                 }
 
@@ -507,31 +492,29 @@ namespace Sylves
             // We've found all raycast infos, stream out any that haven't already been sent
             foreach (var ri in queuedRaycastInfos.Drain())
             {
-                if (hasOriginCell && originCell == ri.cell)
-                    continue;
                 yield return ri;
             }
         }
 
-        private IEnumerable<RaycastInfo> RaycastHashCell(Vector3Int hashCell, Vector3 rayOrigin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        private IEnumerable<RaycastInfo> RaycastHashCell(Vector3Int hashCell, Vector3 rayOrigin, Vector3 direction, float maxDistance, bool exitInfo)
         {
             if (meshDetails.hashedCells.TryGetValue(hashCell, out var cells))
             {
                 foreach (var cell in cells)
                 {
-                    var raycastInfo = RaycastCell(cell, rayOrigin, direction);
-                    if (raycastInfo != null && raycastInfo.Value.distance <= maxDistance)
-                    {
-                        yield return raycastInfo.Value;
-                    }
+                    var (entry, exit) = RaycastCell(cell, rayOrigin, direction);
+                    if (entry != null && entry.Value.distance <= maxDistance)
+                        yield return entry.Value;
+                    if (exitInfo && exit != null && exit.Value.distance <= maxDistance)
+                        yield return exit.Value;
                 }
             }
         }
 
-        // Narrow phase
-        // I.e. raycast, applied to a single cell
-        // Unlike raycast, this doesn't catch rays that start in the cell.
-        protected virtual RaycastInfo? RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
+        // Narrow phase, applied to a single cell.
+        // entry is where the ray enters the cell, or the ray origin when it starts inside.
+        // exit is where the ray last leaves the cell.
+        protected virtual (RaycastInfo? entry, RaycastInfo? exit) RaycastCell(Cell cell, Vector3 rayOrigin, Vector3 direction)
         {
             // Detect special planar case
             if (IsPlanar && direction.z == 0)
@@ -550,59 +533,108 @@ namespace Sylves
                 var v = meshData.vertices[face[i]];
                 if (MeshRaycast.RaycastTri(rayOrigin, direction, v0, prev, v, out var point, out var distance))
                 {
-                    return new RaycastInfo
+                    return (new RaycastInfo
                     {
                         cell = cell,
                         cellDir = null,
                         distance = distance,
                         point = point,
-                    };
+                    }, null);
                 }
                 prev = v;
             }
-            return null;
+            return (null, null);
         }
 
-        private RaycastInfo? RaycastCell2D(Cell cell, Vector3 rayOrigin, Vector3 direction)
+        // First crossing into the polygon, and the last crossing out.
+        // A ray that starts inside reports entry at distance 0.
+        private (RaycastInfo? entry, RaycastInfo? exit) RaycastCell2D(Cell cell, Vector3 rayOrigin, Vector3 direction)
         {
             var cellData = CellData[cell] as MeshCellData;
             var face = cellData.Face;
             var prev = meshData.vertices[face[face.Count - 1]];
-            var bestD = float.PositiveInfinity;
-            var bestP = new Vector3();
-            var bestI = 0;
+            var entryMinD = float.PositiveInfinity;
+            var entryMinP = default(Vector3);
+            var entryMinI = default(int);
+            var exitMinD = float.PositiveInfinity;
+            var exitMaxD = -1f;
+            var exitMaxP = default(Vector3);
+            var exitMaxI = default(int);
             for (var i = 0; i < face.Count; i++)
             {
                 var curr = meshData.vertices[face[i]];
-                if (MeshRaycast.RaycastSegmentPlanar(rayOrigin, direction, prev, curr, out var p, out var d, out var _))
+                if (MeshRaycast.RaycastSegmentPlanar(rayOrigin, direction, prev, curr, out var p, out var d, out var isEntry))
                 {
-                    if (d < bestD)
+                    if (isEntry)
                     {
-                        bestD = d;
-                        bestP = p;
-                        bestI = i;
+                        if (d < entryMinD)
+                        {
+                            entryMinD = d;
+                            entryMinP = p;
+                            entryMinI = i;
+                        }
+                    }
+                    else
+                    {
+                        if (d > exitMaxD)
+                        {
+                            exitMaxD = d;
+                            exitMaxP = p;
+                            exitMaxI = i;
+                        }
+                        if (d < exitMinD)
+                        {
+                            exitMinD = d;
+                        }
                     }
                 }
                 prev = curr;
             }
-            if (bestD == float.PositiveInfinity)
+            RaycastInfo? entry = null;
+            RaycastInfo? exit = null;
+
+            // First entry.
+            // We exclude entries after the first exit, because that case 
+            // means we started in the cell (see below)
+            if (entryMinD != float.PositiveInfinity && entryMinD <= exitMinD)
             {
-                return null;
-            }
-            else
-            {
-                var cellDir = MeshGridBuilder.EdgeIndexToCellDir((bestI + face.Count - 1) % face.Count, face.Count, meshGridOptions.DoubleOddFaces);
-                return new RaycastInfo
+                var cellDir = MeshGridBuilder.EdgeIndexToCellDir((entryMinI + face.Count - 1) % face.Count, face.Count, meshGridOptions.DoubleOddFaces);
+                entry = new RaycastInfo
                 {
                     cell = cell,
                     cellDir = cellDir,
-                    distance = bestD,
-                    point = bestP,
+                    distance = entryMinD,
+                    point = entryMinP,
                 };
             }
+
+            if (exitMaxD != -1f)
+            {
+                var cellDir = MeshGridBuilder.EdgeIndexToCellDir((exitMaxI + face.Count - 1) % face.Count, face.Count, meshGridOptions.DoubleOddFaces);
+                exit = new RaycastInfo
+                {
+                    cell = cell,
+                    cellDir = cellDir,
+                    distance = exitMaxD,
+                    point = exitMaxP,
+                    isExit = true,
+                };
+            }
+
+            // We left the cell, but never entered it
+            // That means we started in the cell
+            if (entry == null && exit != null)
+            {
+                entry = new RaycastInfo
+                {
+                    cell = cell,
+                    cellDir = null,
+                    distance = 0,
+                    point = rayOrigin,
+                };
+            }
+            return (entry, exit);
         }
-
-
 
         public override bool FindCell(
             Matrix4x4 matrix,

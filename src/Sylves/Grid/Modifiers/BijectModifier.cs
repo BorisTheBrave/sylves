@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -240,9 +240,9 @@ namespace Sylves
 
         public override IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max) => Underlying.GetCellsIntersectsApprox(min, max).Select(fromUnderlying);
 
-        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
-            foreach(var info in Underlying.Raycast(origin, direction, maxDistance))
+            foreach(var info in Underlying.Raycast(origin, direction, maxDistance, exitInfo))
             {
                 var info2 = info;
                 info2.cell = fromUnderlying(info.cell);

@@ -460,8 +460,9 @@ namespace Sylves
         }
 
         // The 12 fa
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
+            if (exitInfo) throw new NotImplementedException();
             var x1 = origin.x / cellSize.x;
             var y1 = origin.y / cellSize.y;
             var z1 = origin.z / cellSize.z;

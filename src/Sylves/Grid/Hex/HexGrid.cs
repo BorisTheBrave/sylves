@@ -625,8 +625,9 @@ namespace Sylves
                 }
             }
         }
-        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity)
+        public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
+            if (exitInfo) throw new NotImplementedException();
             Cell? prevHex = null;
             foreach(var triInfo in childTriangles.Raycast(origin, direction, maxDistance))
             {
