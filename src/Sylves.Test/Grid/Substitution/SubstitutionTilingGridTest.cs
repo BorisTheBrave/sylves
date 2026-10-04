@@ -162,6 +162,41 @@ namespace Sylves.Test
             GridTest.Raycast(g, s, new Vector3(10, 0, 0), 1);
 		}
 
+        [Test]
+        [TestCaseSource(nameof(Bools))]
+        public void TestRaycast_ExitInfo(bool isRaw)
+        {
+            var g = MakeRaw(new DominoGrid(), isRaw);
+            var origin = g.GetCellCenter(new Cell(0, 0, 0));
+            var direction = Vector3.right;
+            const float maxDistance = 3f;
+
+            var plain = g.Raycast(origin, direction, maxDistance).ToList();
+            var infos = g.Raycast(origin, direction, maxDistance, exitInfo: true).ToList();
+            var entries = infos.Where(i => !i.isExit).ToList();
+
+            Assert.AreEqual(plain.Count, entries.Count);
+            for (var i = 0; i < plain.Count; i++)
+            {
+                Assert.AreEqual(plain[i].cell, entries[i].cell, $"{i}");
+                Assert.AreEqual(plain[i].cellDir, entries[i].cellDir, $"{i}");
+                Assert.AreEqual(plain[i].distance, entries[i].distance, 1e-4, $"{i}");
+            }
+
+            var start = entries.Single(i => i.cell == plain[0].cell);
+            Assert.AreEqual(0f, start.distance, 1e-4);
+            Assert.IsNull(start.cellDir);
+
+            var startExit = infos.Single(i => i.isExit && i.cell == start.cell);
+            Assert.Greater(startExit.distance, start.distance);
+            Assert.Less(startExit.distance, maxDistance);
+            Assert.IsNotNull(startExit.cellDir);
+
+            var clipped = g.Raycast(origin, direction, startExit.distance * 0.5f, exitInfo: true).ToList();
+            CollectionAssert.AreEqual(new[] { start.cell }, clipped.Select(i => i.cell));
+            Assert.IsFalse(clipped.Single().isExit);
+        }
+
 		[Test]
 		public void TestBounds()
 		{

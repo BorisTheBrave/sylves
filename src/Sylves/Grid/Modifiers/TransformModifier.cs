@@ -156,7 +156,6 @@ namespace Sylves
         {
             origin = iTransform.MultiplyPoint3x4(origin);
             direction = iTransform.MultiplyVector(direction);
-            // TODO: Worry about maxDistance?
             foreach(var info in Underlying.Raycast(origin, direction, maxDistance, exitInfo))
             {
                 var info2 = info;

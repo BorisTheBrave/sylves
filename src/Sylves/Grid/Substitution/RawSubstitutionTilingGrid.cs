@@ -438,7 +438,6 @@ namespace Sylves
 
         public override IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
-            if (exitInfo) throw new NotImplementedException();
             // Computes distance to interection of aabb, or null if it misses the truncated array.
             Func<Matrix4x4, InternalPrototile, float?> getDist = (transform, prototile) =>
             {
@@ -453,18 +452,7 @@ namespace Sylves
                 // Raycast against the actual children of this prototile
                 for (var i = 0; i < prototile.ChildTiles.Length; i++)
                 {
-                    if (MeshRaycast.RaycastPolygonPlanar(origin, direction, prototile.ChildTiles[i], transform, out var point, out var childDist, out var side)
-                       && childDist < maxDistance)
-                    {
-                        var ri = new RaycastInfo
-                        {
-                            cell = SetChildTileAt(partialPath, i),
-                            cellDir = (CellDir?)side,
-                            distance = childDist,
-                            point = point,
-                        };
-                        queuedRaycastInfos.Add(ri);
-                    }
+                    EnqueuePolygonRaycast(queuedRaycastInfos, origin, direction, prototile.ChildTiles[i], transform, SetChildTileAt(partialPath, i), maxDistance, exitInfo);
                 }
 
                 // Drain the queue. As the prototiles are in order, and their child tiles are inside their bounds and thus always have a larger dist

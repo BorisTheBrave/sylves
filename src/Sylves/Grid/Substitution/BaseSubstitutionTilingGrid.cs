@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -741,6 +741,111 @@ namespace Sylves
         public abstract IEnumerable<Cell> GetCellsIntersectsApprox(Vector3 min, Vector3 max);
 
         public abstract IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false);
+
+        // First crossing into the polygon, and, when requested, the last crossing out.
+        // A ray that starts inside reports entry at distance 0. side is the index of the crossed edge.
+        internal static void EnqueuePolygonRaycast(PriorityQueue<RaycastInfo> queued, Vector3 origin, Vector3 direction, Vector3[] polygon, Matrix4x4 transform, Cell cell, float maxDistance, bool exitInfo)
+        {
+            if (!exitInfo)
+            {
+                if (MeshRaycast.RaycastPolygonPlanar(origin, direction, polygon, transform, out var point, out var childDist, out var side)
+                    && childDist < maxDistance)
+                {
+                    queued.Add(new RaycastInfo
+                    {
+                        cell = cell,
+                        cellDir = (CellDir?)side,
+                        distance = childDist,
+                        point = point,
+                    });
+                }
+                return;
+            }
+
+            var inverse = transform.inverse;
+            var localOrigin = inverse.MultiplyPoint3x4(origin);
+            var localDirection = inverse.MultiplyVector(direction);
+
+            var entryMinD = float.PositiveInfinity;
+            var entryMinP = default(Vector3);
+            var entryMinI = default(int);
+            var exitMinD = float.PositiveInfinity;
+            var exitMaxD = -1f;
+            var exitMaxP = default(Vector3);
+            var exitMaxI = default(int);
+            for (var i = 0; i < polygon.Length; i++)
+            {
+                var v0 = polygon[i];
+                var v1 = polygon[(i + 1) % polygon.Length];
+                if (MeshRaycast.RaycastSegmentPlanar(localOrigin, localDirection, v0, v1, out var p, out var d, out var isEntry))
+                {
+                    if (isEntry)
+                    {
+                        if (d < entryMinD)
+                        {
+                            entryMinD = d;
+                            entryMinP = p;
+                            entryMinI = i;
+                        }
+                    }
+                    else
+                    {
+                        if (d > exitMaxD)
+                        {
+                            exitMaxD = d;
+                            exitMaxP = p;
+                            exitMaxI = i;
+                        }
+                        if (d < exitMinD)
+                        {
+                            exitMinD = d;
+                        }
+                    }
+                }
+            }
+
+            RaycastInfo? entry = null;
+            if (entryMinD != float.PositiveInfinity && entryMinD <= exitMinD)
+            {
+                entry = new RaycastInfo
+                {
+                    cell = cell,
+                    cellDir = (CellDir)entryMinI,
+                    distance = entryMinD,
+                    point = transform.MultiplyPoint(entryMinP),
+                };
+            }
+
+            RaycastInfo? exit = null;
+            if (exitMaxD != -1f)
+            {
+                exit = new RaycastInfo
+                {
+                    cell = cell,
+                    cellDir = (CellDir)exitMaxI,
+                    distance = exitMaxD,
+                    point = transform.MultiplyPoint(exitMaxP),
+                    isExit = true,
+                };
+            }
+
+            // Left the polygon without an entry crossing: the ray started inside.
+            if (entry == null && exit != null)
+            {
+                entry = new RaycastInfo
+                {
+                    cell = cell,
+                    cellDir = null,
+                    distance = 0,
+                    point = transform.MultiplyPoint(localOrigin),
+                };
+            }
+
+            if (entry != null && entry.Value.distance < maxDistance)
+                queued.Add(entry.Value);
+            if (exit != null && exit.Value.distance < maxDistance)
+                queued.Add(exit.Value);
+        }
         #endregion
 
         #region Symmetry
