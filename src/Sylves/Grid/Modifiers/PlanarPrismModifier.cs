@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 #if UNITY
@@ -801,101 +801,190 @@ namespace Sylves
         }
         public IEnumerable<RaycastInfo> Raycast(Vector3 origin, Vector3 direction, float maxDistance = float.PositiveInfinity, bool exitInfo = false)
         {
-            if (exitInfo) throw new NotImplementedException();
-            var planarOrigin = new Vector3(origin.x, origin.y, 0);
             var planarDirection = new Vector3(direction.x, direction.y, 0);
 
             var dz = direction.z;
             var layerHeight = planarPrismOptions.LayerHeight;
             var layerOffset = planarPrismOptions.LayerOffset;
-
             var layerStep = dz > 0 ? 1 : dz < 0 ? -1 : 0;
 
-            int currentLayer = GetLayer(origin);
-            Cell prevUCell = default;
-            bool hasPrevUCell = false;
-
-            foreach (var info in underlying.Raycast(planarOrigin, planarDirection, maxDistance))
+            // Check if we start outside the bound.
+            // startOnLayerBorder: the ray enters the slab through a layer face, so the
+            // first layer step crosses that face at t = 0 instead of starting inside a cell.
+            var extraDistance = 0f;
+            var startOnLayerBorder = false;
+            var layerZ = origin.z;
+            if (bound != null)
             {
-                float t = info.distance;
-                int layerAtT = GetLayer(origin + t * direction);
+                // Find the start and end values of t that the ray crosses the layers
+                var zLo = layerOffset + layerHeight * (bound.MinLayer - 0.5f);
+                var zHi = layerOffset + layerHeight * (bound.MexLayer - 0.5f);
+                var tz1 = dz == 0 ? (zLo > origin.z ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (zLo - origin.z) / dz : (zHi - origin.z) / dz;
+                var tz2 = dz == 0 ? (zHi > origin.z ? 1 : -1) * float.PositiveInfinity : dz >= 0 ? (zHi - origin.z) / dz : (zLo - origin.z) / dz;
+                var mint = tz1;
+                var maxt = tz2;
 
-                if (hasPrevUCell && currentLayer != layerAtT)
-                {
-                    var cellType = underlying.GetCellType(prevUCell);
-                    GetAxialDirs(cellType, out var fwd, out var bck);
-                    var layerCellDir = dz > 0 ? bck : fwd;
+                // Don't go beyond maxt
+                maxDistance = Math.Min(maxDistance, maxt);
 
-                    while (currentLayer != layerAtT)
-                    {
-                        float boundaryZ = layerOffset + layerHeight * (currentLayer + 0.5f * layerStep);
-                        float tBoundary = (boundaryZ - origin.z) / dz;
-
-                        if (tBoundary > t)
-                            break;
-
-                        currentLayer += layerStep;
-
-                        if (bound != null && (currentLayer < bound.MinLayer || currentLayer >= bound.MexLayer))
-                            yield break;
-
-                        yield return new RaycastInfo
-                        {
-                            cell = Combine(prevUCell, currentLayer),
-                            point = origin + tBoundary * direction,
-                            cellDir = layerCellDir,
-                            distance = tBoundary,
-                        };
-                    }
-                }
-
-                currentLayer = layerAtT;
-
-                if (bound != null && (currentLayer < bound.MinLayer || currentLayer >= bound.MexLayer))
+                if (maxDistance < 0 || float.IsPositiveInfinity(mint))
                     yield break;
 
-                var prismInfo = PrismInfo.Get(underlying.GetCellType(info.cell));
-
-                yield return new RaycastInfo
+                if (mint > 0)
                 {
-                    cell = Combine(info.cell, currentLayer),
-                    point = origin + t * direction,
-                    cellDir = info.cellDir.HasValue ? prismInfo.BaseToPrism(info.cellDir.Value) : (CellDir?) null,
-                    distance = t,
-                };
-
-                prevUCell = info.cell;
-                hasPrevUCell = true;
+                    // Advance things to mint. Snap the layer coordinate, not origin,
+                    // so points stay on the ray (origin + t * direction).
+                    origin += direction * mint;
+                    maxDistance -= mint;
+                    extraDistance = mint;
+                    startOnLayerBorder = true;
+                    layerZ = dz >= 0 ? zLo : zHi;
+                }
             }
 
-            // After the last 2D result, yield remaining layer crossings
-            if (hasPrevUCell && layerStep != 0)
+            // We walk along the underlying array in parallel with walking the layers
+            // We rely on exitInfo: true to get the range of the ray in each cell
+            var planarOrigin = new Vector3(origin.x, origin.y, 0);
+            var planarHits = underlying.Raycast(planarOrigin, planarDirection, maxDistance, exitInfo: true).GetEnumerator();
+            try
             {
-                var cellType = underlying.GetCellType(prevUCell);
-                GetAxialDirs(cellType, out var fwd, out var bck);
-                var layerCellDir = dz > 0 ? bck : fwd;
+                var hasPlanar = planarHits.MoveNext();
+                Cell? uCell = null;
+                var layer = 0;
+                var hasCarriedLayer = false;
+                var carriedLayer = 0;
+
+                // Planar raycast starts inside a cell,
+                // but the raycast started outside the slab and entered through a layer face.
+                if (startOnLayerBorder
+                    && hasPlanar
+                    && planarHits.Current.distance == 0
+                    && !planarHits.Current.isExit
+                    && planarHits.Current.cellDir == null)
+                {
+                    // Skip the planar hit that claims we started inside a cell.
+                    uCell = planarHits.Current.cell;
+                    layer = dz > 0 ? bound.MinLayer - 1 : bound.MexLayer;
+                    hasPlanar = planarHits.MoveNext();
+                }
+                else
+                {
+                    // The ray enters a planar cell through a side later on, so the walk
+                    // starts normally and the layer face is not a special first step.
+                    startOnLayerBorder = false;
+                }
 
                 while (true)
                 {
-                    float boundaryZ = layerOffset + layerHeight * (currentLayer + 0.5f * layerStep);
-                    float tBoundary = (boundaryZ - origin.z) / dz;
-
-                    if (tBoundary > maxDistance)
-                        break;
-
-                    currentLayer += layerStep;
-
-                    if (bound != null && (currentLayer < bound.MinLayer || currentLayer >= bound.MexLayer))
-                        yield break;
-
-                    yield return new RaycastInfo
+                    // Time to next planar cell event (enter or exit)
+                    var tPlanar = hasPlanar ? planarHits.Current.distance : float.PositiveInfinity;
+                    // Time to next layer. Only computed when inside a planar cell.
+                    var tLayer = float.PositiveInfinity;
+                    if (uCell != null && layerStep != 0)
                     {
-                        cell = Combine(prevUCell, currentLayer),
-                        point = origin + tBoundary * direction,
-                        cellDir = layerCellDir,
-                        distance = tBoundary,
-                    };
+                        var boundaryZ = layerOffset + layerHeight * (layer + 0.5f * layerStep);
+                        tLayer = (boundaryZ - layerZ) / dz;
+                    }
+
+                    if (tLayer <= tPlanar)
+                    {
+                        var t = tLayer;
+
+                        if (float.IsInfinity(t) || t > maxDistance)
+                            yield break;
+
+                        // Move from one layer to the next
+                        var cellType = underlying.GetCellType(uCell.Value);
+                        GetAxialDirs(cellType, out var fwd, out var bck);
+
+                        // On a border start, the current layer is outside the slab and was never entered.
+                        if (exitInfo && !startOnLayerBorder)
+                        {
+                            yield return new RaycastInfo
+                            {
+                                cell = Combine(uCell.Value, layer),
+                                point = origin + t * direction,
+                                cellDir = dz > 0 ? fwd : bck,
+                                distance = t + extraDistance,
+                                isExit = true,
+                            };
+                        }
+                        startOnLayerBorder = false;
+
+                        layer += layerStep;
+                        if (bound != null && (layer < bound.MinLayer || layer >= bound.MexLayer))
+                            yield break;
+                        yield return new RaycastInfo
+                        {
+                            cell = Combine(uCell.Value, layer),
+                            point = origin + t * direction,
+                            cellDir = dz > 0 ? bck : fwd,
+                            distance = t + extraDistance,
+                        };
+                    }
+                    else
+                    {
+                        var t = tPlanar;
+
+                        if (float.IsInfinity(t) || t > maxDistance)
+                            yield break;
+                        // Either entering or exiting a planar cell
+                        // Repeat the raycast info, and update state
+                        var cellType = underlying.GetCellType(planarHits.Current.isExit ? uCell.Value : planarHits.Current.cell);
+                        var prismInfo = PrismInfo.Get(cellType);
+
+                        var info = planarHits.Current;
+                        hasPlanar = planarHits.MoveNext();
+
+                        if (info.isExit)
+                        {
+                            if (exitInfo)
+                            {
+                                yield return new RaycastInfo
+                                {
+                                    cell = Combine(uCell.Value, layer),
+                                    point = origin + info.distance * direction,
+                                    cellDir = info.cellDir.HasValue ? prismInfo.BaseToPrism(info.cellDir.Value) : (CellDir?)null,
+                                    distance = info.distance + extraDistance,
+                                    isExit = true,
+                                };
+                            }
+
+                            carriedLayer = layer;
+                            hasCarriedLayer = true;
+                            uCell = null;
+                        }
+                        else
+                        {
+                            // The carried layer avoids rounding back across a layer face that was
+                            // stepped at the same t as the planar exit. It only holds if no further
+                            // layer face lies between that exit and this entry (i.e. no gap crossing).
+                            var useCarried = false;
+                            if (hasCarriedLayer)
+                            {
+                                var nextBoundaryZ = layerOffset + layerHeight * (carriedLayer + 0.5f * layerStep);
+                                useCarried = layerStep == 0 || info.distance < (nextBoundaryZ - layerZ) / dz;
+                            }
+                            // Layers occupy [offset + height * (l - 0.5), offset + height * (l + 0.5)).
+                            layer = useCarried ? carriedLayer : Mathf.FloorToInt((layerZ + info.distance * dz - layerOffset) / layerHeight + 0.5f);
+                            hasCarriedLayer = false;
+                            uCell = info.cell;
+                            if (bound != null && (layer < bound.MinLayer || layer >= bound.MexLayer))
+                                yield break;
+                            yield return new RaycastInfo
+                            {
+                                cell = Combine(info.cell, layer),
+                                point = origin + info.distance * direction,
+                                cellDir = info.cellDir.HasValue ? prismInfo.BaseToPrism(info.cellDir.Value) : (CellDir?)null,
+                                distance = info.distance + extraDistance,
+                            };
+                        }
+                    }
                 }
+            }
+            finally
+            {
+                planarHits.Dispose();
             }
         }
         #endregion
