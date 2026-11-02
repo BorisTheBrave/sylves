@@ -48,9 +48,9 @@ namespace Sylves
         /// <summary>
         /// Returns a bound of a rhombus that bounds the X and Y axes.
         /// </summary>
-        public static HexBound Rhombus(int minX, int minY, int maxX, int maxY)
+        public static HexBound Rhombus(int minX, int minY, int mexX, int mexY)
         {
-            return new HexBound(new Vector3Int(minX, minY, -maxX - maxY + 1), new Vector3Int(maxX, maxY, -minX - minY + 1));
+            return new HexBound(new Vector3Int(minX, minY, -mexX - mexY + 1), new Vector3Int(mexX, mexY, -minX - minY + 1));
         }
 
 

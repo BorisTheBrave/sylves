@@ -42,10 +42,10 @@ namespace Sylves
             this.Min = min;
             this.Mex = mex;
         }
-        public SquareBound(int minX, int minY, int maxX, int maxY)
+        public SquareBound(int minX, int minY, int mexX, int mexY)
         {
             this.Min = new Vector2Int(minX, minY);
-            this.Mex = new Vector2Int(maxX, maxY);
+            this.Mex = new Vector2Int(mexX, mexY);
         }
         public static SquareBound FromVectors(IEnumerable<Vector2Int> vs)
         {
